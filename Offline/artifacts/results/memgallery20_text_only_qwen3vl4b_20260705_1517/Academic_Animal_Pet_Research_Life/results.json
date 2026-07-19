@@ -1,0 +1,1668 @@
+[
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D1",
+    "question": "What subject is now Lena majoring in at university?",
+    "category": "FR",
+    "system_answer": "Life Sciences",
+    "original_answer": "Life Sciences",
+    "retrieved_ids": [
+      "D7:12",
+      "D3:7",
+      "D3:3",
+      "D3:1",
+      "D3:2"
+    ],
+    "clue": [
+      "D1:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:49"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D1",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "Maltese",
+    "original_answer": "Maltese",
+    "retrieved_ids": [
+      "D2:3",
+      "D1:5",
+      "D1:6",
+      "D5:3",
+      "D2:4"
+    ],
+    "clue": [
+      "D1:5",
+      "D1:6",
+      "D1:7",
+      "D1:11",
+      "D2:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:49"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "When did Lena adopt her dog? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2024-05-23",
+    "original_answer": "2024-05-22",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:2",
+      "D2:12",
+      "D6:12",
+      "D7:3"
+    ],
+    "clue": [
+      "D2:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:49"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "Is the dog in the picture the same breed as Amy's dog?",
+    "category": "TTL",
+    "system_answer": "No, the dog in the picture is not the same breed as Amy's dog. The dog in the image is a Maltese, as indicated by its small size, silky white fur, and affectionate demeanor, which aligns with the description of Maltese dogs in the conversation. Amy’s dog is a Cairn Terrier, which is described as energetic, adventurous, and having a different appearance and temperament.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:4",
+      "D1:5",
+      "D5:3",
+      "D1:6"
+    ],
+    "clue": [
+      "D2:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:50"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "The dog in the attached image is a Cairn Terrier.",
+    "original_answer": "Cairn Terrier",
+    "retrieved_ids": [
+      "D3:14",
+      "D2:4",
+      "D3:16",
+      "D3:15",
+      "D6:8"
+    ],
+    "clue": [
+      "D2:3",
+      "D2:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:50"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "Is the dog in the picture more similar to Amy’s Cairn Terrier or to Lena’s Maltese?",
+    "category": "VR",
+    "system_answer": "The dog in the picture is more similar to Amy’s Cairn Terrier. It has a wiry, shaggy coat, a sturdy build, and a confident, alert expression — all characteristic of Cairn Terriers. Lena’s Maltese, in contrast, is typically smooth-coated, smaller, and more delicate in appearance.",
+    "original_answer": "It is more similar to Amy’s Cairn Terrier.",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:3",
+      "D2:5",
+      "D3:14",
+      "D3:16"
+    ],
+    "clue": [
+      "D2:3",
+      "D2:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:51"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "Is the dog in the picture the same breed as the pet of any friend or classmate mentioned by Lena? Answer Yes or No. If yes, then please specify which person's pet it shares the same breed with.",
+    "category": "VR",
+    "system_answer": "Yes, the dog in the picture is the same breed as Amy's Cairn Terrier, as mentioned in the conversation.",
+    "original_answer": "Yes. It is the same as Amy's.",
+    "retrieved_ids": [
+      "D3:14",
+      "D3:16",
+      "D6:8",
+      "D2:4",
+      "D2:3"
+    ],
+    "clue": [
+      "D2:3",
+      "D2:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:51"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "What is the name of Lena's friend Amy's cat?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:12",
+      "D2:1",
+      "D2:2",
+      "D2:3"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:52"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "What is the name of Amy’s Cairn Terrier?",
+    "category": "FR",
+    "system_answer": "Pebble",
+    "original_answer": "Pebble",
+    "retrieved_ids": [
+      "D2:5",
+      "D2:4",
+      "D2:7",
+      "D2:6",
+      "D2:3"
+    ],
+    "clue": [
+      "D2:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:52"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "What candidate names have been listed when naming Lena's dog?",
+    "category": "FR",
+    "system_answer": "The candidate names listed when naming Lena's dog are 'Coral', 'Sunny', and 'Lumi'.",
+    "original_answer": "Coral, Sunny, Lumi.",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:7",
+      "D12:10",
+      "D2:2",
+      "D11:9"
+    ],
+    "clue": [
+      "D2:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:52"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "Please determine whether the following information conflicts with the dialogue memory:\nLena’s pet Lumi is a cat.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D11:3",
+      "D11:4",
+      "D2:9",
+      "D2:10",
+      "D5:1"
+    ],
+    "clue": [
+      "D2:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:52"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "Please determine whether the following information conflicts with the dialogue memory:\nLena’s pet Momo is a dog.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:5",
+      "D2:1",
+      "D2:2",
+      "D5:2"
+    ],
+    "clue": [
+      "D2:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:52"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "What is the name of Lena’s Maltese dog?",
+    "category": "FR",
+    "system_answer": "Lumi",
+    "original_answer": "Lumi.",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:1",
+      "D2:8",
+      "D2:7",
+      "D1:5"
+    ],
+    "clue": [
+      "D2:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:52"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "Please determine whether the following information conflicts with the dialogue memory:\n Lena has a Maltese dog called Coco.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:2",
+      "D2:3",
+      "D5:2",
+      "D5:8"
+    ],
+    "clue": [
+      "D2:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:53"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "Is the dog in the picture the same breed as Lumi?",
+    "category": "TTL",
+    "system_answer": "No, the dog in the picture is not the same breed as Lumi. The dog in the picture is a Maltese, as mentioned in the conversation, while Lumi is a Papillon, as confirmed in the session D12.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D2:3",
+      "D1:5",
+      "D2:4",
+      "D1:6",
+      "D12:2"
+    ],
+    "clue": [
+      "D2:1",
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:53"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D3",
+    "question": "Is the dog in the picture the same breed as CMU’s mascot?",
+    "category": "TTL",
+    "system_answer": "Yes, the dog in the picture is a Scottish Terrier, which is the same breed as CMU’s mascot, Scotty the Scottish Terrier.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D3:14",
+      "D3:16",
+      "D3:13",
+      "D2:4",
+      "D3:15"
+    ],
+    "clue": [
+      "D3:13",
+      "D3:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:54"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D3",
+    "question": "Is the dog in the picture the same breed as CMU’s mascot?",
+    "category": "TTL",
+    "system_answer": "No, the dog in the picture is a Yorkshire Terrier, not the same breed as CMU’s mascot, which is a Scottish Terrier.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D3:14",
+      "D3:16",
+      "D2:4",
+      "D3:13",
+      "D2:3"
+    ],
+    "clue": [
+      "D3:13",
+      "D3:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:54"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D3",
+    "question": "Please help me find the image that shows CMU’s full name along with its mascot.",
+    "category": "VS",
+    "system_answer": "No image in the provided memory content shows CMU’s full name along with its mascot.",
+    "original_answer": "D3:IMG_001",
+    "retrieved_ids": [
+      "D3:13",
+      "D14:5",
+      "D3:5",
+      "D3:14",
+      "D3:4"
+    ],
+    "clue": [
+      "D3:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:54"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D3",
+    "question": "Please determine whether the following information conflicts with the dialogue memory:\n The dog in the following attached image is the same breed as CMU's mascot dog.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D3:13",
+      "D3:14",
+      "D3:15",
+      "D3:16",
+      "D3:17"
+    ],
+    "clue": [
+      "D3:13",
+      "D3:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:55"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D4",
+    "question": "Which image shows vocalization sonograms?",
+    "category": "VS",
+    "system_answer": "D4:IMG_001",
+    "original_answer": "D4:IMG_001",
+    "retrieved_ids": [
+      "D4:2",
+      "D4:4",
+      "D4:3",
+      "D4:5",
+      "D8:5"
+    ],
+    "clue": [
+      "D4:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:55"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D4",
+    "question": "What practice did the seminar speaker encourage students to adopt?",
+    "category": "MR",
+    "system_answer": "The seminar speaker encouraged students to keep a small behavior journal.",
+    "original_answer": "The speaker encouraged students to keep a small behavior journal. Lena was tempted to start one for Lumi, perhaps even doodling her expressions.",
+    "retrieved_ids": [
+      "D4:9",
+      "D4:13",
+      "D3:7",
+      "D7:5",
+      "D4:8"
+    ],
+    "clue": [
+      "D4:8",
+      "D4:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:55"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D4",
+    "question": "Why does Lena keep Lumi around calm animals?",
+    "category": "MR",
+    "system_answer": "Lena keeps Lumi around calm animals because Lumi copies calmness surprisingly well, and this environment helps her stay relaxed and grounded.",
+    "original_answer": "Lena tries to keep Lumi around calm animals because she copies calmness surprisingly well. This is based on social learning and social mirroring principles.",
+    "retrieved_ids": [
+      "D6:12",
+      "D11:8",
+      "D4:8",
+      "D7:2",
+      "D11:4"
+    ],
+    "clue": [
+      "D4:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:55"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D4",
+    "question": "Did the seminar speaker mention using machine learning to analyze animal vocalizations?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:2",
+      "D4:4",
+      "D4:5",
+      "D4:3"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:55"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D5",
+    "question": "Which two dogs in the conversations are described as intelligent and quick learners?",
+    "category": "MR",
+    "system_answer": "Lumi and Coco.",
+    "original_answer": "Lena's Maltese dog Lumi and Lucy's Toy Poodle dog Coco.",
+    "retrieved_ids": [
+      "D3:16",
+      "D5:3",
+      "D12:10",
+      "D12:9",
+      "D5:5"
+    ],
+    "clue": [
+      "D5:2",
+      "D5:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:56"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D5",
+    "question": "What is the name of Lucy's Scotch Terrier dog?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:16",
+      "D3:14",
+      "D5:5",
+      "D12:2",
+      "D2:9"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:56"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D5",
+    "question": "What is the name of Lucy’s Toy Poodle?",
+    "category": "FR",
+    "system_answer": "Coco",
+    "original_answer": "Coco.",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:4",
+      "D12:2",
+      "D2:9",
+      "D2:7"
+    ],
+    "clue": [
+      "D5:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:56"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D5",
+    "question": "What is the name of Lucy’s cat?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:9",
+      "D12:2",
+      "D2:8",
+      "D2:7",
+      "D10:1"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:56"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D5",
+    "question": "Please help me find the two images related to Lucy's pet. Only return the image_id of the two images (separate the answers with commas).",
+    "category": "VS",
+    "system_answer": "D5:IMG_003, D12:IMG_002",
+    "original_answer": "D5:IMG_002, D5:IMG_003",
+    "retrieved_ids": [
+      "D5:5",
+      "D12:2",
+      "D2:9",
+      "D12:1",
+      "D5:2"
+    ],
+    "clue": [
+      "D5:3",
+      "D5:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:56"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D2",
+    "question": "What are the names of Lena, Amy, and Lucy’s pets (separate the answers with commas)?",
+    "category": "FR",
+    "system_answer": "Lumi, Pebble, Lumi",
+    "original_answer": "Lumi, Pebble, Coco.",
+    "retrieved_ids": [
+      "D12:10",
+      "D2:3",
+      "D3:16",
+      "D2:9",
+      "D2:12"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D5:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:56"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D6",
+    "question": "Please find the image where a Standard Poodle is standing gracefully outdoors.",
+    "category": "VS",
+    "system_answer": "D6:IMG_001, D6:IMG_002",
+    "original_answer": "D6:IMG_001",
+    "retrieved_ids": [
+      "D6:4",
+      "D6:3",
+      "D6:8",
+      "D6:5",
+      "D6:6"
+    ],
+    "clue": [
+      "D6:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:57"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D6",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "Standard Poodle",
+    "original_answer": "Standard poodle.",
+    "retrieved_ids": [
+      "D6:4",
+      "D6:3",
+      "D6:8",
+      "D5:5",
+      "D6:6"
+    ],
+    "clue": [
+      "D6:3",
+      "D6:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:57"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D6",
+    "question": "Does Lena's sister like Standard Poodles?",
+    "category": "KR",
+    "system_answer": "No, Lena's sister does not like Standard Poodles. Her favorite breed is the Standard Schnauzer.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:8",
+      "D6:5",
+      "D6:6",
+      "D6:7"
+    ],
+    "clue": [
+      "D6:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:57"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D6",
+    "question": "After Lena’s correction, which dog breed does her sister actually like?",
+    "category": "KR",
+    "system_answer": "Standard Schnauzer",
+    "original_answer": "Standard Schnauzer",
+    "retrieved_ids": [
+      "D6:9",
+      "D12:10",
+      "D6:8",
+      "D6:6",
+      "D2:1"
+    ],
+    "clue": [
+      "D6:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:57"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D6",
+    "question": "Is the dog in the picture the breed that Lena's sister likes?",
+    "category": "KR",
+    "system_answer": "Yes, the dog in the picture is a Standard Schnauzer, which is the breed Lena’s sister likes.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:8",
+      "D6:6",
+      "D3:16",
+      "D6:7"
+    ],
+    "clue": [
+      "D6:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:58"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D6",
+    "question": "Is the dog in the picture the breed that Lena's sister likes?",
+    "category": "KR",
+    "system_answer": "No, the dog in the picture is not the breed that Lena's sister likes. Lena's sister likes Standard Schnauzers, as mentioned in the conversation, while the dog in the image is a Poodle.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:8",
+      "D6:5",
+      "D6:6",
+      "D6:7"
+    ],
+    "clue": [
+      "D6:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:58"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D7",
+    "question": "How has Lumi been helping Lena cope with academic pressure?",
+    "category": "FR",
+    "system_answer": "Lumi helps Lena cope with academic pressure by sitting beside her while she studies, nudging her arm to encourage breaks, and even lying on her notebook during debugging sessions, which helped her solve problems faster. Lena also notes that studying with Lumi makes her room feel softer and balances technical intensity, creating a calm emotional environment that supports sustainable learning.",
+    "original_answer": "Lumi sits beside Lena when she studies, nudges her arm to tell her to take breaks, and literally lay on her notebook during a debugging session forcing her to pause. Lumi functions as an emotional support companion and biological notification system for stress management.",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:2",
+      "D7:4",
+      "D7:5",
+      "D7:12"
+    ],
+    "clue": [
+      "D7:1",
+      "D7:2",
+      "D7:3",
+      "D7:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:59"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D7",
+    "question": "Which image shows DBSCAN density-based clustering data visualization?",
+    "category": "VS",
+    "system_answer": "D7:IMG_001",
+    "original_answer": "D7:IMG_001",
+    "retrieved_ids": [
+      "D7:10",
+      "D7:11",
+      "D7:9",
+      "D8:5",
+      "D8:2"
+    ],
+    "clue": [
+      "D7:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:17:59"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D7",
+    "question": "How did Lena feel about learning machine learning materials?",
+    "category": "MR",
+    "system_answer": "Lena found some parts of beginner ML materials intimidating, but others were really exciting. She also expressed that the learning curve is natural and that ML becomes intuitive once you see how patterns form.",
+    "original_answer": "Some parts are intimidating, but others are really exciting. Visual examples like clustering graphs made things feel more approachable and helped abstract ideas suddenly click.",
+    "retrieved_ids": [
+      "D7:9",
+      "D7:8",
+      "D7:12",
+      "D8:1",
+      "D3:7"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:00"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D7",
+    "question": "Did Lena mention using any productivity apps or timers for studying?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:6",
+      "D7:5",
+      "D7:7",
+      "D7:1",
+      "D7:3"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:00"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D8",
+    "question": "What AI model did Lena use for her image classification project?",
+    "category": "FR",
+    "system_answer": "Lena planned to use a pre-trained model like ResNet or VGG16 for her image classification project, which she intended to fine-tune on a smaller dataset of dog images to recognize Boston Bulldogs.",
+    "original_answer": "Convolutional neural network.",
+    "retrieved_ids": [
+      "D8:2",
+      "D7:9",
+      "D7:11",
+      "D8:4",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:00"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D8",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "Boston Bulldog (also known as Boston Terrier)",
+    "original_answer": "Boston Bulldog",
+    "retrieved_ids": [
+      "D8:6",
+      "D8:5",
+      "D8:7",
+      "D12:2",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:00"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D8",
+    "question": "Please search the two images of the Boston Bulldog in the conversation.",
+    "category": "VS",
+    "system_answer": "D8:IMG_003, D8:IMG_004",
+    "original_answer": "D8:IMG_003, D8:IMG_004",
+    "retrieved_ids": [
+      "D8:6",
+      "D8:5",
+      "D8:4",
+      "D8:7",
+      "D8:8"
+    ],
+    "clue": [
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:01"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D9",
+    "question": "When did Lena and Lumi go on a trip? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2024-08-25",
+    "original_answer": "2024-08-25",
+    "retrieved_ids": [
+      "D10:4",
+      "D4:11",
+      "D5:1",
+      "D7:14",
+      "D9:11"
+    ],
+    "clue": [
+      "D9:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:01"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D9",
+    "question": "Who trims her pet's fur at home?",
+    "category": "FR",
+    "system_answer": "Amy trims Pebble’s fur at home.",
+    "original_answer": "Amy",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:4",
+      "D9:6",
+      "D9:7",
+      "D9:5"
+    ],
+    "clue": [
+      "D9:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:01"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D10",
+    "question": "When did Lumi first visit Lena’s brother’s house? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "The provided memory content does not mention when Lumi first visited Lena’s brother’s house. Therefore, the information is not available in the conversation history.",
+    "original_answer": "2024-09-08",
+    "retrieved_ids": [
+      "D10:4",
+      "D11:8",
+      "D4:11",
+      "D5:1",
+      "D7:14"
+    ],
+    "clue": [
+      "D10:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:02"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D10",
+    "question": "What is the name of Lena’s brother’s dog?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:2",
+      "D12:2",
+      "D12:1",
+      "D2:1"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:02"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D10",
+    "question": "What is the name of Lena’s brother’s cat?",
+    "category": "MR",
+    "system_answer": "The conversation does not mention Lena’s brother or his cat. Therefore, the name of Lena’s brother’s cat is not provided in the memory content.",
+    "original_answer": "Miso",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:1",
+      "D2:2",
+      "D2:7",
+      "D12:2"
+    ],
+    "clue": [
+      "D10:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:02"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D11",
+    "question": "What animals did Lena and Lumi encounter at the birthday gathering?",
+    "category": "FR",
+    "system_answer": "Lena and Lumi encountered pets at the birthday gathering, including Miso, another pet who was described as a “strange, fluffy creature” that doesn’t climb on keyboards. Lumi was observed interacting with Miso, settling near them, and even sharing space on a bed. After the gathering, Lumi napped under Lena’s chair.",
+    "original_answer": "A calm mixed-breed dog and a guinea pig.",
+    "retrieved_ids": [
+      "D11:1",
+      "D11:2",
+      "D10:4",
+      "D10:5",
+      "D11:9"
+    ],
+    "clue": [
+      "D11:3",
+      "D11:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:03"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D11",
+    "question": "Which image shows guinea pigs?",
+    "category": "VS",
+    "system_answer": "D11:IMG_001",
+    "original_answer": "D11:IMG_001",
+    "retrieved_ids": [
+      "D11:5",
+      "D11:6",
+      "D1:5",
+      "D12:2",
+      "D8:5"
+    ],
+    "clue": [
+      "D11:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:03"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D11",
+    "question": "Which image shows a birthday cake?",
+    "category": "VS",
+    "system_answer": "None of the provided images show a birthday cake.",
+    "original_answer": "D11:IMG_002",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:5",
+      "D13:6",
+      "D13:5",
+      "D13:7"
+    ],
+    "clue": [
+      "D11:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:03"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D11",
+    "question": "Did Lena mention Lumi playing with any toys at the gathering?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D5:1",
+      "D11:1",
+      "D4:11",
+      "D11:9",
+      "D10:4"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:03"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D12",
+    "question": "When did Lena and Lumi meet the Papillon at the park? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2024-09-28",
+    "original_answer": "2024-09-28",
+    "retrieved_ids": [
+      "D12:2",
+      "D12:4",
+      "D12:5",
+      "D12:6",
+      "D12:10"
+    ],
+    "clue": [
+      "D12:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:03"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D12",
+    "question": "When did Lena meet her new pet: a Papillon dog?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:2",
+      "D12:1",
+      "D2:12",
+      "D12:3"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:04"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D12",
+    "question": "Is the dog in the attached image the same breed as the one Lena met at the park?",
+    "category": "VR",
+    "system_answer": "Yes, the dog in the attached image is the same breed as the one Lena met at the park — both are Papillons. Lena described the dog at the park as having “huge butterfly-like ears,” which matches the distinctive fringed ears of a Papillon, and the image shows a dog with similar features.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D12:2",
+      "D12:1",
+      "D6:8",
+      "D6:6",
+      "D2:3"
+    ],
+    "clue": [
+      "D12:1",
+      "D12:2",
+      "D12:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:04"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D12",
+    "question": "What breed is the dog shown in the image?",
+    "category": "TTL",
+    "system_answer": "Papillon",
+    "original_answer": "Papillon",
+    "retrieved_ids": [
+      "D12:2",
+      "D12:3",
+      "D12:1",
+      "D12:5",
+      "D12:4"
+    ],
+    "clue": [
+      "D12:1",
+      "D12:2",
+      "D12:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:04"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D12",
+    "question": "Please determine whether the following information conflicts with the dialogue memory:\nLena said the Papillon she met was very shy and avoided other dogs.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D12:2",
+      "D12:3",
+      "D12:4",
+      "D12:9",
+      "D12:10"
+    ],
+    "clue": [
+      "D12:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:05"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "What two types of dresses was Lena deciding between?",
+    "category": "FR",
+    "system_answer": "Baroque Print Maxi Dress and Abstract Floral Babydoll Dress",
+    "original_answer": "Baroque Print Maxi Dress and Abstract Floral Babydoll Dress.",
+    "retrieved_ids": [
+      "D13:1",
+      "D13:2",
+      "D13:9",
+      "D13:17",
+      "D13:16"
+    ],
+    "clue": [
+      "D13:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:05"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "How many Baroque Print Maxi Dress options did Lena show? Please answer using an Arabic numeral.",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D13:3",
+      "D13:2",
+      "D13:4",
+      "D13:5",
+      "D13:18"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:05"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Baroque Print Maxi Dress",
+    "original_answer": "Baroque Print Maxi Dress",
+    "retrieved_ids": [
+      "D13:2",
+      "D13:3",
+      "D13:5",
+      "D13:6",
+      "D13:4"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:05"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Baroque Print Maxi Dress",
+    "original_answer": "Baroque Print Maxi Dress",
+    "retrieved_ids": [
+      "D13:2",
+      "D13:3",
+      "D13:6",
+      "D13:5",
+      "D13:4"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:05"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Baroque Print Maxi Dress",
+    "original_answer": "Baroque Print Maxi Dress",
+    "retrieved_ids": [
+      "D13:2",
+      "D13:6",
+      "D13:5",
+      "D13:3",
+      "D13:4"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:06"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Baroque Print Maxi Dress",
+    "original_answer": "Baroque Print Maxi Dress",
+    "retrieved_ids": [
+      "D13:2",
+      "D13:5",
+      "D13:6",
+      "D13:3",
+      "D13:4"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:06"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Baroque Print Maxi Dress",
+    "original_answer": "Baroque Print Maxi Dress",
+    "retrieved_ids": [
+      "D13:2",
+      "D13:3",
+      "D13:5",
+      "D13:6",
+      "D13:4"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:06"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "Search for images of clothing in the same category as those in the attached image.",
+    "category": "VS",
+    "system_answer": "D13:IMG_001, D13:IMG_002, D13:IMG_003, D13:IMG_004, D13:IMG_007",
+    "original_answer": "D13:IMG_001, D13:IMG_002, D13:IMG_003",
+    "retrieved_ids": [
+      "D13:3",
+      "D13:2",
+      "D13:5",
+      "D13:8",
+      "D13:4"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:07"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "Search for images of clothing in the same category as those in the attached image.",
+    "category": "VS",
+    "system_answer": "D13:IMG_001, D13:IMG_002, D13:IMG_003, D13:IMG_004, D13:IMG_005",
+    "original_answer": "D13:IMG_001, D13:IMG_002, D13:IMG_003",
+    "retrieved_ids": [
+      "D13:3",
+      "D13:2",
+      "D13:6",
+      "D13:4",
+      "D13:5"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:07"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "Search for images of clothing in the same category as those in the attached image.",
+    "category": "VS",
+    "system_answer": "D13:IMG_001, D13:IMG_002, D13:IMG_004, D13:IMG_005, D13:IMG_007",
+    "original_answer": "D13:IMG_001, D13:IMG_002, D13:IMG_003",
+    "retrieved_ids": [
+      "D13:2",
+      "D13:8",
+      "D13:3",
+      "D13:6",
+      "D13:5"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:08"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "How many Abstract Floral Babydoll Dress options did Lena show? Please answer using an Arabic numeral.",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D13:5",
+      "D13:6",
+      "D13:8",
+      "D13:7",
+      "D13:2"
+    ],
+    "clue": [
+      "D13:5",
+      "D13:6",
+      "D13:7",
+      "D13:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:08"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Abstract Floral Babydoll Dress",
+    "original_answer": "Abstract Floral Babydoll Dress",
+    "retrieved_ids": [
+      "D13:6",
+      "D13:5",
+      "D13:8",
+      "D13:2",
+      "D13:7"
+    ],
+    "clue": [
+      "D13:5",
+      "D13:6",
+      "D13:7",
+      "D13:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:08"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Abstract Floral Babydoll Dress",
+    "original_answer": "Abstract Floral Babydoll Dress",
+    "retrieved_ids": [
+      "D13:6",
+      "D13:5",
+      "D13:2",
+      "D13:8",
+      "D13:3"
+    ],
+    "clue": [
+      "D13:5",
+      "D13:6",
+      "D13:7",
+      "D13:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:08"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Abstract Floral Babydoll Dress",
+    "original_answer": "Abstract Floral Babydoll Dress",
+    "retrieved_ids": [
+      "D13:6",
+      "D13:2",
+      "D13:8",
+      "D13:5",
+      "D13:7"
+    ],
+    "clue": [
+      "D13:5",
+      "D13:6",
+      "D13:7",
+      "D13:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:09"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Abstract Floral Babydoll Dress",
+    "original_answer": "Abstract Floral Babydoll Dress",
+    "retrieved_ids": [
+      "D13:6",
+      "D13:2",
+      "D13:5",
+      "D13:8",
+      "D13:3"
+    ],
+    "clue": [
+      "D13:5",
+      "D13:6",
+      "D13:7",
+      "D13:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:09"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "What are the price ranges for the two dress categories?",
+    "category": "MR",
+    "system_answer": "The Baroque maxi dresses are around $70–$90, while the Babydoll ones are about $40–$55.",
+    "original_answer": "The Baroque maxi dresses are around $70–$90, while the Babydoll ones are about $40–$55.",
+    "retrieved_ids": [
+      "D13:9",
+      "D13:10",
+      "D13:1",
+      "D13:6",
+      "D13:5"
+    ],
+    "clue": [
+      "D13:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:09"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "Which dress did Lena finally order, and what was the reasoning?",
+    "category": "KR",
+    "system_answer": "Lena finally ordered the Abstract Floral Babydoll Dress. The reasoning was that it felt like the best match for her daily style, as it is cute, comfortable, and versatile—something she’ll get plenty of wear out of.",
+    "original_answer": "D13:IMG_004",
+    "retrieved_ids": [
+      "D13:19",
+      "D13:18",
+      "D13:17",
+      "D13:1",
+      "D13:9"
+    ],
+    "clue": [
+      "D13:5",
+      "D13:17",
+      "D13:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:10"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "Did Lena mention considering any accessories to pair with the dresses?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D13:18",
+      "D13:17",
+      "D13:19",
+      "D13:16",
+      "D13:1"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:10"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D13",
+    "question": "How many total dress pictures were shared? Please answer using an Arabic numeral.",
+    "category": "VR",
+    "system_answer": "6",
+    "original_answer": "7",
+    "retrieved_ids": [
+      "D13:6",
+      "D13:2",
+      "D13:5",
+      "D13:3",
+      "D13:7"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4",
+      "D13:5",
+      "D13:6",
+      "D13:7",
+      "D13:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:10"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D14",
+    "question": "Did Lena and Lumi pass through Allentown on their way to Pittsburgh?",
+    "category": "KR",
+    "system_answer": "No, they passed through Erie, not Allentown.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D14:2",
+      "D14:3",
+      "D14:1",
+      "D14:4",
+      "D14:8"
+    ],
+    "clue": [
+      "D14:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:10"
+  },
+  {
+    "sample_id": "Lena",
+    "dataset": "Academic_Animal_Pet_Research_Life",
+    "session_id": "D14",
+    "question": "What did Lena and Lumi think of the scenery in Allentown during their trip?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D14:2",
+      "D14:3",
+      "D14:1",
+      "D14:4",
+      "D14:8"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:18:10"
+  }
+]

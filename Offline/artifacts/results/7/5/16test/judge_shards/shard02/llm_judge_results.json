@@ -1,0 +1,1220 @@
+[
+  {
+    "index": 144,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TTL",
+    "question": "What is the name of the content in the picture?",
+    "prediction": "Machu Picchu",
+    "reference": "Machu Picchu.",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:3",
+      "D6:3",
+      "D2:6",
+      "D2:1"
+    ],
+    "clue": [
+      "D2:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Machu Picchu', satisfying the question.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Machu Picchu', satisfying the question.\"\n}"
+  },
+  {
+    "index": 145,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TTL",
+    "question": "What is the name of the content in the picture?",
+    "prediction": "Machu Picchu",
+    "reference": "Machu Picch.",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:3",
+      "D6:3",
+      "D2:6",
+      "D2:1"
+    ],
+    "clue": [
+      "D2:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer 'Machu Picchu' matches the intended content name; it aligns with the reference answer despite a minor typo in the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer 'Machu Picchu' matches the intended content name; it aligns with the reference answer despite a minor typo in the reference.\"\n}"
+  },
+  {
+    "index": 146,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: the users ultimately did not approve of the design concept for the Sydney Opera House.",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D1:6",
+      "D2:8",
+      "D2:9",
+      "D2:10",
+      "D2:11"
+    ],
+    "clue": [
+      "D2:8",
+      "D2:9"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'Yes' but the prediction says 'No', which contradicts the correct response.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer is 'Yes' but the prediction says 'No', which contradicts the correct response.\"}"
+  },
+  {
+    "index": 147,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "CD",
+    "question": "Does Julian contradict himself by claiming modern architecture ignores nature, despite earlier praising green architecture?",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D1:4",
+      "D1:5",
+      "D2:5",
+      "D2:7",
+      "D2:8"
+    ],
+    "clue": [
+      "D1:4",
+      "D2:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly.\"\n}"
+  },
+  {
+    "index": 148,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "CD",
+    "question": "Does Julian ever state that ancient construction techniques are fully understood, contradicting earlier claims of mystery?",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:3",
+      "D2:4",
+      "D2:5",
+      "D7:2"
+    ],
+    "clue": [
+      "D2:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, stating 'No'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly, stating 'No'.\"\n}"
+  },
+  {
+    "index": 149,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TTL",
+    "question": "What is the name of the content in the picture?",
+    "prediction": "Sagrada Família",
+    "reference": "Sagrada Família.",
+    "retrieved_ids": [
+      "D2:10",
+      "D2:11",
+      "D1:2",
+      "D2:2",
+      "D2:3"
+    ],
+    "clue": [
+      "D2:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Sagrada Família', correctly identifying the content.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Sagrada Família', correctly identifying the content.\"\n}"
+  },
+  {
+    "index": 150,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "VR",
+    "question": "Who designed the content in the picture?",
+    "prediction": "Antoni Gaudí",
+    "reference": "Antoni Gaudí.",
+    "retrieved_ids": [
+      "D2:11",
+      "D2:10",
+      "D2:1",
+      "D1:2",
+      "D2:2"
+    ],
+    "clue": [
+      "D2:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Antoni Gaudí'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Antoni Gaudí'.\"\n}"
+  },
+  {
+    "index": 151,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "MR",
+    "question": "What art forms were mentioned in the conversation at the end of July?",
+    "prediction": "No art forms were mentioned in the conversation at the end of July, as all referenced sessions occurred in October and November 2024.",
+    "reference": "Music, painting, digital art, installation art, VR art.",
+    "retrieved_ids": [
+      "D6:1",
+      "D9:6",
+      "D9:8",
+      "D9:7",
+      "D10:1"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:8",
+      "D3:11",
+      "D3:12",
+      "D3:13"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction says no art forms were mentioned, contradicting the reference which lists specific art forms (Music, painting, digital art, installation art, VR art).",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The prediction says no art forms were mentioned, contradicting the reference which lists specific art forms (Music, painting, digital art, installation art, VR art).\"}"
+  },
+  {
+    "index": 152,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "MR",
+    "question": "Why does Julian feel like he is \"floating\" when Julian close his eyes listening to \"Clair de Lune\"?",
+    "prediction": "Julian feels like he is \"floating\" because the melodies and emotional expression in pieces like “Clair de Lune” transcend time and space, creating a transcendent, dream-like state that feels weightless and immersive.",
+    "reference": "Because the melody and emotional expression of \"Clair de Lune\" are very delicate, and he experienced a sense of transcending time and space as he followed the flow of the music.",
+    "retrieved_ids": [
+      "D3:10",
+      "D3:9",
+      "D3:11",
+      "D3:8",
+      "D4:2"
+    ],
+    "clue": [
+      "D3:9",
+      "D3:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer captures the same reasons—delicate melody and emotional expression causing a transcendent, weightless feeling—without contradicting the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer captures the same reasons—delicate melody and emotional expression causing a transcendent, weightless feeling—without contradicting the reference.\"\n}"
+  },
+  {
+    "index": 153,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "VS",
+    "question": "Which shared image is the own painting of Julian?",
+    "prediction": "D10:IMG_001, D13:IMG_001",
+    "reference": "D3:IMG_001",
+    "retrieved_ids": [
+      "D10:12",
+      "D11:12",
+      "D13:4",
+      "D11:13",
+      "D9:6"
+    ],
+    "clue": [
+      "D3:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer lists D10:IMG_001 and D13:IMG_001, which do not match the reference answer D3:IMG_001.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer lists D10:IMG_001 and D13:IMG_001, which do not match the reference answer D3:IMG_001.\"\n}"
+  },
+  {
+    "index": 154,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "AR",
+    "question": "Do you think some of the art pieces Julian like are modernist?",
+    "prediction": "Yes, some of the art pieces Julian likes are modernist. For example, he expressed interest in Georgia O’Keeffe, who was a pioneer in American modernism, and Wassily Kandinsky, often regarded as the father of abstract art — a key movement in modernism. Additionally, Julian’s fascination with how spaces and technology shape emotion and memory aligns with modernist explorations of form, function, and innovation.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:1",
+      "D14:13",
+      "D5:8",
+      "D9:3",
+      "D6:1"
+    ],
+    "clue": [],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Reference answer states the information is not mentioned, but prediction asserts that some pieces are modernist, contradicting the reference.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"Reference answer states the information is not mentioned, but prediction asserts that some pieces are modernist, contradicting the reference.\"}"
+  },
+  {
+    "index": 155,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "AR",
+    "question": "Does Julian ever say music cannot create immersive worlds?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:11",
+      "D7:3",
+      "D14:13",
+      "D3:9",
+      "D3:10"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned', correctly reflecting that the source does not state Julian saying music cannot create immersive worlds.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned', correctly reflecting that the source does not state Julian saying music cannot create immersive worlds.\"\n}"
+  },
+  {
+    "index": 156,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "FR",
+    "question": "What is the candidate title for the short essay Julian mentioned he wanted to write?",
+    "prediction": "The provided memory content does not mention a specific candidate title for the short essay Julian wanted to write.",
+    "reference": "The Café as Canvas.",
+    "retrieved_ids": [
+      "D14:13",
+      "D14:12",
+      "D6:2",
+      "D7:13",
+      "D6:1"
+    ],
+    "clue": [
+      "D4:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer provides the title 'The Café as Canvas', but the prediction claims no title is mentioned, contradicting the correct answer.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer provides the title 'The Café as Canvas', but the prediction claims no title is mentioned, contradicting the correct answer.\"\n}"
+  },
+  {
+    "index": 157,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "AR",
+    "question": "Did Julian mention attending an art school in Japan?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:1",
+      "D9:12",
+      "D14:13",
+      "D6:1",
+      "D7:13"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating that it is not mentioned.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer stating that it is not mentioned.\"\n}"
+  },
+  {
+    "index": 158,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TR",
+    "question": "When did Julian go to the museum café? Return in the format YYYY-MM-DD.",
+    "prediction": "2024-07-30",
+    "reference": "2024-07-30",
+    "retrieved_ids": [
+      "D10:1",
+      "D12:1",
+      "D4:2",
+      "D9:11",
+      "D9:12"
+    ],
+    "clue": [
+      "D4:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted date exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted date exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 159,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "FR",
+    "question": "Based on the conversation, which historical masters of art were discussed in August?",
+    "prediction": "Wassily Kandinsky, Claude Monet, Caspar David Friedrich, Georgia O'Keeffe, and Pablo Picasso were discussed in August.",
+    "reference": "Johannes Vermeer, Judith Leyster, Frida Kahlo, Diego Rivera, Albrecht Dürer, Claude Monet, Wassily Kandinsky, Georgia O'Keeffe, Pablo Picasso, Banksy, Christo, Jeanne-Claude, Caspar David Friedrich, John Constable, Jackson Pollock, Andy Warhol, Roy Lichtenstein, and Yayoi Kusama.",
+    "retrieved_ids": [
+      "D5:7",
+      "D10:2",
+      "D5:12",
+      "D5:8",
+      "D5:10"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:3",
+      "D5:4",
+      "D5:6",
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10",
+      "D5:11",
+      "D5:12",
+      "D5:13",
+      "D5:14",
+      "D5:16",
+      "D5:17",
+      "D5:18"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer lists only a subset of the masters; the reference answer includes many more names, so the answer is incomplete.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer lists only a subset of the masters; the reference answer includes many more names, so the answer is incomplete.\"\n}"
+  },
+  {
+    "index": 160,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "AR",
+    "question": "Did Julian ever say he dislikes abstract paintings?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:12",
+      "D14:13",
+      "D10:1",
+      "D11:13"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer stating 'Not mentioned.'\"}"
+  },
+  {
+    "index": 161,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TR",
+    "question": "Did Julian consider researching Vermeer before exploring female artists like Judith Leyster and Georgia O’Keeffe?",
+    "prediction": "Yes, Julian first recommended Vermeer as a beginner-friendly artist, then suggested Judith Leyster as a lesser-known contemporary, and later introduced Georgia O’Keeffe as a pioneering female artist. This sequence indicates Julian considered Vermeer before exploring the female artists.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:2",
+      "D5:3",
+      "D5:8",
+      "D5:9"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer affirms 'Yes' and correctly explains that Julian considered Vermeer before the female artists, matching the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer affirms 'Yes' and correctly explains that Julian considered Vermeer before the female artists, matching the reference answer.\"\n}"
+  },
+  {
+    "index": 162,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "AR",
+    "question": "Did Julian consider purchasing related art books?",
+    "prediction": "Yes, Julian considered purchasing related art books. In session D5, he expressed interest in accessing materials related to Claude Monet, mentioning that his works are reproduced and exhibited frequently, and that books, documentaries, and local exhibitions dedicated to him are available.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:11",
+      "D9:10",
+      "D10:1",
+      "D5:6",
+      "D12:1"
+    ],
+    "clue": [],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer states the information is not mentioned, but the prediction asserts Julian considered purchasing books, contradicting the reference.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer states the information is not mentioned, but the prediction asserts Julian considered purchasing books, contradicting the reference.\"}"
+  },
+  {
+    "index": 163,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "VS",
+    "question": "Among the pictures in early-September, which one is related to traditional Chinese art?",
+    "prediction": "D6:IMG_006",
+    "reference": "D5:IMG_006",
+    "retrieved_ids": [
+      "D10:12",
+      "D13:4",
+      "D8:13",
+      "D6:14",
+      "D9:6"
+    ],
+    "clue": [
+      "D6:14"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer references D6:IMG_006, but the reference answer specifies D5:IMG_006, so it does not match.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer references D6:IMG_006, but the reference answer specifies D5:IMG_006, so it does not match.\"}"
+  },
+  {
+    "index": 164,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "MR",
+    "question": "Do you still remember who the temple mentioned before was built to commemorate?",
+    "prediction": "The temple was built to commemorate a hero who once protected the ancient town from disasters.",
+    "reference": "It was built to commemorate a hero who once protected the ancient town from disasters.",
+    "retrieved_ids": [
+      "D6:8",
+      "D6:7",
+      "D2:1",
+      "D7:7",
+      "D2:3"
+    ],
+    "clue": [
+      "D6:7",
+      "D6:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer restates the reference answer accurately, preserving the meaning that the temple was built to commemorate a hero who protected the ancient town from disasters.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer restates the reference answer accurately, preserving the meaning that the temple was built to commemorate a hero who protected the ancient town from disasters.\"\n}"
+  },
+  {
+    "index": 165,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "AR",
+    "question": "Is there a teahouse named \"Qingfeng Pavilion\" in the ancient town?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:3",
+      "D6:15",
+      "D6:11",
+      "D6:4"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer stating 'Not mentioned.'\"}"
+  },
+  {
+    "index": 166,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TR",
+    "question": "On which date did Julian visit the ancient town? Return in the format YYYY-MM-DD.",
+    "prediction": "2024-09-06",
+    "reference": "2024-09-05",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:6",
+      "D6:19",
+      "D7:2",
+      "D9:12"
+    ],
+    "clue": [
+      "D6:2"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted date 2024-09-06 does not match the reference date 2024-09-05.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted date 2024-09-06 does not match the reference date 2024-09-05.\"\n}"
+  },
+  {
+    "index": 167,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TR",
+    "question": "Did Julian describe the ancient town’s street and market before mentioning the river and stone bridge?",
+    "prediction": "No, Julian did not describe the ancient town’s street and market before mentioning the river and stone bridge. The conversation first mentions the river and stone bridge (in rounds D6:9 and D6:10), and only later in round D6:11 does Julian reference the view from the bridge, which includes the town’s layout, but not specifically the street and market.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "clue": [
+      "D6:3",
+      "D6:4",
+      "D6:9",
+      "D6:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'Yes', but the prediction says 'No', contradicting the correct response.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer is 'Yes', but the prediction says 'No', contradicting the correct response.\"}"
+  },
+  {
+    "index": 168,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "CD",
+    "question": "Does Julian ever deny the existence of lively night activities in the ancient town after describing nighttime performances?",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:8",
+      "D6:12",
+      "D6:13",
+      "D6:15"
+    ],
+    "clue": [
+      "D6:13",
+      "D6:15"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer 'No.' exactly matches the reference answer, correctly addressing the question.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer 'No.' exactly matches the reference answer, correctly addressing the question.\"\n}"
+  },
+  {
+    "index": 169,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TR",
+    "question": "On which day in the conversation was the digital temple discussed? Return in the format YYYY-MM-DD.",
+    "prediction": "2024-09-15",
+    "reference": "2024-09-15",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:2",
+      "D7:6",
+      "D7:7",
+      "D7:8"
+    ],
+    "clue": [
+      "D7:2",
+      "D7:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer.\"}"
+  },
+  {
+    "index": 170,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "VS",
+    "question": "Which of the picture from the conversation shows the embroidered festival costumes?",
+    "prediction": "D7:IMG_001",
+    "reference": "D7:IMG_001",
+    "retrieved_ids": [
+      "D7:12",
+      "D6:14",
+      "D8:13",
+      "D13:4",
+      "D6:7"
+    ],
+    "clue": [
+      "D7:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 171,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TTL",
+    "question": "Based on the dialogue, what kind of clothing is this?",
+    "prediction": "The clothing is a traditional embroidered dress with long sleeves and intricate geometric and floral patterns in red, orange, yellow, green, and blue, accompanied by a matching embroidered cap with hanging tassels. It is displayed in a museum or exhibition setting.",
+    "reference": "Embroidered costumes.",
+    "retrieved_ids": [
+      "D7:12",
+      "D8:2",
+      "D8:13",
+      "D6:2",
+      "D7:2"
+    ],
+    "clue": [
+      "D7:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction identifies the clothing as an embroidered dress, which aligns with the reference answer 'Embroidered costumes' and adds consistent details without contradiction.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction identifies the clothing as an embroidered dress, which aligns with the reference answer 'Embroidered costumes' and adds consistent details without contradiction.\"}"
+  },
+  {
+    "index": 172,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "MR",
+    "question": "In Julian’s discussion of digital heritage, what two forms of digital preservation did he compare when talking about transforming memory into narrative form?",
+    "prediction": "Documentaries and virtual reality (VR)",
+    "reference": "He compared VR experiences with documentaries as two forms of digital preservation.",
+    "retrieved_ids": [
+      "D7:11",
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:10"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction lists the same two forms—documentaries and virtual reality (VR)—as the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction lists the same two forms—documentaries and virtual reality (VR)—as the reference answer.\"\n}"
+  },
+  {
+    "index": 173,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "AR",
+    "question": "Did Julian ever mention having a fear of VR technology?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D14:13",
+      "D3:14",
+      "D7:13",
+      "D7:2",
+      "D14:4"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating that it was not mentioned.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer stating that it was not mentioned.\"}"
+  },
+  {
+    "index": 174,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "CD",
+    "question": "Did the conversation contain any contradictory statements about whether VR experiences replace real cultural memory?",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D3:14",
+      "D7:5",
+      "D7:7",
+      "D7:10",
+      "D7:11"
+    ],
+    "clue": [
+      "D7:5",
+      "D7:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, indicating no contradictory statements.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly, indicating no contradictory statements.\"\n}"
+  },
+  {
+    "index": 175,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "KR",
+    "question": "Julian initially wondered whether digitized culture replaces the original. What final understanding did he adopt later in the conversation?",
+    "prediction": "Julian initially wondered whether digitized culture replaces the original, but later adopted the understanding that it’s not replacement—it’s translation. He saw digital preservation as a form of transformation that acknowledges change while preserving essence, rather than pretending to be identical to the original.",
+    "reference": "He concluded that digitization does not replace culture but translates and preserves it in new narrative forms.",
+    "retrieved_ids": [
+      "D7:6",
+      "D7:5",
+      "D7:11",
+      "D3:12",
+      "D7:1"
+    ],
+    "clue": [
+      "D7:5",
+      "D7:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states that digitization does not replace culture but translates and preserves it, matching the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction states that digitization does not replace culture but translates and preserves it, matching the reference answer.\"}"
+  },
+  {
+    "index": 176,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TR",
+    "question": "Did Julian first learn about 3D digitization of temples before discussing VR-based intangible heritage?",
+    "prediction": "No, Julian first learned about 3D digitization of temples before discussing VR-based intangible heritage. In round D7:2, Julian mentions seeing a 3D model of a temple, and in round D7:7, they discuss VR for reconstructed historical streets — indicating the 3D digitization experience preceded the VR discussion.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:2",
+      "D7:7",
+      "D7:8",
+      "D7:9"
+    ],
+    "clue": [
+      "D7:2",
+      "D7:7"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer says 'No' while the reference answer is 'Yes', directly contradicting the correct response.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer says 'No' while the reference answer is 'Yes', directly contradicting the correct response.\"\n}"
+  },
+  {
+    "index": 177,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "FR",
+    "question": "Please list all the documentaries about Tibet mentioned.",
+    "prediction": "Here Are Treasures, Potala Palace, Paths of the Soul",
+    "reference": "Paths of the Soul, The Third Pole, Potala Palace, and Here Are Treasures.",
+    "retrieved_ids": [
+      "D8:10",
+      "D8:11",
+      "D8:14",
+      "D8:1",
+      "D8:12"
+    ],
+    "clue": [
+      "D8:1",
+      "D8:3",
+      "D8:10",
+      "D8:11",
+      "D8:13"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer omits 'The Third Pole', so it does not list all documentaries mentioned.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer omits 'The Third Pole', so it does not list all documentaries mentioned.\"}"
+  },
+  {
+    "index": 178,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "AR",
+    "question": "Did any dialogue mention Gaudí having visited Tibet?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:11",
+      "D8:10",
+      "D8:11",
+      "D8:14",
+      "D9:2"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating that the dialogue does not mention Gaudí visiting Tibet.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer stating that the dialogue does not mention Gaudí visiting Tibet.\"\n}"
+  },
+  {
+    "index": 179,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TR",
+    "question": "What is the first documentary mentioned in the conversation?",
+    "prediction": "The first documentary mentioned in the conversation is *The Third Pole*.",
+    "reference": "Paths of the Soul.",
+    "retrieved_ids": [
+      "D7:11",
+      "D8:4",
+      "D8:6",
+      "D8:10",
+      "D8:12"
+    ],
+    "clue": [
+      "D8:1"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '*The Third Pole*' does not match the reference answer 'Paths of the Soul', so it is semantically incorrect.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '*The Third Pole*' does not match the reference answer 'Paths of the Soul', so it is semantically incorrect.\"\n}"
+  },
+  {
+    "index": 180,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "VS",
+    "question": "Which of the pictures are about documentaries?",
+    "prediction": "D8:IMG_002, D8:IMG_005",
+    "reference": "D8:IMG_001, D8:IMG_002, D8:IMG_004",
+    "retrieved_ids": [
+      "D8:14",
+      "D8:12",
+      "D8:6",
+      "D8:3",
+      "D8:10"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:13"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction omits IMG_001 and IMG_004 and adds IMG_005, which does not match the reference list of documentary pictures.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The prediction omits IMG_001 and IMG_004 and adds IMG_005, which does not match the reference list of documentary pictures.\"\n}"
+  },
+  {
+    "index": 181,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TR",
+    "question": "Did Julian express admiration for Tibetan pilgrims before asking about the documentary The Third Pole?",
+    "prediction": "Yes, Julian expressed admiration for Tibetan pilgrims in the previous round before asking about the documentary The Third Pole.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D8:1",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:14"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction affirms that Julian expressed admiration for Tibetan pilgrims before asking about the documentary, matching the reference answer 'Yes' and providing consistent elaboration.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction affirms that Julian expressed admiration for Tibetan pilgrims before asking about the documentary, matching the reference answer 'Yes' and providing consistent elaboration.\"}"
+  },
+  {
+    "index": 182,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "VS",
+    "question": "Which of the pictures shown in the conversation is about the oil painting?",
+    "prediction": "D9:IMG_001, D10:IMG_001",
+    "reference": "D9:IMG_001",
+    "retrieved_ids": [
+      "D10:12",
+      "D9:5",
+      "D3:4",
+      "D12:5",
+      "D9:6"
+    ],
+    "clue": [
+      "D9:5"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction adds D10:IMG_001, which is not in the reference answer; it should only list D9:IMG_001.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The prediction adds D10:IMG_001, which is not in the reference answer; it should only list D9:IMG_001.\"}"
+  },
+  {
+    "index": 183,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "FR",
+    "question": "Which works were mentioned in the conversation at the art exhibition in early November?",
+    "prediction": "Monet's \"Water Lilies\" series and \"Rouen Cathedral\" series, Renoir's \"The Ball at the Pancake Mill,\" and Degas' \"Dance Class\" were mentioned in the conversation at the art exhibition in early November.",
+    "reference": "Monet's \"Water Lilies\" and \"Rouen Cathedral\", Renoir's \"Ball at the Pancake Mill\", and Degas' \"Dance Class\".",
+    "retrieved_ids": [
+      "D10:2",
+      "D10:9",
+      "D10:11",
+      "D10:1",
+      "D9:6"
+    ],
+    "clue": [
+      "D10:2",
+      "D10:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer lists the same three artists and works (Monet's Water Lilies and Rouen Cathedral, Renoir's Ball at the Pancake Mill, Degas' Dance Class), with minor wording variations that do not change the meaning.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer lists the same three artists and works (Monet's Water Lilies and Rouen Cathedral, Renoir's Ball at the Pancake Mill, Degas' Dance Class), with minor wording variations that do not change the meaning.\"}"
+  },
+  {
+    "index": 184,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "VS",
+    "question": "Which painting images show the topic of 'Water Lilies'?",
+    "prediction": "D10:IMG_001, D11:IMG_002",
+    "reference": "D10:IMG_001, D11:IMG_002",
+    "retrieved_ids": [
+      "D10:12",
+      "D11:8",
+      "D10:2",
+      "D13:4",
+      "D5:6"
+    ],
+    "clue": [
+      "D10:12",
+      "D11:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, listing the same painting image IDs.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer, listing the same painting image IDs.\"\n}"
+  },
+  {
+    "index": 185,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "MR",
+    "question": "What kind of people are suitable for renting audio guide equipment for exhibitions?",
+    "prediction": "People who don't quite understand the meaning of the work during the visit and want to gain a deeper understanding are suitable for renting audio guide equipment for exhibitions.",
+    "reference": "For those who are not familiar with the meaning of the work and want to delve deeper into it.",
+    "retrieved_ids": [
+      "D10:6",
+      "D13:11",
+      "D10:7",
+      "D10:5",
+      "D13:8"
+    ],
+    "clue": [
+      "D10:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer restates the reference answer's meaning, identifying people unfamiliar with the work's meaning who want deeper understanding as suitable renters.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer restates the reference answer's meaning, identifying people unfamiliar with the work's meaning who want deeper understanding as suitable renters.\"}"
+  },
+  {
+    "index": 186,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "FR",
+    "question": "In the conversation, a Chinese restaurant near the exhibition was mentioned. Which one it was?",
+    "prediction": "\"Moxiangju\"",
+    "reference": "Moxiangju.",
+    "retrieved_ids": [
+      "D10:8",
+      "D10:7",
+      "D12:9",
+      "D12:1",
+      "D10:9"
+    ],
+    "clue": [
+      "D10:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer 'Moxiangju' matches the reference answer exactly.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer 'Moxiangju' matches the reference answer exactly.\"\n}"
+  },
+  {
+    "index": 187,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "MR",
+    "question": "What is Julian's favorite artwork from an art exhibition?",
+    "prediction": "There is no explicit information in the conversation indicating Julian's favorite artwork from an art exhibition.",
+    "reference": "Monet's \"Water Lilies\".",
+    "retrieved_ids": [
+      "D10:1",
+      "D9:12",
+      "D9:11",
+      "D10:2",
+      "D9:6"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer specifies Julian's favorite artwork as Monet's \"Water Lilies\", but the prediction claims no information is given, contradicting the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer specifies Julian's favorite artwork as Monet's \\\"Water Lilies\\\", but the prediction claims no information is given, contradicting the reference.\"\n}"
+  },
+  {
+    "index": 188,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "AR",
+    "question": "Did Julian mention Van Gogh's works in the exhibition?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:2",
+      "D9:12",
+      "D10:9",
+      "D5:6"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating that Van Gogh's works were not mentioned.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer stating that Van Gogh's works were not mentioned.\"\n}"
+  },
+  {
+    "index": 189,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "MR",
+    "question": "Across the exhibition and the light workshop sessions, which Impressionist artist did Julian keep returning to when thinking about light and reflections?",
+    "prediction": "Monet",
+    "reference": "Claude Monet.",
+    "retrieved_ids": [
+      "D10:2",
+      "D10:9",
+      "D10:1",
+      "D11:12",
+      "D11:13"
+    ],
+    "clue": [
+      "D10:12",
+      "D11:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer 'Monet' matches the reference answer 'Claude Monet' and correctly identifies the Impressionist artist.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer 'Monet' matches the reference answer 'Claude Monet' and correctly identifies the Impressionist artist.\"\n}"
+  },
+  {
+    "index": 190,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TR",
+    "question": "Did Julian plan the Impressionist exhibition visit before sharing his reflections after attending it?",
+    "prediction": "Yes, Julian planned the visit by inquiring about the exhibition, including specific works by Monet and Renoir, and whether reservations were needed, indicating prior planning before sharing his reflections.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:2",
+      "D10:3",
+      "D10:9",
+      "D11:12"
+    ],
+    "clue": [
+      "D10:1",
+      "D10:7",
+      "D10:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction affirms 'Yes' and provides consistent elaboration, matching the reference answer without contradiction.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction affirms 'Yes' and provides consistent elaboration, matching the reference answer without contradiction.\"}"
+  },
+  {
+    "index": 191,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "FR",
+    "question": "During the light workshop, what object did Julian choose to paint repeatedly under different lighting conditions?",
+    "prediction": "Julian chose a glass vase with flowers to paint repeatedly under different lighting conditions.",
+    "reference": "A glass vase with flowers.",
+    "retrieved_ids": [
+      "D11:2",
+      "D11:13",
+      "D11:11",
+      "D11:1",
+      "D11:4"
+    ],
+    "clue": [
+      "D11:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction correctly states that Julian chose a glass vase with flowers, matching the reference answer and not contradicting any details.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction correctly states that Julian chose a glass vase with flowers, matching the reference answer and not contradicting any details.\"}"
+  },
+  {
+    "index": 192,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "VS",
+    "question": "Which image from the conversation shows Monet’s water lilies painting that Julian associated with reflections during the light workshop?",
+    "prediction": "D11:IMG_002",
+    "reference": "D11:IMG_002",
+    "retrieved_ids": [
+      "D10:12",
+      "D11:8",
+      "D10:2",
+      "D5:6",
+      "D11:9"
+    ],
+    "clue": [
+      "D11:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (D11:IMG_002).",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer (D11:IMG_002).\"\n}"
+  },
+  {
+    "index": 193,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "CD",
+    "question": "Is there any contradiction in Julian’s descriptions of the vase appearing warm under sunlight and cold under artificial lighting?",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D11:3",
+      "D11:6",
+      "D11:9",
+      "D11:10",
+      "D11:11"
+    ],
+    "clue": [
+      "D11:3",
+      "D11:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer 'No.' matches the reference answer exactly, indicating no contradiction.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer 'No.' matches the reference answer exactly, indicating no contradiction.\"}"
+  },
+  {
+    "index": 194,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "TR",
+    "question": "When comparing Julian’s experience with natural sunlight versus artificial indoor lighting in the workshop, which lighting condition happened later in time?",
+    "prediction": "Artificial indoor lighting happened later in time.",
+    "reference": "The switch to artificial indoor lighting happened later.",
+    "retrieved_ids": [
+      "D11:1",
+      "D11:2",
+      "D11:9",
+      "D11:10",
+      "D11:13"
+    ],
+    "clue": [
+      "D11:3",
+      "D11:7",
+      "D11:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer states that artificial indoor lighting happened later, which matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer states that artificial indoor lighting happened later, which matches the reference answer.\"\n}"
+  },
+  {
+    "index": 195,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "VS",
+    "question": "Which of the pictures from the conversation is about the sculptures?",
+    "prediction": "D12:IMG_002",
+    "reference": "D12:IMG_002",
+    "retrieved_ids": [
+      "D12:6",
+      "D9:6",
+      "D13:4",
+      "D9:7",
+      "D12:7"
+    ],
+    "clue": [
+      "D12:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 196,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "AR",
+    "question": "Was there a food experience area set up in the art exhibition?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:7",
+      "D10:8",
+      "D12:7",
+      "D12:5",
+      "D12:4"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 197,
+    "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+    "category": "FR",
+    "question": "What historical and modern artworks have Julian mentioned in the conversation in December?",
+    "prediction": "In December, Julian mentioned the \"Digital Art Immersion Exhibition\" at the Contemporary Art Center, which features modern digital art, and the theme of combining classical art with modern digital art under the title \"Time and Memory.\" He also referenced Impressionist masterpieces by Monet and Renoir as historical artworks.",
+    "reference": "Julian mentioned Botticelli's The Birth of Venus and a modern digital illustration, used for a comparative display.",
+    "retrieved_ids": [
+      "D10:1",
+      "D13:3",
+      "D6:1",
+      "D9:12",
+      "D5:6"
+    ],
+    "clue": [
+      "D13:4"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Unterminated string starting at: line 4 column 13 (char 52)",
+    "raw_judge": ""
+  }
+]

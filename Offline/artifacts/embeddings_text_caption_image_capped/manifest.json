@@ -1,0 +1,8 @@
+[
+  {
+    "worker_id": 0,
+    "ids": "artifacts/embeddings_text_caption_image_capped/ids_worker0.json",
+    "vectors": "artifacts/embeddings_text_caption_image_capped/embeddings_worker0.npy",
+    "count": 3962
+  }
+]

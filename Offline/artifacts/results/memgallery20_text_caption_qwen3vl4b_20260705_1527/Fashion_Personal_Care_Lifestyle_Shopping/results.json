@@ -1,0 +1,1369 @@
+[
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D1",
+    "question": "Did the user consider purchasing Li Ning's clothing brand?",
+    "category": "AR",
+    "system_answer": "Yes, the user considered purchasing Li Ning's clothing brand, as indicated by the image caption describing a runway model wearing a black graphic sweatshirt with the text “LI-NING” and “ZHANGJIAJIE.”",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:5",
+      "D1:3",
+      "D9:1",
+      "D9:2"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:31"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D2",
+    "question": "Which image shown in late-July is related to the T-shirt discussed in the conversation?",
+    "category": "VS",
+    "system_answer": "D2:IMG_001, D2:IMG_002",
+    "original_answer": "D2:IMG_001",
+    "retrieved_ids": [
+      "D2:6",
+      "D2:5",
+      "D2:7",
+      "D2:4",
+      "D2:3"
+    ],
+    "clue": [
+      "D2:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:31"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D2",
+    "question": "Does the statement 'Chloe dislikes minimalist fashion styles' conflict with the conversation?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D2:17",
+      "D2:19",
+      "D2:20",
+      "D2:21",
+      "D2:22"
+    ],
+    "clue": [
+      "D2:14",
+      "D2:17",
+      "D2:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:31"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D1",
+    "question": "Did Chloe focus on improving her outfits before she decided to get a manicure?",
+    "category": "TR",
+    "system_answer": "Yes, Chloe mentioned that after finding a great pair of slim-fit jeans and feeling more confident styling her trench coat, she started noticing how much her nails needed attention, which led her to decide to get a manicure.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D3:1",
+      "D3:2",
+      "D3:3",
+      "D3:4",
+      "D3:11"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:25",
+      "D3:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:32"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D3",
+    "question": "List the manicure-related terms and products Chloe mentioned considering or getting.",
+    "category": "FR",
+    "system_answer": "Manicure-related terms and products Chloe mentioned:  \n- Manicure (basic, clean-up, shape, polish)  \n- Polish (soft pink with glitter top coat)  \n- Cuticle oil (recommended, “Sweet Almond Cuticle Oil” with black label and dropper cap)  \n- Glitter (as a top coat)  \n- Shape (round or oval, with oval described as more elegant)",
+    "original_answer": "Chloe mentioned a basic manicure, polish, soft pink polish (\"Ballet Slippers\"), glitter top coat, and cuticle oil. She also considered round and oval nail shapes.",
+    "retrieved_ids": [
+      "D3:3",
+      "D3:11",
+      "D3:2",
+      "D3:4",
+      "D3:10"
+    ],
+    "clue": [
+      "D3:3",
+      "D3:4",
+      "D3:6",
+      "D3:7",
+      "D3:8",
+      "D3:9",
+      "D3:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:33"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D3",
+    "question": "What nail shape was Chloe initially considering?",
+    "category": "MR",
+    "system_answer": "Chloe initially considered round nail shape.",
+    "original_answer": "She was initially considering a round nail shape, or maybe oval.",
+    "retrieved_ids": [
+      "D3:4",
+      "D3:5",
+      "D3:3",
+      "D3:2",
+      "D3:6"
+    ],
+    "clue": [
+      "D3:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:33"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D3",
+    "question": "When Chloe was uncertain about polish colors, what final choice did she settle on?",
+    "category": "KR",
+    "system_answer": "Chloe settled on the soft pink polish called “Ballet Slippers,” which the assistant described as popular, universally flattering, sheer, and understated.",
+    "original_answer": "Soft pink with a subtle glitter top coat.",
+    "retrieved_ids": [
+      "D3:6",
+      "D7:4",
+      "D7:5",
+      "D3:7",
+      "D7:6"
+    ],
+    "clue": [
+      "D3:6",
+      "D3:8",
+      "D3:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:33"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D3",
+    "question": "How many images are related to manicures or nail polish? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VS",
+    "system_answer": "D3:IMG_001, D3:IMG_002",
+    "original_answer": "2",
+    "retrieved_ids": [
+      "D3:10",
+      "D3:3",
+      "D3:7",
+      "D3:11",
+      "D3:4"
+    ],
+    "clue": [
+      "D3:7",
+      "D3:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:33"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D3",
+    "question": "Did Chloe mention getting gel or acrylic nails?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:3",
+      "D3:4",
+      "D3:11",
+      "D3:1"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:33"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D4",
+    "question": "What study routine strategies were discussed in the conversation?",
+    "category": "FR",
+    "system_answer": "Time-blocking with short focused blocks (30–45 minutes) to reduce task jumping, adding tea breaks for resetting, and replacing doom-scrolling with stretching or a two-minute walk to clear the head.",
+    "original_answer": "Time-blocking with 30-45 minute focused blocks, creating a 3-item priority to-do list to prevent overwhelm, taking tea breaks to reset instead of doom-scrolling, stretching or taking two-minute walks between tasks, allowing routines to adapt to daily energy levels, starting the day with a small reset (clean desk, tea, one priority), creating weekly overviews with key deadlines and focus themes, and setting weekly mood themes like 'slow week', 'focus week', or 'balanced week'.",
+    "retrieved_ids": [
+      "D4:2",
+      "D4:3",
+      "D4:7",
+      "D4:1",
+      "D4:12"
+    ],
+    "clue": [
+      "D4:2",
+      "D4:4",
+      "D4:6",
+      "D4:7",
+      "D4:9",
+      "D4:11",
+      "D4:12",
+      "D4:13",
+      "D4:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:34"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D4",
+    "question": "Why is a 3-item priority to-do list recommended over longer lists?",
+    "category": "MR",
+    "system_answer": "A 3-item priority to-do list is recommended because it prevents overwhelm and still gives structure, making finishing meaningful tasks feel empowering.",
+    "original_answer": "A 3-item priority list prevents overwhelm and still gives structure. Finishing three meaningful tasks feels empowering, whereas putting ten things on a list makes you feel defeated.",
+    "retrieved_ids": [
+      "D4:5",
+      "D4:4",
+      "D4:6",
+      "D4:3",
+      "D4:7"
+    ],
+    "clue": [
+      "D4:4",
+      "D4:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:34"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D4",
+    "question": "Which image shows a to-do list?",
+    "category": "VS",
+    "system_answer": "D4:IMG_001",
+    "original_answer": "D4:IMG_001",
+    "retrieved_ids": [
+      "D4:4",
+      "D4:5",
+      "D4:6",
+      "D4:12",
+      "D4:13"
+    ],
+    "clue": [
+      "D4:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:34"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D4",
+    "question": "What alternative was suggested instead of doom-scrolling between tasks?",
+    "category": "MR",
+    "system_answer": "Stretching or a two-minute walk.",
+    "original_answer": "Try stretching or a two-minute walk instead—it clears your head faster. Tea breaks are also perfect because they're calming but not distracting like scrolling on your phone.",
+    "retrieved_ids": [
+      "D4:7",
+      "D4:6",
+      "D4:3",
+      "D4:5",
+      "D4:2"
+    ],
+    "clue": [
+      "D4:6",
+      "D4:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:34"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D4",
+    "question": "What is Chloe's planned gentle start for her new routine?",
+    "category": "KR",
+    "system_answer": "Clean desk, tea, one priority.",
+    "original_answer": "A small reset with clean desk, tea, and one priority.",
+    "retrieved_ids": [
+      "D4:11",
+      "D4:12",
+      "D4:9",
+      "D4:16",
+      "D4:10"
+    ],
+    "clue": [
+      "D4:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:35"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D4",
+    "question": "What book is Chloe currently reading?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:4",
+      "D4:1",
+      "D4:13"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:35"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D4",
+    "question": "Did Chloe use any specific study apps or productivity tools?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:3",
+      "D4:2",
+      "D4:1",
+      "D4:13",
+      "D4:12"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:35"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D5",
+    "question": "Does it contradict the conversation to say that Chloe always applies a heavy amount of perfume intentionally?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:6",
+      "D5:8",
+      "D5:9",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:4",
+      "D5:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:35"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D5",
+    "question": "What are the user's main concerns about the perfume they sprayed?",
+    "category": "FR",
+    "system_answer": "The user is concerned about using too much perfume, which makes it smell too strong; they also worry about the strong smell being a distraction during a group meeting and whether it will last too long. Additionally, they are concerned about potential skin irritation from the alcohol content in the perfume.",
+    "original_answer": "The user is concerned about the strong smell, how to reduce it, the appropriate amount of perfume to use, the duration of the strong smell, whether it will be a problem in a meeting, if they should change the perfume, how to choose a suitable perfume, proper storage of perfume, and potential skin irritation from the perfume.",
+    "retrieved_ids": [
+      "D5:12",
+      "D5:1",
+      "D5:6",
+      "D5:2",
+      "D5:8"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:5",
+      "D5:6",
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10",
+      "D5:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:36"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D5",
+    "question": "Which picture shown is about a meeting room?",
+    "category": "VS",
+    "system_answer": "D5:IMG_002",
+    "original_answer": "D5:IMG_002",
+    "retrieved_ids": [
+      "D5:7",
+      "D6:16",
+      "D6:2",
+      "D6:1",
+      "D6:3"
+    ],
+    "clue": [
+      "D5:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:36"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D5",
+    "question": "Based on the conversation, what steps can the user take to make the perfume smell less strong when outside?",
+    "category": "MR",
+    "system_answer": "The user can try to ventilate the room by opening a window or using a fan to help dissipate the scent. Additionally, they can dab off excess perfume with a tissue to reduce its intensity.",
+    "original_answer": "The user can walk in an open area with more air circulation to help dissipate the scent. Avoiding confined spaces can also reduce the intensity of the smell.",
+    "retrieved_ids": [
+      "D5:2",
+      "D5:6",
+      "D5:1",
+      "D5:8",
+      "D5:5"
+    ],
+    "clue": [
+      "D5:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:36"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D5",
+    "question": "Based on the conversation, would the user use a perfume with a very high concentration of essential oils if they are concerned about the strong smell?",
+    "category": "AR",
+    "system_answer": "No, the user would not use a perfume with a very high concentration of essential oils if they are concerned about the strong smell. The assistant advised looking for a lighter or more subtle fragrance, minimizing the amount used, and ventilating the room to reduce intensity. Additionally, the user expressed concern about the strong smell, and the assistant recommended being careful with the amount sprayed and considering alternatives.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D5:8",
+      "D5:6",
+      "D5:12",
+      "D5:9",
+      "D5:2"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:37"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D5",
+    "question": "Did Chloe experience the perfume mishap before she decided to refresh her room?",
+    "category": "TR",
+    "system_answer": "Yes, Chloe experienced the perfume mishap before she decided to refresh her room. The conversation shows that the perfume mishap occurred in session D5 (rounds D5:1 to D5:11), and she decided to refresh her room in session D6 (round D6:1), which took place on 2024-09-05, after the mishap.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:8",
+      "D5:11",
+      "D6:1",
+      "D6:2"
+    ],
+    "clue": [
+      "D5:1",
+      "D6:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:38"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D6",
+    "question": "What desk organization method was recommended, and why is it effective?",
+    "category": "MR",
+    "system_answer": "A small tray for essentials was recommended, as it keeps items like pens, lip balm, and favorite perfume tidy. This method is effective because it minimizes clutter and helps maintain a clean, organized space.",
+    "original_answer": "Clear everything off the desk first to give you a clean canvas. It's very satisfying, and then you only return what you truly need.",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:2",
+      "D6:16",
+      "D6:4",
+      "D6:7"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:38"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D6",
+    "question": "Which image shows a candle on a table? Only return the image_id of the image.",
+    "category": "VS",
+    "system_answer": "D6:IMG_001",
+    "original_answer": "D6:IMG_001",
+    "retrieved_ids": [
+      "D6:5",
+      "D8:9",
+      "D7:15",
+      "D8:12",
+      "D8:8"
+    ],
+    "clue": [
+      "D6:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:38"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D6",
+    "question": "Why are clear storage boxes recommended over regular boxes?",
+    "category": "MR",
+    "system_answer": "Clear boxes are recommended because you can see what’s inside without digging, which helps with organization and makes it easier to find items.",
+    "original_answer": "Clear boxes are great because you see what's inside without digging. Adding labels makes everything feel intentional and organized.",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:10",
+      "D6:4",
+      "D6:3",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:9",
+      "D6:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:39"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D6",
+    "question": "Which image shows the pothos plant that Chloe is considering?",
+    "category": "VS",
+    "system_answer": "D6:IMG_002",
+    "original_answer": "D6:IMG_002",
+    "retrieved_ids": [
+      "D6:14",
+      "D6:15",
+      "D6:13",
+      "D8:12",
+      "D7:7"
+    ],
+    "clue": [
+      "D6:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:39"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D6",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Pothos",
+    "original_answer": "Pothos",
+    "retrieved_ids": [
+      "D6:14",
+      "D6:15",
+      "D8:12",
+      "D8:9",
+      "D8:3"
+    ],
+    "clue": [
+      "D6:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:40"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D6",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D6:IMG_002",
+    "original_answer": "D6:IMG_002",
+    "retrieved_ids": [
+      "D6:14",
+      "D6:15",
+      "D6:13",
+      "D8:9",
+      "D8:3"
+    ],
+    "clue": [
+      "D6:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:42"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D6",
+    "question": "Why was a pothos plant recommended for Chloe's room?",
+    "category": "MR",
+    "system_answer": "It was recommended because pothos plants are low-maintenance and never die, making them ideal for adding greenery to a room.",
+    "original_answer": "Pothos plants are low-maintenance—they're the superheroes of houseplants because they never die. Even a small one can brighten a room.",
+    "retrieved_ids": [
+      "D6:15",
+      "D6:14",
+      "D6:13",
+      "D6:16",
+      "D6:1"
+    ],
+    "clue": [
+      "D6:13",
+      "D6:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:42"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D6",
+    "question": "What previous issue led Chloe to want to refresh her room?",
+    "category": "KR",
+    "system_answer": "The perfume mishap.",
+    "original_answer": "After the perfume mishap, Chloe suddenly felt like refreshing her whole room.",
+    "retrieved_ids": [
+      "D6:1",
+      "D6:16",
+      "D6:2",
+      "D6:3",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:42"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D6",
+    "question": "When did Chloe plan to clean her room? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2024-09-05",
+    "original_answer": "2024-09-05",
+    "retrieved_ids": [
+      "D4:1",
+      "D6:1",
+      "D6:11",
+      "D6:12",
+      "D6:16"
+    ],
+    "clue": [
+      "D6:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:42"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D6",
+    "question": "Did Chloe mention painting her walls during this room refresh?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:1",
+      "D6:16",
+      "D6:2",
+      "D6:15",
+      "D6:11"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:42"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D2",
+    "question": "Which came first: Chloe seeking advice on styling casual outfits or Chloe choosing a birthday gift for Jenny?",
+    "category": "TR",
+    "system_answer": "Chloe seeking advice on styling casual outfits came first.",
+    "original_answer": "She sought styling advice earlier.",
+    "retrieved_ids": [
+      "D2:1",
+      "D4:1",
+      "D7:1",
+      "D7:2",
+      "D7:13"
+    ],
+    "clue": [
+      "D2:1",
+      "D2:25",
+      "D7:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:42"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D7",
+    "question": "What is the name of the friend the user wants to give a birthday gift to?",
+    "category": "FR",
+    "system_answer": "Jenny",
+    "original_answer": "Jenny",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:2",
+      "D7:14",
+      "D7:13",
+      "D7:3"
+    ],
+    "clue": [
+      "D7:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:43"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D7",
+    "question": "Did Chloe look at the green dress before picking a matching winter scarf for Jenny?",
+    "category": "TR",
+    "system_answer": "Yes, Chloe looked at the green dress before picking a matching winter scarf for Jenny. She considered the dress as a gift option, then discussed how to make it seasonally appropriate by pairing it with a scarf, ultimately selecting a burgundy scarf to complement the dress’s green tone.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D7:7",
+      "D7:8",
+      "D7:9",
+      "D7:10",
+      "D7:11"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:43"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D7",
+    "question": "What birthday gifts did the user discuss?",
+    "category": "FR",
+    "system_answer": "The user discussed a birthday cake and a toy rabbit (given last year).",
+    "original_answer": "Lipstick, dress, scarf, Toy Rabbit, birthday cake.",
+    "retrieved_ids": [
+      "D7:13",
+      "D7:14",
+      "D7:2",
+      "D7:1",
+      "D7:16"
+    ],
+    "clue": [
+      "D7:3",
+      "D7:7",
+      "D7:9",
+      "D7:11",
+      "D7:12",
+      "D7:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:43"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D7",
+    "question": "What lipstick shade does Jenny usually wear?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:4",
+      "D7:5",
+      "D7:3",
+      "D7:6",
+      "D3:6"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:43"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D7",
+    "question": "What did the user finally decide on as the birthday gift?",
+    "category": "KR",
+    "system_answer": "The user finally decided on a birthday cake, as confirmed in the conversation when they asked if they should buy a cake as well, and the assistant recommended it. The user later confirmed they would order both the gift and the cake.",
+    "original_answer": "The green dress and burgundy scarf.",
+    "retrieved_ids": [
+      "D7:13",
+      "D7:14",
+      "D8:14",
+      "D7:2",
+      "D7:16"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:11",
+      "D7:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:44"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D7",
+    "question": "Please help me search for the picture of the cute toy.",
+    "category": "VS",
+    "system_answer": "D7:IMG_004",
+    "original_answer": "D7:IMG_004",
+    "retrieved_ids": [
+      "D7:12",
+      "D7:3",
+      "D7:13",
+      "D8:12",
+      "D7:15"
+    ],
+    "clue": [
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:44"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D7",
+    "question": "What did Chloe get her mom for her birthday last year?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:13",
+      "D8:14",
+      "D8:1",
+      "D8:2",
+      "D7:2"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:44"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D8",
+    "question": "In which of the images that the user looked at is the necklace planned as a gift?",
+    "category": "VS",
+    "system_answer": "D8:IMG_003",
+    "original_answer": "D8:IMG_003",
+    "retrieved_ids": [
+      "D8:6",
+      "D8:7",
+      "D8:12",
+      "D8:14",
+      "D8:8"
+    ],
+    "clue": [
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:44"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D8",
+    "question": "What is the first candidate gift Chloe mentioned for her mom?",
+    "category": "MR",
+    "system_answer": "A custom necklace with her initials.",
+    "original_answer": "The book.",
+    "retrieved_ids": [
+      "D8:1",
+      "D8:14",
+      "D8:2",
+      "D8:13",
+      "D7:2"
+    ],
+    "clue": [
+      "D8:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:45"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "What two categories of autumn/winter clothing did Chloe consider purchasing?",
+    "category": "FR",
+    "system_answer": "Collared Luxe Faux Fur Jackets and sweaters (specifically, the camel cable-knit cowl neck sweater).",
+    "original_answer": "Collared Luxe Faux Fur Jackets and Cowl Neck Fisherman Sweaters.",
+    "retrieved_ids": [
+      "D9:2",
+      "D9:1",
+      "D9:18",
+      "D9:19",
+      "D9:17"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:45"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "Which image shows the first burgundy faux fur jacket with black collar?",
+    "category": "VS",
+    "system_answer": "D9:IMG_001",
+    "original_answer": "D9:IMG_001",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:4",
+      "D9:5",
+      "D9:6",
+      "D9:15"
+    ],
+    "clue": [
+      "D9:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:45"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "How many Collared Luxe Faux Fur Jackets did Chloe view? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:5",
+      "D9:2",
+      "D9:4",
+      "D9:6"
+    ],
+    "clue": [
+      "D9:3",
+      "D9:4",
+      "D9:5",
+      "D9:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:45"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Collared Luxe Faux Fur Jackets",
+    "original_answer": "Collared Luxe Faux Fur Jacket",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:6",
+      "D9:5",
+      "D9:4",
+      "D9:2"
+    ],
+    "clue": [
+      "D9:3",
+      "D9:4",
+      "D9:5",
+      "D9:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:45"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "The clothing in the picture is not explicitly categorized in the conversation. The conversation discusses \"Collared Luxe Faux Fur Jackets\" and other faux fur jackets, but the image shows a black coat with a fur collar, which does not match the described faux fur jackets. Therefore, the category cannot be determined from the provided conversation.",
+    "original_answer": "Collared Luxe Faux Fur Jacket",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:5",
+      "D9:4",
+      "D9:6",
+      "D9:2"
+    ],
+    "clue": [
+      "D9:3",
+      "D9:4",
+      "D9:5",
+      "D9:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:46"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Collared Luxe Faux Fur Jackets",
+    "original_answer": "Collared Luxe Faux Fur Jacket",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:6",
+      "D9:5",
+      "D9:4",
+      "D9:2"
+    ],
+    "clue": [
+      "D9:3",
+      "D9:4",
+      "D9:5",
+      "D9:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:46"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Collared Luxe Faux Fur Jackets",
+    "original_answer": "Collared Luxe Faux Fur Jacket",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:4",
+      "D9:5",
+      "D9:6",
+      "D9:2"
+    ],
+    "clue": [
+      "D9:3",
+      "D9:4",
+      "D9:5",
+      "D9:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:46"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Collared Luxe Faux Fur Jackets",
+    "original_answer": "Collared Luxe Faux Fur Jacket",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:5",
+      "D9:4",
+      "D9:6",
+      "D9:2"
+    ],
+    "clue": [
+      "D9:3",
+      "D9:4",
+      "D9:5",
+      "D9:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:47"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "How many Cowl Neck Fisherman Sweaters did Chloe view? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "0",
+    "original_answer": "6",
+    "retrieved_ids": [
+      "D9:8",
+      "D9:10",
+      "D9:11",
+      "D9:13",
+      "D9:9"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9",
+      "D9:10",
+      "D9:11",
+      "D9:12",
+      "D9:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:47"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Sweater",
+    "original_answer": "Cowl Neck Fisherman Sweater",
+    "retrieved_ids": [
+      "D9:13",
+      "D9:10",
+      "D9:11",
+      "D9:9",
+      "D9:12"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9",
+      "D9:10",
+      "D9:11",
+      "D9:12",
+      "D9:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:47"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Cowl neck sweater",
+    "original_answer": "Cowl Neck Fisherman Sweater",
+    "retrieved_ids": [
+      "D9:9",
+      "D9:13",
+      "D9:10",
+      "D9:11",
+      "D9:12"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9",
+      "D9:10",
+      "D9:11",
+      "D9:12",
+      "D9:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:47"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Sweater",
+    "original_answer": "Cowl Neck Fisherman Sweater",
+    "retrieved_ids": [
+      "D9:9",
+      "D9:10",
+      "D9:13",
+      "D9:11",
+      "D9:12"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9",
+      "D9:10",
+      "D9:11",
+      "D9:12",
+      "D9:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:47"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Cowl Neck Fisherman Sweater",
+    "original_answer": "Cowl Neck Fisherman Sweater",
+    "retrieved_ids": [
+      "D9:13",
+      "D9:11",
+      "D9:10",
+      "D9:9",
+      "D9:8"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9",
+      "D9:10",
+      "D9:11",
+      "D9:12",
+      "D9:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:48"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Sweater",
+    "original_answer": "Cowl Neck Fisherman Sweater",
+    "retrieved_ids": [
+      "D9:10",
+      "D9:11",
+      "D9:13",
+      "D9:12",
+      "D9:9"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9",
+      "D9:10",
+      "D9:11",
+      "D9:12",
+      "D9:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:48"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Cowl neck sweater",
+    "original_answer": "Cowl Neck Fisherman Sweater",
+    "retrieved_ids": [
+      "D9:13",
+      "D9:9",
+      "D9:10",
+      "D9:12",
+      "D9:11"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9",
+      "D9:10",
+      "D9:11",
+      "D9:12",
+      "D9:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:48"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "Why was the camel cable-knit cowl neck sweater recommended?",
+    "category": "MR",
+    "system_answer": "The camel cable-knit cowl neck sweater was recommended because it is classic, warm, and extremely versatile—it goes with almost anything and feels timeless.",
+    "original_answer": "It's classic, warm, and extremely versatile. The rich texture and neutral color make it great for everyday wear. It goes with almost anything and feels timeless—an easy everyday winter staple that won't go out of style.",
+    "retrieved_ids": [
+      "D9:16",
+      "D9:9",
+      "D9:15",
+      "D9:13",
+      "D9:8"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:15",
+      "D9:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:48"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "Which specific items did Chloe finally decide to purchase?",
+    "category": "KR",
+    "system_answer": "Chloe finally decided to purchase the first burgundy faux fur jacket and the camel cable-knit cowl neck sweater.",
+    "original_answer": "D9:IMG_001, D9:IMG_005",
+    "retrieved_ids": [
+      "D9:1",
+      "D9:18",
+      "D6:4",
+      "D9:2",
+      "D8:1"
+    ],
+    "clue": [
+      "D9:3",
+      "D9:8",
+      "D9:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:49"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "Which image shows a snowy day from last year?",
+    "category": "VS",
+    "system_answer": "D9:IMG_011",
+    "original_answer": "D9:IMG_011",
+    "retrieved_ids": [
+      "D9:20",
+      "D9:12",
+      "D9:11",
+      "D7:12",
+      "D9:3"
+    ],
+    "clue": [
+      "D9:20"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:49"
+  },
+  {
+    "sample_id": "Chloe",
+    "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+    "session_id": "D9",
+    "question": "Did Chloe purchase winter gloves or scarves during the shopping session?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:19",
+      "D9:2",
+      "D9:20",
+      "D9:1",
+      "D9:18"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:30:49"
+  }
+]

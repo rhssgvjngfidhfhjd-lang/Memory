@@ -1,0 +1,8 @@
+[
+  {
+    "worker_id": 0,
+    "ids": "artifacts/embeddings_smoke/ids_worker0.json",
+    "vectors": "artifacts/embeddings_smoke/embeddings_worker0.npy",
+    "count": 1
+  }
+]

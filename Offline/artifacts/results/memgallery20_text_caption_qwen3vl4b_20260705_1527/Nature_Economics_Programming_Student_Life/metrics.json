@@ -1,0 +1,62 @@
+{
+  "count": 136,
+  "f1": 0.7458750074841306,
+  "exact_match": 0.5588235294117647,
+  "retrieval_hitrate@5": 0.8897058823529411,
+  "by_category": {
+    "AR": {
+      "count": 10,
+      "f1": 0.9117647058823529,
+      "exact_match": 0.9,
+      "retrieval_hitrate@5": 0.0
+    },
+    "CD": {
+      "count": 5,
+      "f1": 0.6,
+      "exact_match": 0.6,
+      "retrieval_hitrate@5": 1.0
+    },
+    "FR": {
+      "count": 13,
+      "f1": 0.4707861983407811,
+      "exact_match": 0.07692307692307693,
+      "retrieval_hitrate@5": 0.8461538461538461
+    },
+    "KR": {
+      "count": 3,
+      "f1": 0.6574074074074073,
+      "exact_match": 0.3333333333333333,
+      "retrieval_hitrate@5": 1.0
+    },
+    "MR": {
+      "count": 14,
+      "f1": 0.6805849755460248,
+      "exact_match": 0.14285714285714285,
+      "retrieval_hitrate@5": 0.9285714285714286
+    },
+    "TR": {
+      "count": 3,
+      "f1": 1.0,
+      "exact_match": 1.0,
+      "retrieval_hitrate@5": 0.6666666666666666
+    },
+    "TTL": {
+      "count": 55,
+      "f1": 0.799304735668372,
+      "exact_match": 0.6545454545454545,
+      "retrieval_hitrate@5": 0.9818181818181818
+    },
+    "VR": {
+      "count": 21,
+      "f1": 0.6515151515151515,
+      "exact_match": 0.6190476190476191,
+      "retrieval_hitrate@5": 1.0
+    },
+    "VS": {
+      "count": 12,
+      "f1": 0.9214285714285714,
+      "exact_match": 0.6666666666666666,
+      "retrieval_hitrate@5": 1.0
+    }
+  }
+}

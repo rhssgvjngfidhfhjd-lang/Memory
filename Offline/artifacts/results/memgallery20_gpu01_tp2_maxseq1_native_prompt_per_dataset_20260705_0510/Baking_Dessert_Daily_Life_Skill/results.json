@@ -1,0 +1,2511 @@
+[
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D1",
+    "question": "What aspects of handmade baking were mentioned in the conversation?",
+    "category": "FR",
+    "system_answer": "The conversation mentioned that handmade baking involves preparing basic tools and materials such as an oven, electric egg beater, flour sieves, mixing pots, baking pans, molds, and ingredients like low gluten flour, high gluten flour, butter, eggs, and granulated sugar. It also highlighted that baking is not just about texture but also about presentation and beauty, with the visual appeal enhancing the emotional experience of the treats. Additionally, cookies and cupcakes were suggested as beginner-friendly options, and desserts like chocolate mousse or fruit tart were mentioned as more delicate and creative challenges.",
+    "original_answer": "It mentioned the preparation of tools and materials for manual baking, beginner's categories, mastery of temperature and time, common problems, advanced baking categories, material shelf life and storage, taste improvement, creative decoration, rewards from participating in clubs, and alternative ingredients for healthy baking.",
+    "retrieved_ids": [
+      "D1:2",
+      "D2:11",
+      "D2:12",
+      "D1:9",
+      "D1:1"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:6",
+      "D1:7",
+      "D1:8",
+      "D1:10",
+      "D1:12",
+      "D1:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:48"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D1",
+    "question": "What's the relationship between baking and weight loss?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:13",
+      "D1:14",
+      "D2:4",
+      "D1:4",
+      "D1:3"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:48"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D1",
+    "question": "If earlier Maya used regular white sugar but later asked for healthier alternatives, which type of sugar should be considered correct now?",
+    "category": "KR",
+    "system_answer": "Erythritol or xylitol, as these are sugar substitutes mentioned as alternatives to white sugar for healthier baking.",
+    "original_answer": "Sugar substitutes like erythritol or xylitol.",
+    "retrieved_ids": [
+      "D1:14",
+      "D1:13",
+      "D9:15",
+      "D13:10",
+      "D14:12"
+    ],
+    "clue": [
+      "D1:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:48"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D2",
+    "question": "What experiences and steps would a person have when attending a baking course?",
+    "category": "MR",
+    "system_answer": "A person attending a baking course would first observe the neatly arranged ovens and baking trays, then be introduced to various baking tools such as egg beaters, spatulas, and molds, followed by learning about key ingredients like flour, yeast, and butter and their functions. They would also receive guidance on mastering temperature and time, including preheating ovens, avoiding frequent door openings, and using oven thermometers for accuracy. The course begins with familiarizing oneself with tools and ingredients, and beginners are encouraged to start with simple recipes like cookies.",
+    "original_answer": "Go to the baking classroom, learn about the tools and ingredients, weigh the flour, stir and knead the dough, ferment the dough, shape it and then bake it.",
+    "retrieved_ids": [
+      "D1:15",
+      "D2:1",
+      "D2:2",
+      "D1:3",
+      "D2:3"
+    ],
+    "clue": [
+      "D2:1",
+      "D2:2",
+      "D2:3",
+      "D2:4",
+      "D2:5",
+      "D2:6",
+      "D2:7",
+      "D2:8",
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:49"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D2",
+    "question": "Which of the pictures shared in July 2024 is about the baking tools?",
+    "category": "VS",
+    "system_answer": "D2:IMG_001",
+    "original_answer": "D2:IMG_001",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:3",
+      "D1:1",
+      "D7:1",
+      "D7:2"
+    ],
+    "clue": [
+      "D2:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:54"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D1",
+    "question": "Did Maya discuss making sourdough bread?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:5",
+      "D15:11",
+      "D5:9",
+      "D3:3"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:54"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D3",
+    "question": "On which date did Maya have the quiet afternoon at the library? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2024-07-28",
+    "original_answer": "2024-07-28",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:3",
+      "D3:8",
+      "D3:11",
+      "D3:12"
+    ],
+    "clue": [
+      "D3:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:54"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D3",
+    "question": "What quote about baking did Maya find in one of the library cookbooks?",
+    "category": "MR",
+    "system_answer": "“Baking is the language of warmth.”",
+    "original_answer": "\"Baking is the language of warmth.\"",
+    "retrieved_ids": [
+      "D3:3",
+      "D3:4",
+      "D5:11",
+      "D3:11",
+      "D5:9"
+    ],
+    "clue": [
+      "D3:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:54"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D3",
+    "question": "What three types of hobbies did Maya consider for her 'Creative Hobbies Corner' shelf idea?",
+    "category": "FR",
+    "system_answer": "Baking, gardening, journaling",
+    "original_answer": "Baking, gardening, and journaling.",
+    "retrieved_ids": [
+      "D3:6",
+      "D3:5",
+      "D3:3",
+      "D3:12",
+      "D5:12"
+    ],
+    "clue": [
+      "D3:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:54"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D3",
+    "question": "What comparison did Maya make between organizing books and baking?",
+    "category": "MR",
+    "system_answer": "Maya compared organizing books and baking as “quiet arts” — one arranges knowledge, the other arranges flavor — and noted they mirror each other beautifully.",
+    "original_answer": "She said that aligning books just right on the shelf gives the same small satisfaction as when a cake rises evenly.",
+    "retrieved_ids": [
+      "D3:7",
+      "D3:6",
+      "D3:8",
+      "D3:3",
+      "D5:11"
+    ],
+    "clue": [
+      "D3:6",
+      "D3:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:55"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D3",
+    "question": "What snack did Maya bring for her coworkers during break time?",
+    "category": "FR",
+    "system_answer": "Lemon cookies",
+    "original_answer": "Lemon cookies.",
+    "retrieved_ids": [
+      "D3:10",
+      "D3:11",
+      "D15:11",
+      "D15:10",
+      "D15:7"
+    ],
+    "clue": [
+      "D3:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:55"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D3",
+    "question": "What future event did Maya jokingly suggest she might host at the library?",
+    "category": "FR",
+    "system_answer": "A reading and baking event.",
+    "original_answer": "A reading and baking event.",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:12",
+      "D3:2",
+      "D15:1",
+      "D3:3"
+    ],
+    "clue": [
+      "D3:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:55"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D3",
+    "question": "Did Maya bring chocolate brownies to her coworkers?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:10",
+      "D3:11",
+      "D15:11",
+      "D15:1",
+      "D12:1"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:55"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D3",
+    "question": "Is there a contradiction in Maya's description of her work environment being both 'quiet' and having many visitors?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D15:13",
+      "D3:6",
+      "D3:8",
+      "D3:9",
+      "D3:13"
+    ],
+    "clue": [
+      "D3:1",
+      "D3:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:55"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D4",
+    "question": "How many of the photos Maya shared in early August 2024 are related to chocolate desserts? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D4:4",
+      "D15:9",
+      "D4:3",
+      "D15:3",
+      "D4:8"
+    ],
+    "clue": [
+      "D4:3",
+      "D4:4",
+      "D4:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:56"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D4",
+    "question": "Which chocolate dessert did Maya finally choose in early August 2024?",
+    "category": "KR",
+    "system_answer": "Maya finally chose the chocolate mousse.",
+    "original_answer": "Chocolate mousse.",
+    "retrieved_ids": [
+      "D4:10",
+      "D4:6",
+      "D4:9",
+      "D4:1",
+      "D4:13"
+    ],
+    "clue": [
+      "D4:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:56"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D4",
+    "question": "According to the dialogue, which Chocolate dessert is more suitable for beginners?",
+    "category": "MR",
+    "system_answer": "The chocolate mousse is more suitable for beginners, as it doesn’t require baking and is described as surprisingly beginner-friendly, just needing to layer and chill. In contrast, a chocolate cake involves mixing batter and baking, which is noted as slightly more involved.",
+    "original_answer": "Chocolate chip cookies.",
+    "retrieved_ids": [
+      "D4:3",
+      "D4:4",
+      "D4:12",
+      "D4:13",
+      "D4:6"
+    ],
+    "clue": [
+      "D4:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:56"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D4",
+    "question": "Did Maya successfully make chocolate mousse before beginning to learn baked desserts like cookies?",
+    "category": "TR",
+    "system_answer": "Yes, Maya successfully made chocolate mousse before beginning to learn baked desserts like cookies. She mentioned that the mousse was a huge hit with her family and gave her a confidence boost, which inspired her to try actual baking. She then moved on to cookies as her next step.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D4:12",
+      "D4:13",
+      "D4:16",
+      "D4:19",
+      "D4:20"
+    ],
+    "clue": [
+      "D4:19",
+      "D4:20"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:57"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "When did the user take a slow walk around a bakery? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2024-08-23",
+    "original_answer": "2024-08-23",
+    "retrieved_ids": [
+      "D15:10",
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:15"
+    ],
+    "clue": [
+      "D5:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:13:57"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "Which image shows the cream puffs Maya observed at the bakery?",
+    "category": "VS",
+    "system_answer": "D5:IMG_001",
+    "original_answer": "D5:IMG_001",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:3",
+      "D5:6",
+      "D5:4",
+      "D15:10"
+    ],
+    "clue": [
+      "D5:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:01"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "What technique makes cream puffs glossy according to the conversation?",
+    "category": "MR",
+    "system_answer": "Gently brushing the dough with egg wash before baking makes cream puffs glossy.",
+    "original_answer": "Gently brushing the dough with egg wash before baking.",
+    "retrieved_ids": [
+      "D5:6",
+      "D5:5",
+      "D10:16",
+      "D13:12",
+      "D13:13"
+    ],
+    "clue": [
+      "D5:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:01"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "Based on the images shared, what beverage did Maya drink during her midnight kitchen reflection?",
+    "category": "VR",
+    "system_answer": "Chamomile tea",
+    "original_answer": "Chamomile tea.",
+    "retrieved_ids": [
+      "D5:7",
+      "D5:8",
+      "D15:4",
+      "D15:13",
+      "D5:12"
+    ],
+    "clue": [
+      "D5:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:02"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "Did Maya's late-night kitchen reflection happen before or after her bakery visit? Use 'Before' or 'After'.",
+    "category": "TR",
+    "system_answer": "Before",
+    "original_answer": "After",
+    "retrieved_ids": [
+      "D15:10",
+      "D15:11",
+      "D5:8",
+      "D5:9",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:02"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "Is it a conflict to say that Maya bought pastries during her autumn bakery walk?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D15:10",
+      "D5:1",
+      "D5:2",
+      "D5:3",
+      "D5:15"
+    ],
+    "clue": [
+      "D5:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:02"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "How did Maya's relationship with baking evolve in this session compared to earlier sessions?",
+    "category": "KR",
+    "system_answer": "In this session (D5, 2024-08-23), Maya has moved from viewing baking as a weekend hobby to embracing it as a source of calm and a creative outlet. She now reflects on the sensory and artistic aspects of baking, such as texture and light, and even writes poetic notes while waiting for the oven. This shows a deeper emotional and mindful engagement with the process, unlike earlier sessions where she was more focused on trying new desserts or gaining confidence after a successful mousse.",
+    "original_answer": "Baking transformed from a weekend hobby into something she turns to when she needs calm, and she began thinking about textures and light even when not baking.",
+    "retrieved_ids": [
+      "D5:9",
+      "D2:12",
+      "D5:11",
+      "D4:20",
+      "D2:11"
+    ],
+    "clue": [
+      "D5:8",
+      "D5:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:03"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "What poetic observation did Maya write down while waiting for the oven timer?",
+    "category": "MR",
+    "system_answer": "“patience smells like sugar browning.”",
+    "original_answer": "\"Patience smells like sugar browning.\"",
+    "retrieved_ids": [
+      "D5:11",
+      "D5:12",
+      "D5:13",
+      "D5:9",
+      "D3:3"
+    ],
+    "clue": [
+      "D5:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:03"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "What poetic title did Maya consider for a collection of her nighttime baking thoughts?",
+    "category": "FR",
+    "system_answer": "“The Quiet Oven”",
+    "original_answer": "\"The Quiet Oven.\"",
+    "retrieved_ids": [
+      "D5:12",
+      "D5:13",
+      "D5:8",
+      "D5:11",
+      "D5:9"
+    ],
+    "clue": [
+      "D5:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:03"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "Did Maya mention visiting a French patisserie during her autumn walk?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:3",
+      "D5:15",
+      "D5:2",
+      "D8:15"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:03"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D6",
+    "question": "What experiences and steps would a person have when making cookies?",
+    "category": "MR",
+    "system_answer": "A person would start by preheating the oven to 170–180°C (340–355°F), then prepare butter, low gluten flour, granulated sugar, eggs, and other ingredients. Soften the butter, add sugar and stir evenly, then add the egg mixture in portions and stir. Sieve in flour and knead into dough. Pipe or scoop the dough onto a baking tray, place in the preheated oven, and bake for 12–15 minutes (adjusting based on oven performance). Check for set edges, soft center, and slight sheen fading as they cool. Chocolate chips can be sprinkled on dough slices for added flavor and texture. Keep trays in the middle rack and avoid opening the oven door frequently to maintain heat and even baking.",
+    "original_answer": "Go to the supermarket to buy ingredients, go home to soften the butter, stir the butter and sugar, add the egg liquid in portions and stir, sift in the flour and stir into a dough, make the matcha-flavored dough, roll the two kinds of dough into strips and freeze, take out and slice, place the slices on a baking tray lined with baking paper, sprinkle chocolate chips, preheat the oven, put the baking tray in the oven to bake, and finally take out and cool.",
+    "retrieved_ids": [
+      "D1:2",
+      "D4:7",
+      "D1:3",
+      "D4:21",
+      "D6:12"
+    ],
+    "clue": [
+      "D6:1",
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D6:7",
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12",
+      "D6:13",
+      "D6:14",
+      "D6:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:05"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D6",
+    "question": "Which of the pictures showed is about cutting the dough into slices?",
+    "category": "VS",
+    "system_answer": "D6:IMG_002",
+    "original_answer": "D6:IMG_002",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D2:8",
+      "D9:12"
+    ],
+    "clue": [
+      "D6:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:05"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D6",
+    "question": "Does the statement ‘Maya stored butter in the freezer right before using it for cookies’ conflict with the dialogue?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D15:10",
+      "D15:11",
+      "D5:11",
+      "D6:1",
+      "D6:3"
+    ],
+    "clue": [
+      "D6:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:05"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D5",
+    "question": "Did Maya’s quiet midnight reflection in the kitchen happen before her first full cookie bake?",
+    "category": "TR",
+    "system_answer": "Yes, Maya’s quiet midnight reflection in the kitchen happened before her first full cookie bake. The reflection occurred on 2024-08-23 (Session D5), while her first cookie bake was planned and discussed in Session D4 (2024-08-06).",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D4:20",
+      "D4:21",
+      "D5:8",
+      "D5:9",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:7",
+      "D6:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:06"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D6",
+    "question": "Did Maya bake matcha-flavored cookies before she baked cupcakes with her child?",
+    "category": "TR",
+    "system_answer": "No, Maya did not bake matcha-flavored cookies before she baked cupcakes with her child. The matcha-flavored cookies were baked in session D6 (2024-08-30), while the cupcakes with her child were mentioned in session D15 (2025-01-26), which occurred later.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D15:14",
+      "D4:6",
+      "D4:20",
+      "D6:8",
+      "D6:16"
+    ],
+    "clue": [
+      "D6:7",
+      "D7:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:07"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D7",
+    "question": "Please list the baked goods mentioned in the conversation at September 2024.",
+    "category": "FR",
+    "system_answer": "Apple turnovers, pumpkin muffins, maple pecan twists, apple muffins, cupcakes, mini cakes, and layered cake.",
+    "original_answer": "Cupcakes, cookies, mini chocolate cakes.",
+    "retrieved_ids": [
+      "D5:3",
+      "D5:15",
+      "D5:2",
+      "D4:1",
+      "D7:17"
+    ],
+    "clue": [
+      "D7:2",
+      "D7:9",
+      "D7:11",
+      "D7:13",
+      "D7:14",
+      "D7:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:07"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D7",
+    "question": "Among the pictures you shared with the user in the conversation, which one is about the chocolate cakes?",
+    "category": "VS",
+    "system_answer": "D7:IMG_005, D12:IMG_002",
+    "original_answer": "D7:IMG_005",
+    "retrieved_ids": [
+      "D7:14",
+      "D15:9",
+      "D12:7",
+      "D15:10",
+      "D12:2"
+    ],
+    "clue": [
+      "D7:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:07"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D7",
+    "question": "Do you still remember what change happened to the batter after adding eggs when making cupcakes before?",
+    "category": "MR",
+    "system_answer": "After adding the eggs one by one, the color of the batter has become lighter.",
+    "original_answer": "After adding eggs, the color of the batter became lighter.",
+    "retrieved_ids": [
+      "D7:3",
+      "D7:4",
+      "D7:2",
+      "D7:6",
+      "D6:6"
+    ],
+    "clue": [
+      "D7:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:08"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D7",
+    "question": "Was yogurt used in the home baking process?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:2",
+      "D6:3",
+      "D9:21",
+      "D6:6",
+      "D6:2"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:08"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D7",
+    "question": "Does the claim that Maya baked entirely alone with no help from her child contradict the conversation?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D15:8",
+      "D15:11",
+      "D3:4",
+      "D5:9",
+      "D5:11"
+    ],
+    "clue": [
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:08"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Did Maya photograph any roses during the autumn outing?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D8:16",
+      "D8:1",
+      "D8:17",
+      "D8:11",
+      "D8:15"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:08"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "When did Maya's autumn outing take place? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2024-09-29",
+    "original_answer": "2024-09-29",
+    "retrieved_ids": [
+      "D5:3",
+      "D8:1",
+      "D8:15",
+      "D8:16",
+      "D8:24"
+    ],
+    "clue": [
+      "D8:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:08"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Is there a contradiction between Maya saying she 'had no idea' what the purple flowers were and later recognizing them?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D8:1",
+      "D8:12",
+      "D8:13",
+      "D8:14",
+      "D8:17"
+    ],
+    "clue": [
+      "D8:1",
+      "D8:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:08"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "According to the conversation, what creates the gradient effect in some foxglove blooms?",
+    "category": "VR",
+    "system_answer": "The gradient effect in some foxglove blooms is created by the flowers blooming from the bottom upward, with the top buds staying yellow while the open flowers turn pink.",
+    "original_answer": "The top buds staying yellow while the open flowers turn pink, and foxgloves blooming from the bottom upward.",
+    "retrieved_ids": [
+      "D8:5",
+      "D8:6",
+      "D8:4",
+      "D8:3",
+      "D8:2"
+    ],
+    "clue": [
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:09"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "How many foxglove flower images did Maya share in total during the autumn outing? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "1",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D8:11",
+      "D8:7",
+      "D8:12",
+      "D8:16",
+      "D8:1"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:09"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "How many mallow images did Maya share in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D8:8",
+      "D8:9",
+      "D8:16",
+      "D8:11",
+      "D8:17"
+    ],
+    "clue": [
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:10"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What are the two types of flowers Maya discovered during the autumn outing?",
+    "category": "TTL",
+    "system_answer": "The two types of flowers Maya discovered are foxglove and mallow. Foxglove has bell-shaped flowers, while mallow features delicate, wrinkled petals.",
+    "original_answer": "Foxglove and mallow.",
+    "retrieved_ids": [
+      "D8:11",
+      "D8:12",
+      "D8:1",
+      "D8:7",
+      "D8:8"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:10"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What visual feature helps identify foxglove flowers according to the conversation?",
+    "category": "VR",
+    "system_answer": "The distinctive speckled interiors of the flowers, which help guide pollinators to the nectar, are the visual feature that identifies foxglove flowers.",
+    "original_answer": "Tiny purple or dark red spots inside the blooms that help guide pollinators toward the nectar.",
+    "retrieved_ids": [
+      "D8:5",
+      "D8:3",
+      "D8:6",
+      "D8:2",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:11"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What did Maya's neighbor jokingly call the trail they walked on?",
+    "category": "FR",
+    "system_answer": "A 'flower road'",
+    "original_answer": "A \"flower road.\"",
+    "retrieved_ids": [
+      "D8:13",
+      "D8:12",
+      "D8:14",
+      "D8:1",
+      "D8:15"
+    ],
+    "clue": [
+      "D8:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:11"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What was the name of the beagle that joined the family on the outing?",
+    "category": "FR",
+    "system_answer": "Karl",
+    "original_answer": "Karl.",
+    "retrieved_ids": [
+      "D8:19",
+      "D8:18",
+      "D8:20",
+      "D8:24",
+      "D8:21"
+    ],
+    "clue": [
+      "D8:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:11"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Which two images show Karl the Beagle at different life stages?",
+    "category": "VS",
+    "system_answer": "D8:IMG_009, D8:IMG_010",
+    "original_answer": "D8:IMG_009, D8:IMG_010",
+    "retrieved_ids": [
+      "D8:21",
+      "D8:20",
+      "D8:18",
+      "D8:19",
+      "D8:23"
+    ],
+    "clue": [
+      "D8:18",
+      "D8:21"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:11"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What species of plant is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the picture is foxglove.",
+    "original_answer": "Foxglove",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:6",
+      "D8:5",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:12"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What species of plant is shown in the attached image?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the image is foxglove.",
+    "original_answer": "Foxglove",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:5",
+      "D8:6",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:12"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What species of flower is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "foxglove",
+    "original_answer": "Foxglove",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:5",
+      "D8:6",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:12"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What species of flower is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "The flower shown in the picture is foxglove.",
+    "original_answer": "Foxglove",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:5",
+      "D8:6",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:13"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What species is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The image shows foxglove flowers.",
+    "original_answer": "Foxglove",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:5",
+      "D8:6",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:13"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Please search for all photos of the same plant species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "None of the images in the conversation are of the same plant species as the question image. The conversation exclusively discusses foxglove (Digitalis purpurea), which has tubular, hanging blooms with speckled interiors, while the question images show foxgloves (Digitalis purpurea) with bell-shaped, tubular flowers that are often described as \"foxgloves\" in the conversation. However, the question images are of foxgloves, which are a different species from the foxglove mentioned in the conversation. Therefore, there are no matching images in the conversation.",
+    "original_answer": "D8:IMG_001, D8:IMG_002, D8:IMG_003, D8:IMG_004, D8:IMG_005",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:5",
+      "D8:6",
+      "D8:2",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:14"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Please search for all photos of the same plant species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "None of the images in the conversation are of the same plant species as the question image. The conversation images are all of foxglove (Digitalis purpurea), while the question images show foxglove (Digitalis purpurea) which is a different plant species.",
+    "original_answer": "D8:IMG_001, D8:IMG_002, D8:IMG_003, D8:IMG_004, D8:IMG_005",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:3",
+      "D8:5",
+      "D8:4",
+      "D8:6"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:15"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Please search for all photos of the same plant species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "None of the images in the conversation are of the same plant species as the question image. The conversation exclusively discusses foxglove (Digitalis purpurea), which has tubular, hanging blooms with speckled interiors, while the question image shows foxglove (Digitalis purpurea) with bell-shaped, upright flowers that have a different structure and appearance.",
+    "original_answer": "D8:IMG_001, D8:IMG_002, D8:IMG_003, D8:IMG_004, D8:IMG_005",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:16"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Please search for all photos of the same plant species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D8:IMG_001, D8:IMG_002, D8:IMG_003, D8:IMG_004, D8:IMG_005",
+    "original_answer": "D8:IMG_001, D8:IMG_002, D8:IMG_003, D8:IMG_004, D8:IMG_005",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:3",
+      "D8:5",
+      "D8:6",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:17"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What species is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The provided image shows a white flower with a yellow center and large, green, heart-shaped leaves. Based on the conversation history, this flower is not identified as a mallow, foxglove, or any other species mentioned. The conversation does not contain information about this specific flower, so its species cannot be determined from the given memory content.",
+    "original_answer": "Mallow",
+    "retrieved_ids": [
+      "D8:9",
+      "D8:8",
+      "D8:10",
+      "D8:6",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:18"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The provided image does not match any of the previously discussed plant species in the conversation (mallow, foxglove, or red mallow). The conversation does not contain information about this specific plant, so its species cannot be determined from the given memory.",
+    "original_answer": "Mallow",
+    "retrieved_ids": [
+      "D8:9",
+      "D8:8",
+      "D8:10",
+      "D8:6",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:18"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What species of plant is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the picture is a **mallow**.",
+    "original_answer": "Mallow",
+    "retrieved_ids": [
+      "D8:9",
+      "D8:8",
+      "D8:10",
+      "D8:3",
+      "D8:2"
+    ],
+    "clue": [
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:19"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "What species of plant is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the picture is a mallow.",
+    "original_answer": "Mallow",
+    "retrieved_ids": [
+      "D8:9",
+      "D8:8",
+      "D8:10",
+      "D8:2",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:19"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Do you know what species of plant is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the picture is a **mallow**. The flowers have papery, softly wrinkled petals and a bright yellow center, which are characteristic features of mallow flowers.",
+    "original_answer": "Mallow",
+    "retrieved_ids": [
+      "D8:9",
+      "D8:8",
+      "D8:10",
+      "D8:2",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:20"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "How many images of flowers are shared in the autumn outing? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "8",
+    "retrieved_ids": [
+      "D8:16",
+      "D8:1",
+      "D8:17",
+      "D8:12",
+      "D8:15"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:20"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Please search for all photos of the same plant species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D8:IMG_006, D8:IMG_007, D8:IMG_008",
+    "original_answer": "D8:IMG_006, D8:IMG_007, D8:IMG_008",
+    "retrieved_ids": [
+      "D8:8",
+      "D8:9",
+      "D8:10",
+      "D8:3",
+      "D8:2"
+    ],
+    "clue": [
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:20"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Please search for all photos of the same plant species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "No image in the conversation matches the plant species shown in the question image.",
+    "original_answer": "D8:IMG_006, D8:IMG_007, D8:IMG_008",
+    "retrieved_ids": [
+      "D8:9",
+      "D8:10",
+      "D8:8",
+      "D8:6",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:21"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D8",
+    "question": "Please search for all photos of the same plant species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D8:IMG_008, D8:IMG_006",
+    "original_answer": "D8:IMG_006, D8:IMG_007, D8:IMG_008",
+    "retrieved_ids": [
+      "D8:10",
+      "D8:9",
+      "D8:8",
+      "D8:2",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:22"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D9",
+    "question": "Which fruits will Maya use for decoration?",
+    "category": "MR",
+    "system_answer": "Maya will use fresh strawberries, blueberries, mangoes, and citrus fruits like oranges, lemons, and blood oranges for decoration. She also considers using candied citrus slices and edible flowers such as rose petals and lavender.",
+    "original_answer": "She decided to use fruit jam instead of fruits.",
+    "retrieved_ids": [
+      "D1:11",
+      "D14:2",
+      "D1:10",
+      "D9:7",
+      "D12:18"
+    ],
+    "clue": [
+      "D9:6",
+      "D9:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:22"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D10",
+    "question": "Which of the pictures showed is about softening butter?",
+    "category": "VS",
+    "system_answer": "D10:IMG_001",
+    "original_answer": "D10:IMG_001",
+    "retrieved_ids": [
+      "D10:2",
+      "D10:3",
+      "D6:4",
+      "D7:2",
+      "D6:3"
+    ],
+    "clue": [
+      "D10:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:22"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D10",
+    "question": "Why did Maya tap the cake pan on the table several times before baking?",
+    "category": "FR",
+    "system_answer": "To remove air bubbles, which will result in a smoother cake.",
+    "original_answer": "To remove air bubbles from the batter and make the cake surface smoother.",
+    "retrieved_ids": [
+      "D10:11",
+      "D10:10",
+      "D12:6",
+      "D12:5",
+      "D10:12"
+    ],
+    "clue": [
+      "D10:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:23"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "What category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "open-front coat",
+    "original_answer": "Open-front coat",
+    "retrieved_ids": [
+      "D11:6",
+      "D11:7",
+      "D11:2",
+      "D11:3",
+      "D11:5"
+    ],
+    "clue": [
+      "D11:2",
+      "D11:3",
+      "D11:4",
+      "D11:5",
+      "D11:6",
+      "D11:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:23"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "open-front coat",
+    "original_answer": "Open-front coat",
+    "retrieved_ids": [
+      "D11:2",
+      "D11:7",
+      "D11:6",
+      "D11:9",
+      "D11:8"
+    ],
+    "clue": [
+      "D11:2",
+      "D11:3",
+      "D11:4",
+      "D11:5",
+      "D11:6",
+      "D11:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:23"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "open-knit cowl neck sweater",
+    "original_answer": "Open-front coat",
+    "retrieved_ids": [
+      "D11:6",
+      "D11:2",
+      "D11:7",
+      "D11:3",
+      "D11:14"
+    ],
+    "clue": [
+      "D11:2",
+      "D11:3",
+      "D11:4",
+      "D11:5",
+      "D11:6",
+      "D11:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:23"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "open-front coat",
+    "original_answer": "Open-front coat",
+    "retrieved_ids": [
+      "D11:2",
+      "D11:7",
+      "D11:6",
+      "D11:3",
+      "D11:9"
+    ],
+    "clue": [
+      "D11:2",
+      "D11:3",
+      "D11:4",
+      "D11:5",
+      "D11:6",
+      "D11:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:24"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "open-front coat",
+    "original_answer": "Open-front coat",
+    "retrieved_ids": [
+      "D11:2",
+      "D11:3",
+      "D11:6",
+      "D11:7",
+      "D11:5"
+    ],
+    "clue": [
+      "D11:2",
+      "D11:3",
+      "D11:4",
+      "D11:5",
+      "D11:6",
+      "D11:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:24"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "open-front coat",
+    "original_answer": "Open-front coat",
+    "retrieved_ids": [
+      "D11:7",
+      "D11:6",
+      "D11:5",
+      "D11:3",
+      "D11:2"
+    ],
+    "clue": [
+      "D11:2",
+      "D11:3",
+      "D11:4",
+      "D11:5",
+      "D11:6",
+      "D11:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:24"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "How many open-front coat options did Maya initially show before discussing sweaters? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "6",
+    "retrieved_ids": [
+      "D11:15",
+      "D11:14",
+      "D11:6",
+      "D11:2",
+      "D11:19"
+    ],
+    "clue": [
+      "D11:2",
+      "D11:3",
+      "D11:4",
+      "D11:5",
+      "D11:6",
+      "D11:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:24"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "Which image shows the leopard print open-front coat?",
+    "category": "VS",
+    "system_answer": "D11:IMG_002",
+    "original_answer": "D11:IMG_002",
+    "retrieved_ids": [
+      "D11:3",
+      "D11:4",
+      "D11:8",
+      "D11:9",
+      "D11:6"
+    ],
+    "clue": [
+      "D11:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:25"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "What was the assistant's initial recommendation for Maya's open-front coat choice, and why?",
+    "category": "MR",
+    "system_answer": "The assistant initially recommended the **textured gray open-front coat** because it balances being more visually interesting than plain black while still being subtle enough for daily wear, and it’s cozy and relaxed with enough texture to feel special.",
+    "original_answer": "The textured gray open-front coat, because it's cozy, relaxed, has enough texture to feel special, but the neutral color keeps it easy to wear with everyday outfits.",
+    "retrieved_ids": [
+      "D11:15",
+      "D11:14",
+      "D11:9",
+      "D11:8",
+      "D11:16"
+    ],
+    "clue": [
+      "D11:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:25"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "When was Maya planning to make her clothing purchases? Return the holiday name.",
+    "category": "TR",
+    "system_answer": "Thanksgiving",
+    "original_answer": "Thanksgiving",
+    "retrieved_ids": [
+      "D11:1",
+      "D11:17",
+      "D11:18",
+      "D11:19",
+      "D12:1"
+    ],
+    "clue": [
+      "D11:1",
+      "D11:17"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:25"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "Is there a contradiction in Maya wanting 'something with more personality' while usually wearing 'nothing too flashy'?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D11:1",
+      "D11:9",
+      "D11:14",
+      "D11:15",
+      "D11:25"
+    ],
+    "clue": [
+      "D11:8",
+      "D11:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:25"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "Did Maya consider buying winter boots during the shopping conversation?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D11:1",
+      "D11:18",
+      "D11:17",
+      "D11:19",
+      "D11:16"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:25"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "What color options were available for the oversized open-knit cowl neck sweater with front pockets?",
+    "category": "MR",
+    "system_answer": "The available color options for the oversized open-knit cowl neck sweater with front pockets were **teal**, **navy**, and **red**.",
+    "original_answer": "Teal and bright red.",
+    "retrieved_ids": [
+      "D11:13",
+      "D11:15",
+      "D11:24",
+      "D11:16",
+      "D11:14"
+    ],
+    "clue": [
+      "D11:10",
+      "D11:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:26"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "How did the sweater recommendation change after Maya found two additional options? And why?",
+    "category": "KR",
+    "system_answer": "The sweater recommendation changed from the original teal open-knit cowl neck sweater to the blush pink cowl neck sweater after Maya found two additional options. The assistant explained that the blush pink sweater retains the cozy, oversized feel of the teal one but adds a softer, more flattering, and distinctive winter vibe, and it pairs beautifully with both dark and light coats. The blush pink option was deemed the best overall because it combines comfort, warmth, and gentle elegance—feeling like “her” and making a lovely contrast with the textured gray coat.",
+    "original_answer": "The recommendation shifted from the teal cowl neck sweater to the blush pink cowl neck sweater because it combines comfort with gentle elegance and brightness.",
+    "retrieved_ids": [
+      "D11:19",
+      "D11:23",
+      "D11:24",
+      "D11:15",
+      "D11:13"
+    ],
+    "clue": [
+      "D11:15",
+      "D11:23",
+      "D11:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:27"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "What are the final two clothing items the assistant recommended Maya purchase?",
+    "category": "KR",
+    "system_answer": "The textured gray open-front coat and the teal cowl neck sweater.",
+    "original_answer": "The textured gray open-front coat and the blush pink cowl neck sweater.",
+    "retrieved_ids": [
+      "D11:17",
+      "D11:19",
+      "D11:15",
+      "D11:1",
+      "D11:16"
+    ],
+    "clue": [
+      "D11:24",
+      "D11:25"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:27"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "The clothing in the picture is an open-knit cowl neck sweater.",
+    "original_answer": "Open-knit cowl neck sweater",
+    "retrieved_ids": [
+      "D11:21",
+      "D11:11",
+      "D11:20",
+      "D11:10",
+      "D11:12"
+    ],
+    "clue": [
+      "D11:10",
+      "D11:11",
+      "D11:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:27"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Open-knit cowl neck sweater.",
+    "original_answer": "Open-knit cowl neck sweater",
+    "retrieved_ids": [
+      "D11:11",
+      "D11:21",
+      "D11:20",
+      "D11:12",
+      "D11:10"
+    ],
+    "clue": [
+      "D11:10",
+      "D11:11",
+      "D11:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:27"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Open-knit cowl neck sweater.",
+    "original_answer": "Open-knit cowl neck sweater",
+    "retrieved_ids": [
+      "D11:11",
+      "D11:21",
+      "D11:10",
+      "D11:12",
+      "D11:20"
+    ],
+    "clue": [
+      "D11:10",
+      "D11:11",
+      "D11:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:28"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "The clothing in the picture is a cowl neck sweater dress, which falls under the category of \"open-knit cowl neck sweaters\" as discussed in the conversation.",
+    "original_answer": "Open-knit cowl neck sweater",
+    "retrieved_ids": [
+      "D11:11",
+      "D11:21",
+      "D11:7",
+      "D11:12",
+      "D11:20"
+    ],
+    "clue": [
+      "D11:10",
+      "D11:11",
+      "D11:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:28"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Open-knit cowl neck sweater.",
+    "original_answer": "Open-knit cowl neck sweater",
+    "retrieved_ids": [
+      "D11:21",
+      "D11:11",
+      "D11:20",
+      "D11:10",
+      "D11:12"
+    ],
+    "clue": [
+      "D11:10",
+      "D11:11",
+      "D11:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:28"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "Search for images of clothing in the same category as those in the attached image.",
+    "category": "VS",
+    "system_answer": "D11:IMG_008, D11:IMG_007, D11:IMG_009, D11:IMG_010, D11:IMG_011",
+    "original_answer": "D11:IMG_007, D11:IMG_008, D11:IMG_009",
+    "retrieved_ids": [
+      "D11:21",
+      "D11:11",
+      "D11:20",
+      "D11:10",
+      "D11:12"
+    ],
+    "clue": [
+      "D11:10",
+      "D11:11",
+      "D11:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:29"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "Search for images of clothing in the same category as those in the attached image.",
+    "category": "VS",
+    "system_answer": "D11:IMG_008, D11:IMG_009, D11:IMG_011, D11:IMG_010, D11:IMG_007",
+    "original_answer": "D11:IMG_007, D11:IMG_008, D11:IMG_009",
+    "retrieved_ids": [
+      "D11:11",
+      "D11:12",
+      "D11:21",
+      "D11:20",
+      "D11:10"
+    ],
+    "clue": [
+      "D11:10",
+      "D11:11",
+      "D11:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:30"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "Search for images of clothing in the same category as those in the attached image.",
+    "category": "VS",
+    "system_answer": "D11:IMG_008, D11:IMG_007, D11:IMG_009, D11:IMG_010, D11:IMG_011",
+    "original_answer": "D11:IMG_007, D11:IMG_008, D11:IMG_009",
+    "retrieved_ids": [
+      "D11:21",
+      "D11:11",
+      "D11:20",
+      "D11:10",
+      "D11:12"
+    ],
+    "clue": [
+      "D11:10",
+      "D11:11",
+      "D11:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:30"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "Search for images of clothing in the same category as those in the attached image.",
+    "category": "VS",
+    "system_answer": "D11:IMG_007, D11:IMG_008, D11:IMG_009, D11:IMG_010",
+    "original_answer": "D11:IMG_007, D11:IMG_008, D11:IMG_009",
+    "retrieved_ids": [
+      "D11:21",
+      "D11:10",
+      "D11:12",
+      "D11:11",
+      "D11:20"
+    ],
+    "clue": [
+      "D11:10",
+      "D11:11",
+      "D11:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:31"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D11",
+    "question": "How many pictures of red clothes were shared in the conversation? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "1",
+    "original_answer": "1",
+    "retrieved_ids": [
+      "D11:11",
+      "D11:19",
+      "D11:20",
+      "D11:12",
+      "D11:1"
+    ],
+    "clue": [
+      "D11:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:31"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D12",
+    "question": "Based on Maya's statements, what type of frosting did Maya initially consider, and what did Maya ultimately choose for the birthday cake?",
+    "category": "MR",
+    "system_answer": "Maya initially considered using sprinkles for the birthday cake, as mentioned in round D12:11. Ultimately, she decided to decorate the cake with fresh fruit—specifically strawberries or blueberries—instead of sprinkles, as stated in round D12:17.",
+    "original_answer": "Maya initially considered \"vanilla buttercream frosting\" because \"It is easy to make\", but ultimately chose \"chocolate buttercream frosting\" because she thought \"it's a better choice\" for a chocolate cake.",
+    "retrieved_ids": [
+      "D12:17",
+      "D12:14",
+      "D12:2",
+      "D12:11",
+      "D12:1"
+    ],
+    "clue": [
+      "D12:3",
+      "D12:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:32"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D12",
+    "question": "What kind of birthday cake does Maya's friend like?",
+    "category": "FR",
+    "system_answer": "Maya's friend likes a chocolate cake.",
+    "original_answer": "Chocolate cake.",
+    "retrieved_ids": [
+      "D12:17",
+      "D12:1",
+      "D12:2",
+      "D4:1",
+      "D9:1"
+    ],
+    "clue": [
+      "D12:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:32"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D12",
+    "question": "How did Maya decorate the birthday cake differently throughout the process?",
+    "category": "KR",
+    "system_answer": "Maya initially added sprinkles to the cake for a festive look, then later decided to decorate it with fresh fruit like strawberries or blueberries for a healthier, more natural touch. She also added candles as the final finishing touch before the party.",
+    "original_answer": "First, she was \"adding sprinkles to the cake\", then she tried \"writing 'Happy Birthday' on the cake with a piping bag\". Finally she \"added some candles to the cake.\"",
+    "retrieved_ids": [
+      "D12:15",
+      "D12:14",
+      "D12:11",
+      "D12:17",
+      "D12:16"
+    ],
+    "clue": [
+      "D12:11",
+      "D12:12",
+      "D12:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:32"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D12",
+    "question": "Help me perform conflict detection: Maya say she bought the birthday cake from a bakery.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D12:1",
+      "D12:16",
+      "D12:17",
+      "D15:8",
+      "D9:21"
+    ],
+    "clue": [
+      "D12:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:32"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D13",
+    "question": "Please list the scenes or items related to making candied fruit mentioned in the conversation.",
+    "category": "FR",
+    "system_answer": "- Going to the fruit market to choose hawthorns, strawberries, orange segments, and other fruits.\n- Buying one jin of hawthorns, some strawberries, and several oranges.\n- Washing the hawthorns and strawberries carefully at home.\n- Making candied fruit using sugar syrup.\n- Lining up the finished candied fruits.\n- Using bright oranges, lemons, and blood oranges for candied citrus slices (mentioned in a later session).\n- Candied fruits being used as dessert decorations.",
+    "original_answer": "Fruit market, hawthorns, strawberries, oranges, bamboo sticks, pot, white sugar, water, chopping board, chopsticks.",
+    "retrieved_ids": [
+      "D13:2",
+      "D13:3",
+      "D14:2",
+      "D13:9",
+      "D13:4"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:5",
+      "D13:7",
+      "D13:10",
+      "D13:13",
+      "D13:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:33"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D13",
+    "question": "What experiences and steps would a person have when making candied fruit?",
+    "category": "MR",
+    "system_answer": "A person would start by washing and slicing fruits into thin, even rounds. They prepare a pot with water and sugar in a one-to-one ratio, letting it simmer slowly until the sugar dissolves. Next, they place the fruit slices into the syrup and simmer on low heat, turning occasionally until the slices become translucent. Afterward, they gently lift the slices out of the syrup and place them on parchment paper to cool. The process results in chewy, sweet, and slightly tangy treats with a glossy sheen and a comforting aroma of sunshine and honey.",
+    "original_answer": "Go to the fruit market to buy fruits, go home to wash them, pit the hawthorns, remove the stems of strawberries, peel the orange segments, string the fruits, put sugar and water in a pot and boil over low heat, test the state of the sugar liquid, coat the fruits with sugar liquid, place them on a chopping board to cool, and finally enjoy.",
+    "retrieved_ids": [
+      "D14:6",
+      "D13:9",
+      "D14:7",
+      "D14:8",
+      "D14:4"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3",
+      "D13:4",
+      "D13:5",
+      "D13:6",
+      "D13:7",
+      "D13:10",
+      "D13:13",
+      "D13:14",
+      "D13:15",
+      "D13:17"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:34"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D13",
+    "question": "Which of the pictures showed is about boiling the sugar?",
+    "category": "VS",
+    "system_answer": "D13:IMG_002",
+    "original_answer": "D13:IMG_002",
+    "retrieved_ids": [
+      "D13:11",
+      "D13:12",
+      "D13:13",
+      "D13:10",
+      "D13:14"
+    ],
+    "clue": [
+      "D13:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:35"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D13",
+    "question": "Do you still remember which fruits were mentioned before for making candied fruit?",
+    "category": "MR",
+    "system_answer": "Hawthorns, strawberries, oranges, lemons, and blood oranges were mentioned for making candied fruit.",
+    "original_answer": "Hawthorns, strawberries, oranges.",
+    "retrieved_ids": [
+      "D13:2",
+      "D13:3",
+      "D14:2",
+      "D13:4",
+      "D14:1"
+    ],
+    "clue": [
+      "D13:2",
+      "D13:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:35"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D13",
+    "question": "Was sesame used when making candied fruit?",
+    "category": "AR",
+    "system_answer": "Yes, sesame was used when making candied fruit. The image caption mentions that some pieces of the candied fruit are sprinkled with sesame seeds.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D13:17",
+      "D13:3",
+      "D13:2",
+      "D13:18",
+      "D13:9"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:35"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D14",
+    "question": "What ratio of sugar to water did use when making the syrup?",
+    "category": "FR",
+    "system_answer": "One to one.",
+    "original_answer": "About one to one.",
+    "retrieved_ids": [
+      "D13:10",
+      "D13:11",
+      "D13:14",
+      "D14:5",
+      "D13:12"
+    ],
+    "clue": [
+      "D14:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:35"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D14",
+    "question": "How can you tell when the candied citrus slices are ready?",
+    "category": "FR",
+    "system_answer": "When you can see light pass through the slices, that’s when you know they’re perfectly candied.",
+    "original_answer": "When the slices become translucent and light can pass through them.",
+    "retrieved_ids": [
+      "D14:7",
+      "D14:6",
+      "D14:8",
+      "D14:4",
+      "D14:9"
+    ],
+    "clue": [
+      "D14:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:36"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D14",
+    "question": "What ideas did Maya have for reusing the leftover syrup?",
+    "category": "MR",
+    "system_answer": "Maya suggested using the leftover syrup to drizzle over pancakes, mix into tea, or use as a glaze for pastries.",
+    "original_answer": "Drizzle it over pancakes, mix it into tea, or use it as a glaze for pastries.",
+    "retrieved_ids": [
+      "D14:11",
+      "D14:12",
+      "D13:9",
+      "D13:14",
+      "D15:11"
+    ],
+    "clue": [
+      "D14:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:36"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D15",
+    "question": "When did the family tea gathering take place? Please return the specific time.",
+    "category": "TR",
+    "system_answer": "At exactly three o’clock on Sunday, January 26, 2025.",
+    "original_answer": "On Sunday, January 26, at three in the afternoon.",
+    "retrieved_ids": [
+      "D15:1",
+      "D15:2",
+      "D15:6",
+      "D15:7",
+      "D15:13"
+    ],
+    "clue": [
+      "D15:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:36"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D15",
+    "question": "Who attended the family tea gathering?",
+    "category": "FR",
+    "system_answer": "Maya’s parents, her sister, and her kids attended the family tea gathering.",
+    "original_answer": "Maya’s parents, sister, and kids.",
+    "retrieved_ids": [
+      "D15:1",
+      "D15:6",
+      "D15:7",
+      "D15:13",
+      "D15:4"
+    ],
+    "clue": [
+      "D15:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:37"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D15",
+    "question": "Which picture shows the dessert table?",
+    "category": "VS",
+    "system_answer": "D15:IMG_001",
+    "original_answer": "D15:IMG_001",
+    "retrieved_ids": [
+      "D15:5",
+      "D15:6",
+      "D15:3",
+      "D15:2",
+      "D15:7"
+    ],
+    "clue": [
+      "D15:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:45"
+  },
+  {
+    "sample_id": "Maya",
+    "dataset": "Baking_Dessert_Daily_Life_Skill",
+    "session_id": "D15",
+    "question": "What decoration did Maya place in the center of the dessert table?",
+    "category": "VR",
+    "system_answer": "A vase of fresh flowers.",
+    "original_answer": "A vase of fresh flowers.",
+    "retrieved_ids": [
+      "D15:5",
+      "D14:10",
+      "D12:15",
+      "D15:2",
+      "D12:17"
+    ],
+    "clue": [
+      "D15:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:14:49"
+  }
+]

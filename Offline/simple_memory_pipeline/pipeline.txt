@@ -1,0 +1,82 @@
+┌─────────────────────────────────────────────────────────────────┐
+│                        Entry (cli.py)                           │
+│   Parse CLI arguments → Load input file → Create Pipeline        │
+└───────────────────────────────┬─────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│           Chunking (chunking.py) Text Segmentation               │
+│                                                                 │
+│  input_type:  text ──→ fixed-length / full-session               │
+│               documents ──→ split by document + optional slicing │
+│               dialogue ──→ turn / turn-pair / full-session       │
+│                                                                 │
+│  Output: chunks[]  (a list of text segments)                     │
+└───────────────────────────────┬─────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│        HFTextRetriever (retriever.py) Batch Embedding            │
+│                                                                 │
+│   Model options: contriever / dpr / dragon (Facebook models)     │
+│   Encode all chunks as vectors in query mode (batch processing)  │
+└───────────────────────────────┬─────────────────────────────────┘
+                                │
+                    ┌───────────▼────────────┐
+                    │   Main Loop per Chunk   │
+                    │   (pipeline.py:82)      │
+                    └───────────┬────────────┘
+                                │
+          ┌─────────────────────▼──────────────────────┐
+          │           MemoryBank.retrieve()            │
+          │   Use current chunk embedding for cosine   │
+          │   similarity search                        │
+          │   Return top-K memories + their indices    │
+          └─────────────────────┬──────────────────────┘
+                                │
+          ┌─────────────────────▼──────────────────────┐
+          │          MemoryExecutor.execute()          │
+          │                                            │
+          │  1. Build Prompt                           │
+          │     ├─ Current chunk text                  │
+          │     ├─ Retrieved memories (with indices)   │
+          │     └─ Operations instructions             │
+          │         (operations.py)                    │
+          │         INSERT / UPDATE / DELETE / NOOP    │
+          │                                            │
+          │  2. Call LLM Backend (backends.py)         │
+          │     ├─ OpenAI-compatible API (remote)      │
+          │     └─ vLLM local inference (local)        │
+          │                                            │
+          │  3. Parse LLM response → ExecutionResult[] │
+          └─────────────────────┬──────────────────────┘
+                                │
+          ┌─────────────────────▼──────────────────────┐
+          │   MemoryExecutor.apply_to_memory_bank()    │
+          │                                            │
+          │  Re-embed new/updated content in context   │
+          │  mode                                      │
+          │                                            │
+          │  INSERT ──→ deduplicate and add to memory  │
+          │  UPDATE ──→ overwrite content + embedding  │
+          │  DELETE ──→ remove memory by index         │
+          │  NOOP   ──→ no change                      │
+          └─────────────────────┬──────────────────────┘
+                                │
+                    ┌───────────▼────────────┐
+                    │  memory_bank.step()    │
+                    │  timestep +1           │
+                    │  log trace             │
+                    └───────────┬────────────┘
+                                │
+                More chunks? ────┘ (loop back to retrieve)
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                        Final Output                             │
+│  {                                                             │
+│    "final_memories": [...],   ← final memory bank               │
+│    "trace": [...],            ← full processing per chunk       │
+│    "chunks": [...]            ← original chunks                 │
+│  }                                                             │
+└─────────────────────────────────────────────────────────────────┘

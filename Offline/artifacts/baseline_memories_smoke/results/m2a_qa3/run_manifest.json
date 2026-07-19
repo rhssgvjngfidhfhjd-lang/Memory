@@ -1,0 +1,20 @@
+{
+  "data_name": "AI_Robotics_Automation_Future_Tech",
+  "all_datasets": false,
+  "data_dir": "/data/haozhen/Offline/Mem-Gallery/benchmark/data",
+  "index_root": "artifacts/baseline_memories_smoke/m2a",
+  "query_embedding_dir": "artifacts/query_embeddings",
+  "embedding_dim": 2048,
+  "result_dir": "artifacts/baseline_memories_smoke/results/m2a_qa3",
+  "top_k": 5,
+  "max_qa": 3,
+  "qa_start": 1,
+  "qa_end": 0,
+  "answer_base_url": "http://127.0.0.1:8000/v1",
+  "answer_model": "qwen3-coder-30b-a3b-instruct",
+  "answer_api_key": "EMPTY",
+  "num_predict": 2000,
+  "request_timeout": 180,
+  "retries": 2,
+  "think": false
+}

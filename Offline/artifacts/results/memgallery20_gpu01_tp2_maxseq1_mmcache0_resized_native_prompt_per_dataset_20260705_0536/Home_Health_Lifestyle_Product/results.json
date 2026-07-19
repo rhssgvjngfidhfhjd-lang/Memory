@@ -1,0 +1,1646 @@
+[
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D1",
+    "question": "List all the air purifier mentioned.",
+    "category": "FR",
+    "system_answer": "Philips AC2887/20, Xiaomi Air Purifier 4 Pro",
+    "original_answer": "Philips AC2887/20, Xiaomi Air Purifier 4 Pro",
+    "retrieved_ids": [
+      "D1:12",
+      "D1:1",
+      "D1:6",
+      "D1:8",
+      "D1:11"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:56"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D1",
+    "question": "What exact filter model number does Alex’s future air purifier use?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:8",
+      "D1:10",
+      "D1:1",
+      "D1:6",
+      "D1:11"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:56"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D1",
+    "question": "Infer the user's preferences of air purifier?",
+    "category": "MR",
+    "system_answer": "The user prefers an air purifier that is HEPA-based to handle dust mites and pet dander, with a CADR value of 400–500 m³/h for a large living room (40–50 m²), and 200–300 m³/h for the bedroom (20–25 m²). They prioritize quiet operation, especially for sleep, and value smart features like app control and real-time AQI monitoring. They also care about filter replacement frequency (HEPA every 6–12 months, activated carbon every 3–6 months) and budget-conscious options. Based on their needs, they are open to models like the Philips AC2887/20 for premium allergy performance or the Xiaomi Air Purifier 4 Pro for smart features and value.",
+    "original_answer": "You prefer an air purifier with high CADR, HEPA and activated carbon filters, air quality monitoring, low noise, and reliable brands.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:6",
+      "D1:8",
+      "D1:12",
+      "D1:3"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:3",
+      "D1:6",
+      "D1:9",
+      "D1:11",
+      "D1:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:57"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D1",
+    "question": "Which picture shown in the conversation is related to air quality?",
+    "category": "VS",
+    "system_answer": "D1:IMG_003",
+    "original_answer": "D1:IMG_003",
+    "retrieved_ids": [
+      "D1:7",
+      "D1:8",
+      "D1:1",
+      "D1:2",
+      "D1:9"
+    ],
+    "clue": [
+      "D1:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:58"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D1",
+    "question": "Based on the conversation, if someone is interested in the air purifier's compatibility with a specific brand of home-automation systems for integrated environmental control and its ability to emit negative ions for air ionization, what would be the answer?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:12",
+      "D1:6",
+      "D1:1",
+      "D1:11",
+      "D1:3"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:58"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D1",
+    "question": "Which happened earlier: Alex researching air purifiers or Alex beginning to explore mattress options for sleep optimization?",
+    "category": "TR",
+    "system_answer": "Alex researching air purifiers happened earlier. He initiated this inquiry on 2024-06-28 (Session D1), while he began exploring mattress options for sleep optimization on 2024-08-09 (Session D2).",
+    "original_answer": "Alex researched air purifiers earlier.",
+    "retrieved_ids": [
+      "D1:1",
+      "D2:1",
+      "D2:19",
+      "D3:1",
+      "D3:2"
+    ],
+    "clue": [
+      "D1:1",
+      "D2:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:58"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D2",
+    "question": "Which picture shown in the conversation is about a mattress?",
+    "category": "VS",
+    "system_answer": "D2:IMG_001",
+    "original_answer": "D2:IMG_001",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:12",
+      "D2:3",
+      "D2:13",
+      "D2:15"
+    ],
+    "clue": [
+      "D2:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:59"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D2",
+    "question": "Did Alex identify his sleep pain points before specifying his mattress budget?",
+    "category": "TR",
+    "system_answer": "Yes, Alex identified his sleep pain points—specifically, being a side sleeper and waking up with a stiff neck—before specifying his mattress budget of around $800.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:2",
+      "D2:3",
+      "D2:12",
+      "D2:13"
+    ],
+    "clue": [
+      "D2:1",
+      "D2:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:59"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D2",
+    "question": "Alex viewed multiple mattress materials. What final recommendation aligns with his sleep position and concerns?",
+    "category": "KR",
+    "system_answer": "A memory foam or hybrid mattress with a medium-soft firmness level, such as the Zinus Green Tea Memory Foam Mattress, aligns with Alex’s side sleeping position and concerns for spinal support and breathability.",
+    "original_answer": "A medium-soft memory foam or hybrid mattress with good contouring for side sleeping and neck support.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:2",
+      "D2:13",
+      "D2:12",
+      "D2:16"
+    ],
+    "clue": [
+      "D2:3",
+      "D2:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:00"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D2",
+    "question": "Based on the conversation, how can a side sleeper with a $800 budget choose a suitable mattress?",
+    "category": "MR",
+    "system_answer": "For a side sleeper with a $800 budget, choose a memory foam or hybrid mattress with medium-soft firmness, such as the Zinus Green Tea Memory Foam Mattress, which contours to the body for spinal support, relieves pressure points, and is breathable. Ensure the mattress is properly ventilated to minimize off-gassing, and consider buying online for reviews and deals, though test it in-store if possible for firmness and support. Also, use a sturdy bed frame and allow time for adjustment to maximize comfort.",
+    "original_answer": "They can choose a memory foam or hybrid mattress like the Zinus Green Tea Memory Foam Mattress.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:2",
+      "D2:4",
+      "D2:8",
+      "D2:13"
+    ],
+    "clue": [
+      "D2:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:00"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D2",
+    "question": "Based on the conversation, if someone is interested in a mattress's compatibility with a specific brand of adjustable bed frame and its ability to connect to a smart device for sleep tracking, what would be the answer?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:13",
+      "D2:12",
+      "D2:3",
+      "D2:2",
+      "D2:1"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:01"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "List all the types of houseplants that were discussed in the conversation.",
+    "category": "FR",
+    "system_answer": "Pothos, snake plant, ZZ plant, peace lily, anthurium",
+    "original_answer": "Pothos, Snake plant, ZZ plant, Peace lily, and Anthurium.",
+    "retrieved_ids": [
+      "D3:22",
+      "D3:23",
+      "D3:24",
+      "D3:9",
+      "D3:10"
+    ],
+    "clue": [
+      "D3:3",
+      "D3:4",
+      "D3:6",
+      "D3:10",
+      "D3:14",
+      "D3:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:01"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Based on the conversation, which houseplant requires the least maintenance and why?",
+    "category": "MR",
+    "system_answer": "Snake plant requires the least maintenance because it only needs watering every 2–3 weeks, sometimes less, and handles neglect better than pothos.",
+    "original_answer": "The snake plant requires the least maintenance. It only needs watering every 2-3 weeks, sometimes less, and handles neglect better than pothos. It tolerates low light and irregular watering extremely well.",
+    "retrieved_ids": [
+      "D3:22",
+      "D3:23",
+      "D3:24",
+      "D3:9",
+      "D3:4"
+    ],
+    "clue": [
+      "D3:6",
+      "D3:9",
+      "D3:23"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:01"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "How many pictures of snake plants were shared? Please answer using an Arabic numeral (e.g., 3 instead of 'three').",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D3:7",
+      "D3:8",
+      "D3:9",
+      "D3:10",
+      "D3:4"
+    ],
+    "clue": [
+      "D3:6",
+      "D3:7",
+      "D3:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:05"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "How often does a ZZ plant need to be watered, and why can it survive with such infrequent watering?",
+    "category": "MR",
+    "system_answer": "A ZZ plant needs to be watered once every 3–4 weeks. It can survive with such infrequent watering because it stores water in its rhizomes underground, allowing it to thrive on minimal moisture.",
+    "original_answer": "A ZZ plant needs to be watered once every 3-4 weeks. It can survive with such infrequent watering because it stores water in rhizomes underground, allowing it to thrive on minimal watering.",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:12",
+      "D3:10",
+      "D3:13",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:06"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Did Alex evaluate pothos before evaluating snake plants and ZZ plants?",
+    "category": "TR",
+    "system_answer": "Yes, Alex evaluated pothos first, then snake plants, and later ZZ plants.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D3:9",
+      "D3:10",
+      "D3:11",
+      "D3:13",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:3",
+      "D3:6",
+      "D3:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:06"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "What is the red part of an Anthurium flower actually called, and what is it?",
+    "category": "MR",
+    "system_answer": "The red part of an Anthurium flower is actually called a spathe — it’s a modified leaf that is glossy and heart-shaped, and it’s what gives Anthuriums their iconic appearance.",
+    "original_answer": "The red part is called a spathe, and it's actually a modified leaf, not the flower itself. The long structure in the center is called the spadix.",
+    "retrieved_ids": [
+      "D3:17",
+      "D3:16",
+      "D3:18",
+      "D3:19",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:06"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Based on the conversation, rank the plants from lowest to highest care requirements by < separator.",
+    "category": "MR",
+    "system_answer": "Snake plant < ZZ plant < Pothos",
+    "original_answer": "Snake Plant < Pothos < ZZ Plant < Anthurium < Peace Lily",
+    "retrieved_ids": [
+      "D3:22",
+      "D3:23",
+      "D3:24",
+      "D3:9",
+      "D3:11"
+    ],
+    "clue": [
+      "D3:20"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:06"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "How many pictures of ZZ plants were shared? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "2",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:10",
+      "D3:13",
+      "D3:12",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:10",
+      "D3:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:08"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Which plant did the user finally decide to buy for their bedroom corner?",
+    "category": "KR",
+    "system_answer": "Snake plant",
+    "original_answer": "Snake plant.",
+    "retrieved_ids": [
+      "D3:25",
+      "D3:24",
+      "D3:26",
+      "D3:2",
+      "D3:23"
+    ],
+    "clue": [
+      "D3:24",
+      "D3:25"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:08"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Based on the conversation, if someone is interested in using artificial grow lights for the plants or adding automated watering systems, what would be the answer?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:24",
+      "D3:1",
+      "D3:2",
+      "D3:26",
+      "D3:25"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:08"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "How many total pictures of Anthurium flowers were shared? Please answer using an Arabic numeral.",
+    "category": "VR",
+    "system_answer": "4",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:16",
+      "D3:17",
+      "D3:19",
+      "D3:21"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:08"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Anthurium",
+    "original_answer": "Anthurium",
+    "retrieved_ids": [
+      "D3:17",
+      "D3:16",
+      "D3:18",
+      "D3:19",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:09"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The flower shown in the image is an Anthurium, specifically a white variety, often called a \"flamingo flower\" or \"laceleaf.\" The glossy, heart-shaped spathe and the central spadix are characteristic features of this plant.",
+    "original_answer": "Anthurium",
+    "retrieved_ids": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19",
+      "D3:15"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:09"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Anthurium, specifically a pink variety, with a heart-shaped spathe and a central spadix.",
+    "original_answer": "Anthurium",
+    "retrieved_ids": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:10"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Anthurium",
+    "original_answer": "Anthurium",
+    "retrieved_ids": [
+      "D3:17",
+      "D3:16",
+      "D3:18",
+      "D3:19",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:10"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Anthurium",
+    "original_answer": "Anthurium",
+    "retrieved_ids": [
+      "D3:17",
+      "D3:16",
+      "D3:18",
+      "D3:19",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:10"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "How many Anthurium photos did the user share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:16",
+      "D3:17",
+      "D3:21",
+      "D3:19"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:11"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "How many pothos did the user share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "1",
+    "original_answer": "2",
+    "retrieved_ids": [
+      "D3:4",
+      "D3:3",
+      "D3:22",
+      "D3:10",
+      "D3:9"
+    ],
+    "clue": [
+      "D3:3",
+      "D3:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:14"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Please help me search all images about the pothos. Only return the image_id of the images.",
+    "category": "VS",
+    "system_answer": "D3:IMG_001, D3:IMG_002",
+    "original_answer": "D3:IMG_001, D3:IMG_002",
+    "retrieved_ids": [
+      "D3:4",
+      "D3:3",
+      "D3:10",
+      "D3:22",
+      "D3:5"
+    ],
+    "clue": [
+      "D3:3",
+      "D3:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:17"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "How many Snake Plant photos did the user share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D3:7",
+      "D3:8",
+      "D3:9",
+      "D3:4",
+      "D3:26"
+    ],
+    "clue": [
+      "D3:6",
+      "D3:7",
+      "D3:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:20"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "How many ZZ Plant photos did the user share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "2",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:10",
+      "D3:12",
+      "D3:13",
+      "D3:26"
+    ],
+    "clue": [
+      "D3:10",
+      "D3:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:21"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Please help me search all images about the ZZ Plant. Only return the image_id of the images.",
+    "category": "VS",
+    "system_answer": "D3:IMG_006, D3:IMG_007",
+    "original_answer": "D3:IMG_006, D3:IMG_007",
+    "retrieved_ids": [
+      "D3:10",
+      "D3:11",
+      "D3:12",
+      "D3:13",
+      "D3:7"
+    ],
+    "clue": [
+      "D3:10",
+      "D3:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:23"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "How many peace lily photos did the user share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "2",
+    "retrieved_ids": [
+      "D3:15",
+      "D3:14",
+      "D3:16",
+      "D3:22",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:14",
+      "D3:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:25"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Please help me search all images about the peace lily. Only return the image_id of the images.",
+    "category": "VS",
+    "system_answer": "D3:IMG_008, D3:IMG_009",
+    "original_answer": "D3:IMG_008, D3:IMG_009",
+    "retrieved_ids": [
+      "D3:15",
+      "D3:14",
+      "D3:16",
+      "D3:20",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:14",
+      "D3:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:26"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Is it contradictory to say that Alex prefers high-maintenance plants requiring daily attention?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:21",
+      "D3:22",
+      "D3:25",
+      "D3:26"
+    ],
+    "clue": [
+      "D3:9",
+      "D3:11",
+      "D3:22"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:27"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture are the easiest houseplants to care for.",
+    "category": "CD",
+    "system_answer": "Yes.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:19",
+      "D3:20",
+      "D3:21",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:9",
+      "D3:11",
+      "D3:22"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:27"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture are the easiest houseplants to care for.",
+    "category": "CD",
+    "system_answer": "Yes.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:19",
+      "D3:20",
+      "D3:21",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:9",
+      "D3:11",
+      "D3:22"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:27"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D3",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture are the easiest houseplants to care for.",
+    "category": "CD",
+    "system_answer": "Yes.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:19",
+      "D3:20",
+      "D3:21",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:9",
+      "D3:11",
+      "D3:22"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:27"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D4",
+    "question": "Which exact chair model did Alex finally buy?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:11",
+      "D4:4",
+      "D4:3",
+      "D5:13",
+      "D4:1"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:27"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D4",
+    "question": "How many pictures are about ergonomic chair? Please answer using an Arabic numeral (e.g., 3 instead of 'three').",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:11",
+      "D4:6",
+      "D4:5",
+      "D4:4"
+    ],
+    "clue": [
+      "D4:5",
+      "D4:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:29"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D4",
+    "question": "List all the brands of ergonomic chairs discussed in the conversation.",
+    "category": "FR",
+    "system_answer": "Secretlab, Herman Miller (Aeron or Embody), Steelcase (Series 1 or Gesture)",
+    "original_answer": "Secretlab, Herman Miller, and Steelcase.",
+    "retrieved_ids": [
+      "D4:11",
+      "D4:1",
+      "D4:2",
+      "D4:7",
+      "D4:3"
+    ],
+    "clue": [
+      "D4:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:29"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D4",
+    "question": "Which brand of ergonomic chair did Alex finally choose?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:11",
+      "D4:1",
+      "D5:28",
+      "D4:4",
+      "D4:7"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:29"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D4",
+    "question": "Did Alex upgrade his ergonomic chair before reorganizing his desk?",
+    "category": "TR",
+    "system_answer": "Yes, Alex upgraded his ergonomic chair before reorganizing his desk, as he mentioned in round D5:1 that the upgrade made him notice how messy his desk was.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:2",
+      "D5:13",
+      "D5:14",
+      "D6:1"
+    ],
+    "clue": [
+      "D4:1",
+      "D5:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:29"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D5",
+    "question": "List all the desk organization products that were discussed in the conversation.",
+    "category": "FR",
+    "system_answer": "Cable tray, desk mat, tray for small items",
+    "original_answer": "Desk trays, under-desk cable trays, cable clips, desk mat, and monitor riser.",
+    "retrieved_ids": [
+      "D5:4",
+      "D5:2",
+      "D5:6",
+      "D5:12",
+      "D5:13"
+    ],
+    "clue": [
+      "D5:3",
+      "D5:5",
+      "D5:7",
+      "D5:8",
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:29"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D5",
+    "question": "Which picture shown in the conversation is about the desk trays? Only return the image_id of the image.",
+    "category": "VS",
+    "system_answer": "D5:IMG_001",
+    "original_answer": "D5:IMG_001",
+    "retrieved_ids": [
+      "D5:3",
+      "D5:4",
+      "D5:12",
+      "D5:6",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:31"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D5",
+    "question": "Why was a monitor riser recommended, and what dual benefits does it provide?",
+    "category": "MR",
+    "system_answer": "A monitor riser was recommended because it improves neck posture and frees space underneath for storage, balancing ergonomics with organization.",
+    "original_answer": "A monitor riser improves neck posture and frees space underneath for storage. It balances ergonomics with organization.",
+    "retrieved_ids": [
+      "D5:9",
+      "D5:8",
+      "D5:10",
+      "D5:1",
+      "D5:28"
+    ],
+    "clue": [
+      "D5:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:31"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D5",
+    "question": "Which picture shows the massage gun discussed? Only return the image_id of the image.",
+    "category": "VS",
+    "system_answer": "D5:IMG_003",
+    "original_answer": "D5:IMG_003",
+    "retrieved_ids": [
+      "D5:15",
+      "D5:14",
+      "D5:16",
+      "D5:22",
+      "D5:23"
+    ],
+    "clue": [
+      "D5:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:32"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D5",
+    "question": "What are the specifications of the massage gun that was discussed, including torque and noise level?",
+    "category": "MR",
+    "system_answer": "The torque reaches 45 lbs and the noise level is around 45–50 dB.",
+    "original_answer": "The torque reaches 45 lbs and the noise level is around 45-50 dB.",
+    "retrieved_ids": [
+      "D5:16",
+      "D5:17",
+      "D5:15",
+      "D5:18",
+      "D5:14"
+    ],
+    "clue": [
+      "D5:17"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:32"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D5",
+    "question": "Does the claim 'Alex strongly prefers low-torque massage guns' conflict with the conversation?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D5:14",
+      "D5:15",
+      "D5:16",
+      "D5:17",
+      "D5:20"
+    ],
+    "clue": [
+      "D5:17",
+      "D5:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:32"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D5",
+    "question": "Between the full-sized and mini massage gun models, which was recommended and why?",
+    "category": "MR",
+    "system_answer": "The full-sized model was recommended because it provides stronger relief, especially given Alex’s tension patterns and professional workload.",
+    "original_answer": "The full-sized model was recommended because, given the user's tension patterns and professional workload, it would provide stronger relief. While mini guns are lighter and portable, they have lower torque and are only sufficient for mild tension, not deeper knots.",
+    "retrieved_ids": [
+      "D5:22",
+      "D5:24",
+      "D5:16",
+      "D5:25",
+      "D5:15"
+    ],
+    "clue": [
+      "D5:20",
+      "D5:21",
+      "D5:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:32"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D5",
+    "question": "If someone is interested in smart desk organizers with built-in wireless charging or LED lighting features, what would be the answer?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D5:4",
+      "D5:6",
+      "D6:10",
+      "D5:8",
+      "D5:2"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:32"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D5",
+    "question": "Is there a contradiction in the conversation where improving desk organization could both reduce stress and require initial effort that might add stress?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:2",
+      "D5:9",
+      "D5:14",
+      "D6:1"
+    ],
+    "clue": [
+      "D5:11",
+      "D5:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:32"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D5",
+    "question": "Alex compared a mini and full-sized massage gun. Based on the updated conversation, which one does he plan to purchase?",
+    "category": "KR",
+    "system_answer": "The full-sized model.",
+    "original_answer": "The full-sized massage gun.",
+    "retrieved_ids": [
+      "D5:24",
+      "D5:16",
+      "D5:22",
+      "D5:14",
+      "D5:25"
+    ],
+    "clue": [
+      "D5:24",
+      "D5:27"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:33"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D6",
+    "question": "Summarize the key factors to consider when choosing a desk lamp for reading.",
+    "category": "FR",
+    "system_answer": "Key factors to consider when choosing a desk lamp for reading include:  \n1. **Light Quality**: Opt for bright, even illumination without glare to prevent eye strain.  \n2. **Color Temperature**: Prefer warm white light (2700K–3500K) for comfort and reduced eye strain.  \n3. **Adjustability**: Choose a lamp with an adjustable head or neck to direct light precisely where needed.  \n4. **Brightness Levels**: Look for multiple brightness settings to adapt to different lighting conditions.  \n5. **Budget**: Consider affordability while ensuring the lamp meets your needs (e.g., TaoTronics LED Desk Lamp fits a $50 budget).  \n6. **Energy Efficiency**: Select energy-saving LED models to minimize electricity consumption.  \n7. **Additional Features**: Consider built-in timers or USB charging ports for convenience.  \n8. **Maintenance**: Regular cleaning and gentle adjustment of the gooseneck help maintain performance.",
+    "original_answer": "Consider the quality of light (glare-free and flicker-free), color temperature, flexibility, budget, eye-friendliness, durability, the choice between online and physical store purchase, energy consumption, additional features (built-in timer, USB charging port), and tips for getting the best performance.",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:11",
+      "D6:3",
+      "D6:10",
+      "D6:5"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D6:7",
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:34"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D6",
+    "question": "Which picture shown is about color temperature?",
+    "category": "VS",
+    "system_answer": "D6:IMG_002",
+    "original_answer": "D6:IMG_002",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:5",
+      "D6:2",
+      "D9:16",
+      "D6:4"
+    ],
+    "clue": [
+      "D6:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:35"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D6",
+    "question": "Based on the conversation, how can a person with a $50 budget choose a suitable desk lamp for reading?",
+    "category": "MR",
+    "system_answer": "For a $50 budget, the TaoTronics LED Desk Lamp is recommended. It offers multiple brightness levels, flicker-free technology to prevent eye strain, a non-glare design, and is energy-efficient. It also features an adjustable gooseneck for directing light precisely, and includes a USB charging port for convenience. Ensure the lamp is placed at an appropriate distance from reading material and cleaned regularly for optimal performance.",
+    "original_answer": "They can choose the TaoTronics LED Desk Lamp.",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:2",
+      "D6:4",
+      "D6:10",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D6:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:35"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D6",
+    "question": "Based on the conversation, if someone is interested in the desk lamp's compatibility with a specific brand of smart home systems for voice-controlled operation and its ability to change colors according to the mood of the reader, what would be the answer?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:5",
+      "D6:10",
+      "D6:6",
+      "D6:3",
+      "D6:2"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:36"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D7",
+    "question": "Based on the conversation, how can a person with normal teeth and a $50 budget choose a suitable electric toothbrush?",
+    "category": "MR",
+    "system_answer": "For a person with normal teeth and a $50 budget, the Philips Sonicare ProtectiveClean 4100 is recommended. It uses sonic technology for effective plaque removal, operates relatively quietly, and is a well-known brand with a good reputation. It fits within the budget and meets the need for a thorough clean without being overly loud.",
+    "original_answer": "They can choose the Philips Sonicare ProtectiveClean 4100.",
+    "retrieved_ids": [
+      "D7:3",
+      "D7:2",
+      "D7:4",
+      "D7:1",
+      "D7:13"
+    ],
+    "clue": [
+      "D7:3",
+      "D7:4",
+      "D7:5",
+      "D7:6",
+      "D7:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:36"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D7",
+    "question": "Based on the conversation, if someone is interested in the toothbrush's compatibility with a smartphone app for tracking oral health data and its ability to connect to a smart mirror for integrated oral care reminders, what would be the answer?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:3",
+      "D7:13",
+      "D7:1",
+      "D7:4",
+      "D7:2"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:36"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D7",
+    "question": "Which came first: Alex identifying his oral-care needs or comparing cleaning modes on the Sonicare 4100?",
+    "category": "TR",
+    "system_answer": "Alex identified his oral-care needs (e.g., wanting a good clean, budget constraint, noise sensitivity) before comparing cleaning modes on the Sonicare 4100. The comparison of cleaning modes occurred after he had already established his priorities and selected the model.",
+    "original_answer": "Identifying his oral-care needs came first.",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:4",
+      "D7:5",
+      "D7:7",
+      "D7:8"
+    ],
+    "clue": [
+      "D7:2",
+      "D7:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:37"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D7",
+    "question": "Does the claim 'Alex wants a premium $200 electric toothbrush' contradict the conversation?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:3",
+      "D7:4",
+      "D7:12",
+      "D7:13"
+    ],
+    "clue": [
+      "D7:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:37"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D8",
+    "question": "Summarize the key factors to consider when choosing a coffee maker for a small apartment.",
+    "category": "FR",
+    "system_answer": "Consider the type of coffee you prefer (e.g., drip, espresso, pod-based), the available counter space (prioritize compact models like the Hamilton Beach 49976A), your budget (e.g., around $100 for a simple drip maker), brewing time (look for quick-brewing options), and ease of use (simple operation with minimal setup). Also, ensure you use fresh, high-quality beans and maintain the machine regularly for optimal taste.",
+    "original_answer": "Consider the type of coffee you like, available space, budget, ease of use, size, brewing time, cleaning convenience, coffee quality, the choice between online and physical store purchase, durability, additional features (built - in timer, pause - and - serve feature, reusable coffee filter), and tips for getting the best - tasting coffee.",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:4",
+      "D8:3",
+      "D8:5",
+      "D8:12"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7",
+      "D8:8",
+      "D8:10",
+      "D8:11",
+      "D8:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:38"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D8",
+    "question": "Did Alex express concern about kitchen counter space before asking about cleaning convenience?",
+    "category": "TR",
+    "system_answer": "No, Alex did not express concern about kitchen counter space before asking about cleaning convenience. The conversation focused on napkin types for greasy food cleanup, not counter space.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:12",
+      "D10:13",
+      "D5:1",
+      "D5:2"
+    ],
+    "clue": [
+      "D8:4",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:38"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D8",
+    "question": "Which picture shows a coffee maker?",
+    "category": "VS",
+    "system_answer": "D8:IMG_002",
+    "original_answer": "D8:IMG_002",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:3",
+      "D8:11",
+      "D8:7",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:39"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D8",
+    "question": "Based on the conversation, how can a person with a $100 budget living in a small apartment choose a suitable coffee maker?",
+    "category": "MR",
+    "system_answer": "For a $100 budget and small apartment, choose the Hamilton Beach 49976A drip coffee maker—it’s easy to use, compact (won’t take up much counter space), and fits the budget. It brews rich-tasting coffee with adjustable strength and is easy to clean (dishwasher-safe carafe and removable filter basket).",
+    "original_answer": "They can choose the Hamilton Beach 49976A.",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:12",
+      "D8:7"
+    ],
+    "clue": [
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:39"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D8",
+    "question": "Based on the conversation, if someone is interested in the coffee maker's compatibility with a specific brand of smart home systems for remote-controlled brewing and its ability to make different types of coffee drinks like lattes and cappuccinos without additional equipment, what would be the answer?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D8:11",
+      "D8:12",
+      "D8:7",
+      "D8:2",
+      "D8:3"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:39"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D9",
+    "question": "Which picture shows the different colours of the air fryer?",
+    "category": "VS",
+    "system_answer": "D9:IMG_003",
+    "original_answer": "D9:IMG_003",
+    "retrieved_ids": [
+      "D9:16",
+      "D9:2",
+      "D9:4",
+      "D9:7",
+      "D9:3"
+    ],
+    "clue": [
+      "D9:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:40"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D9",
+    "question": "Based on the conversation, how can someone with a $100 budget choose a suitable air fryer?",
+    "category": "MR",
+    "system_answer": "For a $100 budget, the Cosori Air Fryer (3.7-quart) is recommended as it is compact, easy to use, and has 11 preset cooking programs, making it ideal for small meals and snacks for 1-2 people. It fits within the budget and meets the need for crispy food without burning.",
+    "original_answer": "They can choose the Cosori Air Fryer.",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:4",
+      "D9:2",
+      "D9:15",
+      "D9:9"
+    ],
+    "clue": [
+      "D9:3",
+      "D9:4",
+      "D9:5",
+      "D9:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:40"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D9",
+    "question": "Based on the conversation, if someone asks if the air fryer can connect to a smart home system for remote control, what would be the answer?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:2",
+      "D9:3",
+      "D9:4",
+      "D9:9",
+      "D9:8"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:41"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D10",
+    "question": "Based on the conversation, what are the main factors to consider when choosing between thin, thick, and moisturizing napkins?",
+    "category": "FR",
+    "system_answer": "The main factors to consider are:  \n- **Usage**: Thin napkins are suitable for everyday use (e.g., wiping mouth at dinner), thick napkins are better for parties or messy spills, and moisturizing napkins are ideal for dry or sensitive skin (e.g., during a cold).  \n- **Durability**: Thick napkins are more durable and less prone to tearing under pressure.  \n- **Cost**: Thick napkins are generally more expensive than thin ones, though bulk purchases or store brands may offer better deals.  \n- **Environmental Impact**: Thin napkins use less material, potentially reducing waste; recycled options are available for all types.  \n- **Eco-friendliness**: All types are typically made from wood pulp, but thin napkins may be more sustainable due to lower material use.",
+    "original_answer": "The main factors include the intended use (such as dining, cleaning spills, for sensitive skin, or arts and crafts), cost, environmental impact, softness, and durability.",
+    "retrieved_ids": [
+      "D10:5",
+      "D10:3",
+      "D10:2",
+      "D10:7",
+      "D10:6"
+    ],
+    "clue": [
+      "D10:2",
+      "D10:3",
+      "D10:4",
+      "D10:5",
+      "D10:6",
+      "D10:7",
+      "D10:8",
+      "D10:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:42"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D10",
+    "question": "Which picture shown is about thick napkins?",
+    "category": "VS",
+    "system_answer": "D10:IMG_003",
+    "original_answer": "D10:IMG_003",
+    "retrieved_ids": [
+      "D10:6",
+      "D10:2",
+      "D10:5",
+      "D10:7",
+      "D10:3"
+    ],
+    "clue": [
+      "D10:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:42"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D10",
+    "question": "Based on the conversation, what type of napkin should a person with a limited budget and a need for everyday dining use choose?",
+    "category": "MR",
+    "system_answer": "Thin napkins are best for everyday dining use as they are usually more affordable and take up less space in a napkin holder.",
+    "original_answer": "A person with a limited budget and for everyday dining use should choose thin napkins. They are more affordable and suitable for regular use at the dinner table.",
+    "retrieved_ids": [
+      "D10:7",
+      "D10:5",
+      "D10:6",
+      "D10:3",
+      "D10:2"
+    ],
+    "clue": [
+      "D10:2",
+      "D10:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:43"
+  },
+  {
+    "sample_id": "Alex Chen",
+    "dataset": "Home_Health_Lifestyle_Product",
+    "session_id": "D10",
+    "question": "Based on the conversation, would a person choose a wet napkin to clean up a large, sticky mess?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:5",
+      "D10:3",
+      "D10:13",
+      "D10:2",
+      "D10:10"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:46:43"
+  }
+]

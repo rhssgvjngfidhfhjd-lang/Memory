@@ -1,0 +1,910 @@
+[
+  {
+    "index": 430,
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "category": "CD",
+    "question": "Did Evelyn mention any intention to continue academic work on the same day she finished her draft?",
+    "prediction": "Yes.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D10:12",
+      "D11:1",
+      "D11:2",
+      "D6:2",
+      "D8:19"
+    ],
+    "clue": [
+      "D11:2"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'No', but the predicted answer says 'Yes', which contradicts the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer is 'No', but the predicted answer says 'Yes', which contradicts the reference.\"\n}"
+  },
+  {
+    "index": 431,
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "category": "TTL",
+    "question": "What type of clothing is shown in the picture?",
+    "prediction": "A red and black plaid long-sleeve shirt dress with a button-down front and a flared skirt.",
+    "reference": "Plaid Shirt Dress.",
+    "retrieved_ids": [
+      "D11:5",
+      "D11:4",
+      "D11:10",
+      "D11:11",
+      "D11:9"
+    ],
+    "clue": [
+      "D11:4",
+      "D11:5",
+      "D11:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction identifies the clothing as a plaid shirt dress, matching the reference answer and providing additional consistent details.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction identifies the clothing as a plaid shirt dress, matching the reference answer and providing additional consistent details.\"\n}"
+  },
+  {
+    "index": 432,
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "category": "TTL",
+    "question": "What type of clothing is shown in the picture?",
+    "prediction": "Plaid sleeveless dress.",
+    "reference": "Plaid Shirt Dress.",
+    "retrieved_ids": [
+      "D11:5",
+      "D11:4",
+      "D11:10",
+      "D11:9",
+      "D11:11"
+    ],
+    "clue": [
+      "D11:4",
+      "D11:5",
+      "D11:6"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction describes a 'Plaid sleeveless dress', which contradicts the reference answer of 'Plaid Shirt Dress' (different style and sleeve detail).",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The prediction describes a 'Plaid sleeveless dress', which contradicts the reference answer of 'Plaid Shirt Dress' (different style and sleeve detail).\"}"
+  },
+  {
+    "index": 433,
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "category": "TTL",
+    "question": "What type of clothing is shown in the picture?",
+    "prediction": "The clothing shown in the picture is a blue and black plaid long-sleeve dress.",
+    "reference": "Plaid Shirt Dress.",
+    "retrieved_ids": [
+      "D11:4",
+      "D11:5",
+      "D11:6",
+      "D11:9",
+      "D11:10"
+    ],
+    "clue": [
+      "D11:4",
+      "D11:5",
+      "D11:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction identifies the clothing as a plaid dress, matching the reference 'Plaid Shirt Dress' and adds compatible details without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction identifies the clothing as a plaid dress, matching the reference 'Plaid Shirt Dress' and adds compatible details without contradiction.\"\n}"
+  },
+  {
+    "index": 434,
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "category": "TTL",
+    "question": "What type of clothing is shown in the picture?",
+    "prediction": "The image shows a sleeveless black mini dress with horizontal ribbed texture and a flared skirt.",
+    "reference": "Mesh-Paneled Jersey Dress.",
+    "retrieved_ids": [
+      "D11:10",
+      "D11:8",
+      "D11:9",
+      "D11:7",
+      "D11:5"
+    ],
+    "clue": [
+      "D11:7",
+      "D11:8",
+      "D11:9",
+      "D11:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted description (sleeveless black mini dress with ribbed texture) does not match the reference answer of a mesh-paneled jersey dress.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted description (sleeveless black mini dress with ribbed texture) does not match the reference answer of a mesh-paneled jersey dress.\"\n}"
+  },
+  {
+    "index": 435,
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "category": "TTL",
+    "question": "What type of clothing is shown in the picture?",
+    "prediction": "A sleeveless black dress with a large metallic number “25” printed on the front.",
+    "reference": "Mesh-Paneled Jersey Dress.",
+    "retrieved_ids": [
+      "D11:7",
+      "D11:8",
+      "D11:10",
+      "D11:9",
+      "D11:5"
+    ],
+    "clue": [
+      "D11:7",
+      "D11:8",
+      "D11:9",
+      "D11:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer describes a sleeveless black dress with a metallic number, which does not match the reference answer of a Mesh-Paneled Jersey Dress.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer describes a sleeveless black dress with a metallic number, which does not match the reference answer of a Mesh-Paneled Jersey Dress.\"}"
+  },
+  {
+    "index": 436,
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "category": "TTL",
+    "question": "What type of clothing is shown in the picture?",
+    "prediction": "A sleeveless blue dress with a sheer mesh panel on the upper chest and midriff.",
+    "reference": "Mesh-Paneled Jersey Dress.",
+    "retrieved_ids": [
+      "D11:10",
+      "D11:9",
+      "D11:8",
+      "D11:7",
+      "D11:5"
+    ],
+    "clue": [
+      "D11:7",
+      "D11:8",
+      "D11:9",
+      "D11:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction identifies the item as a dress with a mesh panel, matching the reference 'Mesh-Paneled Jersey Dress' despite extra descriptive details.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction identifies the item as a dress with a mesh panel, matching the reference 'Mesh-Paneled Jersey Dress' despite extra descriptive details.\"}"
+  },
+  {
+    "index": 437,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "VS",
+    "question": "Which image shown represents Lin's efforts to explore psychology before making the decision?",
+    "prediction": "D1:IMG_003",
+    "reference": "D1:IMG_003",
+    "retrieved_ids": [
+      "D1:12",
+      "D1:6",
+      "D1:13",
+      "D1:19",
+      "D1:5"
+    ],
+    "clue": [
+      "D1:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (D1:IMG_003).",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer (D1:IMG_003).\"\n}"
+  },
+  {
+    "index": 438,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "KR",
+    "question": "Did Lin ultimately switch majors or stay in their current one?",
+    "prediction": "Lin ultimately stayed in their current major and declared a minor in psychology.",
+    "reference": "Lin stayed in their current major but declared a minor in psychology.",
+    "retrieved_ids": [
+      "D1:8",
+      "D1:2",
+      "D1:7",
+      "D1:14",
+      "D1:3"
+    ],
+    "clue": [
+      "D1:8",
+      "D1:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference, stating Lin stayed in the current major and declared a minor in psychology.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference, stating Lin stayed in the current major and declared a minor in psychology.\"}"
+  },
+  {
+    "index": 439,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "CD",
+    "question": "Does the statement that Lin’s family encouraged her to switch majors early conflict with the dialogue?",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:7",
+      "D1:11"
+    ],
+    "clue": [
+      "D1:3"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer says 'No' while the reference answer states the correct response is 'Yes', contradicting the reference.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer says 'No' while the reference answer states the correct response is 'Yes', contradicting the reference.\"}"
+  },
+  {
+    "index": 440,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "AR",
+    "question": "Did the conversation mention any specific philosopher who created the idea of moral luck?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:22",
+      "D10:17",
+      "D1:15",
+      "D1:3",
+      "D5:10"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating that no specific philosopher was mentioned.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer stating that no specific philosopher was mentioned.\"}"
+  },
+  {
+    "index": 441,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "TR",
+    "question": "Did Lin explore psychology through a class before officially deciding to declare a psychology minor?",
+    "prediction": "Yes, Lin explored psychology through a class before officially deciding to declare a psychology minor. She enrolled in a psychology course as part of the minor program and found it fascinating, which helped her confirm her interest and confidence in pursuing it.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D1:5",
+      "D1:11",
+      "D1:13",
+      "D1:15",
+      "D1:16"
+    ],
+    "clue": [
+      "D1:5",
+      "D1:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction affirms 'Yes' as the reference answer and correctly states that Lin explored psychology through a class before deciding to declare the minor, matching the question.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction affirms 'Yes' as the reference answer and correctly states that Lin explored psychology through a class before deciding to declare the minor, matching the question.\"\n}"
+  },
+  {
+    "index": 442,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "FR",
+    "question": "Which countries were discussed for studying abroad?",
+    "prediction": "The US and Canada were discussed for studying abroad.",
+    "reference": "The United States and Canada.",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:3",
+      "D2:20",
+      "D2:18",
+      "D2:15"
+    ],
+    "clue": [
+      "D2:1",
+      "D2:2",
+      "D2:13",
+      "D2:14",
+      "D2:19"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly lists the United States (US) and Canada, matching the reference answer without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer correctly lists the United States (US) and Canada, matching the reference answer without contradiction.\"\n}"
+  },
+  {
+    "index": 443,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "AR",
+    "question": "Did Lin mention the name of any professor she plans to email?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:18",
+      "D10:15",
+      "D2:17",
+      "D6:1",
+      "D5:28"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating that no professor name was mentioned.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer stating that no professor name was mentioned.\"\n}"
+  },
+  {
+    "index": 444,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "AR",
+    "question": "Did Lin need the SAT for her graduate school applications?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:10",
+      "D2:9",
+      "D2:1",
+      "D2:11"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer stating 'Not mentioned.'\"}"
+  },
+  {
+    "index": 445,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "MR",
+    "question": "What are the common standardized tests for US graduate programs?",
+    "prediction": "The common standardized tests for US graduate programs are the GRE and TOEFL.",
+    "reference": "TOEFL or IELTS for English proficiency, and GRE or GMAT.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:9",
+      "D2:10",
+      "D2:4",
+      "D2:2"
+    ],
+    "clue": [
+      "D2:3",
+      "D2:4"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 446,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "TR",
+    "question": "Did Lin ask about standardized test requirements before asking about the importance of GPA?",
+    "prediction": "Yes, Lin asked about standardized test requirements before asking about the importance of GPA. She first inquired about whether she needed both the GRE and TOEFL for her Master’s in Human-Computer Interaction, and later asked about the significance of her undergraduate GPA.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:9",
+      "D2:10",
+      "D2:11",
+      "D5:28"
+    ],
+    "clue": [
+      "D2:3",
+      "D2:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states 'Yes' and correctly confirms that Lin asked about standardized test requirements before asking about GPA importance, matching the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction states 'Yes' and correctly confirms that Lin asked about standardized test requirements before asking about GPA importance, matching the reference answer.\"\n}"
+  },
+  {
+    "index": 447,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "VS",
+    "question": "Among the images we've looked in late-July, which ones are related to documents required for studying abroad?",
+    "prediction": "D2:IMG_005, D2:IMG_006",
+    "reference": "D2:IMG_002, D2:IMG_003, D2:IMG_005",
+    "retrieved_ids": [
+      "D2:19",
+      "D2:3",
+      "D2:21",
+      "D2:2",
+      "D2:4"
+    ],
+    "clue": [
+      "D2:8",
+      "D2:11",
+      "D2:19"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer lists IMG_005 and IMG_006, missing IMG_002 and IMG_003 from the reference and adding an incorrect IMG_006.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer lists IMG_005 and IMG_006, missing IMG_002 and IMG_003 from the reference and adding an incorrect IMG_006.\"\n}"
+  },
+  {
+    "index": 448,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "AR",
+    "question": "Did the conversation discuss specific scholarship opportunities?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:17",
+      "D2:18",
+      "D2:16",
+      "D2:3",
+      "D2:10"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned', correctly indicating that the conversation did not discuss specific scholarship opportunities.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned', correctly indicating that the conversation did not discuss specific scholarship opportunities.\"\n}"
+  },
+  {
+    "index": 449,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "AR",
+    "question": "Based on the conversation, would the user consider giving up on improving their spoken English if they find it difficult to understand native speakers even after months of practice?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:3",
+      "D3:9",
+      "D3:10",
+      "D5:7"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 450,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "TR",
+    "question": "Did Lin mention struggling with understanding native English speakers before discussing feeling stressed about final exams?",
+    "prediction": "Yes, Lin mentioned struggling to understand native English speakers in session D3, round D3:2, before discussing feeling stressed about final exams in session D5, round D5:28.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:3",
+      "D5:28",
+      "D9:9",
+      "D9:17"
+    ],
+    "clue": [
+      "D3:2",
+      "D5:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction affirms the answer with 'Yes' and provides consistent supporting details, matching the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction affirms the answer with 'Yes' and provides consistent supporting details, matching the reference answer.\"}"
+  },
+  {
+    "index": 451,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "CD",
+    "question": "Does it conflict with the dialogue to claim that Lin finds it easy to understand native English speakers?",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D3:1",
+      "D3:2",
+      "D3:3",
+      "D3:9",
+      "D9:9"
+    ],
+    "clue": [
+      "D3:2"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'Yes', but the prediction says 'No', which contradicts the correct response.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer is 'Yes', but the prediction says 'No', which contradicts the correct response.\"}"
+  },
+  {
+    "index": 452,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "KR",
+    "question": "After receiving multiple suggestions, what is Lin’s updated approach to improving her spoken English?",
+    "prediction": "Lin’s updated approach to improving her spoken English includes:  \n1. Immersing herself in the language by watching English movies, TV shows, and listening to podcasts daily.  \n2. Using apps like Duolingo or Babbel for listening drills and repeating what she hears to improve pronunciation.  \n3. Joining online English-speaking communities (e.g., HelloTalk or Tandem) to practice short, simple conversations and build confidence.  \n4. Using pronunciation apps like ELSA Speak to analyze and correct her speech, while imitating native speakers’ intonation and rhythm.  \n5. Expanding her vocabulary by reading English books, newspapers, and magazines, noting new words, and using them in sentences.",
+    "reference": "Immersive listening practice combined with speaking practice through online communities and structured courses.",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:1",
+      "D3:3",
+      "D3:5",
+      "D3:4"
+    ],
+    "clue": [
+      "D3:1",
+      "D3:3",
+      "D3:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes immersive listening and speaking practice via online communities, matching the reference; extra details do not contradict the core answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes immersive listening and speaking practice via online communities, matching the reference; extra details do not contradict the core answer.\"\n}"
+  },
+  {
+    "index": 453,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "TR",
+    "question": "Did Lin finish reviewing all five cap-sleeved midi dresses before moving on to slub-knit tops?",
+    "prediction": "Yes, Lin finished reviewing all five cap-sleeved midi dresses before moving on to the slub-knit tops. The assistant confirms this by summarizing the five dresses in round D4:13 and then transitioning to the tops in round D4:13, indicating the dresses were fully reviewed prior to the tops.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:11",
+      "D4:13",
+      "D4:24",
+      "D4:25"
+    ],
+    "clue": [
+      "D4:1",
+      "D4:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer affirms that Lin finished reviewing all five dresses before moving to tops, matching the reference answer 'Yes' and providing consistent elaboration.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer affirms that Lin finished reviewing all five dresses before moving to tops, matching the reference answer 'Yes' and providing consistent elaboration.\"\n}"
+  },
+  {
+    "index": 454,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "VR",
+    "question": "How many Cap-Sleeved Midi Dresses did Lin review in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "5",
+    "retrieved_ids": [
+      "D4:2",
+      "D4:13",
+      "D4:24",
+      "D4:1",
+      "D4:25"
+    ],
+    "clue": [
+      "D4:2",
+      "D4:4",
+      "D4:6",
+      "D4:8",
+      "D4:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '2' does not match the reference answer '5'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '2' does not match the reference answer '5'.\"\n}"
+  },
+  {
+    "index": 455,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "VS",
+    "question": "Which dress image has a striking metallic sheen with bronze tones and scalloped stripes?",
+    "prediction": "D4:IMG_002",
+    "reference": "D4:IMG_001",
+    "retrieved_ids": [
+      "D4:4",
+      "D4:3",
+      "D4:2",
+      "D4:12",
+      "D4:11"
+    ],
+    "clue": [
+      "D4:2",
+      "D4:3"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer 'D4:IMG_002' does not match the reference answer 'D4:IMG_001'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer 'D4:IMG_002' does not match the reference answer 'D4:IMG_001'.\"\n}"
+  },
+  {
+    "index": 456,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "VS",
+    "question": "Which dress did the assistant describe as having a 'soft gray floral' pattern?",
+    "prediction": "D4:IMG_002",
+    "reference": "D4:IMG_002",
+    "retrieved_ids": [
+      "D4:5",
+      "D4:4",
+      "D4:24",
+      "D4:12",
+      "D4:25"
+    ],
+    "clue": [
+      "D4:4",
+      "D4:5"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'D4:IMG_002'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'D4:IMG_002'.\"\n}"
+  },
+  {
+    "index": 457,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "FR",
+    "question": "What color and style characteristics did the assistant highlight for the third midi dress?",
+    "prediction": "The third midi dress is described as **plain heather gray**, with characteristics of being **minimal, easy to style, and endlessly layerable**.",
+    "reference": "Heather gray tone, fitted silhouette, minimalist, clean and streamlined look, easy to mix-and-match.",
+    "retrieved_ids": [
+      "D4:11",
+      "D4:24",
+      "D4:12",
+      "D4:3",
+      "D4:25"
+    ],
+    "clue": [
+      "D4:6",
+      "D4:7"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Expecting value: line 1 column 1 (char 0)",
+    "raw_judge": ""
+  },
+  {
+    "index": 458,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "MR",
+    "question": "How did the assistant compare the blue floral dress to the pale floral dress?",
+    "prediction": "The assistant described the blue floral dress as feeling brighter and more lively compared to the pale floral dress, noting that the blue on gray creates a nice contrast that flatters the eyes and gives early-fall picnic or brunch vibes. In contrast, the pale floral dress was described as gentle, elegant, and approachable, whispering rather than shouting—perfect for daytime or semi-formal outings.",
+    "reference": "The blue floral dress feels brighter and more lively, with blue on gray creating a nice contrast that flatters the eyes, giving early-fall picnic or brunch vibes.",
+    "retrieved_ids": [
+      "D4:5",
+      "D4:9",
+      "D4:25",
+      "D4:26",
+      "D4:24"
+    ],
+    "clue": [
+      "D4:8",
+      "D4:9"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Expecting value: line 1 column 1 (char 0)",
+    "raw_judge": ""
+  },
+  {
+    "index": 459,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "VS",
+    "question": "Which dress image has bold geometric patterns described as 'artsy' and 'modern'?",
+    "prediction": "D4:IMG_005",
+    "reference": "D4:IMG_005",
+    "retrieved_ids": [
+      "D4:11",
+      "D4:12",
+      "D4:10",
+      "D4:4",
+      "D4:5"
+    ],
+    "clue": [
+      "D4:10",
+      "D4:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 460,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "VR",
+    "question": "How many Cap-Sleeved Slub-Knit Tops images did Lin share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "3",
+    "reference": "5",
+    "retrieved_ids": [
+      "D4:13",
+      "D4:14",
+      "D4:15",
+      "D4:23",
+      "D4:17"
+    ],
+    "clue": [
+      "D4:13",
+      "D4:15",
+      "D4:17",
+      "D4:19",
+      "D4:21"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '3' does not match the reference answer '5'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '3' does not match the reference answer '5'.\"\n}"
+  },
+  {
+    "index": 461,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "VS",
+    "question": "Which top image is described as having vibrant purple color that 'energizes the whole screen'?",
+    "prediction": "D4:IMG_006",
+    "reference": "D4:IMG_006",
+    "retrieved_ids": [
+      "D4:13",
+      "D4:14",
+      "D4:23",
+      "D4:21",
+      "D4:25"
+    ],
+    "clue": [
+      "D4:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 462,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "TR",
+    "question": "When did Lin's fall fashion shopping session take place? Return in format YYYY-MM-DD.",
+    "prediction": "2024-09-14",
+    "reference": "2024-09-14",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:5",
+      "D4:23",
+      "D4:24",
+      "D4:26"
+    ],
+    "clue": [
+      "D4:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 463,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "AR",
+    "question": "Did Lin purchase any jackets during this fall shopping session?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:1",
+      "D8:21",
+      "D8:19",
+      "D8:2",
+      "D5:2"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer matches the reference answer exactly.\"}"
+  },
+  {
+    "index": 464,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "KR",
+    "question": "Which three items of clothing did the user ultimately choose during their autumn shopping trip? Only return the image_id of the images, separated by commas.",
+    "prediction": "gray dress with blue floral prints, mint top, blue top",
+    "reference": "D4:IMG_004,D4:IMG_008, D4:IMG_009",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:26",
+      "D4:25",
+      "D8:18",
+      "D4:24"
+    ],
+    "clue": [
+      "D4:8",
+      "D4:17",
+      "D4:18",
+      "D4:24",
+      "D4:25"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer provides descriptive text instead of the required image_id list (D4:IMG_004,D4:IMG_008,D4:IMG_009).",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer provides descriptive text instead of the required image_id list (D4:IMG_004,D4:IMG_008,D4:IMG_009).\"}"
+  },
+  {
+    "index": 465,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "TTL",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "prediction": "The clothing in the picture is not explicitly mentioned in the conversation memory provided. The conversation discusses Cap-Sleeved Midi Dresses and Cap-Sleeved Slub-Knit Tops, but no dress or top matching the image is referenced. Therefore, the category cannot be determined from the given memory.",
+    "reference": "Cap-sleeved midi dress",
+    "retrieved_ids": [
+      "D4:6",
+      "D4:4",
+      "D4:2",
+      "D4:10",
+      "D4:8"
+    ],
+    "clue": [
+      "D4:2",
+      "D4:4",
+      "D4:6",
+      "D4:8",
+      "D4:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction says the category cannot be determined, contradicting the reference answer which specifies 'Cap-sleeved midi dress'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The prediction says the category cannot be determined, contradicting the reference answer which specifies 'Cap-sleeved midi dress'.\"\n}"
+  },
+  {
+    "index": 466,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "TTL",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "prediction": "Cap-Sleeved Midi Dresses",
+    "reference": "Cap-sleeved midi dress",
+    "retrieved_ids": [
+      "D4:4",
+      "D4:6",
+      "D4:2",
+      "D4:10",
+      "D4:8"
+    ],
+    "clue": [
+      "D4:2",
+      "D4:4",
+      "D4:6",
+      "D4:8",
+      "D4:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference meaning, just differing in capitalization and pluralization, which does not change the category.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference meaning, just differing in capitalization and pluralization, which does not change the category.\"\n}"
+  },
+  {
+    "index": 467,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "TTL",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "prediction": "Cap-Sleeved Midi Dresses",
+    "reference": "Cap-sleeved midi dress",
+    "retrieved_ids": [
+      "D4:6",
+      "D4:4",
+      "D4:10",
+      "D4:2",
+      "D4:7"
+    ],
+    "clue": [
+      "D4:2",
+      "D4:4",
+      "D4:6",
+      "D4:8",
+      "D4:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference category, differing only in pluralization, which does not change the meaning.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer matches the reference category, differing only in pluralization, which does not change the meaning.\"}"
+  },
+  {
+    "index": 468,
+    "dataset": "Education_Career_Research_Lifestyle",
+    "category": "TTL",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "prediction": "Cap-Sleeved Midi Dresses",
+    "reference": "Cap-sleeved midi dress",
+    "retrieved_ids": [
+      "D4:4",
+      "D4:6",
+      "D4:10",
+      "D4:8",
+      "D4:2"
+    ],
+    "clue": [
+      "D4:2",
+      "D4:4",
+      "D4:6",
+      "D4:8",
+      "D4:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference meaning, just differing in capitalization and pluralization, which does not change the category.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference meaning, just differing in capitalization and pluralization, which does not change the category.\"\n}"
+  }
+]

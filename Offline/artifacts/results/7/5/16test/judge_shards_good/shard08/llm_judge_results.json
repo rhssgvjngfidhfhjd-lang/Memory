@@ -1,0 +1,3998 @@
+[
+  {
+    "index": 1205,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of plant is shown in the provided image?",
+    "prediction": "Clematis",
+    "reference": "Clematis",
+    "retrieved_ids": [
+      "D5:8",
+      "D5:9",
+      "D5:10",
+      "D5:7",
+      "D9:8"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Clematis'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Clematis'.\"\n}"
+  },
+  {
+    "index": 1206,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of plant is shown in the provided image?",
+    "prediction": "Clematis",
+    "reference": "Clematis",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:8",
+      "D5:7",
+      "D5:9",
+      "D9:3"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Clematis'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Clematis'.\"\n}"
+  },
+  {
+    "index": 1207,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of plant is shown in the provided image?",
+    "prediction": "Clematis",
+    "reference": "Clematis",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:8",
+      "D5:7",
+      "D5:9",
+      "D9:3"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Clematis'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'Clematis'.\"}"
+  },
+  {
+    "index": 1208,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of plant is shown in the provided image?",
+    "prediction": "Clematis",
+    "reference": "Clematis",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:8",
+      "D5:7",
+      "D5:9",
+      "D9:3"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Clematis'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Clematis'.\"\n}"
+  },
+  {
+    "index": 1209,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Which image shows the first Clematis flower Aiden photographed?",
+    "prediction": "D5:IMG_005",
+    "reference": "D5:IMG_005",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer D5:IMG_005.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer D5:IMG_005.\"}"
+  },
+  {
+    "index": 1210,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "What bird species did Aiden spot on the hill, and what is its distinctive feature?",
+    "prediction": "The bird species Aiden spotted on the hill is the American Pipit. Its distinctive feature is its slender, brownish body and the way it forages on open ground.",
+    "reference": "Red-winged Blackbird. The glossy black feathers and the bright red-and-yellow shoulder patch called the epaulet are distinctive identifiers.",
+    "retrieved_ids": [
+      "D10:11",
+      "D5:14",
+      "D9:11",
+      "D10:14",
+      "D7:3"
+    ],
+    "clue": [
+      "D5:14"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer names a different species (American Pipit) and unrelated features, contradicting the reference answer of Red-winged Blackbird with its glossy black feathers and red‑yellow epaulet.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer names a different species (American Pipit) and unrelated features, contradicting the reference answer of Red-winged Blackbird with its glossy black feathers and red‑yellow epaulet.\"}"
+  },
+  {
+    "index": 1211,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "FR",
+    "question": "What differences did Aiden observe between poinsettias and Clematis?",
+    "prediction": "Aiden observed that poinsettia bracts feel thicker and leathery (essentially modified leaves), while Clematis petals are thin and delicate (true tepals). He also noted that poinsettias grow like woody shrubs or small trees, whereas Clematis is a climbing vine. Additionally, Clematis flowers are true flowers that attract different pollinators, unlike poinsettias, which have colored bracts. Clematis thrives in cooler, well-drained soil with “roots in the shade, vines in the sun,” contrasting with poinsettias’ preference for warmer climates.",
+    "reference": "Poinsettias feel more like shrubs while Clematis grows like a climbing vine. Poinsettia bracts are thicker and almost leathery, while Clematis petals are thin and delicate.",
+    "retrieved_ids": [
+      "D5:12",
+      "D5:11",
+      "D5:13",
+      "D5:6",
+      "D5:9"
+    ],
+    "clue": [
+      "D5:11",
+      "D5:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction restates the reference differences (shrubs vs climbing vine, thick leathery bracts vs thin delicate petals) and adds extra consistent details without contradicting the reference.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction restates the reference differences (shrubs vs climbing vine, thick leathery bracts vs thin delicate petals) and adds extra consistent details without contradicting the reference.\"}"
+  },
+  {
+    "index": 1212,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "AR",
+    "question": "Did Aiden photograph any butterflies during this hike?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:18",
+      "D5:1",
+      "D9:1",
+      "D1:22",
+      "D9:17"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1213,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Red-winged Blackbird",
+    "reference": "Red-winged Blackbird",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D5:14",
+      "D7:11",
+      "D7:5"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer 'Red-winged Blackbird'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer 'Red-winged Blackbird'\"}"
+  },
+  {
+    "index": 1214,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Red-winged Blackbird",
+    "reference": "Red-winged Blackbird",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D7:11",
+      "D5:14",
+      "D7:12"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference species.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer exactly matches the reference species.\"\n}"
+  },
+  {
+    "index": 1215,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Red-winged Blackbird",
+    "reference": "Red-winged Blackbird",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D7:12",
+      "D5:14",
+      "D7:11"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1216,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Red-winged Blackbird",
+    "reference": "Red-winged Blackbird",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D5:14",
+      "D7:11",
+      "D7:12"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer.\"}"
+  },
+  {
+    "index": 1217,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same species shared in the conversation as this image.",
+    "prediction": "D5:IMG_009, D5:IMG_010, D7:IMG_008, D7:IMG_009",
+    "reference": "D5:IMG_009, D5:IMG_010, D7:IMG_001",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D5:14",
+      "D7:10",
+      "D7:11"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Predicted list adds extra IDs (D7:IMG_008, D7:IMG_009) and omits the required D7:IMG_001, so it does not match the reference answer.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"Predicted list adds extra IDs (D7:IMG_008, D7:IMG_009) and omits the required D7:IMG_001, so it does not match the reference answer.\"}"
+  },
+  {
+    "index": 1218,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same species shared in the conversation as this image.",
+    "prediction": "D5:IMG_010, D5:IMG_009, D7:IMG_008, D7:IMG_009",
+    "reference": "D5:IMG_009, D5:IMG_010, D7:IMG_001",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D5:14",
+      "D7:10",
+      "D7:11"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer includes extra IDs (D7:IMG_008, D7:IMG_009) and omits the required D7:IMG_001, so it does not match the reference list.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The answer includes extra IDs (D7:IMG_008, D7:IMG_009) and omits the required D7:IMG_001, so it does not match the reference list.\"\n}"
+  },
+  {
+    "index": 1219,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "FR",
+    "question": "What factors contribute to China's e-commerce strength according to the conversation?",
+    "prediction": "China’s e-commerce strength comes from several factors: massive user base, early adoption of mobile payments, dense logistics networks, and highly competitive platforms like Taobao, JD, and Pinduoduo. The environment rewards innovation and scale.",
+    "reference": "Massive user base, early adoption of mobile payments, dense logistics networks, and highly competitive platforms.",
+    "retrieved_ids": [
+      "D6:4",
+      "D6:3",
+      "D6:5",
+      "D6:1",
+      "D6:2"
+    ],
+    "clue": [
+      "D6:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes all four factors listed in the reference answer and adds no contradictory information.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes all four factors listed in the reference answer and adds no contradictory information.\"\n}"
+  },
+  {
+    "index": 1220,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Which image shows the Taobao logo discussed in the conversation?",
+    "prediction": "D6:IMG_001",
+    "reference": "D6:IMG_001",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:5",
+      "D6:4",
+      "D6:1",
+      "D6:13"
+    ],
+    "clue": [
+      "D6:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'D6:IMG_001'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'D6:IMG_001'.\"\n}"
+  },
+  {
+    "index": 1221,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many Brooklyn Nets athletic shorts designs did Aiden compare? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "3",
+    "reference": "3",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:7",
+      "D6:8",
+      "D6:9",
+      "D6:13"
+    ],
+    "clue": [
+      "D6:6",
+      "D6:7",
+      "D6:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer '3' exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer '3' exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1222,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Please help me search for all images of the Brooklyn Nets athletic shorts designs discussed in the conversation.",
+    "prediction": "D6:IMG_002, D6:IMG_003, D6:IMG_004",
+    "reference": "D6:IMG_002, D6:IMG_003, D6:IMG_004",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:7",
+      "D6:8",
+      "D6:9",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:6",
+      "D6:7",
+      "D6:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference list of image IDs.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference list of image IDs.\"\n}"
+  },
+  {
+    "index": 1223,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "prediction": "The clothing in the picture is athletic shorts.",
+    "reference": "Brooklyn Nets Athletic Shorts",
+    "retrieved_ids": [
+      "D6:8",
+      "D6:6",
+      "D6:7",
+      "D6:9",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:6",
+      "D6:7",
+      "D6:8"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer specifies 'Brooklyn Nets Athletic Shorts', but the prediction only says 'athletic shorts' and omits the specific 'Brooklyn Nets' category.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer specifies 'Brooklyn Nets Athletic Shorts', but the prediction only says 'athletic shorts' and omits the specific 'Brooklyn Nets' category.\"\n}"
+  },
+  {
+    "index": 1224,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "prediction": "Basketball shorts",
+    "reference": "Brooklyn Nets Athletic Shorts",
+    "retrieved_ids": [
+      "D6:8",
+      "D6:6",
+      "D6:7",
+      "D6:9",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:6",
+      "D6:7",
+      "D6:8"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer 'Basketball shorts' is too generic and does not match the specific category 'Brooklyn Nets Athletic Shorts' given in the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer 'Basketball shorts' is too generic and does not match the specific category 'Brooklyn Nets Athletic Shorts' given in the reference.\"\n}"
+  },
+  {
+    "index": 1225,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "prediction": "Basketball shorts",
+    "reference": "Brooklyn Nets Athletic Shorts",
+    "retrieved_ids": [
+      "D6:8",
+      "D6:6",
+      "D6:7",
+      "D6:9",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:6",
+      "D6:7",
+      "D6:8"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer 'Basketball shorts' does not include the specific category 'Brooklyn Nets Athletic Shorts' given in the reference and is too generic.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer 'Basketball shorts' does not include the specific category 'Brooklyn Nets Athletic Shorts' given in the reference and is too generic.\"}"
+  },
+  {
+    "index": 1226,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "KR",
+    "question": "Which Brooklyn Nets athletic shorts did Aiden finally choose? Only return the image_id of the image.",
+    "prediction": "D6:IMG_004",
+    "reference": "D6:IMG_004",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:7",
+      "D6:9",
+      "D6:8",
+      "D6:14"
+    ],
+    "clue": [
+      "D6:9",
+      "D6:10",
+      "D6:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (D6:IMG_004) and satisfies the request.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer (D6:IMG_004) and satisfies the request.\"}"
+  },
+  {
+    "index": 1227,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "AR",
+    "question": "Did Aiden purchase any Brooklyn Nets jerseys?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:9",
+      "D6:7",
+      "D6:5",
+      "D6:8"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1228,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TR",
+    "question": "When did Aiden attend the public lecture on birds and environmental conservation? Return in the format YYYY-MM-DD.",
+    "prediction": "2025-04-14",
+    "reference": "2025-04-14",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:19",
+      "D7:20",
+      "D7:21",
+      "D7:22"
+    ],
+    "clue": [
+      "D7:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference date.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference date.\"\n}"
+  },
+  {
+    "index": 1229,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "FR",
+    "question": "What three new bird species did Aiden learn about at the conservation lecture?",
+    "prediction": "The conversation does not specify the names of the three new bird species Aiden learned about at the conservation lecture.",
+    "reference": "Northern Cardinal, Lazuli Bunting, and Yellow-headed Blackbird.",
+    "retrieved_ids": [
+      "D7:3",
+      "D1:22",
+      "D7:1",
+      "D9:15",
+      "D7:22"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:7",
+      "D7:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer claims the names are unspecified, contradicting the reference answer which lists Northern Cardinal, Lazuli Bunting, and Yellow-headed Blackbird.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer claims the names are unspecified, contradicting the reference answer which lists Northern Cardinal, Lazuli Bunting, and Yellow-headed Blackbird.\"\n}"
+  },
+  {
+    "index": 1230,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Northern Cardinal",
+    "reference": "Northern Cardinal",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:7",
+      "D5:15"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5",
+      "D7:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Northern Cardinal'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Northern Cardinal'.\"\n}"
+  },
+  {
+    "index": 1231,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Northern Cardinal",
+    "reference": "Northern Cardinal",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:7",
+      "D5:15"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5",
+      "D7:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Northern Cardinal'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Northern Cardinal'.\"\n}"
+  },
+  {
+    "index": 1232,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Northern Cardinal",
+    "reference": "Northern Cardinal",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:7",
+      "D5:15"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5",
+      "D7:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Northern Cardinal'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Northern Cardinal'.\"\n}"
+  },
+  {
+    "index": 1233,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Northern Cardinal",
+    "reference": "Northern Cardinal",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:7",
+      "D5:15"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5",
+      "D7:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Northern Cardinal'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'Northern Cardinal'.\"}"
+  },
+  {
+    "index": 1234,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Lazuli Bunting",
+    "reference": "Lazuli Bunting",
+    "retrieved_ids": [
+      "D7:7",
+      "D7:8",
+      "D7:9",
+      "D9:11",
+      "D9:12"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:8",
+      "D7:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Lazuli Bunting'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Lazuli Bunting'.\"\n}"
+  },
+  {
+    "index": 1235,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Lazuli Bunting",
+    "reference": "Lazuli Bunting",
+    "retrieved_ids": [
+      "D7:7",
+      "D7:8",
+      "D7:9",
+      "D9:12",
+      "D9:11"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:8",
+      "D7:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Lazuli Bunting'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'Lazuli Bunting'.\"}"
+  },
+  {
+    "index": 1236,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Lazuli Bunting",
+    "reference": "Lazuli Bunting",
+    "retrieved_ids": [
+      "D7:7",
+      "D7:8",
+      "D7:9",
+      "D9:11",
+      "D9:12"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:8",
+      "D7:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Lazuli Bunting'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Lazuli Bunting'.\"\n}"
+  },
+  {
+    "index": 1237,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "The specific species of animal shown in the image is a Yellow-headed Blackbird.",
+    "reference": "Yellow-headed Blackbird",
+    "retrieved_ids": [
+      "D7:11",
+      "D7:10",
+      "D7:12",
+      "D5:15",
+      "D7:2"
+    ],
+    "clue": [
+      "D7:10",
+      "D7:11",
+      "D7:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states the species as Yellow-headed Blackbird, matching the reference answer without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction states the species as Yellow-headed Blackbird, matching the reference answer without contradiction.\"\n}"
+  },
+  {
+    "index": 1238,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Yellow-headed Blackbird",
+    "reference": "Yellow-headed Blackbird",
+    "retrieved_ids": [
+      "D7:11",
+      "D7:12",
+      "D7:10",
+      "D5:15",
+      "D7:2"
+    ],
+    "clue": [
+      "D7:10",
+      "D7:11",
+      "D7:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1239,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Yellow-headed Blackbird",
+    "reference": "Yellow-headed Blackbird",
+    "retrieved_ids": [
+      "D7:10",
+      "D7:11",
+      "D7:12",
+      "D5:15",
+      "D7:2"
+    ],
+    "clue": [
+      "D7:10",
+      "D7:11",
+      "D7:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1240,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many Northern Cardinal photos were shown in the lecture slides? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "3",
+    "reference": "3",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:7",
+      "D7:1"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5",
+      "D7:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer '3'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer '3'.\"\n}"
+  },
+  {
+    "index": 1241,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many Yellow-headed Blackbird photos were shown in the lecture slides? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "3",
+    "reference": "3",
+    "retrieved_ids": [
+      "D7:10",
+      "D7:11",
+      "D7:12",
+      "D7:13",
+      "D7:3"
+    ],
+    "clue": [
+      "D7:10",
+      "D7:11",
+      "D7:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer '3'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer '3'.\"}"
+  },
+  {
+    "index": 1242,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "What distinctive features identify a male Northern Cardinal?",
+    "prediction": "A male Northern Cardinal is identified by its vivid red plumage, black face mask, and pointed crest. Its sturdy beak is also distinctive, as it’s adapted for cracking seeds. The red color can vary slightly in tone depending on light and age, but the overall silhouette remains unmistakable.",
+    "reference": "Vivid red feathers, a crest on its head, a strong beak, and a black mask around the face.",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D5:16",
+      "D7:7"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes all four distinctive features—vivid red plumage, crest, strong/sturdy beak, and black facial mask—matching the reference without contradictions.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes all four distinctive features—vivid red plumage, crest, strong/sturdy beak, and black facial mask—matching the reference without contradictions.\"\n}"
+  },
+  {
+    "index": 1243,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many Lazuli Bunting photos were shown in the lecture slides? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "3",
+    "reference": "3",
+    "retrieved_ids": [
+      "D7:9",
+      "D7:8",
+      "D7:7",
+      "D7:10",
+      "D7:1"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:8",
+      "D7:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer exactly.\"}"
+  },
+  {
+    "index": 1244,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "What ecosystem services do wetlands provide according to the lecture?",
+    "prediction": "Wetlands provide ecosystem services such as flood protection, water purification, carbon storage, and biodiversity support. They also store water, trap sediments, absorb nutrients, and serve as breeding grounds and food sources for species including migratory birds.",
+    "reference": "They store water, trap sediments, absorb nutrients, provide breeding grounds and food sources for species, act as natural water filters, and buffer against floods.",
+    "retrieved_ids": [
+      "D7:15",
+      "D7:16",
+      "D7:18",
+      "D7:17",
+      "D7:14"
+    ],
+    "clue": [
+      "D7:14",
+      "D7:15"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes all the services listed in the reference (store water, trap sediments, absorb nutrients, breeding grounds/food sources, water filtration, flood buffering) and adds extra compatible services without contradiction.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer includes all the services listed in the reference (store water, trap sediments, absorb nutrients, breeding grounds/food sources, water filtration, flood buffering) and adds extra compatible services without contradiction.\"}"
+  },
+  {
+    "index": 1245,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "FR",
+    "question": "What policy tools were mentioned for correcting environmental externalities?",
+    "prediction": "Taxes, subsidies, and tradable permits were mentioned as policy tools for correcting environmental externalities.",
+    "reference": "Taxes on pollution, subsidies for landowners who preserve or restore ecosystems, and tradable permits that cap total pollution.",
+    "retrieved_ids": [
+      "D7:17",
+      "D7:18",
+      "D7:16",
+      "D4:6",
+      "D7:15"
+    ],
+    "clue": [
+      "D7:17"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction lists taxes, subsidies, and tradable permits, matching the three policy tools given in the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction lists taxes, subsidies, and tradable permits, matching the three policy tools given in the reference answer.\"\n}"
+  },
+  {
+    "index": 1246,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "AR",
+    "question": "Did the lecturer discuss specific conservation organizations or NGOs?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:19",
+      "D7:14",
+      "D7:18",
+      "D7:21",
+      "D7:22"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer stating 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1247,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "FR",
+    "question": "What physical symptoms did Aiden experience from drinking too much matcha?",
+    "prediction": "Aiden experienced a racing heart and felt jittery after drinking too much matcha.",
+    "reference": "Racing heart and feeling jittery.",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:13",
+      "D8:1"
+    ],
+    "clue": [
+      "D8:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes both symptoms (racing heart and jitteriness) matching the reference and does not contradict it.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes both symptoms (racing heart and jitteriness) matching the reference and does not contradict it.\"\n}"
+  },
+  {
+    "index": 1248,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Which image shows the matcha beverage mentioned in the conversation?",
+    "prediction": "D8:IMG_001",
+    "reference": "D8:IMG_001",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:4",
+      "D2:14",
+      "D9:1",
+      "D5:6"
+    ],
+    "clue": [
+      "D8:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, correctly identifying the image ID.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer, correctly identifying the image ID.\"}"
+  },
+  {
+    "index": 1249,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "FR",
+    "question": "How much coursework did Aiden have left to review for his two midterms?",
+    "prediction": "For one course, Aiden had three chapters left, and for the other, he needed to review all the key formulas again.",
+    "reference": "For one course, three chapters left. For the other, all key formulas to review.",
+    "retrieved_ids": [
+      "D8:8",
+      "D8:7",
+      "D8:1",
+      "D3:23",
+      "D8:2"
+    ],
+    "clue": [
+      "D8:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer restates the reference information accurately: three chapters left for one course and all key formulas to review for the other.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer restates the reference information accurately: three chapters left for one course and all key formulas to review for the other.\"}"
+  },
+  {
+    "index": 1250,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "AR",
+    "question": "Did Aiden take any anti-anxiety medication?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D8:6",
+      "D8:1",
+      "D8:5",
+      "D8:2",
+      "D8:9"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1251,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TR",
+    "question": "When did Aiden finish both midterms and go hiking? Return in the format YYYY-MM-DD.",
+    "prediction": "2025-05-13",
+    "reference": "2025-05-13",
+    "retrieved_ids": [
+      "D10:20",
+      "D2:17",
+      "D5:22",
+      "D9:16",
+      "D9:17"
+    ],
+    "clue": [
+      "D9:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference date.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference date.\"}"
+  },
+  {
+    "index": 1252,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "FR",
+    "question": "What two types of flowers did Aiden photograph during the post-exam hike?",
+    "prediction": "Aiden photographed a climbing vine-like flower (likely Clematis) and a poinsettia with pale pink and white margins.",
+    "reference": "Morning Glory and Thorn Apple (Datura).",
+    "retrieved_ids": [
+      "D9:1",
+      "D5:6",
+      "D5:1",
+      "D9:18",
+      "D5:20"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:6"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer mentions Clematis and poinsettia, which do not match the reference answer of Morning Glory and Thorn Apple (Datura).",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer mentions Clematis and poinsettia, which do not match the reference answer of Morning Glory and Thorn Apple (Datura).\"}"
+  },
+  {
+    "index": 1253,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many Morning Glory photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "3",
+    "retrieved_ids": [
+      "D9:1",
+      "D9:2",
+      "D5:1",
+      "D9:5",
+      "D9:3"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '2' does not match the reference answer '3'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '2' does not match the reference answer '3'.\"\n}"
+  },
+  {
+    "index": 1254,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Morning Glory",
+    "reference": "Thorn apple",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:4",
+      "D9:2",
+      "D5:8",
+      "D9:6"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer 'Morning Glory' does not match the reference answer 'Thorn apple' and contradicts it.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer 'Morning Glory' does not match the reference answer 'Thorn apple' and contradicts it.\"}"
+  },
+  {
+    "index": 1255,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Morning Glory",
+    "reference": "Thorn apple",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:4",
+      "D9:2",
+      "D9:6",
+      "D5:8"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer 'Morning Glory' does not match the reference answer 'Thorn apple' and contradicts it.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer 'Morning Glory' does not match the reference answer 'Thorn apple' and contradicts it.\"\n}"
+  },
+  {
+    "index": 1256,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "prediction": "D9:IMG_003, D9:IMG_002, D9:IMG_001",
+    "reference": "D9:IMG_001, D9:IMG_002, D9:IMG_003",
+    "retrieved_ids": [
+      "D9:4",
+      "D9:3",
+      "D9:2",
+      "D9:6",
+      "D9:8"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer lists the same three image IDs as the reference (just in a different order), satisfying the request for all photos.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer lists the same three image IDs as the reference (just in a different order), satisfying the request for all photos.\"}"
+  },
+  {
+    "index": 1257,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "prediction": "D9:IMG_004, D9:IMG_005, D9:IMG_006",
+    "reference": "D9:IMG_001, D9:IMG_002, D9:IMG_003",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:3",
+      "D9:7",
+      "D9:8",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted IDs (IMG_004, IMG_005, IMG_006) do not match the reference answer IDs (IMG_001, IMG_002, IMG_003).",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted IDs (IMG_004, IMG_005, IMG_006) do not match the reference answer IDs (IMG_001, IMG_002, IMG_003).\"}"
+  },
+  {
+    "index": 1258,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "What important safety information was shared about Thorn Apple flowers?",
+    "prediction": "Thorn Apple flowers contain strong alkaloids and are toxic. While they are safe if not ingested, people should avoid touching or ingesting any part of them, as they are best admired from a distance.",
+    "reference": "Thorn Apple is toxic—it contains strong alkaloids. It's safe as long as you don't ingest it, but it's best admired from a distance.",
+    "retrieved_ids": [
+      "D9:10",
+      "D9:9",
+      "D9:8",
+      "D9:7",
+      "D9:6"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly states that Thorn Apple flowers contain strong alkaloids, are toxic, and are safe only if not ingested, recommending they be admired from a distance, matching the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer correctly states that Thorn Apple flowers contain strong alkaloids, are toxic, and are safe only if not ingested, recommending they be admired from a distance, matching the reference.\"\n}"
+  },
+  {
+    "index": 1259,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Thorn Apple (Datura)",
+    "reference": "Thorn apple",
+    "retrieved_ids": [
+      "D9:7",
+      "D9:8",
+      "D9:6",
+      "D9:3",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer identifies the flower as Thorn Apple, matching the reference answer and adding the genus Datura without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer identifies the flower as Thorn Apple, matching the reference answer and adding the genus Datura without contradiction.\"\n}"
+  },
+  {
+    "index": 1260,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Thorn Apple (Datura)",
+    "reference": "Thorn apple",
+    "retrieved_ids": [
+      "D9:7",
+      "D9:8",
+      "D9:6",
+      "D9:3",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer identifies the flower as Thorn Apple, matching the reference answer and adding the genus Datura without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer identifies the flower as Thorn Apple, matching the reference answer and adding the genus Datura without contradiction.\"\n}"
+  },
+  {
+    "index": 1261,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Thorn Apple (Datura)",
+    "reference": "Thorn apple",
+    "retrieved_ids": [
+      "D9:7",
+      "D9:8",
+      "D9:6",
+      "D9:3",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference answer, identifying the flower as Thorn apple (adds genus Datura but still correct).",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer matches the reference answer, identifying the flower as Thorn apple (adds genus Datura but still correct).\"}"
+  },
+  {
+    "index": 1262,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Thorn Apple (Datura)",
+    "reference": "Thorn apple",
+    "retrieved_ids": [
+      "D9:7",
+      "D9:8",
+      "D9:6",
+      "D9:3",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference ('Thorn apple') and adds the genus, which is consistent.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer matches the reference ('Thorn apple') and adds the genus, which is consistent.\"\n}"
+  },
+  {
+    "index": 1263,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture is poisonous.",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:7",
+      "D9:8",
+      "D9:9",
+      "D9:10"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer 'No.' matches the reference answer, correctly indicating no conflict.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer 'No.' matches the reference answer, correctly indicating no conflict.\"\n}"
+  },
+  {
+    "index": 1264,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture is poisonous.",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:7",
+      "D9:8",
+      "D9:9",
+      "D9:10"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, indicating no conflict, which is correct.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer exactly, indicating no conflict, which is correct.\"}"
+  },
+  {
+    "index": 1265,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture is poisonous.",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:7",
+      "D9:8",
+      "D9:9",
+      "D9:10"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer says the information conflicts (Yes), but the prediction says No, which is opposite.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer says the information conflicts (Yes), but the prediction says No, which is opposite.\"}"
+  },
+  {
+    "index": 1266,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture is poisonous.",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:7",
+      "D9:8",
+      "D9:9",
+      "D9:10"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer ('No'), correctly indicating no conflict.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer ('No'), correctly indicating no conflict.\"\n}"
+  },
+  {
+    "index": 1267,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "What intelligent behaviors do Blue Jays exhibit according to the conversation?",
+    "prediction": "Blue Jays exhibit intelligence by being naturally alert and social, storing food, warning other birds of predators, solving simple problems, and mimicking other birds’ calls.",
+    "reference": "They are vocal, curious, sometimes mimic other birds' calls, store food, warn other birds of predators, and can solve simple problems.",
+    "retrieved_ids": [
+      "D9:14",
+      "D9:13",
+      "D9:12",
+      "D9:15",
+      "D9:11"
+    ],
+    "clue": [
+      "D9:12",
+      "D9:13"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits the reference's mention of Blue Jays being vocal and curious, so it does not fully contain the required behaviors.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The answer omits the reference's mention of Blue Jays being vocal and curious, so it does not fully contain the required behaviors.\"\n}"
+  },
+  {
+    "index": 1268,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many French Bulldog photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "2",
+    "retrieved_ids": [
+      "D9:19",
+      "D9:22",
+      "D9:20",
+      "D9:1",
+      "D2:17"
+    ],
+    "clue": [
+      "D9:19",
+      "D9:21"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer matches the reference answer exactly.\"}"
+  },
+  {
+    "index": 1269,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "AR",
+    "question": "Did Aiden create a photo journal during this hike?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:18",
+      "D5:1",
+      "D9:1",
+      "D9:16",
+      "D5:22"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference answer exactly, stating 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer matches the reference answer exactly, stating 'Not mentioned.'\"}"
+  },
+  {
+    "index": 1270,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TR",
+    "question": "When did Aiden visit his uncle's farmland? Return in the format YYYY-MM-DD.",
+    "prediction": "2025-06-01",
+    "reference": "2025-06-01",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:2",
+      "D10:15",
+      "D10:16",
+      "D2:17"
+    ],
+    "clue": [
+      "D10:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted date exactly matches the reference answer",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted date exactly matches the reference answer\"}"
+  },
+  {
+    "index": 1271,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "What are the main growing habits of dahlias?",
+    "prediction": "Dahlias prefer well-drained soil, lots of sunlight, and moderate watering. They grow from tubers and can be lifted and stored during winter in colder regions. They usually bloom in late summer to early fall and love full sun.",
+    "reference": "They prefer well-drained soil, lots of sunlight, and moderate watering. They grow from tubers and can be lifted and stored during winter in colder regions.",
+    "retrieved_ids": [
+      "D10:10",
+      "D10:9",
+      "D10:8",
+      "D10:7",
+      "D10:6"
+    ],
+    "clue": [
+      "D10:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer includes all reference points and adds consistent, non-contradictory details.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer includes all reference points and adds consistent, non-contradictory details.\"}"
+  },
+  {
+    "index": 1272,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many American Pipit photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "1",
+    "reference": "3",
+    "retrieved_ids": [
+      "D10:11",
+      "D5:1",
+      "D9:1",
+      "D1:22",
+      "D2:18"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12",
+      "D10:13"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '1' does not match the reference answer '3'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '1' does not match the reference answer '3'.\"\n}"
+  },
+  {
+    "index": 1273,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "KR",
+    "question": "What major academic decision did Aiden make after the farm visit?",
+    "prediction": "Aiden decided to start an environmental studies minor next semester.",
+    "reference": "He decided to start an environmental studies minor next semester.",
+    "retrieved_ids": [
+      "D10:16",
+      "D10:20",
+      "D10:15",
+      "D10:17",
+      "D10:1"
+    ],
+    "clue": [
+      "D10:16"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, stating that Aiden decided to start an environmental studies minor next semester.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer, stating that Aiden decided to start an environmental studies minor next semester.\"\n}"
+  },
+  {
+    "index": 1274,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "AR",
+    "question": "Did Aiden meet any agricultural researchers at his uncle's farm?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:15",
+      "D10:16",
+      "D10:2",
+      "D2:17"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1275,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Pink-yellow dahlia.",
+    "reference": "Pink-yellow dahlia",
+    "retrieved_ids": [
+      "D10:8",
+      "D10:7",
+      "D10:6",
+      "D10:5",
+      "D10:9"
+    ],
+    "clue": [
+      "D10:6",
+      "D10:7",
+      "D10:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer (pink-yellow dahlia), differing only by a trailing period.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer (pink-yellow dahlia), differing only by a trailing period.\"}"
+  },
+  {
+    "index": 1276,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Pink-yellow dahlia.",
+    "reference": "Pink-yellow dahlia",
+    "retrieved_ids": [
+      "D10:8",
+      "D10:7",
+      "D10:6",
+      "D10:5",
+      "D10:9"
+    ],
+    "clue": [
+      "D10:6",
+      "D10:7",
+      "D10:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (pink-yellow dahlia), differing only by a trailing period.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer (pink-yellow dahlia), differing only by a trailing period.\"\n}"
+  },
+  {
+    "index": 1277,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Pink-yellow dahlia.",
+    "reference": "Pink-yellow dahlia",
+    "retrieved_ids": [
+      "D10:8",
+      "D10:7",
+      "D10:6",
+      "D10:5",
+      "D10:9"
+    ],
+    "clue": [
+      "D10:6",
+      "D10:7",
+      "D10:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer (pink-yellow dahlia), differing only by a trailing period.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer (pink-yellow dahlia), differing only by a trailing period.\"}"
+  },
+  {
+    "index": 1278,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many pink-yellow dahlia photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "3",
+    "reference": "3",
+    "retrieved_ids": [
+      "D9:1",
+      "D10:7",
+      "D10:9",
+      "D10:6",
+      "D10:8"
+    ],
+    "clue": [
+      "D10:6",
+      "D10:7",
+      "D10:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer '3'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer '3'.\"\n}"
+  },
+  {
+    "index": 1279,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many bishop of llandaff photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "0",
+    "reference": "2",
+    "retrieved_ids": [
+      "D5:1",
+      "D9:1",
+      "D2:17",
+      "D2:18",
+      "D10:1"
+    ],
+    "clue": [
+      "D10:4",
+      "D10:5"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '0' does not match the reference answer '2'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '0' does not match the reference answer '2'.\"}"
+  },
+  {
+    "index": 1280,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Dahlia ‘Bishop of Llandaff’",
+    "reference": "Bishop of llandaff",
+    "retrieved_ids": [
+      "D10:5",
+      "D10:4",
+      "D10:6",
+      "D10:8",
+      "D10:7"
+    ],
+    "clue": [
+      "D10:4",
+      "D10:5"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer includes the reference answer 'Bishop of Llandaff' and correctly identifies it as a Dahlia, matching the requested flower species.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer includes the reference answer 'Bishop of Llandaff' and correctly identifies it as a Dahlia, matching the requested flower species.\"\n}"
+  },
+  {
+    "index": 1281,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Dahlia ‘Bishop of Llandaff’",
+    "reference": "Bishop of llandaff",
+    "retrieved_ids": [
+      "D10:5",
+      "D10:4",
+      "D10:6",
+      "D10:8",
+      "D10:7"
+    ],
+    "clue": [
+      "D10:4",
+      "D10:5"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 1282,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many American Pipit photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "1",
+    "reference": "3",
+    "retrieved_ids": [
+      "D10:11",
+      "D5:1",
+      "D9:1",
+      "D1:22",
+      "D2:18"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12",
+      "D10:13"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '1' does not match the reference answer '3'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '1' does not match the reference answer '3'.\"}"
+  },
+  {
+    "index": 1283,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of bird is shown in the provided image?",
+    "prediction": "American Pipit",
+    "reference": "American Pipit",
+    "retrieved_ids": [
+      "D10:13",
+      "D10:12",
+      "D10:11",
+      "D7:10",
+      "D7:9"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12",
+      "D10:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'American Pipit'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'American Pipit'.\"\n}"
+  },
+  {
+    "index": 1284,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of bird is shown in the provided image?",
+    "prediction": "American Pipit",
+    "reference": "American Pipit",
+    "retrieved_ids": [
+      "D10:13",
+      "D10:12",
+      "D10:11",
+      "D7:10",
+      "D7:9"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12",
+      "D10:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'American Pipit'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'American Pipit'.\"}"
+  },
+  {
+    "index": 1285,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of bird is shown in the provided image?",
+    "prediction": "American Pipit",
+    "reference": "American Pipit",
+    "retrieved_ids": [
+      "D10:13",
+      "D10:12",
+      "D10:11",
+      "D7:10",
+      "D7:11"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12",
+      "D10:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'American Pipit'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'American Pipit'.\"\n}"
+  },
+  {
+    "index": 1286,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "FR",
+    "question": "Summarize the key factors to consider when choosing a baby stroller.",
+    "prediction": "Consider your lifestyle (e.g., jogging, public transportation, neighborhood walks), budget (e.g., $300), maneuverability (e.g., swivel front wheels, lockable wheels), safety features (e.g., five-point harness, sturdy frame, braking system), and baby comfort (e.g., canopy, adjustable handlebars). Also, prioritize ease of maintenance (e.g., cleaning wheels, tightening bolts).",
+    "reference": "Consider lifestyle, budget, maneuverability, safety features, baby's comfort, storage space, the choice between online and physical store purchase, compatibility with car seats, additional features (large canopy, adjustable handlebars, shock - absorbing system), and maintenance tips.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:2",
+      "D1:3",
+      "D1:10",
+      "D1:4"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6",
+      "D1:7",
+      "D1:8",
+      "D1:9",
+      "D1:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits several key factors from the reference (storage space, purchase channel, car‑seat compatibility, shock‑absorbing system, etc.), so it does not fully capture the reference summary.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The answer omits several key factors from the reference (storage space, purchase channel, car‑seat compatibility, shock‑absorbing system, etc.), so it does not fully capture the reference summary.\"\n}"
+  },
+  {
+    "index": 1287,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which picture shown is about the physical store selling baby strollers?",
+    "prediction": "D1:IMG_002",
+    "reference": "D1:IMG_002",
+    "retrieved_ids": [
+      "D1:7",
+      "D1:1",
+      "D1:2",
+      "D1:3",
+      "D10:7"
+    ],
+    "clue": [
+      "D1:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (D1:IMG_002).",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer (D1:IMG_002).\"}"
+  },
+  {
+    "index": 1288,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Based on the conversation, if someone is interested in the baby stroller's compatibility with a specific brand of baby monitors for remote-monitoring the baby's condition and its ability to fold into a compact size for easy storage in a small car trunk, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:9",
+      "D1:3",
+      "D1:2",
+      "D1:8",
+      "D1:4"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1289,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TR",
+    "question": "Did Liam choose a stroller before he started researching family cars?",
+    "prediction": "No, Liam did not choose a stroller before he started researching family cars. He first researched stroller maintenance, then moved on to considering a car purchase and researching compact SUVs.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:2",
+      "D2:3",
+      "D2:8",
+      "D2:12"
+    ],
+    "clue": [
+      "D1:1",
+      "D2:1"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer says 'No' while the reference answer is 'Yes', directly contradicting the correct response.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer says 'No' while the reference answer is 'Yes', directly contradicting the correct response.\"}"
+  },
+  {
+    "index": 1290,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "What car models and maintenance tips did the user mention?",
+    "prediction": "Car models mentioned: Toyota RAV4, Honda CR-V, Mazda CX-5.  \nMaintenance tips mentioned: Wash the car regularly, wax it every few months, check for scratches or rust, park in a garage or shaded area, follow manufacturer’s service schedule (every 5,000–7,500 miles or 6 months), include oil changes, tire rotations, and brake inspections.",
+    "reference": "The user mentioned the Toyota RAV4 and Honda CR-V as potential car models. They also discussed checking service history, test driving, and maintaining the car’s exterior.",
+    "retrieved_ids": [
+      "D2:10",
+      "D2:11",
+      "D2:12",
+      "D2:3",
+      "D2:9"
+    ],
+    "clue": [
+      "D2:3",
+      "D2:4",
+      "D2:5",
+      "D2:7",
+      "D2:8",
+      "D2:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Predicted answer adds an extra car model (Mazda CX-5) and lists maintenance tips not mentioned in the reference, while omitting the specific tips (checking service history, test driving, exterior maintenance) from the reference.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"Predicted answer adds an extra car model (Mazda CX-5) and lists maintenance tips not mentioned in the reference, while omitting the specific tips (checking service history, test driving, exterior maintenance) from the reference.\"}"
+  },
+  {
+    "index": 1291,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "KR",
+    "question": "Which brand of car user mentioned last?",
+    "prediction": "Honda",
+    "reference": "The user mentioned Honda CR-V.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:12",
+      "D2:2",
+      "D2:10",
+      "D2:8"
+    ],
+    "clue": [
+      "D2:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer 'Honda' correctly identifies the brand mentioned last, matching the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer 'Honda' correctly identifies the brand mentioned last, matching the reference answer.\"\n}"
+  },
+  {
+    "index": 1292,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image did the user provide to discuss the Honda CR-V’s interior?",
+    "prediction": "D2:IMG_002",
+    "reference": "D2:IMG_002",
+    "retrieved_ids": [
+      "D2:7",
+      "D2:8",
+      "D2:4",
+      "D2:12",
+      "D2:3"
+    ],
+    "clue": [
+      "D2:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'D2:IMG_002'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'D2:IMG_002'.\"\n}"
+  },
+  {
+    "index": 1293,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "What was the user’s initial question about buying a car?",
+    "prediction": "I’m thinking of buying a car, but I’m not sure where to start. What should I consider?",
+    "reference": "The user’s initial question was about where to start when buying a car, including considerations like budget, car type, and priorities.",
+    "retrieved_ids": [
+      "D2:12",
+      "D2:3",
+      "D2:2",
+      "D2:5",
+      "D2:9"
+    ],
+    "clue": [
+      "D2:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer accurately restates that the user’s initial question was about where to start when buying a car and what to consider, matching the reference.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer accurately restates that the user’s initial question was about where to start when buying a car and what to consider, matching the reference.\"}"
+  },
+  {
+    "index": 1294,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Which specific brand of car wax user used for maintaining the exterior?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:10",
+      "D2:11",
+      "D2:12",
+      "D2:5",
+      "D2:6"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, stating that the brand is not mentioned.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly, stating that the brand is not mentioned.\"\n}"
+  },
+  {
+    "index": 1295,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image shows a standing desk with computer?",
+    "prediction": "D3:IMG_001",
+    "reference": "D3:IMG_001",
+    "retrieved_ids": [
+      "D3:3",
+      "D3:4",
+      "D3:2",
+      "D3:13",
+      "D3:5"
+    ],
+    "clue": [
+      "D3:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer D3:IMG_001",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer D3:IMG_001\"}"
+  },
+  {
+    "index": 1296,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image shows a mini pothos plant?",
+    "prediction": "D3:IMG_002",
+    "reference": "D3:IMG_002",
+    "retrieved_ids": [
+      "D3:5",
+      "D16:7",
+      "D16:5",
+      "D16:3",
+      "D16:4"
+    ],
+    "clue": [
+      "D3:5"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (D3:IMG_002).",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer (D3:IMG_002).\"\n}"
+  },
+  {
+    "index": 1297,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of plant is shown in the provided image?",
+    "prediction": "Pothos",
+    "reference": "Pothos",
+    "retrieved_ids": [
+      "D3:5",
+      "D16:7",
+      "D16:5",
+      "D16:3",
+      "D16:6"
+    ],
+    "clue": [
+      "D3:5"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Pothos'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Pothos'.\"\n}"
+  },
+  {
+    "index": 1298,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "prediction": "D3:IMG_002, D16:IMG_002, D16:IMG_005, D16:IMG_004",
+    "reference": "D3:IMG_002",
+    "retrieved_ids": [
+      "D3:5",
+      "D16:5",
+      "D16:7",
+      "D16:6",
+      "D16:4"
+    ],
+    "clue": [
+      "D3:5"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction adds extra image IDs beyond the single reference ID D3:IMG_002, which contradicts the reference answer.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The prediction adds extra image IDs beyond the single reference ID D3:IMG_002, which contradicts the reference answer.\"\n}"
+  },
+  {
+    "index": 1299,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image shows a JBL Bluetooth speaker?",
+    "prediction": "D3:IMG_003",
+    "reference": "D3:IMG_003",
+    "retrieved_ids": [
+      "D3:7",
+      "D3:8",
+      "D3:3",
+      "D13:9",
+      "D12:10"
+    ],
+    "clue": [
+      "D3:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer D3:IMG_003.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer D3:IMG_003.\"}"
+  },
+  {
+    "index": 1300,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image shows diffusers for creating atmosphere?",
+    "prediction": "D3:IMG_004",
+    "reference": "D3:IMG_004",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:12",
+      "D3:5",
+      "D3:13",
+      "D3:7"
+    ],
+    "clue": [
+      "D3:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1301,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "What safety considerations were mentioned for using diffusers with a baby?",
+    "prediction": "The safety consideration mentioned is that the diffuser should not be too strong, as the baby sometimes comes in the room. Water-based diffusers with adjustable mist levels or unscented humidifiers are recommended to avoid overwhelming the baby.",
+    "reference": "Liam wanted something subtle that wouldn't be too strong since the baby sometimes comes into the room. Water-based diffusers with adjustable mist levels were recommended, or even unscented humidifiers if he just wanted better air moisture without fragrance.",
+    "retrieved_ids": [
+      "D3:12",
+      "D3:11",
+      "D3:13",
+      "D1:10",
+      "D1:9"
+    ],
+    "clue": [
+      "D3:11",
+      "D3:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction restates the safety concern (avoid strong scent around baby) and lists water‑based diffusers with adjustable mist or unscented humidifiers, matching the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction restates the safety concern (avoid strong scent around baby) and lists water‑based diffusers with adjustable mist or unscented humidifiers, matching the reference.\"\n}"
+  },
+  {
+    "index": 1302,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "KR",
+    "question": "What motivated Liam to optimize his home office, and what dual purpose does he want it to serve?",
+    "prediction": "Liam was motivated to optimize his home office because he wants to reclaim calm and create a productive space amid changing family routines. He aims for it to serve a dual purpose: working efficiently while also keeping an eye on the baby when his wife is busy.",
+    "reference": "After sorting out the family car, Liam thought about optimizing home setup too. His workspace had turned into a mix of baby supplies and old cables. He wants a space where he can work efficiently but also keep an eye on the baby when his wife's busy.",
+    "retrieved_ids": [
+      "D3:10",
+      "D3:15",
+      "D3:1",
+      "D3:9",
+      "D3:2"
+    ],
+    "clue": [
+      "D3:1",
+      "D3:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer captures the motivation (desire for a calm, productive space due to family changes) and correctly states the dual purpose: efficient work and baby monitoring, matching the reference without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The answer captures the motivation (desire for a calm, productive space due to family changes) and correctly states the dual purpose: efficient work and baby monitoring, matching the reference without contradiction.\"\n}"
+  },
+  {
+    "index": 1303,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Did Liam purchase an electric standing desk?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:4",
+      "D3:2",
+      "D3:3",
+      "D3:1",
+      "D3:13"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer stating 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer stating 'Not mentioned.'\"}"
+  },
+  {
+    "index": 1304,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "Summarize the key factors to consider when choosing a bicycle for a 5-mile city commute.",
+    "prediction": "Key factors to consider include commute distance and terrain (paved city streets), budget (~$500), comfort for long rides, maintenance requirements (e.g., internal gear hubs or belt drives), speed needs (hybrid bikes offer balance between comfort and efficiency), and safety (helmet, visible clothing, secure parking). A hybrid bike like the Schwinn Discover is recommended for its suitability to city commuting.",
+    "reference": "Consider the terrain and distance of the commute, budget, speed, durability, comfort, storage options, the choice between online and physical store purchase, maintenance requirements, additional features (built-in lights, kickstand, puncture-resistant tires), and tips for getting the most out of the commuter bike.",
+    "retrieved_ids": [
+      "D4:4",
+      "D4:6",
+      "D4:3",
+      "D4:5",
+      "D4:14"
+    ],
+    "clue": [
+      "D4:3",
+      "D4:4",
+      "D4:5",
+      "D4:6",
+      "D4:7",
+      "D4:8",
+      "D4:11",
+      "D4:12",
+      "D4:14"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits several key factors from the reference (e.g., storage options, online vs physical store purchase, durability, extra features like lights/kickstand/puncture‑resistant tires, and tips), so it does not fully contain the reference answer.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The answer omits several key factors from the reference (e.g., storage options, online vs physical store purchase, durability, extra features like lights/kickstand/puncture‑resistant tires, and tips), so it does not fully contain the reference answer.\"\n}"
+  },
+  {
+    "index": 1305,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "Based on the conversation, how can a person with a $500 budget choose a suitable bike for a 5-mile city commute?",
+    "prediction": "For a 5-mile city commute with a $500 budget, a hybrid bike like the Schwinn Discover is recommended. It combines comfort and efficiency, suitable for paved city streets, and offers a balanced ride for daily use. Consider a lighter hybrid model with thinner tires if speed is important. Also, opt for bikes with internal gear hubs or belt drives for lower maintenance, and choose puncture-resistant tires to reduce flat risks. Buying locally allows for test-riding and proper fitting, though online options may be cheaper with the caveat of self-assembly or nearby mechanic support.",
+    "reference": "They can choose the Schwinn Discover.",
+    "retrieved_ids": [
+      "D4:4",
+      "D4:5",
+      "D4:3",
+      "D4:6",
+      "D4:7"
+    ],
+    "clue": [
+      "D4:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer recommends the Schwinn Discover, matching the reference answer, and adds extra details without contradicting the core recommendation.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer recommends the Schwinn Discover, matching the reference answer, and adds extra details without contradicting the core recommendation.\"\n}"
+  },
+  {
+    "index": 1306,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "If someone is interested in the bike's compatibility with a specific brand of bike-sharing systems for extended travel and its ability to connect to a smartphone app for tracking fitness data, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:10",
+      "D4:4",
+      "D4:11",
+      "D4:6",
+      "D4:9"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 1307,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Does the conversation specify the exact battery capacity of the e-bike Liam considered?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:10",
+      "D4:11",
+      "D4:9",
+      "D4:8",
+      "D4:6"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, stating that the battery capacity is not mentioned.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly, stating that the battery capacity is not mentioned.\"\n}"
+  },
+  {
+    "index": 1308,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TR",
+    "question": "Did Liam begin reorganizing his home office before he purchased a bicycle helmet?",
+    "prediction": "No, Liam did not begin reorganizing his home office before purchasing a bicycle helmet. He first mentioned reorganizing his home office in session D3 (2024-07-12), and later discussed buying a helmet in session D5 (2024-08-23), which occurred after the home office reorganization.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D3:1",
+      "D4:8",
+      "D5:1",
+      "D5:2",
+      "D5:8"
+    ],
+    "clue": [
+      "D3:1",
+      "D5:1"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction says No, contradicting the reference answer Yes.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The prediction says No, contradicting the reference answer Yes.\"}"
+  },
+  {
+    "index": 1309,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "FR",
+    "question": "Summarize the key factors to consider when choosing a bicycle helmet.",
+    "prediction": "Safety standards (e.g., CPSC or equivalent), proper fit, budget, comfort (adjustable straps and padding), durability (impact-resistant materials), additional features (visor, removable liner, reflective elements), and maintenance (cleaning, avoiding extreme temperatures, replacing after crashes).",
+    "reference": "Consider safety standards, fit, budget, comfort, ventilation, style, size, the choice between online and physical store purchase, durability, additional features (visor, removable liner, reflective elements), and maintenance tips.",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:2",
+      "D5:10",
+      "D5:11",
+      "D5:3"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:3",
+      "D5:4",
+      "D5:5",
+      "D5:6",
+      "D5:7",
+      "D5:9",
+      "D5:10",
+      "D5:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer omits several factors listed in the reference (ventilation, style, size, and purchase channel), so it does not fully capture the key considerations.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer omits several factors listed in the reference (ventilation, style, size, and purchase channel), so it does not fully capture the key considerations.\"\n}"
+  },
+  {
+    "index": 1310,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which picture is about the ventilation of the helmet?",
+    "prediction": "D5:IMG_001",
+    "reference": "D5:IMG_001",
+    "retrieved_ids": [
+      "D5:4",
+      "D5:5",
+      "D5:11",
+      "D5:10",
+      "D5:3"
+    ],
+    "clue": [
+      "D5:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1311,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "Based on the conversation, how can a person with a $50 budget choose a suitable bicycle helmet?",
+    "prediction": "Within a $50 budget, the Giro Register is recommended as a suitable bicycle helmet. It meets CPSC safety standards, offers solid construction and reliable protection, includes good ventilation, a comfortable fit, and adjustable straps with padding for long rides. It is lightweight and affordable, making it a practical investment in safety.",
+    "reference": "They can choose the Giro Register.",
+    "retrieved_ids": [
+      "D5:2",
+      "D5:3",
+      "D5:1",
+      "D5:8",
+      "D5:10"
+    ],
+    "clue": [
+      "D5:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer recommends the Giro Register, matching the reference answer and adds no contradictions.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The answer recommends the Giro Register, matching the reference answer and adds no contradictions.\"}"
+  },
+  {
+    "index": 1312,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "If someone is interested in the helmet's compatibility with a specific brand of action cameras for recording rides and its ability to connect to a smart-watch for tracking cycling data, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:3",
+      "D5:5",
+      "D5:9",
+      "D5:2"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1313,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "What materials and features should a waterproof cycling jacket have?",
+    "prediction": "A waterproof cycling jacket should have breathable materials like Gore-Tex or similar to prevent overheating. It should include reflective strips for visibility, and some models feature integrated LED strips for improved visibility without needing separate accessories. Additionally, look for lightweight design and zippers along the sides for easy removal without removing shoes.",
+    "reference": "Look for breathable materials like Gore-Tex or similar to prevent overheating. The jacket should be lightweight with reflective strips for visibility.",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:2",
+      "D6:4",
+      "D6:9",
+      "D6:6"
+    ],
+    "clue": [
+      "D6:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes all elements from the reference (breathable material like Gore‑Tex, lightweight, reflective strips) and adds extra non‑contradictory details.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes all elements from the reference (breathable material like Gore‑Tex, lightweight, reflective strips) and adds extra non‑contradictory details.\"\n}"
+  },
+  {
+    "index": 1314,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image shows a waterproof jacket?",
+    "prediction": "D6:IMG_001",
+    "reference": "D6:IMG_001",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:3",
+      "D6:9",
+      "D6:1",
+      "D6:4"
+    ],
+    "clue": [
+      "D6:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'D6:IMG_001'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'D6:IMG_001'.\"\n}"
+  },
+  {
+    "index": 1315,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image shows cycling gloves?",
+    "prediction": "D6:IMG_002",
+    "reference": "D6:IMG_002",
+    "retrieved_ids": [
+      "D6:5",
+      "D6:6",
+      "D5:11",
+      "D5:4",
+      "D5:10"
+    ],
+    "clue": [
+      "D6:5"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1316,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "KR",
+    "question": "How did Liam's mindset about cycling commuting evolve during this conversation?",
+    "prediction": "Liam initially viewed cycling as a practical but potentially tedious daily chore, but evolved to see it as a routine he looks forward to, emphasizing mindset shifts that remove friction like weather discomfort. He later embraced the idea of treating his commute as a “micro-adventure,” finding purpose and enjoyment in preparation and adaptation, even in challenging conditions like rainy mornings. By the end, he viewed cycling as part of a broader intentionality in life, connecting it to rhythm, comfort, and meaningful moments.",
+    "reference": "Liam started to enjoy the preparation part and see it less as a chore and more as a way to create space for balance. He began treating his commute like a micro-adventure, making even rainy mornings feel purposeful instead of inconvenient. He might even start logging rides to see how weather affects mood or timing.",
+    "retrieved_ids": [
+      "D4:1",
+      "D6:11",
+      "D6:13",
+      "D6:12",
+      "D13:14"
+    ],
+    "clue": [
+      "D6:11",
+      "D6:12",
+      "D6:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer captures the evolution from seeing cycling as a chore to treating it as a purposeful micro‑adventure, including rainy mornings, and adds no contradictions.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer captures the evolution from seeing cycling as a chore to treating it as a purposeful micro‑adventure, including rainy mornings, and adds no contradictions.\"\n}"
+  },
+  {
+    "index": 1317,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Did Liam purchase heated cycling gear?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:10",
+      "D4:8",
+      "D6:7",
+      "D6:6",
+      "D6:1"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer stating 'Not mentioned.'\"}"
+  },
+  {
+    "index": 1318,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "FR",
+    "question": "Summarize the key factors to consider when choosing a backpack for commuting.",
+    "prediction": "Key factors to consider when choosing a backpack for commuting include:  \n- **Adjustable harness and padded hip belt** for proper weight distribution and comfort.  \n- **Dedicated compartments** (e.g., for a 15-inch laptop, notebooks, chargers, pens).  \n- **Durability and materials** such as nylon or polyester, which are lightweight, durable, and water-resistant.  \n- **Waterproofing options**—either a rain cover or a fully waterproof backpack for unpredictable weather.  \n- **Budget-conscious options** that still offer comfort and functionality (e.g., Swissgear ScanSmart TSA-Friendly Laptop Backpack).  \n- **Size suitability** (40–60 liters for travel or commuting).  \n- **Daily use and care**—considering how the backpack will be handled and maintained to maximize its lifespan.",
+    "reference": "Consider size and capacity, comfort, durability, organization, style, the choice between online and physical store purchase, warranty, additional features (built-in USB port, trolley sleeve, anti-theft pocket), and tips for getting the most out of the backpack.",
+    "retrieved_ids": [
+      "D7:10",
+      "D15:3",
+      "D7:2",
+      "D6:8",
+      "D15:4"
+    ],
+    "clue": [
+      "D7:1",
+      "D7:3",
+      "D7:4",
+      "D7:5",
+      "D7:6",
+      "D7:7",
+      "D7:8",
+      "D7:9",
+      "D7:10",
+      "D7:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits several reference factors such as style, purchase channel (online vs physical store), warranty, and specific additional features like built-in USB port, trolley sleeve, and anti‑theft pocket, so it does not fully match the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The answer omits several reference factors such as style, purchase channel (online vs physical store), warranty, and specific additional features like built-in USB port, trolley sleeve, and anti‑theft pocket, so it does not fully match the reference.\"\n}"
+  },
+  {
+    "index": 1319,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which picture shown is about many styles of backpacks?",
+    "prediction": "D7:IMG_002",
+    "reference": "D7:IMG_002",
+    "retrieved_ids": [
+      "D7:6",
+      "D7:1",
+      "D15:6",
+      "D15:7",
+      "D15:5"
+    ],
+    "clue": [
+      "D7:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (D7:IMG_002).",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer (D7:IMG_002).\"}"
+  },
+  {
+    "index": 1320,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "Based on the conversation, how can a person with an $80 budget choose a suitable backpack for commuting?",
+    "prediction": "Look for sales, especially during holiday seasons or end-of-season clearances. Check out discount stores or online marketplaces. You can also consider buying a slightly used backpack, but make sure to inspect it thoroughly for any signs of wear and tear. A suitable option within this budget is the Swissgear ScanSmart TSA-Friendly Laptop Backpack, which has a dedicated 15-inch compartment and multiple pockets for essentials, designed with comfort in mind.",
+    "reference": "They can choose the Swissgear ScanSmart TSA-Friendly Laptop Backpack.",
+    "retrieved_ids": [
+      "D7:2",
+      "D15:8",
+      "D15:2",
+      "D15:3",
+      "D7:10"
+    ],
+    "clue": [
+      "D7:2",
+      "D7:3",
+      "D7:4",
+      "D7:5",
+      "D7:6",
+      "D7:7",
+      "D7:9",
+      "D7:10",
+      "D7:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes the Swissgear ScanSmart TSA-Friendly Laptop Backpack as the recommended option, matching the reference answer, and adds extra non-contradictory advice.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes the Swissgear ScanSmart TSA-Friendly Laptop Backpack as the recommended option, matching the reference answer, and adds extra non-contradictory advice.\"\n}"
+  },
+  {
+    "index": 1321,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Based on the conversation, if someone is interested in the backpack's compatibility with a specific brand of smart locks for added security and its ability to connect to a fitness tracker to monitor the weight carried during the commute, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D15:7",
+      "D7:10",
+      "D7:2",
+      "D7:9",
+      "D7:3"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1322,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TR",
+    "question": "Which did Liam purchase first for commuting: the bicycle or the water bottle?",
+    "prediction": "The bicycle.",
+    "reference": "The bicycle.",
+    "retrieved_ids": [
+      "D4:8",
+      "D4:9",
+      "D6:7",
+      "D8:1",
+      "D9:2"
+    ],
+    "clue": [
+      "D4:1",
+      "D8:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer, stating that the bicycle was purchased first.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer, stating that the bicycle was purchased first.\"}"
+  },
+  {
+    "index": 1323,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "FR",
+    "question": "List the features and types of water bottles the user mentioned considering.",
+    "prediction": "The user considered stainless steel water bottles for their durability and resistance to retaining flavors. They also considered insulated water bottles to keep drinks cold for longer, especially useful in summer. Additionally, they were weighing between a water bottle with a straw lid (convenient for sipping on the go) and a chug lid (for faster water flow). They also liked a water bottle with a wide mouth, which is easy to fill and clean, as shown in the image of the Blue CamelBak Go sports water bottle.",
+    "reference": "Stainless steel, wide mouth, insulated, straw lid, chug lid, built-in filter, and carrying loop. The user also mentioned a water bottle that doesn't sweat.",
+    "retrieved_ids": [
+      "D8:1",
+      "D8:2",
+      "D8:5",
+      "D8:4",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:7",
+      "D8:8",
+      "D8:10"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 1324,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "What material did Liam say he was considering for the water bottle?",
+    "prediction": "Stainless steel",
+    "reference": "Liam said he was considering a stainless steel water bottle.",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:1",
+      "D8:5",
+      "D8:6",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer correctly identifies the material as stainless steel, matching the reference.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer correctly identifies the material as stainless steel, matching the reference.\"}"
+  },
+  {
+    "index": 1325,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "What kind of water bottle did Liam have in mind at the start, and what did he end up getting?",
+    "prediction": "At the start, Liam was considering a stainless steel water bottle, as he mentioned it was durable and didn’t retain flavors. He also considered an insulated water bottle for keeping drinks cold longer. He ended up getting a water bottle with a wide mouth, as noted in the image caption, which is easier to fill and clean.",
+    "reference": "From wanting \"a new water bottle\" and \"to stay hydrated\" and \"thinking of getting a stainless steel water bottle\" to getting \"an insulated, stainless steel, and has a chug lid\" water bottle.",
+    "retrieved_ids": [
+      "D8:5",
+      "D8:1",
+      "D8:2",
+      "D8:4",
+      "D8:6"
+    ],
+    "clue": [
+      "D8:1",
+      "D8:2",
+      "D8:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction says Liam ended up with a wide‑mouth bottle, which contradicts the reference that he got an insulated stainless‑steel bottle with a chug lid.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The prediction says Liam ended up with a wide‑mouth bottle, which contradicts the reference that he got an insulated stainless‑steel bottle with a chug lid.\"\n}"
+  },
+  {
+    "index": 1326,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which images that the conversation shown are related to water bottles?",
+    "prediction": "D8:IMG_001, D8:IMG_003",
+    "reference": "D8:IMG_001, D8:IMG_002, D8:IMG_003",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:1",
+      "D8:2",
+      "D8:11",
+      "D8:7"
+    ],
+    "clue": [
+      "D8:3",
+      "D8:7",
+      "D8:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer omitted D8:IMG_002, which is listed in the reference answer.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer omitted D8:IMG_002, which is listed in the reference answer.\"\n}"
+  },
+  {
+    "index": 1327,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Did Liam say he was getting a glass water bottle?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D8:1",
+      "D9:2",
+      "D8:2",
+      "D9:1",
+      "D8:5"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"}"
+  },
+  {
+    "index": 1328,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image shows cooking noodles at home? Only return the image_id of the image.",
+    "prediction": "D9:IMG_001",
+    "reference": "D9:IMG_001",
+    "retrieved_ids": [
+      "D9:7",
+      "D9:8",
+      "D3:1",
+      "D13:11",
+      "D13:12"
+    ],
+    "clue": [
+      "D9:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer.\"}"
+  },
+  {
+    "index": 1329,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "What benefits do short lunch walks provide?",
+    "prediction": "Short lunch walks help reset posture, improve digestion, and clear mental fog. Ten minutes can shift your whole afternoon energy.",
+    "reference": "Walking is underrated—it resets posture, improves digestion, and clears mental fog. Ten minutes can shift your whole afternoon energy.",
+    "retrieved_ids": [
+      "D9:11",
+      "D9:12",
+      "D9:3",
+      "D9:4",
+      "D16:17"
+    ],
+    "clue": [
+      "D9:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes all the benefits (reset posture, improve digestion, clear mental fog) and the ten‑minute energy boost, matching the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes all the benefits (reset posture, improve digestion, clear mental fog) and the ten‑minute energy boost, matching the reference.\"\n}"
+  },
+  {
+    "index": 1330,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Did Liam mention joining a gym again?",
+    "prediction": "No, Liam did not mention joining a gym again. He expressed that getting to a gym is no longer feasible due to his baby’s schedule, and instead, he is setting up a home workout corner with dumbbells.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:10",
+      "D9:9",
+      "D9:3",
+      "D10:1",
+      "D9:14"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states that Liam did not mention joining a gym again, matching the reference 'Not mentioned' and adds no contradictory information.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction states that Liam did not mention joining a gym again, matching the reference 'Not mentioned' and adds no contradictory information.\"\n}"
+  },
+  {
+    "index": 1331,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "FR",
+    "question": "Summarize the key factors to consider when choosing dumbbells for a beginner's home gym.",
+    "prediction": "1. **Budget**: Start with affordable options, such as coated fixed-weight dumbbells from brands like Decathlon, priced around $50.  \n2. **Weight Range**: Beginners should begin with 2–3 kg pairs to learn proper form and build a foundation.  \n3. **Material & Coating**: Look for durable, coated weights that protect floors and provide a comfortable grip; avoid rough handling to prevent coating damage.  \n4. **Durability**: Choose sturdy metal bars with firmly attached weights; proper storage (dry, organized) prevents rust and damage.  \n5. **Features**: Prioritize basic quality, grip, and weight over advanced features like non-roll design or storage racks unless needed.  \n6. **Fitness Goals**: Define goals (e.g., muscle building, toning) and assess current strength to select appropriate weights.  \n7. **Storage & Organization**: Use storage racks or designated areas to keep dumbbells tidy and prevent them from rolling away.  \n8. **Beginner-Friendly Exercises**: Start with simple moves like bicep curls, shoulder presses, and squats to build strength gradually.",
+    "reference": "Consider fitness goals, current strength level, usage frequency, budget, coating quality, grip, the choice between online and physical store purchase, durability, additional features (non-roll design, storage rack), necessary accessories (workout gloves, yoga mat, water bottle holder), storage tips, and beginner-friendly exercises.",
+    "retrieved_ids": [
+      "D10:3",
+      "D10:9",
+      "D10:2",
+      "D10:4",
+      "D10:12"
+    ],
+    "clue": [
+      "D10:2",
+      "D10:3",
+      "D10:4",
+      "D10:5",
+      "D10:6",
+      "D10:8",
+      "D10:9",
+      "D10:10",
+      "D10:11",
+      "D10:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits several key factors from the reference (usage frequency, purchase channel, accessories like gloves/yoga mat, and detailed storage tips), so it does not fully match the reference summary.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The answer omits several key factors from the reference (usage frequency, purchase channel, accessories like gloves/yoga mat, and detailed storage tips), so it does not fully match the reference summary.\"\n}"
+  },
+  {
+    "index": 1332,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which picture shown in mid-October is about a dumbbell?",
+    "prediction": "D10:IMG_002",
+    "reference": "D10:IMG_002",
+    "retrieved_ids": [
+      "D10:3",
+      "D10:9",
+      "D10:2",
+      "D10:5",
+      "D10:8"
+    ],
+    "clue": [
+      "D10:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1333,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "Based on the conversation, how can a beginner with a $50 budget choose a suitable pair of dumbbells for a home gym?",
+    "prediction": "For a beginner with a $50 budget, coated fixed-weight dumbbells from brands like Decathlon are ideal. Start with a pair in the 2–3 kg range for proper form and foundation. Choose dumbbells with a non-roll design and storage rack for safety and tidiness. Avoid rough handling to preserve the coating and durability. Focus on quality, grip, and weight first, and store them in a dry place to prevent rust.",
+    "reference": "They can choose coated fixed-weight dumbbells from brands like Decathlon.",
+    "retrieved_ids": [
+      "D10:3",
+      "D10:2",
+      "D10:9",
+      "D10:4",
+      "D10:12"
+    ],
+    "clue": [
+      "D10:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer includes the reference suggestion of coated fixed-weight dumbbells from Decathlon and adds compatible details without contradicting the reference.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The answer includes the reference suggestion of coated fixed-weight dumbbells from Decathlon and adds compatible details without contradicting the reference.\"}"
+  },
+  {
+    "index": 1334,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Based on the conversation, if someone is interested in the dumbbells' compatibility with a specific brand of fitness apps for tracking workout progress and their ability to be connected to a smart home system for personalized workout reminders, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:9",
+      "D10:4",
+      "D10:10",
+      "D10:6",
+      "D10:5"
+    ],
+    "clue": [],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 1335,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TR",
+    "question": "Did Liam start considering musical instruments before or after building a home workout routine?",
+    "prediction": "Liam started considering musical instruments before building a home workout routine. In round D11:1, he mentions that after finishing researching fitness gear (like strollers or weights), his brain immediately starts looking for the next project — which includes learning to play a musical instrument. This occurred during the same session (D11, 2024-11-04) where he was discussing fitness gear, indicating that the musical instrument consideration came after fitness gear research but before any home workout routine was built.",
+    "reference": "After.",
+    "retrieved_ids": [
+      "D11:1",
+      "D11:2",
+      "D11:12",
+      "D9:9",
+      "D9:10"
+    ],
+    "clue": [
+      "D10:1",
+      "D11:1"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer states that Liam considered musical instruments before building a home workout routine, which contradicts the reference answer that says it was after.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer states that Liam considered musical instruments before building a home workout routine, which contradicts the reference answer that says it was after.\"\n}"
+  },
+  {
+    "index": 1336,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which picture shown in early-November shows a lot of instruments?",
+    "prediction": "D11:IMG_001",
+    "reference": "D11:IMG_001",
+    "retrieved_ids": [
+      "D11:2",
+      "D11:7",
+      "D11:12",
+      "D11:6",
+      "D11:8"
+    ],
+    "clue": [
+      "D11:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1337,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Based on the conversation, would someone give up on buying a new instrument if they find the price of a new ukulele slightly above their budget?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D11:5",
+      "D11:6",
+      "D11:10",
+      "D11:11",
+      "D12:4"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1338,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which picture shown is about an electric guitar?",
+    "prediction": "D12:IMG_001, D11:IMG_002",
+    "reference": "D12:IMG_001",
+    "retrieved_ids": [
+      "D12:5",
+      "D11:3",
+      "D12:6",
+      "D12:2",
+      "D12:7"
+    ],
+    "clue": [
+      "D12:5"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction adds an extra image ID (D11:IMG_002) that is not in the reference answer, which should be only D12:IMG_001.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The prediction adds an extra image ID (D11:IMG_002) that is not in the reference answer, which should be only D12:IMG_001.\"\n}"
+  },
+  {
+    "index": 1339,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image shows a picnic mat? Only return the image_id of the image.",
+    "prediction": "D13:IMG_001",
+    "reference": "D13:IMG_001",
+    "retrieved_ids": [
+      "D13:4",
+      "D13:5",
+      "D13:3",
+      "D16:2",
+      "D16:21"
+    ],
+    "clue": [
+      "D13:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference image_id.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference image_id.\"}"
+  },
+  {
+    "index": 1340,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "Why are roll-up picnic mats recommended for outdoor trips?",
+    "prediction": "Roll-up picnic mats are recommended because they’re waterproof on one side and soft on the other, making them perfect for grassy or slightly damp ground.",
+    "reference": "They're waterproof on one side and soft on the other, perfect for grassy or slightly damp ground.",
+    "retrieved_ids": [
+      "D13:5",
+      "D13:4",
+      "D13:3",
+      "D1:10",
+      "D14:1"
+    ],
+    "clue": [
+      "D13:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer restates the reference answer accurately, mentioning waterproof one side, soft other side, and suitability for grassy or slightly damp ground.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer restates the reference answer accurately, mentioning waterproof one side, soft other side, and suitability for grassy or slightly damp ground.\"\n}"
+  },
+  {
+    "index": 1341,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "MR",
+    "question": "How does Liam envision his ideal weekend trip experience?",
+    "prediction": "Liam envisions his ideal weekend trip as a short, relaxing getaway within a two-hour radius—preferably a small lakeside town or forest trail—where he can slow down, enjoy quiet moments with his baby, and have music in the background. He values simplicity, warmth, and meaningful, slow-paced experiences that recharge him without disrupting routines.",
+    "reference": "He pictures the baby laughing, music in the background, and just slowing down for once. It's moments that feel slow but meaningful—a quiet afternoon by the lake with family and music.",
+    "retrieved_ids": [
+      "D13:1",
+      "D13:2",
+      "D16:20",
+      "D13:13",
+      "D13:11"
+    ],
+    "clue": [
+      "D13:11",
+      "D13:12"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 1342,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Did Liam mention planning any camping trips?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D16:20",
+      "D13:1",
+      "D16:1",
+      "D13:2",
+      "D16:2"
+    ],
+    "clue": [],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 1343,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "FR",
+    "question": "Summarize the key factors to consider when choosing a suitcase for international travel.",
+    "prediction": "When choosing a suitcase for international travel, consider the following key factors:  \n1. **TSA-approved lock** for security during air travel.  \n2. **Water-resistant exterior** to protect belongings from rain or spills.  \n3. **Built-in USB charging port** for convenient device charging during long flights or layovers.  \n4. **Durability**—opt for a hard-shell suitcase (e.g., 24-inch) for better protection.  \n5. **Weight**—look for lightweight materials like polycarbonate (around 4–5 kg empty) to avoid overweight fees.  \n6. **Interior organization**—choose suitcases with zippered mesh dividers or pockets to neatly separate items.  \n7. **Warranty**—ensure coverage (typically 1–5 years) for potential issues.  \n8. **Budget**—within $200, brands like Samsonite and American Tourister offer good value.",
+    "reference": "Consider the trip duration, mode of transportation, budget, size, weight, wheel type, handle quality, interior organization, presence of a TSA-approved lock, warranty, special features like water-resistance and USB charging ports, and maintenance tips.",
+    "retrieved_ids": [
+      "D14:11",
+      "D14:3",
+      "D14:10",
+      "D14:4",
+      "D14:8"
+    ],
+    "clue": [
+      "D14:2",
+      "D14:3",
+      "D14:4",
+      "D14:5",
+      "D14:6",
+      "D14:7",
+      "D14:8",
+      "D14:9",
+      "D14:10",
+      "D14:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits several factors listed in the reference (trip duration, mode of transportation, size, wheel type, handle quality, maintenance tips) and therefore does not fully match the required summary.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The answer omits several factors listed in the reference (trip duration, mode of transportation, size, wheel type, handle quality, maintenance tips) and therefore does not fully match the required summary.\"\n}"
+  },
+  {
+    "index": 1344,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which picture shown shows suitcase wheels?",
+    "prediction": "D14:IMG_002, D14:IMG_001",
+    "reference": "D14:IMG_002",
+    "retrieved_ids": [
+      "D14:5",
+      "D14:6",
+      "D14:2",
+      "D14:11",
+      "D14:7"
+    ],
+    "clue": [
+      "D14:5"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction adds an extra image ID (D14:IMG_001) that is not in the reference answer, contradicting the correct single answer D14:IMG_002.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The prediction adds an extra image ID (D14:IMG_001) that is not in the reference answer, contradicting the correct single answer D14:IMG_002.\"\n}"
+  },
+  {
+    "index": 1345,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which picture that Liam shown is about a backpack with good security?",
+    "prediction": "D15:IMG_002",
+    "reference": "D15:IMG_002",
+    "retrieved_ids": [
+      "D15:6",
+      "D15:7",
+      "D7:6",
+      "D7:11",
+      "D7:2"
+    ],
+    "clue": [
+      "D15:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1346,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Based on the conversation, would someone give up on buying a backpack with a good backpack system if they can't find one within their budget?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D15:9",
+      "D15:8",
+      "D15:10",
+      "D15:4",
+      "D7:10"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 1347,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "FR",
+    "question": "What two types of flowers did Liam's family observe during their nature trail trip?",
+    "prediction": "Mexican Petunia and Blanket Flower",
+    "reference": "Mexican Petunia and Blanket Flowers.",
+    "retrieved_ids": [
+      "D16:13",
+      "D16:18",
+      "D16:19",
+      "D16:8",
+      "D16:14"
+    ],
+    "clue": [
+      "D16:3",
+      "D16:4",
+      "D16:9",
+      "D16:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer includes both Mexican Petunia and Blanket Flower, matching the two flower types; singular vs plural is a minor variation and does not contradict the reference.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer includes both Mexican Petunia and Blanket Flower, matching the two flower types; singular vs plural is a minor variation and does not contradict the reference.\"}"
+  },
+  {
+    "index": 1348,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VR",
+    "question": "How many Mexican Petunia flower photos did Liam share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "5",
+    "reference": "5",
+    "retrieved_ids": [
+      "D16:6",
+      "D16:7",
+      "D16:5",
+      "D16:3",
+      "D16:4"
+    ],
+    "clue": [
+      "D16:3",
+      "D16:4",
+      "D16:5",
+      "D16:6",
+      "D16:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly.\"\n}"
+  },
+  {
+    "index": 1349,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "The specific species of flower shown in the image is not explicitly mentioned in the provided memory content. However, based on the visual characteristics—large, soft pink, trumpet-shaped flowers with ruffled petals and darker pink centers—this matches the description of a **Mexican Petunia** from the conversation, though the image does not directly correspond to any of the images (D16:IMG_002, D16:IMG_003, D16:IMG_004, or D16:IMG_005) shown in the memory. The memory content does not confirm this flower as a Mexican Petunia, nor does it mention any other species matching the image. Therefore, the flower in the image cannot be definitively identified from the provided memory.",
+    "reference": "Mexican petunia",
+    "retrieved_ids": [
+      "D16:7",
+      "D16:4",
+      "D16:5",
+      "D16:6",
+      "D16:12"
+    ],
+    "clue": [
+      "D16:3",
+      "D16:4",
+      "D16:5",
+      "D16:6",
+      "D16:7"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction says the species cannot be definitively identified, whereas the reference answer states it is a Mexican petunia.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The prediction says the species cannot be definitively identified, whereas the reference answer states it is a Mexican petunia.\"\n}"
+  },
+  {
+    "index": 1350,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Mexican Petunia",
+    "reference": "Mexican petunia",
+    "retrieved_ids": [
+      "D16:4",
+      "D16:5",
+      "D16:7",
+      "D16:6",
+      "D16:3"
+    ],
+    "clue": [
+      "D16:3",
+      "D16:4",
+      "D16:5",
+      "D16:6",
+      "D16:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer (Mexican petunia), differing only in capitalization.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer (Mexican petunia), differing only in capitalization.\"\n}"
+  },
+  {
+    "index": 1351,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "The flower shown in the image is a **Mexican Petunia**.",
+    "reference": "Mexican petunia",
+    "retrieved_ids": [
+      "D16:7",
+      "D16:4",
+      "D16:5",
+      "D16:6",
+      "D16:10"
+    ],
+    "clue": [
+      "D16:3",
+      "D16:4",
+      "D16:5",
+      "D16:6",
+      "D16:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer correctly identifies the flower as Mexican Petunia, matching the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer correctly identifies the flower as Mexican Petunia, matching the reference.\"\n}"
+  },
+  {
+    "index": 1352,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Mexican Petunia",
+    "reference": "Mexican petunia",
+    "retrieved_ids": [
+      "D16:4",
+      "D16:5",
+      "D16:7",
+      "D16:6",
+      "D16:3"
+    ],
+    "clue": [
+      "D16:3",
+      "D16:4",
+      "D16:5",
+      "D16:6",
+      "D16:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference answer (case difference only).",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer matches the reference answer (case difference only).\"\n}"
+  },
+  {
+    "index": 1353,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VR",
+    "question": "How many Blanket Flower photos did Liam share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "4",
+    "retrieved_ids": [
+      "D16:13",
+      "D16:9",
+      "D16:11",
+      "D16:18",
+      "D16:2"
+    ],
+    "clue": [
+      "D16:9",
+      "D16:10",
+      "D16:11",
+      "D16:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '2' does not match the reference answer '4'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '2' does not match the reference answer '4'.\"}"
+  },
+  {
+    "index": 1354,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "The flower shown in the image is a **Blanket Flower** (Gaillardia).",
+    "reference": "Blanket flower",
+    "retrieved_ids": [
+      "D16:12",
+      "D16:11",
+      "D16:10",
+      "D16:9",
+      "D16:4"
+    ],
+    "clue": [
+      "D16:9",
+      "D16:10",
+      "D16:11",
+      "D16:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly identifies the species as Blanket Flower, matching the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer correctly identifies the species as Blanket Flower, matching the reference answer.\"\n}"
+  },
+  {
+    "index": 1355,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "The flower shown in the image is a **Blanket Flower** (Gaillardia).",
+    "reference": "Blanket flower",
+    "retrieved_ids": [
+      "D16:12",
+      "D16:11",
+      "D16:10",
+      "D16:9",
+      "D16:4"
+    ],
+    "clue": [
+      "D16:9",
+      "D16:10",
+      "D16:11",
+      "D16:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly identifies the flower as Blanket Flower, matching the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer correctly identifies the flower as Blanket Flower, matching the reference answer.\"\n}"
+  },
+  {
+    "index": 1356,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "The specific species of flower shown in the image is not explicitly mentioned in the provided memory content. However, based on the conversation, the assistant previously referred to \"Blanket Flowers\" (Gaillardia) with similar red and yellow coloration, but the image in question shows flowers with a distinct red and yellow gradient and a yellow center, which matches the description of **Gaillardia** (Blanket Flower) in the memory. The image does not match the exact description of the \"Blanket Flowers\" seen in the prior images (D16:IMG_006, D16:IMG_007, D16:IMG_008, D16:IMG_009), which had different petal structures and center patterns. Therefore, the flower in the image is not explicitly identified in the memory.",
+    "reference": "Blanket flower",
+    "retrieved_ids": [
+      "D16:12",
+      "D16:11",
+      "D16:10",
+      "D16:9",
+      "D16:7"
+    ],
+    "clue": [
+      "D16:9",
+      "D16:10",
+      "D16:11",
+      "D16:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'Blanket flower', but the prediction says the species is not explicitly identified, contradicting the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer is 'Blanket flower', but the prediction says the species is not explicitly identified, contradicting the reference.\"\n}"
+  },
+  {
+    "index": 1357,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "The flower shown in the image is a Gaillardia, also known as Blanket Flower.",
+    "reference": "Blanket flower",
+    "retrieved_ids": [
+      "D16:12",
+      "D16:11",
+      "D16:10",
+      "D16:9",
+      "D16:7"
+    ],
+    "clue": [
+      "D16:9",
+      "D16:10",
+      "D16:11",
+      "D16:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer identifies the flower as Gaillardia, which is the blanket flower, matching the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer identifies the flower as Gaillardia, which is the blanket flower, matching the reference answer.\"}"
+  },
+  {
+    "index": 1358,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VR",
+    "question": "What are the characteristics of Mexican Petunia flowers?",
+    "prediction": "Mexican Petunia flowers are known for their velvety purple blooms, ruffled petals, and dark purple centers. They can vary in color, including pale lavender or pinkish-white varieties, and often grow in clusters. The flowers have a soft, wrinkled texture and thrive in warm climates, commonly found along trails or stream edges.",
+    "reference": "Mexican Petunias have soft, wrinkled texture and vivid purple color. They often have velvety purple blooms with deeper magenta tones near the center. They thrive in warm climates and tend to grow in clusters along trails or stream edges. Some varieties are pale lavender or pinkish white.",
+    "retrieved_ids": [
+      "D16:6",
+      "D16:5",
+      "D16:7",
+      "D16:4",
+      "D16:3"
+    ],
+    "clue": [
+      "D16:3",
+      "D16:4",
+      "D16:5",
+      "D16:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes all key characteristics from the reference (soft wrinkled texture, velvety purple blooms with deeper magenta/dark center, warm climate, cluster growth along trails/streams, and pale lavender/pinkish‑white varieties) and adds no contradictory information.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer includes all key characteristics from the reference (soft wrinkled texture, velvety purple blooms with deeper magenta/dark center, warm climate, cluster growth along trails/streams, and pale lavender/pinkish‑white varieties) and adds no contradictory information.\"}"
+  },
+  {
+    "index": 1359,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image shows the pale pinkish white Mexican Petunia?",
+    "prediction": "D16:IMG_005",
+    "reference": "D16:IMG_005",
+    "retrieved_ids": [
+      "D16:7",
+      "D16:6",
+      "D16:5",
+      "D16:4",
+      "D16:3"
+    ],
+    "clue": [
+      "D16:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (D16:IMG_005).",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer (D16:IMG_005).\"\n}"
+  },
+  {
+    "index": 1360,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VS",
+    "question": "Which image shows a close-up of Blanket Flower with flame-like petals?",
+    "prediction": "D16:IMG_007, D16:IMG_008, D16:IMG_009",
+    "reference": "D16:IMG_008",
+    "retrieved_ids": [
+      "D16:11",
+      "D16:10",
+      "D16:12",
+      "D16:7",
+      "D16:13"
+    ],
+    "clue": [
+      "D16:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Prediction lists extra image IDs (IMG_007 and IMG_009) beyond the single correct ID IMG_008, contradicting the reference answer.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"Prediction lists extra image IDs (IMG_007 and IMG_009) beyond the single correct ID IMG_008, contradicting the reference answer.\"}"
+  },
+  {
+    "index": 1361,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "VR",
+    "question": "How many Baird Sparrow photos did Liam share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "0",
+    "reference": "4",
+    "retrieved_ids": [
+      "D16:27",
+      "D16:22",
+      "D16:34",
+      "D16:33",
+      "D16:28"
+    ],
+    "clue": [
+      "D16:22",
+      "D16:23",
+      "D16:24",
+      "D16:25"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '0' does not match the reference answer '4'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '0' does not match the reference answer '4'.\"\n}"
+  },
+  {
+    "index": 1362,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "The specific species of animal shown in the provided image is a Field Sparrow.",
+    "reference": "Baird Sparrow",
+    "retrieved_ids": [
+      "D16:23",
+      "D16:24",
+      "D16:25",
+      "D16:31",
+      "D16:30"
+    ],
+    "clue": [
+      "D16:22",
+      "D16:23",
+      "D16:24",
+      "D16:25"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer 'Field Sparrow' does not match the reference answer 'Baird Sparrow'; they are different species.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer 'Field Sparrow' does not match the reference answer 'Baird Sparrow'; they are different species.\"\n}"
+  },
+  {
+    "index": 1363,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Based on the conversation, the specific species of animal shown in the provided image is a **Field Sparrow**.",
+    "reference": "Baird Sparrow",
+    "retrieved_ids": [
+      "D16:24",
+      "D16:23",
+      "D16:25",
+      "D16:31",
+      "D16:30"
+    ],
+    "clue": [
+      "D16:22",
+      "D16:23",
+      "D16:24",
+      "D16:25"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer says 'Field Sparrow' while the reference answer specifies 'Baird Sparrow', which is a different species.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer says 'Field Sparrow' while the reference answer specifies 'Baird Sparrow', which is a different species.\"\n}"
+  },
+  {
+    "index": 1364,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Based on the conversation history, the specific species of animal shown in the provided image is a **Baird’s Sparrow**. This identification was made by the assistant in round D16:25, referencing the bird’s soft brown streaks and buffy facial tones, which match the visual characteristics in the image.",
+    "reference": "Baird Sparrow",
+    "retrieved_ids": [
+      "D16:24",
+      "D16:23",
+      "D16:25",
+      "D16:31",
+      "D16:30"
+    ],
+    "clue": [
+      "D16:22",
+      "D16:23",
+      "D16:24",
+      "D16:25"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction correctly identifies the species as Baird Sparrow, matching the reference answer without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction correctly identifies the species as Baird Sparrow, matching the reference answer without contradiction.\"\n}"
+  },
+  {
+    "index": 1365,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Baird’s Sparrow",
+    "reference": "Baird Sparrow",
+    "retrieved_ids": [
+      "D16:24",
+      "D16:23",
+      "D16:25",
+      "D16:31",
+      "D16:26"
+    ],
+    "clue": [
+      "D16:22",
+      "D16:23",
+      "D16:24",
+      "D16:25"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer 'Baird’s Sparrow' matches the reference 'Baird Sparrow' despite minor punctuation difference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer 'Baird’s Sparrow' matches the reference 'Baird Sparrow' despite minor punctuation difference.\"\n}"
+  },
+  {
+    "index": 1366,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "AR",
+    "question": "Did Liam mention identifying any insects other than butterflies?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D16:21",
+      "D16:34",
+      "D16:9",
+      "D16:2",
+      "D16:33"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, indicating no insects other than butterflies were mentioned.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly, indicating no insects other than butterflies were mentioned.\"\n}"
+  },
+  {
+    "index": 1367,
+    "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+    "category": "TR",
+    "question": "When did the family travel taken place? Return in the format YYYY-MM-DD.",
+    "prediction": "2024-12-22",
+    "reference": "2024-12-22",
+    "retrieved_ids": [
+      "D13:2",
+      "D16:1",
+      "D16:2",
+      "D16:17",
+      "D16:20"
+    ],
+    "clue": [
+      "D16:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (2024-12-22) and satisfies the required format.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer (2024-12-22) and satisfies the required format.\"\n}"
+  },
+  {
+    "index": 1368,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "FR",
+    "question": "What Python library did Liam's class recently start using for plotting data?",
+    "prediction": "matplotlib",
+    "reference": "matplotlib",
+    "retrieved_ids": [
+      "D4:1",
+      "D1:12",
+      "D4:16",
+      "D1:2",
+      "D4:19"
+    ],
+    "clue": [
+      "D1:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'matplotlib'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'matplotlib'.\"\n}"
+  },
+  {
+    "index": 1369,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "What color were the bars in Liam's second bar chart example?",
+    "prediction": "The bars in Liam's second bar chart example were purple.",
+    "reference": "Purple",
+    "retrieved_ids": [
+      "D4:5",
+      "D4:4",
+      "D1:7",
+      "D1:5",
+      "D1:3"
+    ],
+    "clue": [
+      "D1:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer states the bars were purple, matching the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer states the bars were purple, matching the reference answer.\"\n}"
+  },
+  {
+    "index": 1370,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VS",
+    "question": "Which image shows the log-scale bar chart output?",
+    "prediction": "D1:IMG_006",
+    "reference": "D1:IMG_006",
+    "retrieved_ids": [
+      "D1:8",
+      "D1:7",
+      "D1:5",
+      "D1:6",
+      "D1:11"
+    ],
+    "clue": [
+      "D1:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'D1:IMG_006'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'D1:IMG_006'.\"}"
+  },
+  {
+    "index": 1371,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "How many bar chart scripts did Liam show in total during this conversation? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "5",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:12",
+      "D1:5",
+      "D4:16",
+      "D1:6"
+    ],
+    "clue": [
+      "D1:3",
+      "D1:5",
+      "D1:7",
+      "D1:10",
+      "D1:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '2' does not match the reference answer '5'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '2' does not match the reference answer '5'.\"}"
+  },
+  {
+    "index": 1372,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "FR",
+    "question": "What hobby did Liam compare to Python learning, saying he could spend an hour on it happily?",
+    "prediction": "Reading plant encyclopedias",
+    "reference": "Reading plant encyclopedias.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:18",
+      "D1:15",
+      "D1:17",
+      "D1:14"
+    ],
+    "clue": [
+      "D1:14"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1373,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "AR",
+    "question": "Did Liam mention using seaborn library for visualization?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:1",
+      "D4:10",
+      "D4:1",
+      "D1:12",
+      "D4:19"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer stating that Liam did not mention using seaborn.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer stating that Liam did not mention using seaborn.\"}"
+  },
+  {
+    "index": 1374,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "CD",
+    "question": "Is there a contradiction between Liam saying 'everyone else seems to be getting it so quickly' and the assistant saying 'you're practicing outside of class'?",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:15",
+      "D1:17",
+      "D4:11",
+      "D4:12"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly.\"\n}"
+  },
+  {
+    "index": 1375,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "prediction": "D1:IMG_003",
+    "reference": "D1:IMG_007",
+    "retrieved_ids": [
+      "D1:4",
+      "D1:6",
+      "D1:5",
+      "D1:3",
+      "D1:10"
+    ],
+    "clue": [
+      "D1:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted image ID (IMG_003) does not match the reference image ID (IMG_007).",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted image ID (IMG_003) does not match the reference image ID (IMG_007).\"\n}"
+  },
+  {
+    "index": 1376,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "prediction": "D1:IMG_005",
+    "reference": "D1:IMG_008",
+    "retrieved_ids": [
+      "D1:4",
+      "D1:6",
+      "D1:8",
+      "D1:7",
+      "D1:5"
+    ],
+    "clue": [
+      "D1:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted image ID (D1:IMG_005) does not match the reference image ID (D1:IMG_008).",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted image ID (D1:IMG_005) does not match the reference image ID (D1:IMG_008).\"\n}"
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "count": 1711,
+  "retrieval_hitrate@5": 0.7948568088836937,
+  "by_category": {
+    "AR": {
+      "count": 184,
+      "retrieval_hitrate@5": 0.0
+    },
+    "CD": {
+      "count": 81,
+      "retrieval_hitrate@5": 0.8148148148148148
+    },
+    "FR": {
+      "count": 219,
+      "retrieval_hitrate@5": 0.8036529680365296
+    },
+    "KR": {
+      "count": 81,
+      "retrieval_hitrate@5": 0.7160493827160493
+    },
+    "MR": {
+      "count": 206,
+      "retrieval_hitrate@5": 0.8495145631067961
+    },
+    "TR": {
+      "count": 123,
+      "retrieval_hitrate@5": 0.7235772357723578
+    },
+    "TTL": {
+      "count": 337,
+      "retrieval_hitrate@5": 0.9970326409495549
+    },
+    "VR": {
+      "count": 174,
+      "retrieval_hitrate@5": 0.9310344827586207
+    },
+    "VS": {
+      "count": 306,
+      "retrieval_hitrate@5": 0.9738562091503268
+    }
+  }
+}

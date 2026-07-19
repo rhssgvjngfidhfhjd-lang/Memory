@@ -1,0 +1,221 @@
+[
+  {
+    "index": 1,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "VS",
+    "question": "Which image shown in 2024-06-17 is an application of artificial intelligence in the field of education?",
+    "prediction": "D1:IMG_002",
+    "reference": "D1:IMG_002",
+    "retrieved_ids": [
+      "D10:17",
+      "D10:18",
+      "D1:4",
+      "D10:10",
+      "D1:5"
+    ],
+    "clue": [
+      "D1:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 2,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "MR",
+    "question": "What is the impact of the development of artificial intelligence on the job market?",
+    "prediction": "AI will automate repetitive, rule-based tasks, leading to job displacement in some sectors, but it also creates new opportunities such as AI trainers or data annotators. Human creativity and emotional intelligence remain areas where machines cannot replicate, suggesting that while AI transforms the job market, it does not fully replace human roles.",
+    "reference": "It will replace some repetitive and regular jobs, but it will also create new job opportunities, such as artificial intelligence trainers, data annotators, etc. Human creativity and other abilities are difficult to replace.",
+    "retrieved_ids": [
+      "D2:1",
+      "D1:5",
+      "D1:2",
+      "D1:6",
+      "D10:19"
+    ],
+    "clue": [
+      "D1:5"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction matches the reference: it notes AI will replace repetitive jobs, creates new roles like AI trainers and data annotators, and emphasizes human creativity/emotional intelligence remain hard to replace.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction matches the reference: it notes AI will replace repetitive jobs, creates new roles like AI trainers and data annotators, and emphasizes human creativity/emotional intelligence remain hard to replace.\"\n}"
+  },
+  {
+    "index": 3,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "MR",
+    "question": "Julian has previously discussed the security risks of artificial intelligence, and how did the issue of data breaches arise?",
+    "prediction": "The issue of data breaches arose because training AI systems requires vast amounts of data, and if that data isn’t well protected, personal details could be exposed.",
+    "reference": "Artificial intelligence model training requires a large amount of data, and if this data is not properly protected, it may leak personal privacy.",
+    "retrieved_ids": [
+      "D1:7",
+      "D1:6",
+      "D4:16",
+      "D4:17",
+      "D4:15"
+    ],
+    "clue": [
+      "D1:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer restates the reference: AI training needs large data and insufficient protection can lead to personal data leaks, matching the question.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer restates the reference: AI training needs large data and insufficient protection can lead to personal data leaks, matching the question.\"}"
+  },
+  {
+    "index": 4,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "AR",
+    "question": "Did Julian mention any specific application cases of artificial intelligence in the aerospace field?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:5",
+      "D7:9",
+      "D12:6",
+      "D1:6",
+      "D4:15"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating that no specific AI application cases were mentioned.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer stating that no specific AI application cases were mentioned.\"\n}"
+  },
+  {
+    "index": 5,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "CD",
+    "question": "Is there any instance where Julian gives contradictory definitions of AI across sessions?",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:2",
+      "D1:5",
+      "D1:10",
+      "D6:2"
+    ],
+    "clue": [
+      "D1:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference answer exactly, stating 'No'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer matches the reference answer exactly, stating 'No'.\"}"
+  },
+  {
+    "index": 6,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "VS",
+    "question": "Which of the images uploaded in 2024-07-07 focus on a robotic arm?",
+    "prediction": "D2:IMG_004",
+    "reference": "D2:IMG_003, D2:IMG_004",
+    "retrieved_ids": [
+      "D2:2",
+      "D1:3",
+      "D6:1",
+      "D2:8",
+      "D4:7"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer lists two images (D2:IMG_003 and D2:IMG_004) but the prediction only includes D2:IMG_004, omitting D2:IMG_003.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer lists two images (D2:IMG_003 and D2:IMG_004) but the prediction only includes D2:IMG_004, omitting D2:IMG_003.\"}"
+  },
+  {
+    "index": 7,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "AR",
+    "question": "Did Julian consider purchasing a robotic vacuum cleaner?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:32",
+      "D12:7",
+      "D12:8",
+      "D12:6"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 8,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "TR",
+    "question": "Did Julian discuss ethical dilemmas in autonomous driving before or after raising concerns about robots in healthcare?",
+    "prediction": "Julian discussed ethical dilemmas in autonomous driving after raising concerns about robots in healthcare.",
+    "reference": "After.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:4",
+      "D2:5",
+      "D7:2",
+      "D7:13"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states that Julian discussed autonomous driving ethical dilemmas after raising concerns about robots in healthcare, which matches the reference answer 'After'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction states that Julian discussed autonomous driving ethical dilemmas after raising concerns about robots in healthcare, which matches the reference answer 'After'.\"}"
+  },
+  {
+    "index": 9,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "TR",
+    "question": "Did Julian express worries about job-skill obsolescence before or after discussing agricultural robots’ impact on small farmers?",
+    "prediction": "Julian expressed worries about job-skill obsolescence before discussing agricultural robots’ impact on small farmers. He first raised concerns about skills being lost at home and the workforce in round D2:9, then later in D2:11, he reflected on the “skills race” and the potential for job displacement. The discussion about agricultural robots and small farmers occurred in round D2:16, which came after these earlier reflections.",
+    "reference": "Before.",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:11",
+      "D2:15",
+      "D2:16",
+      "D2:17"
+    ],
+    "clue": [
+      "D2:10",
+      "D2:16"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states that Julian expressed worries before discussing agricultural robots, which matches the reference answer 'Before.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction states that Julian expressed worries before discussing agricultural robots, which matches the reference answer 'Before.'\"\n}"
+  },
+  {
+    "index": 10,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "CD",
+    "question": "Does the conversation show any conflict where Julian claims social robots cannot possibly affect human emotional well-being?",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:23",
+      "D2:24",
+      "D2:25",
+      "D2:32"
+    ],
+    "clue": [
+      "D2:24"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'Yes' but the predicted answer says 'No', which contradicts the correct response.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer is 'Yes' but the predicted answer says 'No', which contradicts the correct response.\"\n}"
+  }
+]

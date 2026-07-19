@@ -1,0 +1,23 @@
+[
+  {
+    "sample_id": "Maria",
+    "dataset": "Global_Travel_Cultural_Sightseeing",
+    "session_id": "D9",
+    "question": "Which image shows a building at Yuquan Campus?",
+    "category": "VS",
+    "system_answer": "D9:IMG_008",
+    "original_answer": "D9:IMG_008",
+    "retrieved_ids": [
+      "D9:26",
+      "D9:25",
+      "D9:22",
+      "D9:24",
+      "D10:20"
+    ],
+    "clue": [
+      "D9:25"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:36:04"
+  }
+]

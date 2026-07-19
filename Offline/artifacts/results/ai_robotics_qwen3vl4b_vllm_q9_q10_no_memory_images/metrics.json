@@ -1,0 +1,20 @@
+{
+  "count": 2,
+  "f1": 0.021276595744680847,
+  "exact_match": 0.0,
+  "retrieval_hitrate@5": 1.0,
+  "by_category": {
+    "CD": {
+      "count": 1,
+      "f1": 0.0,
+      "exact_match": 0.0,
+      "retrieval_hitrate@5": 1.0
+    },
+    "TR": {
+      "count": 1,
+      "f1": 0.042553191489361694,
+      "exact_match": 0.0,
+      "retrieval_hitrate@5": 1.0
+    }
+  }
+}

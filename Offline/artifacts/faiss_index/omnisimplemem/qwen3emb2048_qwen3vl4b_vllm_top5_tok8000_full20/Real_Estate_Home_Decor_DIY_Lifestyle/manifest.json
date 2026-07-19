@@ -1,0 +1,10 @@
+{
+  "run_name": "qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20",
+  "dataset": "Real_Estate_Home_Decor_DIY_Lifestyle",
+  "dim": 2048,
+  "count": 249,
+  "index": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Real_Estate_Home_Decor_DIY_Lifestyle/vectors.index",
+  "id_mapping": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Real_Estate_Home_Decor_DIY_Lifestyle/id_mapping.json",
+  "metadata": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Real_Estate_Home_Decor_DIY_Lifestyle/mau_metadata.jsonl",
+  "source": "OmniSimpleMem MAU embeddings"
+}

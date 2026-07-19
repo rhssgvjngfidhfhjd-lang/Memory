@@ -1,0 +1,1417 @@
+[
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D1",
+    "question": "Is the dog in the picture the same breed as Milo?",
+    "category": "VR",
+    "system_answer": "Yes, the dog in the picture is a Cocker Spaniel, which is the same breed as Milo.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D1:4",
+      "D7:7",
+      "D1:2",
+      "D1:8",
+      "D2:2"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:3",
+      "D1:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:37"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D1",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "Cocker Spaniel",
+    "original_answer": "Cocker Spaniel",
+    "retrieved_ids": [
+      "D1:2",
+      "D2:2",
+      "D1:4",
+      "D2:3",
+      "D2:5"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:38"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D1",
+    "question": "Is the dog in the picture the same breed as Milo?",
+    "category": "VR",
+    "system_answer": "Yes, the dog in the picture is a Cocker Spaniel, which is the same breed as Milo, as both are described in the conversation as Cocker Spaniels with expressive eyes and affectionate nature.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D1:4",
+      "D2:2",
+      "D1:8",
+      "D1:2",
+      "D5:2"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:3",
+      "D1:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:38"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D1",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "Cocker Spaniel",
+    "original_answer": "Cocker Spaniel",
+    "retrieved_ids": [
+      "D2:2",
+      "D1:2",
+      "D3:3",
+      "D2:3",
+      "D1:4"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:39"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D1",
+    "question": "Is the dog in the picture the same breed as Milo?",
+    "category": "VR",
+    "system_answer": "Yes, the dog in the picture is a Cocker Spaniel, which is the same breed as Milo.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D1:4",
+      "D7:7",
+      "D1:8",
+      "D1:2",
+      "D2:2"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:3",
+      "D1:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:39"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D1",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "Cocker Spaniel",
+    "original_answer": "Cocker Spaniel",
+    "retrieved_ids": [
+      "D1:2",
+      "D2:2",
+      "D2:3",
+      "D1:4",
+      "D2:5"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:39"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D2",
+    "question": "What are the two spaniel breeds observed in the lab session?",
+    "category": "FR",
+    "system_answer": "The two spaniel breeds observed in the lab session are the Sussex Spaniel and the English Springer Spaniel.",
+    "original_answer": "Sussex Spaniel and English Springer Spaniel.",
+    "retrieved_ids": [
+      "D2:1",
+      "D5:1",
+      "D2:2",
+      "D2:3",
+      "D5:4"
+    ],
+    "clue": [
+      "D2:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:39"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D2",
+    "question": "What is the name of the Sussex Spaniel mentioned in the session?",
+    "category": "FR",
+    "system_answer": "Rocky",
+    "original_answer": "Rocky.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:2",
+      "D2:1",
+      "D2:10",
+      "D2:5"
+    ],
+    "clue": [
+      "D2:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:39"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D2",
+    "question": "According to the conversation, which type of dog looks like a teddy bear?",
+    "category": "FR",
+    "system_answer": "The Sussex Spaniel looks like a teddy bear.",
+    "original_answer": "Sussex Spaniel.",
+    "retrieved_ids": [
+      "D2:5",
+      "D2:1",
+      "D1:4",
+      "D2:3",
+      "D1:1"
+    ],
+    "clue": [
+      "D2:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:40"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D2",
+    "question": "What is the name of the English Springer Spaniel mentioned in the session?",
+    "category": "FR",
+    "system_answer": "Luna",
+    "original_answer": "Luna.",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:3",
+      "D2:2",
+      "D7:2",
+      "D5:2"
+    ],
+    "clue": [
+      "D2:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:40"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D2",
+    "question": "Please determine whether the following information conflicts with the dialogue memory:\n Sussex Spaniel has white-and-liver coat pattern and alert eyes.",
+    "category": "CD",
+    "system_answer": "Yes.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:2",
+      "D2:3",
+      "D2:5",
+      "D2:7"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:40"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D2",
+    "question": "According to the dialogue, what coat color pattern distinguishes the English Springer Spaniel from the Sussex Spaniel?",
+    "category": "VR",
+    "system_answer": "The English Springer Spaniel has a rich golden-liver coat, while the Sussex Spaniel has a rich golden-liver coat as well — but the key distinguishing feature is that the Sussex Spaniel has a longer body and droopy eyes, whereas the English Springer is described as bursting with energy and alert, with a coat that is typically more vibrant and less likely to be associated with the “teddy bear” look. However, the dialogue does not explicitly state a coat color pattern that distinguishes them — both are described as having rich golden-liver coats.",
+    "original_answer": "English Springers have a white-and-liver coat pattern, while Sussex Spaniels are solid golden-brown.",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:3",
+      "D2:5",
+      "D3:3",
+      "D5:2"
+    ],
+    "clue": [
+      "D2:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:41"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D2",
+    "question": "Is the dog in the picture the same breed as Luna?",
+    "category": "VR",
+    "system_answer": "No, the dog in the picture is not the same breed as Luna. The dog in the picture is a Sussex Spaniel, which has a rich golden-liver coat and a calm, steady temperament, while Luna is an English Springer Spaniel, known for her energetic and curious nature.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D2:5",
+      "D2:7",
+      "D2:3",
+      "D2:2",
+      "D2:6"
+    ],
+    "clue": [
+      "D2:1",
+      "D2:2",
+      "D2:3",
+      "D2:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:42"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D2",
+    "question": "Is the dog in the picture the same breed as Luna?",
+    "category": "VR",
+    "system_answer": "No, the dog in the picture is not the same breed as Luna. The dog in the image has a white-and-liver coat pattern and alert eyes, which matches the description of a Welsh Springer Spaniel, while Luna is an English Springer Spaniel. Although both are spaniels, they are distinct breeds with different coat patterns and temperaments.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:5",
+      "D2:2",
+      "D2:7",
+      "D5:2"
+    ],
+    "clue": [
+      "D2:1",
+      "D2:3",
+      "D2:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:42"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D2",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "English Springer Spaniel",
+    "original_answer": "English Springer Spaniel",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:3",
+      "D5:2",
+      "D2:5",
+      "D2:1"
+    ],
+    "clue": [
+      "D2:1",
+      "D2:3",
+      "D2:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:43"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D2",
+    "question": "How did Luna and Rocky respond differently when a clipboard was dropped during the lab session?",
+    "category": "MR",
+    "system_answer": "Rocky flinched but then wagged his tail and approached slowly, like he was checking if everyone was okay. Luna, on the other hand, barked once and then ran to grab the toy she’d been guarding.",
+    "original_answer": "Rocky flinched but calmly approached to check, showing empathy; Luna barked once and redirected to grab her toy.",
+    "retrieved_ids": [
+      "D2:11",
+      "D2:12",
+      "D7:1",
+      "D2:4",
+      "D7:11"
+    ],
+    "clue": [
+      "D2:10",
+      "D2:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:43"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D3",
+    "question": "What is the name of Professor Hayes’s Irish Water Spaniel?",
+    "category": "FR",
+    "system_answer": "Finn",
+    "original_answer": "Finn",
+    "retrieved_ids": [
+      "D5:1",
+      "D3:1",
+      "D5:2",
+      "D3:2",
+      "D3:4"
+    ],
+    "clue": [
+      "D3:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:43"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D3",
+    "question": "According to the conversation, what physical traits make Irish Water Spaniels well-suited for swimming?",
+    "category": "VR",
+    "system_answer": "Their dense, curly coats and webbed feet make them perfect for aquatic work.",
+    "original_answer": "They have dense, curly coats and webbed feet that help them swim efficiently and stay insulated in cold water.",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:1",
+      "D3:3",
+      "D5:2",
+      "D2:3"
+    ],
+    "clue": [
+      "D3:1",
+      "D3:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:43"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D3",
+    "question": "How does the assistant explain the value of small physical actions like writing a name or doodling during an anxiety spike?",
+    "category": "MR",
+    "system_answer": "The assistant explains that writing your name or doodling during an anxiety spike helps occupy your working memory with something safe, which allows you to gently shift back to the task once your mind steadies. This is a form of cognitive defusion — acknowledging anxious thoughts without fighting them.",
+    "original_answer": "They help re-anchor attention and regulate heartbeat, a form of cognitive defusion to reduce panic.",
+    "retrieved_ids": [
+      "D4:10",
+      "D3:15",
+      "D4:9",
+      "D3:14",
+      "D4:11"
+    ],
+    "clue": [
+      "D3:13",
+      "D3:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:44"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D3",
+    "question": "Please search for all images representing the dog breed that Finn represents.",
+    "category": "VS",
+    "system_answer": "D3:IMG_001, D3:IMG_002, D3:IMG_003",
+    "original_answer": "D3:IMG_001, D3:IMG_002, D3:IMG_003",
+    "retrieved_ids": [
+      "D3:3",
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:6"
+    ],
+    "clue": [
+      "D3:1",
+      "D3:2",
+      "D3:3",
+      "D3:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:44"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D3",
+    "question": "When did the user take the psychology exam? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2025-03-29",
+    "original_answer": "2025-03-29",
+    "retrieved_ids": [
+      "D3:9",
+      "D3:10",
+      "D4:1",
+      "D4:2",
+      "D4:8"
+    ],
+    "clue": [
+      "D3:9",
+      "D4:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:44"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D4",
+    "question": "What psychological concept did Evelyn recall during the conversation that relates to nature and mental recovery?",
+    "category": "FR",
+    "system_answer": "Attention Restoration Theory",
+    "original_answer": "The attention restoration theory, which states that natural environments help replenish directed attention.",
+    "retrieved_ids": [
+      "D4:5",
+      "D3:8",
+      "D4:15",
+      "D4:16",
+      "D1:12"
+    ],
+    "clue": [
+      "D4:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:45"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D4",
+    "question": "How does Evelyn's emotional state change over the course of the dialogue?",
+    "category": "KR",
+    "system_answer": "Evelyn begins the dialogue with anxiety about her psychology exam, feeling tightness in her stomach. She later expresses excitement and hope about her research, feeling energized and curious. By the end, she is relaxed and celebratory, having completed her paper draft and feeling she can finally breathe again.",
+    "original_answer": "She begins exhausted and self-critical but ends feeling calm, self-compassionate, and ready to rest.",
+    "retrieved_ids": [
+      "D9:14",
+      "D3:9",
+      "D8:20",
+      "D4:16",
+      "D11:2"
+    ],
+    "clue": [
+      "D4:1",
+      "D4:14",
+      "D4:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:45"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D4",
+    "question": "According to the conversation, how does reflective journaling help manage post-exam stress?",
+    "category": "MR",
+    "system_answer": "Reflective journaling transforms abstract stress into structured thoughts. You can note what worked, what didn’t, and how you want to adjust next time.",
+    "original_answer": "It helps transform abstract stress into structured thoughts and promotes insight for improvement.",
+    "retrieved_ids": [
+      "D4:11",
+      "D4:10",
+      "D4:3",
+      "D4:12",
+      "D3:13"
+    ],
+    "clue": [
+      "D4:10",
+      "D4:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:45"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D4",
+    "question": "Would it be accurate to say Evelyn felt completely confident and relaxed right after finishing her exam?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D11:1",
+      "D3:9",
+      "D4:1",
+      "D4:2",
+      "D4:3"
+    ],
+    "clue": [
+      "D4:1",
+      "D4:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:46"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D5",
+    "question": "What is the name of the Welsh Springer Spaniel observed during the tracking session?",
+    "category": "FR",
+    "system_answer": "Daisy",
+    "original_answer": "Daisy.",
+    "retrieved_ids": [
+      "D5:2",
+      "D5:1",
+      "D7:2",
+      "D5:8",
+      "D7:3"
+    ],
+    "clue": [
+      "D5:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:46"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D5",
+    "question": "What activities did Evelyn plan to do to unwind after the fieldwork?",
+    "category": "FR",
+    "system_answer": "Evelyn planned to go shopping, get a coffee, people-watch, and try a mesh dress as a small reward. She also mentioned taking a proper evening off with no laptop, no data, just a quiet meal and playlist. Additionally, she intended to play at the campus courts for an hour, followed by cooking something simple.",
+    "original_answer": "Cook a simple meal like garlic butter pasta or dumplings, and later play cozy games like Stardew Valley or Spiritfarer.",
+    "retrieved_ids": [
+      "D11:2",
+      "D7:17",
+      "D6:16",
+      "D11:14",
+      "D5:15"
+    ],
+    "clue": [
+      "D5:9",
+      "D5:10",
+      "D5:12",
+      "D5:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:46"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D5",
+    "question": "Would it be accurate to say Daisy was a large, dark-coated water retriever like Finn?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D3:1",
+      "D3:2",
+      "D5:1",
+      "D5:2",
+      "D5:3"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:47"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D6",
+    "question": "What are 'micro-pauses' and why did the assistant recommend them?",
+    "category": "MR",
+    "system_answer": "Micro-pauses are short, deliberate breaks — like closing a laptop for a few minutes — to interrupt mental fatigue. The assistant recommended them because even two minutes of disengagement can help reset focus and prevent burnout, especially when over-focusing on tasks like labeling data.",
+    "original_answer": "Micro-pauses are short, deliberate breaks like closing the laptop or stretching for a few minutes. The assistant recommended them to interrupt cycles of mental fatigue and prevent burnout.",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:4",
+      "D6:7",
+      "D3:12",
+      "D6:5"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:47"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D6",
+    "question": "Which image in the dialogue shows the user's laptop?",
+    "category": "VS",
+    "system_answer": "None of the images mentioned in the dialogue show the user's laptop.",
+    "original_answer": "D6:IMG_001",
+    "retrieved_ids": [
+      "D2:7",
+      "D8:3",
+      "D3:7",
+      "D9:3",
+      "D2:6"
+    ],
+    "clue": [
+      "D6:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:47"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D6",
+    "question": "What environmental change did Evelyn consider to help her stay more present while working?",
+    "category": "FR",
+    "system_answer": "Evelyn considered moving her desk near the window to help her stay more present while working, as natural light helps her stay present.",
+    "original_answer": "She thought about moving her desk near the window to get natural light.",
+    "retrieved_ids": [
+      "D6:7",
+      "D6:12",
+      "D11:2",
+      "D6:6",
+      "D6:15"
+    ],
+    "clue": [
+      "D6:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:48"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D6",
+    "question": "What habit did Evelyn identify as contributing to her difficulty disconnecting from work?",
+    "category": "MR",
+    "system_answer": "Evelyn identified checking emails late at night as a habit contributing to her difficulty disconnecting from work.",
+    "original_answer": "Checking and replying to emails late at night, which kept pulling her back into work mode.",
+    "retrieved_ids": [
+      "D6:12",
+      "D6:4",
+      "D6:3",
+      "D6:2",
+      "D6:9"
+    ],
+    "clue": [
+      "D6:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:48"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D6",
+    "question": "Would it be accurate to say Evelyn believed working late every night was the best way to stay productive?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:14",
+      "D6:15",
+      "D6:16",
+      "D6:17"
+    ],
+    "clue": [
+      "D6:9",
+      "D6:15",
+      "D6:17"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:48"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D7",
+    "question": "In the dalogue of mid-April, which image represents Luna observed in this session?",
+    "category": "VS",
+    "system_answer": "D7:IMG_001",
+    "original_answer": "D7:IMG_001",
+    "retrieved_ids": [
+      "D2:7",
+      "D7:2",
+      "D7:1",
+      "D2:6",
+      "D5:7"
+    ],
+    "clue": [
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:48"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D7",
+    "question": "Which quote from Professor Hayes inspired Evelyn’s perspective on connecting emotion and motion?",
+    "category": "FR",
+    "system_answer": "“Emotion is motion.”",
+    "original_answer": "“Emotion is motion.”",
+    "retrieved_ids": [
+      "D7:11",
+      "D9:14",
+      "D2:14",
+      "D7:10",
+      "D9:13"
+    ],
+    "clue": [
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:48"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D7",
+    "question": "What time and duration did Evelyn plan for her tennis session?",
+    "category": "TR",
+    "system_answer": "Evelyn planned to play tennis around six o'clock and for an hour.",
+    "original_answer": "Around six in the evening for about one hour before dinner.",
+    "retrieved_ids": [
+      "D7:12",
+      "D7:13",
+      "D7:14",
+      "D7:16",
+      "D7:17"
+    ],
+    "clue": [
+      "D7:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:49"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D7",
+    "question": "Would it be correct to say Luna and Daisy showed identical behavioral traits during their tracking sessions?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:3",
+      "D7:4",
+      "D7:5",
+      "D7:9"
+    ],
+    "clue": [
+      "D7:3",
+      "D7:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:49"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D8",
+    "question": "Which departments or research areas were represented at the mixer?",
+    "category": "FR",
+    "system_answer": "Computer science, neuroscience, and art history.",
+    "original_answer": "Computer science, neuroscience, and art history — including someone studying visual perception.",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:1",
+      "D8:3",
+      "D8:8",
+      "D10:1"
+    ],
+    "clue": [
+      "D8:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:49"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D8",
+    "question": "What new personal practice did Evelyn decide to start after the mixer?",
+    "category": "FR",
+    "system_answer": "Evelyn decided to start logging off early tonight and doing some gentle yoga before bed as a new personal practice.",
+    "original_answer": "Keeping a 'learning log' to record mistakes and lessons learned rather than just results.",
+    "retrieved_ids": [
+      "D7:17",
+      "D7:16",
+      "D6:16",
+      "D6:17",
+      "D11:14"
+    ],
+    "clue": [
+      "D8:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:49"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D9",
+    "question": "What new breed appeared in the dataset that challenged Evelyn’s emotion-recognition model?",
+    "category": "FR",
+    "system_answer": "Brittany Spaniel named Cooper.",
+    "original_answer": "Brittany Spaniel",
+    "retrieved_ids": [
+      "D9:1",
+      "D9:2",
+      "D5:5",
+      "D7:6",
+      "D9:11"
+    ],
+    "clue": [
+      "D9:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:49"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D9",
+    "question": "Is the dog in the picture the same breed as Cooper?",
+    "category": "VR",
+    "system_answer": "No, the dog in the picture is not the same breed as Cooper. Cooper is a Brittany Spaniel, as mentioned in the conversation, while the dog in the image has a distinct reddish-brown and white coat with floppy ears, which is characteristic of a Brittany Spaniel, but the image does not match Cooper’s description or the context provided.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D9:3",
+      "D2:2",
+      "D2:5",
+      "D5:2",
+      "D9:9"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:5",
+      "D9:6",
+      "D9:7",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:50"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D9",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "The dog in the attached image is a Brittany Spaniel.",
+    "original_answer": "Brittany Spaniel",
+    "retrieved_ids": [
+      "D9:3",
+      "D2:3",
+      "D2:2",
+      "D9:9",
+      "D5:2"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:5",
+      "D9:6",
+      "D9:7",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:50"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D9",
+    "question": "Is the dog in the picture the same breed as Cooper?",
+    "category": "VR",
+    "system_answer": "No, the dog in the picture is not the same breed as Cooper. The dog in the image is a Brittany Spaniel, as referenced in the conversation where Cooper, a Brittany Spaniel, was discussed. The image shows a dog with a red and white coat, which is characteristic of the Brittany Spaniel breed.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D2:2",
+      "D9:3",
+      "D5:2",
+      "D2:3",
+      "D2:5"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:5",
+      "D9:6",
+      "D9:7",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:51"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D9",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "Brittany Spaniel",
+    "original_answer": "Brittany Spaniel",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:3",
+      "D5:2",
+      "D2:5",
+      "D9:3"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:5",
+      "D9:6",
+      "D9:7",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:51"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D9",
+    "question": "Is the dog in the picture the same breed as Cooper?",
+    "category": "VR",
+    "system_answer": "No, the dog in the picture is not the same breed as Cooper. Cooper is a Brittany Spaniel, as mentioned in the memory, while the dog in the image has a reddish-brown and white coat with a snow-dusted nose and eyes, which is characteristic of a Brittany Spaniel, but the image does not match the description of Cooper’s breed or context. However, the memory does not explicitly confirm the breed of the dog in the image, so it cannot be definitively concluded that it is the same as Cooper.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:3",
+      "D9:3",
+      "D5:2",
+      "D2:5"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:5",
+      "D9:6",
+      "D9:7",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:52"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D9",
+    "question": "What breed is the dog in the attached image?",
+    "category": "TTL",
+    "system_answer": "Welsh Springer Spaniel",
+    "original_answer": "Brittany Spaniel",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:2",
+      "D5:2",
+      "D2:5",
+      "D5:1"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:5",
+      "D9:6",
+      "D9:7",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:53"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D10",
+    "question": "Besides AAAI, are IJCAI and ICML also important academic conferences in artificial intelligence?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:2",
+      "D10:3",
+      "D10:5",
+      "D10:4"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:53"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D10",
+    "question": "Is the abstract deadline for AAAI 2024 July 25th of that year?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:2",
+      "D10:3",
+      "D10:13",
+      "D10:1",
+      "D10:4"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:53"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D10",
+    "question": "Which image shown represents the AAAI 2026 conference details?",
+    "category": "VS",
+    "system_answer": "D10:IMG_001",
+    "original_answer": "D10:IMG_001",
+    "retrieved_ids": [
+      "D10:2",
+      "D10:3",
+      "D10:1",
+      "D10:13",
+      "D10:17"
+    ],
+    "clue": [
+      "D10:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:53"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D10",
+    "question": "When are the AAAI 2026 submission deadlines for abstracts and full papers?",
+    "category": "TR",
+    "system_answer": "Abstracts due **July 25, 2025**, and full papers due **August 1, 2025**, both at 11:59 PM UTC-12.",
+    "original_answer": "Abstracts are due July 25, 2025, and full papers are due August 1, 2025, both at 11:59 PM UTC-12.",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:2",
+      "D10:3",
+      "D10:4",
+      "D10:13"
+    ],
+    "clue": [
+      "D10:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:54"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D10",
+    "question": "Which conference did Professor Hayes suggest Evelyn submit her paper to?",
+    "category": "FR",
+    "system_answer": "AAAI",
+    "original_answer": "AAAI.",
+    "retrieved_ids": [
+      "D10:1",
+      "D8:8",
+      "D10:13",
+      "D8:9",
+      "D10:2"
+    ],
+    "clue": [
+      "D10:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:54"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D10",
+    "question": "List all image IDs representing Singapore landmarks mentioned in the conversation, separated by commas.",
+    "category": "VS",
+    "system_answer": "D10:IMG_002, D10:IMG_003, D10:IMG_004, D10:IMG_005, D10:IMG_006",
+    "original_answer": "D10:IMG_002, D10:IMG_003, D10:IMG_004, D10:IMG_005, D10:IMG_006",
+    "retrieved_ids": [
+      "D10:15",
+      "D10:16",
+      "D10:18",
+      "D10:17",
+      "D10:14"
+    ],
+    "clue": [
+      "D10:14",
+      "D10:15",
+      "D10:16",
+      "D10:17",
+      "D10:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:54"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "What milestone did Evelyn accomplish before deciding to go shopping?",
+    "category": "FR",
+    "system_answer": "Evelyn accomplished finishing the first full draft of her paper last night.",
+    "original_answer": "She finished the first full draft of her research paper.",
+    "retrieved_ids": [
+      "D11:14",
+      "D11:17",
+      "D11:2",
+      "D11:3",
+      "D11:16"
+    ],
+    "clue": [
+      "D11:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:54"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "What two types of dresses was Evelyn considering buying?",
+    "category": "FR",
+    "system_answer": "A plaid shirt dress and a mesh-paneled jersey dress.",
+    "original_answer": "A plaid shirt dress and a mesh-paneled jersey dress.",
+    "retrieved_ids": [
+      "D11:3",
+      "D11:4",
+      "D11:7",
+      "D11:17",
+      "D11:11"
+    ],
+    "clue": [
+      "D11:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:55"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "Which images correspond to the plaid shirt dresses Evelyn mentioned?",
+    "category": "VS",
+    "system_answer": "D11:IMG_001, D11:IMG_002",
+    "original_answer": "D11:IMG_001, D11:IMG_002, D11:IMG_003",
+    "retrieved_ids": [
+      "D11:4",
+      "D11:5",
+      "D11:7",
+      "D11:3",
+      "D11:8"
+    ],
+    "clue": [
+      "D11:4",
+      "D11:5",
+      "D11:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:55"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "Which images correspond to the mesh-paneled jersey dresses Evelyn showed?",
+    "category": "VS",
+    "system_answer": "D11:IMG_004, D11:IMG_007",
+    "original_answer": "D11:IMG_004, D11:IMG_005, D11:IMG_006, D11:IMG_007",
+    "retrieved_ids": [
+      "D11:4",
+      "D11:7",
+      "D11:8",
+      "D11:5",
+      "D11:10"
+    ],
+    "clue": [
+      "D11:7",
+      "D11:8",
+      "D11:9",
+      "D11:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:55"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "Did Evelyn mention any intention to continue academic work on the same day she finished her draft?",
+    "category": "CD",
+    "system_answer": "Yes.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D10:12",
+      "D11:1",
+      "D11:2",
+      "D6:2",
+      "D8:19"
+    ],
+    "clue": [
+      "D11:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:55"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "What type of clothing is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "Plaid shirt dress",
+    "original_answer": "Plaid Shirt Dress.",
+    "retrieved_ids": [
+      "D11:4",
+      "D11:5",
+      "D11:7",
+      "D11:11",
+      "D11:8"
+    ],
+    "clue": [
+      "D11:4",
+      "D11:5",
+      "D11:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:55"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "What type of clothing is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "Plaid shirt dress",
+    "original_answer": "Plaid Shirt Dress.",
+    "retrieved_ids": [
+      "D11:4",
+      "D11:5",
+      "D11:7",
+      "D11:8",
+      "D11:11"
+    ],
+    "clue": [
+      "D11:4",
+      "D11:5",
+      "D11:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:56"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "What type of clothing is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "Plaid shirt dress.",
+    "original_answer": "Plaid Shirt Dress.",
+    "retrieved_ids": [
+      "D11:5",
+      "D11:4",
+      "D11:7",
+      "D11:8",
+      "D11:10"
+    ],
+    "clue": [
+      "D11:4",
+      "D11:5",
+      "D11:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:56"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "What type of clothing is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "The clothing shown in the picture is a mesh-paneled jersey dress.",
+    "original_answer": "Mesh-Paneled Jersey Dress.",
+    "retrieved_ids": [
+      "D11:7",
+      "D11:8",
+      "D11:4",
+      "D11:10",
+      "D11:5"
+    ],
+    "clue": [
+      "D11:7",
+      "D11:8",
+      "D11:9",
+      "D11:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:56"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "What type of clothing is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "The clothing shown in the picture is a black sleeveless jersey dress with a large number \"5\" on the back.",
+    "original_answer": "Mesh-Paneled Jersey Dress.",
+    "retrieved_ids": [
+      "D11:8",
+      "D11:7",
+      "D11:9",
+      "D11:4",
+      "D11:10"
+    ],
+    "clue": [
+      "D11:7",
+      "D11:8",
+      "D11:9",
+      "D11:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:57"
+  },
+  {
+    "sample_id": "Evelyn",
+    "dataset": "Dog_Behavior_Research_Academic_Life",
+    "session_id": "D11",
+    "question": "What type of clothing is shown in the picture?",
+    "category": "TTL",
+    "system_answer": "mesh-paneled jersey dress",
+    "original_answer": "Mesh-Paneled Jersey Dress.",
+    "retrieved_ids": [
+      "D11:7",
+      "D11:8",
+      "D11:4",
+      "D11:10",
+      "D11:11"
+    ],
+    "clue": [
+      "D11:7",
+      "D11:8",
+      "D11:9",
+      "D11:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:19:57"
+  }
+]

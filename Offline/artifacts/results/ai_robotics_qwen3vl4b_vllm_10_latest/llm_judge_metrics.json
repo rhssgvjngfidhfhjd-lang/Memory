@@ -1,0 +1,33 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "count": 10,
+  "correct": 8,
+  "accuracy": 0.8,
+  "by_category": {
+    "AR": {
+      "count": 2,
+      "correct": 2,
+      "accuracy": 1.0
+    },
+    "CD": {
+      "count": 2,
+      "correct": 1,
+      "accuracy": 0.5
+    },
+    "MR": {
+      "count": 2,
+      "correct": 2,
+      "accuracy": 1.0
+    },
+    "TR": {
+      "count": 2,
+      "correct": 2,
+      "accuracy": 1.0
+    },
+    "VS": {
+      "count": 2,
+      "correct": 1,
+      "accuracy": 0.5
+    }
+  }
+}

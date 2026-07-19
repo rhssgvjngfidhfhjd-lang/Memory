@@ -1,0 +1,45 @@
+[
+  {
+    "sample_id": "Julian Vance",
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "session_id": "D2",
+    "question": "Did Julian express worries about job-skill obsolescence before or after discussing agricultural robots’ impact on small farmers?",
+    "category": "TR",
+    "system_answer": "Julian expressed worries about job-skill obsolescence before discussing agricultural robots’ impact on small farmers. He initially questioned the creation of new job opportunities in robotics and maintenance, expressing skepticism about whether the workforce would gain the necessary skills, which preceded his discussion on small farmers and robotic adoption in agriculture.",
+    "original_answer": "Before.",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:11",
+      "D2:15",
+      "D2:16",
+      "D2:17"
+    ],
+    "clue": [
+      "D2:10",
+      "D2:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-02 16:41:32"
+  },
+  {
+    "sample_id": "Julian Vance",
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "session_id": "D2",
+    "question": "Does the conversation show any conflict where Julian claims social robots cannot possibly affect human emotional well-being?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:23",
+      "D2:24",
+      "D2:25",
+      "D2:32"
+    ],
+    "clue": [
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-02 16:41:32"
+  }
+]

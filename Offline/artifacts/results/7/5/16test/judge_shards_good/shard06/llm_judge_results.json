@@ -1,0 +1,3959 @@
+[
+  {
+    "index": 861,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Infer the user's preferences of air purifier?",
+    "prediction": "The user prefers an air purifier that is HEPA-based to handle dust mites and pet dander, with a CADR value of 400–500 m³/h for a large living room (40–50 m²), and 200–300 m³/h for the bedroom (20–25 m²). They prioritize quiet operation, especially for sleep, and value smart features like app control and real-time AQI monitoring. They also care about filter replacement frequency (HEPA every 6–12 months, activated carbon every 3–6 months) and budget-conscious options. Based on their needs, they are open to models like the Philips AC2887/20 for premium allergy performance or the Xiaomi Air Purifier 4 Pro for smart features and value.",
+    "reference": "You prefer an air purifier with high CADR, HEPA and activated carbon filters, air quality monitoring, low noise, and reliable brands.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:6",
+      "D1:8",
+      "D1:12",
+      "D1:3"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:3",
+      "D1:6",
+      "D1:9",
+      "D1:11",
+      "D1:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes high CADR, HEPA and activated carbon filters, low noise, air quality monitoring, and mentions reliable brands, matching the reference without contradictions.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes high CADR, HEPA and activated carbon filters, low noise, air quality monitoring, and mentions reliable brands, matching the reference without contradictions.\"\n}"
+  },
+  {
+    "index": 862,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Which picture shown in the conversation is related to air quality?",
+    "prediction": "D1:IMG_003",
+    "reference": "D1:IMG_003",
+    "retrieved_ids": [
+      "D1:7",
+      "D1:8",
+      "D1:1",
+      "D1:2",
+      "D1:9"
+    ],
+    "clue": [
+      "D1:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (D1:IMG_003).",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer (D1:IMG_003).\"}"
+  },
+  {
+    "index": 863,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "Based on the conversation, if someone is interested in the air purifier's compatibility with a specific brand of home-automation systems for integrated environmental control and its ability to emit negative ions for air ionization, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:12",
+      "D1:6",
+      "D1:1",
+      "D1:11",
+      "D1:3"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 864,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TR",
+    "question": "Which happened earlier: Alex researching air purifiers or Alex beginning to explore mattress options for sleep optimization?",
+    "prediction": "Alex researching air purifiers happened earlier. He initiated this inquiry on 2024-06-28 (Session D1), while he began exploring mattress options for sleep optimization on 2024-08-09 (Session D2).",
+    "reference": "Alex researched air purifiers earlier.",
+    "retrieved_ids": [
+      "D1:1",
+      "D2:1",
+      "D2:19",
+      "D3:1",
+      "D3:2"
+    ],
+    "clue": [
+      "D1:1",
+      "D2:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states that Alex researched air purifiers earlier, matching the reference answer and providing consistent supporting details.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction states that Alex researched air purifiers earlier, matching the reference answer and providing consistent supporting details.\"}"
+  },
+  {
+    "index": 865,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Which picture shown in the conversation is about a mattress?",
+    "prediction": "D2:IMG_001",
+    "reference": "D2:IMG_001",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:12",
+      "D2:3",
+      "D2:13",
+      "D2:15"
+    ],
+    "clue": [
+      "D2:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 866,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TR",
+    "question": "Did Alex identify his sleep pain points before specifying his mattress budget?",
+    "prediction": "Yes, Alex identified his sleep pain points—specifically, being a side sleeper and waking up with a stiff neck—before specifying his mattress budget of around $800.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:2",
+      "D2:3",
+      "D2:12",
+      "D2:13"
+    ],
+    "clue": [
+      "D2:1",
+      "D2:3"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'No', but the predicted answer states 'Yes', directly contradicting the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer is 'No', but the predicted answer states 'Yes', directly contradicting the reference.\"\n}"
+  },
+  {
+    "index": 867,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "KR",
+    "question": "Alex viewed multiple mattress materials. What final recommendation aligns with his sleep position and concerns?",
+    "prediction": "A memory foam or hybrid mattress with a medium-soft firmness level, such as the Zinus Green Tea Memory Foam Mattress, aligns with Alex’s side sleeping position and concerns for spinal support and breathability.",
+    "reference": "A medium-soft memory foam or hybrid mattress with good contouring for side sleeping and neck support.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:2",
+      "D2:13",
+      "D2:12",
+      "D2:16"
+    ],
+    "clue": [
+      "D2:3",
+      "D2:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction matches the reference by recommending a medium‑soft memory foam or hybrid mattress for side sleeping with appropriate support, adding only non‑contradictory details.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction matches the reference by recommending a medium‑soft memory foam or hybrid mattress for side sleeping with appropriate support, adding only non‑contradictory details.\"\n}"
+  },
+  {
+    "index": 868,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Based on the conversation, how can a side sleeper with a $800 budget choose a suitable mattress?",
+    "prediction": "For a side sleeper with a $800 budget, choose a memory foam or hybrid mattress with medium-soft firmness, such as the Zinus Green Tea Memory Foam Mattress, which contours to the body for spinal support, relieves pressure points, and is breathable. Ensure the mattress is properly ventilated to minimize off-gassing, and consider buying online for reviews and deals, though test it in-store if possible for firmness and support. Also, use a sturdy bed frame and allow time for adjustment to maximize comfort.",
+    "reference": "They can choose a memory foam or hybrid mattress like the Zinus Green Tea Memory Foam Mattress.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:2",
+      "D2:4",
+      "D2:8",
+      "D2:13"
+    ],
+    "clue": [
+      "D2:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes the recommended memory foam or hybrid mattress and specifically mentions the Zinus Green Tea Memory Foam Mattress, matching the reference without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes the recommended memory foam or hybrid mattress and specifically mentions the Zinus Green Tea Memory Foam Mattress, matching the reference without contradiction.\"\n}"
+  },
+  {
+    "index": 869,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "Based on the conversation, if someone is interested in a mattress's compatibility with a specific brand of adjustable bed frame and its ability to connect to a smart device for sleep tracking, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:13",
+      "D2:12",
+      "D2:3",
+      "D2:2",
+      "D2:1"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"}"
+  },
+  {
+    "index": 870,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "FR",
+    "question": "List all the types of houseplants that were discussed in the conversation.",
+    "prediction": "Pothos, snake plant, ZZ plant, peace lily, anthurium",
+    "reference": "Pothos, Snake plant, ZZ plant, Peace lily, and Anthurium.",
+    "retrieved_ids": [
+      "D3:22",
+      "D3:23",
+      "D3:24",
+      "D3:9",
+      "D3:10"
+    ],
+    "clue": [
+      "D3:3",
+      "D3:4",
+      "D3:6",
+      "D3:10",
+      "D3:14",
+      "D3:16"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer lists exactly the same houseplant types as the reference answer, matching all items.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer lists exactly the same houseplant types as the reference answer, matching all items.\"}"
+  },
+  {
+    "index": 871,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Based on the conversation, which houseplant requires the least maintenance and why?",
+    "prediction": "Snake plant requires the least maintenance because it only needs watering every 2–3 weeks, sometimes less, and handles neglect better than pothos.",
+    "reference": "The snake plant requires the least maintenance. It only needs watering every 2-3 weeks, sometimes less, and handles neglect better than pothos. It tolerates low light and irregular watering extremely well.",
+    "retrieved_ids": [
+      "D3:22",
+      "D3:23",
+      "D3:24",
+      "D3:9",
+      "D3:4"
+    ],
+    "clue": [
+      "D3:6",
+      "D3:9",
+      "D3:23"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly identifies the snake plant as requiring the least maintenance and gives the same reasons (infrequent watering and better tolerance of neglect) as the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer correctly identifies the snake plant as requiring the least maintenance and gives the same reasons (infrequent watering and better tolerance of neglect) as the reference.\"\n}"
+  },
+  {
+    "index": 872,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VR",
+    "question": "How many pictures of snake plants were shared? Please answer using an Arabic numeral (e.g., 3 instead of 'three').",
+    "prediction": "2",
+    "reference": "3",
+    "retrieved_ids": [
+      "D3:7",
+      "D3:8",
+      "D3:9",
+      "D3:10",
+      "D3:4"
+    ],
+    "clue": [
+      "D3:6",
+      "D3:7",
+      "D3:8"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '2' does not match the reference answer '3'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '2' does not match the reference answer '3'.\"}"
+  },
+  {
+    "index": 873,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "How often does a ZZ plant need to be watered, and why can it survive with such infrequent watering?",
+    "prediction": "A ZZ plant needs to be watered once every 3–4 weeks. It can survive with such infrequent watering because it stores water in its rhizomes underground, allowing it to thrive on minimal moisture.",
+    "reference": "A ZZ plant needs to be watered once every 3-4 weeks. It can survive with such infrequent watering because it stores water in rhizomes underground, allowing it to thrive on minimal watering.",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:12",
+      "D3:10",
+      "D3:13",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference: same watering interval (once every 3‑4 weeks) and same reason (stores water in underground rhizomes, enabling survival with minimal water).",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference: same watering interval (once every 3‑4 weeks) and same reason (stores water in underground rhizomes, enabling survival with minimal water).\"\n}"
+  },
+  {
+    "index": 874,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TR",
+    "question": "Did Alex evaluate pothos before evaluating snake plants and ZZ plants?",
+    "prediction": "Yes, Alex evaluated pothos first, then snake plants, and later ZZ plants.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D3:9",
+      "D3:10",
+      "D3:11",
+      "D3:13",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:3",
+      "D3:6",
+      "D3:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction affirms that Alex evaluated pothos before snake plants and ZZ plants, matching the reference answer and providing consistent additional detail.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction affirms that Alex evaluated pothos before snake plants and ZZ plants, matching the reference answer and providing consistent additional detail.\"\n}"
+  },
+  {
+    "index": 875,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "What is the red part of an Anthurium flower actually called, and what is it?",
+    "prediction": "The red part of an Anthurium flower is actually called a spathe — it’s a modified leaf that is glossy and heart-shaped, and it’s what gives Anthuriums their iconic appearance.",
+    "reference": "The red part is called a spathe, and it's actually a modified leaf, not the flower itself. The long structure in the center is called the spadix.",
+    "retrieved_ids": [
+      "D3:17",
+      "D3:16",
+      "D3:18",
+      "D3:19",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:16"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer correctly states the red part is a spathe and that it is a modified leaf, matching the reference.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The answer correctly states the red part is a spathe and that it is a modified leaf, matching the reference.\"}"
+  },
+  {
+    "index": 876,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Based on the conversation, rank the plants from lowest to highest care requirements by < separator.",
+    "prediction": "Snake plant < ZZ plant < Pothos",
+    "reference": "Snake Plant < Pothos < ZZ Plant < Anthurium < Peace Lily",
+    "retrieved_ids": [
+      "D3:22",
+      "D3:23",
+      "D3:24",
+      "D3:9",
+      "D3:11"
+    ],
+    "clue": [
+      "D3:20"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted ranking is both incomplete (missing Anthurium and Peace Lily) and has the wrong order for Pothos and ZZ Plant; it does not match the reference ranking.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted ranking is both incomplete (missing Anthurium and Peace Lily) and has the wrong order for Pothos and ZZ Plant; it does not match the reference ranking.\"\n}"
+  },
+  {
+    "index": 877,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VR",
+    "question": "How many pictures of ZZ plants were shared? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "2",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:10",
+      "D3:13",
+      "D3:12",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:10",
+      "D3:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly.\"\n}"
+  },
+  {
+    "index": 878,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "KR",
+    "question": "Which plant did the user finally decide to buy for their bedroom corner?",
+    "prediction": "Snake plant",
+    "reference": "Snake plant.",
+    "retrieved_ids": [
+      "D3:25",
+      "D3:24",
+      "D3:26",
+      "D3:2",
+      "D3:23"
+    ],
+    "clue": [
+      "D3:24",
+      "D3:25"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Snake plant', correctly answering the question.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Snake plant', correctly answering the question.\"\n}"
+  },
+  {
+    "index": 879,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "Based on the conversation, if someone is interested in using artificial grow lights for the plants or adding automated watering systems, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:24",
+      "D3:1",
+      "D3:2",
+      "D3:26",
+      "D3:25"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 880,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VR",
+    "question": "How many total pictures of Anthurium flowers were shared? Please answer using an Arabic numeral.",
+    "prediction": "4",
+    "reference": "4",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:16",
+      "D3:17",
+      "D3:19",
+      "D3:21"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer '4'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer '4'.\"\n}"
+  },
+  {
+    "index": 881,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Anthurium",
+    "reference": "Anthurium",
+    "retrieved_ids": [
+      "D3:17",
+      "D3:16",
+      "D3:18",
+      "D3:19",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Anthurium'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Anthurium'.\"\n}"
+  },
+  {
+    "index": 882,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "The flower shown in the image is an Anthurium, specifically a white variety, often called a \"flamingo flower\" or \"laceleaf.\" The glossy, heart-shaped spathe and the central spadix are characteristic features of this plant.",
+    "reference": "Anthurium",
+    "retrieved_ids": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19",
+      "D3:15"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer identifies the flower as Anthurium, matching the reference, and adds non-contradictory details.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer identifies the flower as Anthurium, matching the reference, and adds non-contradictory details.\"}"
+  },
+  {
+    "index": 883,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Anthurium, specifically a pink variety, with a heart-shaped spathe and a central spadix.",
+    "reference": "Anthurium",
+    "retrieved_ids": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction includes the reference answer 'Anthurium' and adds non-contradictory details, so it is semantically correct.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction includes the reference answer 'Anthurium' and adds non-contradictory details, so it is semantically correct.\"\n}"
+  },
+  {
+    "index": 884,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Anthurium",
+    "reference": "Anthurium",
+    "retrieved_ids": [
+      "D3:17",
+      "D3:16",
+      "D3:18",
+      "D3:19",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Anthurium'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Anthurium'.\"\n}"
+  },
+  {
+    "index": 885,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Anthurium",
+    "reference": "Anthurium",
+    "retrieved_ids": [
+      "D3:17",
+      "D3:16",
+      "D3:18",
+      "D3:19",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Anthurium'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Anthurium'.\"\n}"
+  },
+  {
+    "index": 886,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VR",
+    "question": "How many Anthurium photos did the user share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "3",
+    "reference": "4",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:16",
+      "D3:17",
+      "D3:21",
+      "D3:19"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:17",
+      "D3:18",
+      "D3:19"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '3' does not match the reference answer '4'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '3' does not match the reference answer '4'.\"\n}"
+  },
+  {
+    "index": 887,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VR",
+    "question": "How many pothos did the user share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "1",
+    "reference": "2",
+    "retrieved_ids": [
+      "D3:4",
+      "D3:3",
+      "D3:22",
+      "D3:10",
+      "D3:9"
+    ],
+    "clue": [
+      "D3:3",
+      "D3:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '1' does not match the reference answer '2'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '1' does not match the reference answer '2'.\"\n}"
+  },
+  {
+    "index": 888,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Please help me search all images about the pothos. Only return the image_id of the images.",
+    "prediction": "D3:IMG_001, D3:IMG_002",
+    "reference": "D3:IMG_001, D3:IMG_002",
+    "retrieved_ids": [
+      "D3:4",
+      "D3:3",
+      "D3:10",
+      "D3:22",
+      "D3:5"
+    ],
+    "clue": [
+      "D3:3",
+      "D3:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, providing the required image IDs.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer, providing the required image IDs.\"}"
+  },
+  {
+    "index": 889,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VR",
+    "question": "How many Snake Plant photos did the user share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "3",
+    "retrieved_ids": [
+      "D3:7",
+      "D3:8",
+      "D3:9",
+      "D3:4",
+      "D3:26"
+    ],
+    "clue": [
+      "D3:6",
+      "D3:7",
+      "D3:8"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '2' does not match the reference answer '3'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '2' does not match the reference answer '3'.\"}"
+  },
+  {
+    "index": 890,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VR",
+    "question": "How many ZZ Plant photos did the user share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "2",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:10",
+      "D3:12",
+      "D3:13",
+      "D3:26"
+    ],
+    "clue": [
+      "D3:10",
+      "D3:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer exactly.\"}"
+  },
+  {
+    "index": 891,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Please help me search all images about the ZZ Plant. Only return the image_id of the images.",
+    "prediction": "D3:IMG_006, D3:IMG_007",
+    "reference": "D3:IMG_006, D3:IMG_007",
+    "retrieved_ids": [
+      "D3:10",
+      "D3:11",
+      "D3:12",
+      "D3:13",
+      "D3:7"
+    ],
+    "clue": [
+      "D3:10",
+      "D3:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, providing the required image IDs.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer, providing the required image IDs.\"\n}"
+  },
+  {
+    "index": 892,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VR",
+    "question": "How many peace lily photos did the user share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "2",
+    "retrieved_ids": [
+      "D3:15",
+      "D3:14",
+      "D3:16",
+      "D3:22",
+      "D3:20"
+    ],
+    "clue": [
+      "D3:14",
+      "D3:15"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer '2'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer '2'.\"\n}"
+  },
+  {
+    "index": 893,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Please help me search all images about the peace lily. Only return the image_id of the images.",
+    "prediction": "D3:IMG_008, D3:IMG_009",
+    "reference": "D3:IMG_008, D3:IMG_009",
+    "retrieved_ids": [
+      "D3:15",
+      "D3:14",
+      "D3:16",
+      "D3:20",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:14",
+      "D3:15"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference image IDs.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference image IDs.\"}"
+  },
+  {
+    "index": 894,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "CD",
+    "question": "Is it contradictory to say that Alex prefers high-maintenance plants requiring daily attention?",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:21",
+      "D3:22",
+      "D3:25",
+      "D3:26"
+    ],
+    "clue": [
+      "D3:9",
+      "D3:11",
+      "D3:22"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'Yes', but the predicted answer says 'No', which contradicts the correct response.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer is 'Yes', but the predicted answer says 'No', which contradicts the correct response.\"\n}"
+  },
+  {
+    "index": 895,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture are the easiest houseplants to care for.",
+    "prediction": "Yes.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:19",
+      "D3:20",
+      "D3:21",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:9",
+      "D3:11",
+      "D3:22"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer ('Yes') and correctly indicates a conflict.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer ('Yes') and correctly indicates a conflict.\"\n}"
+  },
+  {
+    "index": 896,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture are the easiest houseplants to care for.",
+    "prediction": "Yes.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:19",
+      "D3:20",
+      "D3:21",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:9",
+      "D3:11",
+      "D3:22"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer exactly.\"}"
+  },
+  {
+    "index": 897,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture are the easiest houseplants to care for.",
+    "prediction": "Yes.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:19",
+      "D3:20",
+      "D3:21",
+      "D3:22"
+    ],
+    "clue": [
+      "D3:9",
+      "D3:11",
+      "D3:22"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly.\"\n}"
+  },
+  {
+    "index": 898,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "Which exact chair model did Alex finally buy?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:11",
+      "D4:4",
+      "D4:3",
+      "D5:13",
+      "D4:1"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, stating that the chair model is not mentioned.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly, stating that the chair model is not mentioned.\"\n}"
+  },
+  {
+    "index": 899,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VR",
+    "question": "How many pictures are about ergonomic chair? Please answer using an Arabic numeral (e.g., 3 instead of 'three').",
+    "prediction": "2",
+    "reference": "3",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:11",
+      "D4:6",
+      "D4:5",
+      "D4:4"
+    ],
+    "clue": [
+      "D4:5",
+      "D4:6"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '2' does not match the reference answer '3'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '2' does not match the reference answer '3'.\"\n}"
+  },
+  {
+    "index": 900,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "FR",
+    "question": "List all the brands of ergonomic chairs discussed in the conversation.",
+    "prediction": "Secretlab, Herman Miller (Aeron or Embody), Steelcase (Series 1 or Gesture)",
+    "reference": "Secretlab, Herman Miller, and Steelcase.",
+    "retrieved_ids": [
+      "D4:11",
+      "D4:1",
+      "D4:2",
+      "D4:7",
+      "D4:3"
+    ],
+    "clue": [
+      "D4:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction lists Secretlab, Herman Miller, and Steelcase, matching the reference answer; extra model details do not contradict the required brands.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction lists Secretlab, Herman Miller, and Steelcase, matching the reference answer; extra model details do not contradict the required brands.\"}"
+  },
+  {
+    "index": 901,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "Which brand of ergonomic chair did Alex finally choose?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:11",
+      "D4:1",
+      "D5:28",
+      "D4:4",
+      "D4:7"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer stating that the brand is not mentioned.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer stating that the brand is not mentioned.\"}"
+  },
+  {
+    "index": 902,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TR",
+    "question": "Did Alex upgrade his ergonomic chair before reorganizing his desk?",
+    "prediction": "Yes, Alex upgraded his ergonomic chair before reorganizing his desk, as he mentioned in round D5:1 that the upgrade made him notice how messy his desk was.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:2",
+      "D5:13",
+      "D5:14",
+      "D6:1"
+    ],
+    "clue": [
+      "D4:1",
+      "D5:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer affirms the same Yes as the reference and adds consistent supporting detail without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer affirms the same Yes as the reference and adds consistent supporting detail without contradiction.\"\n}"
+  },
+  {
+    "index": 903,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "FR",
+    "question": "List all the desk organization products that were discussed in the conversation.",
+    "prediction": "Cable tray, desk mat, tray for small items",
+    "reference": "Desk trays, under-desk cable trays, cable clips, desk mat, and monitor riser.",
+    "retrieved_ids": [
+      "D5:4",
+      "D5:2",
+      "D5:6",
+      "D5:12",
+      "D5:13"
+    ],
+    "clue": [
+      "D5:3",
+      "D5:5",
+      "D5:7",
+      "D5:8",
+      "D5:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer omits several products from the reference list (cable clips, monitor riser) and does not fully match the items (e.g., 'Cable tray' vs. 'under-desk cable trays', missing 'desk trays').",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer omits several products from the reference list (cable clips, monitor riser) and does not fully match the items (e.g., 'Cable tray' vs. 'under-desk cable trays', missing 'desk trays').\"\n}"
+  },
+  {
+    "index": 904,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Which picture shown in the conversation is about the desk trays? Only return the image_id of the image.",
+    "prediction": "D5:IMG_001",
+    "reference": "D5:IMG_001",
+    "retrieved_ids": [
+      "D5:3",
+      "D5:4",
+      "D5:12",
+      "D5:6",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, providing the correct image_id.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer, providing the correct image_id.\"}"
+  },
+  {
+    "index": 905,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Why was a monitor riser recommended, and what dual benefits does it provide?",
+    "prediction": "A monitor riser was recommended because it improves neck posture and frees space underneath for storage, balancing ergonomics with organization.",
+    "reference": "A monitor riser improves neck posture and frees space underneath for storage. It balances ergonomics with organization.",
+    "retrieved_ids": [
+      "D5:9",
+      "D5:8",
+      "D5:10",
+      "D5:1",
+      "D5:28"
+    ],
+    "clue": [
+      "D5:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer restates the reference answer, mentioning improved neck posture and freed storage space, and notes the balance of ergonomics and organization.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer restates the reference answer, mentioning improved neck posture and freed storage space, and notes the balance of ergonomics and organization.\"\n}"
+  },
+  {
+    "index": 906,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Which picture shows the massage gun discussed? Only return the image_id of the image.",
+    "prediction": "D5:IMG_003",
+    "reference": "D5:IMG_003",
+    "retrieved_ids": [
+      "D5:15",
+      "D5:14",
+      "D5:16",
+      "D5:22",
+      "D5:23"
+    ],
+    "clue": [
+      "D5:15"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 907,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "What are the specifications of the massage gun that was discussed, including torque and noise level?",
+    "prediction": "The torque reaches 45 lbs and the noise level is around 45–50 dB.",
+    "reference": "The torque reaches 45 lbs and the noise level is around 45-50 dB.",
+    "retrieved_ids": [
+      "D5:16",
+      "D5:17",
+      "D5:15",
+      "D5:18",
+      "D5:14"
+    ],
+    "clue": [
+      "D5:17"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 908,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "CD",
+    "question": "Does the claim 'Alex strongly prefers low-torque massage guns' conflict with the conversation?",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D5:14",
+      "D5:15",
+      "D5:16",
+      "D5:17",
+      "D5:20"
+    ],
+    "clue": [
+      "D5:17",
+      "D5:24"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer says 'No' while the reference answer states 'Yes', contradicting the correct response.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer says 'No' while the reference answer states 'Yes', contradicting the correct response.\"}"
+  },
+  {
+    "index": 909,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Between the full-sized and mini massage gun models, which was recommended and why?",
+    "prediction": "The full-sized model was recommended because it provides stronger relief, especially given Alex’s tension patterns and professional workload.",
+    "reference": "The full-sized model was recommended because, given the user's tension patterns and professional workload, it would provide stronger relief. While mini guns are lighter and portable, they have lower torque and are only sufficient for mild tension, not deeper knots.",
+    "retrieved_ids": [
+      "D5:22",
+      "D5:24",
+      "D5:16",
+      "D5:25",
+      "D5:15"
+    ],
+    "clue": [
+      "D5:20",
+      "D5:21",
+      "D5:24"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction correctly states that the full-sized model was recommended and gives the same reason (stronger relief for the user's tension patterns and workload).",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction correctly states that the full-sized model was recommended and gives the same reason (stronger relief for the user's tension patterns and workload).\"\n}"
+  },
+  {
+    "index": 910,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "If someone is interested in smart desk organizers with built-in wireless charging or LED lighting features, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D5:4",
+      "D5:6",
+      "D6:10",
+      "D5:8",
+      "D5:2"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 911,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "CD",
+    "question": "Is there a contradiction in the conversation where improving desk organization could both reduce stress and require initial effort that might add stress?",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:2",
+      "D5:9",
+      "D5:14",
+      "D6:1"
+    ],
+    "clue": [
+      "D5:11",
+      "D5:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, stating 'No' to the question about a contradiction.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer exactly, stating 'No' to the question about a contradiction.\"}"
+  },
+  {
+    "index": 912,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "KR",
+    "question": "Alex compared a mini and full-sized massage gun. Based on the updated conversation, which one does he plan to purchase?",
+    "prediction": "The full-sized model.",
+    "reference": "The full-sized massage gun.",
+    "retrieved_ids": [
+      "D5:24",
+      "D5:16",
+      "D5:22",
+      "D5:14",
+      "D5:25"
+    ],
+    "clue": [
+      "D5:24",
+      "D5:27"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly states that Alex plans to purchase the full-sized model, matching the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer correctly states that Alex plans to purchase the full-sized model, matching the reference answer.\"\n}"
+  },
+  {
+    "index": 913,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "FR",
+    "question": "Summarize the key factors to consider when choosing a desk lamp for reading.",
+    "prediction": "Key factors to consider when choosing a desk lamp for reading include:  \n1. **Light Quality**: Opt for bright, even illumination without glare to prevent eye strain.  \n2. **Color Temperature**: Prefer warm white light (2700K–3500K) for comfort and reduced eye strain.  \n3. **Adjustability**: Choose a lamp with an adjustable head or neck to direct light precisely where needed.  \n4. **Brightness Levels**: Look for multiple brightness settings to adapt to different lighting conditions.  \n5. **Budget**: Consider affordability while ensuring the lamp meets your needs (e.g., TaoTronics LED Desk Lamp fits a $50 budget).  \n6. **Energy Efficiency**: Select energy-saving LED models to minimize electricity consumption.  \n7. **Additional Features**: Consider built-in timers or USB charging ports for convenience.  \n8. **Maintenance**: Regular cleaning and gentle adjustment of the gooseneck help maintain performance.",
+    "reference": "Consider the quality of light (glare-free and flicker-free), color temperature, flexibility, budget, eye-friendliness, durability, the choice between online and physical store purchase, energy consumption, additional features (built-in timer, USB charging port), and tips for getting the best performance.",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:11",
+      "D6:3",
+      "D6:10",
+      "D6:5"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D6:7",
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits several reference factors such as durability and purchase channel (online vs physical store), so it does not fully contain the reference answer.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The answer omits several reference factors such as durability and purchase channel (online vs physical store), so it does not fully contain the reference answer.\"}"
+  },
+  {
+    "index": 914,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Which picture shown is about color temperature?",
+    "prediction": "D6:IMG_002",
+    "reference": "D6:IMG_002",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:5",
+      "D6:2",
+      "D9:16",
+      "D6:4"
+    ],
+    "clue": [
+      "D6:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (D6:IMG_002).",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer (D6:IMG_002).\"}"
+  },
+  {
+    "index": 915,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Based on the conversation, how can a person with a $50 budget choose a suitable desk lamp for reading?",
+    "prediction": "For a $50 budget, the TaoTronics LED Desk Lamp is recommended. It offers multiple brightness levels, flicker-free technology to prevent eye strain, a non-glare design, and is energy-efficient. It also features an adjustable gooseneck for directing light precisely, and includes a USB charging port for convenience. Ensure the lamp is placed at an appropriate distance from reading material and cleaned regularly for optimal performance.",
+    "reference": "They can choose the TaoTronics LED Desk Lamp.",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:2",
+      "D6:4",
+      "D6:10",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D6:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly recommends the TaoTronics LED Desk Lamp for a $50 budget, matching the reference and adding no contradictory information.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer correctly recommends the TaoTronics LED Desk Lamp for a $50 budget, matching the reference and adding no contradictory information.\"}"
+  },
+  {
+    "index": 916,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "Based on the conversation, if someone is interested in the desk lamp's compatibility with a specific brand of smart home systems for voice-controlled operation and its ability to change colors according to the mood of the reader, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:5",
+      "D6:10",
+      "D6:6",
+      "D6:3",
+      "D6:2"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 917,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Based on the conversation, how can a person with normal teeth and a $50 budget choose a suitable electric toothbrush?",
+    "prediction": "For a person with normal teeth and a $50 budget, the Philips Sonicare ProtectiveClean 4100 is recommended. It uses sonic technology for effective plaque removal, operates relatively quietly, and is a well-known brand with a good reputation. It fits within the budget and meets the need for a thorough clean without being overly loud.",
+    "reference": "They can choose the Philips Sonicare ProtectiveClean 4100.",
+    "retrieved_ids": [
+      "D7:3",
+      "D7:2",
+      "D7:4",
+      "D7:1",
+      "D7:13"
+    ],
+    "clue": [
+      "D7:3",
+      "D7:4",
+      "D7:5",
+      "D7:6",
+      "D7:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly identifies the Philips Sonicare ProtectiveClean 4100 as the recommended choice, matching the reference answer and adding consistent details.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer correctly identifies the Philips Sonicare ProtectiveClean 4100 as the recommended choice, matching the reference answer and adding consistent details.\"}"
+  },
+  {
+    "index": 918,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "Based on the conversation, if someone is interested in the toothbrush's compatibility with a smartphone app for tracking oral health data and its ability to connect to a smart mirror for integrated oral care reminders, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:3",
+      "D7:13",
+      "D7:1",
+      "D7:4",
+      "D7:2"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 919,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TR",
+    "question": "Which came first: Alex identifying his oral-care needs or comparing cleaning modes on the Sonicare 4100?",
+    "prediction": "Alex identified his oral-care needs (e.g., wanting a good clean, budget constraint, noise sensitivity) before comparing cleaning modes on the Sonicare 4100. The comparison of cleaning modes occurred after he had already established his priorities and selected the model.",
+    "reference": "Identifying his oral-care needs came first.",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:4",
+      "D7:5",
+      "D7:7",
+      "D7:8"
+    ],
+    "clue": [
+      "D7:2",
+      "D7:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states that Alex identified his oral-care needs before comparing cleaning modes, matching the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction states that Alex identified his oral-care needs before comparing cleaning modes, matching the reference answer.\"}"
+  },
+  {
+    "index": 920,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "CD",
+    "question": "Does the claim 'Alex wants a premium $200 electric toothbrush' contradict the conversation?",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:3",
+      "D7:4",
+      "D7:12",
+      "D7:13"
+    ],
+    "clue": [
+      "D7:3"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'Yes' (the claim contradicts), but the predicted answer says 'No', which is opposite.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer is 'Yes' (the claim contradicts), but the predicted answer says 'No', which is opposite.\"\n}"
+  },
+  {
+    "index": 921,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "FR",
+    "question": "Summarize the key factors to consider when choosing a coffee maker for a small apartment.",
+    "prediction": "Consider the type of coffee you prefer (e.g., drip, espresso, pod-based), the available counter space (prioritize compact models like the Hamilton Beach 49976A), your budget (e.g., around $100 for a simple drip maker), brewing time (look for quick-brewing options), and ease of use (simple operation with minimal setup). Also, ensure you use fresh, high-quality beans and maintain the machine regularly for optimal taste.",
+    "reference": "Consider the type of coffee you like, available space, budget, ease of use, size, brewing time, cleaning convenience, coffee quality, the choice between online and physical store purchase, durability, additional features (built - in timer, pause - and - serve feature, reusable coffee filter), and tips for getting the best - tasting coffee.",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:4",
+      "D8:3",
+      "D8:5",
+      "D8:12"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7",
+      "D8:8",
+      "D8:10",
+      "D8:11",
+      "D8:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits several key factors from the reference (cleaning convenience, durability, purchase channel, extra features like timer/pause‑serve/reusable filter), so it does not fully capture the reference summary.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The answer omits several key factors from the reference (cleaning convenience, durability, purchase channel, extra features like timer/pause‑serve/reusable filter), so it does not fully capture the reference summary.\"\n}"
+  },
+  {
+    "index": 922,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "TR",
+    "question": "Did Alex express concern about kitchen counter space before asking about cleaning convenience?",
+    "prediction": "No, Alex did not express concern about kitchen counter space before asking about cleaning convenience. The conversation focused on napkin types for greasy food cleanup, not counter space.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:12",
+      "D10:13",
+      "D5:1",
+      "D5:2"
+    ],
+    "clue": [
+      "D8:4",
+      "D8:6"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'Yes', but the prediction says 'No', directly contradicting the correct answer.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer is 'Yes', but the prediction says 'No', directly contradicting the correct answer.\"\n}"
+  },
+  {
+    "index": 923,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Which picture shows a coffee maker?",
+    "prediction": "D8:IMG_002",
+    "reference": "D8:IMG_002",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:3",
+      "D8:11",
+      "D8:7",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'D8:IMG_002'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'D8:IMG_002'.\"}"
+  },
+  {
+    "index": 924,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Based on the conversation, how can a person with a $100 budget living in a small apartment choose a suitable coffee maker?",
+    "prediction": "For a $100 budget and small apartment, choose the Hamilton Beach 49976A drip coffee maker—it’s easy to use, compact (won’t take up much counter space), and fits the budget. It brews rich-tasting coffee with adjustable strength and is easy to clean (dishwasher-safe carafe and removable filter basket).",
+    "reference": "They can choose the Hamilton Beach 49976A.",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:12",
+      "D8:7"
+    ],
+    "clue": [
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction recommends the Hamilton Beach 49976A, exactly matching the reference answer, and adds compatible details without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction recommends the Hamilton Beach 49976A, exactly matching the reference answer, and adds compatible details without contradiction.\"\n}"
+  },
+  {
+    "index": 925,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "Based on the conversation, if someone is interested in the coffee maker's compatibility with a specific brand of smart home systems for remote-controlled brewing and its ability to make different types of coffee drinks like lattes and cappuccinos without additional equipment, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D8:11",
+      "D8:12",
+      "D8:7",
+      "D8:2",
+      "D8:3"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly.\"\n}"
+  },
+  {
+    "index": 926,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Which picture shows the different colours of the air fryer?",
+    "prediction": "D9:IMG_003",
+    "reference": "D9:IMG_003",
+    "retrieved_ids": [
+      "D9:16",
+      "D9:2",
+      "D9:4",
+      "D9:7",
+      "D9:3"
+    ],
+    "clue": [
+      "D9:16"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer.\"}"
+  },
+  {
+    "index": 927,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Based on the conversation, how can someone with a $100 budget choose a suitable air fryer?",
+    "prediction": "For a $100 budget, the Cosori Air Fryer (3.7-quart) is recommended as it is compact, easy to use, and has 11 preset cooking programs, making it ideal for small meals and snacks for 1-2 people. It fits within the budget and meets the need for crispy food without burning.",
+    "reference": "They can choose the Cosori Air Fryer.",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:4",
+      "D9:2",
+      "D9:15",
+      "D9:9"
+    ],
+    "clue": [
+      "D9:3",
+      "D9:4",
+      "D9:5",
+      "D9:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly identifies the Cosori Air Fryer as the recommended choice for a $100 budget, matching the reference answer and adding consistent details.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer correctly identifies the Cosori Air Fryer as the recommended choice for a $100 budget, matching the reference answer and adding consistent details.\"}"
+  },
+  {
+    "index": 928,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "Based on the conversation, if someone asks if the air fryer can connect to a smart home system for remote control, what would be the answer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:2",
+      "D9:3",
+      "D9:4",
+      "D9:9",
+      "D9:8"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned', which is the correct response.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned', which is the correct response.\"\n}"
+  },
+  {
+    "index": 929,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "FR",
+    "question": "Based on the conversation, what are the main factors to consider when choosing between thin, thick, and moisturizing napkins?",
+    "prediction": "The main factors to consider are:  \n- **Usage**: Thin napkins are suitable for everyday use (e.g., wiping mouth at dinner), thick napkins are better for parties or messy spills, and moisturizing napkins are ideal for dry or sensitive skin (e.g., during a cold).  \n- **Durability**: Thick napkins are more durable and less prone to tearing under pressure.  \n- **Cost**: Thick napkins are generally more expensive than thin ones, though bulk purchases or store brands may offer better deals.  \n- **Environmental Impact**: Thin napkins use less material, potentially reducing waste; recycled options are available for all types.  \n- **Eco-friendliness**: All types are typically made from wood pulp, but thin napkins may be more sustainable due to lower material use.",
+    "reference": "The main factors include the intended use (such as dining, cleaning spills, for sensitive skin, or arts and crafts), cost, environmental impact, softness, and durability.",
+    "retrieved_ids": [
+      "D10:5",
+      "D10:3",
+      "D10:2",
+      "D10:7",
+      "D10:6"
+    ],
+    "clue": [
+      "D10:2",
+      "D10:3",
+      "D10:4",
+      "D10:5",
+      "D10:6",
+      "D10:7",
+      "D10:8",
+      "D10:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits the 'softness' factor listed in the reference, so it does not fully capture all main factors.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The answer omits the 'softness' factor listed in the reference, so it does not fully capture all main factors.\"\n}"
+  },
+  {
+    "index": 930,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "VS",
+    "question": "Which picture shown is about thick napkins?",
+    "prediction": "D10:IMG_003",
+    "reference": "D10:IMG_003",
+    "retrieved_ids": [
+      "D10:6",
+      "D10:2",
+      "D10:5",
+      "D10:7",
+      "D10:3"
+    ],
+    "clue": [
+      "D10:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, correctly identifying the picture as D10:IMG_003.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer, correctly identifying the picture as D10:IMG_003.\"}"
+  },
+  {
+    "index": 931,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "MR",
+    "question": "Based on the conversation, what type of napkin should a person with a limited budget and a need for everyday dining use choose?",
+    "prediction": "Thin napkins are best for everyday dining use as they are usually more affordable and take up less space in a napkin holder.",
+    "reference": "A person with a limited budget and for everyday dining use should choose thin napkins. They are more affordable and suitable for regular use at the dinner table.",
+    "retrieved_ids": [
+      "D10:7",
+      "D10:5",
+      "D10:6",
+      "D10:3",
+      "D10:2"
+    ],
+    "clue": [
+      "D10:2",
+      "D10:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer correctly identifies thin napkins as the appropriate choice for everyday dining on a limited budget, matching the reference and adding no contradictory information.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The answer correctly identifies thin napkins as the appropriate choice for everyday dining on a limited budget, matching the reference and adding no contradictory information.\"}"
+  },
+  {
+    "index": 932,
+    "dataset": "Home_Health_Lifestyle_Product",
+    "category": "AR",
+    "question": "Based on the conversation, would a person choose a wet napkin to clean up a large, sticky mess?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:5",
+      "D10:3",
+      "D10:13",
+      "D10:2",
+      "D10:10"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"}"
+  },
+  {
+    "index": 933,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "What experiences and steps would a family have when doing a weekend cleaning as shown in the conversation?",
+    "prediction": "The family discusses cleaning tasks for each room, divides labor for efficiency, shops for cleaning supplies (brooms, mops, cleaners, rags), fills a shopping cart to the brim, starts cleaning from the living room by tidying clutter, and ultimately achieves a sense of accomplishment after cleaning all rooms.",
+    "reference": "Discuss and divide the work, make a list and go shopping at the supermarket, start cleaning from the living room when getting home, and then successively sweep the floor, clean the windows, and tidy up the bedroom. Take a photo to commemorate it after the cleaning is done.",
+    "retrieved_ids": [
+      "D1:2",
+      "D1:1",
+      "D1:4",
+      "D1:3",
+      "D1:10"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:4",
+      "D1:5",
+      "D1:6",
+      "D1:7",
+      "D1:8",
+      "D1:11"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction omits several key steps from the reference answer (sweeping the floor, cleaning the windows, tidying the bedroom, and taking a photo after cleaning).",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The prediction omits several key steps from the reference answer (sweeping the floor, cleaning the windows, tidying the bedroom, and taking a photo after cleaning).\"\n}"
+  },
+  {
+    "index": 934,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which of the pictures showed in early-June is about the clean house after the cleaning was completed?",
+    "prediction": "D1:IMG_002",
+    "reference": "D1:IMG_002",
+    "retrieved_ids": [
+      "D1:10",
+      "D1:5",
+      "D1:11",
+      "D1:9",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'D1:IMG_002'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'D1:IMG_002'.\"\n}"
+  },
+  {
+    "index": 935,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did the user use a vacuum cleaner during the cleaning?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:6",
+      "D3:12",
+      "D1:2",
+      "D1:4",
+      "D1:1"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer stating 'Not mentioned.'\"}"
+  },
+  {
+    "index": 936,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "FR",
+    "question": "What natural dehumidifying and disinfecting materials were mentioned in the conversation?",
+    "prediction": "Bamboo charcoal, white vinegar, baking soda, essential oils (lavender, tea tree, sandalwood), and natural air fresheners based on plant extracts like lavender or tea tree oil were mentioned as natural dehumidifying and disinfecting materials.",
+    "reference": "The natural dehumidifying and disinfecting materials mentioned in the conversation include bamboo charcoal bags, white vinegar, tea tree oil, lavender oil, tea bags, and coffee grounds.",
+    "retrieved_ids": [
+      "D2:7",
+      "D2:10",
+      "D2:9",
+      "D2:8",
+      "D2:1"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:3",
+      "D2:4",
+      "D2:5",
+      "D2:6",
+      "D2:7",
+      "D2:8",
+      "D2:9",
+      "D2:10",
+      "D2:12",
+      "D2:13",
+      "D2:14",
+      "D2:15"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits tea bags and coffee grounds from the reference list and adds items (baking soda, sandalwood, etc.) that were not mentioned, so it does not match the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The answer omits tea bags and coffee grounds from the reference list and adds items (baking soda, sandalwood, etc.) that were not mentioned, so it does not match the reference.\"\n}"
+  },
+  {
+    "index": 937,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "If I want to thoroughly clean the shoe cabinet and remove mold, what natural cleaners can I use?",
+    "prediction": "You can use a natural anti-mold cleaner made from a solution of white vinegar and baking soda. Spray it on the surface, wait a few minutes, then wipe clean. Alternatively, a product combining bamboo charcoal and essential oils is also effective for removing moisture and odors.",
+    "reference": "You can use a cleaning solution made by mixing white vinegar and baking soda to clean the shoe cabinet. White vinegar has mold-removing properties, and when paired with baking soda, it can be more effective at eliminating mold.",
+    "retrieved_ids": [
+      "D2:11",
+      "D2:10",
+      "D2:1",
+      "D2:2",
+      "D2:16"
+    ],
+    "clue": [
+      "D2:10",
+      "D2:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes the reference solution of white vinegar and baking soda and adds no contradictory information, only extra optional natural cleaner.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer includes the reference solution of white vinegar and baking soda and adds no contradictory information, only extra optional natural cleaner.\"}"
+  },
+  {
+    "index": 938,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "KR",
+    "question": "Has the user decided to use bamboo charcoal bags and essential oils to remove the odor from the shoe cabinet?",
+    "prediction": "No, the user has not decided to use bamboo charcoal bags and essential oils. The assistant suggested the product as a good choice, but the user did not confirm or commit to using it. The user explored other natural methods like white vinegar, tea bags, coffee grounds, and dehumidifiers, and also considered a vinegar-baking soda solution for mold.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:6",
+      "D2:16",
+      "D2:10",
+      "D2:2"
+    ],
+    "clue": [
+      "D2:9",
+      "D2:12",
+      "D2:13"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'Yes', but the prediction says 'No', directly contradicting the correct response.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer is 'Yes', but the prediction says 'No', directly contradicting the correct response.\"}"
+  },
+  {
+    "index": 939,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which images that the user uploaded in mid-June helped in analyzing the moisture problem in my shoe cabinet?",
+    "prediction": "D2:IMG_001, D2:IMG_002",
+    "reference": "D2:IMG_001, D2:IMG_002",
+    "retrieved_ids": [
+      "D2:12",
+      "D2:2",
+      "D2:17",
+      "D2:1",
+      "D2:13"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer.\"}"
+  },
+  {
+    "index": 940,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did the conversation mention any specific brands of tea tree oil?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:8",
+      "D2:9",
+      "D2:7",
+      "D2:15",
+      "D2:10"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference answer stating that no specific brands were mentioned.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer matches the reference answer stating that no specific brands were mentioned.\"}"
+  },
+  {
+    "index": 941,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "Based on the previous conversation, how should the urine stains on the carpet be handled?",
+    "prediction": "Use enzyme cleaners for pet stains, spray on the stained areas, wait a few minutes, then wipe off with a damp cloth. For wool carpets, test vinegar and baking soda in an inconspicuous spot first due to their potential harshness. After cleaning, keep the room well-ventilated and consider using air fresheners or pet-specific odor neutralizing sprays to prevent lingering smells.",
+    "reference": "The urine stains on the carpet should be treated by spraying a mixture of white vinegar and water on the stained area, then sprinkling baking soda on top. After waiting for 15 minutes, wipe it clean with water to remove the stain and odor.",
+    "retrieved_ids": [
+      "D3:5",
+      "D3:4",
+      "D3:3",
+      "D3:8",
+      "D3:2"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer suggests using enzyme cleaners and a different procedure, not the specific vinegar‑water spray, baking soda sprinkle, 15‑minute wait, and water wipe described in the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer suggests using enzyme cleaners and a different procedure, not the specific vinegar‑water spray, baking soda sprinkle, 15‑minute wait, and water wipe described in the reference.\"\n}"
+  },
+  {
+    "index": 942,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "FR",
+    "question": "What is the material and color of my sofa?",
+    "prediction": "The sofa is light gray fabric.",
+    "reference": "Your sofa is made of rough-textured light gray fabric.",
+    "retrieved_ids": [
+      "D3:7",
+      "D3:6",
+      "D3:5",
+      "D3:8",
+      "D10:15"
+    ],
+    "clue": [
+      "D3:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states the sofa is light gray fabric, matching the material (fabric) and color (light gray) from the reference; omission of 'rough-textured' is not contradictory.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction states the sofa is light gray fabric, matching the material (fabric) and color (light gray) from the reference; omission of 'rough-textured' is not contradictory.\"\n}"
+  },
+  {
+    "index": 943,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "How does the user clean urine stains on the curtains?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:5",
+      "D3:8",
+      "D3:6",
+      "D3:14",
+      "D3:3"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, stating that the information is not mentioned.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly, stating that the information is not mentioned.\"\n}"
+  },
+  {
+    "index": 944,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "What should I do if I want to restore the shine of my cast iron skillet?",
+    "prediction": "If you want to restore the shine of your cast iron skillet, you should use proper care, including regular use and oil seasoning. Over time, this will make the surface smoother and form a natural non-stick layer. If there are minor scratches, you can gently sand them and reapply oil. For deeper scratches, you may need to do a full sanding and seasoning process.",
+    "reference": "You can restore the skillet’s shine by regularly sanding and oiling it. Over time, the surface will become smoother and may even develop a natural non-stick layer.",
+    "retrieved_ids": [
+      "D4:9",
+      "D4:10",
+      "D4:1",
+      "D4:2",
+      "D5:5"
+    ],
+    "clue": [
+      "D4:5",
+      "D4:6",
+      "D4:7",
+      "D4:8",
+      "D4:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer includes regular sanding and oiling to restore shine, mentions smoother surface and natural non‑stick layer, and adds compatible extra details without contradicting the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The answer includes regular sanding and oiling to restore shine, mentions smoother surface and natural non‑stick layer, and adds compatible extra details without contradicting the reference.\"\n}"
+  },
+  {
+    "index": 945,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did the user mention what issues might arise if a rusty cast iron skillet is used under extreme conditions?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:12",
+      "D4:1",
+      "D4:2",
+      "D4:14",
+      "D4:15"
+    ],
+    "clue": [],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 946,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "What is the 'seasoning' method for nonstick pans, and why does it work?",
+    "prediction": "The 'seasoning' method for nonstick pans involves applying a thin layer of oil to the scratched areas. It works by creating a temporary protective layer that reduces direct contact between food and the damaged coating, helping to prevent sticking. However, this is a short-term solution and needs to be repeated regularly.",
+    "reference": "Seasoning involves applying a thin layer of oil to the pan, then heating it for a few minutes. This allows the oil to fill in the scratches and create a temporary nonstick effect. While nonstick pans and cast iron differ, seasoning can create a temporary protective layer over scratched areas, reducing direct contact between food and the damaged coating.",
+    "retrieved_ids": [
+      "D5:4",
+      "D5:5",
+      "D5:6",
+      "D5:16",
+      "D5:12"
+    ],
+    "clue": [
+      "D5:3",
+      "D5:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes the key points: applying a thin oil layer, creating a temporary protective layer that reduces contact with damaged coating, matching the reference. No contradictions.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer includes the key points: applying a thin oil layer, creating a temporary protective layer that reduces contact with damaged coating, matching the reference. No contradictions.\"}"
+  },
+  {
+    "index": 947,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which image shows the scratched nonstick pan?",
+    "prediction": "D5:IMG_001",
+    "reference": "D5:IMG_001",
+    "retrieved_ids": [
+      "D5:3",
+      "D5:2",
+      "D5:1",
+      "D4:10",
+      "D5:5"
+    ],
+    "clue": [
+      "D5:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'D5:IMG_001'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'D5:IMG_001'.\"\n}"
+  },
+  {
+    "index": 948,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The user has replaced the pan.",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D5:4",
+      "D5:9",
+      "D5:11",
+      "D5:12",
+      "D5:14"
+    ],
+    "clue": [
+      "D5:9"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer says the information conflicts (Yes), but the prediction says No, which contradicts the reference.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer says the information conflicts (Yes), but the prediction says No, which contradicts the reference.\"}"
+  },
+  {
+    "index": 949,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "What recommendations were given for choosing a new nonstick pan to prevent scratching?",
+    "prediction": "When choosing a new pan, look for ceramic-coated or thick-layered nonstick pans, as they are more scratch-resistant. Also, get into the habit of using wooden or silicone utensils and avoid dry heating, as this can significantly extend the pan’s lifespan.",
+    "reference": "Look for ceramic-coated or thick-layered nonstick pans, as they are more scratch-resistant. Also, get into the habit of using wooden or silicone utensils and avoid dry heating, as this can significantly extend the pan's lifespan.",
+    "retrieved_ids": [
+      "D5:11",
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5"
+    ],
+    "clue": [
+      "D5:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer restates the reference recommendations exactly, matching the advice on ceramic/thick-layered pans, wooden/silicone utensils, and avoiding dry heating.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer restates the reference recommendations exactly, matching the advice on ceramic/thick-layered pans, wooden/silicone utensils, and avoiding dry heating.\"}"
+  },
+  {
+    "index": 950,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did Marcus mention any specific brands of nonstick pan repair spray?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D5:15",
+      "D5:7",
+      "D5:4",
+      "D5:16",
+      "D5:8"
+    ],
+    "clue": [],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 951,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "FR",
+    "question": "What workshop organization and tool maintenance activities did Marcus perform?",
+    "prediction": "Marcus cleaned up his small workshop, organized tools by setting up a shelf for frequently used items, and considered using a pegboard for better visibility and efficiency. He also acknowledged neglecting tools for a while and recognized the importance of regular maintenance to extend their lifespan and improve future project efficiency.",
+    "reference": "Marcus cleaned up his workshop, tried to restore hardened paint brushes by soaking them in warm soapy water or vinegar, removed rust spots from metal tools with sandpaper or steel wool and machine oil, organized screws and nails into small containers, cleaned screwdriver and plier handles, and planned to set up a pegboard for frequently used items.",
+    "retrieved_ids": [
+      "D6:1",
+      "D6:11",
+      "D9:12",
+      "D6:9",
+      "D3:15"
+    ],
+    "clue": [
+      "D6:1",
+      "D6:2",
+      "D6:3",
+      "D6:5",
+      "D6:7",
+      "D6:9"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer omits most of the specific maintenance actions (restoring paint brushes, removing rust, cleaning handles, organizing screws/nails) and replaces the pegboard plan with a shelf, so it does not match the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer omits most of the specific maintenance actions (restoring paint brushes, removing rust, cleaning handles, organizing screws/nails) and replaces the pegboard plan with a shelf, so it does not match the reference.\"\n}"
+  },
+  {
+    "index": 952,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "How can hardened paint brushes be restored?",
+    "prediction": "If the bristles aren’t completely stiff, you can try soaking them in warm, soapy water or a bit of vinegar. Then comb through gently with a fine brush. It’s worth a try before throwing them away.",
+    "reference": "If the bristles aren't completely stiff, you can try soaking them in warm, soapy water or a bit of vinegar. Then comb through gently with a fine brush.",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:3",
+      "D5:8",
+      "D5:7",
+      "D5:14"
+    ],
+    "clue": [
+      "D6:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer repeats the reference solution exactly and adds a non‑contradictory suggestion, so it is semantically correct.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer repeats the reference solution exactly and adds a non‑contradictory suggestion, so it is semantically correct.\"}"
+  },
+  {
+    "index": 953,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which image shows a paint brush?",
+    "prediction": "D6:IMG_001",
+    "reference": "D6:IMG_001",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:8",
+      "D6:3",
+      "D11:4",
+      "D6:1"
+    ],
+    "clue": [
+      "D6:2"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 954,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which image shows silica gel bags for moisture absorption?",
+    "prediction": "D6:IMG_002",
+    "reference": "D6:IMG_002",
+    "retrieved_ids": [
+      "D6:4",
+      "D9:4",
+      "D9:5",
+      "D6:5",
+      "D2:5"
+    ],
+    "clue": [
+      "D6:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 955,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which image shows lint-free cloths for cleaning?",
+    "prediction": "D13:IMG_002, D6:IMG_003",
+    "reference": "D6:IMG_003, D13:IMG_002",
+    "retrieved_ids": [
+      "D13:6",
+      "D6:8",
+      "D1:3",
+      "D1:5",
+      "D1:4"
+    ],
+    "clue": [
+      "D6:8",
+      "D13:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer contains the same image IDs as the reference (D6:IMG_003 and D13:IMG_002), only order differs, which does not affect correctness.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer contains the same image IDs as the reference (D6:IMG_003 and D13:IMG_002), only order differs, which does not affect correctness.\"\n}"
+  },
+  {
+    "index": 956,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did Marcus purchase any new power tools during this workshop cleanup?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:1",
+      "D14:1",
+      "D6:9",
+      "D9:9",
+      "D6:11"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 957,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "FR",
+    "question": "What tools and products related to security door lock cylinders were mentioned in the conversation?",
+    "prediction": "Lubricant (specifically for locks), drill-resistant lock cylinders, and brands such as Yili, Dibo, and Yale were mentioned. Materials discussed include copper, aluminum, and stainless steel.",
+    "reference": "The conversation mentioned \"lock-specific lubricants,\" compressed air, cleaning agents, and high-quality lock lubricants.",
+    "retrieved_ids": [
+      "D7:12",
+      "D7:13",
+      "D7:16",
+      "D7:1",
+      "D7:11"
+    ],
+    "clue": [
+      "D7:1",
+      "D7:2",
+      "D7:3",
+      "D7:4",
+      "D7:9"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer lists unrelated items (drill-resistant cylinders, brand names, materials) and omits the referenced tools/products (compressed air, cleaning agents, high-quality lock lubricants).",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer lists unrelated items (drill-resistant cylinders, brand names, materials) and omits the referenced tools/products (compressed air, cleaning agents, high-quality lock lubricants).\"\n}"
+  },
+  {
+    "index": 958,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "Why should the user choose lock-specific lubricants instead of regular oils?",
+    "prediction": "Lock-specific lubricants are preferred because they don’t attract dust like regular oils, which can cause the lock to become clogged again. Regular oils, such as motor oil, are not designed for locks and may degrade or leave residue that interferes with smooth operation.",
+    "reference": "Lock-specific lubricants have an appropriate viscosity that forms a proper lubricating layer inside the cylinder, preventing dust accumulation, and keeping the lock smooth. Regular oils might cause dust buildup, which can lead to problems.",
+    "retrieved_ids": [
+      "D7:4",
+      "D7:3",
+      "D7:5",
+      "D10:7",
+      "D7:6"
+    ],
+    "clue": [
+      "D7:1",
+      "D7:2",
+      "D7:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer correctly states that lock-specific lubricants prevent dust buildup and keep the lock smooth, while regular oils attract dust and can leave residue, matching the reference.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The answer correctly states that lock-specific lubricants prevent dust buildup and keep the lock smooth, while regular oils attract dust and can leave residue, matching the reference.\"}"
+  },
+  {
+    "index": 959,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "What two images are related to the door lock?",
+    "prediction": "D7:IMG_001, D7:IMG_002",
+    "reference": "D7:IMG_001, D7:IMG_002",
+    "retrieved_ids": [
+      "D7:2",
+      "D7:16",
+      "D7:12",
+      "D7:9",
+      "D7:1"
+    ],
+    "clue": [
+      "D7:2",
+      "D7:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, listing the two images D7:IMG_001 and D7:IMG_002.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer, listing the two images D7:IMG_001 and D7:IMG_002.\"}"
+  },
+  {
+    "index": 960,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Which smart lock cylinder should the users choose to replace the current one?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:12",
+      "D7:16",
+      "D7:11",
+      "D7:15",
+      "D7:13"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 961,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "FR",
+    "question": "List all the issues the user encountered during the bicycle repair process.",
+    "prediction": "The chain was rusty, the tires were flat, the gears were slipping, and the inner tubes failed to hold air.",
+    "reference": "The user encountered a rusty chain, flat tires, a hole in the inner tube, front brakes rubbing against the wheel, and gears slipping during the test ride.",
+    "retrieved_ids": [
+      "D8:15",
+      "D8:1",
+      "D8:3",
+      "D8:13",
+      "D8:7"
+    ],
+    "clue": [
+      "D8:3",
+      "D8:8",
+      "D8:10",
+      "D8:13"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer omits the issue of front brakes rubbing against the wheel, so it does not list all the issues from the reference.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer omits the issue of front brakes rubbing against the wheel, so it does not list all the issues from the reference.\"}"
+  },
+  {
+    "index": 962,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "KR",
+    "question": "Why did the user decide to replace the bicycle chain?",
+    "prediction": "The user decided to replace the bicycle chain because lubrication didn't help after cleaning it, and the chain was rusty, which likely contributed to its stiffness.",
+    "reference": "The user initially cleaned the chain but found it still felt stiff, leading them to decide on replacing it.",
+    "retrieved_ids": [
+      "D8:7",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:14"
+    ],
+    "clue": [
+      "D8:3",
+      "D8:4",
+      "D8:5"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 963,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "After removing the old chain, what challenge did the user mention about installing the new one?",
+    "prediction": "The user mentioned that installing the new chain seemed tricky and decided to use more tools.",
+    "reference": "The user found installing the new chain tricky and decided to use more tools to assist with the process.",
+    "retrieved_ids": [
+      "D8:5",
+      "D8:7",
+      "D8:4",
+      "D8:6",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer captures the same meaning as the reference: installing the new chain was tricky and the user decided to use more tools.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer captures the same meaning as the reference: installing the new chain was tricky and the user decided to use more tools.\"\n}"
+  },
+  {
+    "index": 964,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which of the images shared in the conversation corresponds to the point where the user started their test ride?",
+    "prediction": "D8:IMG_003",
+    "reference": "D8:IMG_003",
+    "retrieved_ids": [
+      "D8:12",
+      "D8:13",
+      "D10:10",
+      "D8:15",
+      "D10:11"
+    ],
+    "clue": [
+      "D8:12"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 965,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Since the user had to replace the chain and fix a hole in the inner tube, did she also encounter issues with the bike's frame during the repair process?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D8:7",
+      "D8:4",
+      "D8:8",
+      "D8:3",
+      "D8:15"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 966,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which image shows a dehumidifier discussed in the conversation?",
+    "prediction": "D9:IMG_001",
+    "reference": "D9:IMG_001",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:4",
+      "D18:10",
+      "D2:17",
+      "D3:10"
+    ],
+    "clue": [
+      "D9:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer D9:IMG_001.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer D9:IMG_001.\"}"
+  },
+  {
+    "index": 967,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "What floor treatment was suggested for long-term garage maintenance?",
+    "prediction": "Epoxy or sealant coatings were suggested for long-term garage maintenance to brighten the space, make it easier to maintain, and resist moisture over time.",
+    "reference": "Epoxy or sealant coatings can brighten the space and make it easier to maintain. They also help resist moisture over time.",
+    "retrieved_ids": [
+      "D9:10",
+      "D9:11",
+      "D9:9",
+      "D9:1",
+      "D9:5"
+    ],
+    "clue": [
+      "D9:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction restates the reference answer, correctly identifying epoxy or sealant coatings as the suggested floor treatment and their benefits.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction restates the reference answer, correctly identifying epoxy or sealant coatings as the suggested floor treatment and their benefits.\"}"
+  },
+  {
+    "index": 968,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did Marcus install a ceiling fan in his garage?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:11",
+      "D9:9",
+      "D9:1",
+      "D16:13",
+      "D9:12"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer stating 'Not mentioned.'\"}"
+  },
+  {
+    "index": 969,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "KR",
+    "question": "What previous project led Marcus to focus on garage maintenance?",
+    "prediction": "A bike repair.",
+    "reference": "After getting his bike back in shape (bicycle repair), Marcus started cleaning up the garage and realized the air felt damp and his metal tools had rust spots. This led him to address broader garage maintenance issues.",
+    "retrieved_ids": [
+      "D9:12",
+      "D9:11",
+      "D9:9",
+      "D9:10",
+      "D6:1"
+    ],
+    "clue": [
+      "D9:1",
+      "D9:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly identifies the previous project as a bike repair, matching the reference.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer correctly identifies the previous project as a bike repair, matching the reference.\"}"
+  },
+  {
+    "index": 970,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "Why can lubricant reduce wheel noise, but regular motor oil shouldn’t be used?",
+    "prediction": "Lubricant reduces wheel noise by penetrating the bearing and minimizing friction, while regular motor oil shouldn’t be used because it attracts dust and debris, which can worsen the noise and cause further damage over time.",
+    "reference": "Lubricant reduces friction in the bearings, allowing the wheels to spin more smoothly, which helps minimize noise. However, regular motor oil tends to attract dust, which can cause more debris buildup inside the wheels, leading to faster wear. That’s why silicone oil, sewing machine oil, or wheel-specific lubricants are recommended.",
+    "retrieved_ids": [
+      "D10:7",
+      "D10:9",
+      "D10:8",
+      "D10:6",
+      "D10:10"
+    ],
+    "clue": [
+      "D10:6",
+      "D10:7",
+      "D10:8"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 971,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: user has already replaced the wheels of his suitcase.",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D10:2",
+      "D10:3",
+      "D10:13",
+      "D10:14",
+      "D10:15"
+    ],
+    "clue": [
+      "D10:15"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 972,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "FR",
+    "question": "What limit device design methods were mentioned in the conversation?",
+    "prediction": "The conversation mentions the following limit device design methods:\n\n1. Using friction to prevent the drawer from sliding out.\n2. Incorporating springs.\n3. Designing a simple catch structure.\n4. Using adjustable screws to fine-tune the limit effect.\n5. Using adjustable magnets for adjustments during use.\n6. Making the stopper from PVC pipes or plastic strips for budget-friendly options.\n7. Choosing a limit device in the same color and material as the drawer’s surface, or using wood materials to match the overall style.\n8. Adding friction to the contact surface of the device.",
+    "reference": "The limit device design methods mentioned in the conversation include stoppers, magnets, spring devices, and PVC pipe/plastic strip stoppers.",
+    "retrieved_ids": [
+      "D11:14",
+      "D11:17",
+      "D11:16",
+      "D11:13",
+      "D11:2"
+    ],
+    "clue": [
+      "D11:5",
+      "D11:6",
+      "D11:7",
+      "D11:8",
+      "D11:9",
+      "D11:10",
+      "D11:11",
+      "D11:13"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer adds extra methods (friction, catch structure, adjustable screws, color matching) that were not mentioned in the reference, thus providing incorrect information.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The answer adds extra methods (friction, catch structure, adjustable screws, color matching) that were not mentioned in the reference, thus providing incorrect information.\"}"
+  },
+  {
+    "index": 973,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "Why is using a magnet design to prevent the drawer from sliding out a good idea?",
+    "prediction": "Using a magnet design to prevent the drawer from sliding out is a good idea because it creates a firm limit effect when the drawer is closed, preventing it from sliding out while also making the design cleaner and more aesthetic.",
+    "reference": "The reason for using a magnet design is that the magnet automatically attaches to a part of the track, creating a firm limit effect. It not only prevents the drawer from sliding out but also makes the design simple and aesthetically pleasing.",
+    "retrieved_ids": [
+      "D11:10",
+      "D11:8",
+      "D11:7",
+      "D11:11",
+      "D11:6"
+    ],
+    "clue": [
+      "D11:7",
+      "D11:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer restates the reference points: magnet creates a firm limit effect, stops the drawer from sliding out, and improves aesthetic simplicity.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The answer restates the reference points: magnet creates a firm limit effect, stops the drawer from sliding out, and improves aesthetic simplicity.\"}"
+  },
+  {
+    "index": 974,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which picture that was discussed in the conversation showed the prototype of the limit device?",
+    "prediction": "D11:IMG_002",
+    "reference": "D11:IMG_002",
+    "retrieved_ids": [
+      "D11:15",
+      "D11:17",
+      "D11:14",
+      "D11:16",
+      "D11:3"
+    ],
+    "clue": [
+      "D11:15"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 975,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did the user mention that a suction cup can be used as a limit device in the design?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D11:17",
+      "D11:16",
+      "D11:13",
+      "D11:12",
+      "D11:14"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating 'Not mentioned.'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer stating 'Not mentioned.'\"}"
+  },
+  {
+    "index": 976,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "FR",
+    "question": "What safe methods for disassembling plastic clips were mentioned in the conversation?",
+    "prediction": "Gentle prying, heating to soften the plastic, looking for hidden release points, using plastic pry tools, opening tool kits, tweezers, and heat guns. Avoid using metal screwdrivers; instead, use plastic pry tools, credit cards, or plastic rulers. Disassemble gradually, starting from an easy section and working your way around.",
+    "reference": "The methods include using a plastic pry tool or credit card to pry open, heating the plastic to soften it, looking for hidden release points, and gradually disassembling starting from the looser sections.",
+    "retrieved_ids": [
+      "D12:2",
+      "D12:14",
+      "D12:1",
+      "D12:13",
+      "D12:4"
+    ],
+    "clue": [
+      "D12:3",
+      "D12:4",
+      "D12:5",
+      "D12:6",
+      "D12:7",
+      "D12:8",
+      "D12:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes all the methods from the reference (plastic pry tool/credit card, heating, hidden release points, gradual disassembly) and adds extra details without contradicting the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes all the methods from the reference (plastic pry tool/credit card, heating, hidden release points, gradual disassembly) and adds extra details without contradicting the reference.\"\n}"
+  },
+  {
+    "index": 977,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "Why is heating the plastic clip recommended as an aid for disassembly?",
+    "prediction": "Heating the plastic clip is recommended to soften the plastic, making it more pliable and easier to disassemble without applying excessive force that could cause damage or breakage.",
+    "reference": "Heating softens the plastic, reducing its brittleness, which lowers the risk of breaking the clip during disassembly and makes the process smoother.",
+    "retrieved_ids": [
+      "D12:2",
+      "D12:10",
+      "D12:14",
+      "D12:13",
+      "D12:1"
+    ],
+    "clue": [
+      "D12:5",
+      "D12:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states that heating softens the plastic, making it pliable and reducing breakage risk, matching the reference answer's explanation.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction states that heating softens the plastic, making it pliable and reducing breakage risk, matching the reference answer's explanation.\"}"
+  },
+  {
+    "index": 978,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "KR",
+    "question": "What new insights did the user gain about disassembling plastic clips during the conversation?",
+    "prediction": "The user learned that plastic clips often use elastic latches or snap-fit mechanisms and require different disassembly techniques depending on their design. They also learned general rules such as identifying the clip structure, applying gentle force, disassembling gradually, and using the right tools like plastic pry tools, tweezers, or heat guns. Additionally, the user gained confidence to approach future disassemblies more carefully and was recommended specific tools to make the process safer and more effective.",
+    "reference": "You tried prying with a credit card, heating the plastic to soften it, and successfully found a hidden release point, making the disassembly easier.",
+    "retrieved_ids": [
+      "D12:2",
+      "D12:14",
+      "D12:1",
+      "D12:13",
+      "D12:15"
+    ],
+    "clue": [
+      "D12:3",
+      "D12:4",
+      "D12:5",
+      "D12:6",
+      "D12:7",
+      "D12:8",
+      "D12:9"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer does not mention the specific actions (prying with a credit card, heating the plastic) and the hidden release point that the reference answer describes.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer does not mention the specific actions (prying with a credit card, heating the plastic) and the hidden release point that the reference answer describes.\"\n}"
+  },
+  {
+    "index": 979,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "How does the user disassemble metal clips?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D12:3",
+      "D12:14",
+      "D12:13",
+      "D12:10",
+      "D12:4"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, stating that the information is not mentioned.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer exactly, stating that the information is not mentioned.\"}"
+  },
+  {
+    "index": 980,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "How should heat-shrink tubing be applied to a damaged power cord?",
+    "prediction": "Slide a piece of tubing over the damaged section, then gently heat it using a hairdryer or heat gun until it contracts snugly around the wire, creating a tight, protective seal.",
+    "reference": "Slide a piece of tubing over the damaged section, then gently heat it using a hairdryer or heat gun until it contracts snugly around the wire. It creates a tight, protective seal.",
+    "retrieved_ids": [
+      "D13:4",
+      "D13:3",
+      "D12:7",
+      "D13:12",
+      "D13:5"
+    ],
+    "clue": [
+      "D13:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer in steps and outcome, with no contradictions.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer in steps and outcome, with no contradictions.\"\n}"
+  },
+  {
+    "index": 981,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which image shows a mechanical fan?",
+    "prediction": "D13:IMG_001, D14:IMG_002",
+    "reference": "D13:IMG_001",
+    "retrieved_ids": [
+      "D13:5",
+      "D13:6",
+      "D18:10",
+      "D18:6",
+      "D14:4"
+    ],
+    "clue": [
+      "D13:5"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Predicted answer adds an extra image (D14:IMG_002) not present in the reference, contradicting the correct single answer D13:IMG_001.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"Predicted answer adds an extra image (D14:IMG_002) not present in the reference, contradicting the correct single answer D13:IMG_001.\"}"
+  },
+  {
+    "index": 982,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "What safety precautions should be taken when cleaning a portable fan?",
+    "prediction": "Unplug the fan first, and avoid letting water drip into the motor or control switches. Dry the blades thoroughly after wiping with a damp cloth. Be careful not to push dust deeper into the motor area when cleaning.",
+    "reference": "Unplug the fan, remove the front cover if possible, and use a small brush or compressed air. Be careful not to push dust deeper into the motor area. If wiping blades with a damp cloth, make sure the fan is completely unplugged and dry the blades thoroughly afterward. Avoid letting water drip into the motor or control switches.",
+    "retrieved_ids": [
+      "D13:6",
+      "D13:5",
+      "D13:7",
+      "D13:12",
+      "D13:2"
+    ],
+    "clue": [
+      "D13:5",
+      "D13:6"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The answer omits key precautions from the reference (removing the front cover and using a brush or compressed air), so it is incomplete.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The answer omits key precautions from the reference (removing the front cover and using a brush or compressed air), so it is incomplete.\"}"
+  },
+  {
+    "index": 983,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "What cable organization technique was suggested using common household items?",
+    "prediction": "Use small zip ties or even bread tags as labels—just write what each cable is for.",
+    "reference": "Use small zip ties or even bread tags as labels—just write what each cable is for. This makes troubleshooting or packing much easier later.",
+    "retrieved_ids": [
+      "D13:8",
+      "D13:9",
+      "D13:4",
+      "D13:12",
+      "D13:13"
+    ],
+    "clue": [
+      "D13:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes the suggested technique of using small zip ties or bread tags as labels, matching the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer includes the suggested technique of using small zip ties or bread tags as labels, matching the reference answer.\"}"
+  },
+  {
+    "index": 984,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did Marcus mention using a voltage tester to check his electrical outlets?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D13:12",
+      "D14:1",
+      "D16:13",
+      "D13:10",
+      "D13:2"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating that it was not mentioned.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer stating that it was not mentioned.\"}"
+  },
+  {
+    "index": 985,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "Why won’t the user's computer boot and shows a black screen?",
+    "prediction": "The computer shows a black screen during startup, likely due to a system or hardware issue. The user initially saw a network boot failure error (“PXE-E61: Media test failure, check cable”) and later, after cleaning dust and restarting, the computer turned on but displayed a blue error screen, indicating potential driver or hardware problems. The user also tried Safe Mode, which failed, suggesting possible hard drive or OS file issues.",
+    "reference": "The black screen issue might be caused by a system or hardware fault. Considering the overheating issue and blue screen error mentioned later, the hardware, especially the hard drive, could be failing.",
+    "retrieved_ids": [
+      "D14:3",
+      "D14:4",
+      "D14:5",
+      "D14:2",
+      "D14:7"
+    ],
+    "clue": [
+      "D14:2",
+      "D14:3",
+      "D14:4",
+      "D14:5",
+      "D14:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer states the black screen is likely due to a system/hardware issue and mentions possible hard drive problems, matching the reference's claim about hardware fault and hard drive failure without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer states the black screen is likely due to a system/hardware issue and mentions possible hard drive problems, matching the reference's claim about hardware fault and hard drive failure without contradiction.\"\n}"
+  },
+  {
+    "index": 986,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "KR",
+    "question": "Has the computer issue the user initially mentioned been resolved?",
+    "prediction": "No, the computer issue has not been fully resolved. The user initially reported a black screen, which was later followed by a blue error screen showing a \"REGISTRY ERROR.\" Although the user cleaned the computer and it turned on, the blue screen issue persists, and subsequent troubleshooting steps like booting in Safe Mode did not resolve it. The user also noted the computer is getting hot, suggesting ongoing hardware or cooling issues.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D14:5",
+      "D14:2",
+      "D14:6",
+      "D14:4",
+      "D14:8"
+    ],
+    "clue": [
+      "D14:4",
+      "D14:5",
+      "D14:6"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer says the issue was resolved (Yes), but the prediction says it has not been resolved (No), which directly contradicts the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer says the issue was resolved (Yes), but the prediction says it has not been resolved (No), which directly contradicts the reference.\"\n}"
+  },
+  {
+    "index": 987,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which image was of the computer’s blue screen display?",
+    "prediction": "D14:IMG_003",
+    "reference": "D14:IMG_003",
+    "retrieved_ids": [
+      "D14:6",
+      "D14:5",
+      "D14:3",
+      "D14:4",
+      "D14:7"
+    ],
+    "clue": [
+      "D14:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 988,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did the user finally decide to buy the iPhone 15?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D14:21",
+      "D14:22",
+      "D14:20",
+      "D14:19",
+      "D14:18"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer exactly.\"\n}"
+  },
+  {
+    "index": 989,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "FR",
+    "question": "What methods were mentioned in the conversation to extend the battery life of a wireless keyboard?",
+    "prediction": "- Avoid charging too frequently and wait until the battery is relatively low before recharging.  \n- Use rechargeable batteries.  \n- Keep the battery temperature stable, avoiding high or low-temperature environments.  \n- Do not let the battery completely discharge to 0%.  \n- Turn off the backlight if not needed.  \n- Avoid frequent typing and leaving the keyboard on for long periods.  \n- If not in use for a long time, charge the battery to around 50% and disconnect the power.  \n- Avoid fast charging if not in a hurry, as it may accelerate battery aging due to heat.",
+    "reference": "Methods to extend the battery life of a wireless keyboard include: avoiding frequent charging, charging when the battery drops to 20%-30%, preventing over-discharging, turning off unnecessary keyboard backlighting, maintaining stable battery temperature, and charging the battery to 50% before storing it if not in use for a long time.",
+    "retrieved_ids": [
+      "D15:1",
+      "D15:16",
+      "D15:15",
+      "D15:8",
+      "D15:10"
+    ],
+    "clue": [
+      "D15:1",
+      "D15:2",
+      "D15:8",
+      "D15:9",
+      "D15:10",
+      "D15:15"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes all methods listed in the reference (avoid frequent charging, charge at low battery, prevent over‑discharge, turn off backlight, keep temperature stable, charge to ~50% for storage) and adds no contradictory information.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer includes all methods listed in the reference (avoid frequent charging, charge at low battery, prevent over‑discharge, turn off backlight, keep temperature stable, charge to ~50% for storage) and adds no contradictory information.\"}"
+  },
+  {
+    "index": 990,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "Why does the user need to avoid frequent charging?",
+    "prediction": "The user needs to avoid frequent charging because it can accelerate battery aging. Marcus advised charging when the battery drops to around 20-30% to prevent over-discharging, which helps maintain battery health.",
+    "reference": "Avoiding frequent charging helps prevent premature battery aging.",
+    "retrieved_ids": [
+      "D15:3",
+      "D14:10",
+      "D15:2",
+      "D15:4",
+      "D15:6"
+    ],
+    "clue": [
+      "D15:1",
+      "D15:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer states that frequent charging accelerates battery aging, matching the reference that avoiding it prevents premature aging, and adds no contradictions.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The answer states that frequent charging accelerates battery aging, matching the reference that avoiding it prevents premature aging, and adds no contradictions.\"}"
+  },
+  {
+    "index": 991,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which image shows a power strip with wireless charger?",
+    "prediction": "D16:IMG_001",
+    "reference": "D16:IMG_001",
+    "retrieved_ids": [
+      "D16:3",
+      "D13:10",
+      "D16:2",
+      "D13:11",
+      "D13:9"
+    ],
+    "clue": [
+      "D16:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, correctly identifying the image ID.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer, correctly identifying the image ID.\"}"
+  },
+  {
+    "index": 992,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "What is the recommended cleaning method for humidifiers to prevent mineral buildup?",
+    "prediction": "Mix equal parts white vinegar and water, fill the tank, let it sit for about 30 minutes, then rinse thoroughly. Doing this once every week or two keeps the humidifier free of mineral scale and bacteria.",
+    "reference": "Mix equal parts white vinegar and water, fill the tank, and let it sit for about 30 minutes. Then rinse thoroughly. Doing that once every week or two keeps it free of mineral scale and bacteria. You can also use baking soda first for odor, then vinegar to remove buildup.",
+    "retrieved_ids": [
+      "D16:6",
+      "D16:5",
+      "D3:9",
+      "D9:4",
+      "D3:12"
+    ],
+    "clue": [
+      "D16:5",
+      "D16:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes the key steps (vinegar-water mix, soak 30 minutes, rinse) and the recommended frequency, matching the reference without contradictions, even though it omits the optional baking‑soda tip which is not required.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes the key steps (vinegar-water mix, soak 30 minutes, rinse) and the recommended frequency, matching the reference without contradictions, even though it omits the optional baking‑soda tip which is not required.\"\n}"
+  },
+  {
+    "index": 993,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which image shows a computer keyboard?",
+    "prediction": "D16:IMG_002, D15:IMG_002, D15:IMG_001",
+    "reference": "D16:IMG_002",
+    "retrieved_ids": [
+      "D16:10",
+      "D15:12",
+      "D15:11",
+      "D15:13",
+      "D15:5"
+    ],
+    "clue": [
+      "D16:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction adds extra image IDs (D15:IMG_002, D15:IMG_001) that are not in the reference answer, contradicting the reference which specifies only D16:IMG_002.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The prediction adds extra image IDs (D15:IMG_002, D15:IMG_001) that are not in the reference answer, contradicting the reference which specifies only D16:IMG_002.\"\n}"
+  },
+  {
+    "index": 994,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did Marcus install solar panels to reduce energy consumption?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D16:13",
+      "D16:1",
+      "D16:9",
+      "D13:12",
+      "D16:8"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 995,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "FR",
+    "question": "What are the two main methods mentioned in the conversation for repairing the ID card?",
+    "prediction": "The two main methods mentioned are:  \n1. Using tissue paper to wrap the ID card and pressing it with a heavy object to restore its shape.  \n2. Steaming the ID card to soften wrinkles, followed by pressing it flat with tissue paper.",
+    "reference": "Using tissue paper to press the ID card and applying a heavy object, and steaming the ID card to soften the edges and then pressing it flat with tissue paper.",
+    "retrieved_ids": [
+      "D17:10",
+      "D17:5",
+      "D17:9",
+      "D17:8",
+      "D17:6"
+    ],
+    "clue": [
+      "D17:4",
+      "D17:5",
+      "D17:6",
+      "D17:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer accurately restates both methods: tissue paper with a heavy object, and steaming followed by pressing with tissue paper, matching the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer accurately restates both methods: tissue paper with a heavy object, and steaming followed by pressing with tissue paper, matching the reference.\"\n}"
+  },
+  {
+    "index": 996,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "What should be done if the ID card gets wrinkled?",
+    "prediction": "If the ID card gets wrinkled, you can try placing it between a few sheets of tissue paper, ensuring it slightly covers the front and back, then press it gently with a heavy object (like a book or tablet) to help restore its shape. If wrinkles persist, you can steam the ID card (hang it above steam without touching water) to soften the wrinkles, then use tissue paper to press it flat. Specialized paper restoration tools can also be used to stretch and restore the card.",
+    "reference": "You can try placing the ID card between a few layers of tissue paper, pressing it with a heavy object, and letting it sit for a while. If that doesn’t work, you can steam the ID card to soften the edges and then press it flat with tissue paper.",
+    "retrieved_ids": [
+      "D17:3",
+      "D17:9",
+      "D17:8",
+      "D17:5",
+      "D17:6"
+    ],
+    "clue": [
+      "D17:4",
+      "D17:5",
+      "D17:6",
+      "D17:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer includes the same tissue‑paper + heavy object method and the steam‑then‑press method as the reference, with extra non‑contradictory details.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The answer includes the same tissue‑paper + heavy object method and the steam‑then‑press method as the reference, with extra non‑contradictory details.\"\n}"
+  },
+  {
+    "index": 997,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "Based on the Marcus's statements, what actions did he take to troubleshoot and potentially fix the air conditioner's cooling problem?",
+    "prediction": "Marcus first checked and cleaned the air filter, which was dirty. He then inspected the outdoor condenser unit and cleared debris around it. After these steps, he called an HVAC technician who diagnosed low refrigerant levels and refilled it, which resolved the issue.",
+    "reference": "He checked and cleaned the \"dirty air filter\", \"checked the outdoor unit\" and cleaned the \"leaves and debris around it\", and called \"an HVAC technician\" who \"refilled the refrigerant\".",
+    "retrieved_ids": [
+      "D18:2",
+      "D18:4",
+      "D18:8",
+      "D18:5",
+      "D18:7"
+    ],
+    "clue": [
+      "D18:2",
+      "D18:3",
+      "D18:4",
+      "D18:5",
+      "D18:6",
+      "D18:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes checking and cleaning the dirty air filter, inspecting and clearing debris from the outdoor unit, calling an HVAC technician, and having the refrigerant refilled, matching the reference without contradictions.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes checking and cleaning the dirty air filter, inspecting and clearing debris from the outdoor unit, calling an HVAC technician, and having the refrigerant refilled, matching the reference without contradictions.\"\n}"
+  },
+  {
+    "index": 998,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "MR",
+    "question": "What did Marcus say was the first thing he checked when the AC wasn't cooling properly?",
+    "prediction": "Marcus said the first thing he checked was the air filter.",
+    "reference": "He said the first thing he checked was the air filter.",
+    "retrieved_ids": [
+      "D18:2",
+      "D18:1",
+      "D18:8",
+      "D18:4",
+      "D18:7"
+    ],
+    "clue": [
+      "D18:1",
+      "D18:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, stating that Marcus first checked the air filter.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer, stating that Marcus first checked the air filter.\"}"
+  },
+  {
+    "index": 999,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "VS",
+    "question": "Which of the images from our conversation in early-January are related to the air conditioner?",
+    "prediction": "D18:IMG_003, D18:IMG_001",
+    "reference": "D18:IMG_001, D18:IMG_002, D18:IMG_003",
+    "retrieved_ids": [
+      "D18:10",
+      "D18:2",
+      "D18:4",
+      "D18:3",
+      "D18:1"
+    ],
+    "clue": [
+      "D18:3",
+      "D18:6",
+      "D18:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer omits D18:IMG_002, so it does not match the full list of images in the reference answer.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer omits D18:IMG_002, so it does not match the full list of images in the reference answer.\"}"
+  },
+  {
+    "index": 1000,
+    "dataset": "Home_Repair_Maintenance_Cleaning",
+    "category": "AR",
+    "question": "Did the user say to replace the air conditioner with a new one?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D18:4",
+      "D18:8",
+      "D18:7",
+      "D18:9",
+      "D18:2"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, stating 'Not mentioned'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer exactly, stating 'Not mentioned'.\"}"
+  },
+  {
+    "index": 1001,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VS",
+    "question": "Which image in the dialogue shows the same landmark as this one?",
+    "prediction": "D1:IMG_001, D1:IMG_002, D1:IMG_003, D1:IMG_004, D1:IMG_005",
+    "reference": "D1:IMG_003",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:4",
+      "D1:2",
+      "D1:5",
+      "D1:8"
+    ],
+    "clue": [
+      "D1:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction lists many images, but the reference answer specifies only D1:IMG_003 as the correct image.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The prediction lists many images, but the reference answer specifies only D1:IMG_003 as the correct image.\"}"
+  },
+  {
+    "index": 1002,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "TTL",
+    "question": "What is the name of the landmark in this image?",
+    "prediction": "Hagia Sophia",
+    "reference": "Hagia Sophia",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:4",
+      "D1:2",
+      "D1:5",
+      "D1:8"
+    ],
+    "clue": [
+      "D1:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer 'Hagia Sophia'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer 'Hagia Sophia'.\"}"
+  },
+  {
+    "index": 1003,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VS",
+    "question": "Which image in the dialogue shows the same landmark as this one?",
+    "prediction": "D1:IMG_001, D1:IMG_002, D1:IMG_003, D1:IMG_004, D1:IMG_005",
+    "reference": "D1:IMG_003",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:4",
+      "D1:2",
+      "D1:5",
+      "D1:8"
+    ],
+    "clue": [
+      "D1:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer lists many images, but the reference answer specifies only D1:IMG_003. The extra images contradict the correct answer.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer lists many images, but the reference answer specifies only D1:IMG_003. The extra images contradict the correct answer.\"\n}"
+  },
+  {
+    "index": 1004,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "TTL",
+    "question": "What is the name of the landmark in this image?",
+    "prediction": "Hagia Sophia",
+    "reference": "Hagia Sophia",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:4",
+      "D1:2",
+      "D1:5",
+      "D1:8"
+    ],
+    "clue": [
+      "D1:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Hagia Sophia'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Hagia Sophia'.\"\n}"
+  },
+  {
+    "index": 1005,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VR",
+    "question": "Based on the photos shared by Ethan, in which city was the following picture taken?",
+    "prediction": "Istanbul",
+    "reference": "Istanbul",
+    "retrieved_ids": [
+      "D1:5",
+      "D1:1",
+      "D1:4",
+      "D1:2",
+      "D1:8"
+    ],
+    "clue": [
+      "D1:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer matches the reference answer exactly.\"}"
+  },
+  {
+    "index": 1006,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VS",
+    "question": "Which of Ethan’s photos is the most similar to the content of this picture?",
+    "prediction": "D1:IMG_004, D1:IMG_005",
+    "reference": "D1:IMG_004",
+    "retrieved_ids": [
+      "D1:5",
+      "D1:1",
+      "D1:8",
+      "D1:2",
+      "D1:4"
+    ],
+    "clue": [
+      "D1:5"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction adds an extra photo (D1:IMG_005) that is not in the reference answer, which should only be D1:IMG_004.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The prediction adds an extra photo (D1:IMG_005) that is not in the reference answer, which should only be D1:IMG_004.\"}"
+  },
+  {
+    "index": 1007,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "TTL",
+    "question": "What is the name of the landmark in this image?",
+    "prediction": "Topkapi Palace",
+    "reference": "Topkapi Palace",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:5",
+      "D1:8",
+      "D1:2",
+      "D1:4"
+    ],
+    "clue": [
+      "D1:5",
+      "D1:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer.\"}"
+  },
+  {
+    "index": 1008,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VR",
+    "question": "Based on the photos shared by Ethan, in which city was the following picture taken?",
+    "prediction": "Istanbul",
+    "reference": "Istanbul",
+    "retrieved_ids": [
+      "D1:5",
+      "D1:1",
+      "D1:8",
+      "D1:2",
+      "D2:2"
+    ],
+    "clue": [
+      "D1:5",
+      "D1:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer matches the reference answer exactly.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer matches the reference answer exactly.\"}"
+  },
+  {
+    "index": 1009,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "FR",
+    "question": "Which famous landmarks in Istanbul did Ethan share? List them in the order they were first mentioned in the dialogue, separated by commas.",
+    "prediction": "Topkapi Palace, Alhambra’s Generalife gardens",
+    "reference": "Blue Mosque, Hagia Sophia, Topkapi Palace.",
+    "retrieved_ids": [
+      "D2:1",
+      "D1:10",
+      "D1:5",
+      "D1:9",
+      "D1:6"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D1:4",
+      "D1:5",
+      "D1:8"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer only includes Topkapi Palace and adds an unrelated landmark, missing Blue Mosque and Hagia Sophia from the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer only includes Topkapi Palace and adds an unrelated landmark, missing Blue Mosque and Hagia Sophia from the reference.\"\n}"
+  },
+  {
+    "index": 1010,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "AR",
+    "question": "When did Ethan travel to Istanbul for sightseeing and observation?",
+    "prediction": "Ethan traveled to Istanbul for sightseeing and observation on 2024-05-12, as indicated in the session logs for D1, which began on that date.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:1",
+      "D1:10",
+      "D1:5",
+      "D1:9",
+      "D6:11"
+    ],
+    "clue": [],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer states the information is not mentioned, but the prediction gives a specific date, contradicting the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The reference answer states the information is not mentioned, but the prediction gives a specific date, contradicting the reference.\"\n}"
+  },
+  {
+    "index": 1011,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "FR",
+    "question": "When introducing Istanbul, which Spanish landmark did Ethan mention as a point of comparison?",
+    "prediction": "Ethan mentioned the Alhambra’s Generalife gardens in Spain as a point of comparison when introducing Istanbul.",
+    "reference": "Alhambra's Generalife gardens.",
+    "retrieved_ids": [
+      "D1:10",
+      "D2:1",
+      "D1:9",
+      "D1:5",
+      "D5:1"
+    ],
+    "clue": [
+      "D1:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction correctly states that Ethan mentioned the Alhambra’s Generalife gardens as the Spanish landmark.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction correctly states that Ethan mentioned the Alhambra’s Generalife gardens as the Spanish landmark.\"\n}"
+  },
+  {
+    "index": 1012,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "TR",
+    "question": "In which year did Ethan visit the Alhambra in Spain? Please provide the specific year only.",
+    "prediction": "2024",
+    "reference": "2023",
+    "retrieved_ids": [
+      "D1:10",
+      "D5:1",
+      "D5:7",
+      "D5:8",
+      "D5:12"
+    ],
+    "clue": [
+      "D1:10"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted year 2024 does not match the reference year 2023.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted year 2024 does not match the reference year 2023.\"}"
+  },
+  {
+    "index": 1013,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VS",
+    "question": "Which two images in the dialogue show the same landmark as this one?",
+    "prediction": "D2:IMG_001, D2:IMG_002",
+    "reference": "D2:IMG_001, D2:IMG_002",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:4",
+      "D9:8",
+      "D9:7",
+      "D2:3"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, listing the same two image IDs.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer, listing the same two image IDs.\"\n}"
+  },
+  {
+    "index": 1014,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VS",
+    "question": "This picture shows a night view of a landmark mentioned in the dialogue. Which image in the dialogue most directly depicts this landmark during the daytime?",
+    "prediction": "D2:IMG_002, D2:IMG_001",
+    "reference": "D2:IMG_002",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:2",
+      "D9:7",
+      "D2:3",
+      "D9:8"
+    ],
+    "clue": [
+      "D2:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Predicted answer includes an extra image (D2:IMG_001) that is not in the reference answer, which should be only D2:IMG_002.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"Predicted answer includes an extra image (D2:IMG_001) that is not in the reference answer, which should be only D2:IMG_002.\"\n}"
+  },
+  {
+    "index": 1015,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VR",
+    "question": "This picture shows a night view of a landmark mentioned in the dialogue. Which landmark shared by Ethan in the dialogue does it correspond to?",
+    "prediction": "The Burj Khalifa",
+    "reference": "Burj Khalifa",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:2",
+      "D9:8",
+      "D9:7",
+      "D2:5"
+    ],
+    "clue": [
+      "D2:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer 'The Burj Khalifa' matches the reference answer 'Burj Khalifa' and does not contradict it.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer 'The Burj Khalifa' matches the reference answer 'Burj Khalifa' and does not contradict it.\"\n}"
+  },
+  {
+    "index": 1016,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "TTL",
+    "question": "What is the name of the landmark in this image?",
+    "prediction": "Burj Khalifa",
+    "reference": "Burj Khalifa",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:2",
+      "D2:5",
+      "D2:3",
+      "D9:7"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer 'Burj Khalifa'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer 'Burj Khalifa'\"}"
+  },
+  {
+    "index": 1017,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VS",
+    "question": "Which two images in the dialogue shows the same landmark as this one?",
+    "prediction": "D2:IMG_001, D2:IMG_002",
+    "reference": "D2:IMG_001, D2:IMG_002",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:4",
+      "D9:8",
+      "D9:7",
+      "D2:3"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1018,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VR",
+    "question": "This picture shows a night view of a landmark mentioned in the dialogue. Which landmark shared by Ethan in the dialogue does it correspond to?",
+    "prediction": "The landmark shown in the night view image is the Canton Tower in Guangzhou, as referenced in the dialogue.",
+    "reference": "Burj Khalifa",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:2",
+      "D9:7",
+      "D9:8",
+      "D2:3"
+    ],
+    "clue": [
+      "D2:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer says the landmark is the Canton Tower, which contradicts the reference answer of Burj Khalifa.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer says the landmark is the Canton Tower, which contradicts the reference answer of Burj Khalifa.\"\n}"
+  },
+  {
+    "index": 1019,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "TTL",
+    "question": "What is the name of the landmark in this image?",
+    "prediction": "Burj Khalifa",
+    "reference": "Burj Khalifa",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:2",
+      "D2:5",
+      "D9:7",
+      "D2:3"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1020,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "AR",
+    "question": "Is the user working on a project related to skyscraper design?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:5",
+      "D2:17",
+      "D4:12",
+      "D5:10"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 1021,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VS",
+    "question": "Which image shared in the dialogue shows the same beautiful scenery as this picture?",
+    "prediction": "D3:IMG_001, D8:IMG_005",
+    "reference": "D3:IMG_001",
+    "retrieved_ids": [
+      "D3:3",
+      "D3:4",
+      "D8:6",
+      "D4:1",
+      "D4:2"
+    ],
+    "clue": [
+      "D3:3"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Prediction adds an extra image (D8:IMG_005) that is not in the reference answer, contradicting the correct single answer D3:IMG_001.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"Prediction adds an extra image (D8:IMG_005) that is not in the reference answer, contradicting the correct single answer D3:IMG_001.\"}"
+  },
+  {
+    "index": 1022,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VR",
+    "question": "While discussing which landscape in the dialogue did Ethan share a picture similar to this one?",
+    "prediction": "Ethan shared a picture similar to the first image (Japanese-style garden with a calm pond reflecting surrounding trees, carefully pruned evergreens and deciduous trees in green, yellow, and red autumn foliage lining the water’s edge, a small wooden bridge on the right crossing a narrow part of the pond, bordered by rocks and moss-covered banks, dense forest rising in the background under an overcast sky) during the session dated 2024-05-27, in round D3:4.",
+    "reference": "Japanese garden.",
+    "retrieved_ids": [
+      "D3:4",
+      "D4:2",
+      "D3:8",
+      "D9:2",
+      "D4:1"
+    ],
+    "clue": [
+      "D3:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer identifies the landscape as a Japanese-style garden, matching the reference answer, and adds no contradictory information.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer identifies the landscape as a Japanese-style garden, matching the reference answer, and adds no contradictory information.\"}"
+  },
+  {
+    "index": 1023,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VS",
+    "question": "Please search for the image most similar to this landscape picture when Ethan was talking about Asian landscapes.",
+    "prediction": "D3:IMG_002, D9:IMG_001, D3:IMG_001",
+    "reference": "D3:IMG_002",
+    "retrieved_ids": [
+      "D3:4",
+      "D9:2",
+      "D4:1",
+      "D4:2",
+      "D3:3"
+    ],
+    "clue": [
+      "D3:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Predicted answer adds extra image IDs beyond the single reference ID D3:IMG_002, contradicting the required singular answer.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"Predicted answer adds extra image IDs beyond the single reference ID D3:IMG_002, contradicting the required singular answer.\"}"
+  },
+  {
+    "index": 1024,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "TR",
+    "question": "When did Ethan go to Tokyo? Return in the format YYYY-MM-DD.",
+    "prediction": "2024-05-30",
+    "reference": "2024-05-30.",
+    "retrieved_ids": [
+      "D10:10",
+      "D3:11",
+      "D3:12",
+      "D3:13",
+      "D4:7"
+    ],
+    "clue": [
+      "D3:13"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted date matches the reference answer exactly.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted date matches the reference answer exactly.\"}"
+  },
+  {
+    "index": 1025,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "FR",
+    "question": "What is the name of the temple that Ethan is excited to see in Tokyo?",
+    "prediction": "Senso-ji Temple",
+    "reference": "Senso-ji Temple",
+    "retrieved_ids": [
+      "D4:2",
+      "D3:12",
+      "D3:11",
+      "D3:13",
+      "D4:7"
+    ],
+    "clue": [
+      "D4:1",
+      "D4:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, providing the correct temple name.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer, providing the correct temple name.\"}"
+  },
+  {
+    "index": 1026,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "VS",
+    "question": "What two images in the dialogue show the same landmark as this one in Japan?",
+    "prediction": "D4:IMG_001, D4:IMG_002",
+    "reference": "D4:IMG_001, D4:IMG_002",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:2",
+      "D4:12",
+      "D9:7",
+      "D4:8"
+    ],
+    "clue": [
+      "D4:1",
+      "D4:2"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1027,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "TTL",
+    "question": "What is the name of the landmark in this image?",
+    "prediction": "Senso-ji Temple pagoda",
+    "reference": "Senso-ji Temple",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:2",
+      "D4:12",
+      "D4:9",
+      "D4:8"
+    ],
+    "clue": [
+      "D4:1",
+      "D4:2"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer adds \"pagoda\", changing the landmark from Senso-ji Temple to a specific structure, which does not match the reference answer.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer adds \\\"pagoda\\\", changing the landmark from Senso-ji Temple to a specific structure, which does not match the reference answer.\"}"
+  },
+  {
+    "index": 1028,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "MR",
+    "question": "In the dialogue, which three landmarks in Japan did Ethan share through both images and text (separated by commas)?",
+    "prediction": "Senso-ji Temple, cherry blossoms, Zen garden",
+    "reference": "Senso-ji Temple, Shibuya Crossing, Tokyo Tower.",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:12",
+      "D4:2",
+      "D3:13",
+      "D3:7"
+    ],
+    "clue": [
+      "D4:1",
+      "D4:2",
+      "D4:3",
+      "D4:5",
+      "D4:8",
+      "D4:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Only 'Senso-ji Temple' matches; the other two landmarks differ from the reference answer.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"Only 'Senso-ji Temple' matches; the other two landmarks differ from the reference answer.\"\n}"
+  },
+  {
+    "index": 1029,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "TR",
+    "question": "Did Ethan plan his Barcelona trip before or after returning from Tokyo?",
+    "prediction": "Ethan planned his Barcelona trip after returning from Tokyo.",
+    "reference": "After.",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:11",
+      "D5:12",
+      "D6:11",
+      "D7:14"
+    ],
+    "clue": [
+      "D4:1",
+      "D5:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer states that Ethan planned his Barcelona trip after returning from Tokyo, which matches the reference answer 'After'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer states that Ethan planned his Barcelona trip after returning from Tokyo, which matches the reference answer 'After'.\"\n}"
+  },
+  {
+    "index": 1030,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "FR",
+    "question": "While discussing Spain, whose design work did Ethan mention he was paying attention to?",
+    "prediction": "Ethan mentioned he was paying attention to Gaudí’s design work.",
+    "reference": "Gaudí",
+    "retrieved_ids": [
+      "D5:8",
+      "D5:7",
+      "D5:10",
+      "D5:9",
+      "D5:5"
+    ],
+    "clue": [
+      "D5:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer correctly states that Ethan was paying attention to Gaudí's design work, matching the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer correctly states that Ethan was paying attention to Gaudí's design work, matching the reference answer.\"\n}"
+  },
+  {
+    "index": 1031,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "AR",
+    "question": "Why does Ethan like the architectural works of Andrea Palladio?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D5:8",
+      "D7:11",
+      "D5:9",
+      "D5:10",
+      "D6:7"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 1032,
+    "dataset": "Landscape_Travel_Architecture_Nature",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue memory (please answer only yes or no):\n Ethan mentioned that he likes the architectural works of Andrea Palladio?",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D1:6",
+      "D1:7",
+      "D2:16",
+      "D5:8",
+      "D7:11"
+    ],
+    "clue": [
+      "D5:8"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer is 'Yes', but the predicted answer is 'No', which contradicts the correct response.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer is 'Yes', but the predicted answer is 'No', which contradicts the correct response.\"}"
+  }
+]

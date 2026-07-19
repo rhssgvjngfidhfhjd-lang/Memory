@@ -1,0 +1,10 @@
+{
+  "run_name": "qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20",
+  "dataset": "Landscape_Travel_Architecture_Nature",
+  "dim": 2048,
+  "count": 237,
+  "index": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Landscape_Travel_Architecture_Nature/vectors.index",
+  "id_mapping": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Landscape_Travel_Architecture_Nature/id_mapping.json",
+  "metadata": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Landscape_Travel_Architecture_Nature/mau_metadata.jsonl",
+  "source": "OmniSimpleMem MAU embeddings"
+}

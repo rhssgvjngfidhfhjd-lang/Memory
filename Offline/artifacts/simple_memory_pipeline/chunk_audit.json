@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "errors": [],
+  "modes": {
+    "a": {
+      "count": 3962,
+      "datasets": 20,
+      "caption_rows": 0,
+      "image_rows": 0
+    },
+    "b": {
+      "count": 3962,
+      "datasets": 20,
+      "caption_rows": 1003,
+      "image_rows": 0
+    },
+    "c": {
+      "count": 3962,
+      "datasets": 20,
+      "caption_rows": 1003,
+      "image_rows": 1003
+    }
+  }
+}

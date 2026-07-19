@@ -1,0 +1,3038 @@
+[
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What two species of albatrosses did Aiden photograph during his coastal birdwatching trip?",
+    "category": "FR",
+    "system_answer": "Black-footed Albatross and Laysan Albatross",
+    "original_answer": "Black-footed Albatross and Laysan Albatross.",
+    "retrieved_ids": [
+      "D1:10",
+      "D1:7",
+      "D1:15",
+      "D1:2",
+      "D1:21"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:46"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What are the three fastest clues for distinguishing Black-footed and Laysan Albatrosses at a distance?",
+    "category": "MR",
+    "system_answer": "The three fastest clues are: (1) **Head color** — dark (Black-footed) vs. white (Laysan). (2) **Bill shade** — dark vs. pale. (3) **Body contrast** — uniform brown vs. strong dark–light contrast.",
+    "original_answer": "(1) Head color — dark (Black-footed) vs. white (Laysan). (2) Bill shade — dark vs. pale. (3) Body contrast — uniform brown vs. strong dark–light contrast.",
+    "retrieved_ids": [
+      "D1:15",
+      "D1:18",
+      "D1:19",
+      "D1:16",
+      "D1:10"
+    ],
+    "clue": [
+      "D1:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:46"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "Which image shows the first Laysan Albatross that Aiden photographed?",
+    "category": "VS",
+    "system_answer": "D1:IMG_001, D1:IMG_008, D1:IMG_007, D1:IMG_010",
+    "original_answer": "D1:IMG_006",
+    "retrieved_ids": [
+      "D1:10",
+      "D1:2",
+      "D1:14",
+      "D1:12",
+      "D1:11"
+    ],
+    "clue": [
+      "D1:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:47"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "Did Aiden photograph any gulls during this coastal birdwatching trip?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:21",
+      "D1:20",
+      "D1:1",
+      "D1:11",
+      "D1:22"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:47"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "How many Black-footed Albatross photos did Aiden share in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D1:2",
+      "D1:1",
+      "D1:5",
+      "D1:7",
+      "D1:21"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:47"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Black-footed Albatross",
+    "original_answer": "Black-footed Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:4",
+      "D1:6",
+      "D1:5",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:48"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Black-footed Albatross",
+    "original_answer": "Black-footed Albatross",
+    "retrieved_ids": [
+      "D1:6",
+      "D1:3",
+      "D1:4",
+      "D1:2",
+      "D1:5"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:48"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Black-footed Albatross",
+    "original_answer": "Black-footed Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:4",
+      "D1:6",
+      "D1:10",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:48"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Black-footed Albatross",
+    "original_answer": "Black-footed Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:4",
+      "D1:10",
+      "D1:2",
+      "D1:6"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:49"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Black-footed Albatross",
+    "original_answer": "Black-footed Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:6",
+      "D1:4",
+      "D1:2",
+      "D1:5"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:49"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What flying technique do Black-footed Albatrosses use that allows them to glide with almost no wing flapping?",
+    "category": "MR",
+    "system_answer": "Black-footed Albatrosses use dynamic soaring, a technique that allows them to stay aloft with almost no wing flapping by utilizing wind gradients above the waves.",
+    "original_answer": "Dynamic soaring — using wind gradients above the waves to stay aloft with minimal energy.",
+    "retrieved_ids": [
+      "D1:8",
+      "D1:9",
+      "D1:4",
+      "D1:7",
+      "D1:3"
+    ],
+    "clue": [
+      "D1:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:49"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "How many Laysan Albatross photos did Aiden share in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "0",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:21",
+      "D1:2",
+      "D5:1",
+      "D9:1"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:49"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Laysan Albatross",
+    "original_answer": "Laysan Albatross",
+    "retrieved_ids": [
+      "D1:10",
+      "D1:3",
+      "D1:14",
+      "D1:6",
+      "D1:4"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:50"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Laysan Albatross",
+    "original_answer": "Laysan Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:6",
+      "D1:10",
+      "D1:4",
+      "D1:14"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:50"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Laysan Albatross",
+    "original_answer": "Laysan Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:10",
+      "D1:4",
+      "D1:6",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:50"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The image shows a Laysan Albatross, identifiable by its white head and chest, dark wings, and pale bill.",
+    "original_answer": "Laysan Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:10",
+      "D1:4",
+      "D1:6",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:51"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D1",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Black-footed Albatross",
+    "original_answer": "Laysan Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:10",
+      "D1:6",
+      "D1:14",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:51"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "What types of flowers were used in the centerpiece arrangement at Aiden's family gathering?",
+    "category": "FR",
+    "system_answer": "The centerpiece arrangement at Aiden's family gathering included orange roses, lilies, chrysanthemums, and eucalyptus leaves, along with assorted greenery.",
+    "original_answer": "Orange roses, lilies, chrysanthemums, and eucalyptus leaves.",
+    "retrieved_ids": [
+      "D2:12",
+      "D2:1",
+      "D2:3",
+      "D2:13",
+      "D9:1"
+    ],
+    "clue": [
+      "D2:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:51"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "What feedback did Aiden's aunt give about his first flower arrangement attempt?",
+    "category": "MR",
+    "system_answer": "Aiden's aunt said his bouquet looked a little \"top-heavy,\" though.",
+    "original_answer": "She said the bouquet looked a little 'top-heavy'.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:12",
+      "D9:1",
+      "D5:6",
+      "D2:11"
+    ],
+    "clue": [
+      "D2:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:52"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "Which image shows the food table decorated with sunflowers?",
+    "category": "VS",
+    "system_answer": "D2:IMG_003",
+    "original_answer": "D2:IMG_003",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:5",
+      "D2:6",
+      "D2:1",
+      "D2:12"
+    ],
+    "clue": [
+      "D2:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:52"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "How many Norfolk terriers appeared at the family gathering? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "MR",
+    "system_answer": "2",
+    "original_answer": "2",
+    "retrieved_ids": [
+      "D2:7",
+      "D2:8",
+      "D2:10",
+      "D2:11",
+      "D2:17"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:52"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "How many images of Norfolk terriers appeared at the family gathering? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D2:7",
+      "D2:8",
+      "D2:6",
+      "D2:10",
+      "D2:18"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:53"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Norfolk terrier",
+    "original_answer": "Norfolk terrier",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:8",
+      "D2:6",
+      "D2:7",
+      "D2:10"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:53"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Norfolk terrier",
+    "original_answer": "Norfolk terrier",
+    "retrieved_ids": [
+      "D2:8",
+      "D2:9",
+      "D2:6",
+      "D2:7",
+      "D2:10"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:53"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Norfolk terrier",
+    "original_answer": "Norfolk terrier",
+    "retrieved_ids": [
+      "D2:8",
+      "D2:9",
+      "D2:6",
+      "D2:7",
+      "D2:10"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:53"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Norfolk terrier",
+    "original_answer": "Norfolk terrier",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:8",
+      "D2:6",
+      "D2:7",
+      "D2:10"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:54"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "What three common flower arrangement styles were discussed in the conversation?",
+    "category": "MR",
+    "system_answer": "1. Round arrangements for softer, balanced looks  \n2. Triangular or fan-shaped for centerpieces meant to draw attention upward  \n3. Asymmetric styles for modern, natural-feeling arrangements",
+    "original_answer": "(1) Round arrangements for softer, balanced looks; (2) Triangular or fan-shaped for centerpieces meant to draw attention upward; (3) Asymmetric styles for modern, natural-feeling arrangements.",
+    "retrieved_ids": [
+      "D2:12",
+      "D2:13",
+      "D2:3",
+      "D2:1",
+      "D2:2"
+    ],
+    "clue": [
+      "D2:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:54"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "Did Aiden bring his own camera to photograph the Norfolk terriers?",
+    "category": "AR",
+    "system_answer": "No, Aiden did not bring his own camera to photograph the Norfolk terriers. The user mentioned, “Next time I might bring my camera,” indicating it was a future intention, not an action taken during the event.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:18",
+      "D2:7",
+      "D2:17",
+      "D2:11",
+      "D2:10"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:55"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D2",
+    "question": "What programming project idea did Aiden share with his cousins at the family gathering?",
+    "category": "FR",
+    "system_answer": "Aiden shared that he was thinking about building a tiny program to catalog bird species and plant notes from his walks.",
+    "original_answer": "Building a tiny program to catalog bird species and plant notes from his walks.",
+    "retrieved_ids": [
+      "D2:15",
+      "D2:16",
+      "D3:22",
+      "D3:23",
+      "D2:17"
+    ],
+    "clue": [
+      "D2:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:55"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "How are scatter plots useful for economics data according to the conversation?",
+    "category": "MR",
+    "system_answer": "Scatter plots are essential in economics for visualizing relationships between two variables, such as income vs. consumption, price vs. demand, or inflation vs. unemployment. They help reveal patterns like linear trends, clusters, or outliers, which can suggest economic behaviors worth exploring. They are often the first step in exploratory data analysis and can be used for demand curves or plotting productivity against wages.",
+    "original_answer": "They're great for visualizing relationships between two variables, like income vs. consumption, price vs. demand, or inflation vs. unemployment. They help reveal patterns like linear trends, clusters, or outliers.",
+    "retrieved_ids": [
+      "D3:4",
+      "D3:3",
+      "D3:7",
+      "D3:5",
+      "D3:17"
+    ],
+    "clue": [
+      "D3:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:56"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "Which image shows the code for Aiden's first scatter plot in the conversation?",
+    "category": "VS",
+    "system_answer": "D3:IMG_001, D3:IMG_002",
+    "original_answer": "D3:IMG_001",
+    "retrieved_ids": [
+      "D3:1",
+      "D3:2",
+      "D3:6",
+      "D3:5",
+      "D3:8"
+    ],
+    "clue": [
+      "D3:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:57"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "How many coding exercises did Aiden show for review? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "1",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D3:23",
+      "D3:22",
+      "D1:22",
+      "D10:20",
+      "D3:32"
+    ],
+    "clue": [
+      "D3:24",
+      "D3:26",
+      "D3:28",
+      "D3:30"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:57"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "What economic function did Aiden mention wanting to visualize using 3D plots someday?",
+    "category": "MR",
+    "system_answer": "Cobb-Douglas production function",
+    "original_answer": "A Cobb-Douglas production function.",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:10",
+      "D3:31",
+      "D3:27",
+      "D3:9"
+    ],
+    "clue": [
+      "D3:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:57"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "Did Aiden use Seaborn library during this plotting practice session?",
+    "category": "AR",
+    "system_answer": "No, Aiden did not use the Seaborn library during this plotting practice session. He decided to stick with matplotlib for now, planning to upgrade to Seaborn only after gaining comfort with the basics and starting to analyze real datasets.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:19",
+      "D3:20",
+      "D3:23",
+      "D3:32",
+      "D3:21"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:57"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "What guidelines were suggested for choosing linestyle, color, and linewidth when plotting?",
+    "category": "MR",
+    "system_answer": "A common guideline is: linestyle conveys the type of relationship, color represents category or group, and linewidth emphasizes importance. In economics, when comparing trends—like CPI vs wage growth—you typically use different colors so the reader can distinguish them instantly. Additionally, using different line styles (e.g., dashed vs dotted) and colors (e.g., orange vs yellow) can enhance visual distinction between curves.",
+    "original_answer": "Linestyle conveys the type of relationship, color represents category or group, and linewidth emphasizes importance.",
+    "retrieved_ids": [
+      "D3:26",
+      "D3:25",
+      "D3:24",
+      "D3:15",
+      "D3:18"
+    ],
+    "clue": [
+      "D3:25"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:58"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The user used Seaborn for data visualization.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D3:19",
+      "D3:20",
+      "D3:27",
+      "D3:31",
+      "D3:32"
+    ],
+    "clue": [
+      "D3:19",
+      "D3:20"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:58"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "Did the user ultimately decide to use Seaborn for data visualization?",
+    "category": "KR",
+    "system_answer": "No, the user ultimately decided to stick with matplotlib for now, planning to upgrade to Seaborn once they start analyzing real datasets from class.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D3:19",
+      "D3:20",
+      "D3:31",
+      "D3:7",
+      "D3:18"
+    ],
+    "clue": [
+      "D3:19",
+      "D3:20"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:48:59"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D3:IMG_012",
+    "original_answer": "D3:IMG_011",
+    "retrieved_ids": [
+      "D3:24",
+      "D3:15",
+      "D3:16",
+      "D3:26",
+      "D3:12"
+    ],
+    "clue": [
+      "D3:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:00"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D3:IMG_012",
+    "original_answer": "D3:IMG_012",
+    "retrieved_ids": [
+      "D3:24",
+      "D3:15",
+      "D3:26",
+      "D3:16",
+      "D3:1"
+    ],
+    "clue": [
+      "D3:26"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:00"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D3:IMG_006",
+    "original_answer": "D3:IMG_013",
+    "retrieved_ids": [
+      "D3:30",
+      "D3:28",
+      "D3:8",
+      "D3:9",
+      "D3:1"
+    ],
+    "clue": [
+      "D3:28"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:01"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D3",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D3:IMG_006",
+    "original_answer": "D3:IMG_014",
+    "retrieved_ids": [
+      "D3:30",
+      "D3:28",
+      "D3:8",
+      "D3:9",
+      "D3:1"
+    ],
+    "clue": [
+      "D3:30"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:02"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D4",
+    "question": "What factors drive long-run economic growth according to the conversation?",
+    "category": "FR",
+    "system_answer": "Long-run economic growth is driven mainly by better technology, more physical capital, higher education levels, and improved productivity—not just short-term changes in demand.",
+    "original_answer": "Better technology, more physical capital, higher education levels, and improved productivity.",
+    "retrieved_ids": [
+      "D4:2",
+      "D4:1",
+      "D4:3",
+      "D4:15",
+      "D4:6"
+    ],
+    "clue": [
+      "D4:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:02"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D4",
+    "question": "Which image shows the nested sustainability model diagram?",
+    "category": "VS",
+    "system_answer": "D4:IMG_001",
+    "original_answer": "D4:IMG_001",
+    "retrieved_ids": [
+      "D4:8",
+      "D4:9",
+      "D3:31",
+      "D7:18",
+      "D3:12"
+    ],
+    "clue": [
+      "D4:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:03"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D4",
+    "question": "What types of questions do environmental economists study according to the conversation?",
+    "category": "FR",
+    "system_answer": "Environmental economists study questions like: How do we price carbon emissions? What’s the economic cost of losing a wetland or a forest? How should governments design incentives to protect biodiversity? They also examine how economic systems rely on environmental resources and how to manage those resources sustainably, using tools like externalities, natural capital, ecosystem services, pollution taxes, and cost–benefit analysis.",
+    "original_answer": "How to price carbon emissions, what's the economic cost of losing a wetland or forest, and how governments should design incentives to protect biodiversity.",
+    "retrieved_ids": [
+      "D4:7",
+      "D7:16",
+      "D4:8",
+      "D7:18",
+      "D7:17"
+    ],
+    "clue": [
+      "D4:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:04"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D4",
+    "question": "Did the conversation mention any specific environmental economics textbooks or professors?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D4:7",
+      "D7:16",
+      "D7:18",
+      "D7:15",
+      "D10:17"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:04"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D4",
+    "question": "What is Aiden's ideal future career goal related to environmental policy?",
+    "category": "MR",
+    "system_answer": "Aiden's ideal future career goal is to do research that helps design better environmental policies—specifically, evaluating how conservation programs affect both local communities and wildlife.",
+    "original_answer": "Doing research that helps design better environmental policies—maybe evaluating how conservation programs affect both local communities and wildlife.",
+    "retrieved_ids": [
+      "D4:12",
+      "D10:16",
+      "D4:13",
+      "D10:18",
+      "D10:17"
+    ],
+    "clue": [
+      "D4:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:04"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What two types of flowers did Aiden observe during his weekend hike?",
+    "category": "FR",
+    "system_answer": "Clematis and Morning Glories.",
+    "original_answer": "Poinsettias and Clematis.",
+    "retrieved_ids": [
+      "D5:6",
+      "D9:5",
+      "D9:1",
+      "D5:7",
+      "D9:18"
+    ],
+    "clue": [
+      "D5:2",
+      "D5:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:04"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "How many poinsettia photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D9:1",
+      "D5:6",
+      "D5:1",
+      "D5:2",
+      "D5:5"
+    ],
+    "clue": [
+      "D5:2",
+      "D5:3",
+      "D5:4",
+      "D5:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:05"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Poinsettia",
+    "original_answer": "Poinsettia",
+    "retrieved_ids": [
+      "D5:3",
+      "D5:4",
+      "D5:5",
+      "D5:2",
+      "D5:8"
+    ],
+    "clue": [
+      "D5:2",
+      "D5:3",
+      "D5:4",
+      "D5:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:05"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Poinsettia",
+    "original_answer": "Poinsettia",
+    "retrieved_ids": [
+      "D5:3",
+      "D5:4",
+      "D5:5",
+      "D5:2",
+      "D5:8"
+    ],
+    "clue": [
+      "D5:2",
+      "D5:3",
+      "D5:4",
+      "D5:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:05"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the image is a poinsettia.",
+    "original_answer": "Poinsettia",
+    "retrieved_ids": [
+      "D5:3",
+      "D5:4",
+      "D5:5",
+      "D5:2",
+      "D10:5"
+    ],
+    "clue": [
+      "D5:2",
+      "D5:3",
+      "D5:4",
+      "D5:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:06"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Poinsettia",
+    "original_answer": "Poinsettia",
+    "retrieved_ids": [
+      "D5:3",
+      "D5:4",
+      "D5:5",
+      "D5:2",
+      "D5:8"
+    ],
+    "clue": [
+      "D5:2",
+      "D5:3",
+      "D5:4",
+      "D5:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:06"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Poinsettia",
+    "original_answer": "Poinsettia",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:3",
+      "D5:4",
+      "D5:2",
+      "D5:8"
+    ],
+    "clue": [
+      "D5:2",
+      "D5:3",
+      "D5:4",
+      "D5:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:06"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "How many Clematis photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D9:1",
+      "D5:10",
+      "D5:11",
+      "D5:6",
+      "D5:1"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:07"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Clematis",
+    "original_answer": "Clematis",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:8",
+      "D5:7",
+      "D5:9",
+      "D9:3"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:07"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Clematis",
+    "original_answer": "Clematis",
+    "retrieved_ids": [
+      "D5:8",
+      "D5:9",
+      "D5:10",
+      "D5:7",
+      "D9:8"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:07"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Clematis",
+    "original_answer": "Clematis",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:8",
+      "D5:7",
+      "D5:9",
+      "D9:3"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:08"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Clematis",
+    "original_answer": "Clematis",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:8",
+      "D5:7",
+      "D5:9",
+      "D9:3"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:08"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Clematis",
+    "original_answer": "Clematis",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:8",
+      "D5:7",
+      "D5:9",
+      "D9:3"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:08"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "Which image shows the first Clematis flower Aiden photographed?",
+    "category": "VS",
+    "system_answer": "D5:IMG_005",
+    "original_answer": "D5:IMG_005",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:7",
+      "D5:8",
+      "D5:9",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:09"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What bird species did Aiden spot on the hill, and what is its distinctive feature?",
+    "category": "VR",
+    "system_answer": "The bird species Aiden spotted on the hill is the American Pipit. Its distinctive feature is its slender, brownish body and the way it forages on open ground.",
+    "original_answer": "Red-winged Blackbird. The glossy black feathers and the bright red-and-yellow shoulder patch called the epaulet are distinctive identifiers.",
+    "retrieved_ids": [
+      "D10:11",
+      "D5:14",
+      "D9:11",
+      "D10:14",
+      "D7:3"
+    ],
+    "clue": [
+      "D5:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:09"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What differences did Aiden observe between poinsettias and Clematis?",
+    "category": "FR",
+    "system_answer": "Aiden observed that poinsettia bracts feel thicker and leathery (essentially modified leaves), while Clematis petals are thin and delicate (true tepals). He also noted that poinsettias grow like woody shrubs or small trees, whereas Clematis is a climbing vine. Additionally, Clematis flowers are true flowers that attract different pollinators, unlike poinsettias, which have colored bracts. Clematis thrives in cooler, well-drained soil with “roots in the shade, vines in the sun,” contrasting with poinsettias’ preference for warmer climates.",
+    "original_answer": "Poinsettias feel more like shrubs while Clematis grows like a climbing vine. Poinsettia bracts are thicker and almost leathery, while Clematis petals are thin and delicate.",
+    "retrieved_ids": [
+      "D5:12",
+      "D5:11",
+      "D5:13",
+      "D5:6",
+      "D5:9"
+    ],
+    "clue": [
+      "D5:11",
+      "D5:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:10"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "Did Aiden photograph any butterflies during this hike?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:18",
+      "D5:1",
+      "D9:1",
+      "D1:22",
+      "D9:17"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:11"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Red-winged Blackbird",
+    "original_answer": "Red-winged Blackbird",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D5:14",
+      "D7:11",
+      "D7:5"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:11"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Red-winged Blackbird",
+    "original_answer": "Red-winged Blackbird",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D7:11",
+      "D5:14",
+      "D7:12"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:11"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Red-winged Blackbird",
+    "original_answer": "Red-winged Blackbird",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D7:12",
+      "D5:14",
+      "D7:11"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:11"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Red-winged Blackbird",
+    "original_answer": "Red-winged Blackbird",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D5:14",
+      "D7:11",
+      "D7:12"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:12"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "Please search for all photos of the same species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D5:IMG_009, D5:IMG_010, D7:IMG_008, D7:IMG_009",
+    "original_answer": "D5:IMG_009, D5:IMG_010, D7:IMG_001",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D5:14",
+      "D7:10",
+      "D7:11"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:12"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D5",
+    "question": "Please search for all photos of the same species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D5:IMG_010, D5:IMG_009, D7:IMG_008, D7:IMG_009",
+    "original_answer": "D5:IMG_009, D5:IMG_010, D7:IMG_001",
+    "retrieved_ids": [
+      "D5:15",
+      "D7:2",
+      "D5:14",
+      "D7:10",
+      "D7:11"
+    ],
+    "clue": [
+      "D5:14",
+      "D5:15",
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:13"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D6",
+    "question": "What factors contribute to China's e-commerce strength according to the conversation?",
+    "category": "FR",
+    "system_answer": "China’s e-commerce strength comes from several factors: massive user base, early adoption of mobile payments, dense logistics networks, and highly competitive platforms like Taobao, JD, and Pinduoduo. The environment rewards innovation and scale.",
+    "original_answer": "Massive user base, early adoption of mobile payments, dense logistics networks, and highly competitive platforms.",
+    "retrieved_ids": [
+      "D6:4",
+      "D6:3",
+      "D6:5",
+      "D6:1",
+      "D6:2"
+    ],
+    "clue": [
+      "D6:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:14"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D6",
+    "question": "Which image shows the Taobao logo discussed in the conversation?",
+    "category": "VS",
+    "system_answer": "D6:IMG_001",
+    "original_answer": "D6:IMG_001",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:5",
+      "D6:4",
+      "D6:1",
+      "D6:13"
+    ],
+    "clue": [
+      "D6:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:14"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D6",
+    "question": "How many Brooklyn Nets athletic shorts designs did Aiden compare? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:7",
+      "D6:8",
+      "D6:9",
+      "D6:13"
+    ],
+    "clue": [
+      "D6:6",
+      "D6:7",
+      "D6:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:14"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D6",
+    "question": "Please help me search for all images of the Brooklyn Nets athletic shorts designs discussed in the conversation.",
+    "category": "VS",
+    "system_answer": "D6:IMG_002, D6:IMG_003, D6:IMG_004",
+    "original_answer": "D6:IMG_002, D6:IMG_003, D6:IMG_004",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:7",
+      "D6:8",
+      "D6:9",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:6",
+      "D6:7",
+      "D6:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:15"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D6",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "The clothing in the picture is athletic shorts.",
+    "original_answer": "Brooklyn Nets Athletic Shorts",
+    "retrieved_ids": [
+      "D6:8",
+      "D6:6",
+      "D6:7",
+      "D6:9",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:6",
+      "D6:7",
+      "D6:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:15"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D6",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Basketball shorts",
+    "original_answer": "Brooklyn Nets Athletic Shorts",
+    "retrieved_ids": [
+      "D6:8",
+      "D6:6",
+      "D6:7",
+      "D6:9",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:6",
+      "D6:7",
+      "D6:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:15"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D6",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Basketball shorts",
+    "original_answer": "Brooklyn Nets Athletic Shorts",
+    "retrieved_ids": [
+      "D6:8",
+      "D6:6",
+      "D6:7",
+      "D6:9",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:6",
+      "D6:7",
+      "D6:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:15"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D6",
+    "question": "Which Brooklyn Nets athletic shorts did Aiden finally choose? Only return the image_id of the image.",
+    "category": "KR",
+    "system_answer": "D6:IMG_004",
+    "original_answer": "D6:IMG_004",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:7",
+      "D6:9",
+      "D6:8",
+      "D6:14"
+    ],
+    "clue": [
+      "D6:9",
+      "D6:10",
+      "D6:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:16"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D6",
+    "question": "Did Aiden purchase any Brooklyn Nets jerseys?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:9",
+      "D6:7",
+      "D6:5",
+      "D6:8"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:16"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "When did Aiden attend the public lecture on birds and environmental conservation? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2025-04-14",
+    "original_answer": "2025-04-14",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:19",
+      "D7:20",
+      "D7:21",
+      "D7:22"
+    ],
+    "clue": [
+      "D7:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:16"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What three new bird species did Aiden learn about at the conservation lecture?",
+    "category": "FR",
+    "system_answer": "The conversation does not specify the names of the three new bird species Aiden learned about at the conservation lecture.",
+    "original_answer": "Northern Cardinal, Lazuli Bunting, and Yellow-headed Blackbird.",
+    "retrieved_ids": [
+      "D7:3",
+      "D1:22",
+      "D7:1",
+      "D9:15",
+      "D7:22"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:7",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:16"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Northern Cardinal",
+    "original_answer": "Northern Cardinal",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:7",
+      "D5:15"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5",
+      "D7:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:17"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Northern Cardinal",
+    "original_answer": "Northern Cardinal",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:7",
+      "D5:15"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5",
+      "D7:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:17"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Northern Cardinal",
+    "original_answer": "Northern Cardinal",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:7",
+      "D5:15"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5",
+      "D7:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:17"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Northern Cardinal",
+    "original_answer": "Northern Cardinal",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:7",
+      "D5:15"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5",
+      "D7:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:17"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Lazuli Bunting",
+    "original_answer": "Lazuli Bunting",
+    "retrieved_ids": [
+      "D7:7",
+      "D7:8",
+      "D7:9",
+      "D9:11",
+      "D9:12"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:8",
+      "D7:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:18"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Lazuli Bunting",
+    "original_answer": "Lazuli Bunting",
+    "retrieved_ids": [
+      "D7:7",
+      "D7:8",
+      "D7:9",
+      "D9:12",
+      "D9:11"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:8",
+      "D7:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:18"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Lazuli Bunting",
+    "original_answer": "Lazuli Bunting",
+    "retrieved_ids": [
+      "D7:7",
+      "D7:8",
+      "D7:9",
+      "D9:11",
+      "D9:12"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:8",
+      "D7:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:18"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The specific species of animal shown in the image is a Yellow-headed Blackbird.",
+    "original_answer": "Yellow-headed Blackbird",
+    "retrieved_ids": [
+      "D7:11",
+      "D7:10",
+      "D7:12",
+      "D5:15",
+      "D7:2"
+    ],
+    "clue": [
+      "D7:10",
+      "D7:11",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:19"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Yellow-headed Blackbird",
+    "original_answer": "Yellow-headed Blackbird",
+    "retrieved_ids": [
+      "D7:11",
+      "D7:12",
+      "D7:10",
+      "D5:15",
+      "D7:2"
+    ],
+    "clue": [
+      "D7:10",
+      "D7:11",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:19"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Yellow-headed Blackbird",
+    "original_answer": "Yellow-headed Blackbird",
+    "retrieved_ids": [
+      "D7:10",
+      "D7:11",
+      "D7:12",
+      "D5:15",
+      "D7:2"
+    ],
+    "clue": [
+      "D7:10",
+      "D7:11",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:19"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "How many Northern Cardinal photos were shown in the lecture slides? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:7",
+      "D7:1"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5",
+      "D7:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:20"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "How many Yellow-headed Blackbird photos were shown in the lecture slides? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D7:10",
+      "D7:11",
+      "D7:12",
+      "D7:13",
+      "D7:3"
+    ],
+    "clue": [
+      "D7:10",
+      "D7:11",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:20"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What distinctive features identify a male Northern Cardinal?",
+    "category": "MR",
+    "system_answer": "A male Northern Cardinal is identified by its vivid red plumage, black face mask, and pointed crest. Its sturdy beak is also distinctive, as it’s adapted for cracking seeds. The red color can vary slightly in tone depending on light and age, but the overall silhouette remains unmistakable.",
+    "original_answer": "Vivid red feathers, a crest on its head, a strong beak, and a black mask around the face.",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D5:16",
+      "D7:7"
+    ],
+    "clue": [
+      "D7:4",
+      "D7:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:21"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "How many Lazuli Bunting photos were shown in the lecture slides? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D7:9",
+      "D7:8",
+      "D7:7",
+      "D7:10",
+      "D7:1"
+    ],
+    "clue": [
+      "D7:7",
+      "D7:8",
+      "D7:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:21"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What ecosystem services do wetlands provide according to the lecture?",
+    "category": "MR",
+    "system_answer": "Wetlands provide ecosystem services such as flood protection, water purification, carbon storage, and biodiversity support. They also store water, trap sediments, absorb nutrients, and serve as breeding grounds and food sources for species including migratory birds.",
+    "original_answer": "They store water, trap sediments, absorb nutrients, provide breeding grounds and food sources for species, act as natural water filters, and buffer against floods.",
+    "retrieved_ids": [
+      "D7:15",
+      "D7:16",
+      "D7:18",
+      "D7:17",
+      "D7:14"
+    ],
+    "clue": [
+      "D7:14",
+      "D7:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:21"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "What policy tools were mentioned for correcting environmental externalities?",
+    "category": "FR",
+    "system_answer": "Taxes, subsidies, and tradable permits were mentioned as policy tools for correcting environmental externalities.",
+    "original_answer": "Taxes on pollution, subsidies for landowners who preserve or restore ecosystems, and tradable permits that cap total pollution.",
+    "retrieved_ids": [
+      "D7:17",
+      "D7:18",
+      "D7:16",
+      "D4:6",
+      "D7:15"
+    ],
+    "clue": [
+      "D7:17"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:22"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D7",
+    "question": "Did the lecturer discuss specific conservation organizations or NGOs?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:19",
+      "D7:14",
+      "D7:18",
+      "D7:21",
+      "D7:22"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:22"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D8",
+    "question": "What physical symptoms did Aiden experience from drinking too much matcha?",
+    "category": "FR",
+    "system_answer": "Aiden experienced a racing heart and felt jittery after drinking too much matcha.",
+    "original_answer": "Racing heart and feeling jittery.",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:13",
+      "D8:1"
+    ],
+    "clue": [
+      "D8:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:22"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D8",
+    "question": "Which image shows the matcha beverage mentioned in the conversation?",
+    "category": "VS",
+    "system_answer": "D8:IMG_001",
+    "original_answer": "D8:IMG_001",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:4",
+      "D2:14",
+      "D9:1",
+      "D5:6"
+    ],
+    "clue": [
+      "D8:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:24"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D8",
+    "question": "How much coursework did Aiden have left to review for his two midterms?",
+    "category": "FR",
+    "system_answer": "For one course, Aiden had three chapters left, and for the other, he needed to review all the key formulas again.",
+    "original_answer": "For one course, three chapters left. For the other, all key formulas to review.",
+    "retrieved_ids": [
+      "D8:8",
+      "D8:7",
+      "D8:1",
+      "D3:23",
+      "D8:2"
+    ],
+    "clue": [
+      "D8:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:24"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D8",
+    "question": "Did Aiden take any anti-anxiety medication?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D8:6",
+      "D8:1",
+      "D8:5",
+      "D8:2",
+      "D8:9"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:24"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "When did Aiden finish both midterms and go hiking? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2025-05-13",
+    "original_answer": "2025-05-13",
+    "retrieved_ids": [
+      "D10:20",
+      "D2:17",
+      "D5:22",
+      "D9:16",
+      "D9:17"
+    ],
+    "clue": [
+      "D9:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:24"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "What two types of flowers did Aiden photograph during the post-exam hike?",
+    "category": "FR",
+    "system_answer": "Aiden photographed a climbing vine-like flower (likely Clematis) and a poinsettia with pale pink and white margins.",
+    "original_answer": "Morning Glory and Thorn Apple (Datura).",
+    "retrieved_ids": [
+      "D9:1",
+      "D5:6",
+      "D5:1",
+      "D9:18",
+      "D5:20"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:24"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "How many Morning Glory photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D9:1",
+      "D9:2",
+      "D5:1",
+      "D9:5",
+      "D9:3"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:25"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Morning Glory",
+    "original_answer": "Thorn apple",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:4",
+      "D9:2",
+      "D5:8",
+      "D9:6"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:25"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Morning Glory",
+    "original_answer": "Thorn apple",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:4",
+      "D9:2",
+      "D9:6",
+      "D5:8"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:25"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D9:IMG_003, D9:IMG_002, D9:IMG_001",
+    "original_answer": "D9:IMG_001, D9:IMG_002, D9:IMG_003",
+    "retrieved_ids": [
+      "D9:4",
+      "D9:3",
+      "D9:2",
+      "D9:6",
+      "D9:8"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:26"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D9:IMG_004, D9:IMG_005, D9:IMG_006",
+    "original_answer": "D9:IMG_001, D9:IMG_002, D9:IMG_003",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:3",
+      "D9:7",
+      "D9:8",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:2",
+      "D9:3",
+      "D9:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:27"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "What important safety information was shared about Thorn Apple flowers?",
+    "category": "MR",
+    "system_answer": "Thorn Apple flowers contain strong alkaloids and are toxic. While they are safe if not ingested, people should avoid touching or ingesting any part of them, as they are best admired from a distance.",
+    "original_answer": "Thorn Apple is toxic—it contains strong alkaloids. It's safe as long as you don't ingest it, but it's best admired from a distance.",
+    "retrieved_ids": [
+      "D9:10",
+      "D9:9",
+      "D9:8",
+      "D9:7",
+      "D9:6"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:28"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Thorn Apple (Datura)",
+    "original_answer": "Thorn apple",
+    "retrieved_ids": [
+      "D9:7",
+      "D9:8",
+      "D9:6",
+      "D9:3",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:28"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Thorn Apple (Datura)",
+    "original_answer": "Thorn apple",
+    "retrieved_ids": [
+      "D9:7",
+      "D9:8",
+      "D9:6",
+      "D9:3",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:28"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Thorn Apple (Datura)",
+    "original_answer": "Thorn apple",
+    "retrieved_ids": [
+      "D9:7",
+      "D9:8",
+      "D9:6",
+      "D9:3",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:29"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Thorn Apple (Datura)",
+    "original_answer": "Thorn apple",
+    "retrieved_ids": [
+      "D9:7",
+      "D9:8",
+      "D9:6",
+      "D9:3",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:29"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture is poisonous.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:7",
+      "D9:8",
+      "D9:9",
+      "D9:10"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:29"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture is poisonous.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:7",
+      "D9:8",
+      "D9:9",
+      "D9:10"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:30"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture is poisonous.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:7",
+      "D9:8",
+      "D9:9",
+      "D9:10"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:30"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: The plant in the picture is poisonous.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:7",
+      "D9:8",
+      "D9:9",
+      "D9:10"
+    ],
+    "clue": [
+      "D9:8",
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:30"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "What intelligent behaviors do Blue Jays exhibit according to the conversation?",
+    "category": "MR",
+    "system_answer": "Blue Jays exhibit intelligence by being naturally alert and social, storing food, warning other birds of predators, solving simple problems, and mimicking other birds’ calls.",
+    "original_answer": "They are vocal, curious, sometimes mimic other birds' calls, store food, warn other birds of predators, and can solve simple problems.",
+    "retrieved_ids": [
+      "D9:14",
+      "D9:13",
+      "D9:12",
+      "D9:15",
+      "D9:11"
+    ],
+    "clue": [
+      "D9:12",
+      "D9:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:30"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "How many French Bulldog photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "2",
+    "retrieved_ids": [
+      "D9:19",
+      "D9:22",
+      "D9:20",
+      "D9:1",
+      "D2:17"
+    ],
+    "clue": [
+      "D9:19",
+      "D9:21"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:31"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D9",
+    "question": "Did Aiden create a photo journal during this hike?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:18",
+      "D5:1",
+      "D9:1",
+      "D9:16",
+      "D5:22"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:31"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "When did Aiden visit his uncle's farmland? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2025-06-01",
+    "original_answer": "2025-06-01",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:2",
+      "D10:15",
+      "D10:16",
+      "D2:17"
+    ],
+    "clue": [
+      "D10:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:31"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "What are the main growing habits of dahlias?",
+    "category": "MR",
+    "system_answer": "Dahlias prefer well-drained soil, lots of sunlight, and moderate watering. They grow from tubers and can be lifted and stored during winter in colder regions. They usually bloom in late summer to early fall and love full sun.",
+    "original_answer": "They prefer well-drained soil, lots of sunlight, and moderate watering. They grow from tubers and can be lifted and stored during winter in colder regions.",
+    "retrieved_ids": [
+      "D10:10",
+      "D10:9",
+      "D10:8",
+      "D10:7",
+      "D10:6"
+    ],
+    "clue": [
+      "D10:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:32"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "How many American Pipit photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "1",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D10:11",
+      "D5:1",
+      "D9:1",
+      "D1:22",
+      "D2:18"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12",
+      "D10:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:32"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "What major academic decision did Aiden make after the farm visit?",
+    "category": "KR",
+    "system_answer": "Aiden decided to start an environmental studies minor next semester.",
+    "original_answer": "He decided to start an environmental studies minor next semester.",
+    "retrieved_ids": [
+      "D10:16",
+      "D10:20",
+      "D10:15",
+      "D10:17",
+      "D10:1"
+    ],
+    "clue": [
+      "D10:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:32"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "Did Aiden meet any agricultural researchers at his uncle's farm?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:1",
+      "D10:15",
+      "D10:16",
+      "D10:2",
+      "D2:17"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:32"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Pink-yellow dahlia.",
+    "original_answer": "Pink-yellow dahlia",
+    "retrieved_ids": [
+      "D10:8",
+      "D10:7",
+      "D10:6",
+      "D10:5",
+      "D10:9"
+    ],
+    "clue": [
+      "D10:6",
+      "D10:7",
+      "D10:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:32"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Pink-yellow dahlia.",
+    "original_answer": "Pink-yellow dahlia",
+    "retrieved_ids": [
+      "D10:8",
+      "D10:7",
+      "D10:6",
+      "D10:5",
+      "D10:9"
+    ],
+    "clue": [
+      "D10:6",
+      "D10:7",
+      "D10:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:33"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Pink-yellow dahlia.",
+    "original_answer": "Pink-yellow dahlia",
+    "retrieved_ids": [
+      "D10:8",
+      "D10:7",
+      "D10:6",
+      "D10:5",
+      "D10:9"
+    ],
+    "clue": [
+      "D10:6",
+      "D10:7",
+      "D10:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:33"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "How many pink-yellow dahlia photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D9:1",
+      "D10:7",
+      "D10:9",
+      "D10:6",
+      "D10:8"
+    ],
+    "clue": [
+      "D10:6",
+      "D10:7",
+      "D10:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:33"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "How many bishop of llandaff photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "0",
+    "original_answer": "2",
+    "retrieved_ids": [
+      "D5:1",
+      "D9:1",
+      "D2:17",
+      "D2:18",
+      "D10:1"
+    ],
+    "clue": [
+      "D10:4",
+      "D10:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:34"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Dahlia ‘Bishop of Llandaff’",
+    "original_answer": "Bishop of llandaff",
+    "retrieved_ids": [
+      "D10:5",
+      "D10:4",
+      "D10:6",
+      "D10:8",
+      "D10:7"
+    ],
+    "clue": [
+      "D10:4",
+      "D10:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:34"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Dahlia ‘Bishop of Llandaff’",
+    "original_answer": "Bishop of llandaff",
+    "retrieved_ids": [
+      "D10:5",
+      "D10:4",
+      "D10:6",
+      "D10:8",
+      "D10:7"
+    ],
+    "clue": [
+      "D10:4",
+      "D10:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:34"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "How many American Pipit photos did Aiden share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "1",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D10:11",
+      "D5:1",
+      "D9:1",
+      "D1:22",
+      "D2:18"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12",
+      "D10:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:35"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "What specific species of bird is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "American Pipit",
+    "original_answer": "American Pipit",
+    "retrieved_ids": [
+      "D10:13",
+      "D10:12",
+      "D10:11",
+      "D7:10",
+      "D7:9"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12",
+      "D10:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:35"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "What specific species of bird is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "American Pipit",
+    "original_answer": "American Pipit",
+    "retrieved_ids": [
+      "D10:13",
+      "D10:12",
+      "D10:11",
+      "D7:10",
+      "D7:9"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12",
+      "D10:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:35"
+  },
+  {
+    "sample_id": "Aiden",
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "session_id": "D10",
+    "question": "What specific species of bird is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "American Pipit",
+    "original_answer": "American Pipit",
+    "retrieved_ids": [
+      "D10:13",
+      "D10:12",
+      "D10:11",
+      "D7:10",
+      "D7:11"
+    ],
+    "clue": [
+      "D10:11",
+      "D10:12",
+      "D10:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:49:35"
+  }
+]

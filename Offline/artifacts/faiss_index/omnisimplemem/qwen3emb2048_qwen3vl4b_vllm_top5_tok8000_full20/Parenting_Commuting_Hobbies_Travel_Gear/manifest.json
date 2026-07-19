@@ -1,0 +1,10 @@
+{
+  "run_name": "qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20",
+  "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+  "dim": 2048,
+  "count": 269,
+  "index": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Parenting_Commuting_Hobbies_Travel_Gear/vectors.index",
+  "id_mapping": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Parenting_Commuting_Hobbies_Travel_Gear/id_mapping.json",
+  "metadata": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Parenting_Commuting_Hobbies_Travel_Gear/mau_metadata.jsonl",
+  "source": "OmniSimpleMem MAU embeddings"
+}

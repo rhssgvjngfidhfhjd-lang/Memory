@@ -1,0 +1,9 @@
+Alice Chen is a software engineer who relocated from San Francisco to Boston in March 2024.
+She joined a biotech startup called Helix Labs as a senior backend engineer.
+Her primary project involves building a real-time genomic data processing pipeline using Python and Apache Kafka.
+
+Alice holds a master's degree in computer science from Stanford University, completed in 2019.
+She is an avid marathon runner and has finished three Boston Marathons, most recently in April 2024.
+
+Her manager at Helix Labs is Dr. Marcus Webb, the VP of Engineering.
+The team operates on a fully remote schedule with optional in-person sprints every quarter in Boston.

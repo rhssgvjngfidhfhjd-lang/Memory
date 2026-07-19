@@ -1,0 +1,10 @@
+{
+  "run_name": "qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20",
+  "dataset": "Baking_Dessert_Daily_Life_Skill",
+  "dim": 2048,
+  "count": 319,
+  "index": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Baking_Dessert_Daily_Life_Skill/vectors.index",
+  "id_mapping": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Baking_Dessert_Daily_Life_Skill/id_mapping.json",
+  "metadata": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Baking_Dessert_Daily_Life_Skill/mau_metadata.jsonl",
+  "source": "OmniSimpleMem MAU embeddings"
+}

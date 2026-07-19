@@ -1,0 +1,914 @@
+[
+  {
+    "index": 1145,
+    "dataset": "Music_Dance_Theater_Performance_Learning",
+    "category": "AR",
+    "question": "How can Leo quickly switch between different dance styles?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D11:2",
+      "D10:12",
+      "D10:1",
+      "D10:11",
+      "D11:10"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer ('Not mentioned').",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer ('Not mentioned').\"\n}"
+  },
+  {
+    "index": 1146,
+    "dataset": "Music_Dance_Theater_Performance_Learning",
+    "category": "MR",
+    "question": "Why is body language and pacing important when dealing with a moral dilemma?",
+    "prediction": "Body language and pacing are important when dealing with a moral dilemma because they reflect the character’s inner conflict and emotional truth. As suggested, using the body to express tension — through shifting weight, broken eye contact, or hesitation — allows the audience to feel the struggle. Pacing, like a musical crescendo, builds emotional intensity; slower movement can heighten the weight of the moment, while the release or shift in rhythm mirrors the character’s emotional resolution. Silence and subtle physical cues can also carry more meaning than words, deepening the realism and impact of the scene.",
+    "reference": "Because moral dilemmas often involve emotional conflict, through changes in body language and pacing, actors can show the character's inner struggle and hesitation, which adds depth and realism to the character.",
+    "retrieved_ids": [
+      "D14:5",
+      "D14:4",
+      "D14:8",
+      "D14:9",
+      "D14:12"
+    ],
+    "clue": [
+      "D14:4",
+      "D14:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer conveys the same idea that body language and pacing reveal inner conflict and add depth/realism, matching the reference without contradictions.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer conveys the same idea that body language and pacing reveal inner conflict and add depth/realism, matching the reference without contradictions.\"}"
+  },
+  {
+    "index": 1147,
+    "dataset": "Music_Dance_Theater_Performance_Learning",
+    "category": "VS",
+    "question": "Which image is related to the confrontation scene in the acting discussion?",
+    "prediction": "D14:IMG_001, D14:IMG_002",
+    "reference": "D14:IMG_001",
+    "retrieved_ids": [
+      "D14:7",
+      "D14:8",
+      "D14:13",
+      "D1:4",
+      "D14:9"
+    ],
+    "clue": [
+      "D14:7"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction adds an extra image (D14:IMG_002) that is not in the reference answer, which should be only D14:IMG_001.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The prediction adds an extra image (D14:IMG_002) that is not in the reference answer, which should be only D14:IMG_001.\"}"
+  },
+  {
+    "index": 1148,
+    "dataset": "Music_Dance_Theater_Performance_Learning",
+    "category": "VS",
+    "question": "Which image shows the blocking sketch for the confrontation scene?",
+    "prediction": "D14:IMG_001",
+    "reference": "D14:IMG_002",
+    "retrieved_ids": [
+      "D14:13",
+      "D14:8",
+      "D14:7",
+      "D14:14",
+      "D14:9"
+    ],
+    "clue": [
+      "D14:13"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer 'D14:IMG_001' does not match the reference answer 'D14:IMG_002'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer 'D14:IMG_001' does not match the reference answer 'D14:IMG_002'.\"\n}"
+  },
+  {
+    "index": 1149,
+    "dataset": "Music_Dance_Theater_Performance_Learning",
+    "category": "AR",
+    "question": "Were there any specific details about the stage set?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D14:9",
+      "D14:10",
+      "D14:11",
+      "D14:8",
+      "D3:6"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 1150,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "FR",
+    "question": "What two species of albatrosses did Aiden photograph during his coastal birdwatching trip?",
+    "prediction": "Black-footed Albatross and Laysan Albatross",
+    "reference": "Black-footed Albatross and Laysan Albatross.",
+    "retrieved_ids": [
+      "D1:10",
+      "D1:7",
+      "D1:15",
+      "D1:2",
+      "D1:21"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer.\"}"
+  },
+  {
+    "index": 1151,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "What are the three fastest clues for distinguishing Black-footed and Laysan Albatrosses at a distance?",
+    "prediction": "The three fastest clues are: (1) **Head color** — dark (Black-footed) vs. white (Laysan). (2) **Bill shade** — dark vs. pale. (3) **Body contrast** — uniform brown vs. strong dark–light contrast.",
+    "reference": "(1) Head color — dark (Black-footed) vs. white (Laysan). (2) Bill shade — dark vs. pale. (3) Body contrast — uniform brown vs. strong dark–light contrast.",
+    "retrieved_ids": [
+      "D1:15",
+      "D1:18",
+      "D1:19",
+      "D1:16",
+      "D1:10"
+    ],
+    "clue": [
+      "D1:18"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer lists the same three distinguishing clues—head color, bill shade, and body contrast—in the same order and meaning as the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer lists the same three distinguishing clues—head color, bill shade, and body contrast—in the same order and meaning as the reference.\"\n}"
+  },
+  {
+    "index": 1152,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Which image shows the first Laysan Albatross that Aiden photographed?",
+    "prediction": "D1:IMG_001, D1:IMG_008, D1:IMG_007, D1:IMG_010",
+    "reference": "D1:IMG_006",
+    "retrieved_ids": [
+      "D1:10",
+      "D1:2",
+      "D1:14",
+      "D1:12",
+      "D1:11"
+    ],
+    "clue": [
+      "D1:9"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer lists different image IDs (IMG_001, IMG_008, IMG_007, IMG_010) and does not include the correct ID IMG_006 from the reference.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer lists different image IDs (IMG_001, IMG_008, IMG_007, IMG_010) and does not include the correct ID IMG_006 from the reference.\"\n}"
+  },
+  {
+    "index": 1153,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "AR",
+    "question": "Did Aiden photograph any gulls during this coastal birdwatching trip?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:21",
+      "D1:20",
+      "D1:1",
+      "D1:11",
+      "D1:22"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1154,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many Black-footed Albatross photos did Aiden share in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "3",
+    "reference": "5",
+    "retrieved_ids": [
+      "D1:2",
+      "D1:1",
+      "D1:5",
+      "D1:7",
+      "D1:21"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '3' does not match the reference answer '5'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '3' does not match the reference answer '5'.\"}"
+  },
+  {
+    "index": 1155,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Black-footed Albatross",
+    "reference": "Black-footed Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:4",
+      "D1:6",
+      "D1:5",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Black-footed Albatross'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'Black-footed Albatross'.\"}"
+  },
+  {
+    "index": 1156,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Black-footed Albatross",
+    "reference": "Black-footed Albatross",
+    "retrieved_ids": [
+      "D1:6",
+      "D1:3",
+      "D1:4",
+      "D1:2",
+      "D1:5"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer.\"}"
+  },
+  {
+    "index": 1157,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Black-footed Albatross",
+    "reference": "Black-footed Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:4",
+      "D1:6",
+      "D1:10",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer.\"\n}"
+  },
+  {
+    "index": 1158,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Black-footed Albatross",
+    "reference": "Black-footed Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:4",
+      "D1:10",
+      "D1:2",
+      "D1:6"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Black-footed Albatross'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'Black-footed Albatross'.\"}"
+  },
+  {
+    "index": 1159,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Black-footed Albatross",
+    "reference": "Black-footed Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:6",
+      "D1:4",
+      "D1:2",
+      "D1:5"
+    ],
+    "clue": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D1:5",
+      "D1:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer.\"}"
+  },
+  {
+    "index": 1160,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "What flying technique do Black-footed Albatrosses use that allows them to glide with almost no wing flapping?",
+    "prediction": "Black-footed Albatrosses use dynamic soaring, a technique that allows them to stay aloft with almost no wing flapping by utilizing wind gradients above the waves.",
+    "reference": "Dynamic soaring — using wind gradients above the waves to stay aloft with minimal energy.",
+    "retrieved_ids": [
+      "D1:8",
+      "D1:9",
+      "D1:4",
+      "D1:7",
+      "D1:3"
+    ],
+    "clue": [
+      "D1:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction correctly identifies dynamic soaring as the technique and includes the key details about using wind gradients above the waves to glide with minimal wing flapping.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction correctly identifies dynamic soaring as the technique and includes the key details about using wind gradients above the waves to glide with minimal wing flapping.\"}"
+  },
+  {
+    "index": 1161,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many Laysan Albatross photos did Aiden share in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "0",
+    "reference": "5",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:21",
+      "D1:2",
+      "D5:1",
+      "D9:1"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '0' does not match the reference answer '5'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '0' does not match the reference answer '5'.\"}"
+  },
+  {
+    "index": 1162,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Laysan Albatross",
+    "reference": "Laysan Albatross",
+    "retrieved_ids": [
+      "D1:10",
+      "D1:3",
+      "D1:14",
+      "D1:6",
+      "D1:4"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Laysan Albatross'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'Laysan Albatross'.\"}"
+  },
+  {
+    "index": 1163,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Laysan Albatross",
+    "reference": "Laysan Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:6",
+      "D1:10",
+      "D1:4",
+      "D1:14"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Laysan Albatross'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'Laysan Albatross'.\"}"
+  },
+  {
+    "index": 1164,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Laysan Albatross",
+    "reference": "Laysan Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:10",
+      "D1:4",
+      "D1:6",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, identifying the species as Laysan Albatross.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer, identifying the species as Laysan Albatross.\"}"
+  },
+  {
+    "index": 1165,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "The image shows a Laysan Albatross, identifiable by its white head and chest, dark wings, and pale bill.",
+    "reference": "Laysan Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:10",
+      "D1:4",
+      "D1:6",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer explicitly identifies the species as Laysan Albatross, matching the reference answer and providing additional descriptive details without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer explicitly identifies the species as Laysan Albatross, matching the reference answer and providing additional descriptive details without contradiction.\"\n}"
+  },
+  {
+    "index": 1166,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Black-footed Albatross",
+    "reference": "Laysan Albatross",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:10",
+      "D1:6",
+      "D1:14",
+      "D1:2"
+    ],
+    "clue": [
+      "D1:9",
+      "D1:10",
+      "D1:12",
+      "D1:13",
+      "D1:14"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted species (Black-footed Albatross) does not match the reference species (Laysan Albatross).",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted species (Black-footed Albatross) does not match the reference species (Laysan Albatross).\"\n}"
+  },
+  {
+    "index": 1167,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "FR",
+    "question": "What types of flowers were used in the centerpiece arrangement at Aiden's family gathering?",
+    "prediction": "The centerpiece arrangement at Aiden's family gathering included orange roses, lilies, chrysanthemums, and eucalyptus leaves, along with assorted greenery.",
+    "reference": "Orange roses, lilies, chrysanthemums, and eucalyptus leaves.",
+    "retrieved_ids": [
+      "D2:12",
+      "D2:1",
+      "D2:3",
+      "D2:13",
+      "D9:1"
+    ],
+    "clue": [
+      "D2:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes all the flowers and eucalyptus leaves listed in the reference answer and adds no contradictory information.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer includes all the flowers and eucalyptus leaves listed in the reference answer and adds no contradictory information.\"}"
+  },
+  {
+    "index": 1168,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "What feedback did Aiden's aunt give about his first flower arrangement attempt?",
+    "prediction": "Aiden's aunt said his bouquet looked a little \"top-heavy,\" though.",
+    "reference": "She said the bouquet looked a little 'top-heavy'.",
+    "retrieved_ids": [
+      "D2:3",
+      "D2:12",
+      "D9:1",
+      "D5:6",
+      "D2:11"
+    ],
+    "clue": [
+      "D2:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer conveys the same feedback—Aiden's aunt said the bouquet looked a little 'top‑heavy'—matching the reference without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer conveys the same feedback—Aiden's aunt said the bouquet looked a little 'top‑heavy'—matching the reference without contradiction.\"\n}"
+  },
+  {
+    "index": 1169,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Which image shows the food table decorated with sunflowers?",
+    "prediction": "D2:IMG_003",
+    "reference": "D2:IMG_003",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:5",
+      "D2:6",
+      "D2:1",
+      "D2:12"
+    ],
+    "clue": [
+      "D2:4"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer (D2:IMG_003).",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer (D2:IMG_003).\"\n}"
+  },
+  {
+    "index": 1170,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "How many Norfolk terriers appeared at the family gathering? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "2",
+    "retrieved_ids": [
+      "D2:7",
+      "D2:8",
+      "D2:10",
+      "D2:11",
+      "D2:17"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer '2'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer '2'.\"\n}"
+  },
+  {
+    "index": 1171,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many images of Norfolk terriers appeared at the family gathering? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "2",
+    "reference": "3",
+    "retrieved_ids": [
+      "D2:7",
+      "D2:8",
+      "D2:6",
+      "D2:10",
+      "D2:18"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D2:9"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '2' does not match the reference answer '3'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '2' does not match the reference answer '3'.\"}"
+  },
+  {
+    "index": 1172,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Norfolk terrier",
+    "reference": "Norfolk terrier",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:8",
+      "D2:6",
+      "D2:7",
+      "D2:10"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D2:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer 'Norfolk terrier'",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer 'Norfolk terrier'\"}"
+  },
+  {
+    "index": 1173,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Norfolk terrier",
+    "reference": "Norfolk terrier",
+    "retrieved_ids": [
+      "D2:8",
+      "D2:9",
+      "D2:6",
+      "D2:7",
+      "D2:10"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D2:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer 'Norfolk terrier'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer 'Norfolk terrier'.\"}"
+  },
+  {
+    "index": 1174,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Norfolk terrier",
+    "reference": "Norfolk terrier",
+    "retrieved_ids": [
+      "D2:8",
+      "D2:9",
+      "D2:6",
+      "D2:7",
+      "D2:10"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D2:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Norfolk terrier'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Norfolk terrier'.\"\n}"
+  },
+  {
+    "index": 1175,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "Norfolk terrier",
+    "reference": "Norfolk terrier",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:8",
+      "D2:6",
+      "D2:7",
+      "D2:10"
+    ],
+    "clue": [
+      "D2:6",
+      "D2:8",
+      "D2:9"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Norfolk terrier'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer exactly matches the reference answer 'Norfolk terrier'.\"}"
+  },
+  {
+    "index": 1176,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "What three common flower arrangement styles were discussed in the conversation?",
+    "prediction": "1. Round arrangements for softer, balanced looks  \n2. Triangular or fan-shaped for centerpieces meant to draw attention upward  \n3. Asymmetric styles for modern, natural-feeling arrangements",
+    "reference": "(1) Round arrangements for softer, balanced looks; (2) Triangular or fan-shaped for centerpieces meant to draw attention upward; (3) Asymmetric styles for modern, natural-feeling arrangements.",
+    "retrieved_ids": [
+      "D2:12",
+      "D2:13",
+      "D2:3",
+      "D2:1",
+      "D2:2"
+    ],
+    "clue": [
+      "D2:12"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Error code: 403 - {'status': 403, 'title': 'Forbidden', 'detail': 'Authorization failed'}",
+    "raw_judge": ""
+  },
+  {
+    "index": 1177,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "AR",
+    "question": "Did Aiden bring his own camera to photograph the Norfolk terriers?",
+    "prediction": "No, Aiden did not bring his own camera to photograph the Norfolk terriers. The user mentioned, “Next time I might bring my camera,” indicating it was a future intention, not an action taken during the event.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:18",
+      "D2:7",
+      "D2:17",
+      "D2:11",
+      "D2:10"
+    ],
+    "clue": [],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer states the information is not mentioned, but the prediction asserts definitively that Aiden did not bring his camera, which contradicts the reference.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer states the information is not mentioned, but the prediction asserts definitively that Aiden did not bring his camera, which contradicts the reference.\"}"
+  },
+  {
+    "index": 1178,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "FR",
+    "question": "What programming project idea did Aiden share with his cousins at the family gathering?",
+    "prediction": "Aiden shared that he was thinking about building a tiny program to catalog bird species and plant notes from his walks.",
+    "reference": "Building a tiny program to catalog bird species and plant notes from his walks.",
+    "retrieved_ids": [
+      "D2:15",
+      "D2:16",
+      "D3:22",
+      "D3:23",
+      "D2:17"
+    ],
+    "clue": [
+      "D2:15"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer accurately restates the reference idea of building a tiny program to catalog bird species and plant notes from his walks.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer accurately restates the reference idea of building a tiny program to catalog bird species and plant notes from his walks.\"}"
+  },
+  {
+    "index": 1179,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "How are scatter plots useful for economics data according to the conversation?",
+    "prediction": "Scatter plots are essential in economics for visualizing relationships between two variables, such as income vs. consumption, price vs. demand, or inflation vs. unemployment. They help reveal patterns like linear trends, clusters, or outliers, which can suggest economic behaviors worth exploring. They are often the first step in exploratory data analysis and can be used for demand curves or plotting productivity against wages.",
+    "reference": "They're great for visualizing relationships between two variables, like income vs. consumption, price vs. demand, or inflation vs. unemployment. They help reveal patterns like linear trends, clusters, or outliers.",
+    "retrieved_ids": [
+      "D3:4",
+      "D3:3",
+      "D3:7",
+      "D3:5",
+      "D3:17"
+    ],
+    "clue": [
+      "D3:3"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer includes all points from the reference (visualizing two-variable relationships and revealing linear trends, clusters, outliers) and adds compatible extra details without contradiction.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The answer includes all points from the reference (visualizing two-variable relationships and revealing linear trends, clusters, outliers) and adds compatible extra details without contradiction.\"}"
+  },
+  {
+    "index": 1180,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VS",
+    "question": "Which image shows the code for Aiden's first scatter plot in the conversation?",
+    "prediction": "D3:IMG_001, D3:IMG_002",
+    "reference": "D3:IMG_001",
+    "retrieved_ids": [
+      "D3:1",
+      "D3:2",
+      "D3:6",
+      "D3:5",
+      "D3:8"
+    ],
+    "clue": [
+      "D3:1"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The prediction lists two images (D3:IMG_001, D3:IMG_002) while the reference answer specifies only D3:IMG_001, adding an extra image contradicts the correct answer.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The prediction lists two images (D3:IMG_001, D3:IMG_002) while the reference answer specifies only D3:IMG_001, adding an extra image contradicts the correct answer.\"\n}"
+  },
+  {
+    "index": 1181,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "VR",
+    "question": "How many coding exercises did Aiden show for review? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "1",
+    "reference": "4",
+    "retrieved_ids": [
+      "D3:23",
+      "D3:22",
+      "D1:22",
+      "D10:20",
+      "D3:32"
+    ],
+    "clue": [
+      "D3:24",
+      "D3:26",
+      "D3:28",
+      "D3:30"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '1' does not match the reference answer '4'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '1' does not match the reference answer '4'.\"}"
+  },
+  {
+    "index": 1182,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "MR",
+    "question": "What economic function did Aiden mention wanting to visualize using 3D plots someday?",
+    "prediction": "Cobb-Douglas production function",
+    "reference": "A Cobb-Douglas production function.",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:10",
+      "D3:31",
+      "D3:27",
+      "D3:9"
+    ],
+    "clue": [
+      "D3:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, identifying the Cobb-Douglas production function.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer, identifying the Cobb-Douglas production function.\"\n}"
+  },
+  {
+    "index": 1183,
+    "dataset": "Nature_Economics_Programming_Student_Life",
+    "category": "AR",
+    "question": "Did Aiden use Seaborn library during this plotting practice session?",
+    "prediction": "No, Aiden did not use the Seaborn library during this plotting practice session. He decided to stick with matplotlib for now, planning to upgrade to Seaborn only after gaining comfort with the basics and starting to analyze real datasets.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:19",
+      "D3:20",
+      "D3:23",
+      "D3:32",
+      "D3:21"
+    ],
+    "clue": [],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer states the information is not mentioned, but the prediction asserts definitively that Aiden did not use Seaborn, which contradicts the reference.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer states the information is not mentioned, but the prediction asserts definitively that Aiden did not use Seaborn, which contradicts the reference.\"}"
+  }
+]

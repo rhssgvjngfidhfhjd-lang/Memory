@@ -1,0 +1,1706 @@
+{
+  "summary": {
+    "positional_alignment_mismatches": 0,
+    "categories_checked": [
+      "FR",
+      "KR",
+      "MR",
+      "TR"
+    ],
+    "total_b_correct_c_wrong_regressions": 37,
+    "regressions_with_image_bearing_new_entrant": 3,
+    "fraction_with_image_bearing_new_entrant": 0.08108108108108109,
+    "regressions_where_an_image_chunk_exited_b_top5": 37,
+    "regressions_where_image_composition_increased_b_to_c": 0,
+    "fraction_where_image_composition_increased": 0.0,
+    "regressions_where_clue_pushed_past_k": 37,
+    "by_category_regression_count": {
+      "MR": 8,
+      "TR": 7,
+      "KR": 6,
+      "FR": 16
+    }
+  },
+  "regressions": [
+    {
+      "dataset": "AI_Robotics_Automation_Future_Tech",
+      "category": "MR",
+      "question": "Do you remember what Julian said about AI's role in providing personalized therapy?",
+      "clue": [
+        "D5:5"
+      ],
+      "retrieved_b_top5": [
+        "D5:5",
+        "D5:7",
+        "D5:11",
+        "D5:3",
+        "D5:2"
+      ],
+      "retrieved_c_top5": [
+        "D5:7",
+        "D5:11",
+        "D5:3",
+        "D5:10",
+        "D5:15"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D5:10",
+          false
+        ],
+        [
+          "D5:15",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D5:5",
+          true
+        ],
+        [
+          "D5:2",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 2,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Academic_Animal_Pet_Research_Life",
+      "category": "TR",
+      "question": "When did Lena adopt her dog? Return in the format YYYY-MM-DD.",
+      "clue": [
+        "D2:1"
+      ],
+      "retrieved_b_top5": [
+        "D2:1",
+        "D2:2",
+        "D2:12",
+        "D6:12",
+        "D7:3"
+      ],
+      "retrieved_c_top5": [
+        "D2:2",
+        "D2:10",
+        "D2:12",
+        "D6:12",
+        "D7:3"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D2:10",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D2:1",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Academic_Animal_Pet_Research_Life",
+      "category": "KR",
+      "question": "Does Lena's sister like Standard Poodles?",
+      "clue": [
+        "D6:8"
+      ],
+      "retrieved_b_top5": [
+        "D6:9",
+        "D6:5",
+        "D6:8",
+        "D6:7",
+        "D6:6"
+      ],
+      "retrieved_c_top5": [
+        "D6:9",
+        "D6:5",
+        "D6:7",
+        "D6:6",
+        "D6:10"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D6:10",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D6:8",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 2,
+      "image_count_c_top5": 1,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Academic_Animal_Pet_Research_Life",
+      "category": "KR",
+      "question": "After Lena’s correction, which dog breed does her sister actually like?",
+      "clue": [
+        "D6:8"
+      ],
+      "retrieved_b_top5": [
+        "D6:9",
+        "D12:10",
+        "D6:8",
+        "D6:6",
+        "D2:9"
+      ],
+      "retrieved_c_top5": [
+        "D6:9",
+        "D12:10",
+        "D6:7",
+        "D2:2",
+        "D6:12"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D6:7",
+          false
+        ],
+        [
+          "D2:2",
+          false
+        ],
+        [
+          "D6:12",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D6:8",
+          true
+        ],
+        [
+          "D6:6",
+          true
+        ],
+        [
+          "D2:9",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 3,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Academic_Animal_Pet_Research_Life",
+      "category": "KR",
+      "question": "Is the dog in the picture the breed that Lena's sister likes?",
+      "clue": [
+        "D6:8"
+      ],
+      "retrieved_b_top5": [
+        "D6:9",
+        "D6:5",
+        "D6:8",
+        "D6:6",
+        "D6:7"
+      ],
+      "retrieved_c_top5": [
+        "D6:9",
+        "D6:5",
+        "D6:6",
+        "D6:7",
+        "D6:10"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D6:10",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D6:8",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 2,
+      "image_count_c_top5": 1,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Academic_Animal_Pet_Research_Life",
+      "category": "MR",
+      "question": "What is the name of Lena’s brother’s cat?",
+      "clue": [
+        "D10:1"
+      ],
+      "retrieved_b_top5": [
+        "D2:9",
+        "D10:1",
+        "D2:2",
+        "D2:7",
+        "D2:12"
+      ],
+      "retrieved_c_top5": [
+        "D2:2",
+        "D2:7",
+        "D2:12",
+        "D2:8",
+        "D2:10"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D2:8",
+          false
+        ],
+        [
+          "D2:10",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D2:9",
+          true
+        ],
+        [
+          "D10:1",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 2,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+      "category": "TR",
+      "question": "Which date did Julian first mention the Machu Picchu view? Return in the format YYYY-MM-DD.",
+      "clue": [
+        "D2:2"
+      ],
+      "retrieved_b_top5": [
+        "D12:1",
+        "D2:1",
+        "D2:2",
+        "D2:3",
+        "D7:2"
+      ],
+      "retrieved_c_top5": [
+        "D12:1",
+        "D2:1",
+        "D2:3",
+        "D7:2",
+        "D7:13"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D7:13",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D2:2",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Architecture_Art_Culture_Exhibition_Technology",
+      "category": "MR",
+      "question": "What is Julian's favorite artwork from an art exhibition?",
+      "clue": [
+        "D10:11",
+        "D10:12"
+      ],
+      "retrieved_b_top5": [
+        "D10:1",
+        "D9:12",
+        "D10:12",
+        "D9:11",
+        "D10:2"
+      ],
+      "retrieved_c_top5": [
+        "D10:1",
+        "D9:12",
+        "D9:11",
+        "D10:2",
+        "D9:6"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D9:6",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D10:12",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Astronomy_Physics_Scientific_Experiments_Cosmology",
+      "category": "FR",
+      "question": "List the natural laws the user is considering changing.",
+      "clue": [
+        "D11:3",
+        "D11:4",
+        "D11:5",
+        "D11:6",
+        "D11:7",
+        "D11:8",
+        "D11:9",
+        "D11:10"
+      ],
+      "retrieved_b_top5": [
+        "D11:18",
+        "D11:2",
+        "D11:22",
+        "D11:3",
+        "D11:17"
+      ],
+      "retrieved_c_top5": [
+        "D11:18",
+        "D11:2",
+        "D11:22",
+        "D11:17",
+        "D11:23"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D11:23",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D11:3",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Baking_Dessert_Daily_Life_Skill",
+      "category": "TR",
+      "question": "On which date did Maya have the quiet afternoon at the library? Return in the format YYYY-MM-DD.",
+      "clue": [
+        "D3:1"
+      ],
+      "retrieved_b_top5": [
+        "D3:1",
+        "D3:2",
+        "D3:3",
+        "D3:8",
+        "D3:12"
+      ],
+      "retrieved_c_top5": [
+        "D3:2",
+        "D3:3",
+        "D3:8",
+        "D3:11",
+        "D3:12"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D3:11",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D3:1",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Baking_Dessert_Daily_Life_Skill",
+      "category": "TR",
+      "question": "Did Maya bake matcha-flavored cookies before she baked cupcakes with her child?",
+      "clue": [
+        "D6:7",
+        "D7:1"
+      ],
+      "retrieved_b_top5": [
+        "D15:14",
+        "D4:20",
+        "D6:7",
+        "D6:8",
+        "D6:16"
+      ],
+      "retrieved_c_top5": [
+        "D15:14",
+        "D4:6",
+        "D4:20",
+        "D6:8",
+        "D6:16"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D4:6",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D6:7",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Baking_Dessert_Daily_Life_Skill",
+      "category": "MR",
+      "question": "What color options were available for the oversized open-knit cowl neck sweater with front pockets?",
+      "clue": [
+        "D11:10",
+        "D11:11"
+      ],
+      "retrieved_b_top5": [
+        "D11:11",
+        "D11:10",
+        "D11:13",
+        "D11:12",
+        "D11:20"
+      ],
+      "retrieved_c_top5": [
+        "D11:13",
+        "D11:15",
+        "D11:24",
+        "D11:16",
+        "D11:14"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D11:15",
+          false
+        ],
+        [
+          "D11:24",
+          false
+        ],
+        [
+          "D11:16",
+          false
+        ],
+        [
+          "D11:14",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D11:11",
+          true
+        ],
+        [
+          "D11:10",
+          true
+        ],
+        [
+          "D11:12",
+          true
+        ],
+        [
+          "D11:20",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 4,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Dog_Behavior_Research_Academic_Life",
+      "category": "FR",
+      "question": "According to the conversation, which type of dog looks like a teddy bear?",
+      "clue": [
+        "D2:2"
+      ],
+      "retrieved_b_top5": [
+        "D2:5",
+        "D2:1",
+        "D1:4",
+        "D2:2",
+        "D2:3"
+      ],
+      "retrieved_c_top5": [
+        "D2:1",
+        "D2:5",
+        "D1:1",
+        "D2:6",
+        "D5:1"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D1:1",
+          false
+        ],
+        [
+          "D2:6",
+          true
+        ],
+        [
+          "D5:1",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D1:4",
+          true
+        ],
+        [
+          "D2:2",
+          true
+        ],
+        [
+          "D2:3",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": true,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 4,
+      "image_count_c_top5": 2,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Education_Career_Research_Lifestyle",
+      "category": "FR",
+      "question": "What color and style characteristics did the assistant highlight for the third midi dress?",
+      "clue": [
+        "D4:6",
+        "D4:7"
+      ],
+      "retrieved_b_top5": [
+        "D4:11",
+        "D4:10",
+        "D4:24",
+        "D4:12",
+        "D4:6"
+      ],
+      "retrieved_c_top5": [
+        "D4:11",
+        "D4:24",
+        "D4:12",
+        "D4:3",
+        "D4:25"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D4:3",
+          false
+        ],
+        [
+          "D4:25",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D4:10",
+          true
+        ],
+        [
+          "D4:6",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 2,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Education_Career_Research_Lifestyle",
+      "category": "FR",
+      "question": "What is the name of the temple that user is excited to see?",
+      "clue": [
+        "D5:14"
+      ],
+      "retrieved_b_top5": [
+        "D5:15",
+        "D5:16",
+        "D5:21",
+        "D5:18",
+        "D5:14"
+      ],
+      "retrieved_c_top5": [
+        "D5:15",
+        "D5:16",
+        "D5:21",
+        "D5:18",
+        "D5:20"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D5:20",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D5:14",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Fashion_Personal_Care_Lifestyle_Shopping",
+      "category": "MR",
+      "question": "What is the first candidate gift Chloe mentioned for her mom?",
+      "clue": [
+        "D8:2"
+      ],
+      "retrieved_b_top5": [
+        "D8:1",
+        "D8:14",
+        "D8:2",
+        "D8:13",
+        "D7:2"
+      ],
+      "retrieved_c_top5": [
+        "D8:1",
+        "D8:14",
+        "D8:13",
+        "D7:2",
+        "D7:1"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D7:1",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D8:2",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Global_Travel_Cultural_Sightseeing",
+      "category": "FR",
+      "question": "What does Maria want to see in the Louvre?",
+      "clue": [
+        "D2:6"
+      ],
+      "retrieved_b_top5": [
+        "D1:4",
+        "D1:3",
+        "D2:5",
+        "D2:6",
+        "D2:3"
+      ],
+      "retrieved_c_top5": [
+        "D1:4",
+        "D2:1",
+        "D2:5",
+        "D1:12",
+        "D1:11"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D2:1",
+          false
+        ],
+        [
+          "D1:12",
+          false
+        ],
+        [
+          "D1:11",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D1:3",
+          true
+        ],
+        [
+          "D2:6",
+          true
+        ],
+        [
+          "D2:3",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 4,
+      "image_count_c_top5": 1,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Global_Travel_Cultural_Sightseeing",
+      "category": "TR",
+      "question": "What other landmark does Maria mention after discussing the Champs-Élysées?",
+      "clue": [
+        "D2:3",
+        "D2:4"
+      ],
+      "retrieved_b_top5": [
+        "D1:4",
+        "D2:1",
+        "D2:2",
+        "D2:3",
+        "D2:5"
+      ],
+      "retrieved_c_top5": [
+        "D1:4",
+        "D1:12",
+        "D2:1",
+        "D2:2",
+        "D2:9"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D1:12",
+          false
+        ],
+        [
+          "D2:9",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D2:3",
+          true
+        ],
+        [
+          "D2:5",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 3,
+      "image_count_c_top5": 1,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Global_Travel_Cultural_Sightseeing",
+      "category": "MR",
+      "question": "What characteristic did the assistant say the third Abstract Floral Tie-Waist Dress has that makes it suitable for warm weather?",
+      "clue": [
+        "D4:6"
+      ],
+      "retrieved_b_top5": [
+        "D4:3",
+        "D4:21",
+        "D4:10",
+        "D4:6",
+        "D4:7"
+      ],
+      "retrieved_c_top5": [
+        "D4:3",
+        "D4:21",
+        "D4:7",
+        "D4:11",
+        "D4:22"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D4:11",
+          false
+        ],
+        [
+          "D4:22",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D4:10",
+          true
+        ],
+        [
+          "D4:6",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 2,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Global_Travel_Cultural_Sightseeing",
+      "category": "FR",
+      "question": "What are the two specific places the user wants to visit in China?",
+      "clue": [
+        "D8:2",
+        "D8:3"
+      ],
+      "retrieved_b_top5": [
+        "D10:2",
+        "D9:35",
+        "D9:36",
+        "D8:3",
+        "D10:18"
+      ],
+      "retrieved_c_top5": [
+        "D10:2",
+        "D9:36",
+        "D10:18",
+        "D10:19",
+        "D10:1"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D10:19",
+          false
+        ],
+        [
+          "D10:1",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D9:35",
+          true
+        ],
+        [
+          "D8:3",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 2,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Global_Travel_Sustainable_Fashion_Design",
+      "category": "MR",
+      "question": "What does Sophie want to explore in the local galleries they plan to visit?",
+      "clue": [
+        "D1:7"
+      ],
+      "retrieved_b_top5": [
+        "D4:1",
+        "D1:8",
+        "D1:7",
+        "D4:12",
+        "D6:15"
+      ],
+      "retrieved_c_top5": [
+        "D4:1",
+        "D1:8",
+        "D4:12",
+        "D6:15",
+        "D5:9"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D5:9",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D1:7",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Global_Travel_Sustainable_Fashion_Design",
+      "category": "FR",
+      "question": "What two categories of summer clothing did Sophie explore during the wardrobe refresh?",
+      "clue": [
+        "D3:2",
+        "D3:12"
+      ],
+      "retrieved_b_top5": [
+        "D3:1",
+        "D3:23",
+        "D3:2",
+        "D3:22",
+        "D3:3"
+      ],
+      "retrieved_c_top5": [
+        "D3:1",
+        "D3:23",
+        "D3:22",
+        "D3:3",
+        "D3:13"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D3:13",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D3:2",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Global_Travel_Sustainable_Fashion_Design",
+      "category": "TR",
+      "question": "Did Sophie visit Milan before arriving in Rome?",
+      "clue": [
+        "D5:1",
+        "D6:1"
+      ],
+      "retrieved_b_top5": [
+        "D5:1",
+        "D5:2",
+        "D5:14",
+        "D5:15",
+        "D5:16"
+      ],
+      "retrieved_c_top5": [
+        "D4:4",
+        "D5:2",
+        "D5:14",
+        "D5:15",
+        "D5:16"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D4:4",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D5:1",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Global_Travel_Sustainable_Fashion_Design",
+      "category": "FR",
+      "question": "What two categories of clothing did Sophie explore during her London fashion shopping?",
+      "clue": [
+        "D8:2",
+        "D8:8"
+      ],
+      "retrieved_b_top5": [
+        "D8:17",
+        "D8:2",
+        "D8:16",
+        "D8:1",
+        "D8:22"
+      ],
+      "retrieved_c_top5": [
+        "D8:17",
+        "D8:16",
+        "D8:1",
+        "D8:22",
+        "D3:23"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D3:23",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D8:2",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Global_Travel_Sustainable_Fashion_Design",
+      "category": "KR",
+      "question": "How did the assistant describe the second denim shirt dress?",
+      "clue": [
+        "D8:3"
+      ],
+      "retrieved_b_top5": [
+        "D8:13",
+        "D8:12",
+        "D8:3",
+        "D8:4",
+        "D8:6"
+      ],
+      "retrieved_c_top5": [
+        "D8:13",
+        "D8:12",
+        "D3:17",
+        "D3:13",
+        "D3:15"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D3:17",
+          false
+        ],
+        [
+          "D3:13",
+          false
+        ],
+        [
+          "D3:15",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D8:3",
+          true
+        ],
+        [
+          "D8:4",
+          true
+        ],
+        [
+          "D8:6",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 3,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Global_Travel_Sustainable_Fashion_Design",
+      "category": "KR",
+      "question": "Which two additional images of Chenille & Metallic Knit Skirts did Sophie share later? Return the image_ids separated by commas.",
+      "clue": [
+        "D8:20",
+        "D8:21"
+      ],
+      "retrieved_b_top5": [
+        "D8:19",
+        "D8:8",
+        "D8:9",
+        "D8:20",
+        "D8:14"
+      ],
+      "retrieved_c_top5": [
+        "D8:19",
+        "D8:14",
+        "D3:21",
+        "D3:13",
+        "D8:9"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D3:21",
+          false
+        ],
+        [
+          "D3:13",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D8:8",
+          true
+        ],
+        [
+          "D8:20",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 3,
+      "image_count_c_top5": 1,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Home_Health_Lifestyle_Product",
+      "category": "FR",
+      "question": "List all the desk organization products that were discussed in the conversation.",
+      "clue": [
+        "D5:3",
+        "D5:5",
+        "D5:7",
+        "D5:8",
+        "D5:10"
+      ],
+      "retrieved_b_top5": [
+        "D5:4",
+        "D5:2",
+        "D5:3",
+        "D5:6",
+        "D5:12"
+      ],
+      "retrieved_c_top5": [
+        "D5:4",
+        "D5:2",
+        "D5:6",
+        "D5:12",
+        "D5:13"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D5:13",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D5:3",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Landscape_Travel_Architecture_Nature",
+      "category": "TR",
+      "question": "Which location did Ethan mention first during his Barcelona trip, La Rambla or Park Güell?",
+      "clue": [
+        "D7:1",
+        "D7:4"
+      ],
+      "retrieved_b_top5": [
+        "D5:1",
+        "D5:2",
+        "D7:1",
+        "D7:4",
+        "D7:14"
+      ],
+      "retrieved_c_top5": [
+        "D5:1",
+        "D5:9",
+        "D5:12",
+        "D7:13",
+        "D7:14"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D5:9",
+          false
+        ],
+        [
+          "D5:12",
+          false
+        ],
+        [
+          "D7:13",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D5:2",
+          true
+        ],
+        [
+          "D7:1",
+          true
+        ],
+        [
+          "D7:4",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 3,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Landscape_Travel_Architecture_Nature",
+      "category": "FR",
+      "question": "What breed of dog did Mia bring on the hike?",
+      "clue": [
+        "D8:1"
+      ],
+      "retrieved_b_top5": [
+        "D8:15",
+        "D8:1",
+        "D8:5",
+        "D8:2",
+        "D8:16"
+      ],
+      "retrieved_c_top5": [
+        "D8:15",
+        "D8:5",
+        "D8:16",
+        "D8:14",
+        "D8:17"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D8:14",
+          false
+        ],
+        [
+          "D8:17",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D8:1",
+          true
+        ],
+        [
+          "D8:2",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 2,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Landscape_Travel_Architecture_Nature",
+      "category": "FR",
+      "question": "What is the scientific name of the striking red-and-yellow flower Ethan found on the hillside?",
+      "clue": [
+        "D8:10"
+      ],
+      "retrieved_b_top5": [
+        "D8:7",
+        "D8:12",
+        "D8:11",
+        "D8:9",
+        "D8:10"
+      ],
+      "retrieved_c_top5": [
+        "D8:12",
+        "D8:11",
+        "D8:7",
+        "D8:6",
+        "D8:8"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D8:6",
+          true
+        ],
+        [
+          "D8:8",
+          true
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D8:9",
+          true
+        ],
+        [
+          "D8:10",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": true,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 3,
+      "image_count_c_top5": 3,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Landscape_Travel_Architecture_Nature",
+      "category": "FR",
+      "question": "What type of flowers did Ethan encounter again during his solo hike that he had seen before with Mia and Jordan?",
+      "clue": [
+        "D11:2"
+      ],
+      "retrieved_b_top5": [
+        "D11:1",
+        "D8:19",
+        "D8:12",
+        "D8:21",
+        "D11:2"
+      ],
+      "retrieved_c_top5": [
+        "D8:19",
+        "D8:12",
+        "D8:18",
+        "D8:20",
+        "D8:14"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D8:18",
+          false
+        ],
+        [
+          "D8:20",
+          false
+        ],
+        [
+          "D8:14",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D11:1",
+          true
+        ],
+        [
+          "D8:21",
+          true
+        ],
+        [
+          "D11:2",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 3,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Nature_Economics_Programming_Student_Life",
+      "category": "FR",
+      "question": "What three new bird species did Aiden learn about at the conservation lecture?",
+      "clue": [
+        "D7:4",
+        "D7:7",
+        "D7:10"
+      ],
+      "retrieved_b_top5": [
+        "D7:3",
+        "D7:4",
+        "D1:22",
+        "D7:1",
+        "D9:15"
+      ],
+      "retrieved_c_top5": [
+        "D7:3",
+        "D1:22",
+        "D7:1",
+        "D9:15",
+        "D7:22"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D7:22",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D7:4",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Parenting_Commuting_Hobbies_Travel_Gear",
+      "category": "FR",
+      "question": "What two types of flowers did Liam's family observe during their nature trail trip?",
+      "clue": [
+        "D16:3",
+        "D16:4",
+        "D16:9",
+        "D16:10"
+      ],
+      "retrieved_b_top5": [
+        "D16:13",
+        "D16:9",
+        "D16:18",
+        "D16:19",
+        "D16:12"
+      ],
+      "retrieved_c_top5": [
+        "D16:13",
+        "D16:18",
+        "D16:19",
+        "D16:8",
+        "D16:14"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D16:8",
+          false
+        ],
+        [
+          "D16:14",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D16:9",
+          true
+        ],
+        [
+          "D16:12",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 2,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Python_Botany_AI_Student_Life",
+      "category": "KR",
+      "question": "Is Liam quite afraid of giant schnauzers now?",
+      "clue": [
+        "D5:7",
+        "D5:10"
+      ],
+      "retrieved_b_top5": [
+        "D5:8",
+        "D5:13",
+        "D5:14",
+        "D5:11",
+        "D5:10"
+      ],
+      "retrieved_c_top5": [
+        "D5:13",
+        "D5:14",
+        "D5:11",
+        "D5:8",
+        "D5:15"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D5:15",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D5:10",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 2,
+      "image_count_c_top5": 1,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Python_Botany_AI_Student_Life",
+      "category": "FR",
+      "question": "What are the two types of flowers Liam's friend shared with him?",
+      "clue": [
+        "D6:2",
+        "D6:11"
+      ],
+      "retrieved_b_top5": [
+        "D6:1",
+        "D2:14",
+        "D3:1",
+        "D6:13",
+        "D6:2"
+      ],
+      "retrieved_c_top5": [
+        "D6:1",
+        "D2:14",
+        "D3:1",
+        "D6:13",
+        "D6:14"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D6:14",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D6:2",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 1,
+      "image_count_c_top5": 0,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Real_Estate_Home_Decor_DIY_Lifestyle",
+      "category": "FR",
+      "question": "What is the scientific name of the Dunlin bird?",
+      "clue": [
+        "D11:3"
+      ],
+      "retrieved_b_top5": [
+        "D11:3",
+        "D11:8",
+        "D11:4",
+        "D11:5",
+        "D11:7"
+      ],
+      "retrieved_c_top5": [
+        "D11:8",
+        "D11:5",
+        "D11:9",
+        "D11:4",
+        "D10:7"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D11:9",
+          false
+        ],
+        [
+          "D10:7",
+          true
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D11:3",
+          true
+        ],
+        [
+          "D11:7",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": true,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 4,
+      "image_count_c_top5": 3,
+      "clue_rank_in_c_full_list": null
+    },
+    {
+      "dataset": "Technology_Ethics_Future_Society",
+      "category": "MR",
+      "question": "What did Elias say about magnolias in relation to their evolutionary history?",
+      "clue": [
+        "D11:2"
+      ],
+      "retrieved_b_top5": [
+        "D11:3",
+        "D11:6",
+        "D11:2",
+        "D11:5",
+        "D11:4"
+      ],
+      "retrieved_c_top5": [
+        "D11:3",
+        "D11:4",
+        "D11:6",
+        "D11:5",
+        "D11:12"
+      ],
+      "new_entrants_in_c": [
+        [
+          "D11:12",
+          false
+        ]
+      ],
+      "exited_from_b": [
+        [
+          "D11:2",
+          true
+        ]
+      ],
+      "any_new_entrant_has_image": false,
+      "any_exited_had_image": true,
+      "image_count_b_top5": 5,
+      "image_count_c_top5": 4,
+      "clue_rank_in_c_full_list": null
+    }
+  ]
+}

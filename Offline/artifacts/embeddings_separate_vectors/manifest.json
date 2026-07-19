@@ -1,0 +1,8 @@
+[
+  {
+    "worker_id": 0,
+    "ids": "artifacts/embeddings_separate_vectors/ids_worker0.json",
+    "vectors": "artifacts/embeddings_separate_vectors/embeddings_worker0.npy",
+    "count": 4965
+  }
+]

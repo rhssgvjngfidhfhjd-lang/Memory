@@ -1,0 +1,20 @@
+{
+  "data_name": "AI_Robotics_Automation_Future_Tech",
+  "all_datasets": true,
+  "data_dir": "/data/haozhen/Offline/Mem-Gallery/benchmark/data",
+  "index_root": "artifacts/simple_memory_pipeline_insert_only/b_text_caption",
+  "query_embedding_dir": "artifacts/query_embeddings",
+  "embedding_dim": 2048,
+  "result_dir": "artifacts/simple_memory_pipeline_insert_only/results/b_qwen3vl4b_no_id_leak",
+  "top_k": 5,
+  "max_qa": 0,
+  "qa_start": 1,
+  "qa_end": 0,
+  "answer_base_url": "http://127.0.0.1:8022/v1",
+  "answer_model": "Qwen/Qwen3-VL-4B-Instruct",
+  "answer_api_key": "EMPTY",
+  "num_predict": 8000,
+  "request_timeout": 180,
+  "retries": 2,
+  "think": false
+}

@@ -1,0 +1,10 @@
+{
+  "run_name": "qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20",
+  "dataset": "Dog_Behavior_Research_Academic_Life",
+  "dim": 2048,
+  "count": 218,
+  "index": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Dog_Behavior_Research_Academic_Life/vectors.index",
+  "id_mapping": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Dog_Behavior_Research_Academic_Life/id_mapping.json",
+  "metadata": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Dog_Behavior_Research_Academic_Life/mau_metadata.jsonl",
+  "source": "OmniSimpleMem MAU embeddings"
+}

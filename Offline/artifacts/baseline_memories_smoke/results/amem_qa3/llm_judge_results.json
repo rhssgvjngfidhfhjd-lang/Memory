@@ -1,0 +1,68 @@
+[
+  {
+    "index": 1,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "VS",
+    "question": "Which image shown in 2024-06-17 is an application of artificial intelligence in the field of education?",
+    "prediction": "",
+    "reference": "D1:IMG_002",
+    "retrieved_ids": [
+      "D1:4",
+      "D1:5",
+      "D1:2",
+      "D1:3",
+      "D1:1"
+    ],
+    "clue": [
+      "D1:4"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer is empty and does not contain the required reference answer 'D1:IMG_002'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer is empty and does not contain the required reference answer 'D1:IMG_002'.\"\n}"
+  },
+  {
+    "index": 2,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "MR",
+    "question": "What is the impact of the development of artificial intelligence on the job market?",
+    "prediction": "The development of artificial intelligence will automate some repetitive, rule-based tasks, potentially replacing certain roles. However, it also creates new opportunities such as AI trainers or data annotators. While AI can handle routine functions, human creativity and emotional intelligence remain difficult for machines to replicate, suggesting that many jobs will evolve rather than disappear entirely. The key is managing this transition thoughtfully to ensure that the benefits of AI are realized while minimizing negative impacts on employment.",
+    "reference": "It will replace some repetitive and regular jobs, but it will also create new job opportunities, such as artificial intelligence trainers, data annotators, etc. Human creativity and other abilities are difficult to replace.",
+    "retrieved_ids": [
+      "D1:5",
+      "D1:6",
+      "D1:2",
+      "D1:4",
+      "D1:1"
+    ],
+    "clue": [
+      "D1:5"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction includes all key points: AI will replace some repetitive jobs, create new roles like AI trainers and data annotators, and human creativity/emotional intelligence remain hard to replace, matching the reference without contradictions.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction includes all key points: AI will replace some repetitive jobs, create new roles like AI trainers and data annotators, and human creativity/emotional intelligence remain hard to replace, matching the reference without contradictions.\"}"
+  },
+  {
+    "index": 3,
+    "dataset": "AI_Robotics_Automation_Future_Tech",
+    "category": "MR",
+    "question": "Julian has previously discussed the security risks of artificial intelligence, and how did the issue of data breaches arise?",
+    "prediction": "Based on the conversation history, Julian explained that data breaches arise as a security risk from artificial intelligence due to the vast amounts of information required to train AI systems. If this data isn't well protected, personal details could be exposed. This relates to his broader discussion about AI's potential versus risk scenarios, particularly focusing on data privacy concerns as one of the key security issues associated with AI implementation.",
+    "reference": "Artificial intelligence model training requires a large amount of data, and if this data is not properly protected, it may leak personal privacy.",
+    "retrieved_ids": [
+      "D1:6",
+      "D1:2",
+      "D1:5",
+      "D1:4",
+      "D1:1"
+    ],
+    "clue": [
+      "D1:6"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer restates that AI training needs large amounts of data and that insufficient protection can lead to personal data leaks, matching the reference answer without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer restates that AI training needs large amounts of data and that insufficient protection can lead to personal data leaks, matching the reference answer without contradiction.\"\n}"
+  }
+]

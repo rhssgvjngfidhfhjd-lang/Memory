@@ -1,0 +1,4791 @@
+[
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D1",
+    "question": "What Python library did Liam's class recently start using for plotting data?",
+    "category": "FR",
+    "system_answer": "matplotlib",
+    "original_answer": "matplotlib",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:2",
+      "D4:16",
+      "D1:3",
+      "D4:15"
+    ],
+    "clue": [
+      "D1:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:45"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D1",
+    "question": "What color were the bars in Liam's second bar chart example?",
+    "category": "VR",
+    "system_answer": "The bars in Liam's second bar chart example were not explicitly described in terms of color in the provided memory. However, in the first bar chart example (D1:IMG_004), the assistant noted that \"the suitable color\" was used, but no specific color was mentioned. Since no color was specified for the second bar chart in the memory, the answer cannot be determined from the given information.",
+    "original_answer": "Purple",
+    "retrieved_ids": [
+      "D4:5",
+      "D4:4",
+      "D1:6",
+      "D1:7",
+      "D4:6"
+    ],
+    "clue": [
+      "D1:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:46"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D1",
+    "question": "Which image shows the log-scale bar chart output?",
+    "category": "VS",
+    "system_answer": "D1:IMG_006",
+    "original_answer": "D1:IMG_006",
+    "retrieved_ids": [
+      "D1:8",
+      "D1:7",
+      "D1:5",
+      "D1:4",
+      "D1:6"
+    ],
+    "clue": [
+      "D1:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:46"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D1",
+    "question": "How many bar chart scripts did Liam show in total during this conversation? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D1:3",
+      "D1:4",
+      "D1:11",
+      "D4:15",
+      "D4:2"
+    ],
+    "clue": [
+      "D1:3",
+      "D1:5",
+      "D1:7",
+      "D1:10",
+      "D1:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:46"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D1",
+    "question": "What hobby did Liam compare to Python learning, saying he could spend an hour on it happily?",
+    "category": "FR",
+    "system_answer": "Reading plant encyclopedias",
+    "original_answer": "Reading plant encyclopedias.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:18",
+      "D1:15",
+      "D1:17",
+      "D1:14"
+    ],
+    "clue": [
+      "D1:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:46"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D1",
+    "question": "Did Liam mention using seaborn library for visualization?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:5",
+      "D4:16",
+      "D4:15",
+      "D1:6",
+      "D1:10"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:46"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D1",
+    "question": "Is there a contradiction between Liam saying 'everyone else seems to be getting it so quickly' and the assistant saying 'you're practicing outside of class'?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:15",
+      "D1:17",
+      "D4:11",
+      "D4:12"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:46"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D1",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D1:IMG_002",
+    "original_answer": "D1:IMG_007",
+    "retrieved_ids": [
+      "D1:4",
+      "D1:3",
+      "D4:2",
+      "D4:17",
+      "D4:9"
+    ],
+    "clue": [
+      "D1:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:47"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D1",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D1:IMG_002",
+    "original_answer": "D1:IMG_008",
+    "retrieved_ids": [
+      "D1:4",
+      "D1:3",
+      "D4:2",
+      "D1:8",
+      "D1:7"
+    ],
+    "clue": [
+      "D1:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:47"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The flower shown in the image is a white orchid, specifically identified as a moon orchid in the conversation.",
+    "original_answer": "Moon orchid",
+    "retrieved_ids": [
+      "D2:4",
+      "D3:3",
+      "D12:2",
+      "D6:3",
+      "D12:3"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4",
+      "D2:6",
+      "D2:8",
+      "D2:10",
+      "D3:3",
+      "D12:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:47"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The flower shown in the image is a white orchid, specifically a Phalaenopsis orchid, as indicated by its distinct petal structure and central labellum with red and yellow markings.",
+    "original_answer": "Moon orchid",
+    "retrieved_ids": [
+      "D2:4",
+      "D3:3",
+      "D12:2",
+      "D2:6",
+      "D6:3"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4",
+      "D2:6",
+      "D2:8",
+      "D2:10",
+      "D3:3",
+      "D12:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:48"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The flower shown in the image is a moon orchid.",
+    "original_answer": "Moon orchid",
+    "retrieved_ids": [
+      "D2:4",
+      "D3:3",
+      "D2:6",
+      "D12:2",
+      "D6:3"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4",
+      "D2:6",
+      "D2:8",
+      "D2:10",
+      "D3:3",
+      "D12:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:48"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The flower shown in the image is a white orchid, specifically a moon orchid, as referenced in the conversation where Liam discusses its symmetrical shape and subtle pink markings at the center.",
+    "original_answer": "Moon orchid",
+    "retrieved_ids": [
+      "D2:4",
+      "D3:3",
+      "D2:6",
+      "D12:2",
+      "D12:3"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4",
+      "D2:6",
+      "D2:8",
+      "D2:10",
+      "D3:3",
+      "D12:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:49"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The specific species of flower shown in the image is a white orchid.",
+    "original_answer": "Moon orchid",
+    "retrieved_ids": [
+      "D2:4",
+      "D3:3",
+      "D2:6",
+      "D12:2",
+      "D6:3"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4",
+      "D2:6",
+      "D2:8",
+      "D2:10",
+      "D3:3",
+      "D12:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:49"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Moon orchid",
+    "original_answer": "Moon orchid",
+    "retrieved_ids": [
+      "D2:4",
+      "D3:3",
+      "D6:3",
+      "D12:2",
+      "D2:6"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4",
+      "D2:6",
+      "D2:8",
+      "D2:10",
+      "D3:3",
+      "D12:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:50"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_003, D3:IMG_002",
+    "original_answer": "D2:IMG_001, D2:IMG_002, D2:IMG_003, D2:IMG_004, D2:IMG_005, D3:IMG_002, D12:IMG_007",
+    "retrieved_ids": [
+      "D2:4",
+      "D12:3",
+      "D2:6",
+      "D12:8",
+      "D3:3"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4",
+      "D2:6",
+      "D2:8",
+      "D2:10",
+      "D3:3",
+      "D12:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:50"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_003, D2:IMG_002",
+    "original_answer": "D2:IMG_001, D2:IMG_002, D2:IMG_003, D2:IMG_004, D2:IMG_005, D3:IMG_002, D12:IMG_007",
+    "retrieved_ids": [
+      "D2:4",
+      "D12:3",
+      "D2:6",
+      "D12:8",
+      "D2:7"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4",
+      "D2:6",
+      "D2:8",
+      "D2:10",
+      "D3:3",
+      "D12:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:50"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_006, D2:IMG_007, D2:IMG_008, D2:IMG_013",
+    "original_answer": "D2:IMG_006, D2:IMG_007, D2:IMG_008, D2:IMG_009",
+    "retrieved_ids": [
+      "D2:15",
+      "D2:13",
+      "D2:12",
+      "D6:9",
+      "D2:24"
+    ],
+    "clue": [
+      "D2:12",
+      "D2:13",
+      "D2:15",
+      "D2:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:51"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_006, D2:IMG_007, D2:IMG_008, D2:IMG_013",
+    "original_answer": "D2:IMG_006, D2:IMG_007, D2:IMG_008, D2:IMG_009",
+    "retrieved_ids": [
+      "D2:15",
+      "D2:24",
+      "D2:12",
+      "D2:13",
+      "D6:9"
+    ],
+    "clue": [
+      "D2:12",
+      "D2:13",
+      "D2:15",
+      "D2:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:51"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_008, D2:IMG_013, D3:IMG_005",
+    "original_answer": "D2:IMG_006, D2:IMG_007, D2:IMG_008, D2:IMG_009",
+    "retrieved_ids": [
+      "D2:15",
+      "D2:24",
+      "D3:8",
+      "D6:9",
+      "D2:14"
+    ],
+    "clue": [
+      "D2:12",
+      "D2:13",
+      "D2:15",
+      "D2:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:52"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D12:IMG_005, D3:IMG_005",
+    "original_answer": "D2:IMG_006, D2:IMG_007, D2:IMG_008, D2:IMG_009",
+    "retrieved_ids": [
+      "D6:3",
+      "D2:15",
+      "D3:8",
+      "D2:24",
+      "D12:6"
+    ],
+    "clue": [
+      "D2:12",
+      "D2:13",
+      "D2:15",
+      "D2:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:52"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_007, D2:IMG_008",
+    "original_answer": "D2:IMG_006, D2:IMG_007, D2:IMG_008, D2:IMG_009",
+    "retrieved_ids": [
+      "D2:13",
+      "D2:12",
+      "D12:17",
+      "D2:24",
+      "D2:15"
+    ],
+    "clue": [
+      "D2:12",
+      "D2:13",
+      "D2:15",
+      "D2:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:53"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_006, D2:IMG_007, D2:IMG_008, D2:IMG_009, D2:IMG_013",
+    "original_answer": "D2:IMG_006, D2:IMG_007, D2:IMG_008, D2:IMG_009",
+    "retrieved_ids": [
+      "D2:15",
+      "D2:12",
+      "D2:24",
+      "D2:13",
+      "D2:16"
+    ],
+    "clue": [
+      "D2:12",
+      "D2:13",
+      "D2:15",
+      "D2:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:53"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What are the three types of flowers Liam read about during his weekend?",
+    "category": "FR",
+    "system_answer": "Water lilies, lisianthus, and moon orchid.",
+    "original_answer": "Moon orchids, bolero deep blue (lisianthus), and globe thistle.",
+    "retrieved_ids": [
+      "D3:1",
+      "D3:10",
+      "D2:25",
+      "D2:14",
+      "D3:8"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:12",
+      "D2:20"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:53"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "How many moon orchid images did Liam share when reading Plant Encyclopedias? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:2",
+      "D2:6",
+      "D3:3",
+      "D12:9"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4",
+      "D2:6",
+      "D2:8",
+      "D2:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:53"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "How many moon orchid images did Liam share in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "7",
+    "retrieved_ids": [
+      "D2:4",
+      "D2:2",
+      "D2:6",
+      "D3:3",
+      "D12:9"
+    ],
+    "clue": [
+      "D2:2",
+      "D2:4",
+      "D2:6",
+      "D2:8",
+      "D2:10",
+      "D3:3",
+      "D12:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:54"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "How many lisianthus images did Liam share in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D2:15",
+      "D3:8",
+      "D2:14",
+      "D6:2",
+      "D12:2"
+    ],
+    "clue": [
+      "D2:12",
+      "D2:13",
+      "D2:14",
+      "D2:15",
+      "D2:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:54"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "How many globe thistle photos did Liam take during the walk? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:19",
+      "D12:16"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:54"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Globe thistle",
+    "original_answer": "Globe thistle",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:15"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:54"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Globe thistle",
+    "original_answer": "Globe thistle",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:15"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:54"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Globe thistle",
+    "original_answer": "Globe thistle",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:15"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:55"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Globe thistle",
+    "original_answer": "Globe thistle",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:15"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:55"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Globe thistle",
+    "original_answer": "Globe thistle",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:15"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:55"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Globe thistle",
+    "original_answer": "Globe thistle",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:15"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:55"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_010, D2:IMG_011, D2:IMG_012, D2:IMG_013",
+    "original_answer": "D2:IMG_010, D2:IMG_011, D2:IMG_012, D2:IMG_013",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:24"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:56"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_010, D2:IMG_011, D2:IMG_012, D2:IMG_013",
+    "original_answer": "D2:IMG_010, D2:IMG_011, D2:IMG_012, D2:IMG_013",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:24"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:56"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_010, D2:IMG_011, D2:IMG_012, D2:IMG_013",
+    "original_answer": "D2:IMG_010, D2:IMG_011, D2:IMG_012, D2:IMG_013",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:24"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:57"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_010, D2:IMG_011, D2:IMG_012, D2:IMG_013",
+    "original_answer": "D2:IMG_010, D2:IMG_011, D2:IMG_012, D2:IMG_013",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:24"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:57"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D2:IMG_010, D2:IMG_011, D2:IMG_012, D2:IMG_013",
+    "original_answer": "D2:IMG_010, D2:IMG_011, D2:IMG_012, D2:IMG_013",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:24",
+      "D2:22"
+    ],
+    "clue": [
+      "D2:20",
+      "D2:21",
+      "D2:23",
+      "D2:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:58"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What is the alternative name for bolero deep blue flowers?",
+    "category": "FR",
+    "system_answer": "Lisianthus",
+    "original_answer": "Lisianthus",
+    "retrieved_ids": [
+      "D2:11",
+      "D2:12",
+      "D2:15",
+      "D2:16",
+      "D2:24"
+    ],
+    "clue": [
+      "D2:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:58"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "What visual characteristic makes globe thistles look almost artificial?",
+    "category": "VR",
+    "system_answer": "The round, spiky, spherical shape of globe thistles makes them look almost artificial.",
+    "original_answer": "The round, spherical shape is so perfect.",
+    "retrieved_ids": [
+      "D2:20",
+      "D2:23",
+      "D2:21",
+      "D2:22",
+      "D2:24"
+    ],
+    "clue": [
+      "D2:20"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:58"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "When did Liam mention visiting a botanical garden during this weekend?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D2:1",
+      "D2:26",
+      "D3:16",
+      "D3:18",
+      "D3:1"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:58"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "Which image shows the globe thistle structure from above with layers of spikes around the center?",
+    "category": "VS",
+    "system_answer": "D2:IMG_011",
+    "original_answer": "D2:IMG_011",
+    "retrieved_ids": [
+      "D2:21",
+      "D2:20",
+      "D2:22",
+      "D2:23",
+      "D2:19"
+    ],
+    "clue": [
+      "D2:21"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:59"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D2",
+    "question": "When did the user see moon orchid while reading Plant Encyclopedias? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2025-03-08",
+    "original_answer": "2025-03-08",
+    "retrieved_ids": [
+      "D2:2",
+      "D2:3",
+      "D2:4",
+      "D2:5",
+      "D2:6"
+    ],
+    "clue": [
+      "D2:1",
+      "D2:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:59"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "What did Liam do this afternoon that led to discovering water lilies?",
+    "category": "FR",
+    "system_answer": "Liam went for a walk in the park with his dog, near a pond, which led to him noticing and photographing the water lilies.",
+    "original_answer": "He took his dog for a walk in the park near the pond.",
+    "retrieved_ids": [
+      "D3:18",
+      "D3:2",
+      "D3:17",
+      "D3:15",
+      "D3:6"
+    ],
+    "clue": [
+      "D3:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:24:59"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "What visual similarity did Liam notice between moon orchids and water lilies?",
+    "category": "MR",
+    "system_answer": "Liam noticed that both moon orchids and water lilies have a soft white tone and evoke a calming feeling, despite differing in shape and environment.",
+    "original_answer": "The soft white petals gave the same calming feeling, even though their shapes are different.",
+    "retrieved_ids": [
+      "D3:3",
+      "D3:4",
+      "D3:5",
+      "D12:9",
+      "D3:10"
+    ],
+    "clue": [
+      "D3:3",
+      "D3:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:00"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "According to the conversation, what is the difference between water lily centers and moon orchid centers?",
+    "category": "VR",
+    "system_answer": "Water lilies have a bright yellow center to attract pollinators on open water, while moon orchids have more subtle yellow and pink patterns to guide their specific pollinators.",
+    "original_answer": "Water lilies have bright yellow middles for attracting pollinators on open water, while moon orchids have more subtle yellow and pink patterns.",
+    "retrieved_ids": [
+      "D3:5",
+      "D3:3",
+      "D3:4",
+      "D12:9",
+      "D2:4"
+    ],
+    "clue": [
+      "D3:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:00"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "How many water lily photos did Liam share during the conversation about park walk? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "4",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:8",
+      "D3:3",
+      "D3:5",
+      "D3:7"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:00"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "How many water lily photos did Liam share in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "6",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:8",
+      "D3:3",
+      "D3:5",
+      "D12:9"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:00"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Water lily",
+    "original_answer": "Water lily",
+    "retrieved_ids": [
+      "D3:8",
+      "D3:2",
+      "D3:5",
+      "D12:10",
+      "D3:9"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:00"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Water lily",
+    "original_answer": "Water lily",
+    "retrieved_ids": [
+      "D12:10",
+      "D3:5",
+      "D3:8",
+      "D3:2",
+      "D3:9"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:01"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Water lily",
+    "original_answer": "Water lily",
+    "retrieved_ids": [
+      "D12:10",
+      "D3:8",
+      "D3:9",
+      "D3:5",
+      "D3:2"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:01"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Water lily",
+    "original_answer": "Water lily",
+    "retrieved_ids": [
+      "D12:10",
+      "D3:8",
+      "D3:5",
+      "D3:9",
+      "D3:2"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:01"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Water lily",
+    "original_answer": "Water lily",
+    "retrieved_ids": [
+      "D12:10",
+      "D3:8",
+      "D3:5",
+      "D3:2",
+      "D3:9"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:02"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Water lily",
+    "original_answer": "Water lily",
+    "retrieved_ids": [
+      "D12:10",
+      "D3:5",
+      "D3:2",
+      "D3:8",
+      "D3:3"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:02"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D3:IMG_003, D3:IMG_005, D12:IMG_009",
+    "original_answer": "D3:IMG_001, D3:IMG_003, D3:IMG_004, D3:IMG_005, D12:IMG_008, D12:IMG_009",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:5",
+      "D3:8",
+      "D12:10",
+      "D3:9"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:02"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D3:IMG_001, D3:IMG_003, D3:IMG_005, D12:IMG_009",
+    "original_answer": "D3:IMG_001, D3:IMG_003, D3:IMG_004, D3:IMG_005, D12:IMG_008, D12:IMG_009",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:5",
+      "D3:8",
+      "D12:10",
+      "D6:9"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:03"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D3:IMG_002, D3:IMG_005, D3:IMG_003, D12:IMG_009",
+    "original_answer": "D3:IMG_001, D3:IMG_003, D3:IMG_004, D3:IMG_005, D12:IMG_008, D12:IMG_009",
+    "retrieved_ids": [
+      "D3:5",
+      "D3:2",
+      "D3:8",
+      "D12:10",
+      "D3:3"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:03"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D3:IMG_003, D12:IMG_009",
+    "original_answer": "D3:IMG_001, D3:IMG_003, D3:IMG_004, D3:IMG_005, D12:IMG_008, D12:IMG_009",
+    "retrieved_ids": [
+      "D3:5",
+      "D3:8",
+      "D12:10",
+      "D3:2",
+      "D3:9"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:04"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D3:IMG_003, D12:IMG_009",
+    "original_answer": "D3:IMG_001, D3:IMG_003, D3:IMG_004, D3:IMG_005, D12:IMG_008, D12:IMG_009",
+    "retrieved_ids": [
+      "D3:5",
+      "D3:2",
+      "D12:10",
+      "D3:8",
+      "D3:9"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:04"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D3:IMG_001, D3:IMG_002, D3:IMG_005",
+    "original_answer": "D3:IMG_001, D3:IMG_003, D3:IMG_004, D3:IMG_005, D12:IMG_008, D12:IMG_009",
+    "retrieved_ids": [
+      "D3:2",
+      "D3:5",
+      "D3:8",
+      "D12:10",
+      "D3:3"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:5",
+      "D3:7",
+      "D3:8",
+      "D12:9",
+      "D12:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:05"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "When do most water lilies bloom according to the conversation?",
+    "category": "MR",
+    "system_answer": "Most water lilies bloom during warm seasons—typically late spring through early fall.",
+    "original_answer": "During warm seasons—typically late spring through early fall.",
+    "retrieved_ids": [
+      "D3:14",
+      "D3:13",
+      "D3:15",
+      "D3:9",
+      "D3:10"
+    ],
+    "clue": [
+      "D3:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:05"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "When did the park walk take place of the user with his dog? Return in format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2025-03-15",
+    "original_answer": "2025-03-15",
+    "retrieved_ids": [
+      "D10:9",
+      "D10:10",
+      "D3:1",
+      "D3:16",
+      "D3:18"
+    ],
+    "clue": [
+      "D3:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:05"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "What realization did Liam have about his brain after seeing water lilies remind him of moon orchids?",
+    "category": "MR",
+    "system_answer": "Liam realized that his brain was starting to recognize patterns after reading so many plant encyclopedias.",
+    "original_answer": "His brain is starting to recognize patterns after reading so many plant encyclopedias.",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:3",
+      "D3:10",
+      "D12:9",
+      "D3:17"
+    ],
+    "clue": [
+      "D3:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:05"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "Did Liam's dog jump into the water to chase dragonflies?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:12",
+      "D3:13",
+      "D3:11",
+      "D3:1",
+      "D3:6"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:05"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D3",
+    "question": "How did Liam's understanding of observing plants evolve from reading about them to seeing them in person?",
+    "category": "KR",
+    "system_answer": "Liam found that observing plants in person adds depth to his learning, making it feel different and more impactful than reading about them. He noted that seeing real flowers in their natural setting enhances his understanding and provides a more immersive experience, which helps reset his mind after academic stress.",
+    "original_answer": "He realized that seeing real flowers in their natural setting hits differently and adds depth to everything he's been learning.",
+    "retrieved_ids": [
+      "D3:17",
+      "D2:1",
+      "D2:9",
+      "D3:16",
+      "D2:26"
+    ],
+    "clue": [
+      "D3:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:06"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "Which code image shows the script for purple line charts with different line styles?",
+    "category": "VS",
+    "system_answer": "D4:IMG_001, D4:IMG_002",
+    "original_answer": "D4:IMG_001",
+    "retrieved_ids": [
+      "D4:3",
+      "D4:2",
+      "D4:4",
+      "D4:16",
+      "D1:4"
+    ],
+    "clue": [
+      "D4:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:06"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "What two colors did Liam use for the second line chart example?",
+    "category": "VR",
+    "system_answer": "Red and orange",
+    "original_answer": "Red and orange.",
+    "retrieved_ids": [
+      "D4:4",
+      "D4:5",
+      "D4:3",
+      "D4:16",
+      "D4:6"
+    ],
+    "clue": [
+      "D4:4",
+      "D4:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:06"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "What did Liam almost forget to do because he spent so long on the assignment?",
+    "category": "FR",
+    "system_answer": "eat dinner",
+    "original_answer": "Eat dinner.",
+    "retrieved_ids": [
+      "D4:12",
+      "D4:11",
+      "D5:15",
+      "D4:15",
+      "D3:18"
+    ],
+    "clue": [
+      "D4:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:06"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "Is there a contradiction between Liam saying the assignment is long and also saying it feels more manageable?",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:17",
+      "D4:11",
+      "D4:12",
+      "D4:20"
+    ],
+    "clue": [
+      "D4:19",
+      "D4:20"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:07"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D11:IMG_002",
+    "original_answer": "D4:IMG_009",
+    "retrieved_ids": [
+      "D11:3",
+      "D4:3",
+      "D1:3",
+      "D11:2",
+      "D4:2"
+    ],
+    "clue": [
+      "D4:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:07"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D1:IMG_007",
+    "original_answer": "D4:IMG_010",
+    "retrieved_ids": [
+      "D11:3",
+      "D4:3",
+      "D1:3",
+      "D11:2",
+      "D1:10"
+    ],
+    "clue": [
+      "D4:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:07"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D4:IMG_012",
+    "original_answer": "D4:IMG_011",
+    "retrieved_ids": [
+      "D4:9",
+      "D4:7",
+      "D4:18",
+      "D4:8",
+      "D4:6"
+    ],
+    "clue": [
+      "D4:17"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:08"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D4:IMG_012",
+    "original_answer": "D4:IMG_012",
+    "retrieved_ids": [
+      "D4:9",
+      "D4:7",
+      "D4:18",
+      "D4:8",
+      "D4:6"
+    ],
+    "clue": [
+      "D4:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:08"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "Which result of the dialogue can this Python program draw? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D4:IMG_003",
+    "original_answer": "D4:IMG_004",
+    "retrieved_ids": [
+      "D4:3",
+      "D4:2",
+      "D4:4",
+      "D4:16",
+      "D1:3"
+    ],
+    "clue": [
+      "D4:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:08"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "Which result of the dialogue can this Python program draw? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D4:IMG_007",
+    "original_answer": "D4:IMG_006",
+    "retrieved_ids": [
+      "D4:8",
+      "D4:18",
+      "D4:9",
+      "D4:7",
+      "D4:6"
+    ],
+    "clue": [
+      "D4:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:09"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D4",
+    "question": "Which result of the dialogue can this Python program draw? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D4:IMG_006",
+    "original_answer": "D4:IMG_008",
+    "retrieved_ids": [
+      "D4:9",
+      "D4:18",
+      "D4:7",
+      "D4:6",
+      "D4:8"
+    ],
+    "clue": [
+      "D4:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:09"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "What is the name of Liam's miniature schnauzer?",
+    "category": "FR",
+    "system_answer": "Pepper",
+    "original_answer": "Pepper",
+    "retrieved_ids": [
+      "D5:4",
+      "D7:8",
+      "D7:10",
+      "D5:1",
+      "D5:5"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:6",
+      "D5:21"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:09"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Which two images show Pepper before and after the beard trim?",
+    "category": "VS",
+    "system_answer": "D5:IMG_001, D5:IMG_002",
+    "original_answer": "D5:IMG_001, D5:IMG_002",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:2",
+      "D5:16",
+      "D5:17",
+      "D5:4"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:09"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "What challenge did Liam face while trimming Pepper's beard?",
+    "category": "MR",
+    "system_answer": "Liam faced the challenge of Pepper trying to lick the scissors during the grooming process, which made it chaotic and unpredictable. Additionally, Liam was nervous and initially unsure how to handle the trimming, especially since Pepper is a miniature schnauzer with a strong reaction to hairdryers and unpredictable movements.",
+    "original_answer": "Pepper kept moving his head every time Liam tried to trim the corners.",
+    "retrieved_ids": [
+      "D5:16",
+      "D5:15",
+      "D5:17",
+      "D5:18",
+      "D5:2"
+    ],
+    "clue": [
+      "D5:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:10"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "What are the two types of schnauzers discussed in this conversation?",
+    "category": "FR",
+    "system_answer": "Miniature schnauzers and giant schnauzers.",
+    "original_answer": "Miniature schnauzer and giant schnauzer.",
+    "retrieved_ids": [
+      "D5:5",
+      "D7:15",
+      "D5:9",
+      "D5:8",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:10"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "How many giant schnauzer images did Liam share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D5:8",
+      "D5:10",
+      "D5:9",
+      "D7:10",
+      "D5:2"
+    ],
+    "clue": [
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:10"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "What color coat is most common in giant schnauzers according to the conversation?",
+    "category": "FR",
+    "system_answer": "Black",
+    "original_answer": "Black",
+    "retrieved_ids": [
+      "D5:11",
+      "D5:9",
+      "D5:10",
+      "D5:12",
+      "D5:5"
+    ],
+    "clue": [
+      "D5:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:10"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Where did Pepper try to hide when he heard the hairdryer?",
+    "category": "FR",
+    "system_answer": "Pepper tried to hide behind the laptop.",
+    "original_answer": "Behind Liam's laptop.",
+    "retrieved_ids": [
+      "D5:15",
+      "D5:16",
+      "D5:21",
+      "D5:18",
+      "D5:17"
+    ],
+    "clue": [
+      "D5:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:11"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "What did Liam plan to try trimming next time, and why was he scared?",
+    "category": "MR",
+    "system_answer": "Liam planned to try trimming Pepper’s eyebrows next time because he finds them iconic, but he was scared Pepper would move again, which could make it difficult to trim them accurately.",
+    "original_answer": "Pepper's eyebrows, because he was scared Pepper would move again.",
+    "retrieved_ids": [
+      "D5:15",
+      "D5:3",
+      "D5:16",
+      "D5:17",
+      "D5:18"
+    ],
+    "clue": [
+      "D5:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:11"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Did Liam mention taking Pepper to a professional groomer?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D5:15",
+      "D5:18",
+      "D5:16",
+      "D5:17",
+      "D5:2"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:11"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "When did this grooming conversation take place? Return in format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2025-03-22",
+    "original_answer": "2025-03-22",
+    "retrieved_ids": [
+      "D5:2",
+      "D5:15",
+      "D5:16",
+      "D5:17",
+      "D5:19"
+    ],
+    "clue": [
+      "D5:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:11"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The animal shown in the image is a miniature schnauzer.",
+    "original_answer": "Miniature schnauzer",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:9",
+      "D5:4",
+      "D7:15",
+      "D5:8"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:12"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Miniature schnauzer",
+    "original_answer": "Miniature schnauzer",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:4",
+      "D5:9",
+      "D5:8",
+      "D7:15"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:12"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The animal shown in the image is a miniature schnauzer.",
+    "original_answer": "Miniature schnauzer",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:4",
+      "D5:9",
+      "D7:15",
+      "D5:10"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:12"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The animal shown in the image is a miniature schnauzer.",
+    "original_answer": "Miniature schnauzer",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:9",
+      "D5:4",
+      "D7:15",
+      "D5:8"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:12"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D5:IMG_003, D5:IMG_004",
+    "original_answer": "D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:9",
+      "D5:4",
+      "D5:8",
+      "D5:10"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:13"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D5:IMG_003, D5:IMG_004",
+    "original_answer": "D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:4",
+      "D5:9",
+      "D5:8",
+      "D5:10"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:13"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D5:IMG_006, D5:IMG_007",
+    "original_answer": "D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006",
+    "retrieved_ids": [
+      "D5:9",
+      "D5:10",
+      "D5:5",
+      "D5:4",
+      "D5:8"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:13"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D5:IMG_004, D5:IMG_003",
+    "original_answer": "D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:4",
+      "D5:9",
+      "D5:8",
+      "D7:15"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:14"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D5:IMG_003, D5:IMG_004",
+    "original_answer": "D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:9",
+      "D5:10",
+      "D5:4",
+      "D5:8"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:14"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "How many times did the image of miniature schnauzer appear in the conversation? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D5:4",
+      "D5:5",
+      "D5:1",
+      "D5:8",
+      "D5:2"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:14"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Please determine whether the following information conflicts with the dialogue: Liam's giant schnauzer is called Pepper.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D5:7",
+      "D5:12",
+      "D7:11",
+      "D7:12",
+      "D7:13"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:14"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D1",
+    "question": "Please determine whether the following information conflicts with the dialogue: Liam is learning data visualization and plotting in a MATLAB class.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D1:10",
+      "D4:1",
+      "D4:2",
+      "D4:15",
+      "D4:16"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D4:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:15"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Please determine whether the following information conflicts with the dialogue: Liam has loved giant schnauzers since he was a child.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D5:8",
+      "D5:9",
+      "D5:11",
+      "D5:13",
+      "D5:14"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:15"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D5",
+    "question": "Is Liam quite afraid of giant schnauzers now?",
+    "category": "KR",
+    "system_answer": "No, Liam is not afraid of giant schnauzers anymore; he has grown to like them more and more as he spent more time with dogs.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D5:8",
+      "D5:13",
+      "D5:14",
+      "D5:9",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:15"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What are the two types of flowers Liam's friend shared with him?",
+    "category": "FR",
+    "system_answer": "Frangipani and wallflowers.",
+    "original_answer": "Frangipani and wallflower.",
+    "retrieved_ids": [
+      "D6:1",
+      "D2:14",
+      "D6:2",
+      "D3:1",
+      "D6:13"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:15"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "How many frangipani images were shared in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "5",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D6:6",
+      "D12:25",
+      "D6:2",
+      "D6:4",
+      "D12:26"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:15"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "How many wallflower images were shared in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "5",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D6:8",
+      "D6:12",
+      "D6:11",
+      "D6:10",
+      "D6:9"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:15"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What type of neural network did the professor mention for image tasks?",
+    "category": "FR",
+    "system_answer": "Convolutional neural networks (CNNs)",
+    "original_answer": "Convolutional neural networks (CNNs).",
+    "retrieved_ids": [
+      "D6:19",
+      "D6:15",
+      "D11:12",
+      "D11:10",
+      "D6:18"
+    ],
+    "clue": [
+      "D6:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:16"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What technique did the assistant suggest for expanding a small dataset?",
+    "category": "FR",
+    "system_answer": "The assistant suggested using augmentations like rotation, small zoom, mild color jitter, or horizontal flips to expand the dataset.",
+    "original_answer": "Data augmentation—rotation, brightness shifts, cropping, and flipping.",
+    "retrieved_ids": [
+      "D12:22",
+      "D12:21",
+      "D12:23",
+      "D12:29",
+      "D12:15"
+    ],
+    "clue": [
+      "D6:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:16"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "Did Liam use TensorFlow for his flower classifier?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:16",
+      "D6:17",
+      "D12:14",
+      "D6:21",
+      "D6:15"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:16"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "Why did Liam think frangipani and wallflower would make a good beginner dataset?",
+    "category": "MR",
+    "system_answer": "Liam thought frangipani and wallflower would make a good beginner dataset because their structure, color, and petal shapes are so different that even a simple model might do well, providing clear visual contrasts to help the network learn meaningful features.",
+    "original_answer": "Because they are two visually distinct classes with clear traits, and their structure, color, and petal shapes are so different.",
+    "retrieved_ids": [
+      "D12:29",
+      "D12:28",
+      "D6:17",
+      "D6:16",
+      "D6:21"
+    ],
+    "clue": [
+      "D6:17"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:17"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Frangipani",
+    "original_answer": "Frangipani",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:2",
+      "D6:6"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:17"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Frangipani",
+    "original_answer": "Frangipani",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:2",
+      "D12:25"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:17"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Frangipani",
+    "original_answer": "Frangipani",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:2",
+      "D6:6"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:17"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Frangipani",
+    "original_answer": "Frangipani",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:2",
+      "D6:6"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:18"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Frangipani",
+    "original_answer": "Frangipani",
+    "retrieved_ids": [
+      "D6:4",
+      "D6:5",
+      "D6:3",
+      "D6:6",
+      "D6:2"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:18"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Frangipani",
+    "original_answer": "Frangipani",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:2",
+      "D12:24"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:18"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Frangipani",
+    "original_answer": "Frangipani",
+    "retrieved_ids": [
+      "D6:4",
+      "D6:3",
+      "D6:5",
+      "D6:2",
+      "D12:24"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:18"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D6:IMG_002, D6:IMG_003, D12:IMG_014",
+    "original_answer": "D6:IMG_001, D6:IMG_002, D6:IMG_003, D6:IMG_004, D6:IMG_005, D12:IMG_014, D12:IMG_015, D12:IMG_016",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:4",
+      "D6:2",
+      "D12:24",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:19"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D6:IMG_001, D6:IMG_002, D6:IMG_003, D12:IMG_014",
+    "original_answer": "D6:IMG_001, D6:IMG_002, D6:IMG_003, D6:IMG_004, D6:IMG_005, D12:IMG_014, D12:IMG_015, D12:IMG_016",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:4",
+      "D6:2",
+      "D12:24",
+      "D6:11"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:19"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Wallflower",
+    "original_answer": "Wallflower",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:11",
+      "D6:10",
+      "D6:8",
+      "D6:3"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:20"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The flower shown in the image is a wallflower.",
+    "original_answer": "Wallflower",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:11",
+      "D6:10",
+      "D6:8",
+      "D12:6"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:20"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The flower shown in the image is a wallflower.",
+    "original_answer": "Wallflower",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:11",
+      "D6:10",
+      "D6:8",
+      "D12:6"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:20"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Wallflower",
+    "original_answer": "Wallflower",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:8",
+      "D6:12"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:20"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Wallflower",
+    "original_answer": "Wallflower",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:10",
+      "D6:8",
+      "D6:11",
+      "D6:12"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:21"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "What specific species of flower is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Wallflower",
+    "original_answer": "Wallflower",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:11",
+      "D6:10",
+      "D6:8",
+      "D6:12"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:21"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D6:IMG_006, D6:IMG_007, D6:IMG_008, D6:IMG_009",
+    "original_answer": "D6:IMG_006, D6:IMG_007, D6:IMG_008, D6:IMG_009, D6:IMG_010",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:11",
+      "D6:10",
+      "D6:8",
+      "D2:24"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:22"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D6:IMG_006, D6:IMG_007, D6:IMG_008, D6:IMG_009",
+    "original_answer": "D6:IMG_006, D6:IMG_007, D6:IMG_008, D6:IMG_009, D6:IMG_010",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:11",
+      "D6:10",
+      "D6:8",
+      "D2:24"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:22"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D6:IMG_006, D6:IMG_007, D6:IMG_008, D6:IMG_009",
+    "original_answer": "D6:IMG_006, D6:IMG_007, D6:IMG_008, D6:IMG_009, D6:IMG_010",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:11",
+      "D6:8",
+      "D6:10",
+      "D2:24"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:23"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D6",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "category": "VS",
+    "system_answer": "D6:IMG_006, D6:IMG_007, D6:IMG_008, D6:IMG_009",
+    "original_answer": "D6:IMG_006, D6:IMG_007, D6:IMG_008, D6:IMG_009, D6:IMG_010",
+    "retrieved_ids": [
+      "D6:9",
+      "D6:11",
+      "D6:8",
+      "D6:10",
+      "D2:8"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:23"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "Which image shows the chocolate bar ingredient label?",
+    "category": "VS",
+    "system_answer": "D7:IMG_001",
+    "original_answer": "D7:IMG_001",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:2",
+      "D7:4",
+      "D7:3",
+      "D7:5"
+    ],
+    "clue": [
+      "D7:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:23"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "What are the main ingredients in the organic Kalamata olives?",
+    "category": "FR",
+    "system_answer": "The main ingredients in the organic Kalamata olives are: organic Kalamata olives, water, and sea salt.",
+    "original_answer": "Organic Kalamata olives, water, and sea salt.",
+    "retrieved_ids": [
+      "D7:5",
+      "D7:6",
+      "D7:4",
+      "D7:3",
+      "D7:2"
+    ],
+    "clue": [
+      "D7:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:24"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "What is the name of the friend's toy terrier dog?",
+    "category": "FR",
+    "system_answer": "Tico",
+    "original_answer": "Tico",
+    "retrieved_ids": [
+      "D7:8",
+      "D7:10",
+      "D7:9",
+      "D7:17",
+      "D7:11"
+    ],
+    "clue": [
+      "D7:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:24"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "How many toy terrier images did Liam share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D7:10",
+      "D7:8",
+      "D7:9",
+      "D5:2",
+      "D5:1"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:24"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "What personality difference did Liam notice between Pepper and Tico?",
+    "category": "MR",
+    "system_answer": "Pepper feels calmer and more composed, while Tico is hyperactive and barks at everything that moves. Liam attributes Pepper’s temperament to being a miniature schnauzer, which has a steadier, more composed nature compared to Tico, a toy terrier with a reactive, energetic personality.",
+    "original_answer": "Pepper usually sits quietly and observes, while Tico barks at everything that moves.",
+    "retrieved_ids": [
+      "D7:16",
+      "D7:12",
+      "D7:11",
+      "D7:13",
+      "D7:17"
+    ],
+    "clue": [
+      "D7:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:24"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "When did this breakfast and dog visit conversation take place? Return in format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2025-04-02",
+    "original_answer": "2025-04-02",
+    "retrieved_ids": [
+      "D3:12",
+      "D5:20",
+      "D7:8",
+      "D7:13",
+      "D7:17"
+    ],
+    "clue": [
+      "D7:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:25"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "Did Liam mention what he had for breakfast besides checking food labels?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:4",
+      "D7:5",
+      "D7:7",
+      "D7:6"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:25"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "Please determine whether the following information conflicts with the dialogue: Tico is a mini schnauzer.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D5:4",
+      "D7:8",
+      "D7:11",
+      "D7:14",
+      "D7:15"
+    ],
+    "clue": [
+      "D7:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:25"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Toy terrier",
+    "original_answer": "Toy terrier",
+    "retrieved_ids": [
+      "D7:8",
+      "D5:5",
+      "D5:4",
+      "D7:10",
+      "D5:9"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:25"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Toy terrier",
+    "original_answer": "Toy terrier",
+    "retrieved_ids": [
+      "D7:8",
+      "D5:5",
+      "D7:10",
+      "D5:4",
+      "D7:9"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:25"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The animal shown in the image is a Boston Terrier.",
+    "original_answer": "Toy terrier",
+    "retrieved_ids": [
+      "D5:9",
+      "D5:10",
+      "D7:8",
+      "D5:5",
+      "D7:10"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:26"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Toy terrier",
+    "original_answer": "Toy terrier",
+    "retrieved_ids": [
+      "D7:8",
+      "D7:10",
+      "D5:5",
+      "D7:9",
+      "D5:4"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:26"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "What specific species of animal is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Toy terrier",
+    "original_answer": "Toy terrier",
+    "retrieved_ids": [
+      "D7:8",
+      "D7:10",
+      "D5:5",
+      "D7:9",
+      "D5:4"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:26"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "Which picture is of Tico when he was a puppy?",
+    "category": "VS",
+    "system_answer": "D7:IMG_005",
+    "original_answer": "D7:IMG_005",
+    "retrieved_ids": [
+      "D7:8",
+      "D7:9",
+      "D7:10",
+      "D7:12",
+      "D7:11"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:26"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D7:IMG_005, D7:IMG_003, D7:IMG_004",
+    "original_answer": "D7:IMG_003, D7:IMG_004, D7:IMG_005",
+    "retrieved_ids": [
+      "D7:10",
+      "D5:5",
+      "D7:8",
+      "D5:4",
+      "D7:9"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:27"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D7:IMG_005, D7:IMG_003, D7:IMG_004",
+    "original_answer": "D7:IMG_003, D7:IMG_004, D7:IMG_005",
+    "retrieved_ids": [
+      "D7:10",
+      "D5:5",
+      "D7:8",
+      "D5:4",
+      "D7:9"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:27"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D7:IMG_003, D7:IMG_004, D7:IMG_005",
+    "original_answer": "D7:IMG_003, D7:IMG_004, D7:IMG_005",
+    "retrieved_ids": [
+      "D5:5",
+      "D7:8",
+      "D7:10",
+      "D5:4",
+      "D7:9"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:27"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D7:IMG_005, D7:IMG_003",
+    "original_answer": "D7:IMG_003, D7:IMG_004, D7:IMG_005",
+    "retrieved_ids": [
+      "D5:5",
+      "D7:10",
+      "D7:8",
+      "D5:4",
+      "D5:9"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:28"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D7",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "category": "VS",
+    "system_answer": "D7:IMG_005, D7:IMG_004, D7:IMG_003",
+    "original_answer": "D7:IMG_003, D7:IMG_004, D7:IMG_005",
+    "retrieved_ids": [
+      "D7:10",
+      "D7:8",
+      "D5:5",
+      "D5:4",
+      "D7:9"
+    ],
+    "clue": [
+      "D7:8",
+      "D7:9",
+      "D7:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:28"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "When is Liam's anniversary with his girlfriend? Return in the format MM-DD.",
+    "category": "TR",
+    "system_answer": "04-06",
+    "original_answer": "05-06",
+    "retrieved_ids": [
+      "D8:1",
+      "D8:2",
+      "D8:12",
+      "D8:16",
+      "D8:17"
+    ],
+    "clue": [
+      "D8:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:28"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "How many Abstract Ikat Maxi Dress images did Liam consider?",
+    "category": "VR",
+    "system_answer": "Liam considered three Abstract Ikat Maxi Dress images: D8:IMG_001, D8:IMG_002, and D8:IMG_003.",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:4",
+      "D8:2",
+      "D8:6",
+      "D8:7"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:29"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Abstract Ikat Maxi Dress",
+    "original_answer": "Abstract Ikat Maxi Dress",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:4",
+      "D8:7",
+      "D8:13"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:29"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Abstract Ikat Maxi Dress",
+    "original_answer": "Abstract Ikat Maxi Dress",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:4",
+      "D8:2",
+      "D8:7",
+      "D8:13"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:29"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Abstract Ikat Maxi Dress",
+    "original_answer": "Abstract Ikat Maxi Dress",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:4",
+      "D8:7",
+      "D8:13"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:29"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Abstract Ikat Maxi Dress",
+    "original_answer": "Abstract Ikat Maxi Dress",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:4",
+      "D8:7",
+      "D8:13"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:30"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Abstract Ikat Maxi Dress",
+    "original_answer": "Abstract Ikat Maxi Dress",
+    "retrieved_ids": [
+      "D8:3",
+      "D8:2",
+      "D8:4",
+      "D8:7",
+      "D8:13"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:30"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "How many Athletic Marled Knit Joggers images did Liam review?",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D8:8",
+      "D8:9",
+      "D8:10",
+      "D8:7",
+      "D8:21"
+    ],
+    "clue": [
+      "D8:7",
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:30"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Joggers",
+    "original_answer": "Athletic marled knit joggers",
+    "retrieved_ids": [
+      "D8:7",
+      "D8:8",
+      "D8:9",
+      "D8:10",
+      "D8:12"
+    ],
+    "clue": [
+      "D8:7",
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:30"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Joggers",
+    "original_answer": "Athletic marled knit joggers",
+    "retrieved_ids": [
+      "D8:7",
+      "D8:8",
+      "D8:10",
+      "D8:9",
+      "D8:12"
+    ],
+    "clue": [
+      "D8:7",
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:30"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Joggers",
+    "original_answer": "Athletic marled knit joggers",
+    "retrieved_ids": [
+      "D8:8",
+      "D8:9",
+      "D8:7",
+      "D8:10",
+      "D8:20"
+    ],
+    "clue": [
+      "D8:7",
+      "D8:8",
+      "D8:9",
+      "D8:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:31"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "What final decision did Liam make about gifts for his girlfriend?",
+    "category": "KR",
+    "system_answer": "Liam decided to gift her the blue-white Abstract Ikat Maxi Dress for the anniversary dinner and the gradient joggers for her daily life.",
+    "original_answer": "The blue-white Abstract Ikat Maxi Dress and the gradient joggers.",
+    "retrieved_ids": [
+      "D8:17",
+      "D8:16",
+      "D8:18",
+      "D8:1",
+      "D8:12"
+    ],
+    "clue": [
+      "D8:15",
+      "D8:17"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:31"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "Which of the clothes in the pictures did Liam finally choose as a gift for his girlfriend?",
+    "category": "VS",
+    "system_answer": "D8:IMG_001, D8:IMG_006, D8:IMG_010, D8:IMG_012",
+    "original_answer": "D8:IMG_004, D8:IMG_007",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:19",
+      "D8:7",
+      "D8:12",
+      "D8:21"
+    ],
+    "clue": [
+      "D8:5",
+      "D8:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:31"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "Why did Liam decide to buy both a dress and joggers?",
+    "category": "FR",
+    "system_answer": "Liam decided to buy both a dress and joggers because it shows thoughtfulness and understanding of her lifestyle—something elegant for special occasions (the dress for the anniversary dinner) and something comfortable for daily life (the joggers as an extra surprise). This combination creates a nice balance of style and practicality.",
+    "original_answer": "The dress for the anniversary dinner, and the joggers as an extra surprise for her daily life.",
+    "retrieved_ids": [
+      "D8:12",
+      "D8:15",
+      "D8:11",
+      "D8:16",
+      "D8:18"
+    ],
+    "clue": [
+      "D8:15"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:32"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "How many Bandana Print Sweatshorts images did Liam review for himself?",
+    "category": "VR",
+    "system_answer": "Liam reviewed four Bandana Print Sweatshorts images for himself.",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D8:19",
+      "D8:20",
+      "D8:22",
+      "D8:23",
+      "D8:21"
+    ],
+    "clue": [
+      "D8:19",
+      "D8:20",
+      "D8:21",
+      "D8:22",
+      "D8:23"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:32"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Bandana Print Sweatshorts",
+    "original_answer": "Bandana print sweatshorts",
+    "retrieved_ids": [
+      "D8:20",
+      "D8:19",
+      "D8:7",
+      "D8:8",
+      "D8:23"
+    ],
+    "clue": [
+      "D8:19",
+      "D8:20",
+      "D8:21",
+      "D8:22",
+      "D8:23"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:32"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Bandana Print Sweatshorts",
+    "original_answer": "Bandana print sweatshorts",
+    "retrieved_ids": [
+      "D8:20",
+      "D8:19",
+      "D8:7",
+      "D8:23",
+      "D8:8"
+    ],
+    "clue": [
+      "D8:19",
+      "D8:20",
+      "D8:21",
+      "D8:22",
+      "D8:23"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:33"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Bandana Print Sweatshorts",
+    "original_answer": "Bandana print sweatshorts",
+    "retrieved_ids": [
+      "D8:20",
+      "D8:19",
+      "D8:7",
+      "D8:8",
+      "D8:10"
+    ],
+    "clue": [
+      "D8:19",
+      "D8:20",
+      "D8:21",
+      "D8:22",
+      "D8:23"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:33"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Bandana Print Sweatshorts",
+    "original_answer": "Bandana print sweatshorts",
+    "retrieved_ids": [
+      "D8:20",
+      "D8:19",
+      "D8:7",
+      "D8:8",
+      "D8:23"
+    ],
+    "clue": [
+      "D8:19",
+      "D8:20",
+      "D8:21",
+      "D8:22",
+      "D8:23"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:33"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "Which Bandana Print Sweatshorts did Liam ultimately choose, and why?",
+    "category": "MR",
+    "system_answer": "Liam did not ultimately choose any specific Bandana Print Sweatshorts, as the conversation only involved him reviewing and discussing multiple options without making a final selection.",
+    "original_answer": "The fifth one, because it is clean, easy to style, and fits his simple commuting needs better.",
+    "retrieved_ids": [
+      "D8:19",
+      "D8:20",
+      "D8:22",
+      "D8:23",
+      "D8:21"
+    ],
+    "clue": [
+      "D8:27"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:33"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "What type of tops does Liam usually wear?",
+    "category": "FR",
+    "system_answer": "Liam usually wears black and white T-shirts.",
+    "original_answer": "Black and white T-shirts.",
+    "retrieved_ids": [
+      "D8:25",
+      "D8:26",
+      "D8:27",
+      "D8:7",
+      "D8:12"
+    ],
+    "clue": [
+      "D8:25"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:34"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "When did this gift shopping conversation take place? Return in format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2025-04-07",
+    "original_answer": "2025-04-07",
+    "retrieved_ids": [
+      "D8:1",
+      "D8:15",
+      "D8:16",
+      "D8:17",
+      "D8:18"
+    ],
+    "clue": [
+      "D8:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:34"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D8",
+    "question": "Did Liam consider buying jewelry for the anniversary?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D8:16",
+      "D8:17",
+      "D8:1",
+      "D8:15",
+      "D8:12"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:34"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D9",
+    "question": "Which code image shows the first 3×3 heatmap script?",
+    "category": "VS",
+    "system_answer": "D9:IMG_001",
+    "original_answer": "D9:IMG_001",
+    "retrieved_ids": [
+      "D9:3",
+      "D9:2",
+      "D9:10",
+      "D9:4",
+      "D9:5"
+    ],
+    "clue": [
+      "D9:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:34"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D9",
+    "question": "What colormap did the first heatmap use?",
+    "category": "VR",
+    "system_answer": "The first heatmap used a reversed 'hot' colormap.",
+    "original_answer": "Reversed 'hot' colormap.",
+    "retrieved_ids": [
+      "D9:5",
+      "D9:2",
+      "D9:4",
+      "D9:9",
+      "D9:3"
+    ],
+    "clue": [
+      "D9:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:34"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D9",
+    "question": "What AI interpretability tool uses heatmaps to show which image regions influence predictions?",
+    "category": "FR",
+    "system_answer": "Gradient-based saliency maps use heatmaps to show which image regions influence predictions.",
+    "original_answer": "Gradient-based saliency maps.",
+    "retrieved_ids": [
+      "D9:8",
+      "D9:7",
+      "D9:9",
+      "D9:6",
+      "D9:16"
+    ],
+    "clue": [
+      "D9:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:35"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D9",
+    "question": "What happens to 3D scatter plots when one axis spans only a small interval?",
+    "category": "MR",
+    "system_answer": "When one axis spans only a small interval, the scatter appears as a vertical or horizontal band, which is a helpful demonstration of how axis scaling affects perceived spread.",
+    "original_answer": "The scatter appears as a vertical or horizontal band.",
+    "retrieved_ids": [
+      "D9:14",
+      "D9:13",
+      "D9:12",
+      "D9:11",
+      "D9:15"
+    ],
+    "clue": [
+      "D9:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:35"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D9",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D9:IMG_004",
+    "original_answer": "D9:IMG_005",
+    "retrieved_ids": [
+      "D9:2",
+      "D9:3",
+      "D9:10",
+      "D9:5",
+      "D9:4"
+    ],
+    "clue": [
+      "D9:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:35"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D9",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D9:IMG_007",
+    "original_answer": "D9:IMG_010",
+    "retrieved_ids": [
+      "D9:11",
+      "D9:10",
+      "D9:12",
+      "D1:3",
+      "D9:3"
+    ],
+    "clue": [
+      "D9:17"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:36"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D10",
+    "question": "What city did Liam visit during his summer break?",
+    "category": "FR",
+    "system_answer": "Barcelona",
+    "original_answer": "Barcelona",
+    "retrieved_ids": [
+      "D10:7",
+      "D10:15",
+      "D10:6",
+      "D10:1",
+      "D10:12"
+    ],
+    "clue": [
+      "D10:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:36"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D10",
+    "question": "What famous Barcelona building did Liam spot from afar in the panoramic view?",
+    "category": "KR",
+    "system_answer": "The Sagrada Família",
+    "original_answer": "Sagrada Família",
+    "retrieved_ids": [
+      "D10:7",
+      "D10:12",
+      "D10:6",
+      "D10:13",
+      "D10:8"
+    ],
+    "clue": [
+      "D10:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:36"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D10",
+    "question": "How many Sagrada Família images did Liam share?",
+    "category": "VR",
+    "system_answer": "Liam shared two images of the Sagrada Família: D10:IMG_006 and D10:IMG_007.",
+    "original_answer": "3",
+    "retrieved_ids": [
+      "D10:8",
+      "D10:12",
+      "D10:13",
+      "D10:14",
+      "D10:10"
+    ],
+    "clue": [
+      "D10:12",
+      "D10:13",
+      "D10:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:36"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D10",
+    "question": "Did Liam visit Casa Batlló during his Barcelona trip?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D10:7",
+      "D10:8",
+      "D10:1",
+      "D10:12",
+      "D10:15"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:37"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D11",
+    "question": "What summer project did Liam decide to work on combining Python and AI courses?",
+    "category": "FR",
+    "system_answer": "Liam decided to build a small CNN model for flower classification, specifically starting with distinguishing between frangipani and wallflower, to combine what he learned from his Python programming class and AI intro course.",
+    "original_answer": "Building a small CNN model for flower classification.",
+    "retrieved_ids": [
+      "D11:1",
+      "D6:21",
+      "D6:22",
+      "D6:16",
+      "D11:19"
+    ],
+    "clue": [
+      "D11:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:37"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D11",
+    "question": "What are the four mathematical functions Liam plotted for warm-up?",
+    "category": "FR",
+    "system_answer": "Sine, cosine, exponential, and logarithmic functions.",
+    "original_answer": "Sine, cosine, exponential, and logarithm.",
+    "retrieved_ids": [
+      "D11:9",
+      "D11:8",
+      "D11:6",
+      "D11:4",
+      "D11:7"
+    ],
+    "clue": [
+      "D11:2",
+      "D11:4",
+      "D11:6",
+      "D11:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:37"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D11",
+    "question": "Why is understanding exponential curves important for deep learning?",
+    "category": "MR",
+    "system_answer": "Understanding exponential curves is important for deep learning because they appear in loss curves and gradient explosion scenarios, helping interpret unstable training behavior in deep networks.",
+    "original_answer": "Exponential functions appear in loss curves, gradient explosion, and many other phenomena. Understanding this shape helps interpret unstable training behavior.",
+    "retrieved_ids": [
+      "D11:7",
+      "D11:8",
+      "D11:9",
+      "D11:6",
+      "D11:13"
+    ],
+    "clue": [
+      "D11:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:38"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D11",
+    "question": "What is the purpose of pooling layers in CNNs?",
+    "category": "MR",
+    "system_answer": "Pooling reduces spatial size while keeping the most important activations. It makes the network more robust to shifts in the image and reduces computation cost—useful when flowers appear at different sizes or angles.",
+    "original_answer": "Pooling reduces spatial size while keeping the most important activations, makes the network more robust to shifts, and reduces computation cost.",
+    "retrieved_ids": [
+      "D11:15",
+      "D11:14",
+      "D11:13",
+      "D11:12",
+      "D6:19"
+    ],
+    "clue": [
+      "D11:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:38"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D11",
+    "question": "Which image shows the CNN architecture diagram?",
+    "category": "VS",
+    "system_answer": "D11:IMG_008",
+    "original_answer": "D11:IMG_008",
+    "retrieved_ids": [
+      "D11:16",
+      "D11:17",
+      "D11:11",
+      "D11:2",
+      "D6:19"
+    ],
+    "clue": [
+      "D11:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:38"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D11",
+    "question": "Did Liam mention using batch normalization in his CNN?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:19",
+      "D11:13",
+      "D11:16",
+      "D6:18",
+      "D11:12"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:38"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D11",
+    "question": "What does ReLU activation do and why is it helpful?",
+    "category": "MR",
+    "system_answer": "ReLU introduces non-linearity and helps prevent vanishing gradients. For flower classification, ReLU layers help the network learn complex floral textures and color variations.",
+    "original_answer": "ReLU keeps positive values and zeros out negatives, introduces non-linearity, and helps prevent vanishing gradients.",
+    "retrieved_ids": [
+      "D11:13",
+      "D11:14",
+      "D11:15",
+      "D11:12",
+      "D11:7"
+    ],
+    "clue": [
+      "D11:13"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:39"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D11",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "category": "VR",
+    "system_answer": "D11:IMG_006",
+    "original_answer": "D11:IMG_007",
+    "retrieved_ids": [
+      "D11:7",
+      "D11:3",
+      "D11:8",
+      "D11:2",
+      "D11:6"
+    ],
+    "clue": [
+      "D11:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:39"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What new flower species did Liam discover during his morning hike?",
+    "category": "FR",
+    "system_answer": "Cyclamen",
+    "original_answer": "Cyclamen",
+    "retrieved_ids": [
+      "D3:1",
+      "D2:25",
+      "D12:1",
+      "D6:1",
+      "D12:24"
+    ],
+    "clue": [
+      "D12:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:39"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "How many different cyclamen photos did Liam take?",
+    "category": "VR",
+    "system_answer": "Liam took three different cyclamen photos: one white cyclamen (D12:IMG_001), another angle of the same white cyclamen (D12:IMG_002), and vibrant pink cyclamen (D12:IMG_003).",
+    "original_answer": "6",
+    "retrieved_ids": [
+      "D12:3",
+      "D12:2",
+      "D12:4",
+      "D12:9",
+      "D12:8"
+    ],
+    "clue": [
+      "D12:2",
+      "D12:3",
+      "D12:4",
+      "D12:5",
+      "D12:6",
+      "D12:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:40"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What are the flower species Liam decided to include in his final dataset?",
+    "category": "KR",
+    "system_answer": "Liam decided to include frangipani, petunia, moon orchids, and water lilies in his final dataset.",
+    "original_answer": "Cyclamen, moon orchid, water lily, petunia, and frangipani.",
+    "retrieved_ids": [
+      "D12:29",
+      "D12:23",
+      "D6:1",
+      "D12:28",
+      "D12:16"
+    ],
+    "clue": [
+      "D12:8",
+      "D12:9",
+      "D12:20",
+      "D12:24"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:40"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "How many petunia images did Liam share?",
+    "category": "VR",
+    "system_answer": "Liam shared three petunia images: D12:IMG_010, D12:IMG_011, and D12:IMG_013.",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D12:16",
+      "D12:17",
+      "D3:7",
+      "D3:8",
+      "D12:19"
+    ],
+    "clue": [
+      "D12:16",
+      "D12:17",
+      "D12:18",
+      "D12:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:40"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "When did the cyclamen hiking take place? Return in format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2025-06-03",
+    "original_answer": "2025-06-03",
+    "retrieved_ids": [
+      "D12:1",
+      "D12:2",
+      "D12:5",
+      "D12:6",
+      "D12:8"
+    ],
+    "clue": [
+      "D12:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:41"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "Did Liam collect sunflower images for the dataset?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D12:30",
+      "D12:29",
+      "D12:23",
+      "D12:16",
+      "D6:1"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:41"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "How did Liam's flower dataset evolve from the initial frangipani vs wallflower idea in D6?",
+    "category": "KR",
+    "system_answer": "Liam started with a simple frangipani vs wallflower dataset in D6, which he found beginner-friendly due to the clear visual differences between the two. He later expanded the dataset by adding another flower species he photographed during a beach trip, as mentioned in D12. The dataset was being prepared with careful labeling, multiple viewpoints, and quality assurance to ensure meaningful training data.",
+    "original_answer": "It expanded from 2 classes (frangipani vs wallflower) to 5 classes (cyclamen, moon orchid, water lily, petunia, frangipani) with overlapping colors but distinct structures to create a more challenging fine-grained classification task.",
+    "retrieved_ids": [
+      "D6:16",
+      "D6:17",
+      "D6:21",
+      "D12:29",
+      "D12:23"
+    ],
+    "clue": [
+      "D12:11",
+      "D12:20",
+      "D12:28"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:42"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Cyclamen",
+    "original_answer": "Cyclamen",
+    "retrieved_ids": [
+      "D12:6",
+      "D12:5",
+      "D12:8",
+      "D12:7",
+      "D12:3"
+    ],
+    "clue": [
+      "D12:2",
+      "D12:3",
+      "D12:4",
+      "D12:5",
+      "D12:6",
+      "D12:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:42"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Cyclamen",
+    "original_answer": "Cyclamen",
+    "retrieved_ids": [
+      "D12:6",
+      "D12:5",
+      "D12:8",
+      "D12:7",
+      "D12:3"
+    ],
+    "clue": [
+      "D12:2",
+      "D12:3",
+      "D12:4",
+      "D12:5",
+      "D12:6",
+      "D12:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:42"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Cyclamen",
+    "original_answer": "Cyclamen",
+    "retrieved_ids": [
+      "D12:6",
+      "D12:5",
+      "D12:8",
+      "D12:7",
+      "D12:4"
+    ],
+    "clue": [
+      "D12:2",
+      "D12:3",
+      "D12:4",
+      "D12:5",
+      "D12:6",
+      "D12:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:42"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Cyclamen",
+    "original_answer": "Cyclamen",
+    "retrieved_ids": [
+      "D12:6",
+      "D12:5",
+      "D12:8",
+      "D12:7",
+      "D12:4"
+    ],
+    "clue": [
+      "D12:2",
+      "D12:3",
+      "D12:4",
+      "D12:5",
+      "D12:6",
+      "D12:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:43"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Cyclamen",
+    "original_answer": "Cyclamen",
+    "retrieved_ids": [
+      "D12:6",
+      "D12:5",
+      "D12:8",
+      "D12:3",
+      "D12:2"
+    ],
+    "clue": [
+      "D12:2",
+      "D12:3",
+      "D12:4",
+      "D12:5",
+      "D12:6",
+      "D12:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:43"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "Cyclamen",
+    "original_answer": "Cyclamen",
+    "retrieved_ids": [
+      "D12:6",
+      "D12:5",
+      "D12:8",
+      "D12:7",
+      "D12:4"
+    ],
+    "clue": [
+      "D12:2",
+      "D12:3",
+      "D12:4",
+      "D12:5",
+      "D12:6",
+      "D12:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:43"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the image is a petunia.",
+    "original_answer": "Petunia",
+    "retrieved_ids": [
+      "D6:9",
+      "D12:17",
+      "D6:11",
+      "D6:8",
+      "D6:10"
+    ],
+    "clue": [
+      "D12:16",
+      "D12:17",
+      "D12:18",
+      "D12:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:43"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the image is a petunia.",
+    "original_answer": "Petunia",
+    "retrieved_ids": [
+      "D12:17",
+      "D6:9",
+      "D6:11",
+      "D12:19",
+      "D6:8"
+    ],
+    "clue": [
+      "D12:16",
+      "D12:17",
+      "D12:18",
+      "D12:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:44"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the image is a petunia.",
+    "original_answer": "Petunia",
+    "retrieved_ids": [
+      "D12:17",
+      "D6:9",
+      "D6:11",
+      "D6:8",
+      "D12:19"
+    ],
+    "clue": [
+      "D12:16",
+      "D12:17",
+      "D12:18",
+      "D12:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:44"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the image is a petunia.",
+    "original_answer": "Petunia",
+    "retrieved_ids": [
+      "D12:17",
+      "D6:9",
+      "D12:19",
+      "D12:16",
+      "D6:11"
+    ],
+    "clue": [
+      "D12:16",
+      "D12:17",
+      "D12:18",
+      "D12:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:44"
+  },
+  {
+    "sample_id": "Liam",
+    "dataset": "Python_Botany_AI_Student_Life",
+    "session_id": "D12",
+    "question": "What specific species of plant is shown in the provided image?",
+    "category": "TTL",
+    "system_answer": "The plant shown in the image is a petunia.",
+    "original_answer": "Petunia",
+    "retrieved_ids": [
+      "D12:17",
+      "D6:9",
+      "D6:11",
+      "D12:19",
+      "D6:8"
+    ],
+    "clue": [
+      "D12:16",
+      "D12:17",
+      "D12:18",
+      "D12:19"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 15:25:45"
+  }
+]

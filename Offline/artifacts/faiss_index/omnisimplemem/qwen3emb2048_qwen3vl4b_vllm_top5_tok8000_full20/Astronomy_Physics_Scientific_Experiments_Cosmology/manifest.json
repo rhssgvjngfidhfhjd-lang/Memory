@@ -1,0 +1,10 @@
+{
+  "run_name": "qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20",
+  "dataset": "Astronomy_Physics_Scientific_Experiments_Cosmology",
+  "dim": 2048,
+  "count": 233,
+  "index": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Astronomy_Physics_Scientific_Experiments_Cosmology/vectors.index",
+  "id_mapping": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Astronomy_Physics_Scientific_Experiments_Cosmology/id_mapping.json",
+  "metadata": "/data/haozhen/Offline/Offline/artifacts/faiss_index/omnisimplemem/qwen3emb2048_qwen3vl4b_vllm_top5_tok8000_full20/Astronomy_Physics_Scientific_Experiments_Cosmology/mau_metadata.jsonl",
+  "source": "OmniSimpleMem MAU embeddings"
+}

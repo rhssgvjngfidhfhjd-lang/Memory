@@ -1,0 +1,14 @@
+{
+  "model": "Qwen/Qwen3-VL-Embedding-2B",
+  "expected_dim": 2048,
+  "datasets": [
+    {
+      "dataset": "AI_Robotics_Automation_Future_Tech",
+      "memories": 12,
+      "image_rows": 4,
+      "elapsed_sec": 22.9,
+      "skipped": false
+    }
+  ],
+  "total_memories": 12
+}

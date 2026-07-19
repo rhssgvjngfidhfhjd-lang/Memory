@@ -1,0 +1,1735 @@
+[
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D1",
+    "question": "Which country’s humid climate might influence Sophie’s thinking about fabric design?",
+    "category": "FR",
+    "system_answer": "Singapore",
+    "original_answer": "Singapore",
+    "retrieved_ids": [
+      "D1:5",
+      "D1:6",
+      "D5:7",
+      "D1:13",
+      "D1:14"
+    ],
+    "clue": [
+      "D1:5"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:08"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D1",
+    "question": "What does Sophie want to explore in the local galleries they plan to visit?",
+    "category": "MR",
+    "system_answer": "Sophie wants to explore how artists express cultural identity and environmental awareness in the local galleries.",
+    "original_answer": "Sophie is interested in how local artists are expressing cultural identities and environmental awareness through their work.",
+    "retrieved_ids": [
+      "D4:1",
+      "D1:8",
+      "D4:12",
+      "D6:15",
+      "D5:9"
+    ],
+    "clue": [
+      "D1:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:08"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D1",
+    "question": "Did Sophie mention specific cultural festivals she plan to attend in Singapore?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:11",
+      "D1:8",
+      "D2:1",
+      "D1:2"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:08"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D2",
+    "question": "When did Sophie start visiting Singapore? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2024-05-21",
+    "original_answer": "2024-05-21",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:2",
+      "D1:11",
+      "D2:1",
+      "D2:16"
+    ],
+    "clue": [
+      "D2:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:08"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D2",
+    "question": "Which country did Sophie visit in May 2024?",
+    "category": "TR",
+    "system_answer": "Singapore",
+    "original_answer": "Singapore",
+    "retrieved_ids": [
+      "D1:1",
+      "D2:1",
+      "D4:1",
+      "D7:1",
+      "D9:13"
+    ],
+    "clue": [
+      "D2:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:08"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D1",
+    "question": "What is the notable feature of Marina Bay Sands mentioned in the conversation?",
+    "category": "MR",
+    "system_answer": "Marina Bay Sands is described as an icon of modern ambition, symbolizing how vision and investment can reshape a nation. It is also noted for its illuminated skyline at night, with its three-tower complex and rooftop garden being central features. Additionally, it is mentioned as a location where Singapore blends innovation with aesthetics, and its architecture is often compared to natural ecosystems, such as the Supertrees at Gardens by the Bay.",
+    "original_answer": "Marina Bay Sands is noted for its incredible views, especially at night when it lights up.",
+    "retrieved_ids": [
+      "D9:4",
+      "D2:4",
+      "D2:9",
+      "D2:2",
+      "D2:3"
+    ],
+    "clue": [
+      "D1:2",
+      "D2:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:09"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D2",
+    "question": "Which image in the dialogue shows the same landmark as this one?",
+    "category": "VS",
+    "system_answer": "D2:IMG_005, D2:IMG_001, D9:IMG_002",
+    "original_answer": "D2:IMG_005",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:12",
+      "D9:4",
+      "D2:10",
+      "D2:2"
+    ],
+    "clue": [
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:11"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D2",
+    "question": "What is the name of the landmark in this image?",
+    "category": "TTL",
+    "system_answer": "Merlion",
+    "original_answer": "Merlion Park.",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:10",
+      "D9:4",
+      "D2:12",
+      "D2:2"
+    ],
+    "clue": [
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:11"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D2",
+    "question": "Based on the photos shared by Sophie, in which country was the following picture taken?",
+    "category": "VR",
+    "system_answer": "Singapore",
+    "original_answer": "Singapore",
+    "retrieved_ids": [
+      "D2:9",
+      "D2:2",
+      "D9:4",
+      "D9:3",
+      "D2:10"
+    ],
+    "clue": [
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:12"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D2",
+    "question": "In the conversation, which number travel destination was the country shown in the image for Sophie?",
+    "category": "VR",
+    "system_answer": "The country shown in the image for Sophie is Singapore, and it appears in travel destination number D2.",
+    "original_answer": "It was her first travel destination.",
+    "retrieved_ids": [
+      "D2:2",
+      "D9:4",
+      "D2:9",
+      "D9:3",
+      "D1:2"
+    ],
+    "clue": [
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:13"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D2",
+    "question": "Which image in the dialogue shows the same landmark as this one?",
+    "category": "VS",
+    "system_answer": "D6:IMG_003",
+    "original_answer": "D2:IMG_005",
+    "retrieved_ids": [
+      "D6:3",
+      "D9:2",
+      "D2:12",
+      "D7:2",
+      "D6:7"
+    ],
+    "clue": [
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:15"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D2",
+    "question": "What is the name of the landmark in this image?",
+    "category": "TTL",
+    "system_answer": "The landmark in the image is the Pantheon.",
+    "original_answer": "Merlion Park.",
+    "retrieved_ids": [
+      "D6:3",
+      "D2:12",
+      "D6:7",
+      "D9:2",
+      "D7:2"
+    ],
+    "clue": [
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:15"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D2",
+    "question": "Based on the photos shared by Sophie, in which country was the following picture taken?",
+    "category": "VR",
+    "system_answer": "Italy",
+    "original_answer": "Singapore",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:2",
+      "D2:12",
+      "D2:2",
+      "D4:8"
+    ],
+    "clue": [
+      "D2:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:18"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D1",
+    "question": "Did Sophie visit Singapore before or after updating her summer wardrobe?",
+    "category": "TR",
+    "system_answer": "Sophie visited Singapore before updating her summer wardrobe.",
+    "original_answer": "Before.",
+    "retrieved_ids": [
+      "D1:1",
+      "D1:11",
+      "D1:17",
+      "D2:1",
+      "D3:1"
+    ],
+    "clue": [
+      "D1:1",
+      "D3:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:18"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "What two categories of summer clothing did Sophie explore during the wardrobe refresh?",
+    "category": "FR",
+    "system_answer": "Abstract Print Kimonos and Acid Washed Denim Skater Skirts",
+    "original_answer": "Abstract Print Kimono and Acid Washed Denim Skater Skirt.",
+    "retrieved_ids": [
+      "D3:1",
+      "D3:23",
+      "D3:22",
+      "D3:3",
+      "D3:13"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:18"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "How many Abstract Print Kimonos did Sophie view in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "5",
+    "retrieved_ids": [
+      "D3:3",
+      "D3:2",
+      "D3:20",
+      "D3:4",
+      "D3:5"
+    ],
+    "clue": [
+      "D3:2",
+      "D3:4",
+      "D3:6",
+      "D3:8",
+      "D3:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:19"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "How many Acid Washed Denim Skater Skirts did Sophie examine? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "4",
+    "retrieved_ids": [
+      "D3:13",
+      "D3:22",
+      "D3:18",
+      "D3:19",
+      "D3:21"
+    ],
+    "clue": [
+      "D3:12",
+      "D3:14",
+      "D3:16",
+      "D3:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:19"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Acid Washed Denim Skater Skirt",
+    "original_answer": "Acid Washed Denim Skater Skirt",
+    "retrieved_ids": [
+      "D8:8",
+      "D8:20",
+      "D8:11",
+      "D3:16",
+      "D3:12"
+    ],
+    "clue": [
+      "D3:12",
+      "D3:14",
+      "D3:16",
+      "D3:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:19"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Acid Washed Denim Skater Skirts",
+    "original_answer": "Acid Washed Denim Skater Skirt",
+    "retrieved_ids": [
+      "D3:18",
+      "D8:11",
+      "D3:16",
+      "D8:8",
+      "D3:12"
+    ],
+    "clue": [
+      "D3:12",
+      "D3:14",
+      "D3:16",
+      "D3:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:19"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Acid Washed Denim Skater Skirts",
+    "original_answer": "Acid Washed Denim Skater Skirt",
+    "retrieved_ids": [
+      "D3:18",
+      "D8:11",
+      "D3:12",
+      "D3:16",
+      "D3:14"
+    ],
+    "clue": [
+      "D3:12",
+      "D3:14",
+      "D3:16",
+      "D3:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:20"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Acid Washed Denim Skater Skirts",
+    "original_answer": "Acid Washed Denim Skater Skirt",
+    "retrieved_ids": [
+      "D3:18",
+      "D8:11",
+      "D3:12",
+      "D8:20",
+      "D3:16"
+    ],
+    "clue": [
+      "D3:12",
+      "D3:14",
+      "D3:16",
+      "D3:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:20"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Acid Washed Denim Skater Skirts",
+    "original_answer": "Acid Washed Denim Skater Skirt",
+    "retrieved_ids": [
+      "D3:18",
+      "D8:11",
+      "D3:16",
+      "D8:8",
+      "D3:12"
+    ],
+    "clue": [
+      "D3:12",
+      "D3:14",
+      "D3:16",
+      "D3:18"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:20"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "Which image shows the kimono with oversized bold floral patterns?",
+    "category": "VS",
+    "system_answer": "D3:IMG_002",
+    "original_answer": "D3:IMG_002",
+    "retrieved_ids": [
+      "D3:4",
+      "D3:5",
+      "D3:20",
+      "D3:6",
+      "D3:10"
+    ],
+    "clue": [
+      "D3:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:21"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "Which image shows the deep blue kimono with patterned print that Sophie ultimately chose?",
+    "category": "VS",
+    "system_answer": "D3:IMG_004",
+    "original_answer": "D3:IMG_004",
+    "retrieved_ids": [
+      "D3:20",
+      "D3:21",
+      "D3:9",
+      "D3:8",
+      "D3:4"
+    ],
+    "clue": [
+      "D3:8",
+      "D3:20"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:21"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "Which image shows the soft-toned acid washed skirt that Sophie selected?",
+    "category": "VS",
+    "system_answer": "D3:IMG_009",
+    "original_answer": "D3:IMG_008",
+    "retrieved_ids": [
+      "D3:22",
+      "D3:21",
+      "D8:9",
+      "D3:18",
+      "D3:12"
+    ],
+    "clue": [
+      "D3:16",
+      "D3:21"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:21"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D3",
+    "question": "What association did Sophie make with the deep blue kimono?",
+    "category": "MR",
+    "system_answer": "Sophie associated the deep blue kimono with ocean breeze and summer nights.",
+    "original_answer": "It reminds her of ocean breeze and summer nights.",
+    "retrieved_ids": [
+      "D3:20",
+      "D3:9",
+      "D3:21",
+      "D3:23",
+      "D1:9"
+    ],
+    "clue": [
+      "D3:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:21"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D2",
+    "question": "Which country did Sophie visit immediately before this summer wardrobe refresh session?",
+    "category": "TR",
+    "system_answer": "Singapore",
+    "original_answer": "Singapore.",
+    "retrieved_ids": [
+      "D3:1",
+      "D4:1",
+      "D4:12",
+      "D5:16",
+      "D5:17"
+    ],
+    "clue": [
+      "D2:1",
+      "D3:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:21"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D4",
+    "question": "What two countries does Sophie plan to visit in Europe?",
+    "category": "FR",
+    "system_answer": "Italy and the UK",
+    "original_answer": "Italy and the UK.",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:12",
+      "D5:16",
+      "D7:1",
+      "D5:17"
+    ],
+    "clue": [
+      "D4:1",
+      "D4:2",
+      "D4:6"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:22"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D4",
+    "question": "Why does Sophie feel that visiting Florence would be inspiring for their eco-friendly designs?",
+    "category": "MR",
+    "system_answer": "Sophie feels that visiting Florence would be inspiring for their eco-friendly designs because the city’s artisanal workshops, textures, and light feel crafted with intention — aligning perfectly with her sustainable approach to fashion. The historic architecture and Renaissance energy also resonate with her vision of blending cultural identity and environmental awareness.",
+    "original_answer": "Because of its incredible art scene and the influence of the Renaissance.",
+    "retrieved_ids": [
+      "D4:3",
+      "D4:4",
+      "D4:2",
+      "D5:15",
+      "D4:5"
+    ],
+    "clue": [
+      "D4:2",
+      "D4:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:22"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D4",
+    "question": "Which two Italian cities did Sophie mention? Please list them in the order they appeared in the conversation.",
+    "category": "FR",
+    "system_answer": "Florence, Rome",
+    "original_answer": "Florence and Rome.",
+    "retrieved_ids": [
+      "D4:1",
+      "D5:16",
+      "D4:3",
+      "D4:4",
+      "D5:15"
+    ],
+    "clue": [
+      "D4:2",
+      "D4:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:22"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D4",
+    "question": "Has Sophie decided on any specific sustainable brands in London that they want to visit?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D7:1",
+      "D7:15",
+      "D8:1",
+      "D4:7",
+      "D4:6"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:22"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D5",
+    "question": "Which Italian city did Sophie make a short stop in on her way to Rome?",
+    "category": "FR",
+    "system_answer": "Florence",
+    "original_answer": "Milan.",
+    "retrieved_ids": [
+      "D5:16",
+      "D5:15",
+      "D4:4",
+      "D5:17",
+      "D4:1"
+    ],
+    "clue": [
+      "D5:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:23"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D5",
+    "question": "Which image shows the wide-angle view of Milan?",
+    "category": "VS",
+    "system_answer": "D5:IMG_001",
+    "original_answer": "D5:IMG_001",
+    "retrieved_ids": [
+      "D5:1",
+      "D4:2",
+      "D5:10",
+      "D5:12",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:27"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D5",
+    "question": "What aspect of Milan's street fashion particularly stood out to Sophie?",
+    "category": "MR",
+    "system_answer": "The minimal yet expressive style of Milan’s street fashion, characterized by neutral tones and sharp silhouettes—almost architectural—particularly stood out to Sophie. She noted that this style aligns beautifully with sustainable design principles.",
+    "original_answer": "People dress with intention, not extravagance. The style features lots of neutral tones with sharp silhouettes—almost architectural.",
+    "retrieved_ids": [
+      "D5:2",
+      "D5:3",
+      "D5:15",
+      "D5:14",
+      "D5:6"
+    ],
+    "clue": [
+      "D5:2",
+      "D5:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:27"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D5",
+    "question": "What type of fabric shop did Sophie visit in Milan?",
+    "category": "FR",
+    "system_answer": "A tiny fabric shop with deadstock linens.",
+    "original_answer": "A tiny fabric shop with deadstock linens.",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:4",
+      "D5:6",
+      "D5:15",
+      "D4:3"
+    ],
+    "clue": [
+      "D5:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:27"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D5",
+    "question": "What university did Sophie visit in Milan that used to be her dream school?",
+    "category": "FR",
+    "system_answer": "Politecnico di Milano",
+    "original_answer": "Politecnico di Milano.",
+    "retrieved_ids": [
+      "D5:9",
+      "D5:10",
+      "D5:14",
+      "D5:13",
+      "D5:11"
+    ],
+    "clue": [
+      "D5:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:28"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D5",
+    "question": "Which image shows the historic building of Politecnico di Milano?",
+    "category": "VS",
+    "system_answer": "D5:IMG_002",
+    "original_answer": "D5:IMG_002",
+    "retrieved_ids": [
+      "D5:10",
+      "D5:12",
+      "D5:11",
+      "D5:1",
+      "D6:3"
+    ],
+    "clue": [
+      "D5:10"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:30"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D5",
+    "question": "Which image shows the modern section of Politecnico di Milano campus?",
+    "category": "VS",
+    "system_answer": "D5:IMG_003",
+    "original_answer": "D5:IMG_003",
+    "retrieved_ids": [
+      "D5:12",
+      "D5:10",
+      "D5:11",
+      "D5:13",
+      "D5:1"
+    ],
+    "clue": [
+      "D5:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:32"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D5",
+    "question": "What metaphor did Sophie use to describe cities and fashion?",
+    "category": "MR",
+    "system_answer": "Sophie described cities as \"conversations, each speaking a different visual language,\" and linked this to fashion by saying fashion is shaped by climate and culture as much as creativity — implying that fashion, like cities, communicates through textures, tones, and silhouettes.",
+    "original_answer": "Cities feel like conversations, each speaking a different visual language.",
+    "retrieved_ids": [
+      "D5:8",
+      "D8:18",
+      "D8:19",
+      "D9:11",
+      "D7:1"
+    ],
+    "clue": [
+      "D5:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:33"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D5",
+    "question": "What city was Sophie planning to visit after Milan?",
+    "category": "TR",
+    "system_answer": "Rome",
+    "original_answer": "Rome.",
+    "retrieved_ids": [
+      "D5:2",
+      "D5:9",
+      "D5:14",
+      "D5:15",
+      "D5:16"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:16"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:33"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D5",
+    "question": "Did Sophie visit Milan before arriving in Rome?",
+    "category": "TR",
+    "system_answer": "Yes, Sophie visited Milan before arriving in Rome. She mentioned making a short stop in Milan on her way to Rome, and the conversation reflects her appreciation for Milan’s design history and innovation during that visit.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D4:4",
+      "D5:2",
+      "D5:14",
+      "D5:15",
+      "D5:16"
+    ],
+    "clue": [
+      "D5:1",
+      "D6:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:33"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "What are the main historical sites Sophie visits in Rome? Please list them in the order they appeared in the conversation.",
+    "category": "FR",
+    "system_answer": "The conversation does not specify the exact names or list of historical sites Sophie visits in Rome. It mentions “these places” and “these monuments” generically, and references Rome’s ancient ruins, marble, arches, and structures as symbolic of endurance and renewal. No specific site names (e.g., Colosseum, Vatican, Trevi Fountain) are mentioned in the dialogue.",
+    "original_answer": "Colosseum, Pantheon, St. Peter's Basilica, and Vatican Museums.",
+    "retrieved_ids": [
+      "D6:14",
+      "D5:16",
+      "D4:4",
+      "D6:15",
+      "D4:5"
+    ],
+    "clue": [
+      "D6:1",
+      "D6:3",
+      "D6:4",
+      "D6:6",
+      "D6:9"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:34"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "Which image did Sophie mention that showcases the Colosseum lit up beautifully?",
+    "category": "VS",
+    "system_answer": "D6:IMG_001, D6:IMG_002",
+    "original_answer": "D6:IMG_002",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:1",
+      "D6:3",
+      "D6:7",
+      "D9:2"
+    ],
+    "clue": [
+      "D6:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:36"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "Which images in the dialogue shows the same landmark as this one?",
+    "category": "VS",
+    "system_answer": "D6:IMG_003, D6:IMG_004, D6:IMG_006",
+    "original_answer": "D6:IMG_003, D6:IMG_004",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:4",
+      "D6:2",
+      "D6:7",
+      "D6:1"
+    ],
+    "clue": [
+      "D6:3",
+      "D6:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:37"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "What is the name of the landmark in this image?",
+    "category": "TTL",
+    "system_answer": "Pantheon",
+    "original_answer": "Pantheon.",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:4",
+      "D6:2",
+      "D6:1",
+      "D5:10"
+    ],
+    "clue": [
+      "D6:3",
+      "D6:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:37"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "Based on the photos shared by Sophie, in which country was the following picture taken?",
+    "category": "VR",
+    "system_answer": "Italy",
+    "original_answer": "Italy",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:2",
+      "D4:4",
+      "D5:16",
+      "D4:2"
+    ],
+    "clue": [
+      "D6:3",
+      "D6:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:39"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "Which images in the dialogue shows the same landmark as this one?",
+    "category": "VS",
+    "system_answer": "D6:IMG_001, D6:IMG_002, D6:IMG_003, D6:IMG_004, D6:IMG_006",
+    "original_answer": "D6:IMG_003, D6:IMG_004",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:2",
+      "D6:7",
+      "D6:4",
+      "D6:1"
+    ],
+    "clue": [
+      "D6:3",
+      "D6:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:40"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "What is the name of the landmark in this image?",
+    "category": "TTL",
+    "system_answer": "Pantheon",
+    "original_answer": "Pantheon.",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:2",
+      "D6:4",
+      "D6:1",
+      "D6:7"
+    ],
+    "clue": [
+      "D6:3",
+      "D6:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:40"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "Based on the photos shared by Sophie, in which country was the following picture taken?",
+    "category": "VR",
+    "system_answer": "Italy",
+    "original_answer": "Italy",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:2",
+      "D6:7",
+      "D6:4",
+      "D6:1"
+    ],
+    "clue": [
+      "D6:3",
+      "D6:4"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:41"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "What is the name of the landmark in this image?",
+    "category": "TTL",
+    "system_answer": "St. Peter’s Basilica",
+    "original_answer": "St. Peter's Basilica.",
+    "retrieved_ids": [
+      "D6:7",
+      "D6:10",
+      "D6:3",
+      "D6:9",
+      "D6:6"
+    ],
+    "clue": [
+      "D6:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:41"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "Based on the photos shared by Sophie, in which country was the following picture taken?",
+    "category": "VR",
+    "system_answer": "Italy",
+    "original_answer": "Italy",
+    "retrieved_ids": [
+      "D6:7",
+      "D6:10",
+      "D6:9",
+      "D4:2",
+      "D6:3"
+    ],
+    "clue": [
+      "D6:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:43"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D6",
+    "question": "From the conversation, which city did Sophie explore right before visiting London?",
+    "category": "TR",
+    "system_answer": "Italy",
+    "original_answer": "Rome.",
+    "retrieved_ids": [
+      "D4:1",
+      "D4:6",
+      "D7:1",
+      "D7:15",
+      "D9:1"
+    ],
+    "clue": [
+      "D6:1",
+      "D7:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:43"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D7",
+    "question": "When did Sophie go to London during her trip? Return in the format YYYY-MM-DD.",
+    "category": "TR",
+    "system_answer": "2024-07-29",
+    "original_answer": "2024-07-28",
+    "retrieved_ids": [
+      "D4:1",
+      "D7:1",
+      "D7:14",
+      "D7:15",
+      "D8:17"
+    ],
+    "clue": [
+      "D7:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:44"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D4",
+    "question": "Which countries did Sophie visit in July 2024?",
+    "category": "TR",
+    "system_answer": "Sophie visited Italy and the UK in July 2024.",
+    "original_answer": "Italy and the UK.",
+    "retrieved_ids": [
+      "D1:1",
+      "D2:1",
+      "D4:1",
+      "D4:12",
+      "D7:1"
+    ],
+    "clue": [
+      "D4:1",
+      "D6:1",
+      "D7:1"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:44"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D7",
+    "question": "What landmark does Sophie admire for its symbolism of resilience and timelessness?",
+    "category": "FR",
+    "system_answer": "Big Ben",
+    "original_answer": "Big Ben",
+    "retrieved_ids": [
+      "D7:3",
+      "D7:2",
+      "D6:14",
+      "D7:11",
+      "D7:8"
+    ],
+    "clue": [
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:44"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D7",
+    "question": "Which image in the dialogue shows the same landmark as this one?",
+    "category": "VS",
+    "system_answer": "D7:IMG_001, D7:IMG_005, D7:IMG_005",
+    "original_answer": "D7:IMG_001",
+    "retrieved_ids": [
+      "D7:2",
+      "D9:2",
+      "D7:3",
+      "D7:8",
+      "D6:3"
+    ],
+    "clue": [
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:46"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D7",
+    "question": "What is the name of the landmark in this image?",
+    "category": "TTL",
+    "system_answer": "Big Ben",
+    "original_answer": "Big Ben.",
+    "retrieved_ids": [
+      "D7:2",
+      "D7:3",
+      "D7:8",
+      "D9:2",
+      "D7:5"
+    ],
+    "clue": [
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:46"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D7",
+    "question": "When did Sophie arrive in the city where the landmark in the image is located? Return in the format YYYY-MM-DD.",
+    "category": "VR",
+    "system_answer": "2024-07-29",
+    "original_answer": "2024-07-28",
+    "retrieved_ids": [
+      "D7:2",
+      "D7:1",
+      "D7:8",
+      "D2:2",
+      "D4:2"
+    ],
+    "clue": [
+      "D7:1",
+      "D7:2"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:48"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D7",
+    "question": "Which iconic structure is noted for its Victorian Gothic architecture?",
+    "category": "FR",
+    "system_answer": "Tower Bridge",
+    "original_answer": "Tower Bridge",
+    "retrieved_ids": [
+      "D7:2",
+      "D7:8",
+      "D7:11",
+      "D7:3",
+      "D9:2"
+    ],
+    "clue": [
+      "D7:11"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:49"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "What two categories of clothing did Sophie explore during her London fashion shopping?",
+    "category": "FR",
+    "system_answer": "Sophie explored the categories of \"Buttoned Denim Shirt Dress\" and \"pleated knit skirt\" during her London fashion shopping.",
+    "original_answer": "Buttoned Denim Shirt Dress and Chenille & Metallic Knit Skirt.",
+    "retrieved_ids": [
+      "D8:17",
+      "D8:16",
+      "D8:1",
+      "D8:22",
+      "D3:23"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:8"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:49"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "How many Buttoned Denim Shirt Dresses did Sophie view in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "2",
+    "original_answer": "6",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:12",
+      "D8:13",
+      "D8:17",
+      "D8:7"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:49"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "In the image, which clothing item appeared in the dialogue—the one on the left, right, or both? What type is it?",
+    "category": "VR",
+    "system_answer": "The clothing item in the image is a denim shirt dress. It appeared in the dialogue in both the left and right views.",
+    "original_answer": "Both, the buttoned denim shirt dress.",
+    "retrieved_ids": [
+      "D8:7",
+      "D8:5",
+      "D8:6",
+      "D8:2",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:50"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Denim shirt dress",
+    "original_answer": "Buttoned Denim Shirt Dress",
+    "retrieved_ids": [
+      "D8:7",
+      "D8:3",
+      "D3:10",
+      "D3:8",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:50"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Buttoned Denim Shirt Dress",
+    "original_answer": "Buttoned Denim Shirt Dress",
+    "retrieved_ids": [
+      "D8:5",
+      "D8:7",
+      "D8:2",
+      "D8:6",
+      "D8:4"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:50"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Buttoned Denim Shirt Dress",
+    "original_answer": "Buttoned Denim Shirt Dress",
+    "retrieved_ids": [
+      "D8:2",
+      "D8:7",
+      "D8:5",
+      "D8:4",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:50"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "How many Chenille & Metallic Knit Skirts did Sophie examine in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "category": "VR",
+    "system_answer": "3",
+    "original_answer": "6",
+    "retrieved_ids": [
+      "D8:9",
+      "D8:14",
+      "D8:19",
+      "D8:15",
+      "D3:21"
+    ],
+    "clue": [
+      "D8:8",
+      "D8:9",
+      "D8:10",
+      "D8:11",
+      "D8:20",
+      "D8:21"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:50"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "The clothing in the picture belongs to the \"Buttoned Denim Shirt Dresses\" category.",
+    "original_answer": "Chenille & Metallic Knit Skirt",
+    "retrieved_ids": [
+      "D8:11",
+      "D8:8",
+      "D8:10",
+      "D8:9",
+      "D8:3"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:51"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "According to the conversation, what category is the clothing in the picture?",
+    "category": "TTL",
+    "system_answer": "Chenille & Metallic Knit Skirt",
+    "original_answer": "Chenille & Metallic Knit Skirt",
+    "retrieved_ids": [
+      "D8:11",
+      "D8:10",
+      "D8:9",
+      "D8:20",
+      "D8:8"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:51"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "Which six images show the Buttoned Denim Shirt Dresses?",
+    "category": "VS",
+    "system_answer": "D8:IMG_001, D8:IMG_002, D8:IMG_004, D8:IMG_005, D8:IMG_006",
+    "original_answer": "D8:IMG_001, D8:IMG_002, D8:IMG_003, D8:IMG_004, D8:IMG_005, D8:IMG_006",
+    "retrieved_ids": [
+      "D8:7",
+      "D8:2",
+      "D8:5",
+      "D8:3",
+      "D8:6"
+    ],
+    "clue": [
+      "D8:2",
+      "D8:3",
+      "D8:4",
+      "D8:5",
+      "D8:6",
+      "D8:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:52"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "Which image shows the lighter-wash denim shirt dress that Sophie ultimately chose?",
+    "category": "VS",
+    "system_answer": "D8:IMG_006",
+    "original_answer": "D8:IMG_005",
+    "retrieved_ids": [
+      "D8:13",
+      "D8:12",
+      "D8:2",
+      "D8:7",
+      "D8:17"
+    ],
+    "clue": [
+      "D8:6",
+      "D8:12"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:52"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "Which image shows the pleated metallic knit skirt that Sophie selected?",
+    "category": "VS",
+    "system_answer": "D8:IMG_009",
+    "original_answer": "D8:IMG_009",
+    "retrieved_ids": [
+      "D8:9",
+      "D8:15",
+      "D8:14",
+      "D8:10",
+      "D8:11"
+    ],
+    "clue": [
+      "D8:10",
+      "D8:14"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:52"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "How did the assistant describe the second denim shirt dress?",
+    "category": "KR",
+    "system_answer": "The assistant described the second denim shirt dress as sleek and modern, perfect for pairing with structured outerwear.",
+    "original_answer": "It feels more dramatic with the oversized silhouette—very London street style boldness.",
+    "retrieved_ids": [
+      "D8:13",
+      "D8:12",
+      "D3:17",
+      "D3:13",
+      "D3:15"
+    ],
+    "clue": [
+      "D8:3"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:53"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "Which two additional images of Chenille & Metallic Knit Skirts did Sophie share later? Return the image_ids separated by commas.",
+    "category": "KR",
+    "system_answer": "D8:IMG_008, D8:IMG_009",
+    "original_answer": "D8:IMG_011, D8:IMG_012",
+    "retrieved_ids": [
+      "D8:19",
+      "D8:14",
+      "D3:21",
+      "D3:13",
+      "D8:9"
+    ],
+    "clue": [
+      "D8:20",
+      "D8:21"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:53"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "After seeing the two additional knit skirts, did Sophie change her original choice?",
+    "category": "KR",
+    "system_answer": "No, Sophie did not change her original choice. She reaffirmed her preference for the original one, noting it had a stronger balance of texture, structure, and versatility, especially for layering with London’s style sensibilities.",
+    "original_answer": "No.",
+    "retrieved_ids": [
+      "D8:14",
+      "D8:22",
+      "D8:23",
+      "D3:22",
+      "D8:15"
+    ],
+    "clue": [
+      "D8:23"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:53"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D8",
+    "question": "Please determine whether the following information conflicts with the dialogue memory: Sophie change her original choice after seeing the two additional knit skirts.",
+    "category": "CD",
+    "system_answer": "No.",
+    "original_answer": "Yes.",
+    "retrieved_ids": [
+      "D3:22",
+      "D8:14",
+      "D8:16",
+      "D8:22",
+      "D8:23"
+    ],
+    "clue": [
+      "D8:23"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:53"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D1",
+    "question": "How does Sophie believe financial strength in cities like London and Singapore can impact sustainable fashion?",
+    "category": "MR",
+    "system_answer": "Sophie believes financial strength in cities like London and Singapore can empower sustainable fashion by providing resources for research, ethical production, and green innovation. She sees finance as a force for good when it prioritizes long-term value over short-term profit, and she envisions this financial growth enabling her to establish a global sustainable fashion label that drives positive change. The financial dynamism of these cities, she argues, mirrors the potential for fashion to become a global language for change, with London offering resilience and Singapore offering innovation.",
+    "original_answer": "The financial strength can drive investment into sustainable practices, allowing designers to access eco-friendly materials and innovate further.",
+    "retrieved_ids": [
+      "D9:6",
+      "D9:11",
+      "D9:13",
+      "D9:7",
+      "D9:5"
+    ],
+    "clue": [
+      "D1:3",
+      "D9:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:54"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D9",
+    "question": "Is there any detailed information about Sophie’s planned mentorship initiative such as curriculum or partners?",
+    "category": "AR",
+    "system_answer": "Not mentioned.",
+    "original_answer": "Not mentioned.",
+    "retrieved_ids": [
+      "D9:12",
+      "D9:13",
+      "D9:8",
+      "D9:11",
+      "D1:8"
+    ],
+    "clue": [],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:54"
+  },
+  {
+    "sample_id": "Sophie",
+    "dataset": "Global_Travel_Sustainable_Fashion_Design",
+    "session_id": "D9",
+    "question": "What two cities did Sophie compare in terms of their financial advancements? Please list them in the order that Sophie visited in her trip.",
+    "category": "MR",
+    "system_answer": "London, Singapore",
+    "original_answer": "Singapore and London.",
+    "retrieved_ids": [
+      "D9:5",
+      "D9:1",
+      "D9:10",
+      "D7:1",
+      "D9:11"
+    ],
+    "clue": [
+      "D9:1",
+      "D9:5",
+      "D9:7"
+    ],
+    "error": "",
+    "timestamp": "2026-07-05 05:45:55"
+  }
+]

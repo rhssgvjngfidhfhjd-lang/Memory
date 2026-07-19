@@ -1,0 +1,1337 @@
+[
+  {
+    "index": 1431,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "MR",
+    "question": "What realization did Liam have about his brain after seeing water lilies remind him of moon orchids?",
+    "prediction": "Liam realized his brain was starting to recognize patterns after reading so many plant encyclopedias.",
+    "reference": "His brain is starting to recognize patterns after reading so many plant encyclopedias.",
+    "retrieved_ids": [
+      "D3:11",
+      "D3:10",
+      "D3:17",
+      "D3:4",
+      "D12:9"
+    ],
+    "clue": [
+      "D3:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer restates the reference answer accurately, indicating Liam's brain is starting to recognize patterns after reading many plant encyclopedias.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer restates the reference answer accurately, indicating Liam's brain is starting to recognize patterns after reading many plant encyclopedias.\"\n}"
+  },
+  {
+    "index": 1432,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "AR",
+    "question": "Did Liam's dog jump into the water to chase dragonflies?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D3:12",
+      "D3:13",
+      "D3:6",
+      "D3:11",
+      "D3:1"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1433,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "KR",
+    "question": "How did Liam's understanding of observing plants evolve from reading about them to seeing them in person?",
+    "prediction": "Liam found that observing plants in person adds depth to his learning, making it feel different and more impactful than reading about them. He noted that seeing real flowers in their natural setting enhances his understanding and provides a more immersive experience.",
+    "reference": "He realized that seeing real flowers in their natural setting hits differently and adds depth to everything he's been learning.",
+    "retrieved_ids": [
+      "D3:17",
+      "D2:1",
+      "D2:9",
+      "D3:16",
+      "D2:26"
+    ],
+    "clue": [
+      "D3:16"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer conveys the same idea that seeing real flowers in their natural setting adds depth and a different, more impactful understanding, matching the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer conveys the same idea that seeing real flowers in their natural setting adds depth and a different, more impactful understanding, matching the reference.\"\n}"
+  },
+  {
+    "index": 1434,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VS",
+    "question": "Which code image shows the script for purple line charts with different line styles?",
+    "prediction": "D4:IMG_001, D4:IMG_002",
+    "reference": "D4:IMG_001",
+    "retrieved_ids": [
+      "D4:3",
+      "D4:4",
+      "D4:2",
+      "D4:16",
+      "D4:15"
+    ],
+    "clue": [
+      "D4:2"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer includes an extra image ID (D4:IMG_002) that is not in the reference answer, which should be only D4:IMG_001.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer includes an extra image ID (D4:IMG_002) that is not in the reference answer, which should be only D4:IMG_001.\"\n}"
+  },
+  {
+    "index": 1435,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "What two colors did Liam use for the second line chart example?",
+    "prediction": "red and orange",
+    "reference": "Red and orange.",
+    "retrieved_ids": [
+      "D4:5",
+      "D4:4",
+      "D4:15",
+      "D4:16",
+      "D4:3"
+    ],
+    "clue": [
+      "D4:4",
+      "D4:5"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer (red and orange) and does not contradict it.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer (red and orange) and does not contradict it.\"}"
+  },
+  {
+    "index": 1436,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "FR",
+    "question": "What did Liam almost forget to do because he spent so long on the assignment?",
+    "prediction": "eat dinner",
+    "reference": "Eat dinner.",
+    "retrieved_ids": [
+      "D4:12",
+      "D4:11",
+      "D5:15",
+      "D3:18",
+      "D2:1"
+    ],
+    "clue": [
+      "D4:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer in meaning ('Eat dinner'), differing only in capitalization.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer matches the reference answer in meaning ('Eat dinner'), differing only in capitalization.\"\n}"
+  },
+  {
+    "index": 1437,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "CD",
+    "question": "Is there a contradiction between Liam saying the assignment is long and also saying it feels more manageable?",
+    "prediction": "No.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D1:1",
+      "D4:11",
+      "D4:12",
+      "D4:19",
+      "D4:20"
+    ],
+    "clue": [
+      "D4:19",
+      "D4:20"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer matches the reference answer exactly, correctly stating there is no contradiction.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The predicted answer matches the reference answer exactly, correctly stating there is no contradiction.\"}"
+  },
+  {
+    "index": 1438,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "prediction": "D4:IMG_002",
+    "reference": "D4:IMG_009",
+    "retrieved_ids": [
+      "D4:3",
+      "D4:4",
+      "D4:15",
+      "D4:16",
+      "D11:3"
+    ],
+    "clue": [
+      "D4:15"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted image ID (D4:IMG_002) does not match the reference answer (D4:IMG_009).",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted image ID (D4:IMG_002) does not match the reference answer (D4:IMG_009).\"}"
+  },
+  {
+    "index": 1439,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "prediction": "D11:IMG_002",
+    "reference": "D4:IMG_010",
+    "retrieved_ids": [
+      "D11:3",
+      "D4:16",
+      "D4:4",
+      "D4:3",
+      "D11:8"
+    ],
+    "clue": [
+      "D4:16"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted image ID (D11:IMG_002) does not match the reference answer (D4:IMG_010).",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted image ID (D11:IMG_002) does not match the reference answer (D4:IMG_010).\"\n}"
+  },
+  {
+    "index": 1440,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "prediction": "D4:IMG_008",
+    "reference": "D4:IMG_011",
+    "retrieved_ids": [
+      "D4:9",
+      "D4:7",
+      "D4:8",
+      "D4:17",
+      "D4:18"
+    ],
+    "clue": [
+      "D4:17"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted image ID (D4:IMG_008) does not match the reference answer (D4:IMG_011).",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted image ID (D4:IMG_008) does not match the reference answer (D4:IMG_011).\"\n}"
+  },
+  {
+    "index": 1441,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "Which Python program in the shared image will produce the result shown in the attached figure? Please return the corresponding image ID only.",
+    "prediction": "D4:IMG_006",
+    "reference": "D4:IMG_012",
+    "retrieved_ids": [
+      "D4:7",
+      "D4:9",
+      "D4:8",
+      "D1:6",
+      "D4:18"
+    ],
+    "clue": [
+      "D4:18"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted image ID D4:IMG_006 does not match the reference answer D4:IMG_012.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted image ID D4:IMG_006 does not match the reference answer D4:IMG_012.\"}"
+  },
+  {
+    "index": 1442,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "Which result of the dialogue can this Python program draw? Please return the corresponding image ID only.",
+    "prediction": "D4:IMG_003",
+    "reference": "D4:IMG_004",
+    "retrieved_ids": [
+      "D4:4",
+      "D4:2",
+      "D4:15",
+      "D4:3",
+      "D4:16"
+    ],
+    "clue": [
+      "D4:5"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted image ID (D4:IMG_003) does not match the reference answer (D4:IMG_004).",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted image ID (D4:IMG_003) does not match the reference answer (D4:IMG_004).\"\n}"
+  },
+  {
+    "index": 1443,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "Which result of the dialogue can this Python program draw? Please return the corresponding image ID only.",
+    "prediction": "D4:IMG_012",
+    "reference": "D4:IMG_006",
+    "retrieved_ids": [
+      "D4:18",
+      "D4:8",
+      "D4:17",
+      "D4:6",
+      "D4:7"
+    ],
+    "clue": [
+      "D4:7"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted image ID (D4:IMG_012) does not match the reference answer (D4:IMG_006).",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted image ID (D4:IMG_012) does not match the reference answer (D4:IMG_006).\"}"
+  },
+  {
+    "index": 1444,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "Which result of the dialogue can this Python program draw? Please return the corresponding image ID only.",
+    "prediction": "D4:IMG_007",
+    "reference": "D4:IMG_008",
+    "retrieved_ids": [
+      "D4:8",
+      "D4:18",
+      "D4:9",
+      "D4:17",
+      "D4:6"
+    ],
+    "clue": [
+      "D4:9"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted image ID (D4:IMG_007) does not match the reference answer (D4:IMG_008).",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted image ID (D4:IMG_007) does not match the reference answer (D4:IMG_008).\"}"
+  },
+  {
+    "index": 1445,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "FR",
+    "question": "What is the name of Liam's miniature schnauzer?",
+    "prediction": "Pepper",
+    "reference": "Pepper",
+    "retrieved_ids": [
+      "D7:13",
+      "D5:3",
+      "D5:18",
+      "D5:13",
+      "D5:7"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:6",
+      "D5:21"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer exactly matches the reference answer 'Pepper'.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer exactly matches the reference answer 'Pepper'.\"}"
+  },
+  {
+    "index": 1446,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VS",
+    "question": "Which two images show Pepper before and after the beard trim?",
+    "prediction": "D5:IMG_002, D5:IMG_003",
+    "reference": "D5:IMG_001, D5:IMG_002",
+    "retrieved_ids": [
+      "D5:16",
+      "D5:2",
+      "D5:17",
+      "D5:15",
+      "D5:18"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Predicted images do not match reference; it lists IMG_002 and IMG_003 instead of IMG_001 and IMG_002.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"Predicted images do not match reference; it lists IMG_002 and IMG_003 instead of IMG_001 and IMG_002.\"}"
+  },
+  {
+    "index": 1447,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "MR",
+    "question": "What challenge did Liam face while trimming Pepper's beard?",
+    "prediction": "Liam was nervous about trimming Pepper's beard, but he successfully completed the task and felt proud of the result. Pepper looked clean, comfortable, and still very much himself. The grooming attempt was described as not bad at all for a first-time effort.",
+    "reference": "Pepper kept moving his head every time Liam tried to trim the corners.",
+    "retrieved_ids": [
+      "D5:16",
+      "D5:15",
+      "D5:17",
+      "D5:18",
+      "D5:21"
+    ],
+    "clue": [
+      "D5:3"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer does not mention the challenge that Pepper kept moving his head, which is the key detail from the reference answer.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer does not mention the challenge that Pepper kept moving his head, which is the key detail from the reference answer.\"\n}"
+  },
+  {
+    "index": 1448,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "FR",
+    "question": "What are the two types of schnauzers discussed in this conversation?",
+    "prediction": "Giant schnauzers and miniature schnauzers.",
+    "reference": "Miniature schnauzer and giant schnauzer.",
+    "retrieved_ids": [
+      "D7:15",
+      "D5:11",
+      "D5:8",
+      "D5:5",
+      "D5:9"
+    ],
+    "clue": [
+      "D5:7"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer lists the same two types (giant and miniature schnauzers), just in a different order, which matches the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer lists the same two types (giant and miniature schnauzers), just in a different order, which matches the reference.\"\n}"
+  },
+  {
+    "index": 1449,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "How many giant schnauzer images did Liam share? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "3",
+    "reference": "3",
+    "retrieved_ids": [
+      "D5:11",
+      "D5:8",
+      "D5:10",
+      "D5:9",
+      "D5:13"
+    ],
+    "clue": [
+      "D5:8",
+      "D5:9",
+      "D5:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer '3'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer '3'.\"\n}"
+  },
+  {
+    "index": 1450,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "FR",
+    "question": "What color coat is most common in giant schnauzers according to the conversation?",
+    "prediction": "Black",
+    "reference": "Black",
+    "retrieved_ids": [
+      "D5:11",
+      "D5:12",
+      "D5:9",
+      "D5:10",
+      "D5:8"
+    ],
+    "clue": [
+      "D5:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer 'Black'.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer 'Black'.\"\n}"
+  },
+  {
+    "index": 1451,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "FR",
+    "question": "Where did Pepper try to hide when he heard the hairdryer?",
+    "prediction": "Pepper tried to hide behind the laptop.",
+    "reference": "Behind Liam's laptop.",
+    "retrieved_ids": [
+      "D5:15",
+      "D5:16",
+      "D5:21",
+      "D5:18",
+      "D5:17"
+    ],
+    "clue": [
+      "D5:14"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states Pepper hid behind the laptop, which matches the reference answer 'Behind Liam's laptop' and does not contradict any details.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction states Pepper hid behind the laptop, which matches the reference answer 'Behind Liam's laptop' and does not contradict any details.\"\n}"
+  },
+  {
+    "index": 1452,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "MR",
+    "question": "What did Liam plan to try trimming next time, and why was he scared?",
+    "prediction": "Liam planned to try trimming Pepper’s eyebrows next time because he finds them iconic, but he was scared Pepper would move again, which could make it difficult to trim them accurately.",
+    "reference": "Pepper's eyebrows, because he was scared Pepper would move again.",
+    "retrieved_ids": [
+      "D5:15",
+      "D5:16",
+      "D5:17",
+      "D5:18",
+      "D5:3"
+    ],
+    "clue": [
+      "D5:16"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Expecting value: line 1 column 1 (char 0)",
+    "raw_judge": ""
+  },
+  {
+    "index": 1453,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "AR",
+    "question": "Did Liam mention taking Pepper to a professional groomer?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D5:15",
+      "D5:18",
+      "D5:16",
+      "D5:17",
+      "D5:21"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer stating 'Not mentioned.'",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer stating 'Not mentioned.'\"\n}"
+  },
+  {
+    "index": 1454,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TR",
+    "question": "When did this grooming conversation take place? Return in format YYYY-MM-DD.",
+    "prediction": "2025-03-22",
+    "reference": "2025-03-22",
+    "retrieved_ids": [
+      "D5:15",
+      "D5:16",
+      "D5:17",
+      "D5:18",
+      "D5:19"
+    ],
+    "clue": [
+      "D5:1"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted date matches the reference date exactly.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted date matches the reference date exactly.\"}"
+  },
+  {
+    "index": 1455,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "The animal shown in the image is a Miniature Schnauzer.",
+    "reference": "Miniature schnauzer",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:5",
+      "D5:4",
+      "D7:12",
+      "D5:9"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer correctly identifies the animal as a Miniature Schnauzer, matching the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer correctly identifies the animal as a Miniature Schnauzer, matching the reference answer.\"\n}"
+  },
+  {
+    "index": 1456,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "The animal shown in the image is a miniature schnauzer.",
+    "reference": "Miniature schnauzer",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:5",
+      "D5:4",
+      "D7:12",
+      "D5:2"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer correctly identifies the animal as a miniature schnauzer, matching the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer correctly identifies the animal as a miniature schnauzer, matching the reference answer.\"}"
+  },
+  {
+    "index": 1457,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "The animal shown in the image is a Miniature Schnauzer.",
+    "reference": "Miniature schnauzer",
+    "retrieved_ids": [
+      "D5:5",
+      "D5:1",
+      "D5:4",
+      "D7:12",
+      "D5:9"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer correctly identifies the animal as a Miniature Schnauzer, matching the reference answer.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer correctly identifies the animal as a Miniature Schnauzer, matching the reference answer.\"\n}"
+  },
+  {
+    "index": 1458,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of animal is shown in the provided image?",
+    "prediction": "The animal shown in the image is a Miniature Schnauzer.",
+    "reference": "Miniature schnauzer",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:5",
+      "D5:4",
+      "D7:12",
+      "D5:9"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer correctly identifies the animal as a Miniature Schnauzer, matching the reference answer.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer correctly identifies the animal as a Miniature Schnauzer, matching the reference answer.\"}"
+  },
+  {
+    "index": 1459,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "prediction": "No images found.",
+    "reference": "D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:5",
+      "D5:4",
+      "D7:12",
+      "D5:2"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer says no images were found, which contradicts the reference answer that lists specific image IDs.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer says no images were found, which contradicts the reference answer that lists specific image IDs.\"}"
+  },
+  {
+    "index": 1460,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "prediction": "No images found.",
+    "reference": "D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:5",
+      "D5:4",
+      "D7:12",
+      "D5:2"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer says 'No images found' whereas the reference answer lists specific image IDs, so it contradicts the correct response.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer says 'No images found' whereas the reference answer lists specific image IDs, so it contradicts the correct response.\"\n}"
+  },
+  {
+    "index": 1461,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "prediction": "D5:IMG_006, D5:IMG_005, D5:IMG_007",
+    "reference": "D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006",
+    "retrieved_ids": [
+      "D5:9",
+      "D5:5",
+      "D5:8",
+      "D5:10",
+      "D5:4"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted image IDs (D5:IMG_006, D5:IMG_005, D5:IMG_007) do not match the reference list (D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006).",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted image IDs (D5:IMG_006, D5:IMG_005, D5:IMG_007) do not match the reference list (D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006).\"}"
+  },
+  {
+    "index": 1462,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "prediction": "No images of the same dog species were shared in the conversation.",
+    "reference": "D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:5",
+      "D7:12",
+      "D5:4",
+      "D5:2"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The reference answer lists specific image IDs, but the prediction claims no such images exist, directly contradicting the reference.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The reference answer lists specific image IDs, but the prediction claims no such images exist, directly contradicting the reference.\"}"
+  },
+  {
+    "index": 1463,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same dog species shared in the conversation as this image.",
+    "prediction": "No images found.",
+    "reference": "D5:IMG_001, D5:IMG_002, D5:IMG_003, D5:IMG_004, D7:IMG_006",
+    "retrieved_ids": [
+      "D5:1",
+      "D5:5",
+      "D5:4",
+      "D5:9",
+      "D7:12"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer says no images were found, which contradicts the reference answer that lists specific image IDs.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer says no images were found, which contradicts the reference answer that lists specific image IDs.\"}"
+  },
+  {
+    "index": 1464,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "How many times did the image of miniature schnauzer appear in the conversation? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "0",
+    "reference": "5",
+    "retrieved_ids": [
+      "D5:4",
+      "D5:2",
+      "D5:5",
+      "D5:1",
+      "D7:12"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '0' does not match the reference answer '5'.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"The predicted answer '0' does not match the reference answer '5'.\"}"
+  },
+  {
+    "index": 1465,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue: Liam's giant schnauzer is called Pepper.",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D5:7",
+      "D5:12",
+      "D5:21",
+      "D5:22",
+      "D7:13"
+    ],
+    "clue": [
+      "D5:1",
+      "D5:2",
+      "D5:4",
+      "D5:5",
+      "D7:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "Reference answer says the statement conflicts (Yes), but prediction says No, which contradicts the reference.",
+    "raw_judge": "{\"score\": 0, \"label\": \"incorrect\", \"reason\": \"Reference answer says the statement conflicts (Yes), but prediction says No, which contradicts the reference.\"}"
+  },
+  {
+    "index": 1466,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue: Liam is learning data visualization and plotting in a MATLAB class.",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D1:2",
+      "D1:12",
+      "D4:1",
+      "D4:16",
+      "D4:19"
+    ],
+    "clue": [
+      "D1:1",
+      "D1:2",
+      "D4:1"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Error code: 403 - {'status': 403, 'title': 'Forbidden', 'detail': 'Authorization failed'}",
+    "raw_judge": ""
+  },
+  {
+    "index": 1467,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "CD",
+    "question": "Please determine whether the following information conflicts with the dialogue: Liam has loved giant schnauzers since he was a child.",
+    "prediction": "No.",
+    "reference": "Yes.",
+    "retrieved_ids": [
+      "D5:7",
+      "D5:11",
+      "D5:12",
+      "D5:13",
+      "D5:14"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:10"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Request timed out.",
+    "raw_judge": ""
+  },
+  {
+    "index": 1468,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "KR",
+    "question": "Is Liam quite afraid of giant schnauzers now?",
+    "prediction": "No, Liam is not afraid of giant schnauzers anymore. He has grown to like them more and more as he spent more time with dogs.",
+    "reference": "No.",
+    "retrieved_ids": [
+      "D5:13",
+      "D5:14",
+      "D5:11",
+      "D5:8",
+      "D5:15"
+    ],
+    "clue": [
+      "D5:7",
+      "D5:10"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states 'No' and adds consistent details, matching the reference answer without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The prediction states 'No' and adds consistent details, matching the reference answer without contradiction.\"\n}"
+  },
+  {
+    "index": 1469,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "FR",
+    "question": "What are the two types of flowers Liam's friend shared with him?",
+    "prediction": "Frangipani and wallflowers.",
+    "reference": "Frangipani and wallflower.",
+    "retrieved_ids": [
+      "D6:1",
+      "D2:14",
+      "D3:1",
+      "D6:13",
+      "D6:14"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:11"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The answer lists both flower types (frangipani and wallflower), only differing in plural form, which does not contradict the reference.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The answer lists both flower types (frangipani and wallflower), only differing in plural form, which does not contradict the reference.\"\n}"
+  },
+  {
+    "index": 1470,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "How many frangipani images were shared in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "4",
+    "reference": "5",
+    "retrieved_ids": [
+      "D6:2",
+      "D6:7",
+      "D12:25",
+      "D6:4",
+      "D12:26"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '4' does not match the reference answer '5'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '4' does not match the reference answer '5'.\"\n}"
+  },
+  {
+    "index": 1471,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VR",
+    "question": "How many wallflower images were shared in total? Please answer using an Arabic numeral (e.g., “2” instead of “Two”).",
+    "prediction": "3",
+    "reference": "5",
+    "retrieved_ids": [
+      "D6:8",
+      "D6:9",
+      "D6:11",
+      "D6:13",
+      "D6:7"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "score": 0,
+    "label": "incorrect",
+    "reason": "The predicted answer '3' does not match the reference answer '5'.",
+    "raw_judge": "{\n  \"score\": 0,\n  \"label\": \"incorrect\",\n  \"reason\": \"The predicted answer '3' does not match the reference answer '5'.\"\n}"
+  },
+  {
+    "index": 1472,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "FR",
+    "question": "What type of neural network did the professor mention for image tasks?",
+    "prediction": "Convolutional neural networks (CNNs)",
+    "reference": "Convolutional neural networks (CNNs).",
+    "retrieved_ids": [
+      "D6:19",
+      "D6:15",
+      "D11:12",
+      "D11:10",
+      "D6:18"
+    ],
+    "clue": [
+      "D6:18"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer, correctly identifying convolutional neural networks (CNNs) as the type mentioned.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer, correctly identifying convolutional neural networks (CNNs) as the type mentioned.\"\n}"
+  },
+  {
+    "index": 1473,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "FR",
+    "question": "What technique did the assistant suggest for expanding a small dataset?",
+    "prediction": "The assistant suggested using augmentations like rotation, small zoom, mild color jitter, or horizontal flips to expand the dataset.",
+    "reference": "Data augmentation—rotation, brightness shifts, cropping, and flipping.",
+    "retrieved_ids": [
+      "D12:22",
+      "D12:21",
+      "D12:23",
+      "D12:29",
+      "D12:15"
+    ],
+    "clue": [
+      "D6:19"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Expecting value: line 1 column 1 (char 0)",
+    "raw_judge": ""
+  },
+  {
+    "index": 1474,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "AR",
+    "question": "Did Liam use TensorFlow for his flower classifier?",
+    "prediction": "Not mentioned.",
+    "reference": "Not mentioned.",
+    "retrieved_ids": [
+      "D6:16",
+      "D6:17",
+      "D12:14",
+      "D6:21",
+      "D6:15"
+    ],
+    "clue": [],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer exactly matches the reference answer \"Not mentioned.\"",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer exactly matches the reference answer \\\"Not mentioned.\\\"\"\n}"
+  },
+  {
+    "index": 1475,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "MR",
+    "question": "Why did Liam think frangipani and wallflower would make a good beginner dataset?",
+    "prediction": "Liam thought frangipani and wallflower would make a good beginner dataset because their structure, color, and petal shapes are so different that even a simple model might do well, providing clear visual contrasts to help the network learn meaningful features.",
+    "reference": "Because they are two visually distinct classes with clear traits, and their structure, color, and petal shapes are so different.",
+    "retrieved_ids": [
+      "D12:29",
+      "D12:28",
+      "D6:17",
+      "D6:16",
+      "D6:21"
+    ],
+    "clue": [
+      "D6:17"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer restates the reference reasoning that the two classes are visually distinct with different structure, color, and petal shapes, adding no contradictory information.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer restates the reference reasoning that the two classes are visually distinct with different structure, color, and petal shapes, adding no contradictory information.\"\n}"
+  },
+  {
+    "index": 1476,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Frangipani (Plumeria)",
+    "reference": "Frangipani",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:6",
+      "D6:5",
+      "D6:4",
+      "D12:25"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes 'Frangipani', matching the reference answer, and adds the scientific name without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes 'Frangipani', matching the reference answer, and adds the scientific name without contradiction.\"\n}"
+  },
+  {
+    "index": 1477,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Frangipani (Plumeria)",
+    "reference": "Frangipani",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:3",
+      "D6:5",
+      "D12:25",
+      "D6:4"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer includes 'Frangipani', matching the reference answer, with additional scientific name but no contradiction.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"Predicted answer includes 'Frangipani', matching the reference answer, with additional scientific name but no contradiction.\"}"
+  },
+  {
+    "index": 1478,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Frangipani (Plumeria)",
+    "reference": "Frangipani",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:3",
+      "D6:5",
+      "D6:4",
+      "D12:25"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes 'Frangipani', matching the reference answer, and adds the scientific name without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes 'Frangipani', matching the reference answer, and adds the scientific name without contradiction.\"\n}"
+  },
+  {
+    "index": 1479,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "Frangipani (Plumeria)",
+    "reference": "Frangipani",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:6",
+      "D6:5",
+      "D6:4",
+      "D12:25"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes 'Frangipani', matching the reference answer, and adds the scientific name without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes 'Frangipani', matching the reference answer, and adds the scientific name without contradiction.\"\n}"
+  },
+  {
+    "index": 1480,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of plant is shown in the provided image?",
+    "prediction": "Frangipani (plumeria)",
+    "reference": "Frangipani",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:5",
+      "D6:3",
+      "D6:4",
+      "D12:25"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer includes 'Frangipani', matching the reference answer and adds the synonymous name without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer includes 'Frangipani', matching the reference answer and adds the synonymous name without contradiction.\"\n}"
+  },
+  {
+    "index": 1481,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of plant is shown in the provided image?",
+    "prediction": "Frangipani (Plumeria)",
+    "reference": "Frangipani",
+    "retrieved_ids": [
+      "D6:3",
+      "D6:6",
+      "D6:5",
+      "D6:4",
+      "D12:25"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The predicted answer includes 'Frangipani', matching the reference answer, and adds the scientific name without contradiction.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"The predicted answer includes 'Frangipani', matching the reference answer, and adds the scientific name without contradiction.\"\n}"
+  },
+  {
+    "index": 1482,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of plant is shown in the provided image?",
+    "prediction": "Frangipani (Plumeria)",
+    "reference": "Frangipani",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:3",
+      "D6:5",
+      "D6:4",
+      "D12:25"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "Predicted answer includes 'Frangipani', matching the reference answer; the added scientific name does not contradict.",
+    "raw_judge": "{\n  \"score\": 1,\n  \"label\": \"correct\",\n  \"reason\": \"Predicted answer includes 'Frangipani', matching the reference answer; the added scientific name does not contradict.\"\n}"
+  },
+  {
+    "index": 1483,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "prediction": "D6:IMG_003, D6:IMG_004, D6:IMG_005, D6:IMG_002, D12:IMG_015",
+    "reference": "D6:IMG_001, D6:IMG_002, D6:IMG_003, D6:IMG_004, D6:IMG_005, D12:IMG_014, D12:IMG_015, D12:IMG_016",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:3",
+      "D12:25",
+      "D6:5",
+      "D6:4"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Unterminated string starting at: line 1 column 46 (char 45)",
+    "raw_judge": ""
+  },
+  {
+    "index": 1484,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "VS",
+    "question": "Please search for all photos of the same plant species as this image shared in the conversation.",
+    "prediction": "D6:IMG_003, D6:IMG_004, D6:IMG_005, D6:IMG_002, D12:IMG_015",
+    "reference": "D6:IMG_001, D6:IMG_002, D6:IMG_003, D6:IMG_004, D6:IMG_005, D12:IMG_014, D12:IMG_015, D12:IMG_016",
+    "retrieved_ids": [
+      "D6:6",
+      "D6:3",
+      "D12:25",
+      "D6:5",
+      "D6:4"
+    ],
+    "clue": [
+      "D6:2",
+      "D6:3",
+      "D6:4",
+      "D6:5",
+      "D6:6",
+      "D12:24",
+      "D12:25",
+      "D12:26"
+    ],
+    "score": 0,
+    "label": "judge_error",
+    "reason": "Expecting property name enclosed in double quotes: line 1 column 13 (char 12)",
+    "raw_judge": ""
+  },
+  {
+    "index": 1485,
+    "dataset": "Python_Botany_AI_Student_Life",
+    "category": "TTL",
+    "question": "What specific species of flower is shown in the provided image?",
+    "prediction": "The specific species of flower shown in the image is a wallflower.",
+    "reference": "Wallflower",
+    "retrieved_ids": [
+      "D6:12",
+      "D6:10",
+      "D6:11",
+      "D6:9",
+      "D6:8"
+    ],
+    "clue": [
+      "D6:8",
+      "D6:9",
+      "D6:10",
+      "D6:11",
+      "D6:12"
+    ],
+    "score": 1,
+    "label": "correct",
+    "reason": "The prediction states the flower is a wallflower, matching the reference answer without contradiction.",
+    "raw_judge": "{\"score\": 1, \"label\": \"correct\", \"reason\": \"The prediction states the flower is a wallflower, matching the reference answer without contradiction.\"}"
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "worker_id": 0,
+    "ids": "artifacts/embeddings_image_companions/ids_worker0.json",
+    "vectors": "artifacts/embeddings_image_companions/embeddings_worker0.npy",
+    "count": 502
+  },
+  {
+    "worker_id": 1,
+    "ids": "artifacts/embeddings_image_companions/ids_worker1.json",
+    "vectors": "artifacts/embeddings_image_companions/embeddings_worker1.npy",
+    "count": 501
+  }
+]

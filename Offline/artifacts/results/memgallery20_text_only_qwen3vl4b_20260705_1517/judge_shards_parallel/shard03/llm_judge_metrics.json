@@ -1,0 +1,53 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "count": 214,
+  "correct": 159,
+  "accuracy": 0.7429906542056075,
+  "by_category": {
+    "AR": {
+      "count": 28,
+      "correct": 26,
+      "accuracy": 0.9285714285714286
+    },
+    "CD": {
+      "count": 13,
+      "correct": 3,
+      "accuracy": 0.23076923076923078
+    },
+    "FR": {
+      "count": 28,
+      "correct": 21,
+      "accuracy": 0.75
+    },
+    "KR": {
+      "count": 11,
+      "correct": 7,
+      "accuracy": 0.6363636363636364
+    },
+    "MR": {
+      "count": 20,
+      "correct": 17,
+      "accuracy": 0.85
+    },
+    "TR": {
+      "count": 21,
+      "correct": 16,
+      "accuracy": 0.7619047619047619
+    },
+    "TTL": {
+      "count": 45,
+      "correct": 42,
+      "accuracy": 0.9333333333333333
+    },
+    "VR": {
+      "count": 15,
+      "correct": 7,
+      "accuracy": 0.4666666666666667
+    },
+    "VS": {
+      "count": 33,
+      "correct": 20,
+      "accuracy": 0.6060606060606061
+    }
+  }
+}
