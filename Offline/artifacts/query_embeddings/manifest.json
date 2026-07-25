@@ -1,9 +1,0 @@
-{
-  "count": 1711,
-  "dim": 2048,
-  "model_name": "Qwen/Qwen3-VL-Embedding-2B",
-  "dtype": "bfloat16",
-  "data_dir": "/data/haozhen/Offline/Mem-Gallery/benchmark/data",
-  "vectors": "/data/haozhen/Offline/Offline/artifacts/query_embeddings/vectors.npy",
-  "metadata": "/data/haozhen/Offline/Offline/artifacts/query_embeddings/metadata.jsonl"
-}
