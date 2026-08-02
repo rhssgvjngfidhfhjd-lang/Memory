@@ -1,4 +1,4 @@
-# Offline — Memory Baselines Workspace
+# Memory Baselines Workspace
 
 Multi-project workspace for evaluating memory-augmented agent baselines
 (`AgentMem`, A-Mem, M2A, SimpleMem, Omni-SimpleMem, ...) on the Mem-Gallery
