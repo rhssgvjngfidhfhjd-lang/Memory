@@ -1,5 +1,0 @@
-[
-  "Project Phoenix is an internal initiative at Helix Labs aimed at migrating the legacy monolithic data ingestion service to a microservices architecture. The project was approved in January 2024 with a budget of $1.2 million and is expected to reach production by Q3 2025. Alice Chen is the technical lead for the migration.",
-  "The Helix Labs genomics pipeline currently processes approximately 50,000 patient samples per month. Each sample generates roughly 200 GB of raw sequencing data. The pipeline relies on Apache Kafka for real-time streaming, PostgreSQL for metadata storage, and a custom Python orchestration layer maintained by the backend engineering team.",
-  "Dr. Marcus Webb joined Helix Labs in 2021 after spending eight years at Illumina as a principal engineer. He holds a PhD in bioinformatics from MIT. Under his leadership, the backend engineering headcount grew from 4 to 22 engineers. He introduced quarterly in-person sprint weeks to improve team cohesion across remote locations."
-]

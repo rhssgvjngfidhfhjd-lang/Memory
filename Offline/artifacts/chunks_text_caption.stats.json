@@ -1,9 +1,0 @@
-{
-  "chunks": 3962,
-  "with_images": 0,
-  "data_dir": "/data/haozhen/Offline/Mem-Gallery/benchmark/data",
-  "output": "/data/haozhen/Offline/Offline/artifacts/chunks_text_caption.jsonl",
-  "max_tokens": 800,
-  "include_captions": true,
-  "include_images": false
-}

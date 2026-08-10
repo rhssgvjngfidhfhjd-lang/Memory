@@ -35,7 +35,7 @@ from eval_framework.datasets.schemas import (
 )
 from eval_framework.memory_adapters.base import MemoryAdapter
 
-_DEFAULT_PIPELINE_ROOT = "/data/haozhen/Offline/Offline"
+_DEFAULT_PIPELINE_ROOT = "/data/haozhen/Memory/Offline"
 
 # One embedding model per process: sample workers run in threads, and a
 # per-adapter Qwen3-VL-Embedding-2B instance (~5 GB) per thread would not fit
