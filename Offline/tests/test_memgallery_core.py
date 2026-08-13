@@ -1,0 +1,1133 @@
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+import numpy as np
+
+from hive_mem.executor import ExecutionResult, MemoryExecutor
+from hive_mem.mau import MAUBank
+from hive_mem.builder import MAUBuilder
+from hive_mem.builder import MemoryEvent
+from benchmarks.memgallery_harness.runner.metrics import (
+    add_memory_metrics,
+    add_retrieval_memory_tokens,
+    calculate_memory_metrics,
+    calculate_retrieval_memory_tokens,
+    merge_llm_judge_metrics,
+    provenance_hit,
+    write_retrieval_memory_token,
+)
+from benchmarks.memgallery_harness.runner.answer_client import (
+    VLMAnswerClient,
+    build_retrieved_memory_context,
+)
+from hive_mem.llm_client import GenerationResponse
+from hive_mem.build_memories import completed_dataset_stats
+from hive_mem.output_layout import DatasetLayout
+from embedding.build_query_embeddings import _prepare_text_query
+from embedding.qwen3_text_embedding import (
+    DEFAULT_QUERY_INSTRUCTION,
+    Qwen3TextEmbeddingService,
+    Qwen3TextMemoryEmbedder,
+    create_embedding_service,
+    create_memory_embedder,
+)
+from embedding.qwen3vl_embedding import Qwen3VLEmbeddingService, QwenMemoryEmbedder
+
+
+class FakeEmbedder:
+    def embed_texts(self, texts, mode="context"):
+        single = isinstance(texts, str)
+        values = [texts] if single else list(texts)
+        result = np.asarray([[float(len(text)), 1.0] for text in values], dtype=np.float32)
+        return result[0] if single else result
+
+
+class Qwen3TextEmbeddingTest(unittest.TestCase):
+    def test_completed_dataset_detection_checks_event_count_and_dimension(self):
+        with tempfile.TemporaryDirectory() as directory:
+            layout = DatasetLayout(Path(directory) / "dataset")
+            layout.reports_dir.mkdir(parents=True)
+            layout.vectors_dir.mkdir(parents=True)
+            (layout.root / "memories.jsonl").write_text("{}\n{}\n", encoding="utf-8")
+            layout.build_stats.write_text(
+                json.dumps({"input_events": 3, "final_memories": 2}), encoding="utf-8"
+            )
+            np.save(layout.text_vectors, np.zeros((2, 1024), dtype=np.float32))
+            checkpoint = Path(directory) / "checkpoint"
+            stats = completed_dataset_stats(
+                layout, checkpoint, expected_events=3, expected_dim=1024
+            )
+            self.assertTrue(stats["skipped_complete"])
+            self.assertIsNone(
+                completed_dataset_stats(
+                    layout, checkpoint, expected_events=3, expected_dim=2048
+                )
+            )
+
+    def test_factory_keeps_vl_default_and_selects_text_model_explicitly(self):
+        vl_service = create_embedding_service(
+            model_name="Qwen/Qwen3-VL-Embedding-2B",
+            device="cpu",
+            expected_dim=2048,
+        )
+        text_service = create_embedding_service(
+            model_name="Qwen/Qwen3-Embedding-0.6B",
+            device="cpu",
+            expected_dim=1024,
+        )
+        vl_memory = create_memory_embedder(
+            model_name="Qwen/Qwen3-VL-Embedding-2B",
+            device="cpu",
+            expected_dim=2048,
+        )
+        text_memory = create_memory_embedder(
+            model_name="Qwen/Qwen3-Embedding-0.6B",
+            device="cpu",
+            expected_dim=1024,
+        )
+        self.assertIsInstance(vl_service, Qwen3VLEmbeddingService)
+        self.assertIsInstance(text_service, Qwen3TextEmbeddingService)
+        self.assertIsInstance(vl_memory, QwenMemoryEmbedder)
+        self.assertIsInstance(text_memory, Qwen3TextMemoryEmbedder)
+        self.assertTrue(vl_service.supports_images)
+        self.assertFalse(text_service.supports_images)
+
+    def test_query_instruction_and_image_caption_are_text(self):
+        service = Qwen3TextEmbeddingService(device="cpu")
+        query = _prepare_text_query(
+            {
+                "question": "What color is the bag?",
+                "query_image": {"path": "/tmp/bag.png", "caption": "A blue bag."},
+            }
+        )
+        self.assertEqual(query, "What color is the bag?\nImage caption: A blue bag.")
+        self.assertEqual(
+            service._format_query(query),
+            f"Instruct: {DEFAULT_QUERY_INSTRUCTION}\nQuery: {query}",
+        )
+        with self.assertRaisesRegex(ValueError, "text-only"):
+            service.embed_query("question", ["/tmp/bag.png"])
+
+    def test_last_token_pool_handles_left_and_right_padding(self):
+        import torch
+
+        hidden = torch.tensor(
+            [
+                [[1.0], [2.0], [3.0]],
+                [[4.0], [5.0], [6.0]],
+            ]
+        )
+        left_mask = torch.tensor([[0, 1, 1], [1, 1, 1]])
+        right_mask = torch.tensor([[1, 1, 0], [1, 1, 1]])
+        np.testing.assert_allclose(
+            Qwen3TextEmbeddingService._last_token_pool(hidden, left_mask).numpy(),
+            [[3.0], [6.0]],
+        )
+        np.testing.assert_allclose(
+            Qwen3TextEmbeddingService._last_token_pool(hidden, right_mask).numpy(),
+            [[2.0], [6.0]],
+        )
+
+    def test_normalization_is_done_in_float32(self):
+        import torch
+        import torch.nn.functional as functional
+
+        vector = torch.tensor([[0.1, 0.2, 0.3]], dtype=torch.bfloat16)
+        normalized = functional.normalize(vector.float(), p=2, dim=1)
+        self.assertEqual(normalized.dtype, torch.float32)
+        np.testing.assert_allclose(
+            torch.linalg.vector_norm(normalized, dim=1).numpy(),
+            [1.0],
+            atol=1e-6,
+        )
+
+
+class ProvenanceMemoryBankTest(unittest.TestCase):
+    def test_save_uses_mau_shaped_json_and_keeps_legacy_aliases(self):
+        bank = MAUBank()
+        bank.add_memory(
+            "Lena likes Maltese dogs",
+            np.asarray([1.0, 0.0]),
+            metadata={
+                "session_id": "D1",
+                "image_paths": ["/tmp/dog.jpg"],
+                "image_captions": ["A small white dog."],
+            },
+        )
+        item = bank.memories[0]
+        self.assertEqual(item.content, item.summary)
+        self.assertEqual(item.memory_id, item.id)
+        self.assertTrue(item.id.startswith("mau_"))
+
+        with tempfile.TemporaryDirectory() as directory:
+            bank.save(directory)
+            self.assertTrue((Path(directory) / "vectors" / "text.npy").exists())
+            with (Path(directory) / "memories.jsonl").open() as handle:
+                row = json.loads(handle.readline())
+            loaded = MAUBank.load(directory)
+
+        self.assertNotIn("memory_id", row)
+        self.assertNotIn("content", row)
+        self.assertEqual(row["id"], item.id)
+        self.assertEqual(row["summary"], "Lena likes Maltese dogs")
+        self.assertEqual(row["modality_type"], "multimodal")
+        self.assertNotIn("embedding", row)
+        self.assertNotIn("details", row)
+        self.assertNotIn("timestamp", row)
+        self.assertEqual(row["links"], {"prev": None, "next": None, "related": []})
+        self.assertEqual(loaded.memories[0].content, "Lena likes Maltese dogs")
+        self.assertEqual(loaded.memories[0].memory_id, item.id)
+
+    def test_load_accepts_legacy_agentmem_json(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            old_row = {
+                "memory_id": "mem_old",
+                "content": "legacy fact",
+                "metadata": {"source_dialogue_ids": ["D1:1"]},
+            }
+            (root / "memories.jsonl").write_text(json.dumps(old_row) + "\n")
+            np.save(root / "vectors.npy", np.asarray([[1.0, 0.0]], dtype=np.float32))
+            loaded = MAUBank.load(root)
+
+        self.assertEqual(loaded.memories[0].id, "mem_old")
+        self.assertEqual(loaded.memories[0].summary, "legacy fact")
+        self.assertEqual(loaded.memories[0].content, "legacy fact")
+
+    def test_archived_status_and_links_survive_save_load(self):
+        bank = MAUBank()
+        bank.add_memory("old", np.asarray([1.0, 0.0]), metadata={"session_id": "D1"})
+        bank.add_memory("new", np.asarray([0.0, 1.0]), metadata={"session_id": "D2"})
+        old, new = bank.memories[0], bank.memories[1]
+        old.status = "ARCHIVED"
+        new.links["related"].append({"target": old.id, "type": "SUPERSEDES"})
+
+        with tempfile.TemporaryDirectory() as directory:
+            bank.save(directory)
+            loaded = MAUBank.load(directory)
+        self.assertEqual(loaded.memories[0].status, "ARCHIVED")
+        self.assertEqual(loaded.memories[1].links["related"], [{"target": old.id, "type": "SUPERSEDES"}])
+
+    def test_insert_inherits_event_metadata(self):
+        bank = MAUBank()
+        executor = MemoryExecutor(llm_client=None, embedder=FakeEmbedder())
+        executor.apply_to_memory_bank(
+            [ExecutionResult(success=True, memory_content="new fact")],
+            bank,
+            event_metadata={"source_dialogue_ids": ["D2:3"]},
+        )
+        self.assertEqual(bank.memories[0].metadata["source_dialogue_ids"], ["D2:3"])
+
+    def test_hit_uses_top_k_memory_groups(self):
+        groups = [["D1:1", "D1:2"], ["D2:1"]]
+        self.assertEqual(provenance_hit(groups, ["D1:2"], k=1), 1.0)
+        self.assertEqual(provenance_hit(groups, ["D2:1"], k=1), 0.0)
+
+    def test_merge_llm_judge_metrics_adds_overall_and_category_scores(self):
+        metrics = {
+            "count": 2,
+            "f1": 0.5,
+            "exact_match": 0.25,
+            "retrieval_hitrate@5": 1.0,
+            "by_category": {
+                "AR": {
+                    "count": 2,
+                    "f1": 0.5,
+                    "exact_match": 0.25,
+                    "retrieval_hitrate@5": 1.0,
+                }
+            },
+        }
+        judge_metrics = {
+            "accuracy": 0.75,
+            "by_category": {"AR": {"accuracy": 0.5}},
+        }
+        merged = merge_llm_judge_metrics(metrics, judge_metrics)
+        self.assertEqual(merged["llm_judge"], 0.75)
+        self.assertEqual(merged["by_category"]["AR"]["llm_judge"], 0.5)
+        self.assertEqual(list(merged)[:2], ["f1", "llm_judge"])
+        self.assertEqual(list(merged["by_category"]["AR"])[:2], ["f1", "llm_judge"])
+
+    def test_memory_metrics_use_recorded_usage_and_active_summary_characters(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dataset = root / "datasets" / "d"
+            (dataset / "traces").mkdir(parents=True)
+            (dataset / "memories.jsonl").write_text(
+                "\n".join(
+                    [
+                        json.dumps({"summary": "active fact", "status": "ACTIVE"}),
+                        json.dumps({"summary": "old fact", "status": "ARCHIVED"}),
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (dataset / "traces" / "build.jsonl").write_text(
+                "\n".join(
+                    [
+                        json.dumps(
+                            {
+                                "llm_usage": {
+                                    "prompt_tokens": 10,
+                                    "completion_tokens": 4,
+                                    "total_tokens": 14,
+                                }
+                            }
+                        ),
+                        json.dumps(
+                            {
+                                "llm_usage": {
+                                    "prompt_tokens": 20,
+                                    "completion_tokens": 6,
+                                    "total_tokens": 26,
+                                }
+                            }
+                        ),
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            memory_metrics = calculate_memory_metrics(root)
+
+        self.assertEqual(
+            memory_metrics["memory_build_tokens"],
+            {"prompt_tokens": 30, "completion_tokens": 10, "total_tokens": 40},
+        )
+        self.assertEqual(memory_metrics["summary_characters"], len("active fact"))
+
+    def test_memory_metrics_follow_f1_and_judge_in_summary(self):
+        combined = add_memory_metrics(
+            {
+                "f1": 0.5,
+                "llm_judge": 0.75,
+                "count": 2,
+                "by_category": {
+                    "AR": {"count": 2, "f1": 0.4, "llm_judge": 0.6}
+                },
+            },
+            {
+                "memory_build_tokens": {
+                    "prompt_tokens": 10,
+                    "completion_tokens": 5,
+                    "total_tokens": 15,
+                },
+                "summary_characters": 100,
+            },
+        )
+        self.assertEqual(
+            list(combined)[:4],
+            ["f1", "llm_judge", "memory_build_tokens", "summary_characters"],
+        )
+        self.assertEqual(
+            list(combined["by_category"]["AR"])[:2],
+            ["f1", "llm_judge"],
+        )
+
+    def test_inserts_are_never_deduplicated(self):
+        # 1 chunk -> 1 MAU design (2026-08-06): identical text from two chunks
+        # stays as two memories, each keeping its own provenance.
+        bank = MAUBank()
+        executor = MemoryExecutor(llm_client=None, embedder=FakeEmbedder())
+        executor.apply_to_memory_bank(
+            [ExecutionResult(success=True, memory_content="Alice likes coffee")],
+            bank,
+            event_metadata={"source_dialogue_ids": ["D1:1"], "source_chunk_ids": ["x:D1:1"]},
+        )
+        executor.apply_to_memory_bank(
+            [ExecutionResult(success=True, memory_content="Alice likes coffee")],
+            bank,
+            event_metadata={"source_dialogue_ids": ["D1:5"], "source_chunk_ids": ["x:D1:5"]},
+        )
+        self.assertEqual(len(bank), 2)
+        self.assertEqual(bank.memories[0].metadata["source_dialogue_ids"], ["D1:1"])
+        self.assertEqual(bank.memories[1].metadata["source_dialogue_ids"], ["D1:5"])
+
+
+class RetrievalMemoryTokenTest(unittest.TestCase):
+    class WhitespaceTokenizer:
+        def encode(self, text, add_special_tokens=False):
+            return str(text).split()
+
+    def test_context_formatter_matches_answer_prompt_memory_section(self):
+        items = [
+            {
+                "text": "memory D1:IMG_001",
+                "image": {"path": "/tmp/image.jpg", "img_id": "D1:IMG_001"},
+                "metadata": {
+                    "session_id": "D1",
+                    "dialogue_id": "D1:1",
+                    "image_id": "D1:IMG_001",
+                },
+            }
+        ]
+        context, image_paths = build_retrieved_memory_context(items, "VS")
+        client = VLMAnswerClient()
+        full_text, full_image_paths = client._build_text_and_image_paths(
+            items,
+            "question",
+            None,
+            "VS",
+        )
+        self.assertTrue(full_text.startswith(context + "\n\n\n\nquestion"))
+        self.assertEqual(image_paths, ["/tmp/image.jpg"])
+        self.assertEqual(full_image_paths, image_paths)
+
+    def test_historical_trace_counts_empty_graph_and_image_memory(self):
+        rows = [
+            {
+                "category": "MR",
+                "top_k": [
+                    {
+                        "via": "vector",
+                        "content": "fact D1:IMG_001",
+                        "source_dialogue_ids": ["D1:1"],
+                        "image_ids": [],
+                        "image_paths": [],
+                    },
+                    {
+                        "via": "graph",
+                        "content": "related fact",
+                        "source_dialogue_ids": ["D1:2"],
+                        "image_ids": [],
+                        "image_paths": [],
+                    },
+                ],
+            },
+            {
+                "category": "VS",
+                "top_k": [
+                    {
+                        "via": "vector",
+                        "content": "visual fact",
+                        "source_dialogue_ids": ["D2:1"],
+                        "image_ids": ["D2:IMG_001"],
+                        "image_paths": ["/tmp/image.jpg"],
+                    }
+                ],
+            },
+            {"category": "FR", "top_k": []},
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "run_manifest.json").write_text(
+                json.dumps({"graph_mode": "append"}),
+                encoding="utf-8",
+            )
+            (root / "retrieval_trace.jsonl").write_text(
+                "\n".join(json.dumps(row) for row in rows) + "\n",
+                encoding="utf-8",
+            )
+            metrics = calculate_retrieval_memory_tokens(
+                root,
+                tokenizer=self.WhitespaceTokenizer(),
+            )
+            written = write_retrieval_memory_token(
+                root,
+                tokenizer=self.WhitespaceTokenizer(),
+            )
+            saved = json.loads((root / "retrieval_memory_token.json").read_text())
+
+        self.assertEqual(metrics["total_tokens"], 38)
+        self.assertEqual(metrics["query_count"], 3)
+        self.assertEqual(metrics["average_tokens_per_query"], 12.67)
+        self.assertEqual(written, metrics)
+        self.assertEqual(saved, metrics)
+
+    def test_retrieval_tokens_are_inserted_with_memory_metrics(self):
+        combined = add_retrieval_memory_tokens(
+            {
+                "f1": 0.5,
+                "llm_judge": 0.75,
+                "memory_build_tokens": {"total_tokens": 10},
+                "summary_characters": 100,
+                "count": 2,
+            },
+            {
+                "total_tokens": 20,
+                "query_count": 2,
+                "average_tokens_per_query": 10.0,
+            },
+        )
+        self.assertEqual(
+            list(combined)[:5],
+            [
+                "f1",
+                "llm_judge",
+                "memory_build_tokens",
+                "summary_characters",
+                "retrieval_memory_tokens",
+            ],
+        )
+
+
+class CrashingLLMClient:
+    def __init__(self, crash_at):
+        self.n = 0
+        self.crash_at = crash_at
+
+    def generate(self, prompt):
+        self.n += 1
+        if self.n - 1 == self.crash_at:
+            raise RuntimeError("simulated crash")
+        return f"MEMORY_ITEM: fact number {self.n}"
+
+
+class BuilderResumeTest(unittest.TestCase):
+    def test_resume_after_mid_run_crash_does_not_duplicate_trace_entries(self):
+        events = [
+            MemoryEvent(
+                text=f"event {i}",
+                dataset="d",
+                dialogue_id=f"D1:{i}",
+                session_id="D1",
+                round_id=i,
+                source_chunk_id=f"c{i}",
+            )
+            for i in range(5)
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory) / "out"
+            builder = MAUBuilder(CrashingLLMClient(crash_at=4), FakeEmbedder())
+            with self.assertRaises(RuntimeError):
+                builder.build(events, out, resume=True, checkpoint_every=3)
+
+            builder_resumed = MAUBuilder(CrashingLLMClient(crash_at=999), FakeEmbedder())
+            builder_resumed.build(events, out, resume=True, checkpoint_every=3)
+
+            with (out / "traces" / "build.jsonl").open() as handle:
+                indices = [json.loads(line)["event_index"] for line in handle]
+        self.assertEqual(indices, [0, 1, 2, 3, 4])
+
+
+class ScriptedLLMClient:
+    def __init__(self, response):
+        self.response = response
+
+    def generate(self, prompt):
+        self.last_prompt = prompt
+        return self.response
+
+
+class UsageLLMClient:
+    def generate_with_usage(self, prompt):
+        return GenerationResponse(
+            text="MEMORY_ITEM: measured fact",
+            usage={"prompt_tokens": 12, "completion_tokens": 3, "total_tokens": 15},
+        )
+
+
+class OperationTogglesTest(unittest.TestCase):
+    def test_insert_only_prompt_omits_disabled_blocks_and_mandates_insert(self):
+        executor = MemoryExecutor(llm_client=None, embedder=FakeEmbedder())
+        prompt = executor._build_prompt("chunk")
+        self.assertIn("MEMORY_ITEM:", prompt)
+        self.assertNotIn("ACTION:", prompt)
+        self.assertIn("### Memory Item Rules", prompt)
+        self.assertIn("### Entities Rules", prompt)
+        self.assertNotIn("UPDATE", prompt)
+        self.assertNotIn("NOOP", prompt)
+        self.assertIn("MUST output at least one memory item", prompt)
+
+    def test_response_without_memory_item_is_rejected(self):
+        llm_client = ScriptedLLMClient("Here is a summary of the chunk, but not in the required format.")
+        executor = MemoryExecutor(llm_client=llm_client, embedder=FakeEmbedder())
+        _, actions = executor.execute(chunk_text="chunk")
+        self.assertEqual(len(actions), 1)
+        self.assertFalse(actions[0].success)
+        self.assertIn("No MEMORY_ITEM block", actions[0].reasoning)
+
+    def test_insert_only_builder_falls_back_to_raw_chunk_on_unusable_response(self):
+        events = [
+            MemoryEvent(
+                text="event zero",
+                dataset="d",
+                dialogue_id="D1:0",
+                session_id="D1",
+                round_id=0,
+                source_chunk_id="c0",
+            )
+        ]
+        builder = MAUBuilder(
+            ScriptedLLMClient("gibberish with no action"),
+            FakeEmbedder(),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            stats = builder.build(events, Path(directory) / "out", resume=False)
+            bank = MAUBank.load(Path(directory) / "out")
+        self.assertEqual(stats["fallback_inserts_this_run"], 1)
+        self.assertEqual(len(bank), 1)
+        self.assertEqual(bank.memories[0].content, "event zero")
+        self.assertEqual(bank.memories[0].metadata["source_dialogue_ids"], ["D1:0"])
+        self.assertEqual(bank.memories[0].metadata["source"], "fallback_insert")
+
+    def test_builder_records_generation_usage_in_trace(self):
+        event = MemoryEvent(
+            text="event zero",
+            dataset="d",
+            dialogue_id="D1:0",
+            session_id="D1",
+            round_id=0,
+            source_chunk_id="c0",
+        )
+        builder = MAUBuilder(UsageLLMClient(), FakeEmbedder())
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "out"
+            builder.build([event], root, resume=False)
+            trace = json.loads((root / "traces" / "build.jsonl").read_text())
+        self.assertEqual(
+            trace["llm_usage"],
+            {"prompt_tokens": 12, "completion_tokens": 3, "total_tokens": 15},
+        )
+
+
+class MemoryEdgesTest(unittest.TestCase):
+    @staticmethod
+    def _bank_with_sessions():
+        from hive_mem.build_memory_edges import build_temporal_chain
+
+        bank = MAUBank()
+        rows = [
+            ("bought allergy medicine", "D3", 1, "2024-06-18"),
+            ("medicine was recommended by Alice", "D3", 2, "2024-06-18"),
+            ("had an allergic reaction", "D4", 1, "2024-06-25"),
+            ("switched to medicine B", "D7", 1, "2024-07-28"),
+        ]
+        # Insert out of order to prove sorting is metadata-driven.
+        for summary, session, round_id, date in [rows[2], rows[0], rows[3], rows[1]]:
+            bank.add_memory(
+                summary,
+                np.asarray([float(len(summary)), 1.0]),
+                metadata={"session_id": session, "round_id": round_id, "date": date},
+            )
+        build_temporal_chain(bank)
+        return bank
+
+    def test_temporal_chain_orders_by_date_session_round(self):
+        bank = self._bank_with_sessions()
+        by_summary = {item.summary: item for item in bank.memories}
+        chain = []
+        cursor = next(item for item in bank.memories if item.links["prev"] is None)
+        while cursor is not None:
+            chain.append(cursor.summary)
+            next_id = cursor.links["next"]
+            cursor = next((i for i in bank.memories if i.id == next_id), None)
+        self.assertEqual(
+            chain,
+            [
+                "bought allergy medicine",
+                "medicine was recommended by Alice",
+                "had an allergic reaction",
+                "switched to medicine B",
+            ],
+        )
+        self.assertIsNone(by_summary["switched to medicine B"].links["next"])
+
+    def test_temporal_chain_skips_archived_memories(self):
+        from hive_mem.build_memory_edges import build_temporal_chain
+
+        bank = self._bank_with_sessions()
+        bank.memories[1].status = "ARCHIVED"
+        build_temporal_chain(bank)
+        archived = bank.memories[1]
+        self.assertIsNone(archived.links["prev"])
+        self.assertIsNone(archived.links["next"])
+        chained_ids = {
+            item.links["prev"] for item in bank.memories if item.links["prev"]
+        } | {item.links["next"] for item in bank.memories if item.links["next"]}
+        self.assertNotIn(archived.id, chained_ids)
+
+    def test_candidate_pairs_respect_session_window(self):
+        from hive_mem.build_memory_edges import generate_candidate_pairs
+
+        bank = self._bank_with_sessions()
+        pairs = generate_candidate_pairs(bank, session_window=1)
+        summaries = {
+            (bank.memories[a].summary, bank.memories[b].summary) for a, b in pairs
+        }
+        self.assertIn(
+            ("bought allergy medicine", "medicine was recommended by Alice"), summaries
+        )
+        self.assertIn(
+            ("medicine was recommended by Alice", "had an allergic reaction"), summaries
+        )
+        # D3 (session 3) and D7 (session 7) are farther than the window.
+        self.assertNotIn(
+            ("bought allergy medicine", "switched to medicine B"), summaries
+        )
+
+    def test_event_relation_classification_writes_confident_edges_only(self):
+        from hive_mem.build_memory_edges import classify_event_relations
+
+        bank = self._bank_with_sessions()
+        pairs = [(1, 0), (0, 2)]  # (earlier, later) bank indices
+
+        class RelationBackend:
+            def __init__(self):
+                self.responses = iter(
+                    [
+                        '{"relation": "SAME_EPISODE", "confidence": 0.4}',
+                        '{"relation": "CAUSES", "confidence": 0.9}',
+                    ]
+                )
+
+            def generate(self, prompt):
+                return next(self.responses)
+
+        stats = classify_event_relations(
+            bank, pairs, RelationBackend(), min_confidence=0.7
+        )
+        self.assertEqual(stats["CAUSES"], 1)
+        self.assertEqual(stats["NONE"], 1)
+        edges = bank.memories[0].links["related"]
+        self.assertEqual(
+            edges,
+            [
+                {
+                    "target": bank.memories[2].id,
+                    "type": "CAUSES",
+                    "confidence": 0.9,
+                }
+            ],
+        )
+        self.assertEqual(bank.memories[1].links["related"], [])
+
+
+class EntityExtractionTest(unittest.TestCase):
+    def test_parse_and_filter_entities(self):
+        from hive_mem.entity_schema import normalize_entities as filter_entities, parse_entities_payload as parse_entities
+
+        raw = """Here you go:
+        [{"name": "Alice", "type": "person", "aliases": ["her friend Alice", "Alice"],
+          "attributes": {"relation": "friend", "breed": "Maltese", "bogus_key": "x"}},
+         {"name": "it", "type": "OBJECT"},
+         {"name": "X", "type": "OBJECT"},
+         {"name": "Lumi", "type": "ANIMAL",
+          "attributes": {"species": "dog", "trait": ["intelligent", "quick learner", ""]}},
+         {"name": "Alice", "type": "PERSON"},
+         {"name": "happiness", "type": "EMOTION"}]"""
+        entities = filter_entities(parse_entities(raw))
+        # PERSON keeps 'relation', drops 'breed' (ANIMAL-only) and unknown keys.
+        self.assertEqual(
+            entities,
+            [
+                {
+                    "name": "Alice",
+                    "type": "PERSON",
+                    "aliases": ["her friend Alice"],
+                    "attributes": {"relation": "friend"},
+                },
+                {
+                    "name": "Lumi",
+                    "type": "ANIMAL",
+                    "attributes": {
+                        "species": "dog",
+                        "trait": ["intelligent", "quick learner"],
+                    },
+                },
+            ],
+        )
+
+    def test_executor_insert_block_carries_entities(self):
+        executor = MemoryExecutor(llm_client=None, embedder=FakeEmbedder())
+        block = (
+            "MEMORY_ITEM: Lena's Maltese dog Lumi is a quick learner.\n"
+            'ENTITIES: [{"name": "Lumi", "type": "ANIMAL", '
+            '"attributes": {"breed": "Maltese", "owner": "Lena", "trait": "quick learner"}}]'
+        )
+        result = executor._parse_single_action(block)
+        self.assertTrue(result.success)
+        self.assertEqual(result.memory_content, "Lena's Maltese dog Lumi is a quick learner.")
+        self.assertEqual(
+            result.entities,
+            [{"name": "Lumi", "type": "ANIMAL",
+              "attributes": {"breed": "Maltese", "owner": "Lena", "trait": "quick learner"}}],
+        )
+        bank = MAUBank()
+        executor.apply_to_memory_bank([result], bank, event_metadata={})
+        self.assertEqual(bank.memories[0].entities[0]["name"], "Lumi")
+
+    def test_executor_insert_with_bad_entities_keeps_memory(self):
+        executor = MemoryExecutor(llm_client=None, embedder=FakeEmbedder())
+        block = "MEMORY_ITEM: a fact\nENTITIES: [not valid json"
+        result = executor._parse_single_action(block)
+        self.assertTrue(result.success)
+        self.assertEqual(result.memory_content, "a fact")
+        self.assertEqual(result.entities, [])
+
+    def test_executor_prompt_mentions_entities_when_insert_enabled(self):
+        executor = MemoryExecutor(llm_client=None, embedder=FakeEmbedder())
+        prompt = executor._build_prompt("chunk")
+        self.assertIn("ENTITIES", prompt)
+        self.assertIn("ANIMAL: species, breed", prompt)
+
+    def test_parse_entities_rejects_garbage(self):
+        from hive_mem.entity_schema import parse_entities_payload as parse_entities
+
+        self.assertIsNone(parse_entities("no json here"))
+
+    def test_entities_survive_save_load_roundtrip(self):
+        bank = MAUBank()
+        bank.add_memory("fact", np.asarray([1.0, 0.0]), metadata={"session_id": "D1"})
+        bank.memories[0].entities = [{"name": "Alice", "type": "PERSON"}]
+        with tempfile.TemporaryDirectory() as directory:
+            bank.save(directory)
+            with (Path(directory) / "memories.jsonl").open() as handle:
+                row = json.loads(handle.readline())
+            loaded = MAUBank.load(directory)
+        self.assertEqual(row["entities"], [{"name": "Alice", "type": "PERSON"}])
+        self.assertEqual(loaded.memories[0].entities, [{"name": "Alice", "type": "PERSON"}])
+
+
+class EntityEdgeDerivationTest(unittest.TestCase):
+    @staticmethod
+    def _bank(rows):
+        bank = MAUBank()
+        for summary, session, entities in rows:
+            bank.add_memory(
+                summary,
+                np.asarray([1.0, 0.0]),
+                metadata={"session_id": session, "round_id": 1},
+            )
+            bank.memories[-1].entities = entities
+        return bank
+
+    def test_rare_shared_entity_links_across_sessions(self):
+        from hive_mem.build_memory_edges import derive_entity_pairs
+
+        bank = self._bank(
+            [
+                ("bought medicine", "D1", [{"name": "allergy medicine", "type": "OBJECT"}]),
+                ("weather chat", "D2", [{"name": "Beijing", "type": "PLACE"}]),
+                ("reaction to medicine", "D9", [{"name": "allergy medicine", "type": "OBJECT"}]),
+            ]
+        )
+        pairs = derive_entity_pairs(bank, df_max=0.7, df_stop=0.9)
+        self.assertEqual(pairs, [(0, 2)])
+
+    def test_stoplisted_entity_never_links(self):
+        from hive_mem.build_memory_edges import derive_entity_pairs
+
+        entity = [{"name": "Lena", "type": "PERSON"}]
+        bank = self._bank(
+            [(f"m{i}", f"D{i + 1}", list(entity)) for i in range(4)]
+        )
+        # df = 1.0 > df_stop, so no pairs even though the entity is shared.
+        self.assertEqual(derive_entity_pairs(bank, df_max=0.3, df_stop=0.5), [])
+
+    def test_min_shared_entities_qualify_without_rare_entity(self):
+        from hive_mem.build_memory_edges import derive_entity_pairs
+
+        shared = [
+            {"name": "Alice", "type": "PERSON"},
+            {"name": "camping trip", "type": "EVENT"},
+        ]
+        bank = self._bank(
+            [
+                ("planning", "D1", list(shared)),
+                ("during trip", "D5", list(shared)),
+                ("other", "D3", [{"name": "library", "type": "PLACE"}]),
+            ]
+        )
+        pairs = derive_entity_pairs(bank, df_max=0.1, df_stop=0.9, min_shared=2)
+        self.assertEqual(pairs, [(0, 1)])
+
+    def test_degree_cap_limits_pairs_per_memory(self):
+        from hive_mem.build_memory_edges import derive_entity_pairs
+
+        entity = [{"name": "shelter", "type": "PLACE"}]
+        bank = self._bank(
+            [(f"m{i}", f"D{i + 1}", list(entity)) for i in range(5)]
+        )
+        pairs = derive_entity_pairs(bank, df_max=1.0, df_stop=1.0, degree_cap=1)
+        degree = {}
+        for a, b in pairs:
+            degree[a] = degree.get(a, 0) + 1
+            degree[b] = degree.get(b, 0) + 1
+        self.assertTrue(all(count <= 1 for count in degree.values()))
+
+    def test_conflict_candidates_report_value_changes(self):
+        from hive_mem.build_memory_edges import find_conflict_candidates
+
+        bank = self._bank(
+            [
+                (
+                    "sister likes Standard Poodles",
+                    "D1",
+                    [{"name": "Lena's sister", "type": "PERSON",
+                      "attributes": {"preference": "Standard Poodle"}}],
+                ),
+                (
+                    "actually she likes Schnauzers",
+                    "D6",
+                    [{"name": "Lena's sister", "type": "PERSON",
+                      "attributes": {"preference": "Standard Schnauzer"}}],
+                ),
+            ]
+        )
+        conflicts = find_conflict_candidates(bank)
+        self.assertEqual(len(conflicts), 1)
+        self.assertEqual(conflicts[0]["earlier_value"], "Standard Poodle")
+        self.assertEqual(conflicts[0]["later_value"], "Standard Schnauzer")
+
+    def test_attribute_pairs_join_different_entities_with_shared_value(self):
+        from hive_mem.build_memory_edges import derive_attribute_pairs
+
+        bank = self._bank(
+            [
+                ("Lumi is intelligent", "D1",
+                 [{"name": "Lumi", "type": "ANIMAL",
+                   "attributes": {"trait": "intelligent", "species": "dog"}}]),
+                ("weather chat", "D2", []),
+                ("Coco is intelligent too", "D9",
+                 [{"name": "Coco", "type": "ANIMAL",
+                   "attributes": {"trait": "Intelligent", "species": "dog"}}]),
+                ("a smart fridge", "D3",
+                 [{"name": "smart fridge", "type": "OBJECT",
+                   "attributes": {"use": "intelligent"}}]),
+            ]
+        )
+        pairs = derive_attribute_pairs(bank, df_max=0.6, df_stop=0.9)
+        # Lumi & Coco join via (ANIMAL, trait, intelligent) — case-insensitive;
+        # the OBJECT with value "intelligent" does NOT join (type-scoped buckets).
+        self.assertIn((0, 2), pairs)
+        self.assertTrue(all({a, b} != {0, 3} and {a, b} != {2, 3} for a, b in pairs))
+
+    def test_entity_pairs_feed_event_relation_candidates(self):
+        from hive_mem.build_memory_edges import (
+            derive_entity_pairs,
+            generate_candidate_pairs,
+        )
+
+        bank = self._bank(
+            [
+                ("bought medicine", "D1", [{"name": "allergy medicine", "type": "OBJECT"}]),
+                ("weather chat", "D2", []),
+                ("reaction to medicine", "D9", [{"name": "allergy medicine", "type": "OBJECT"}]),
+            ]
+        )
+        entity_pairs = derive_entity_pairs(bank, df_max=0.7, df_stop=0.9)
+        candidates = generate_candidate_pairs(
+            bank, session_window=1, entity_pairs=entity_pairs
+        )
+        # (0, 2) spans sessions D1 -> D9: only reachable via the entity pair.
+        self.assertIn((0, 2), candidates)
+
+
+class GraphExpandedRetrievalTest(unittest.TestCase):
+    @staticmethod
+    def _build_index_dir(directory, graph=True, **options):
+        from hive_mem.retriever import GraphExpandedIndex
+        from hive_mem.retriever import SimpleMemoryIndex
+
+        bank = MAUBank()
+        rows = [
+            ("seed memory", [1.0, 0.0], "D1"),
+            ("linked but dissimilar", [0.1, 1.0], "D9"),
+            ("mildly similar filler", [0.5, 0.5], "D2"),
+            ("other filler", [0.45, 0.55], "D3"),
+        ]
+        for summary, vector, session in rows:
+            bank.add_memory(
+                summary,
+                np.asarray(vector, dtype=np.float32),
+                metadata={"session_id": session, "round_id": 1},
+            )
+        # Typed edge connecting the strong seed to the dissimilar memory.
+        bank.memories[0].links["related"].append(
+            {"target": bank.memories[1].id, "type": "CAUSES", "confidence": 0.9}
+        )
+        bank.save(directory)
+        if graph:
+            return GraphExpandedIndex(directory, **options)
+        return SimpleMemoryIndex(directory)
+
+    def test_graph_expansion_pulls_in_linked_memory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            baseline = self._build_index_dir(directory, graph=False)
+            base_hits = baseline.search([1.0, 0.0], top_k=2)
+            self.assertEqual(
+                [hit.item.summary for hit in base_hits],
+                ["seed memory", "mildly similar filler"],
+            )
+
+            index = self._build_index_dir(
+                directory, expansion_bonus=0.7, expand_entity=False
+            )
+            hits = index.search([1.0, 0.0], top_k=2)
+            self.assertEqual(hits[0].item.summary, "seed memory")
+            self.assertEqual(hits[0].via, "vector")
+            self.assertEqual(hits[1].item.summary, "linked but dissimilar")
+            self.assertEqual(hits[1].via, "graph")
+
+    def test_zero_bonus_and_no_expansion_matches_baseline(self):
+        with tempfile.TemporaryDirectory() as directory:
+            index = self._build_index_dir(
+                directory,
+                expansion_bonus=0.0,
+                expand_temporal=False,
+                expand_related=False,
+                expand_entity=False,
+            )
+            hits = index.search([1.0, 0.0], top_k=2)
+            self.assertEqual(
+                [hit.item.summary for hit in hits],
+                ["seed memory", "mildly similar filler"],
+            )
+            self.assertTrue(all(hit.via == "vector" for hit in hits))
+
+    def test_entity_edges_expand_across_sessions(self):
+        from hive_mem.retriever import GraphExpandedIndex
+
+        with tempfile.TemporaryDirectory() as directory:
+            bank = MAUBank()
+            for summary, vector, session in [
+                ("seed about medicine", [1.0, 0.0], "D1"),
+                ("far session medicine memory", [0.0, 1.0], "D9"),
+                ("noise", [0.4, 0.6], "D2"),
+            ]:
+                bank.add_memory(
+                    summary,
+                    np.asarray(vector, dtype=np.float32),
+                    metadata={"session_id": session, "round_id": 1},
+                )
+            for position in (0, 1):
+                bank.memories[position].entities = [
+                    {"name": "allergy medicine", "type": "OBJECT"}
+                ]
+            bank.save(directory)
+            index = GraphExpandedIndex(
+                directory,
+                expansion_bonus=1.0,
+                expand_temporal=False,
+                expand_related=False,
+                df_max=0.9,
+                df_stop=0.95,
+            )
+            hits = index.search([1.0, 0.0], top_k=2)
+            self.assertEqual(hits[1].item.summary, "far session medicine memory")
+            self.assertEqual(hits[1].via, "graph")
+
+    def test_append_mode_keeps_vector_topk_and_appends_neighbours(self):
+        with tempfile.TemporaryDirectory() as directory:
+            baseline = self._build_index_dir(directory, graph=False)
+            base_hits = baseline.search([1.0, 0.0], top_k=2)
+            index = self._build_index_dir(
+                directory,
+                mode="append",
+                append_k=1,
+                expansion_bonus=0.5,
+                expand_entity=False,
+            )
+            hits = index.search([1.0, 0.0], top_k=2)
+            # First top_k identical to the pure vector ranking.
+            self.assertEqual(
+                [h.item.summary for h in hits[:2]],
+                [h.item.summary for h in base_hits],
+            )
+            self.assertTrue(all(h.via == "vector" for h in hits[:2]))
+            # Appended neighbour follows with via=graph and rank 3.
+            self.assertEqual(len(hits), 3)
+            self.assertEqual(hits[2].via, "graph")
+            self.assertEqual(hits[2].rank, 3)
+            self.assertEqual(hits[2].item.summary, "linked but dissimilar")
+
+    def test_category_gating_uses_plain_vector_for_other_categories(self):
+        from benchmarks.memgallery_harness.eval_memgallery import SimpleMemoryMemGalleryAdapter
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dataset_dir = root / "datasets" / "toy"
+            self._build_index_dir(dataset_dir, graph=False)  # writes the bank
+            adapter = SimpleMemoryMemGalleryAdapter(
+                root,
+                "toy",
+                top_k=2,
+                graph_options={
+                    "expansion_bonus": 0.7,
+                    "expand_entity": False,
+                    "categories": {"TR"},
+                },
+            )
+            adapter.recall({"text": "q", "category": "TR", "vector": [1.0, 0.0]})
+            self.assertIn("graph", {row["via"] for row in adapter.last_trace})
+            adapter.recall({"text": "q", "category": "VS", "vector": [1.0, 0.0]})
+            self.assertEqual({row["via"] for row in adapter.last_trace}, {"vector"})
+
+    def test_archived_memories_never_enter_expansion(self):
+        from hive_mem.retriever import GraphExpandedIndex
+
+        with tempfile.TemporaryDirectory() as directory:
+            bank = MAUBank()
+            bank.add_memory("old fact", np.asarray([0.9, 0.1]), metadata={"session_id": "D1"})
+            bank.add_memory("seed", np.asarray([1.0, 0.0]), metadata={"session_id": "D2"})
+            bank.memories[0].status = "ARCHIVED"
+            bank.memories[1].links["related"].append(
+                {"target": bank.memories[0].id, "type": "CAUSES", "confidence": 0.9}
+            )
+            bank.save(directory)
+            index = GraphExpandedIndex(directory, expansion_bonus=1.0)
+            hits = index.search([1.0, 0.0], top_k=3)
+            summaries = [hit.item.summary for hit in hits]
+            self.assertNotIn("old fact", summaries)
+
+
+class MemoryEventMetadataTest(unittest.TestCase):
+    def test_metadata_includes_singular_keys_for_answer_prompt_formatter(self):
+        event = MemoryEvent(
+            text="hello",
+            dataset="d",
+            dialogue_id="D1:3",
+            session_id="D1",
+            round_id=3,
+            source_chunk_id="c3",
+            image_ids=["D1:IMG_001"],
+        )
+        metadata = event.metadata
+        self.assertEqual(metadata["dialogue_id"], "D1:3")
+        self.assertEqual(metadata["image_id"], "D1:IMG_001")
+
+
+class AnswerPromptImageIdLeakTest(unittest.TestCase):
+    def setUp(self):
+        self.client = VLMAnswerClient()
+        self.memory = {
+            "text": "A robot painting at an easel (image_id: D6:IMG_001).",
+            "image": None,
+            "metadata": {
+                "session_id": "D6",
+                "dialogue_id": "D6:1",
+                "image_id": "D6:IMG_001",
+            },
+        }
+
+    def test_unattached_memory_id_is_redacted_for_visual_question(self):
+        text, paths = self.client._build_text_and_image_paths(
+            [self.memory], "question", {"path": "/tmp/query.png"}, "VS"
+        )
+        self.assertNotIn("D6:IMG_001", text)
+        self.assertIn("[IMAGE_ID_REDACTED]", text)
+        self.assertEqual(paths, ["/tmp/query.png"])
+
+    def test_attached_memory_image_keeps_its_candidate_id(self):
+        memory = {**self.memory, "image": {"path": "/tmp/memory.png", "img_id": "D6:IMG_001"}}
+        text, paths = self.client._build_text_and_image_paths(
+            [memory], "question", {"path": "/tmp/query.png"}, "VS"
+        )
+        self.assertIn("IMG:D6:IMG_001", text)
+        self.assertIn("Attached memory image 1: D6:IMG_001", text)
+        self.assertEqual(paths, ["/tmp/memory.png", "/tmp/query.png"])
+
+    def test_nonvisual_question_does_not_expose_unattached_candidate_id(self):
+        memory = {**self.memory, "image": {"path": "/tmp/memory.png", "img_id": "D6:IMG_001"}}
+        text, paths = self.client._build_text_and_image_paths([memory], "question", None, "TTL")
+        self.assertNotIn("D6:IMG_001", text)
+        self.assertEqual(paths, [])
+
+
+if __name__ == "__main__":
+    unittest.main()

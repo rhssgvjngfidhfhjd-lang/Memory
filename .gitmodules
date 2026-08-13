@@ -1,0 +1,6 @@
+[submodule "agent-workflow-memory"]
+	path = agent-workflow-memory
+	url = https://github.com/zorazrw/agent-workflow-memory.git
+[submodule "langextract"]
+	path = langextract
+	url = https://github.com/google/langextract.git

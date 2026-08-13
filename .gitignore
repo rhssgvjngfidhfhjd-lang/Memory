@@ -9,7 +9,7 @@ venv/
 env/
 offline_env/
 
-# 环境变量和密钥
+# 环境变量和本地密钥
 .env
 *.key
 Nvida_api/apikey

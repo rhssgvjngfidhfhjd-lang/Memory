@@ -1,0 +1,123 @@
+﻿import threading
+import time
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from typing import Any, List, Sequence
+
+
+@dataclass(frozen=True)
+class GenerationResponse:
+    text: str
+    usage: dict[str, int]
+
+class BaseLLMClient(ABC):
+    @abstractmethod
+    def generate(self, prompt: str) -> str:
+        raise NotImplementedError
+
+
+class LLMClient(BaseLLMClient):
+    def __init__(
+        self,
+        model: str,
+        api_base: str,
+        api_key,
+        temperature: float = 0.0,
+        max_new_tokens: int = 1024,
+        top_p: float = 1.0,
+        max_retries: int = 3,
+        retry_sleep: float = 2.0,
+        timeout: int = 60,
+    ):
+        keys = _normalize_api_keys(api_key)
+        if not keys:
+            raise ValueError("api=True requires at least one api_key.")
+
+        self.model = model
+        self.api_base = api_base
+        self.api_keys = keys
+        self.temperature = temperature
+        self.max_new_tokens = max_new_tokens
+        self.top_p = top_p
+        self.max_retries = max_retries
+        self.retry_sleep = retry_sleep
+        self.timeout = timeout
+        self._client_cache = {}
+        self._lock = threading.Lock()
+        self._key_index = 0
+
+    def generate(self, prompt: str) -> str:
+        return self.generate_with_usage(prompt).text
+
+    def generate_with_usage(self, prompt: str) -> GenerationResponse:
+        last_error = None
+        for _ in range(self.max_retries):
+            client = self._next_client()
+            try:
+                completion = client.chat.completions.create(
+                    model=self.model,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=self.temperature,
+                    top_p=self.top_p,
+                    max_tokens=self.max_new_tokens,
+                )
+                message = completion.choices[0].message.content
+                return GenerationResponse(
+                    text=(message or "").strip(),
+                    usage=_normalize_usage(completion.usage),
+                )
+            except Exception as exc:
+                last_error = exc
+                time.sleep(self.retry_sleep)
+        raise RuntimeError(f"API generation failed after {self.max_retries} attempts: {last_error}")
+
+    def _next_client(self):
+        with self._lock:
+            api_key = self.api_keys[self._key_index % len(self.api_keys)]
+            self._key_index += 1
+            client = self._client_cache.get(api_key)
+            if client is None:
+                try:
+                    from openai import OpenAI
+                except ImportError as exc:
+                    raise RuntimeError(
+                        "API mode requires the 'openai' package to be installed."
+                    ) from exc
+                client = OpenAI(
+                    base_url=self.api_base,
+                    api_key=api_key,
+                    max_retries=2,
+                    timeout=self.timeout,
+                )
+                self._client_cache[api_key] = client
+            return client
+
+
+def _normalize_usage(usage: Any) -> dict[str, int]:
+    """Return the three build-token counters used by result metrics."""
+    if usage is None:
+        return {}
+
+    def value(name: str) -> int:
+        raw = usage.get(name, 0) if isinstance(usage, dict) else getattr(usage, name, 0)
+        return int(raw or 0)
+
+    prompt_tokens = value("prompt_tokens")
+    completion_tokens = value("completion_tokens")
+    total_tokens = value("total_tokens") or prompt_tokens + completion_tokens
+    return {
+        "prompt_tokens": prompt_tokens,
+        "completion_tokens": completion_tokens,
+        "total_tokens": total_tokens,
+    }
+
+
+def _normalize_api_keys(api_key) -> List[str]:
+    if api_key is None:
+        return []
+    if isinstance(api_key, str):
+        key = api_key.strip()
+        return [key] if key else []
+    if isinstance(api_key, Sequence):
+        return [str(key).strip() for key in api_key if str(key).strip()]
+    raise ValueError("api_key must be a string or a list of strings.")

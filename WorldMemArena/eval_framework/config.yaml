@@ -98,7 +98,7 @@ baselines:
     chunk_mode: "round"                        # round | turn | session
     operations: "insert"                       # 全集 "insert,update,delete,noop"; 子集如 "insert" = insert-only 消融
     ops_top_k: 5                               # executor 决策时检索的旧记忆条数
-    pipeline_root: "/data/haozhen/Offline/Offline"
+    pipeline_root: "/data/haozhen/Memory/Offline"
     executor_model: "Qwen/Qwen3-VL-4B-Instruct"
     executor_base_url: "http://127.0.0.1:8000/v1"
     executor_max_new_tokens: 1024

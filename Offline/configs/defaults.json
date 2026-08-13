@@ -1,0 +1,27 @@
+{
+  "_comment": "Experiment defaults, loaded by hive_mem entrypoints via parser.set_defaults (CLI args still override). Machine-specific values live here on purpose — edit when the environment moves.",
+
+  "answer_model": "Qwen/Qwen3-VL-4B-Instruct",
+  "answer_base_url": "http://127.0.0.1:8000/v1",
+  "num_predict": 512,
+  "request_timeout": 180,
+  "retries": 2,
+  "think": false,
+  "top_k": 5,
+
+  "executor_model": "Qwen/Qwen3-VL-4B-Instruct",
+  "executor_base_url": "http://127.0.0.1:8000/v1",
+
+  "embedding_model": "Qwen/Qwen3-VL-Embedding-2B",
+  "embedding_dim": 2048,
+
+  "data_dir": "/data/haozhen/Memory/Mem-Gallery/benchmark/data",
+  "query_embedding_dir": "data/qwen3_vl_embedding_2b/query_embeddings",
+  "profiles_file": "/data/haozhen/Memory/Offline/configs/profiles.json",
+
+  "judge_model": "openai/gpt-oss-120b",
+  "judge_timeout": 60,
+  "judge_key_file": "/data/haozhen/Memory/Nvida_api/apikey",
+  "judge_key_count": 12,
+  "judge_max_tokens": 1024
+}
