@@ -11,11 +11,17 @@ from hive_mem.builder import MAUBuilder
 from hive_mem.builder import MemoryEvent
 from benchmarks.memgallery_harness.runner.metrics import (
     add_memory_metrics,
+    add_retrieval_memory_tokens,
     calculate_memory_metrics,
+    calculate_retrieval_memory_tokens,
     merge_llm_judge_metrics,
     provenance_hit,
+    write_retrieval_memory_token,
 )
-from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
+from benchmarks.memgallery_harness.runner.answer_client import (
+    VLMAnswerClient,
+    build_retrieved_memory_context,
+)
 from hive_mem.llm_client import GenerationResponse
 from hive_mem.build_memories import completed_dataset_stats
 from hive_mem.output_layout import DatasetLayout
@@ -340,6 +346,123 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         self.assertEqual(len(bank), 2)
         self.assertEqual(bank.memories[0].metadata["source_dialogue_ids"], ["D1:1"])
         self.assertEqual(bank.memories[1].metadata["source_dialogue_ids"], ["D1:5"])
+
+
+class RetrievalMemoryTokenTest(unittest.TestCase):
+    class WhitespaceTokenizer:
+        def encode(self, text, add_special_tokens=False):
+            return str(text).split()
+
+    def test_context_formatter_matches_answer_prompt_memory_section(self):
+        items = [
+            {
+                "text": "memory D1:IMG_001",
+                "image": {"path": "/tmp/image.jpg", "img_id": "D1:IMG_001"},
+                "metadata": {
+                    "session_id": "D1",
+                    "dialogue_id": "D1:1",
+                    "image_id": "D1:IMG_001",
+                },
+            }
+        ]
+        context, image_paths = build_retrieved_memory_context(items, "VS")
+        client = VLMAnswerClient()
+        full_text, full_image_paths = client._build_text_and_image_paths(
+            items,
+            "question",
+            None,
+            "VS",
+        )
+        self.assertTrue(full_text.startswith(context + "\n\n\n\nquestion"))
+        self.assertEqual(image_paths, ["/tmp/image.jpg"])
+        self.assertEqual(full_image_paths, image_paths)
+
+    def test_historical_trace_counts_empty_graph_and_image_memory(self):
+        rows = [
+            {
+                "category": "MR",
+                "top_k": [
+                    {
+                        "via": "vector",
+                        "content": "fact D1:IMG_001",
+                        "source_dialogue_ids": ["D1:1"],
+                        "image_ids": [],
+                        "image_paths": [],
+                    },
+                    {
+                        "via": "graph",
+                        "content": "related fact",
+                        "source_dialogue_ids": ["D1:2"],
+                        "image_ids": [],
+                        "image_paths": [],
+                    },
+                ],
+            },
+            {
+                "category": "VS",
+                "top_k": [
+                    {
+                        "via": "vector",
+                        "content": "visual fact",
+                        "source_dialogue_ids": ["D2:1"],
+                        "image_ids": ["D2:IMG_001"],
+                        "image_paths": ["/tmp/image.jpg"],
+                    }
+                ],
+            },
+            {"category": "FR", "top_k": []},
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "run_manifest.json").write_text(
+                json.dumps({"graph_mode": "append"}),
+                encoding="utf-8",
+            )
+            (root / "retrieval_trace.jsonl").write_text(
+                "\n".join(json.dumps(row) for row in rows) + "\n",
+                encoding="utf-8",
+            )
+            metrics = calculate_retrieval_memory_tokens(
+                root,
+                tokenizer=self.WhitespaceTokenizer(),
+            )
+            written = write_retrieval_memory_token(
+                root,
+                tokenizer=self.WhitespaceTokenizer(),
+            )
+            saved = json.loads((root / "retrieval_memory_token.json").read_text())
+
+        self.assertEqual(metrics["total_tokens"], 38)
+        self.assertEqual(metrics["query_count"], 3)
+        self.assertEqual(metrics["average_tokens_per_query"], 12.67)
+        self.assertEqual(written, metrics)
+        self.assertEqual(saved, metrics)
+
+    def test_retrieval_tokens_are_inserted_with_memory_metrics(self):
+        combined = add_retrieval_memory_tokens(
+            {
+                "f1": 0.5,
+                "llm_judge": 0.75,
+                "memory_build_tokens": {"total_tokens": 10},
+                "summary_characters": 100,
+                "count": 2,
+            },
+            {
+                "total_tokens": 20,
+                "query_count": 2,
+                "average_tokens_per_query": 10.0,
+            },
+        )
+        self.assertEqual(
+            list(combined)[:5],
+            [
+                "f1",
+                "llm_judge",
+                "memory_build_tokens",
+                "summary_characters",
+                "retrieval_memory_tokens",
+            ],
+        )
 
 
 class CrashingLLMClient:

@@ -6,6 +6,7 @@ import tempfile
 import atexit
 
 import os
+import sys
 
 import chromadb
 from chromadb.config import Settings
@@ -16,6 +17,65 @@ from chromadb.utils.embedding_functions import (
 from nltk.tokenize import word_tokenize
 
 
+_QWEN_EMBEDDING_SERVICES = {}
+
+
+class Qwen3VLEmbeddingFunction:
+    """Chroma embedding function backed by Offline's validated Qwen3-VL loader."""
+
+    def __init__(self, model_name: str):
+        offline_root = Path(
+            os.getenv("OFFLINE_ROOT", "/data/haozhen/Memory/Offline")
+        ).resolve()
+        offline_src = str(offline_root / "src")
+        if offline_src not in sys.path:
+            sys.path.insert(0, offline_src)
+
+        from embedding.qwen3vl_embedding import Qwen3VLEmbeddingService
+
+        device = os.getenv("QWEN3VL_EMBEDDING_DEVICE") or "cpu"
+        self.model_name = model_name
+        self.device = device
+        cache_key = (model_name, device)
+        service = _QWEN_EMBEDDING_SERVICES.get(cache_key)
+        if service is None:
+            service = Qwen3VLEmbeddingService(
+                model_name=model_name,
+                device=device,
+                expected_dim=2048,
+                dtype=os.getenv("QWEN3VL_EMBEDDING_DTYPE", "bfloat16"),
+                local_files_only=os.getenv("HF_HUB_OFFLINE", "0") == "1",
+            )
+            _QWEN_EMBEDDING_SERVICES[cache_key] = service
+        self.service = service
+
+    def __call__(self, input):
+        return [self.service.embed_chunk(str(text)) for text in input]
+
+    def embed_documents(self, input):
+        return self(input)
+
+    def embed_query(self, input):
+        return self(input)
+
+    @staticmethod
+    def name() -> str:
+        return "qwen3_vl_embedding"
+
+    def get_config(self):
+        return {"model_name": self.model_name, "device": self.device}
+
+    @staticmethod
+    def build_from_config(config):
+        return Qwen3VLEmbeddingFunction(str(config["model_name"]))
+
+    def default_space(self):
+        return "cosine"
+
+    def supported_spaces(self):
+        return ["cosine", "l2", "ip"]
+
+
 def _build_embedding_function(model_name: str):
     """Pick an OpenAI-compatible or SentenceTransformer embedding function.
 
@@ -24,6 +84,8 @@ def _build_embedding_function(model_name: str):
     ``all-MiniLM-L6-v2`` collections used historically by A-Mem); anything
     else falls back to local ``SentenceTransformer`` loading.
     """
+    if model_name == "Qwen/Qwen3-VL-Embedding-2B":
+        return Qwen3VLEmbeddingFunction(model_name)
     if model_name.startswith("text-embedding-"):
         return OpenAIEmbeddingFunction(
             api_key=os.getenv("OPENAI_API_KEY") or "",

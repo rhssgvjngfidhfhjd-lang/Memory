@@ -7,8 +7,13 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
+from benchmarks.memgallery_harness.runner.answer_client import (
+    build_retrieved_memory_context,
+)
+
 
 MEMORY_METRICS_FILENAME = "memory_metrics.json"
+RETRIEVAL_MEMORY_TOKEN_FILENAME = "retrieval_memory_token.json"
 TOKEN_KEYS = ("prompt_tokens", "completion_tokens", "total_tokens")
 
 
@@ -184,6 +189,147 @@ def add_memory_metrics(summary: dict, memory_metrics: dict) -> dict:
             for category, values in categories.items()
         }
     return combined
+
+
+def calculate_retrieval_memory_tokens(
+    result_dir: str | Path,
+    *,
+    tokenizer_name: str = "",
+    tokenizer: Any = None,
+) -> dict[str, int | float]:
+    """Count retrieved-memory text tokens across all QA retrieval traces.
+
+    The count covers only the memory section rendered into the answer prompt:
+    its heading, per-memory headers, memory text, graph prefixes, redaction,
+    and attached-memory-image labels. It excludes the system prompt, question,
+    answer completion, and visual image tokens.
+    """
+    root = Path(result_dir)
+    trace_path = root / "retrieval_trace.jsonl"
+    if not trace_path.exists():
+        raise FileNotFoundError(f"Retrieval trace not found: {trace_path}")
+
+    manifest_path = root / "run_manifest.json"
+    manifest = (
+        json.loads(manifest_path.read_text(encoding="utf-8"))
+        if manifest_path.exists()
+        else {}
+    )
+    if tokenizer is None:
+        from transformers import AutoTokenizer
+
+        model = tokenizer_name or str(manifest.get("answer_model") or "")
+        tokenizer = AutoTokenizer.from_pretrained(
+            _resolve_tokenizer_name(model),
+            trust_remote_code=True,
+        )
+
+    append_graph_memories = str(manifest.get("graph_mode") or "").lower() == "append"
+    total_tokens = 0
+    query_count = 0
+    for row in _read_jsonl(trace_path):
+        query_count += 1
+        hits = row.get("top_k") or []
+        if not hits:
+            continue
+        memory_context = row.get("memory_context")
+        if not isinstance(memory_context, str):
+            memory_items = _memory_items_from_trace(
+                hits,
+                append_graph_memories=append_graph_memories,
+            )
+            memory_context, _ = build_retrieved_memory_context(
+                memory_items,
+                str(row.get("category") or ""),
+            )
+        token_ids = tokenizer.encode(memory_context, add_special_tokens=False)
+        total_tokens += len(token_ids)
+
+    return {
+        "total_tokens": total_tokens,
+        "query_count": query_count,
+        "average_tokens_per_query": (
+            round(total_tokens / query_count, 2) if query_count else 0.0
+        ),
+    }
+
+
+def write_retrieval_memory_token(
+    result_dir: str | Path,
+    output_dir: str | Path | None = None,
+    *,
+    tokenizer_name: str = "",
+    tokenizer: Any = None,
+) -> dict[str, int | float]:
+    metrics = calculate_retrieval_memory_tokens(
+        result_dir,
+        tokenizer_name=tokenizer_name,
+        tokenizer=tokenizer,
+    )
+    path = Path(output_dir or result_dir) / RETRIEVAL_MEMORY_TOKEN_FILENAME
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
+    return metrics
+
+
+def add_retrieval_memory_tokens(summary: dict, retrieval_metrics: dict) -> dict:
+    """Place retrieval-memory token totals with the other memory metrics."""
+    leading_keys = (
+        "f1",
+        "llm_judge",
+        "memory_build_tokens",
+        "summary_characters",
+    )
+    combined = {
+        key: summary.get(key)
+        for key in leading_keys
+        if key in summary
+    }
+    combined["retrieval_memory_tokens"] = dict(retrieval_metrics)
+    combined.update(
+        {
+            key: value
+            for key, value in summary.items()
+            if key not in {*leading_keys, "retrieval_memory_tokens"}
+        }
+    )
+    return combined
+
+
+def _memory_items_from_trace(
+    hits: list[dict[str, Any]],
+    *,
+    append_graph_memories: bool,
+) -> list[dict[str, Any]]:
+    """Rebuild answer-client memory items from historical retrieval traces."""
+    items = []
+    for hit in hits:
+        source_ids = [str(value) for value in (hit.get("source_dialogue_ids") or [])]
+        dialogue_id = source_ids[0] if source_ids else ""
+        session_id = dialogue_id.split(":", 1)[0] if dialogue_id else ""
+        image_ids = [str(value) for value in (hit.get("image_ids") or [])]
+        image_paths = [str(value) for value in (hit.get("image_paths") or [])]
+        image = None
+        if image_paths:
+            image = {
+                "path": image_paths[0],
+                "img_id": image_ids[0] if image_ids else "",
+            }
+        text = str(hit.get("content") or "")
+        if append_graph_memories and str(hit.get("via") or "") == "graph":
+            text = f"(related background memory) {text}"
+        items.append(
+            {
+                "text": text,
+                "image": image,
+                "metadata": {
+                    "session_id": session_id,
+                    "dialogue_id": dialogue_id,
+                    "image_id": image_ids[0] if image_ids else "",
+                },
+            }
+        )
+    return items
 
 
 def _count_summary_characters(index_root: Path) -> int:

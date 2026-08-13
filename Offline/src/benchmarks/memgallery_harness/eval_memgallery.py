@@ -6,7 +6,10 @@ import os
 from pathlib import Path
 import time
 
-from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
+from benchmarks.memgallery_harness.runner.answer_client import (
+    VLMAnswerClient,
+    build_retrieved_memory_context,
+)
 from benchmarks.memgallery_harness.runner.prompts import (
     SYSTEM_PROMPT,
     format_question_prompt,
@@ -14,7 +17,11 @@ from benchmarks.memgallery_harness.runner.prompts import (
 )
 from benchmarks.memgallery_harness.retrieval.query_embedding_cache import QueryEmbeddingCache, make_query_id
 
-from benchmarks.memgallery_harness.runner.metrics import summarize_results, write_memory_metrics
+from benchmarks.memgallery_harness.runner.metrics import (
+    summarize_results,
+    write_memory_metrics,
+    write_retrieval_memory_token,
+)
 from typing import Any, Optional
 from hive_mem.retriever import SimpleMemoryIndex
 
@@ -142,6 +149,7 @@ def run_dataset(
         memory_items = adapter.recall(
             {"text": f"[{category}] {question}", "category": category, "vector": query_vector}
         )
+        memory_context, _ = build_retrieved_memory_context(memory_items, category)
         prompt = format_question_prompt(question, category, speaker_a, "assistant")
         try:
             answer = client.answer(
@@ -179,6 +187,7 @@ def run_dataset(
                 "category": category,
                 "clue": clue,
                 "top_k": adapter.last_trace,
+                "memory_context": memory_context,
             }
         )
         print(f"[{dataset_name} {qa_index}/{len(qa_pairs)}] {category} answer={answer[:80]!r} error={error[:80]!r}")
@@ -238,6 +247,11 @@ def main() -> None:
         "--memory-tokenizer",
         default="",
         help="Tokenizer used only to backfill build tokens for historical traces without usage.",
+    )
+    parser.add_argument(
+        "--retrieval-memory-tokenizer",
+        default="",
+        help="Tokenizer for retrieved-memory text; defaults to --answer-model.",
     )
     from hive_mem.build_memories import apply_config_defaults
     apply_config_defaults(parser)
@@ -320,11 +334,24 @@ def main() -> None:
         for trace in all_traces:
             handle.write(json.dumps(trace, ensure_ascii=False) + "\n")
     (result_dir / "run_manifest.json").write_text(json.dumps(vars(args), ensure_ascii=False, indent=2), encoding="utf-8")
-    write_memory_metrics(
-        Path(args.index_root),
-        result_dir,
-        tokenizer_name=args.memory_tokenizer,
-    )
+    try:
+        write_retrieval_memory_token(
+            result_dir,
+            tokenizer_name=args.retrieval_memory_tokenizer or args.answer_model,
+        )
+    except (OSError, KeyError, ValueError) as exc:
+        print(f"retrieval memory token metrics unavailable: {exc}", flush=True)
+    try:
+        write_memory_metrics(
+            Path(args.index_root),
+            result_dir,
+            tokenizer_name=args.memory_tokenizer,
+        )
+    except (FileNotFoundError, KeyError, ValueError) as exc:
+        # Legacy baseline traces (including A-Mem) do not always contain the
+        # tokenizer metadata needed for an honest memory-token estimate.  QA
+        # results are still complete and should not prevent the judge stage.
+        print(f"memory metrics unavailable: {exc}", flush=True)
 
 
 if __name__ == "__main__":

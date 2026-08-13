@@ -16,6 +16,45 @@ MAX_IMAGE_SIDE_FOR_ANSWER = 1344
 IMAGE_ID_PATTERN = re.compile(r"\bD\d+:IMG_\d+\b", re.IGNORECASE)
 
 
+def build_retrieved_memory_context(
+    memory_items: list[dict[str, Any]],
+    category: str = "",
+) -> tuple[str, list[str]]:
+    """Render the exact retrieved-memory text and attached memory images.
+
+    Keeping this formatter outside ``VLMAnswerClient`` lets offline metrics
+    tokenize the same text that the answer model receives.
+    """
+    lines = ["The retrieved memory contents are as follows:"]
+    image_paths: list[str] = []
+    image_num = 0
+    include_memory_images = category.upper() in {"VS", "VR"}
+    for idx, item in enumerate(memory_items, start=1):
+        md = item.get("metadata", {}) or {}
+        image = item.get("image")
+        has_attached_memory_image = (
+            include_memory_images
+            and isinstance(image, dict)
+            and bool(image.get("path"))
+        )
+        header = f"[{idx}] SESSION:{md.get('session_id', '')} ROUND:{md.get('dialogue_id', '')}"
+        # An image ID is a legitimate candidate label only when its image is
+        # actually attached. Exposing an unattached ID leaks the answer to
+        # text-only and caption-only ablations.
+        if has_attached_memory_image and md.get("image_id"):
+            header += f" IMG:{md.get('image_id')}"
+        lines.append(header)
+        memory_text = str(item.get("text", ""))
+        if not has_attached_memory_image:
+            memory_text = IMAGE_ID_PATTERN.sub("[IMAGE_ID_REDACTED]", memory_text)
+        lines.append(memory_text)
+        if has_attached_memory_image:
+            image_num += 1
+            lines.append(f"Attached memory image {image_num}: {image.get('img_id', '')}")
+            image_paths.append(str(image["path"]))
+    return "\n\n".join(lines), image_paths
+
+
 class VLMAnswerClient:
     def __init__(
         self,
@@ -176,35 +215,9 @@ class VLMAnswerClient:
         query_image: dict[str, Any] | None,
         category: str = "",
     ) -> tuple[str, list[str]]:
-        lines = ["The retrieved memory contents are as follows:"]
-        image_paths: list[str] = []
-        image_num = 0
-        include_memory_images = self._include_memory_images(category)
-        for idx, item in enumerate(memory_items, start=1):
-            md = item.get("metadata", {}) or {}
-            image = item.get("image")
-            has_attached_memory_image = (
-                include_memory_images
-                and isinstance(image, dict)
-                and bool(image.get("path"))
-            )
-            header = f"[{idx}] SESSION:{md.get('session_id', '')} ROUND:{md.get('dialogue_id', '')}"
-            # An image ID is a legitimate candidate label only when its image is
-            # actually attached. Exposing an unattached ID leaks the answer to
-            # text-only and caption-only ablations.
-            if has_attached_memory_image and md.get("image_id"):
-                header += f" IMG:{md.get('image_id')}"
-            lines.append(header)
-            memory_text = str(item.get("text", ""))
-            if not has_attached_memory_image:
-                memory_text = IMAGE_ID_PATTERN.sub("[IMAGE_ID_REDACTED]", memory_text)
-            lines.append(memory_text)
-            if has_attached_memory_image:
-                image_num += 1
-                lines.append(f"Attached memory image {image_num}: {image.get('img_id', '')}")
-                image_paths.append(str(image["path"]))
-        lines.append("")
-        lines.append(question_prompt)
+        memory_text, image_paths = build_retrieved_memory_context(memory_items, category)
+        lines = [memory_text, "", question_prompt]
+        image_num = len(image_paths)
         if query_image and query_image.get("path"):
             image_num += 1
             lines.append(f"Attached question image {image_num}.")

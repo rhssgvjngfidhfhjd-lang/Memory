@@ -14,9 +14,12 @@ from openai import OpenAI
 
 from benchmarks.memgallery_harness.runner.metrics import (
     MEMORY_METRICS_FILENAME,
+    RETRIEVAL_MEMORY_TOKEN_FILENAME,
     add_memory_metrics,
+    add_retrieval_memory_tokens,
     merge_llm_judge_metrics,
     write_memory_metrics,
+    write_retrieval_memory_token,
 )
 
 
@@ -267,22 +270,46 @@ def main() -> None:
     if benchmark_metrics_path.exists():
         benchmark_metrics = json.loads(benchmark_metrics_path.read_text(encoding="utf-8"))
         combined = merge_llm_judge_metrics(benchmark_metrics, summary)
+        source_result_dir = Path(args.results).parent
+        run_manifest_path = source_result_dir / "run_manifest.json"
+        run_manifest = (
+            json.loads(run_manifest_path.read_text(encoding="utf-8"))
+            if run_manifest_path.exists()
+            else {}
+        )
         memory_metrics_path = out_dir / MEMORY_METRICS_FILENAME
-        if not memory_metrics_path.exists():
-            run_manifest_path = Path(args.results).parent / "run_manifest.json"
-            if run_manifest_path.exists():
-                run_manifest = json.loads(run_manifest_path.read_text(encoding="utf-8"))
-                try:
-                    write_memory_metrics(
-                        run_manifest["index_root"],
-                        out_dir,
-                        tokenizer_name=str(run_manifest.get("memory_tokenizer") or ""),
-                    )
-                except (FileNotFoundError, KeyError, ValueError) as exc:
-                    print(f"memory metrics unavailable: {exc}", flush=True)
+        if not memory_metrics_path.exists() and run_manifest:
+            try:
+                write_memory_metrics(
+                    run_manifest["index_root"],
+                    out_dir,
+                    tokenizer_name=str(run_manifest.get("memory_tokenizer") or ""),
+                )
+            except (FileNotFoundError, KeyError, ValueError) as exc:
+                print(f"memory metrics unavailable: {exc}", flush=True)
         if memory_metrics_path.exists():
             memory_metrics = json.loads(memory_metrics_path.read_text(encoding="utf-8"))
             combined = add_memory_metrics(combined, memory_metrics)
+
+        retrieval_metrics_path = out_dir / RETRIEVAL_MEMORY_TOKEN_FILENAME
+        if not retrieval_metrics_path.exists() and run_manifest:
+            try:
+                write_retrieval_memory_token(
+                    source_result_dir,
+                    out_dir,
+                    tokenizer_name=str(
+                        run_manifest.get("retrieval_memory_tokenizer")
+                        or run_manifest.get("answer_model")
+                        or ""
+                    ),
+                )
+            except (OSError, KeyError, ValueError) as exc:
+                print(f"retrieval memory token metrics unavailable: {exc}", flush=True)
+        if retrieval_metrics_path.exists():
+            retrieval_metrics = json.loads(
+                retrieval_metrics_path.read_text(encoding="utf-8")
+            )
+            combined = add_retrieval_memory_tokens(combined, retrieval_metrics)
         (out_dir / "summary.json").write_text(
             json.dumps(combined, ensure_ascii=False, indent=2), encoding="utf-8"
         )
