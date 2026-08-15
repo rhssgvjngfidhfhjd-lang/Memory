@@ -8,7 +8,7 @@ from typing import Any, Iterable
 
 import numpy as np
 
-from hive_mem.executor import MemoryExecutor
+from hive_mem.executor import MemoryExecutor, normalize_visual_input
 from hive_mem.mau import MAUBank
 from hive_mem.output_layout import DatasetLayout
 from dataclasses import asdict, dataclass, field
@@ -111,7 +111,9 @@ class MAUBuilder:
         max_events: int = 0,
         build_image_vectors: bool = False,
         profile: str = "",
+        executor_visual_input: str = "image",
     ) -> dict[str, Any]:
+        executor_visual_input = normalize_visual_input(executor_visual_input)
         all_events = list(events)
         event_list = all_events[:max_events] if max_events else all_events
         output_layout = DatasetLayout(Path(output_dir))
@@ -126,6 +128,15 @@ class MAUBuilder:
         start_index = 0
         if resume and state_path.exists():
             state = json.loads(state_path.read_text(encoding="utf-8"))
+            checkpoint_visual_input = str(
+                state.get("executor_visual_input") or "caption"
+            )
+            if checkpoint_visual_input != executor_visual_input:
+                raise ValueError(
+                    "Checkpoint executor visual input mismatch: "
+                    f"{checkpoint_visual_input!r} != {executor_visual_input!r}. "
+                    "Use the original mode or restart with --no-resume."
+                )
             start_index = int(state.get("next_event_index", 0))
             bank = MAUBank.load(checkpoint_dir)
             _truncate_trace(trace_path, start_index)
@@ -137,13 +148,20 @@ class MAUBuilder:
         memory_items = 0
         parse_failures = 0
         fallback_inserts = 0
+        executor_image_requests = 0
         started = time.time()
         for event_index in range(start_index, len(event_list)):
             event = event_list[event_index]
+            executor_images = (
+                event.image_paths if executor_visual_input == "image" else []
+            )
             raw_response, actions, llm_usage = self.executor.execute_with_usage(
                 chunk_text=event.text,
                 profile=profile,
+                image_paths=executor_images,
+                visual_input=executor_visual_input,
             )
+            executor_image_requests += int(bool(executor_images))
             self.executor.apply_to_memory_bank(
                 actions,
                 bank,
@@ -151,9 +169,13 @@ class MAUBuilder:
             )
             used_fallback = False
             if not any(action.success for action in actions):
-                embedding = self.embedder.embed_texts(event.text, mode="context")
-                bank.add_memory(
+                fallback_text = self.executor.prepare_chunk_text(
                     event.text,
+                    executor_visual_input,
+                )
+                embedding = self.embedder.embed_texts(fallback_text, mode="context")
+                bank.add_memory(
+                    fallback_text,
                     embedding,
                     metadata={**event.metadata, "source": "fallback_insert"},
                 )
@@ -170,6 +192,8 @@ class MAUBuilder:
 
                 "raw_response": raw_response,
                 "actions": [action.to_dict() for action in actions],
+                "executor_visual_input": executor_visual_input,
+                "executor_image_count": len(executor_images),
                 "fallback_insert": used_fallback,
                 "memory_count_after": len(bank),
             }
@@ -180,7 +204,13 @@ class MAUBuilder:
             if (event_index + 1) % checkpoint_every == 0 or event_index + 1 == len(event_list):
                 bank.save(checkpoint_dir)
                 state_path.write_text(
-                    json.dumps({"next_event_index": event_index + 1}, indent=2),
+                    json.dumps(
+                        {
+                            "next_event_index": event_index + 1,
+                            "executor_visual_input": executor_visual_input,
+                        },
+                        indent=2,
+                    ),
                     encoding="utf-8",
                 )
 
@@ -210,6 +240,8 @@ class MAUBuilder:
             "memory_items_this_run": memory_items,
             "parse_failures_this_run": parse_failures,
             "fallback_inserts_this_run": fallback_inserts,
+            "executor_visual_input": executor_visual_input,
+            "executor_image_requests_this_run": executor_image_requests,
             "elapsed_seconds_this_run": time.time() - started,
             "image_vector_memories": image_vector_count,
         }

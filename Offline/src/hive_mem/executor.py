@@ -9,7 +9,7 @@ git for mutable-memory experiments.
 import json
 import re
 from dataclasses import dataclass
-from typing import List
+from typing import List, Sequence
 
 import numpy as np
 from json_repair import repair_json
@@ -19,6 +19,9 @@ from .entity_schema import (
     ontology_prompt_block,
     parse_entities_payload,
 )
+
+
+EXECUTOR_VISUAL_INPUTS = ("image", "caption")
 
 
 
@@ -44,22 +47,81 @@ class MemoryExecutor:
         self.llm_client = llm_client
         self.embedder = embedder
 
-    def execute(self, chunk_text: str, profile: str = ""):
-        raw_response, results, _ = self.execute_with_usage(chunk_text, profile=profile)
+    def execute(
+        self,
+        chunk_text: str,
+        profile: str = "",
+        *,
+        image_paths: Sequence[str] | None = None,
+        visual_input: str = "image",
+    ):
+        raw_response, results, _ = self.execute_with_usage(
+            chunk_text,
+            profile=profile,
+            image_paths=image_paths,
+            visual_input=visual_input,
+        )
         return raw_response, results
 
-    def execute_with_usage(self, chunk_text: str, profile: str = ""):
-        prompt = self._build_prompt(chunk_text, profile=profile)
+    def execute_with_usage(
+        self,
+        chunk_text: str,
+        profile: str = "",
+        *,
+        image_paths: Sequence[str] | None = None,
+        visual_input: str = "image",
+    ):
+        visual_input = normalize_visual_input(visual_input)
+        selected_images = (
+            [str(path) for path in (image_paths or []) if str(path).strip()]
+            if visual_input == "image"
+            else []
+        )
+        prepared_chunk = self.prepare_chunk_text(chunk_text, visual_input)
+        prompt = self._build_prompt(
+            prepared_chunk,
+            profile=profile,
+            has_images=bool(selected_images),
+        )
         generate_with_usage = getattr(self.llm_client, "generate_with_usage", None)
         if callable(generate_with_usage):
-            response = generate_with_usage(prompt)
+            response = (
+                generate_with_usage(prompt, image_paths=selected_images)
+                if selected_images
+                else generate_with_usage(prompt)
+            )
             raw_response = response.text
             usage = dict(response.usage)
         else:
-            raw_response = self.llm_client.generate(prompt)
+            raw_response = (
+                self.llm_client.generate(prompt, image_paths=selected_images)
+                if selected_images
+                else self.llm_client.generate(prompt)
+            )
             usage = {}
         results = self._parse_response(raw_response)
         return raw_response, results, usage
+
+    @staticmethod
+    def prepare_chunk_text(chunk_text: str, visual_input: str = "image") -> str:
+        """Apply the mutually exclusive image/caption policy to one chunk."""
+        if normalize_visual_input(visual_input) == "caption":
+            return str(chunk_text)
+
+        lines = []
+        for line in str(chunk_text).splitlines():
+            stripped = line.lstrip()
+            if stripped.lower().startswith("image_caption:"):
+                continue
+            if stripped.lower().startswith("previous_round_summary:"):
+                line = re.sub(
+                    r";\s*image_caption\b.*$",
+                    "",
+                    line,
+                    flags=re.IGNORECASE,
+                ).rstrip()
+            lines.append(line)
+        return "\n".join(lines)
 
     def apply_to_memory_bank(
         self,
@@ -91,13 +153,26 @@ class MemoryExecutor:
     # empirically-motivated fixes from the 2026-08 evaluation rounds: explicit
     # date anchoring (TR/MR), no persona boilerplate (embedding dilution),
     # completeness over ENTITIES.
-    def _build_prompt(self, chunk_text: str, profile: str = "") -> str:
+    def _build_prompt(
+        self,
+        chunk_text: str,
+        profile: str = "",
+        *,
+        has_images: bool = False,
+    ) -> str:
         profile_block = (
             "### User Profile\n"
             "Background reference for resolving who/what names refer to; "
             "do NOT copy profile facts into memories.\n"
             f"{profile}\n\n"
         ) if profile else ""
+        image_block = (
+            "### Attached Image\n"
+            "The original image referenced by the image_id in the current chunk is "
+            "attached. Inspect the image itself and preserve visual details that may "
+            "be needed to answer future questions; do not guess details that are not "
+            "visible.\n\n"
+        ) if has_images else ""
 
         return (
             "### Role\n"
@@ -111,6 +186,7 @@ class MemoryExecutor:
 
             "### Current Chunk\n"
             f"{chunk_text}\n\n"
+            f"{image_block}"
 
             "### Output Format\n"
             "Output one memory item per independent fact, written as a MEMORY_ITEM line "
@@ -267,3 +343,13 @@ class MemoryExecutor:
     @staticmethod
     def _normalize_memory_text(text: str) -> str:
         return re.sub(r"\s+", " ", str(text or "")).strip().lower()
+
+
+def normalize_visual_input(value: str) -> str:
+    mode = str(value or "").strip().lower()
+    if mode not in EXECUTOR_VISUAL_INPUTS:
+        raise ValueError(
+            f"Unknown executor visual input {value!r}; expected one of "
+            f"{', '.join(EXECUTOR_VISUAL_INPUTS)}"
+        )
+    return mode

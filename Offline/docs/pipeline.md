@@ -6,7 +6,8 @@
 
 ## 2. 建库（MAU 生成 + 同步编码）  `hive_mem/build_memories.py::main` → `hive_mem/builder.py::MemGalleryMemoryBuilder.build`
 prompt1 拼装：`hive_mem/executor.py::MemoryExecutor._build_prompt`（本体清单来自 `entity_schema.py::ontology_prompt_block`）
-LLM 调用与解析：`executor.py::execute / _parse_response`，入库 `executor.py::apply_to_memory_bank`
+视觉输入：`configs/defaults.json::executor_visual_input` 默认 `image`，向建库 VLM 发送原图并移除互斥的 caption；设为 `caption` 可恢复旧的纯文本 caption 输入
+LLM 调用与解析：`executor.py::execute / _parse_response` → `hive_mem/llm_client.py::LLMClient.generate_with_usage`（支持原图 `image_url`），入库 `executor.py::apply_to_memory_bank`
 向量编码（就在本步）：`embedding/qwen3vl_embedding.py::QwenMemoryEmbedder.embed_texts / embed_images`
 输入：chunks_no_profile.jsonl + `configs/profiles.json`（persona 注入 prompt）
 输出：`outputs/<run>/datasets/<数据集>/memories.jsonl`（MAU：summary+entities+attributes）+ `vectors/text.npy` + `vectors/image.npy`/`vectors/image_mask.npy`

@@ -20,6 +20,7 @@ from pathlib import Path
 from hive_mem.llm_client import LLMClient
 from hive_mem.builder import load_events
 from hive_mem.executor import MemoryExecutor
+from hive_mem.executor import EXECUTOR_VISUAL_INPUTS
 from hive_mem.mau import MAUBank
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,10 +45,19 @@ def main() -> None:
     parser.add_argument("--chunk-index", type=int, default=0)
     parser.add_argument("--out-dir", default=str(ROOT / "outputs/temp"))
     parser.add_argument("--device", default="cuda:0")
+    parser.add_argument(
+        "--executor-visual-input",
+        choices=EXECUTOR_VISUAL_INPUTS,
+        default="",
+        help="Override configs/defaults.json for this one-item build.",
+    )
     parser.add_argument("--no-embed", action="store_true", help="跳过真实 embedding（不加载 GPU 模型）")
     args = parser.parse_args()
 
     config = json.loads((ROOT / "configs/defaults.json").read_text(encoding="utf-8"))
+    visual_input = args.executor_visual_input or config.get(
+        "executor_visual_input", "image"
+    )
     events = load_events(args.chunks)
     event = events[args.chunk_index]
     profile = json.loads(Path(args.profiles).read_text(encoding="utf-8")).get(event.dataset, "")
@@ -70,7 +80,12 @@ def main() -> None:
         )
 
     executor = MemoryExecutor(llm_client, embedder)
-    raw_response, actions = executor.execute(chunk_text=event.text, profile=profile)
+    raw_response, actions = executor.execute(
+        chunk_text=event.text,
+        profile=profile,
+        image_paths=event.image_paths,
+        visual_input=visual_input,
+    )
 
     bank = MAUBank()
     executor.apply_to_memory_bank(actions, bank, event_metadata=event.metadata)
@@ -85,6 +100,10 @@ def main() -> None:
     (out_dir / f"raw_response_{tag}.txt").write_text(raw_response, encoding="utf-8")
 
     print(f"=== chunk={event.source_chunk_id} dataset={event.dataset} ===")
+    print(
+        f"executor_visual_input={visual_input} "
+        f"attached_images={len(event.image_paths) if visual_input == 'image' else 0}"
+    )
     print(f"LLM 返回 {len(actions)} 个块，入库 {len(bank)} 条 MAU")
     for mau in maus:
         print(json.dumps(mau, ensure_ascii=False, indent=2))

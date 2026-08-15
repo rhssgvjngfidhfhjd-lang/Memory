@@ -61,6 +61,11 @@ pip install -e .          # src-layout install; removes any need for PYTHONPATH
 
 Serve the executor/answer model (Qwen3-VL-4B-Instruct) with vLLM on `:8000`.
 
+The executor uses the chunk's original image as its visual evidence by default
+(`executor_visual_input: image` in `configs/defaults.json`) and removes the
+mutually exclusive `image_caption` text. Use
+`--executor-visual-input caption` to reproduce the legacy caption-only build.
+
 ## Pipeline
 
 ```bash
@@ -70,6 +75,7 @@ python -m hive_mem.build_memories --mode c \
   --profiles-file configs/profiles.json \
   --output-root outputs/<run> \
   --executor-model Qwen/Qwen3-VL-4B-Instruct --executor-base-url http://127.0.0.1:8000/v1 \
+  --executor-visual-input image \
   --device cuda:0
 
 # 2. Deterministic edges (temporal chain; entity/attribute pairs derived at load time)

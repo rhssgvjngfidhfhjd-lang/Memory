@@ -1,4 +1,7 @@
 ﻿import threading
+import base64
+import mimetypes
+from pathlib import Path
 import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -12,7 +15,11 @@ class GenerationResponse:
 
 class BaseLLMClient(ABC):
     @abstractmethod
-    def generate(self, prompt: str) -> str:
+    def generate(
+        self,
+        prompt: str,
+        image_paths: Sequence[str] | None = None,
+    ) -> str:
         raise NotImplementedError
 
 
@@ -46,17 +53,26 @@ class LLMClient(BaseLLMClient):
         self._lock = threading.Lock()
         self._key_index = 0
 
-    def generate(self, prompt: str) -> str:
-        return self.generate_with_usage(prompt).text
+    def generate(
+        self,
+        prompt: str,
+        image_paths: Sequence[str] | None = None,
+    ) -> str:
+        return self.generate_with_usage(prompt, image_paths=image_paths).text
 
-    def generate_with_usage(self, prompt: str) -> GenerationResponse:
+    def generate_with_usage(
+        self,
+        prompt: str,
+        image_paths: Sequence[str] | None = None,
+    ) -> GenerationResponse:
+        user_content = _build_user_content(prompt, image_paths)
         last_error = None
         for _ in range(self.max_retries):
             client = self._next_client()
             try:
                 completion = client.chat.completions.create(
                     model=self.model,
-                    messages=[{"role": "user", "content": prompt}],
+                    messages=[{"role": "user", "content": user_content}],
                     temperature=self.temperature,
                     top_p=self.top_p,
                     max_tokens=self.max_new_tokens,
@@ -121,3 +137,31 @@ def _normalize_api_keys(api_key) -> List[str]:
     if isinstance(api_key, Sequence):
         return [str(key).strip() for key in api_key if str(key).strip()]
     raise ValueError("api_key must be a string or a list of strings.")
+
+
+def _build_user_content(
+    prompt: str,
+    image_paths: Sequence[str] | None,
+) -> str | list[dict[str, Any]]:
+    """Build an OpenAI-compatible user message without altering text-only calls."""
+    paths = [Path(path) for path in (image_paths or []) if str(path).strip()]
+    if not paths:
+        return prompt
+    content: list[dict[str, Any]] = [{"type": "text", "text": prompt}]
+    content.extend(
+        {
+            "type": "image_url",
+            "image_url": {"url": _encode_image_data_url(path)},
+        }
+        for path in paths
+    )
+    return content
+
+
+def _encode_image_data_url(path: Path) -> str:
+    """Encode the source image bytes directly; build-time input is not resized."""
+    if not path.is_file():
+        raise FileNotFoundError(f"Build image not found: {path}")
+    mime = mimetypes.guess_type(path.name)[0] or "image/jpeg"
+    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+    return f"data:{mime};base64,{encoded}"
