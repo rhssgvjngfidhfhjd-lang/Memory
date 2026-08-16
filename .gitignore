@@ -45,6 +45,7 @@ Offline/artifacts/faiss_index_*/
 
 # 运行日志/状态文件（非 *.log 后缀的也一并排除）
 **/logs/
+Offline/wandb/
 *_status.txt
 *_driver.log
 

@@ -14,6 +14,7 @@ from PIL import Image
 
 MAX_IMAGE_SIDE_FOR_ANSWER = 1344
 IMAGE_ID_PATTERN = re.compile(r"\bD\d+:IMG_\d+\b", re.IGNORECASE)
+MEMORY_IMAGE_CATEGORIES = frozenset({"VS", "VR", "TTL"})
 
 
 def build_retrieved_memory_context(
@@ -28,7 +29,7 @@ def build_retrieved_memory_context(
     lines = ["The retrieved memory contents are as follows:"]
     image_paths: list[str] = []
     image_num = 0
-    include_memory_images = category.upper() in {"VS", "VR"}
+    include_memory_images = category.upper() in MEMORY_IMAGE_CATEGORIES
     for idx, item in enumerate(memory_items, start=1):
         md = item.get("metadata", {}) or {}
         image = item.get("image")
@@ -142,8 +143,10 @@ class VLMAnswerClient:
             ],
         }
         if self.think is not None:
-            payload["extra_body"] = {"think": self.think}
-            payload["think"] = self.think
+            # vLLM applies Qwen's thinking switch while rendering the chat
+            # template. Top-level ``think``/``extra_body`` fields are ignored
+            # by its OpenAI-compatible request schema.
+            payload["chat_template_kwargs"] = {"enable_thinking": self.think}
         data = self._post_json(f"{self.base_url}/chat/completions", payload)
         choices = data.get("choices") or []
         if not choices:
@@ -226,7 +229,7 @@ class VLMAnswerClient:
 
     @staticmethod
     def _include_memory_images(category: str) -> bool:
-        return category.upper() in {"VS", "VR"}
+        return category.upper() in MEMORY_IMAGE_CATEGORIES
 
     def _post_json(self, url: str, payload: dict[str, Any]) -> dict[str, Any]:
         last_exc = None

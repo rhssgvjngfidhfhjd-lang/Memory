@@ -9,6 +9,7 @@ import numpy as np
 from .llm_client import LLMClient
 from .builder import MAUBuilder
 from .builder import load_events
+from .executor import EXECUTOR_VISUAL_INPUTS
 from .output_layout import RunLayout
 from .output_layout import DatasetLayout
 from embedding.qwen3_text_embedding import create_memory_embedder
@@ -34,8 +35,9 @@ def completed_dataset_stats(
     *,
     expected_events: int,
     expected_dim: int,
+    expected_executor_visual_input: str = "image",
 ) -> dict | None:
-    """Return existing stats only for a dimensionally complete dataset build."""
+    """Return stats only for a complete build made with compatible settings."""
     if (checkpoint_dir / "builder_state.json").exists():
         return None
     memories_path = dataset_layout.root / "memories.jsonl"
@@ -53,6 +55,10 @@ def completed_dataset_stats(
     if vectors.shape != (memory_count, int(expected_dim)):
         return None
     if int(stats.get("final_memories", -1)) != memory_count:
+        return None
+    # Builds made before this field existed used captions and no raw images.
+    stored_visual_input = str(stats.get("executor_visual_input") or "caption")
+    if stored_visual_input != expected_executor_visual_input:
         return None
     return {**stats, "skipped_complete": True}
 
@@ -81,6 +87,15 @@ def main() -> None:
     parser.add_argument("--executor-max-tokens", type=int, default=1024)
     parser.add_argument("--executor-timeout", type=int, default=180)
     parser.add_argument("--executor-retries", type=int, default=2)
+    parser.add_argument(
+        "--executor-visual-input",
+        choices=EXECUTOR_VISUAL_INPUTS,
+        default="image",
+        help=(
+            "Build evidence: raw image only, caption only, or both raw image and "
+            "caption."
+        ),
+    )
     parser.add_argument("--embedding-model", default="Qwen/Qwen3-VL-Embedding-2B")
     parser.add_argument("--embedding-dim", type=int, default=2048)
     parser.add_argument("--device", default="cuda:0")
@@ -135,6 +150,7 @@ def main() -> None:
                 layout.checkpoint(dataset),
                 expected_events=len(events),
                 expected_dim=args.embedding_dim,
+                expected_executor_visual_input=args.executor_visual_input,
             )
             if existing is not None:
                 summaries[dataset] = existing
@@ -149,6 +165,7 @@ def main() -> None:
             max_events=args.max_events,
             build_image_vectors=(args.mode == "c" and embedder.supports_images),
             profile=profiles.get(dataset, ""),
+            executor_visual_input=args.executor_visual_input,
         )
         print(json.dumps({dataset: summaries[dataset]}, ensure_ascii=False))
     manifest_path = layout.build_manifest

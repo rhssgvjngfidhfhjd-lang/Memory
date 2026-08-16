@@ -2,6 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 
@@ -22,7 +23,7 @@ from benchmarks.memgallery_harness.runner.answer_client import (
     VLMAnswerClient,
     build_retrieved_memory_context,
 )
-from hive_mem.llm_client import GenerationResponse
+from hive_mem.llm_client import GenerationResponse, LLMClient, _build_user_content
 from hive_mem.build_memories import completed_dataset_stats
 from hive_mem.output_layout import DatasetLayout
 from embedding.build_query_embeddings import _prepare_text_query
@@ -52,7 +53,14 @@ class Qwen3TextEmbeddingTest(unittest.TestCase):
             layout.vectors_dir.mkdir(parents=True)
             (layout.root / "memories.jsonl").write_text("{}\n{}\n", encoding="utf-8")
             layout.build_stats.write_text(
-                json.dumps({"input_events": 3, "final_memories": 2}), encoding="utf-8"
+                json.dumps(
+                    {
+                        "input_events": 3,
+                        "final_memories": 2,
+                        "executor_visual_input": "image",
+                    }
+                ),
+                encoding="utf-8",
             )
             np.save(layout.text_vectors, np.zeros((2, 1024), dtype=np.float32))
             checkpoint = Path(directory) / "checkpoint"
@@ -63,6 +71,15 @@ class Qwen3TextEmbeddingTest(unittest.TestCase):
             self.assertIsNone(
                 completed_dataset_stats(
                     layout, checkpoint, expected_events=3, expected_dim=2048
+                )
+            )
+            self.assertIsNone(
+                completed_dataset_stats(
+                    layout,
+                    checkpoint,
+                    expected_events=3,
+                    expected_dim=1024,
+                    expected_executor_visual_input="caption",
                 )
             )
 
@@ -503,6 +520,40 @@ class BuilderResumeTest(unittest.TestCase):
                 indices = [json.loads(line)["event_index"] for line in handle]
         self.assertEqual(indices, [0, 1, 2, 3, 4])
 
+    def test_resume_rejects_a_different_executor_visual_input(self):
+        events = [
+            MemoryEvent(
+                text=f"event {i}",
+                dataset="d",
+                dialogue_id=f"D1:{i}",
+                session_id="D1",
+                round_id=i,
+                source_chunk_id=f"c{i}",
+            )
+            for i in range(3)
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory) / "out"
+            builder = MAUBuilder(CrashingLLMClient(crash_at=1), FakeEmbedder())
+            with self.assertRaises(RuntimeError):
+                builder.build(
+                    events,
+                    out,
+                    resume=True,
+                    checkpoint_every=1,
+                    executor_visual_input="caption",
+                )
+
+            resumed = MAUBuilder(CrashingLLMClient(crash_at=999), FakeEmbedder())
+            with self.assertRaisesRegex(ValueError, "visual input mismatch"):
+                resumed.build(
+                    events,
+                    out,
+                    resume=True,
+                    checkpoint_every=1,
+                    executor_visual_input="image",
+                )
+
 
 class ScriptedLLMClient:
     def __init__(self, response):
@@ -510,6 +561,13 @@ class ScriptedLLMClient:
 
     def generate(self, prompt):
         self.last_prompt = prompt
+        return self.response
+
+
+class MultimodalScriptedLLMClient(ScriptedLLMClient):
+    def generate(self, prompt, image_paths=None):
+        self.last_prompt = prompt
+        self.last_image_paths = list(image_paths or [])
         return self.response
 
 
@@ -532,6 +590,117 @@ class OperationTogglesTest(unittest.TestCase):
         self.assertNotIn("UPDATE", prompt)
         self.assertNotIn("NOOP", prompt)
         self.assertIn("MUST output at least one memory item", prompt)
+
+    def test_image_visual_input_replaces_current_and_previous_captions(self):
+        llm_client = MultimodalScriptedLLMClient("MEMORY_ITEM: visual fact")
+        executor = MemoryExecutor(llm_client=llm_client, embedder=FakeEmbedder())
+        chunk = (
+            "session: D2\n"
+            "user: What is shown?\n"
+            "assistant: Please inspect it.\n"
+            "image_id: D2:IMG_001\n"
+            "image_caption: A caption that must not be sent.\n"
+            "previous_round_summary: D1:1; user asked; image_caption old caption"
+        )
+
+        executor.execute(
+            chunk,
+            image_paths=["/tmp/original.jpg"],
+            visual_input="image",
+        )
+
+        self.assertEqual(llm_client.last_image_paths, ["/tmp/original.jpg"])
+        self.assertIn("user: What is shown?", llm_client.last_prompt)
+        self.assertIn("image_id: D2:IMG_001", llm_client.last_prompt)
+        self.assertIn("### Attached Image", llm_client.last_prompt)
+        self.assertNotIn("caption that must not be sent", llm_client.last_prompt)
+        self.assertNotIn("old caption", llm_client.last_prompt)
+
+    def test_caption_visual_input_keeps_caption_and_sends_no_image(self):
+        llm_client = MultimodalScriptedLLMClient("MEMORY_ITEM: caption fact")
+        executor = MemoryExecutor(llm_client=llm_client, embedder=FakeEmbedder())
+
+        executor.execute(
+            "user: What is shown?\nimage_caption: A red bicycle.",
+            image_paths=["/tmp/original.jpg"],
+            visual_input="caption",
+        )
+
+        self.assertEqual(llm_client.last_image_paths, [])
+        self.assertIn("image_caption: A red bicycle.", llm_client.last_prompt)
+        self.assertNotIn("### Attached Image", llm_client.last_prompt)
+
+    def test_image_caption_visual_input_keeps_caption_and_sends_image(self):
+        llm_client = MultimodalScriptedLLMClient("MEMORY_ITEM: combined fact")
+        executor = MemoryExecutor(llm_client=llm_client, embedder=FakeEmbedder())
+
+        executor.execute(
+            "user: What is shown?\nimage_caption: A red bicycle.",
+            image_paths=["/tmp/original.jpg"],
+            visual_input="image_caption",
+        )
+
+        self.assertEqual(llm_client.last_image_paths, ["/tmp/original.jpg"])
+        self.assertIn("image_caption: A red bicycle.", llm_client.last_prompt)
+        self.assertIn("### Attached Image", llm_client.last_prompt)
+
+    def test_llm_user_content_embeds_original_image_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image_path = Path(directory) / "sample.png"
+            image_path.write_bytes(b"original-image-bytes")
+            content = _build_user_content("prompt", [str(image_path)])
+
+        self.assertEqual(content[0], {"type": "text", "text": "prompt"})
+        self.assertEqual(content[1]["type"], "image_url")
+        self.assertTrue(
+            content[1]["image_url"]["url"].startswith("data:image/png;base64,")
+        )
+        self.assertEqual(_build_user_content("prompt", []), "prompt")
+
+    def test_llm_client_sends_multimodal_content_and_keeps_usage(self):
+        captured = {}
+
+        class Completions:
+            def create(self, **kwargs):
+                captured.update(kwargs)
+                return SimpleNamespace(
+                    choices=[
+                        SimpleNamespace(
+                            message=SimpleNamespace(content="MEMORY_ITEM: visual fact")
+                        )
+                    ],
+                    usage={
+                        "prompt_tokens": 9,
+                        "completion_tokens": 3,
+                        "total_tokens": 12,
+                    },
+                )
+
+        fake_client = SimpleNamespace(
+            chat=SimpleNamespace(completions=Completions())
+        )
+        client = LLMClient("model", "http://localhost/v1", "key", retry_sleep=0)
+        client._next_client = lambda: fake_client
+        with tempfile.TemporaryDirectory() as directory:
+            image_path = Path(directory) / "sample.jpg"
+            image_path.write_bytes(b"raw-jpeg-bytes")
+            response = client.generate_with_usage(
+                "prompt",
+                image_paths=[str(image_path)],
+            )
+
+        content = captured["messages"][0]["content"]
+        self.assertEqual(content[0], {"type": "text", "text": "prompt"})
+        self.assertTrue(
+            content[1]["image_url"]["url"].startswith("data:image/jpeg;base64,")
+        )
+        self.assertEqual(response.text, "MEMORY_ITEM: visual fact")
+        self.assertEqual(response.usage["total_tokens"], 12)
+
+    def test_default_config_uses_raw_image_for_executor(self):
+        config_path = Path(__file__).resolve().parents[1] / "configs" / "defaults.json"
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+        self.assertEqual(config["executor_visual_input"], "image")
 
     def test_response_without_memory_item_is_rejected(self):
         llm_client = ScriptedLLMClient("Here is a summary of the chunk, but not in the required format.")
@@ -1122,9 +1291,16 @@ class AnswerPromptImageIdLeakTest(unittest.TestCase):
         self.assertIn("Attached memory image 1: D6:IMG_001", text)
         self.assertEqual(paths, ["/tmp/memory.png", "/tmp/query.png"])
 
-    def test_nonvisual_question_does_not_expose_unattached_candidate_id(self):
+    def test_ttl_question_attaches_memory_image_and_keeps_candidate_id(self):
         memory = {**self.memory, "image": {"path": "/tmp/memory.png", "img_id": "D6:IMG_001"}}
         text, paths = self.client._build_text_and_image_paths([memory], "question", None, "TTL")
+        self.assertIn("IMG:D6:IMG_001", text)
+        self.assertIn("Attached memory image 1: D6:IMG_001", text)
+        self.assertEqual(paths, ["/tmp/memory.png"])
+
+    def test_nonvisual_question_does_not_expose_unattached_candidate_id(self):
+        memory = {**self.memory, "image": {"path": "/tmp/memory.png", "img_id": "D6:IMG_001"}}
+        text, paths = self.client._build_text_and_image_paths([memory], "question", None, "FR")
         self.assertNotIn("D6:IMG_001", text)
         self.assertEqual(paths, [])
 
