@@ -107,6 +107,20 @@ baselines:
     embedder_dim: 2048
     embedder_device: ""                        # 空 = 用 QWEN3VL_EMBEDDING_DEVICE env, 再空 = auto
 
+  HiveMem:
+    # Current insert-only HiveMem implementation in Offline/src/hive_mem.
+    mm_mode: "image"
+    chunk_mode: "round"
+    pipeline_root: "/data/haozhen/Memory/Offline"
+    executor_model: "Qwen/Qwen3-VL-4B-Instruct"
+    executor_base_url: "http://127.0.0.1:8015/v1"
+    executor_max_new_tokens: 1024
+    executor_retries: 3
+    executor_timeout: 180
+    embedder_model: "Qwen/Qwen3-VL-Embedding-2B"
+    embedder_dim: 2048
+    embedder_device: ""
+
   SimpleMem:
     mm_mode: "text"                            # 单独控制 SimpleMem 内部的 text/image 路径
 
@@ -149,4 +163,3 @@ baselines:
     tokens_per_image: 256                          # 每张图估算 token(Qwen 256 / GPT 576 / Gemini 576)
     max_images: 25                                 # image-FIFO 触发阈值
     tokenizer_path: "eval_framework/baselines/MMFU_Single/tokenizers/gpt2"  # 本地 tokenizer, 避免运行时联网
-

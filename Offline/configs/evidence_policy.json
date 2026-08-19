@@ -1,10 +1,10 @@
 {
   "seed": 42,
   "data_dir": "../Mem-Gallery/benchmark/data",
-  "memory_bank": "outputs/hive_mem_token_rerun_0810/c_insert_only",
+  "memory_bank": "outputs/hive_mem_concurrency16_full_20260818",
   "query_cache": "data/qwen3_vl_embedding_2b/query_embeddings",
   "profiles_file": "configs/profiles.json",
-  "output_dir": "outputs/evidence_policy",
+  "output_dir": "outputs/evidence_policy_ppo_rerun_20260818",
   "top_k": 5,
   "model": {
     "name": "Qwen/Qwen3-VL-4B-Instruct",
@@ -18,7 +18,7 @@
   "policy": {
     "embedding_dim": 2048,
     "hidden_dim": 256,
-    "hidden_layers": 2
+    "hidden_layers": 3
   },
   "ppo": {
     "learning_rate": 0.0003,
@@ -27,11 +27,12 @@
     "entropy_coefficient": 0.01,
     "max_grad_norm": 1.0,
     "update_epochs": 4,
-    "minibatch_size": 32,
-    "rollout_batch_size": 32,
+    "minibatch_size": 16,
+    "rollout_batch_size": 16,
     "gamma": 1.0,
     "gae_lambda": 1.0,
-    "epochs": 3,
+    "epochs": 6,
+    "validation_interval_fraction": 0.5,
     "validation_limit": 20
   },
   "split": {

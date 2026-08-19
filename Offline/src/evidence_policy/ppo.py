@@ -129,8 +129,11 @@ class PPOTrainer:
     def update(self, buffer: PPOBuffer) -> dict[str, float]:
         if not buffer.transitions:
             raise ValueError("Cannot update PPO with an empty buffer")
+        rewards = np.asarray(
+            [row.reward for row in buffer.transitions], dtype=np.float32
+        )
         advantages_np, returns_np = compute_gae(
-            [row.reward for row in buffer.transitions],
+            rewards,
             [row.old_value for row in buffer.transitions],
             [row.done for row in buffer.transitions],
             gamma=self.gamma,
@@ -154,10 +157,25 @@ class PPOTrainer:
                     )
                 )
         self.update_steps += 1
-        return {
+        result = {
             key: float(np.mean([row[key] for row in metrics]))
             for key in metrics[0]
         }
+        result.update(
+            self._critic_diagnostics(buffer.transitions, returns_np)
+        )
+        result.update(
+            {
+                "pg_loss": result["policy_loss"],
+                "entropy_loss": result["entropy"],
+                "lr": float(self.optimizer.param_groups[0]["lr"]),
+                "reward_mean": float(rewards.mean()),
+                "reward_min": float(rewards.min()),
+                "reward_max": float(rewards.max()),
+                "batch_size": float(len(rewards)),
+            }
+        )
+        return result
 
     def _update_minibatch(
         self,
@@ -194,6 +212,9 @@ class PPOTrainer:
         policy_loss, ratio = clipped_policy_loss(
             new_log_prob, old_log_prob, advantage, self.clip_ratio
         )
+        log_ratio = new_log_prob - old_log_prob
+        ppo_kl = ((ratio - 1.0) - log_ratio).mean()
+        pg_clipfrac = ((ratio - 1.0).abs() > self.clip_ratio).float().mean()
         value_loss = nn.functional.mse_loss(value, target_return)
         loss = (
             policy_loss
@@ -210,7 +231,37 @@ class PPOTrainer:
             "value_loss": float(value_loss.detach().cpu()),
             "entropy": float(entropy.detach().cpu()),
             "ratio": float(ratio.mean().detach().cpu()),
+            "ppo_kl": float(ppo_kl.detach().cpu()),
+            "pg_clipfrac": float(pg_clipfrac.detach().cpu()),
             "grad_norm": float(torch.as_tensor(grad_norm).detach().cpu()),
+        }
+
+    def _critic_diagnostics(
+        self,
+        transitions: Sequence[PPOTransition],
+        returns: np.ndarray,
+    ) -> dict[str, float]:
+        values: list[float] = []
+        with torch.no_grad():
+            for row in transitions:
+                step = self.policy.evaluate_actions(
+                    row.observation.to(self.device), row.actions
+                )
+                values.append(float(step.value.cpu()))
+        predicted = np.asarray(values, dtype=np.float32)
+        target = np.asarray(returns, dtype=np.float32)
+        errors = target - predicted
+        target_variance = float(np.var(target))
+        explained_variance = (
+            1.0 - float(np.var(errors)) / target_variance
+            if target_variance > 1e-8
+            else 0.0
+        )
+        return {
+            "predicted_value_mean": float(predicted.mean()),
+            "target_return_mean": float(target.mean()),
+            "absolute_value_error": float(np.mean(np.abs(errors))),
+            "explained_variance": explained_variance,
         }
 
     def save_checkpoint(

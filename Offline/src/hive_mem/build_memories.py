@@ -88,6 +88,12 @@ def main() -> None:
     parser.add_argument("--executor-timeout", type=int, default=180)
     parser.add_argument("--executor-retries", type=int, default=2)
     parser.add_argument(
+        "--executor-concurrency",
+        type=int,
+        default=1,
+        help="Maximum concurrent executor LLM requests (results commit in event order).",
+    )
+    parser.add_argument(
         "--executor-visual-input",
         choices=EXECUTOR_VISUAL_INPUTS,
         default="image",
@@ -166,6 +172,7 @@ def main() -> None:
             build_image_vectors=(args.mode == "c" and embedder.supports_images),
             profile=profiles.get(dataset, ""),
             executor_visual_input=args.executor_visual_input,
+            executor_concurrency=args.executor_concurrency,
         )
         print(json.dumps({dataset: summaries[dataset]}, ensure_ascii=False))
     manifest_path = layout.build_manifest

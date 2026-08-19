@@ -18,6 +18,10 @@ from .qwen3_text_embedding import (
 from benchmarks.memgallery_harness.retrieval.query_embedding_cache import make_query_id
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_MEMGALLERY_DATA_DIR = PROJECT_ROOT.parent / "Mem-Gallery" / "benchmark" / "data"
+
+
 def resolve_question_image(data_dir: Path, qa: dict[str, Any]) -> dict[str, str] | None:
     raw = qa.get("question_image")
     if not raw:
@@ -114,8 +118,9 @@ def _worker(payload):
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Precompute Mem-Gallery QA query embeddings.")
-    parser.add_argument("--data-dir", default="/data/haozhen/Memory/Mem-Gallery/benchmark/data")
+    parser = argparse.ArgumentParser(description="Precompute benchmark QA query embeddings.")
+    parser.add_argument("--benchmark", choices=("memgallery", "wma"), default="memgallery")
+    parser.add_argument("--data-dir", default=str(DEFAULT_MEMGALLERY_DATA_DIR))
     parser.add_argument("--data-name", default="")
     parser.add_argument("--all-datasets", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--out-dir", default="data/qwen3_vl_embedding_2b/query_embeddings")
@@ -130,7 +135,13 @@ def main() -> None:
     args = parser.parse_args()
 
     data_dir = Path(args.data_dir)
-    items = iter_qa_items(data_dir, data_name=args.data_name, all_datasets=args.all_datasets)
+    if args.benchmark == "wma":
+        from benchmarks.wma_harness.retrieval.query_embedding_cache import iter_qa_items as iter_wma_qa_items
+
+        sample_ids = {args.data_name} if args.data_name else None
+        items = iter_wma_qa_items(data_dir, sample_ids=sample_ids)
+    else:
+        items = iter_qa_items(data_dir, data_name=args.data_name, all_datasets=args.all_datasets)
     if args.limit:
         items = items[: args.limit]
 
@@ -176,6 +187,7 @@ def main() -> None:
         "model_name": args.model_name,
         "dtype": args.dtype,
         "data_dir": str(data_dir.resolve()),
+        "benchmark": args.benchmark,
         "vectors": str((out_dir / "vectors.npy").resolve()),
         "metadata": str((out_dir / "metadata.jsonl").resolve()),
     }

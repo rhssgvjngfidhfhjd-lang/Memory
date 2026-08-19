@@ -2,6 +2,7 @@
 
 from .evidence import (
     DialogueStore,
+    WMADialogueStore,
     EvidenceChainBuilder,
     EvidenceStrategy,
     EvidenceTextAction,
@@ -16,6 +17,7 @@ from .rollout import EvidenceEpisode, EvidenceRollout, EvidenceSelectionEnv, F1R
 
 __all__ = [
     "DialogueStore",
+    "WMADialogueStore",
     "EvidenceChainBuilder",
     "EvidenceEpisode",
     "EvidenceRollout",

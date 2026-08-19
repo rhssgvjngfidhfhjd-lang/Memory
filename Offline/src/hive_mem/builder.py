@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from concurrent.futures import Future, ThreadPoolExecutor
 import json
 from pathlib import Path
 import shutil
@@ -116,8 +117,12 @@ class MAUBuilder:
         build_image_vectors: bool = False,
         profile: str = "",
         executor_visual_input: str = "image",
+        executor_concurrency: int = 1,
     ) -> dict[str, Any]:
         executor_visual_input = normalize_visual_input(executor_visual_input)
+        executor_concurrency = int(executor_concurrency)
+        if executor_concurrency < 1:
+            raise ValueError("executor_concurrency must be at least 1")
         all_events = list(events)
         event_list = all_events[:max_events] if max_events else all_events
         output_layout = DatasetLayout(Path(output_dir))
@@ -154,71 +159,96 @@ class MAUBuilder:
         fallback_inserts = 0
         executor_image_requests = 0
         started = time.time()
-        for event_index in range(start_index, len(event_list)):
-            event = event_list[event_index]
-            executor_images = (
-                event.image_paths
-                if visual_input_uses_images(executor_visual_input)
-                else []
-            )
-            raw_response, actions, llm_usage = self.executor.execute_with_usage(
-                chunk_text=event.text,
-                profile=profile,
-                image_paths=executor_images,
-                visual_input=executor_visual_input,
-            )
-            executor_image_requests += int(bool(executor_images))
-            self.executor.apply_to_memory_bank(
-                actions,
-                bank,
-                event_metadata=event.metadata,
-            )
-            used_fallback = False
-            if not any(action.success for action in actions):
-                fallback_text = self.executor.prepare_chunk_text(
-                    event.text,
-                    executor_visual_input,
+        pool: ThreadPoolExecutor | None = None
+        futures: dict[int, Future] = {}
+        try:
+            if executor_concurrency > 1:
+                pool = ThreadPoolExecutor(
+                    max_workers=executor_concurrency,
+                    thread_name_prefix="memory-executor",
                 )
-                embedding = self.embedder.embed_texts(fallback_text, mode="context")
-                bank.add_memory(
-                    fallback_text,
-                    embedding,
-                    metadata={**event.metadata, "source": "fallback_insert"},
-                )
-                fallback_inserts += 1
-                used_fallback = True
-            for action in actions:
-                if action.success:
-                    memory_items += 1
-                else:
-                    parse_failures += 1
-            trace = {
-                "event_index": event_index,
-                "event": event.to_dict(),
+                futures = {
+                    event_index: pool.submit(
+                        self._execute_event,
+                        event_list[event_index],
+                        profile=profile,
+                        executor_visual_input=executor_visual_input,
+                    )
+                    for event_index in range(start_index, len(event_list))
+                }
 
-                "raw_response": raw_response,
-                "actions": [action.to_dict() for action in actions],
-                "executor_visual_input": executor_visual_input,
-                "executor_image_count": len(executor_images),
-                "fallback_insert": used_fallback,
-                "memory_count_after": len(bank),
-            }
-            if llm_usage:
-                trace["llm_usage"] = llm_usage
-            with trace_path.open("a", encoding="utf-8") as handle:
-                handle.write(json.dumps(trace, ensure_ascii=False) + "\n")
-            if (event_index + 1) % checkpoint_every == 0 or event_index + 1 == len(event_list):
-                bank.save(checkpoint_dir)
-                state_path.write_text(
-                    json.dumps(
-                        {
-                            "next_event_index": event_index + 1,
-                            "executor_visual_input": executor_visual_input,
-                        },
-                        indent=2,
-                    ),
-                    encoding="utf-8",
+            # Executor calls may finish out of order, but every state mutation is
+            # committed in event order. This keeps memories, vectors, traces and
+            # resume checkpoints aligned and reproducible.
+            for event_index in range(start_index, len(event_list)):
+                event = event_list[event_index]
+                if pool is None:
+                    executor_images, raw_response, actions, llm_usage = self._execute_event(
+                        event,
+                        profile=profile,
+                        executor_visual_input=executor_visual_input,
+                    )
+                else:
+                    executor_images, raw_response, actions, llm_usage = futures[
+                        event_index
+                    ].result()
+                executor_image_requests += int(bool(executor_images))
+                self.executor.apply_to_memory_bank(
+                    actions,
+                    bank,
+                    event_metadata=event.metadata,
                 )
+                used_fallback = False
+                if not any(action.success for action in actions):
+                    fallback_text = self.executor.prepare_chunk_text(
+                        event.text,
+                        executor_visual_input,
+                    )
+                    embedding = self.embedder.embed_texts(fallback_text, mode="context")
+                    bank.add_memory(
+                        fallback_text,
+                        embedding,
+                        metadata={**event.metadata, "source": "fallback_insert"},
+                    )
+                    fallback_inserts += 1
+                    used_fallback = True
+                for action in actions:
+                    if action.success:
+                        memory_items += 1
+                    else:
+                        parse_failures += 1
+                trace = {
+                    "event_index": event_index,
+                    "event": event.to_dict(),
+
+                    "raw_response": raw_response,
+                    "actions": [action.to_dict() for action in actions],
+                    "executor_visual_input": executor_visual_input,
+                    "executor_image_count": len(executor_images),
+                    "fallback_insert": used_fallback,
+                    "memory_count_after": len(bank),
+                }
+                if llm_usage:
+                    trace["llm_usage"] = llm_usage
+                with trace_path.open("a", encoding="utf-8") as handle:
+                    handle.write(json.dumps(trace, ensure_ascii=False) + "\n")
+                if (event_index + 1) % checkpoint_every == 0 or event_index + 1 == len(event_list):
+                    bank.save(checkpoint_dir)
+                    state_path.write_text(
+                        json.dumps(
+                            {
+                                "next_event_index": event_index + 1,
+                                "executor_visual_input": executor_visual_input,
+                            },
+                            indent=2,
+                        ),
+                        encoding="utf-8",
+                    )
+        finally:
+            if pool is not None:
+                for future in futures.values():
+                    future.cancel()
+                pool.shutdown(wait=True, cancel_futures=True)
 
         bank.save(output_dir)
         image_vector_count = 0
@@ -247,6 +277,7 @@ class MAUBuilder:
             "parse_failures_this_run": parse_failures,
             "fallback_inserts_this_run": fallback_inserts,
             "executor_visual_input": executor_visual_input,
+            "executor_concurrency": executor_concurrency,
             "executor_image_requests_this_run": executor_image_requests,
             "elapsed_seconds_this_run": time.time() - started,
             "image_vector_memories": image_vector_count,
@@ -266,6 +297,27 @@ class MAUBuilder:
                 except OSError:
                     pass
         return stats
+
+    def _execute_event(
+        self,
+        event: MemoryEvent,
+        *,
+        profile: str,
+        executor_visual_input: str,
+    ):
+        """Run the stateless executor step; callers serialize all bank mutations."""
+        executor_images = (
+            event.image_paths
+            if visual_input_uses_images(executor_visual_input)
+            else []
+        )
+        raw_response, actions, llm_usage = self.executor.execute_with_usage(
+            chunk_text=event.text,
+            profile=profile,
+            image_paths=executor_images,
+            visual_input=executor_visual_input,
+        )
+        return executor_images, raw_response, actions, llm_usage
 
 
 def _truncate_trace(trace_path: Path, keep_before_index: int) -> None:

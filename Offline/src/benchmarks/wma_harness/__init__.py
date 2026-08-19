@@ -1,1 +1,1 @@
-"""WorldMemArena benchmark adapter (placeholder, not implemented yet)."""
+"""WorldMemArena runner using HiveMem memory banks."""

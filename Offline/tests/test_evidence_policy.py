@@ -28,9 +28,28 @@ from evidence_policy.rollout import (
 )
 from hive_mem.mau import MAU
 from hive_mem.retriever import MemoryHit
+from scripts.evidence_policy import validation_checkpoints
 
 
 EMBEDDING_DIM = 8
+
+
+class ValidationScheduleTest(unittest.TestCase):
+    def test_half_epoch_aligns_to_completed_rollout_batch(self):
+        self.assertEqual(
+            validation_checkpoints(
+                1026, interval_fraction=0.5, rollout_batch_size=32
+            ),
+            {512: "half"},
+        )
+
+    def test_epoch_only_schedule_has_no_midpoint(self):
+        self.assertEqual(
+            validation_checkpoints(
+                1026, interval_fraction=1.0, rollout_batch_size=32
+            ),
+            {},
+        )
 
 
 def make_hit(
@@ -179,6 +198,26 @@ class EvidencePolicyTest(unittest.TestCase):
         metrics = trainer.update(buffer)
 
         self.assertTrue(all(np.isfinite(value) for value in metrics.values()))
+        self.assertTrue(
+            {
+                "ppo_kl",
+                "pg_loss",
+                "pg_clipfrac",
+                "lr",
+                "grad_norm",
+                "entropy_loss",
+                "value_loss",
+                "predicted_value_mean",
+                "target_return_mean",
+                "absolute_value_error",
+                "explained_variance",
+                "reward_mean",
+                "reward_min",
+                "reward_max",
+                "batch_size",
+            }.issubset(metrics)
+        )
+        self.assertEqual(metrics["batch_size"], 1.0)
         self.assertTrue(
             any(
                 not torch.equal(old, new.detach())

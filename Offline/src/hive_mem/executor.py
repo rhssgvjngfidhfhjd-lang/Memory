@@ -174,6 +174,14 @@ class MemoryExecutor:
             "visible.\n\n"
         ) if has_images else ""
 
+        subject_rule = (
+            '- The "user" in the chunk is the person described in the profile: always '
+            'refer to them by name (e.g. "Julian said ..."), never as "the user".\n'
+            if profile
+            else '- No named profile is available: refer to the subject as "the user" or '
+            '"the agent" unless the chunk explicitly provides a name.\n'
+        )
+
         return (
             "### Role\n"
             "You summarize conversation chunks into memory items and, in the same "
@@ -196,13 +204,12 @@ class MemoryExecutor:
             '"attributes": {"key": "value or [values]"}}]>\n\n'
 
             "### Memory Item Rules\n"
-            '- The "user" in the chunk is the person described in the profile: always '
-            'refer to them by name (e.g. "Julian said ..."), never as "the user".\n'
+            + subject_rule +
             "- Split unrelated facts into separate memory items; one topic per item.\n"
-            '- Every MEMORY_ITEM MUST begin with "On <session date>, " using the '
-            'date from the chunk header (e.g. "On 2024-06-17, Julian ..."); resolve '
-            'relative time ("last week") inside the text to absolute dates when '
-            "possible.\n"
+            '- When the chunk has a non-empty date, every MEMORY_ITEM MUST begin '
+            'with "On <session date>, " (e.g. "On 2024-06-17, Julian ..."); if '
+            'the date field is empty, do not invent a date or add an "On" prefix. '
+            'Resolve relative time ("last week") to absolute dates when possible.\n'
             '- Refer to people by bare name only. WRONG: "Julian Vance, a 31-year-old '
             'UX strategist focused on emerging tech, asked ..." RIGHT: "Julian asked '
             '...". Never copy age/occupation/personality from the profile into a '

@@ -12,6 +12,9 @@ import torch
 from hive_mem.retriever import MemoryHit
 
 
+MEMGALLERY_VISUAL_CATEGORIES = frozenset({"VS", "VR"})
+
+
 class EvidenceTextAction(str, Enum):
     SUMMARY = "summary"
     DIALOGUE = "dialogue"
@@ -139,12 +142,81 @@ class DialogueStore:
                 )
         return result
 
+    def resolve_image_path(self, dataset: str, raw_path: str) -> Path:
+        path = Path(raw_path)
+        if path.exists():
+            return path
+        normalized = str(raw_path).replace("\\", "/")
+        marker = "/image/"
+        if marker in normalized:
+            relative = normalized.split(marker, 1)[1]
+            candidate = self.data_dir / "image" / relative
+        else:
+            candidate = self.data_dir / "image" / dataset / path.name
+        if not candidate.exists():
+            raise FileNotFoundError(f"Cannot map stored image path {raw_path!r} to {candidate}")
+        return candidate
+
+
+class WMADialogueStore(DialogueStore):
+    """Lazy round lookup for WorldMemArena's nested sample files."""
+
+    def __init__(self, data_dir: str | Path):
+        super().__init__(data_dir)
+        from embedding.chunk_builder import iter_wma_sample_files
+
+        self._paths = {path.stem: path for path in iter_wma_sample_files(self.data_dir)}
+
+    def _load_dataset(self, dataset: str) -> dict[str, DialogueEvidence]:
+        import json
+        from embedding.chunk_builder import _wma_rounds
+
+        try:
+            path = self._paths[dataset]
+        except KeyError as exc:
+            raise FileNotFoundError(f"Missing WorldMemArena sample: {dataset}") from exc
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        result: dict[str, DialogueEvidence] = {}
+        for session in payload.get("sessions", []) or []:
+            session_id = str(session.get("_v2_session_id") or session.get("session_id") or "")
+            for round_number, user, assistant in _wma_rounds(session.get("dialogue", []) or []):
+                dialogue_id = f"{session_id}:R{round_number:04d}"
+                result[dialogue_id] = DialogueEvidence(
+                    dataset=dataset,
+                    dialogue_id=dialogue_id,
+                    user=str(user.get("content", "") or ""),
+                    assistant=str(assistant.get("content", "") or ""),
+                )
+        return result
+
+    def resolve_image_path(self, dataset: str, raw_path: str) -> Path:
+        path = Path(raw_path)
+        if path.exists():
+            return path
+        try:
+            sample_dir = self._paths[dataset].parent
+        except KeyError as exc:
+            raise FileNotFoundError(f"Missing WorldMemArena sample: {dataset}") from exc
+        candidate = sample_dir / str(raw_path).replace("\\", "/")
+        if not candidate.exists():
+            raise FileNotFoundError(f"Cannot map stored image path {raw_path!r} to {candidate}")
+        return candidate
+
 
 class EvidenceChainBuilder:
     """Convert per-MAU actions into the existing VLM ``memory_items`` shape."""
 
-    def __init__(self, dialogue_store: DialogueStore):
+    def __init__(
+        self,
+        dialogue_store: DialogueStore,
+        *,
+        visual_categories: set[str] | frozenset[str] | None = None,
+    ):
         self.dialogue_store = dialogue_store
+        self.visual_categories = {
+            str(value).upper()
+            for value in (visual_categories or MEMGALLERY_VISUAL_CATEGORIES)
+        }
 
     def build(
         self,
@@ -170,13 +242,21 @@ class EvidenceChainBuilder:
                     raise ValueError(f"MAU {hit.item.id} has no caption evidence")
                 text = f"{text}\nImage caption: {caption}"
             elif action.visual is EvidenceVisualAction.IMAGE:
-                if query_category.upper() not in {"VS", "VR"}:
-                    raise ValueError("Memory images are only valid for VS/VR questions")
+                if query_category.upper() not in self.visual_categories:
+                    allowed = (
+                        "VS/VR"
+                        if self.visual_categories == set(MEMGALLERY_VISUAL_CATEGORIES)
+                        else "/".join(sorted(self.visual_categories))
+                    )
+                    raise ValueError(
+                        f"Memory images are only valid for {allowed} questions; "
+                        f"got {query_category or 'unknown'}"
+                    )
                 raw_path = self._single_value(metadata, "image_paths")
                 if not raw_path:
                     raise ValueError(f"MAU {hit.item.id} has no image evidence")
                 image = {
-                    "path": str(self._resolve_image_path(dataset, raw_path)),
+                    "path": str(self.dialogue_store.resolve_image_path(dataset, raw_path)),
                     "img_id": self._single_value(metadata, "image_ids"),
                     "caption": "",
                 }
@@ -206,21 +286,6 @@ class EvidenceChainBuilder:
             )
         return self.dialogue_store.get(dataset, str(source_ids[0])).render()
 
-    def _resolve_image_path(self, dataset: str, raw_path: str) -> Path:
-        path = Path(raw_path)
-        if path.exists():
-            return path
-        normalized = str(raw_path).replace("\\", "/")
-        marker = "/image/"
-        if marker in normalized:
-            relative = normalized.split(marker, 1)[1]
-            candidate = self.dialogue_store.data_dir / "image" / relative
-        else:
-            candidate = self.dialogue_store.data_dir / "image" / dataset / path.name
-        if not candidate.exists():
-            raise FileNotFoundError(f"Cannot map stored image path {raw_path!r} to {candidate}")
-        return candidate
-
     @staticmethod
     def _single_value(metadata: dict[str, Any], key: str) -> str:
         value = metadata.get(key, [])
@@ -233,9 +298,14 @@ def make_policy_observation(
     query_embedding: Sequence[float] | np.ndarray,
     memory_hits: Sequence[MemoryHit],
     category: str,
+    visual_categories: set[str] | frozenset[str] | None = None,
 ) -> PolicyObservation:
     if not memory_hits:
         raise ValueError("Policy observation requires at least one retrieved MAU")
+    allowed_visual = {
+        str(value).upper()
+        for value in (visual_categories or MEMGALLERY_VISUAL_CATEGORIES)
+    }
     has_visual = [
         bool(hit.item.metadata.get("image_paths"))
         and bool(hit.item.metadata.get("image_captions"))
@@ -249,7 +319,7 @@ def make_policy_observation(
         memory_ids=tuple(hit.item.id for hit in memory_hits),
         has_visual_evidence=torch.as_tensor(has_visual, dtype=torch.bool),
         visual_action_mask=torch.as_tensor(
-            [available and category.upper() in {"VS", "VR"} for available in has_visual],
+            [available and category.upper() in allowed_visual for available in has_visual],
             dtype=torch.bool,
         ),
     )
@@ -262,10 +332,15 @@ def choose_baseline_actions(
     category: str,
     strategy: EvidenceStrategy,
     rng: random.Random | None = None,
+    visual_categories: set[str] | frozenset[str] | None = None,
 ) -> tuple[MAUEvidenceAction, ...]:
     if strategy is EvidenceStrategy.PPO:
         raise ValueError("PPO actions must come from EvidenceSelectionPolicy")
     rng = rng or random.Random()
+    allowed_visual = {
+        str(value).upper()
+        for value in (visual_categories or MEMGALLERY_VISUAL_CATEGORIES)
+    }
     actions: list[MAUEvidenceAction] = []
     for hit in memory_hits:
         has_visual = bool(hit.item.metadata.get("image_paths")) and bool(
@@ -275,7 +350,7 @@ def choose_baseline_actions(
             text = EvidenceTextAction.DIALOGUE
             visual = (
                 EvidenceVisualAction.IMAGE
-                if has_visual and category.upper() in {"VS", "VR"}
+                if has_visual and category.upper() in allowed_visual
                 else EvidenceVisualAction.CAPTION if has_visual else None
             )
         elif strategy is EvidenceStrategy.SUMMARY:
@@ -283,7 +358,7 @@ def choose_baseline_actions(
             visual = EvidenceVisualAction.CAPTION if has_visual else None
         else:
             text = rng.choice(list(EvidenceTextAction))
-            if has_visual and category.upper() in {"VS", "VR"}:
+            if has_visual and category.upper() in allowed_visual:
                 visual = rng.choice(list(EvidenceVisualAction))
             else:
                 visual = EvidenceVisualAction.CAPTION if has_visual else None

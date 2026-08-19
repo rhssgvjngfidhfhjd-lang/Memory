@@ -1,9 +1,8 @@
-"""Adapter for the AgentMem baseline (agentmem).
+"""Adapter for the HiveMem baseline.
 
-Drives the INSERT/UPDATE/DELETE/NOOP memory pipeline from
-``Offline/agentmem`` online against the WMA runner protocol:
-turns are buffered into dialogue rounds, and each completed round goes through
-the pipeline's executor loop (embed -> retrieve -> LLM decide -> apply).
+Drives the insert-only pipeline from ``Offline/src/hive_mem`` online against
+the WMA runner protocol: turns are buffered into dialogue rounds, and each
+completed round is converted by the executor into one or more MAUs.
 
 The pipeline code is imported from an external checkout (config
 ``baselines.AgentMem.pipeline_root`` / env ``AGENTMEM_ROOT``);
@@ -52,13 +51,14 @@ def _param(baseline_name: str, key: str, default: Any) -> Any:
 
 def _ensure_pipeline_on_path(pipeline_root: str) -> None:
     root = Path(pipeline_root).resolve()
-    if not (root / "agentmem").is_dir():
+    source_root = root / "src"
+    if not (source_root / "hive_mem").is_dir():
         raise FileNotFoundError(
-            f"agentmem/ not found under {root}. Set "
-            "baselines.AgentMem.pipeline_root in config.yaml or the "
-            "AGENTMEM_ROOT env var."
+            f"src/hive_mem/ not found under {root}. Set "
+            "baselines.HiveMem.pipeline_root in config.yaml or the "
+            "HIVEMEM_ROOT env var."
         )
-    s = str(root)
+    s = str(source_root)
     if s not in sys.path:
         sys.path.insert(0, s)
 
@@ -83,9 +83,9 @@ def _get_shared_embedder(model_name: str, device: str, expected_dim: int) -> _Lo
     global _SHARED_EMBEDDER
     with _EMBEDDER_LOCK:
         if _SHARED_EMBEDDER is None:
-            from agentmem.memgallery.qwen_embedder import QwenMemoryEmbedder
+            from embedding.qwen3_text_embedding import create_memory_embedder
 
-            _SHARED_EMBEDDER = QwenMemoryEmbedder(
+            _SHARED_EMBEDDER = create_memory_embedder(
                 model_name=model_name,
                 device=device,
                 expected_dim=expected_dim,
@@ -93,10 +93,10 @@ def _get_shared_embedder(model_name: str, device: str, expected_dim: int) -> _Lo
     return _LockedEmbedder(_SHARED_EMBEDDER)
 
 
-class AgentMemAdapter(MemoryAdapter):
-    """agentmem (AgentMem) driven by the WMA eval runner."""
+class HiveMemAdapter(MemoryAdapter):
+    """HiveMem driven online by the WMA eval runner."""
 
-    def __init__(self, baseline_name: str = "AgentMem") -> None:
+    def __init__(self, baseline_name: str = "HiveMem") -> None:
         self.baseline_name = baseline_name
         self._integration_error: str | None = None
 
@@ -106,41 +106,32 @@ class AgentMemAdapter(MemoryAdapter):
         self.chunk_mode = str(_param(baseline_name, "chunk_mode", "round")).strip().lower()
         if self.chunk_mode not in {"round", "turn", "session"}:
             raise ValueError(f"invalid chunk_mode: {self.chunk_mode!r}")
-        self.ops_top_k = int(_param(baseline_name, "ops_top_k", 5))
-
         pipeline_root = str(
-            os.getenv("AGENTMEM_ROOT")
+            os.getenv("HIVEMEM_ROOT")
+            or os.getenv("AGENTMEM_ROOT")
             or _param(baseline_name, "pipeline_root", _DEFAULT_PIPELINE_ROOT)
         )
         try:
             _ensure_pipeline_on_path(pipeline_root)
-            from agentmem.backends import OpenAICompatibleBackend
-            from agentmem.executor import MemoryExecutor
-            from agentmem.memory_bank import MemoryBank
-            from agentmem.operations import get_operations
+            from hive_mem.executor import MemoryExecutor
+            from hive_mem.llm_client import LLMClient
+            from hive_mem.mau import MAUBank
         except Exception as exc:  # noqa: BLE001 — surface via capabilities
             self._integration_error = f"{type(exc).__name__}: {exc}"
             return
 
-        self._memory_bank_cls = MemoryBank
-        operation_names = str(
-            _param(baseline_name, "operations", "insert")
-        ).split(",")
-        try:
-            self._operations = get_operations(operation_names)
-        except ValueError as exc:
-            self._integration_error = f"ValueError: {exc}"
-            return
-        self.operation_names = [op.name for op in self._operations]
+        self._memory_bank_cls = MAUBank
+        self.operation_names = ["insert"]
 
         api_key_env = str(_param(baseline_name, "executor_api_key_env", ""))
         api_key = (os.getenv(api_key_env) if api_key_env else None) or "EMPTY"
-        backend = OpenAICompatibleBackend(
+        backend = LLMClient(
             model=str(_param(baseline_name, "executor_model", "Qwen/Qwen3-VL-4B-Instruct")),
             api_base=str(_param(baseline_name, "executor_base_url", "http://127.0.0.1:8000/v1")),
             api_key=api_key,
             temperature=float(_param(baseline_name, "executor_temperature", 0.0)),
             max_new_tokens=int(_param(baseline_name, "executor_max_new_tokens", 1024)),
+            max_retries=int(_param(baseline_name, "executor_retries", 3)),
             timeout=int(_param(baseline_name, "executor_timeout", 120)),
         )
         device = str(
@@ -155,7 +146,7 @@ class AgentMemAdapter(MemoryAdapter):
         )
         self._executor = MemoryExecutor(backend, self._embedder)
 
-        self._bank = MemoryBank()
+        self._bank = MAUBank()
         self._round_buffer: list[NormalizedTurn] = []
         self._round_counters: dict[str, int] = {}
         self._prev_contents: dict[str, str] = {}
@@ -196,7 +187,7 @@ class AgentMemAdapter(MemoryAdapter):
 
     def snapshot_memories(self) -> list[MemorySnapshotRecord]:
         out: list[MemorySnapshotRecord] = []
-        for item in self._bank.get_items():
+        for item in self._bank.memories:
             out.append(
                 MemorySnapshotRecord(
                     memory_id=item.memory_id,
@@ -205,14 +196,14 @@ class AgentMemAdapter(MemoryAdapter):
                     status="active",
                     source=self.baseline_name,
                     raw_backend_id=item.memory_id,
-                    raw_backend_type="agentmem",
+                    raw_backend_type="hivemem",
                     metadata=dict(item.metadata),
                 )
             )
         return out
 
     def export_memory_delta(self, session_id: str) -> list[MemoryDeltaRecord]:
-        current = {item.memory_id: item.content for item in self._bank.get_items()}
+        current = {item.memory_id: item.content for item in self._bank.memories}
         deltas: list[MemoryDeltaRecord] = []
         for memory_id, content in current.items():
             if memory_id not in self._prev_contents:
@@ -248,7 +239,7 @@ class AgentMemAdapter(MemoryAdapter):
         import numpy as np
 
         items: list[RetrievalItem] = []
-        memories = self._bank.get_items()
+        memories = self._bank.memories
         if memories:
             query_vec = np.asarray(
                 self._embedder.embed_texts(str(query), mode="query"), dtype=np.float32
@@ -290,7 +281,7 @@ class AgentMemAdapter(MemoryAdapter):
 
     def get_capabilities(self) -> dict[str, Any]:
         caps: dict[str, Any] = {
-            "backend": "agentmem",
+            "backend": "hivemem",
             "baseline": self.baseline_name,
             "available": self._integration_error is None,
             "delta_granularity": "per_session",
@@ -315,23 +306,30 @@ class AgentMemAdapter(MemoryAdapter):
             return
         metadata = self._round_metadata(turns)
 
-        query_embedding = self._embedder.embed_texts(chunk_text, mode="query")
-        retrieved, indices = self._bank.retrieve(query_embedding, top_k=self.ops_top_k)
         _, actions = self._executor.execute(
-            operations=self._operations,
             chunk_text=chunk_text,
-            retrieved_memories=retrieved,
+            image_paths=metadata.get("image_paths") or [],
+            visual_input="image" if self.mm_mode == "image" else "caption",
         )
         self._executor.apply_to_memory_bank(
             actions,
             self._bank,
-            indices,
             event_metadata=metadata,
         )
-        self._bank.step()
+        if not any(action.success and action.memory_content.strip() for action in actions):
+            fallback_text = self._executor.prepare_chunk_text(
+                chunk_text,
+                "image" if self.mm_mode == "image" else "caption",
+            )
+            embedding = self._embedder.embed_texts(fallback_text, mode="context")
+            self._bank.add_memory(
+                fallback_text,
+                embedding,
+                metadata={**metadata, "source": "fallback_insert"},
+            )
         self._rounds_processed += 1
         for action in actions:
-            key = action.action_type
+            key = "INSERT"
             self._action_counts[key] = self._action_counts.get(key, 0) + 1
             if not action.success:
                 self._parse_failures += 1
@@ -379,3 +377,7 @@ class AgentMemAdapter(MemoryAdapter):
             "image_paths": image_paths,
             "image_captions": image_captions,
         }
+
+
+# Keep the historical class name importable for old configs and result scripts.
+AgentMemAdapter = HiveMemAdapter

@@ -50,8 +50,16 @@ class MemoryHit:
 
 
 class SimpleMemoryIndex:
-    def __init__(self, directory: str | Path):
+    def __init__(
+        self,
+        directory: str | Path,
+        *,
+        visual_categories: set[str] | None = None,
+    ):
         self.directory = Path(directory)
+        self.visual_categories = {
+            str(value).upper() for value in (visual_categories or {"VS", "VR", "TTL"})
+        }
         layout = DatasetLayout(self.directory)
         self.bank = MAUBank.load(self.directory)
         text_vectors_path = layout.existing_vector_path("text.npy", "vectors.npy")
@@ -65,6 +73,7 @@ class SimpleMemoryIndex:
         self,
         query_vector: list[float] | np.ndarray,
         category: str = "",
+        allowed_session_ids: set[str] | None = None,
     ) -> np.ndarray:
         """Per-memory similarity scores for a query; ARCHIVED rows are -inf."""
         query = np.asarray(query_vector, dtype=np.float32).reshape(-1)
@@ -72,13 +81,21 @@ class SimpleMemoryIndex:
         if self.text_vectors.shape[1] != query.shape[0]:
             raise ValueError(f"Query dim {query.shape[0]} != memory dim {self.text_vectors.shape[1]}")
         scores = self.text_vectors @ query
-        if category.upper() in {"VS", "VR", "TTL"} and self.image_vectors is not None:
+        if category.upper() in self.visual_categories and self.image_vectors is not None:
             image_scores = self.image_vectors @ query
             scores = np.where(self.image_mask, np.maximum(scores, image_scores), scores)
         archived = np.asarray(
             [item.status != "ACTIVE" for item in self.bank.memories], dtype=bool
         )
-        return np.where(archived, -np.inf, scores)
+        disallowed = archived
+        if allowed_session_ids is not None:
+            allowed = {str(value) for value in allowed_session_ids}
+            outside_checkpoint = np.asarray(
+                [str(item.metadata.get("session_id", "")) not in allowed for item in self.bank.memories],
+                dtype=bool,
+            )
+            disallowed = disallowed | outside_checkpoint
+        return np.where(disallowed, -np.inf, scores)
 
     def search(
         self,
@@ -86,10 +103,11 @@ class SimpleMemoryIndex:
         top_k: int = 5,
         *,
         category: str = "",
+        allowed_session_ids: set[str] | None = None,
     ) -> list[MemoryHit]:
         if not len(self.bank):
             return []
-        scores = self._scores(query_vector, category)
+        scores = self._scores(query_vector, category, allowed_session_ids)
         actual_k = min(int(top_k), int(np.isfinite(scores).sum()))
         indices = np.argsort(scores)[::-1][:actual_k]
         return [
@@ -123,8 +141,9 @@ class GraphExpandedIndex(SimpleMemoryIndex):
         df_stop: float = 0.5,
         min_shared: int = 2,
         degree_cap: int = 10,
+        visual_categories: set[str] | None = None,
     ):
-        super().__init__(directory)
+        super().__init__(directory, visual_categories=visual_categories)
         self.seed_k = int(seed_k)
         self.expansion_bonus = float(expansion_bonus)
         if mode not in ("rerank", "append"):
@@ -185,10 +204,11 @@ class GraphExpandedIndex(SimpleMemoryIndex):
         top_k: int = 5,
         *,
         category: str = "",
+        allowed_session_ids: set[str] | None = None,
     ) -> list[MemoryHit]:
         if not len(self.bank):
             return []
-        scores = self._scores(query_vector, category)
+        scores = self._scores(query_vector, category, allowed_session_ids)
         active_count = int(np.isfinite(scores).sum())
         seed_count = min(self.seed_k or int(top_k), active_count)
         seed_indices = [int(i) for i in np.argsort(scores)[::-1][:seed_count]]

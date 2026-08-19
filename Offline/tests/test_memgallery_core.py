@@ -1,5 +1,7 @@
 import json
 import tempfile
+import threading
+import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -494,9 +496,44 @@ class CrashingLLMClient:
         return f"MEMORY_ITEM: fact number {self.n}"
 
 
+def _event_index_from_prompt(prompt):
+    chunk = prompt.split("### Current Chunk\n", 1)[1].splitlines()[0]
+    return int(chunk.rsplit(" ", 1)[1])
+
+
+class OutOfOrderLLMClient:
+    def __init__(self, requests):
+        self.barrier = threading.Barrier(requests)
+        self.lock = threading.Lock()
+        self.active = 0
+        self.max_active = 0
+        self.completion_order = []
+
+    def generate(self, prompt):
+        event_index = _event_index_from_prompt(prompt)
+        with self.lock:
+            self.active += 1
+            self.max_active = max(self.max_active, self.active)
+        self.barrier.wait(timeout=2)
+        time.sleep((3 - event_index) * 0.01)
+        with self.lock:
+            self.completion_order.append(event_index)
+            self.active -= 1
+        return f"MEMORY_ITEM: fact {event_index}"
+
+
+class IndexedFailureLLMClient:
+    def generate(self, prompt):
+        event_index = _event_index_from_prompt(prompt)
+        if event_index == 1:
+            raise RuntimeError("simulated concurrent crash")
+        return f"MEMORY_ITEM: fact {event_index}"
+
+
 class BuilderResumeTest(unittest.TestCase):
-    def test_resume_after_mid_run_crash_does_not_duplicate_trace_entries(self):
-        events = [
+    @staticmethod
+    def events(count=5):
+        return [
             MemoryEvent(
                 text=f"event {i}",
                 dataset="d",
@@ -505,8 +542,70 @@ class BuilderResumeTest(unittest.TestCase):
                 round_id=i,
                 source_chunk_id=f"c{i}",
             )
-            for i in range(5)
+            for i in range(count)
         ]
+
+    def test_concurrent_executor_commits_memories_and_traces_in_event_order(self):
+        events = self.events(3)
+        client = OutOfOrderLLMClient(requests=3)
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory) / "out"
+            stats = MAUBuilder(client, FakeEmbedder()).build(
+                events,
+                out,
+                resume=False,
+                executor_concurrency=3,
+            )
+            bank = MAUBank.load(out)
+            with (out / "traces" / "build.jsonl").open() as handle:
+                traces = [json.loads(line) for line in handle]
+
+        self.assertEqual(client.max_active, 3)
+        self.assertEqual(client.completion_order, [2, 1, 0])
+        self.assertEqual(
+            [item.content for item in bank.memories],
+            ["fact 0", "fact 1", "fact 2"],
+        )
+        self.assertEqual(
+            [item.metadata["source_chunk_ids"] for item in bank.memories],
+            [["c0"], ["c1"], ["c2"]],
+        )
+        self.assertEqual([trace["event_index"] for trace in traces], [0, 1, 2])
+        self.assertEqual(stats["executor_concurrency"], 3)
+
+    def test_concurrent_failure_only_checkpoints_contiguous_commits(self):
+        events = self.events(3)
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory) / "out"
+            builder = MAUBuilder(IndexedFailureLLMClient(), FakeEmbedder())
+            with self.assertRaisesRegex(RuntimeError, "concurrent crash"):
+                builder.build(
+                    events,
+                    out,
+                    resume=True,
+                    checkpoint_every=1,
+                    executor_concurrency=3,
+                )
+            state = json.loads(
+                (out / ".checkpoint" / "builder_state.json").read_text()
+            )
+            with (out / "traces" / "build.jsonl").open() as handle:
+                indices = [json.loads(line)["event_index"] for line in handle]
+
+        self.assertEqual(state["next_event_index"], 1)
+        self.assertEqual(indices, [0])
+
+    def test_executor_concurrency_must_be_positive(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(ValueError, "at least 1"):
+                MAUBuilder(CrashingLLMClient(crash_at=999), FakeEmbedder()).build(
+                    self.events(1),
+                    Path(directory) / "out",
+                    executor_concurrency=0,
+                )
+
+    def test_resume_after_mid_run_crash_does_not_duplicate_trace_entries(self):
+        events = self.events()
         with tempfile.TemporaryDirectory() as directory:
             out = Path(directory) / "out"
             builder = MAUBuilder(CrashingLLMClient(crash_at=4), FakeEmbedder())
@@ -701,6 +800,7 @@ class OperationTogglesTest(unittest.TestCase):
         config_path = Path(__file__).resolve().parents[1] / "configs" / "defaults.json"
         config = json.loads(config_path.read_text(encoding="utf-8"))
         self.assertEqual(config["executor_visual_input"], "image")
+        self.assertEqual(config["executor_concurrency"], 16)
 
     def test_response_without_memory_item_is_rejected(self):
         llm_client = ScriptedLLMClient("Here is a summary of the chunk, but not in the required format.")

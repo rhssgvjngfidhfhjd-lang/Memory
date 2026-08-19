@@ -336,3 +336,154 @@ def build_chunks_from_directory(
             )
         )
     return chunks
+
+
+def iter_wma_sample_files(data_dir: str | Path) -> list[Path]:
+    """Return WorldMemArena sample JSON files in a stable order."""
+    root = Path(data_dir)
+    section_roots = [root / section for section in ("agent", "lifelong")]
+    existing_sections = [path for path in section_roots if path.is_dir()]
+    search_roots = existing_sections or [root]
+    paths = [path for search_root in search_roots for path in search_root.rglob("*.json")]
+    return sorted(paths, key=lambda item: (item.stem, str(item)))
+
+
+def _wma_rounds(dialogue: list[dict[str, Any]]) -> Iterable[tuple[int, dict[str, Any], dict[str, Any]]]:
+    """Pair WMA user/assistant messages using the MemGallery round unit."""
+    pending_user: dict[str, Any] | None = None
+    round_number = 0
+    for row in dialogue:
+        role = str(row.get("role", "")).lower()
+        if role == "user":
+            if pending_user is not None:
+                round_number += 1
+                yield round_number, pending_user, {}
+            pending_user = row
+        elif role == "assistant":
+            round_number += 1
+            yield round_number, pending_user or {}, row
+            pending_user = None
+    if pending_user is not None:
+        round_number += 1
+        yield round_number, pending_user, {}
+
+
+def _wma_attachments(*messages: dict[str, Any]) -> list[dict[str, Any]]:
+    result: list[dict[str, Any]] = []
+    for message in messages:
+        for attachment in message.get("attachments", []) or []:
+            if isinstance(attachment, dict) and attachment.get("file_path"):
+                result.append(attachment)
+    return result
+
+
+def build_wma_chunks_from_data(
+    sample: dict[str, Any],
+    data_dir: str | Path,
+    *,
+    sample_path: str | Path | None = None,
+    max_tokens: int = 800,
+    include_previous_summary: bool = True,
+    include_captions: bool = True,
+    include_images: bool = True,
+) -> list[Chunk]:
+    """Convert one WMA sample to the same round-level ``Chunk`` schema.
+
+    Gold ``memory_points`` and ``qa_checkpoints`` are intentionally ignored.
+    """
+    root = Path(data_dir)
+    image_base_dir = Path(sample_path).parent if sample_path is not None else root
+    sample_id = str(sample["sample_id"])
+    chunks: list[Chunk] = []
+    for session in sample.get("sessions", []) or []:
+        session_id = str(session.get("_v2_session_id") or session.get("session_id") or "")
+        previous_summary = ""
+        for round_number, user_row, assistant_row in _wma_rounds(session.get("dialogue", []) or []):
+            dialogue_id = f"{session_id}:R{round_number:04d}"
+            attachments = _wma_attachments(user_row, assistant_row)
+            image_ids = [str(row.get("image_id", "")) for row in attachments]
+            captions = [str(row.get("caption", "")) for row in attachments]
+            image_paths = [
+                str(
+                    (
+                        Path(str(row["file_path"]))
+                        if Path(str(row["file_path"])).is_absolute()
+                        else image_base_dir / str(row["file_path"])
+                    ).resolve()
+                )
+                for row in attachments
+            ]
+            timestamp = str(user_row.get("timestamp") or assistant_row.get("timestamp") or "")
+            chunk_text = _make_chunk_text(
+                profile_summary="",
+                session_id=session_id,
+                date=timestamp,
+                round_id=dialogue_id,
+                user_text=str(user_row.get("content", "") or ""),
+                assistant_text=str(assistant_row.get("content", "") or ""),
+                image_ids=image_ids,
+                captions=captions,
+                previous_round_summary=previous_summary if include_previous_summary else "",
+                max_tokens=max_tokens,
+                include_captions=include_captions,
+            )
+            metadata = {
+                "dataset": sample_id,
+                "profile_name": "",
+                "session_id": session_id,
+                "date": timestamp,
+                "round_id": round_number,
+                "dialogue_id": dialogue_id,
+                "image_id": image_ids[0] if image_ids else "",
+                "image_ids": image_ids,
+                "image_caption": captions[0] if include_captions and captions else "",
+                "image_captions": captions if include_captions else [],
+                "timestamp": timestamp,
+                "category": "",
+                "has_image": bool(image_paths),
+                "token_estimate": estimate_tokens(chunk_text),
+            }
+            chunks.append(
+                Chunk(
+                    chunk_id=f"{sample_id}:{dialogue_id}",
+                    text=chunk_text,
+                    images=image_paths if include_images else [],
+                    metadata=metadata,
+                )
+            )
+            previous_summary = _make_previous_summary(
+                dialogue_id,
+                str(user_row.get("content", "") or ""),
+                str(assistant_row.get("content", "") or ""),
+                captions if include_captions else [],
+            )
+    return chunks
+
+
+def build_wma_chunks_from_directory(
+    data_dir: str | Path,
+    *,
+    sample_ids: set[str] | None = None,
+    max_tokens: int = 800,
+    include_previous_summary: bool = True,
+    include_captions: bool = True,
+    include_images: bool = True,
+) -> list[Chunk]:
+    chunks: list[Chunk] = []
+    for path in iter_wma_sample_files(data_dir):
+        sample = json.loads(path.read_text(encoding="utf-8"))
+        sample_id = str(sample["sample_id"])
+        if sample_ids is not None and sample_id not in sample_ids:
+            continue
+        chunks.extend(
+            build_wma_chunks_from_data(
+                sample,
+                data_dir,
+                sample_path=path,
+                max_tokens=max_tokens,
+                include_previous_summary=include_previous_summary,
+                include_captions=include_captions,
+                include_images=include_images,
+            )
+        )
+    return chunks

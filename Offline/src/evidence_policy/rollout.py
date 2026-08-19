@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import random
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Protocol, Sequence
 
@@ -48,6 +48,7 @@ class EvidenceEpisode:
     memory_hits: tuple[MemoryHit, ...]
     query_image: dict[str, Any] | None = None
     clue: tuple[str, ...] = ()
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -131,12 +132,14 @@ class EvidenceSelectionEnv:
         reward_function: RewardFunction | None = None,
         cache: RolloutCache | None = None,
         rng: random.Random | None = None,
+        visual_categories: set[str] | frozenset[str] | None = None,
     ):
         self.client = client
         self.chain_builder = chain_builder
         self.reward_function = reward_function or F1Reward()
         self.cache = cache
         self.rng = rng or random.Random()
+        self.visual_categories = visual_categories
 
     def rollout(
         self,
@@ -147,7 +150,10 @@ class EvidenceSelectionEnv:
         deterministic: bool = False,
     ) -> EvidenceRollout:
         observation = make_policy_observation(
-            episode.query_embedding, episode.memory_hits, episode.category
+            episode.query_embedding,
+            episode.memory_hits,
+            episode.category,
+            visual_categories=self.visual_categories,
         )
         policy_step = None
         if strategy is EvidenceStrategy.PPO:
@@ -163,7 +169,11 @@ class EvidenceSelectionEnv:
             actions = policy_step.actions
         else:
             actions = choose_baseline_actions(
-                episode.memory_hits, episode.category, strategy, self.rng
+                episode.memory_hits,
+                episode.category,
+                strategy,
+                self.rng,
+                visual_categories=self.visual_categories,
             )
         cache_key = self._cache_key(episode, actions)
         cached = self.cache.get(cache_key) if self.cache is not None else None

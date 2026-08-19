@@ -451,7 +451,7 @@ MEMGALLERY_NATIVE_REGISTRY: dict[str, Callable[..., MemGalleryNativeAdapter]] = 
 }
 
 EXTERNAL_ADAPTER_KEYS: frozenset[str] = frozenset({
-    "A-Mem", "AgentMem", "Dummy",
+    "A-Mem", "AgentMem", "HiveMem", "Dummy",
     "SimpleMem", "Omni-SimpleMem",
     "ViLoMem",
     "M2A", "MIRIX",
@@ -467,7 +467,12 @@ def create_amem_adapter(**kwargs: Any) -> MemoryAdapter:
 
 def create_agentmem_adapter(**kwargs: Any) -> MemoryAdapter:
     from eval_framework.memory_adapters.agentmem_adapter import AgentMemAdapter
-    return AgentMemAdapter(**kwargs)
+    return AgentMemAdapter(baseline_name="AgentMem", **kwargs)
+
+
+def create_hivemem_adapter(**kwargs: Any) -> MemoryAdapter:
+    from eval_framework.memory_adapters.agentmem_adapter import HiveMemAdapter
+    return HiveMemAdapter(**kwargs)
 
 
 def create_dummy_adapter(**kwargs: Any) -> DummyAdapter:
@@ -529,6 +534,7 @@ def create_harness_adapter(**kwargs: Any) -> MemoryAdapter:
 EXTERNAL_ADAPTER_REGISTRY: dict[str, Callable[..., MemoryAdapter]] = {
     "A-Mem": create_amem_adapter,
     "AgentMem": create_agentmem_adapter,
+    "HiveMem": create_hivemem_adapter,
     "Dummy": create_dummy_adapter,
     "SimpleMem": create_simplemem_adapter,
     "Omni-SimpleMem": create_omni_simplemem_adapter,

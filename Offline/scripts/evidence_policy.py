@@ -33,6 +33,7 @@ from evidence_policy.evidence import (  # noqa: E402
     DialogueStore,
     EvidenceChainBuilder,
     EvidenceStrategy,
+    WMADialogueStore,
 )
 from evidence_policy.policy import EvidenceSelectionPolicy  # noqa: E402
 from evidence_policy.ppo import PPOBuffer, PPOTrainer, load_policy_checkpoint, save_json  # noqa: E402
@@ -46,13 +47,13 @@ from hive_mem.retriever import SimpleMemoryIndex  # noqa: E402
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="PPO evidence selection for Mem-Gallery")
+    parser = argparse.ArgumentParser(description="PPO evidence selection for benchmark MAUs")
     parser.add_argument(
         "--config", default=str(ROOT / "configs" / "evidence_policy.json")
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    split_parser = subparsers.add_parser("prepare-split", help="Create balanced 12/4/4 splits")
+    split_parser = subparsers.add_parser("prepare-split", help="Create balanced benchmark splits")
     split_parser.add_argument("--trials", type=int, default=20000)
 
     train_parser = subparsers.add_parser("train", help="Train the PPO policy")
@@ -91,11 +92,22 @@ def load_config(path: Path) -> dict[str, Any]:
 
 def prepare_split(config: dict[str, Any], config_path: Path, *, trials: int) -> None:
     data_dir = Path(config["data_dir"])
-    stats = dataset_statistics(data_dir)
+    benchmark = str(config.get("benchmark", "memgallery")).lower()
+    stats = dataset_statistics(data_dir, benchmark=benchmark)
     names = sorted(stats)
-    if len(names) != 20:
+    if benchmark == "memgallery" and len(names) != 20:
         raise ValueError(f"Expected 20 Mem-Gallery datasets, found {len(names)}")
-    sizes = (12, 4, 4)
+    configured_sizes = config.get("split_sizes")
+    if configured_sizes:
+        sizes = tuple(int(value) for value in configured_sizes)
+    elif benchmark == "memgallery":
+        sizes = (12, 4, 4)
+    else:
+        train_size = int(len(names) * 0.6)
+        validation_size = int(len(names) * 0.2)
+        sizes = (train_size, validation_size, len(names) - train_size - validation_size)
+    if len(sizes) != 3 or sum(sizes) != len(names):
+        raise ValueError(f"Split sizes {sizes} do not cover {len(names)} datasets")
     rng = random.Random(int(config["seed"]))
     best: tuple[float, list[str]] | None = None
     for _ in range(max(1, int(trials))):
@@ -117,15 +129,32 @@ def prepare_split(config: dict[str, Any], config_path: Path, *, trials: int) -> 
     print(json.dumps({"score": best[0], "split": split, "report": report}, indent=2))
 
 
-def dataset_statistics(data_dir: Path) -> dict[str, Counter[str]]:
+def dataset_statistics(
+    data_dir: Path, *, benchmark: str = "memgallery"
+) -> dict[str, Counter[str]]:
     stats: dict[str, Counter[str]] = {}
-    for path in sorted((data_dir / "dialog").glob("*.json")):
+    if benchmark == "wma":
+        from embedding.chunk_builder import iter_wma_sample_files
+
+        paths = iter_wma_sample_files(data_dir)
+    else:
+        paths = sorted((data_dir / "dialog").glob("*.json"))
+    for path in paths:
         payload = json.loads(path.read_text(encoding="utf-8"))
-        categories = Counter(
-            str(row.get("point", "")) for row in payload.get("human-annotated QAs", [])
-        )
+        if benchmark == "wma":
+            categories = Counter(
+                str(row.get("question_type_abbrev", ""))
+                for checkpoint in payload.get("qa_checkpoints", []) or []
+                for row in checkpoint.get("questions", []) or []
+            )
+            name = str(payload["sample_id"])
+        else:
+            categories = Counter(
+                str(row.get("point", "")) for row in payload.get("human-annotated QAs", [])
+            )
+            name = path.stem
         categories["__total__"] = sum(categories.values())
-        stats[path.stem] = categories
+        stats[name] = categories
     return stats
 
 
@@ -165,9 +194,16 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
     policy = build_policy(config, device)
     trainer = build_trainer(config, policy)
     start_epoch = 0
+    train_question_count = 0
     if args.resume:
         state = trainer.load_checkpoint(args.resume)
         start_epoch = int(state["epoch"]) + 1
+        train_question_count = int(
+            state["extra"].get(
+                "train_question_count",
+                state["extra"].get("train_question_step", 0),
+            )
+        )
     client, env = build_environment(config)
     client.assert_model_available()
     query_cache = QueryEmbeddingCache(
@@ -176,17 +212,29 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
     profiles = load_profiles(config)
     epochs = int(args.epochs or config["ppo"]["epochs"])
     output_dir = Path(config["output_dir"])
+    ppo_metrics_path = output_dir / "ppo_metrics.jsonl"
+    if start_epoch == 0 and ppo_metrics_path.exists():
+        ppo_metrics_path.unlink()
     for epoch in range(start_epoch, start_epoch + epochs):
         buffer = PPOBuffer()
         episodes = list(iter_episodes(config, "train", query_cache, profiles))
         random.shuffle(episodes)
         if args.max_train_episodes:
             episodes = episodes[: args.max_train_episodes]
+        validation_points = validation_checkpoints(
+            len(episodes),
+            interval_fraction=float(
+                config["ppo"].get("validation_interval_fraction", 1.0)
+            ),
+            rollout_batch_size=int(config["ppo"]["rollout_batch_size"]),
+        )
         updates: list[dict[str, float]] = []
         rewards: list[float] = []
         train_rollouts: list[dict[str, Any]] = []
+        validations: list[dict[str, Any]] = []
         failed_rollouts = 0
-        for episode in episodes:
+        for episode_index, episode in enumerate(episodes, start=1):
+            train_question_count += 1
             with torch.no_grad():
                 rollout = env.rollout(episode, EvidenceStrategy.PPO, policy=policy)
             step = rollout.policy_step
@@ -194,22 +242,141 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
             train_rollouts.append(rollout_record(rollout, episode))
             if rollout.error:
                 failed_rollouts += 1
-                continue
-            buffer.add(
-                rollout.observation,
-                rollout.actions,
-                old_log_prob=float(step.joint_log_prob.cpu()),
-                old_value=float(step.value.cpu()),
-                reward=rollout.reward,
-            )
-            rewards.append(rollout.reward)
-            if len(buffer) >= int(config["ppo"]["rollout_batch_size"]):
-                updates.append(trainer.update(buffer))
-                buffer.clear()
+            else:
+                buffer.add(
+                    rollout.observation,
+                    rollout.actions,
+                    old_log_prob=float(step.joint_log_prob.cpu()),
+                    old_value=float(step.value.cpu()),
+                    reward=rollout.reward,
+                )
+                rewards.append(rollout.reward)
+                if len(buffer) >= int(config["ppo"]["rollout_batch_size"]):
+                    metrics = trainer.update(buffer)
+                    updates.append(metrics)
+                    append_jsonl(
+                        ppo_metrics_path,
+                        {
+                            "epoch": epoch,
+                            "question_count": train_question_count,
+                            "update_step": trainer.update_steps,
+                            **metrics,
+                        },
+                    )
+                    buffer.clear()
+            validation_phase = validation_points.get(episode_index)
+            if validation_phase is not None:
+                validations.append(
+                    run_training_validation(
+                        config,
+                        env,
+                        query_cache,
+                        profiles,
+                        policy,
+                        output_dir=output_dir,
+                        epoch=epoch,
+                        phase=validation_phase,
+                        update_step=trainer.update_steps,
+                        train_question_count=train_question_count,
+                    )
+                )
         if len(buffer):
-            updates.append(trainer.update(buffer))
-        validation_limit = int(config["ppo"].get("validation_limit", 0))
-        policy.eval()
+            metrics = trainer.update(buffer)
+            updates.append(metrics)
+            append_jsonl(
+                ppo_metrics_path,
+                {
+                    "epoch": epoch,
+                    "question_count": train_question_count,
+                    "update_step": trainer.update_steps,
+                    **metrics,
+                },
+            )
+        end_validation = run_training_validation(
+            config,
+            env,
+            query_cache,
+            profiles,
+            policy,
+            output_dir=output_dir,
+            epoch=epoch,
+            phase="end",
+            update_step=trainer.update_steps,
+            train_question_count=train_question_count,
+        )
+        validations.append(end_validation)
+        checkpoint = output_dir / "checkpoints" / f"epoch_{epoch:03d}.pt"
+        train_trace = output_dir / "train" / f"epoch_{epoch:03d}_rollouts.jsonl"
+        write_jsonl(train_trace, train_rollouts)
+        trainer.save_checkpoint(
+            checkpoint,
+            config=config,
+            epoch=epoch,
+            extra={
+                "validation": end_validation["metrics"],
+                "validations": validations,
+                "train_question_count": train_question_count,
+            },
+        )
+        summary = {
+            "epoch": epoch,
+            "update_step": trainer.update_steps,
+            "train_question_count": train_question_count,
+            "train_episodes": len(episodes),
+            "successful_rollouts": len(rewards),
+            "failed_rollouts": failed_rollouts,
+            "mean_reward": float(np.mean(rewards)) if rewards else 0.0,
+            "updates": mean_dicts(updates),
+            "validation": end_validation["metrics"],
+            "validations": validations,
+            "checkpoint": str(checkpoint),
+            "rollouts": str(train_trace),
+            "validation_rollouts": end_validation["rollouts"],
+        }
+        print(json.dumps(summary, ensure_ascii=False))
+
+
+def validation_checkpoints(
+    total_episodes: int,
+    *,
+    interval_fraction: float,
+    rollout_batch_size: int,
+) -> dict[int, str]:
+    if not 0.0 < interval_fraction <= 1.0:
+        raise ValueError("validation_interval_fraction must be in (0, 1]")
+    if rollout_batch_size <= 0:
+        raise ValueError("rollout_batch_size must be positive")
+    checkpoints: dict[int, str] = {}
+    multiple = 1
+    while multiple * interval_fraction < 1.0 - 1e-9:
+        fraction = multiple * interval_fraction
+        target = int(total_episodes * fraction)
+        aligned = target - target % rollout_batch_size
+        if 0 < aligned < total_episodes:
+            phase = "half" if abs(fraction - 0.5) < 1e-9 else (
+                f"fraction_{fraction:g}".replace(".", "_")
+            )
+            checkpoints.setdefault(aligned, phase)
+        multiple += 1
+    return checkpoints
+
+
+def run_training_validation(
+    config: dict[str, Any],
+    env: EvidenceSelectionEnv,
+    query_cache: QueryEmbeddingCache,
+    profiles: dict[str, str],
+    policy: EvidenceSelectionPolicy,
+    *,
+    output_dir: Path,
+    epoch: int,
+    phase: str,
+    update_step: int,
+    train_question_count: int,
+) -> dict[str, Any]:
+    was_training = policy.training
+    policy.eval()
+    try:
         validation = evaluate(
             config,
             "validation",
@@ -219,30 +386,25 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
             profiles,
             policy=policy,
             deterministic=True,
-            limit=validation_limit,
+            limit=int(config["ppo"].get("validation_limit", 0)),
         )
-        policy.train()
-        checkpoint = output_dir / "checkpoints" / f"epoch_{epoch:03d}.pt"
-        train_trace = output_dir / "train" / f"epoch_{epoch:03d}_rollouts.jsonl"
-        write_jsonl(train_trace, train_rollouts)
-        trainer.save_checkpoint(
-            checkpoint,
-            config=config,
-            epoch=epoch,
-            extra={"validation": validation["metrics"]},
-        )
-        summary = {
-            "epoch": epoch,
-            "train_episodes": len(episodes),
-            "successful_rollouts": len(rewards),
-            "failed_rollouts": failed_rollouts,
-            "mean_reward": float(np.mean(rewards)) if rewards else 0.0,
-            "updates": mean_dicts(updates),
-            "validation": validation["metrics"],
-            "checkpoint": str(checkpoint),
-            "rollouts": str(train_trace),
-        }
-        print(json.dumps(summary, ensure_ascii=False))
+    finally:
+        if was_training:
+            policy.train()
+    filename = (
+        f"epoch_{epoch:03d}_rollouts.jsonl"
+        if phase == "end"
+        else f"epoch_{epoch:03d}_{phase}_rollouts.jsonl"
+    )
+    trace = output_dir / "validation" / filename
+    write_jsonl(trace, validation["rollouts"])
+    return {
+        "phase": phase,
+        "update_step": int(update_step),
+        "train_question_count": int(train_question_count),
+        "metrics": validation["metrics"],
+        "rollouts": str(trace),
+    }
 
 
 def evaluate_command(config: dict[str, Any], args: argparse.Namespace) -> None:
@@ -317,10 +479,21 @@ def evaluate(
                 "original_answer": episode.ground_truth,
                 "retrieved_source_groups": source_groups,
                 "clue": list(episode.clue),
+                "gold_sessions": list(episode.clue),
+                "retrieved_sessions": [
+                    str(hit.item.metadata.get("session_id", ""))
+                    for hit in episode.memory_hits
+                ],
+                "difficulty": episode.metadata.get("difficulty", ""),
             }
         )
         rollouts.append(rollout_record(rollout, episode, source_groups=source_groups))
-    metrics = summarize_results(records, k=int(config["top_k"]))
+    if str(config.get("benchmark", "memgallery")).lower() == "wma":
+        from benchmarks.wma_harness.runner.metrics import summarize_results as summarize_wma_results
+
+        metrics = summarize_wma_results(records, k=int(config["top_k"]))
+    else:
+        metrics = summarize_results(records, k=int(config["top_k"]))
     metrics["mean_reward"] = (
         float(np.mean([row["reward"] for row in rollouts])) if rollouts else 0.0
     )
@@ -336,6 +509,9 @@ def iter_episodes(
     query_cache: QueryEmbeddingCache,
     profiles: dict[str, str],
 ) -> Iterator[EvidenceEpisode]:
+    if str(config.get("benchmark", "memgallery")).lower() == "wma":
+        yield from iter_wma_episodes(config, split, query_cache)
+        return
     data_dir = Path(config["data_dir"])
     for dataset_name in config["split"][split]:
         path = data_dir / "dialog" / f"{dataset_name}.json"
@@ -380,6 +556,110 @@ def iter_episodes(
             )
 
 
+def iter_wma_episodes(
+    config: dict[str, Any],
+    split: str,
+    query_cache: QueryEmbeddingCache,
+) -> Iterator[EvidenceEpisode]:
+    from benchmarks.wma_harness.retrieval.query_embedding_cache import (
+        build_gold_evidence_map,
+        make_query_id as make_wma_query_id,
+        session_ids,
+        visible_sessions_for_checkpoint,
+    )
+    from benchmarks.wma_harness.runner.prompts import SYSTEM_PROMPT as WMA_SYSTEM_PROMPT
+    from benchmarks.wma_harness.runner.prompts import format_question_prompt as format_wma_prompt
+    from embedding.chunk_builder import iter_wma_sample_files
+
+    data_dir = Path(config["data_dir"])
+    paths = {path.stem: path for path in iter_wma_sample_files(data_dir)}
+    visual_categories = {
+        str(value).upper()
+        for value in config.get("visual_categories", ["VFR", "VS", "VU", "CMR", ""])
+    }
+    for sample_id in config["split"][split]:
+        payload = json.loads(paths[sample_id].read_text(encoding="utf-8"))
+        ordered_sessions = session_ids(payload)
+        gold_points = build_gold_evidence_map(payload)
+        point_sessions = {
+            evidence_id: row["session_id"]
+            for evidence_id, row in gold_points.items()
+        }
+        index = SimpleMemoryIndex(
+            Path(config["memory_bank"]) / "datasets" / sample_id,
+            visual_categories=visual_categories,
+        )
+        for checkpoint in payload.get("qa_checkpoints", []) or []:
+            checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
+            covered_sessions = [
+                str(value) for value in checkpoint.get("covered_sessions", [])
+            ]
+            visible_sessions = visible_sessions_for_checkpoint(
+                ordered_sessions, covered_sessions
+            )
+            visible_session_set = set(visible_sessions)
+            for qa_index, qa in enumerate(checkpoint.get("questions", []) or [], start=1):
+                category = str(qa.get("question_type_abbrev", ""))
+                question = str(qa.get("question", ""))
+                query_id = make_wma_query_id(
+                    sample_id=sample_id,
+                    checkpoint_id=checkpoint_id,
+                    qa_index=qa_index,
+                    category=category,
+                    question=question,
+                )
+                query_vector = query_cache.get_by_id(query_id)
+                if query_vector is None:
+                    raise KeyError(f"Missing cached query embedding: {query_id}")
+                hits = index.search(
+                    query_vector,
+                    top_k=int(config["top_k"]),
+                    category=category,
+                    allowed_session_ids=visible_session_set,
+                )
+                evidence_ids = [
+                    str(row.get("memory_id") or row.get("image_id") or "")
+                    for row in qa.get("evidence", []) or []
+                    if isinstance(row, dict)
+                ]
+                yield EvidenceEpisode(
+                    query_id=query_id,
+                    dataset=sample_id,
+                    category=category,
+                    question_prompt=format_wma_prompt(question, category),
+                    system_prompt=WMA_SYSTEM_PROMPT,
+                    ground_truth=str(qa.get("answer", "")),
+                    query_embedding=query_vector,
+                    memory_hits=tuple(hits),
+                    clue=tuple(
+                        dict.fromkeys(
+                            point_sessions[value]
+                            for value in evidence_ids
+                            if value in point_sessions
+                            and point_sessions[value] in visible_session_set
+                        )
+                    ),
+                    metadata={
+                        "checkpoint_id": checkpoint_id,
+                        "question": question,
+                        "question_type": qa.get("question_type", ""),
+                        "difficulty": qa.get("difficulty", ""),
+                        "evidence": qa.get("evidence", []),
+                        "covered_sessions": covered_sessions,
+                        "visible_sessions": visible_sessions,
+                        "gold_future_evidence_ids": [
+                            value
+                            for value in evidence_ids
+                            if value in point_sessions
+                            and point_sessions[value] not in visible_session_set
+                        ],
+                        "gold_unmapped_evidence_ids": [
+                            value for value in evidence_ids if value not in point_sessions
+                        ],
+                    },
+                )
+
+
 def build_policy(config: dict[str, Any], device: torch.device) -> EvidenceSelectionPolicy:
     return EvidenceSelectionPolicy(**config["policy"]).to(device)
 
@@ -405,7 +685,13 @@ def build_environment(
     config: dict[str, Any],
 ) -> tuple[VLMAnswerClient, EvidenceSelectionEnv]:
     model = config["model"]
-    client = VLMAnswerClient(
+    benchmark = str(config.get("benchmark", "memgallery")).lower()
+    client_class = VLMAnswerClient
+    if benchmark == "wma":
+        from benchmarks.wma_harness.runner.answer_client import VLMAnswerClient as WMAAnswerClient
+
+        client_class = WMAAnswerClient
+    client = client_class(
         model=model["name"],
         base_url=model["base_url"],
         api_key=model["api_key"],
@@ -415,12 +701,21 @@ def build_environment(
         think=bool(model["think"]),
     )
     cache = RolloutCache(Path(config["output_dir"]) / "rollout_cache.jsonl")
-    builder = EvidenceChainBuilder(DialogueStore(config["data_dir"]))
+    visual_categories = {
+        str(value).upper() for value in config.get("visual_categories", ["VS", "VR"])
+    }
+    store = (
+        WMADialogueStore(config["data_dir"])
+        if benchmark == "wma"
+        else DialogueStore(config["data_dir"])
+    )
+    builder = EvidenceChainBuilder(store, visual_categories=visual_categories)
     return client, EvidenceSelectionEnv(
         client,
         builder,
         cache=cache,
         rng=random.Random(int(config["seed"])),
+        visual_categories=visual_categories,
     )
 
 
@@ -463,11 +758,19 @@ def validate_runtime(config: dict[str, Any], *, require_split: bool) -> None:
     if require_split:
         split = config.get("split", {})
         groups = [split.get(name, []) for name in ("train", "validation", "test")]
-        if [len(group) for group in groups] != [12, 4, 4]:
-            raise ValueError("Run prepare-split first; expected split sizes 12/4/4")
+        benchmark = str(config.get("benchmark", "memgallery")).lower()
+        expected_sizes = (
+            list(config.get("split_sizes", []))
+            if config.get("split_sizes")
+            else [12, 4, 4] if benchmark == "memgallery" else []
+        )
+        if expected_sizes and [len(group) for group in groups] != expected_sizes:
+            raise ValueError(f"Run prepare-split first; expected split sizes {expected_sizes}")
+        if any(not group for group in groups):
+            raise ValueError("Run prepare-split first; train/validation/test must be non-empty")
         flattened = [name for group in groups for name in group]
-        if len(set(flattened)) != 20:
-            raise ValueError("Persona splits overlap or do not cover all 20 datasets")
+        if len(set(flattened)) != len(flattened):
+            raise ValueError("Benchmark splits overlap")
 
 
 def load_profiles(config: dict[str, Any]) -> dict[str, str]:
@@ -517,6 +820,7 @@ def rollout_record(
             "original_answer": episode.ground_truth,
             "retrieved_source_groups": source_groups,
             "clue": list(episode.clue),
+            **episode.metadata,
         }
     )
     return row
@@ -528,6 +832,13 @@ def write_jsonl(path: str | Path, rows: Iterable[dict[str, Any]]) -> None:
     with path.open("w", encoding="utf-8") as handle:
         for row in rows:
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def append_jsonl(path: str | Path, row: dict[str, Any]) -> None:
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
 if __name__ == "__main__":
