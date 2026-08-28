@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vp-extractor"
+version = "0.1.0"
+description = "Open-vocabulary visual primitive discovery and cropping"
+requires-python = ">=3.10"
+dependencies = [
+    "Pillow>=10.0.0",
+    "requests>=2.31.0",
+]
+
+[project.scripts]
+vp-extractor = "vp_extractor.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

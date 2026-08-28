@@ -1,0 +1,35 @@
+Ground only the primary memory subject described by this caption.
+
+Caption:
+__CAPTION__
+
+This is not an exhaustive object-detection task. Determine the entity or
+entities that are the grammatical subject of the caption's first sentence and
+return only those primary subjects.
+
+Strict rules:
+- Other nouns describe context, location, contents, clothing, props, or
+  background. Never return them as separate primitives.
+- For "a dog sitting inside a box filled with papers, including a flyer", the
+  only target is the dog. Do not return the box, papers, or flyer.
+- For "a woman modeling a dress" followed by descriptions of smaller alternate
+  views, the only target is the woman wearing the dress. Do not return any
+  smaller or repeated view.
+- If one primary subject is shown repeatedly, return only its largest, most
+  complete primary depiction.
+- Return multiple boxes only when the first sentence itself begins with
+  multiple primary subjects, such as "two dogs" or "a man and a cat".
+- If the primary subject is a document, poster, diagram, slide, or screen,
+  return one box around the complete coherent item, not its internal parts.
+- Prefer a tight box around the complete primary subject.
+- Use a short label grounded in visible evidence and the caption.
+- Return at most __MAX_PRIMITIVES__ boxes.
+- Coordinates are integers normalized to 0..1000 relative to the full image.
+- Return JSON only, without markdown or explanation.
+
+Required format:
+[
+  {"label": "primary subject description", "bbox_norm": [x1, y1, x2, y2]}
+]
+
+Return [] if the caption's primary subject is not visible.

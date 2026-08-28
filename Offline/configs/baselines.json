@@ -1,0 +1,47 @@
+{
+  "HiveMem": {
+    "adapter": "hivemem",
+    "source_root": ".",
+    "in_process": true
+  },
+  "AUGUSTUSMemory": {
+    "adapter": "memengine",
+    "source_root": "baselines/AUGUSTUSMemory/upstream",
+    "python_env": "MEMENGINE_PYTHON"
+  },
+  "OmniSimpleMem": {
+    "adapter": "omni_simplemem",
+    "source_root": "baselines/OmniSimpleMem",
+    "python_env": "OMNI_SIMPLEMEM_PYTHON"
+  },
+  "M2A": {
+    "adapter": "m2a",
+    "source_root": "baselines/M2A",
+    "python_env": "M2A_PYTHON",
+    "compatibility_mode": "semantic_store_direct"
+  },
+  "MIRIX": {
+    "adapter": "mirix_family",
+    "source_root": "baselines/MIRIX",
+    "python_env": "MIRIX_PYTHON",
+    "compatibility_mode": "empty_semantic_fallback"
+  },
+  "MMA": {
+    "adapter": "mirix_family",
+    "source_root": "baselines/MMA-main/MMA",
+    "python_env": "MMA_PYTHON",
+    "compatibility_mode": "empty_semantic_fallback"
+  },
+  "MemVerse": {
+    "adapter": "memverse",
+    "source_root": "baselines/MemVerse-main",
+    "python_env": "MEMVERSE_PYTHON"
+  },
+  "M3-Agent-caption": {
+    "adapter": "m3_agent",
+    "source_root": "baselines/m3-agent-master",
+    "python_env": "M3_AGENT_PYTHON",
+    "compatibility_mode": "dialogue_round_as_clip",
+    "audio_enabled": false
+  }
+}

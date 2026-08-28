@@ -1,0 +1,35 @@
+Identify the independently memorable visual subjects in this image.
+
+__FOCUS_CONTEXT__
+
+When a memory caption is available, locate only the minimum set of dominant
+visual subjects needed to represent its main content. The caption may also
+describe background details, thumbnails, insets, alternate angles, or repeated
+views. Do not return those auxiliary depictions as separate subjects. If the
+same semantic entity appears more than once, keep only its largest, most
+complete, and most informative primary depiction. Return multiple boxes only
+when the caption's main content genuinely contains multiple distinct entities.
+
+Without a memory caption, use generic image-only discovery. A subject may be a
+complete physical entity (for example a person, animal, product, vehicle, or
+object) or a coherent visual entity such as a complete document, card, poster,
+or meaningful screen panel. Return separate instances separately.
+
+Rules:
+- Prefer complete, independently localizable subjects.
+- Do not return isolated text lines, decorative icons, ordinary body parts,
+  meaningless background, or duplicate boxes for the same subject.
+- Do not return a full-image container or background region when more specific
+  visual subjects have already been identified inside it.
+- Use a short, specific label based on visible evidence and the memory caption.
+  Do not invent names, identities, relationships, or hidden properties.
+- Return at most __MAX_PRIMITIVES__ subjects.
+- Coordinates are integers normalized to 0..1000 relative to the full image.
+- Return JSON only, without markdown or explanation.
+
+Required format:
+[
+  {"label": "specific subject description", "bbox_norm": [x1, y1, x2, y2]}
+]
+
+Return [] when no valid subject is visible.

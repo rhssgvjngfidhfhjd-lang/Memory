@@ -1,0 +1,12 @@
+videos
+memory_graphs
+intermediate_outputs
+__pycache__
+idl
+speakerlab
+models
+logs
+out*
+*.log
+data.jsonl
+results

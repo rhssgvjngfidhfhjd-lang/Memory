@@ -1,0 +1,41 @@
+{
+  "_comment": "Experiment defaults, loaded by hive_mem entrypoints via parser.set_defaults (CLI args still override). Machine-specific values live here on purpose — edit when the environment moves.",
+
+  "answer_model": "Qwen/Qwen3-VL-4B-Instruct",
+  "answer_base_url": "http://127.0.0.1:18000/v1",
+  "answer_temperature": 0.0,
+  "num_predict": 512,
+  "request_timeout": 180,
+  "retries": 2,
+  "think": false,
+  "top_k": 5,
+
+  "executor_model": "Qwen/Qwen3-VL-4B-Instruct",
+  "executor_base_url": "http://127.0.0.1:18000/v1",
+  "executor_temperature": 0.0,
+  "executor_max_tokens": 512,
+  "executor_visual_input": "image",
+  "executor_concurrency": 16,
+  "cost_mb_input_price": null,
+  "cost_mb_output_price": null,
+  "cost_qa_input_price": null,
+  "cost_qa_output_price": null,
+
+  "embedding_model": "Qwen/Qwen3-VL-Embedding-2B",
+  "embedding_base_url": "http://127.0.0.1:8001/v1",
+  "embedding_dim": 2048,
+  "embedding_api_key_env": "EMBEDDING_API_KEY",
+
+  "baseline_worker_timeout": 180,
+  "baseline_strict_config": true,
+
+  "data_dir": "../Mem-Gallery/benchmark/data",
+  "query_embedding_dir": "data/qwen3_vl_embedding_2b/query_embeddings",
+  "profiles_file": "configs/profiles.json",
+
+  "judge_model": "openai/gpt-oss-120b",
+  "judge_timeout": 60,
+  "judge_key_file": "../Nvida_api/apikey",
+  "judge_key_count": 12,
+  "judge_max_tokens": 512
+}

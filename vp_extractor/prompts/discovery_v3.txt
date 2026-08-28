@@ -1,0 +1,46 @@
+Extract object-centric visual primitives from this image.
+
+__FOCUS_CONTEXT__
+
+Caption-guided mode:
+- First determine the grammatical core subject or subjects of the caption's
+  opening main clause. Return boxes only for those core memory subjects.
+- Treat objects mentioned as location, surroundings, attributes, contents, or
+  incidental details as context only. In particular, objects introduced by
+  phrases such as "in", "inside", "on", "with", "including", "near", or
+  "in the background" must not become separate primitives unless the opening
+  main clause explicitly presents them as coordinated core subjects.
+- A caption naming one core subject must normally produce exactly one box,
+  even when it describes many other visible objects.
+- Return multiple boxes only when the opening main clause explicitly has
+  multiple distinct core subjects, such as "two dogs" or "a dog and a cat".
+- When a core subject is a coherent document, poster, diagram, slide, or
+  screen, return the complete coherent item rather than its internal parts.
+- If the same core subject appears in thumbnails, insets, alternate angles, or
+  repeated views, keep only its largest, most complete, and most informative
+  primary depiction.
+
+Generic image-only mode:
+- When no memory caption is available, identify independently memorable visual
+  subjects from visible evidence. A subject may be a complete physical entity
+  or a coherent document, card, poster, diagram, slide, or screen panel.
+- Return separate physical instances separately.
+
+Rules for both modes:
+- Prefer a tight box around each complete core subject.
+- Do not return isolated text, decorative icons, ordinary body parts,
+  meaningless background, or duplicate boxes for the same subject.
+- Do not return a full-image container or background region when a more
+  specific core subject has been identified inside it.
+- Use a short, specific label. Do not invent names, identities, relationships,
+  or hidden properties.
+- Return at most __MAX_PRIMITIVES__ subjects.
+- Coordinates are integers normalized to 0..1000 relative to the full image.
+- Return JSON only, without markdown or explanation.
+
+Required format:
+[
+  {"label": "specific subject description", "bbox_norm": [x1, y1, x2, y2]}
+]
+
+Return [] when no valid subject is visible.

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python test_single_key_latency.py)",
+      "Bash(kill -0 2267261)"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+[submodule "agent-workflow-memory"]
+	path = agent-workflow-memory
+	url = https://github.com/zorazrw/agent-workflow-memory.git
+[submodule "langextract"]
+	path = langextract
+	url = https://github.com/google/langextract.git
+[submodule "H2HMEM-main/dataset"]
+	path = H2HMEM-main/dataset
+	url = https://hf-mirror.com/datasets/varib/H2HMEM

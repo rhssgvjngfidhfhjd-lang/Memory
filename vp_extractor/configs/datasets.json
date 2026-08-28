@@ -1,0 +1,15 @@
+{
+  "H2HMEM": {
+    "root": "../H2HMEM-main/dataset",
+    "include": ["**/image/*"]
+  },
+  "Mem-Gallery": {
+    "root": "../Mem-Gallery/benchmark/data/image",
+    "include": ["**/*"],
+    "caption_root": "../Mem-Gallery/benchmark/data/dialog"
+  },
+  "WorldMemArena": {
+    "root": "../WorldMemArena/WorldMemArena/lifelong/personal/images",
+    "include": ["**/*"]
+  }
+}

@@ -1,0 +1,11 @@
+Locate exactly one visual subject in this image.
+
+Subject: __LABEL__
+Previous uncertain box: __BBOX__
+
+Return the tight bounding box of the complete visible subject. Coordinates are
+integers normalized to 0..1000 relative to the full image. Return JSON only:
+[{"label": "__LABEL__", "bbox_norm": [x1, y1, x2, y2]}]
+
+Return [] if the subject cannot be located reliably.
+

@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.cache/
+.env
+exp_log/
+*.pid
+*.log
+.DS_Store
+
+# 数据集（HuggingFace 官方托管，见项目根目录 setup_data.sh）
+/WorldMemArena/
+
+# 评测结果 / 可重建的运行产物
+eval_framework/results/
+exp_results/
+lancedb_data/
+omni_memory_data/
+*_status.txt

@@ -1,0 +1,25 @@
+Identify the independently memorable visual subjects in this image.
+
+A subject may be a complete physical entity (for example a person, animal,
+product, vehicle, or object) or a coherent visual entity such as a complete
+document, card, poster, or meaningful screen panel. Return separate instances
+separately.
+
+Rules:
+- Prefer complete, independently localizable subjects.
+- Do not return isolated text lines, decorative icons, ordinary body parts,
+  meaningless background, or duplicate boxes for the same subject.
+- Do not return a full-image container or background region when more specific
+  visual subjects have already been identified inside it.
+- Use a short, specific label based only on visible evidence. Do not invent
+  names, identities, relationships, or hidden properties.
+- Return at most __MAX_PRIMITIVES__ subjects.
+- Coordinates are integers normalized to 0..1000 relative to the full image.
+- Return JSON only, without markdown or explanation.
+
+Required format:
+[
+  {"label": "specific subject description", "bbox_norm": [x1, y1, x2, y2]}
+]
+
+Return [] when no valid subject is visible.
