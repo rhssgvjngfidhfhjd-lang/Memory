@@ -17,6 +17,12 @@ $ExpectedModels = @{
     8001 = 'Qwen/Qwen3-VL-Embedding-2B'
 }
 $Completed = [System.Collections.Generic.HashSet[string]]::new()
+$TunnelMarkers = @(
+    'haozhen@8.209.211.218',
+    '28001:127.0.0.1:8013',
+    '28002:127.0.0.1:8014',
+    '28003:127.0.0.1:8015'
+)
 
 function Write-MonitorLog([string]$Message) {
     $line = "$(Get-Date -Format o) $Message"
@@ -45,19 +51,17 @@ function Test-ModelPort([int]$Port) {
     }
 }
 
-function Restore-InferenceTunnel {
-    Write-MonitorLog 'Inference tunnel unhealthy; starting scoped SSH recovery.'
-    $markers = @(
-        'haozhen@8.209.211.218',
-        '28001:127.0.0.1:8013',
-        '28002:127.0.0.1:8014',
-        '28003:127.0.0.1:8015'
-    )
-    $existing = Get-CimInstance Win32_Process -Filter "Name = 'ssh.exe'" |
+function Get-ScopedTunnelProcess {
+    return @(Get-CimInstance Win32_Process -Filter "Name = 'ssh.exe'" |
         Where-Object {
             $command = [string]$_.CommandLine
-            ($markers | Where-Object { $command -notlike "*$_*" }).Count -eq 0
-        }
+            ($TunnelMarkers | Where-Object { $command -notlike "*$_*" }).Count -eq 0
+        })
+}
+
+function Restore-InferenceTunnel {
+    Write-MonitorLog 'Inference tunnel unhealthy; starting scoped SSH recovery.'
+    $existing = Get-ScopedTunnelProcess
     foreach ($process in $existing) {
         Write-MonitorLog "Stopping stale scoped SSH process pid=$($process.ProcessId)."
         Stop-Process -Id $process.ProcessId -Force -ErrorAction SilentlyContinue
@@ -88,10 +92,17 @@ Write-MonitorLog "Monitor started; interval=${IntervalSeconds}s pid=$PID."
 while ($true) {
     $portRows = @($AllPorts | ForEach-Object { Test-ModelPort $_ })
     $downInference = @($portRows | Where-Object { -not $_.Healthy -and $_.Port -in $InferencePorts })
+    $tunnelProcesses = @(Get-ScopedTunnelProcess)
     if ($downInference.Count -gt 0) {
-        Write-MonitorLog "Down inference ports: $($downInference.Port -join ',')."
-        Restore-InferenceTunnel
-        $portRows = @($AllPorts | ForEach-Object { Test-ModelPort $_ })
+        if ($tunnelProcesses.Count -eq 0) {
+            Write-MonitorLog "Unavailable inference ports with no tunnel process: $($downInference.Port -join ',')."
+            Restore-InferenceTunnel
+            $portRows = @($AllPorts | ForEach-Object { Test-ModelPort $_ })
+            $tunnelProcesses = @(Get-ScopedTunnelProcess)
+        }
+        else {
+            Write-MonitorLog "Model probes unavailable/busy on $($downInference.Port -join ','); scoped tunnel pid=$($tunnelProcesses.ProcessId -join ',') remains alive, so it was not restarted."
+        }
     }
 
     $jobCounts = @{}
@@ -121,6 +132,7 @@ while ($true) {
         monitor_pid = $PID
         runner_pid = $runnerPid
         runner_alive = $runnerAlive
+        tunnel_pids = @($tunnelProcesses.ProcessId)
         ports = @($portRows)
         job_counts = $jobCounts
         newly_completed = $newCompleted
