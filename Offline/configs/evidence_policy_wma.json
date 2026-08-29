@@ -4,11 +4,18 @@
   "split_manifest": "",
   "seed": 42,
   "data_dir": "../WorldMemArena/WorldMemArena/lifelong",
-  "memory_bank": "outputs/hive_mem_wma_lifelong",
+  "memory_bank": "outputs/WorldMemArena/HiveMem/memory",
   "query_cache": "data/wma_qwen3_vl_embedding_2b/lifelong_query_embeddings",
   "output_dir": "outputs/evidence_policy_wma_lifelong_ppo",
   "top_k": 5,
   "excluded_categories": ["MB"],
+  "evidence": {
+    "schema_version": 2,
+    "order": ["summary", "dialogue", "caption", "image", "vp"],
+    "vp_run_dir": "../vp_extractor/outputs/qwen3vl4b_all_v1",
+    "strict_vp_coverage": true,
+    "max_vps_per_image": 5
+  },
   "visual_categories": [
     "VFR",
     "VS",
@@ -33,7 +40,8 @@
   "policy": {
     "embedding_dim": 2048,
     "hidden_dim": 256,
-    "hidden_layers": 3
+    "hidden_layers": 3,
+    "deterministic_threshold": 0.5
   },
   "ppo": {
     "learning_rate": 0.0003,

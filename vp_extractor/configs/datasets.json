@@ -9,7 +9,7 @@
     "caption_root": "../Mem-Gallery/benchmark/data/dialog"
   },
   "WorldMemArena": {
-    "root": "../WorldMemArena/WorldMemArena/lifelong/personal/images",
-    "include": ["**/*"]
+    "root": "../WorldMemArena/WorldMemArena/lifelong",
+    "include": ["images/**/*", "**/images/**/*"]
   }
 }

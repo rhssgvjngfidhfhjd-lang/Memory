@@ -18,24 +18,36 @@ def build_retrieved_memory_context(
     include_images = category.upper() in MEMORY_IMAGE_CATEGORIES
     for rank, item in enumerate(memory_items, start=1):
         metadata = item.get("metadata", {}) or {}
-        image = item.get("image")
-        attached = include_images and isinstance(image, dict) and bool(image.get("path"))
+        raw_images = item.get("images")
+        if not isinstance(raw_images, list):
+            legacy = item.get("image")
+            raw_images = [legacy] if isinstance(legacy, dict) else []
+        attached_images = [
+            image
+            for image in raw_images
+            if include_images and isinstance(image, dict) and bool(image.get("path"))
+        ]
+        attached_original = any(
+            str(image.get("kind", "image")) == "image" for image in attached_images
+        )
         header = (
             f"[{rank}] SESSION:{metadata.get('session_id', '')} "
             f"ROUND:{metadata.get('dialogue_id', '')}"
         )
-        if attached and metadata.get("image_id"):
+        if attached_original and metadata.get("image_id"):
             header += f" IMG:{metadata['image_id']}"
         text = str(item.get("text", ""))
-        if not attached:
+        if not attached_original:
             for image_id in metadata.get("image_ids", []) or []:
                 if image_id:
                     text = text.replace(str(image_id), "[IMAGE_ID_REDACTED]")
         lines.extend((header, text))
-        if attached:
+        for image in attached_images:
             image_paths.append(str(image["path"]))
+            raw_kind = str(image.get("kind", "image")).lower()
+            kind = "image" if raw_kind == "image" else raw_kind.upper()
             lines.append(
-                f"Attached memory image {len(image_paths)}: {image.get('img_id', '')}"
+                f"Attached memory {kind} {len(image_paths)}: {image.get('img_id', '')}"
             )
     return "\n\n".join(lines), image_paths
 

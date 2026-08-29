@@ -52,6 +52,14 @@ A configured benchmark:
 vp-extractor extract --dataset H2HMEM --limit 10
 vp-extractor extract --dataset Mem-Gallery
 vp-extractor extract --dataset WorldMemArena
+vp-extractor extract --dataset all
+```
+
+Large runs can be split deterministically across workers. All shards may share
+the same run directory because each source image owns a distinct item folder:
+
+```bash
+vp-extractor extract --dataset all --num-shards 8 --shard-index 0
 ```
 
 Results are written to `outputs/<run_id>/`. Existing `record.json` files are

@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 
 from .llm_client import LLMClient
-from .builder import MAUBuilder
+from .builder import MAUBuilder, build_signatures_compatible
 from .builder import load_events
 from .executor import EXECUTOR_VISUAL_INPUTS
 from .output_layout import RunLayout
@@ -70,7 +70,9 @@ def completed_dataset_stats(
     stored_visual_input = str(stats.get("executor_visual_input") or "caption")
     if stored_visual_input != expected_executor_visual_input:
         return None
-    if expected_signature is not None and stats.get("build_signature") != expected_signature:
+    if expected_signature is not None and not build_signatures_compatible(
+        stats.get("build_signature"), expected_signature
+    ):
         return None
     return {**stats, "skipped_complete": True}
 

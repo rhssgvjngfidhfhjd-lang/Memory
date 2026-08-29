@@ -2,7 +2,7 @@ import unittest
 
 from PIL import Image
 
-from vp_extractor.vlm import ObjectDiscoverer, parse_candidates
+from vp_extractor.vlm import ObjectDiscoverer, _image_data_url, parse_candidates
 
 
 class FakeVLM:
@@ -15,6 +15,11 @@ class FakeVLM:
 
 
 class CandidateParsingTests(unittest.TestCase):
+    def test_vlm_payload_uses_compact_jpeg_transport(self):
+        payload = _image_data_url(Image.new("RGB", (32, 32), "red"))
+
+        self.assertTrue(payload.startswith("data:image/jpeg;base64,"))
+
     def test_discovery_injects_caption_context(self):
         vlm = FakeVLM()
         discoverer = ObjectDiscoverer(
@@ -74,6 +79,23 @@ class CandidateParsingTests(unittest.TestCase):
     def test_accepts_single_relocalization_object(self):
         result = parse_candidates('{"bbox_norm":[10,20,30,40]}', default_label="cup")
         self.assertEqual(result[0].label, "cup")
+
+    def test_salvages_complete_objects_from_truncated_array(self):
+        result = parse_candidates(
+            '[{"label":"cup","bbox_norm":[1,2,3,4]},'
+            '{"label":"book","bbox_norm":[5,6,7,8]},'
+            '{"label":"unfinished","bbox_norm":[9,10'
+        )
+
+        self.assertEqual([item.label for item in result], ["cup", "book"])
+
+    def test_salvages_complete_objects_from_truncated_wrapper(self):
+        result = parse_candidates(
+            '{"objects":[{"label":"cup","bbox_norm":[1,2,3,4]},'
+            '{"label":"unfinished"'
+        )
+
+        self.assertEqual([item.label for item in result], ["cup"])
 
 
 if __name__ == "__main__":

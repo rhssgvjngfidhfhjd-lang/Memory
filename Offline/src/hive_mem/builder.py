@@ -6,6 +6,7 @@ from pathlib import Path
 import shutil
 import time
 from typing import Any, Iterable
+from urllib.parse import urlparse
 
 import numpy as np
 
@@ -152,7 +153,9 @@ class MAUBuilder:
                     f"{checkpoint_visual_input!r} != {executor_visual_input!r}. "
                     "Use the original mode or restart with --no-resume."
                 )
-            if state.get("signature") != checkpoint_signature:
+            if not build_signatures_compatible(
+                state.get("signature"), checkpoint_signature
+            ):
                 raise ValueError(
                     "Checkpoint build signature does not match the current inputs/config. "
                     "Use the original settings or restart with --no-resume."
@@ -322,7 +325,6 @@ class MAUBuilder:
                 except OSError:
                     pass
         return stats
-
     def _execute_event(
         self,
         event: MemoryEvent,
@@ -343,6 +345,37 @@ class MAUBuilder:
             visual_input=executor_visual_input,
         )
         return executor_images, raw_response, actions, llm_usage, llm_call_stats
+
+
+def build_signatures_compatible(
+    stored: dict[str, Any] | None, current: dict[str, Any] | None
+) -> bool:
+    """Allow resume when only the port of an equivalent loopback service moved."""
+    left = dict(stored or {})
+    right = dict(current or {})
+    endpoints = ("executor_base_url", "embedding_base_url")
+    endpoint_pairs = [(left.pop(key, ""), right.pop(key, "")) for key in endpoints]
+    return left == right and all(
+        _equivalent_loopback_endpoint(old, new) for old, new in endpoint_pairs
+    )
+
+
+def _equivalent_loopback_endpoint(left: Any, right: Any) -> bool:
+    first = str(left or "").rstrip("/")
+    second = str(right or "").rstrip("/")
+    if first == second:
+        return True
+    if not first or not second:
+        return False
+    first_url = urlparse(first)
+    second_url = urlparse(second)
+    loopback = {"localhost", "127.0.0.1", "::1"}
+    return (
+        first_url.scheme == second_url.scheme
+        and (first_url.hostname or "").lower() in loopback
+        and (second_url.hostname or "").lower() in loopback
+        and first_url.path.rstrip("/") == second_url.path.rstrip("/")
+    )
 
 
 def _truncate_trace(trace_path: Path, keep_before_index: int) -> None:

@@ -24,7 +24,7 @@ from .evidence import (
 from .policy import EvidenceSelectionPolicy
 
 
-EVIDENCE_CACHE_VERSION = 3
+EVIDENCE_CACHE_VERSION = 4
 
 
 class RewardFunction(Protocol):
@@ -149,11 +149,15 @@ class EvidenceSelectionEnv:
         policy: EvidenceSelectionPolicy | None = None,
         deterministic: bool = False,
     ) -> EvidenceRollout:
+        availability = self.chain_builder.availability(
+            episode.dataset, episode.category, episode.memory_hits
+        )
         observation = make_policy_observation(
             episode.query_embedding,
             episode.memory_hits,
             episode.category,
             visual_categories=self.visual_categories,
+            evidence_availability_mask=availability,
         )
         policy_step = None
         if strategy is EvidenceStrategy.PPO:
@@ -174,6 +178,7 @@ class EvidenceSelectionEnv:
                 strategy,
                 self.rng,
                 visual_categories=self.visual_categories,
+                evidence_availability_mask=availability,
             )
         items = self.chain_builder.build(
             episode.dataset, episode.category, episode.memory_hits, actions
@@ -243,6 +248,16 @@ class EvidenceSelectionEnv:
             "category": episode.category,
             "query_image": episode.query_image,
             "rendered_memory_items": list(memory_items),
+            "vp_run_id": (
+                self.chain_builder.vp_index.run_id
+                if self.chain_builder.vp_index is not None
+                else ""
+            ),
+            "vp_signature": (
+                self.chain_builder.vp_index.signature
+                if self.chain_builder.vp_index is not None
+                else ""
+            ),
         }
         config_hash = hashlib.sha256(
             json.dumps(config, sort_keys=True, ensure_ascii=False).encode("utf-8")

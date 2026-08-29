@@ -48,26 +48,38 @@ def build_retrieved_memory_context(
     include_memory_images = category.upper() in MEMORY_IMAGE_CATEGORIES
     for idx, item in enumerate(memory_items, start=1):
         md = item.get("metadata", {}) or {}
-        image = item.get("image")
-        has_attached_memory_image = (
-            include_memory_images
+        raw_images = item.get("images")
+        if not isinstance(raw_images, list):
+            legacy = item.get("image")
+            raw_images = [legacy] if isinstance(legacy, dict) else []
+        attached_images = [
+            image
+            for image in raw_images
+            if include_memory_images
             and isinstance(image, dict)
             and bool(image.get("path"))
+        ]
+        has_attached_original = any(
+            str(image.get("kind", "image")) == "image" for image in attached_images
         )
         header = f"[{idx}] SESSION:{md.get('session_id', '')} ROUND:{md.get('dialogue_id', '')}"
         # An image ID is a legitimate candidate label only when its image is
         # actually attached. Exposing an unattached ID leaks the answer to
         # text-only and caption-only ablations.
-        if has_attached_memory_image and md.get("image_id"):
+        if has_attached_original and md.get("image_id"):
             header += f" IMG:{md.get('image_id')}"
         lines.append(header)
         memory_text = str(item.get("text", ""))
-        if not has_attached_memory_image:
+        if not has_attached_original:
             memory_text = IMAGE_ID_PATTERN.sub("[IMAGE_ID_REDACTED]", memory_text)
         lines.append(memory_text)
-        if has_attached_memory_image:
+        for image in attached_images:
             image_num += 1
-            lines.append(f"Attached memory image {image_num}: {image.get('img_id', '')}")
+            raw_kind = str(image.get("kind", "image")).lower()
+            kind = "image" if raw_kind == "image" else raw_kind.upper()
+            lines.append(
+                f"Attached memory {kind} {image_num}: {image.get('img_id', '')}"
+            )
             image_paths.append(str(image["path"]))
     return "\n\n".join(lines), image_paths
 

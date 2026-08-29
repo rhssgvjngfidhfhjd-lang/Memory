@@ -12,7 +12,7 @@ import numpy as np
 
 from hive_mem.executor import ExecutionResult, MemoryExecutor
 from hive_mem.mau import MAUBank
-from hive_mem.builder import MAUBuilder
+from hive_mem.builder import MAUBuilder, build_signatures_compatible
 from hive_mem.builder import MemoryEvent
 from benchmarks.memgallery_harness.runner.metrics import (
     add_memory_metrics,
@@ -928,6 +928,24 @@ class IndexedFailureLLMClient:
 
 
 class BuilderResumeTest(unittest.TestCase):
+    def test_resume_allows_only_loopback_endpoint_port_change(self):
+        stored = {
+            "dataset": "demo",
+            "executor_model": "model",
+            "executor_base_url": "http://127.0.0.1:28001/v1",
+            "embedding_base_url": "http://127.0.0.1:8001/v1",
+        }
+        current = {
+            **stored,
+            "executor_base_url": "http://localhost:18000/v1",
+        }
+        self.assertTrue(build_signatures_compatible(stored, current))
+        self.assertFalse(
+            build_signatures_compatible(
+                stored, {**current, "executor_model": "different-model"}
+            )
+        )
+
     @staticmethod
     def events(count=5):
         return [

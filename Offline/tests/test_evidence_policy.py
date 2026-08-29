@@ -13,8 +13,7 @@ from evidence_policy.evidence import (
     DialogueStore,
     EvidenceChainBuilder,
     EvidenceStrategy,
-    EvidenceTextAction,
-    EvidenceVisualAction,
+    EvidenceType,
     MAUEvidenceAction,
     choose_baseline_actions,
     make_policy_observation,
@@ -26,6 +25,7 @@ from evidence_policy.rollout import (
     EvidenceSelectionEnv,
     RolloutCache,
 )
+from evidence_policy.vp_store import VPArtifactIndex
 from hive_mem.mau import MAU
 from hive_mem.retriever import MemoryHit
 from scripts.evidence_policy import validation_checkpoints
@@ -99,6 +99,41 @@ def write_dialogue_dataset(root: Path, dataset: str = "toy") -> None:
     )
 
 
+def write_vp_run(root: Path, source_image: Path) -> Path:
+    run = root / "vp_run"
+    crop = run / "items" / "img_test" / "vp_0001.jpg"
+    crop.parent.mkdir(parents=True)
+    crop.write_bytes(b"vp crop")
+    (run / "exports").mkdir()
+    (run / "run.json").write_text(
+        json.dumps({"schema_version": "1.0", "run_id": "test"}), encoding="utf-8"
+    )
+    record = {
+        "schema_version": "1.0",
+        "run_id": "test",
+        "image_id": "img_test",
+        "source": {
+            "dataset": "Mem-Gallery",
+            "relative_path": source_image.name,
+            "sha256": "",
+        },
+        "status": "success",
+        "primitives": [
+            {
+                "vp_id": "img_test_vp_0001",
+                "label": "subject",
+                "bbox_norm": [0, 0, 500, 500],
+                "bbox_px": [0, 0, 5, 5],
+                "crop_path": "items/img_test/vp_0001.jpg",
+            }
+        ],
+    }
+    (run / "exports" / "images.jsonl").write_text(
+        json.dumps(record) + "\n", encoding="utf-8"
+    )
+    return run
+
+
 class EvidenceChainTest(unittest.TestCase):
     def test_builds_selected_dialogue_and_image(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -110,14 +145,14 @@ class EvidenceChainTest(unittest.TestCase):
                 "m1", image_path=str(image_path), caption="A fruit tart."
             )
             action = MAUEvidenceAction(
-                "m1", EvidenceTextAction.DIALOGUE, EvidenceVisualAction.IMAGE
+                "m1", frozenset({EvidenceType.DIALOGUE, EvidenceType.IMAGE})
             )
             items = EvidenceChainBuilder(DialogueStore(root)).build(
                 "toy", "VS", [hit], [action]
             )
 
         self.assertIn("User: What should I bake?", items[0]["text"])
-        self.assertEqual(items[0]["image"]["path"], str(image_path))
+        self.assertEqual(items[0]["images"][0]["path"], str(image_path))
         self.assertNotIn("A fruit tart.", items[0]["text"])
 
     def test_caption_action_adds_caption_without_image(self):
@@ -126,14 +161,33 @@ class EvidenceChainTest(unittest.TestCase):
             write_dialogue_dataset(root)
             hit = make_hit("m1", image_path="old/image.jpg", caption="A tart.")
             action = MAUEvidenceAction(
-                "m1", EvidenceTextAction.SUMMARY, EvidenceVisualAction.CAPTION
+                "m1", frozenset({EvidenceType.SUMMARY, EvidenceType.CAPTION})
             )
             items = EvidenceChainBuilder(DialogueStore(root)).build(
                 "toy", "FR", [hit], [action]
             )
 
-        self.assertEqual(items[0]["text"], "summary fact\nImage caption: A tart.")
-        self.assertIsNone(items[0]["image"])
+        self.assertIn("Summary:\nsummary fact", items[0]["text"])
+        self.assertIn("Image captions:\n- A tart.", items[0]["text"])
+        self.assertEqual(items[0]["images"], [])
+
+    def test_zero_mask_drops_mau_and_image_plus_vp_attaches_both(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dialogue_dataset(root)
+            image_path = root / "image.jpg"
+            image_path.write_bytes(b"original")
+            index = VPArtifactIndex(write_vp_run(root, image_path))
+            builder = EvidenceChainBuilder(DialogueStore(root), vp_index=index)
+            hit = make_hit("m1", image_path=str(image_path), caption="A tart.")
+            self.assertEqual(builder.build("toy", "VS", [hit], [MAUEvidenceAction("m1")]), [])
+            action = MAUEvidenceAction(
+                "m1", frozenset({EvidenceType.IMAGE, EvidenceType.VP})
+            )
+            items = builder.build("toy", "VS", [hit], [action])
+
+        self.assertEqual([row["kind"] for row in items[0]["images"]], ["image", "vp"])
+        self.assertEqual(items[0]["text"], "")
 
     def test_baseline_actions_respect_visual_constraints(self):
         visual = make_hit("visual", image_path="image.jpg", caption="caption")
@@ -141,9 +195,15 @@ class EvidenceChainTest(unittest.TestCase):
         actions = choose_baseline_actions(
             [visual, text_only], "FR", EvidenceStrategy.FULL
         )
-        self.assertIs(actions[0].visual, EvidenceVisualAction.CAPTION)
-        self.assertIsNone(actions[1].visual)
-        with self.assertRaisesRegex(ValueError, "only valid for VS/VR"):
+        self.assertEqual(
+            actions[0].selected,
+            frozenset({EvidenceType.SUMMARY, EvidenceType.DIALOGUE, EvidenceType.CAPTION}),
+        )
+        self.assertEqual(
+            actions[1].selected,
+            frozenset({EvidenceType.SUMMARY, EvidenceType.DIALOGUE}),
+        )
+        with self.assertRaisesRegex(ValueError, "selected unavailable evidence"):
             EvidenceChainBuilder(DialogueStore("unused")).build(
                 "toy",
                 "FR",
@@ -151,8 +211,7 @@ class EvidenceChainTest(unittest.TestCase):
                 [
                     MAUEvidenceAction(
                         "visual",
-                        EvidenceTextAction.SUMMARY,
-                        EvidenceVisualAction.IMAGE,
+                        frozenset({EvidenceType.SUMMARY, EvidenceType.IMAGE}),
                     )
                 ],
             )
@@ -177,7 +236,12 @@ class EvidencePolicyTest(unittest.TestCase):
         self.assertEqual(deterministic_a.actions, deterministic_b.actions)
         self.assertTrue(torch.isfinite(sampled.joint_log_prob))
         self.assertTrue(torch.isfinite(sampled.value))
-        self.assertTrue(all(action.visual is None for action in sampled.actions))
+        self.assertTrue(
+            all(
+                action.selected.issubset({EvidenceType.SUMMARY, EvidenceType.DIALOGUE})
+                for action in sampled.actions
+            )
+        )
 
     def test_ppo_update_changes_parameters(self):
         policy = EvidenceSelectionPolicy(

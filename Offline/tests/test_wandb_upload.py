@@ -5,6 +5,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import torch
+
 from scripts.upload_evidence_policy_wandb import load_run_data
 
 
@@ -16,6 +18,51 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 class WandbUploadTest(unittest.TestCase):
+    def test_recovers_epoch_summaries_from_checkpoints_without_train_log(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_jsonl(
+                root / "ppo_metrics.jsonl",
+                [{"epoch": 0, "update_step": 3, "ppo_kl": 0.01}],
+            )
+            checkpoint = root / "checkpoints" / "epoch_000.pt"
+            checkpoint.parent.mkdir(parents=True)
+            validation = {
+                "mean_reward": 0.75,
+                "f1": 0.5,
+                "exact_match": 0.25,
+                "retrieval_hitrate@5": 1.0,
+                "errors": 0,
+                "by_category": {},
+            }
+            torch.save(
+                {
+                    "epoch": 0,
+                    "update_steps": 3,
+                    "config": {"seed": 42, "ppo": {"learning_rate": 3e-4}},
+                    "extra": {
+                        "train_question_count": 32,
+                        "validation": validation,
+                        "validations": [
+                            {
+                                "phase": "end",
+                                "update_step": 3,
+                                "metrics": validation,
+                            }
+                        ],
+                    },
+                },
+                checkpoint,
+            )
+
+            data = load_run_data(root)
+
+        self.assertEqual(data.config["seed"], 42)
+        self.assertEqual(len(data.epoch_rows), 1)
+        self.assertEqual(data.validation_rows[0]["update_step"], 3)
+        self.assertEqual(data.validation_rows[0]["reward"], 0.75)
+        self.assertTrue(any("recovered from checkpoints" in row for row in data.warnings))
+
     def test_loads_validation_and_ppo_metrics_by_update_step(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

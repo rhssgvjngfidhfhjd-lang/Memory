@@ -104,6 +104,7 @@ class ObjectDiscoverer:
         relocalize_prompt: str,
         max_primitives: int,
         caption_guided_prompt: str | None = None,
+        response_retries: int = 1,
     ):
         self.vlm = vlm
         self.discovery_prompt = discovery_prompt.replace(
@@ -116,12 +117,20 @@ class ObjectDiscoverer:
             else None
         )
         self.max_primitives = max_primitives
+        self.response_retries = max(0, int(response_retries))
 
     def discover(
         self, image: Image.Image, focus_context: str | None = None
     ) -> list[PrimitiveCandidate]:
-        raw = self.vlm.generate(self.build_prompt(focus_context), image)
-        return parse_candidates(raw)[: self.max_primitives]
+        last_error: ValueError | None = None
+        for _ in range(self.response_retries + 1):
+            raw = self.vlm.generate(self.build_prompt(focus_context), image)
+            try:
+                return parse_candidates(raw)[: self.max_primitives]
+            except ValueError as exc:
+                last_error = exc
+        assert last_error is not None
+        raise last_error
 
     def build_prompt(self, focus_context: str | None = None) -> str:
         """Build the exact discovery prompt sent to the VLM."""
@@ -142,10 +151,17 @@ class ObjectDiscoverer:
         prompt = self.relocalize_prompt.replace("__LABEL__", candidate.label).replace(
             "__BBOX__", str(list(candidate.bbox_norm))
         )
-        candidates = parse_candidates(
-            self.vlm.generate(prompt, image), default_label=candidate.label
-        )
-        return candidates[0] if candidates else None
+        last_error: ValueError | None = None
+        for _ in range(self.response_retries + 1):
+            try:
+                candidates = parse_candidates(
+                    self.vlm.generate(prompt, image), default_label=candidate.label
+                )
+                return candidates[0] if candidates else None
+            except ValueError as exc:
+                last_error = exc
+        assert last_error is not None
+        raise last_error
 
 
 def parse_candidates(
@@ -198,11 +214,37 @@ def _load_json_payload(text: str) -> Any:
         try:
             return json.loads(stripped[start : end + 1])
         except json.JSONDecodeError as exc:
+            salvaged = _salvage_complete_objects(stripped[start:])
+            if salvaged:
+                return salvaged
             raise ValueError(f"Invalid VLM JSON: {exc}") from exc
+
+
+def _salvage_complete_objects(text: str) -> list[dict[str, Any]]:
+    """Recover complete object entries from a truncated JSON array/wrapper."""
+    decoder = json.JSONDecoder()
+    objects: list[dict[str, Any]] = []
+    cursor = text.find("{")
+    while cursor >= 0:
+        try:
+            value, end = decoder.raw_decode(text, cursor)
+        except json.JSONDecodeError:
+            cursor = text.find("{", cursor + 1)
+            continue
+        if isinstance(value, dict):
+            objects.append(value)
+        cursor = text.find("{", end)
+    return objects
 
 
 def _image_data_url(image: Image.Image) -> str:
     buffer = io.BytesIO()
-    image.save(buffer, format="PNG")
+    image.convert("RGB").save(
+        buffer,
+        format="JPEG",
+        quality=90,
+        optimize=True,
+        progressive=True,
+    )
     encoded = base64.b64encode(buffer.getvalue()).decode("ascii")
-    return f"data:image/png;base64,{encoded}"
+    return f"data:image/jpeg;base64,{encoded}"

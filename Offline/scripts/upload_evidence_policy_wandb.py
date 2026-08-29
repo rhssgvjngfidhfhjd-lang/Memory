@@ -81,15 +81,23 @@ def load_run_data(run_dir: Path) -> RunData:
     if not run_dir.is_dir():
         raise FileNotFoundError(f"Run directory not found: {run_dir}")
     train_log = run_dir / "train.log"
-    if not train_log.exists():
-        raise FileNotFoundError(f"Training log not found: {train_log}")
     config_path = run_dir / "config.json"
     config = json.loads(config_path.read_text(encoding="utf-8")) if config_path.exists() else {}
-    epoch_rows = tuple(read_jsonl(train_log))
-    if not epoch_rows:
-        raise ValueError(f"No epoch summaries found in {train_log}")
-
     warnings: list[str] = []
+    if train_log.exists():
+        epoch_rows = tuple(read_jsonl(train_log))
+    else:
+        checkpoint_config, epoch_rows = load_checkpoint_epoch_rows(run_dir)
+        if not config:
+            config = checkpoint_config
+        warnings.append(
+            "train.log is missing; epoch summaries were recovered from checkpoints"
+        )
+    if not epoch_rows:
+        raise ValueError(
+            f"No epoch summaries found in {train_log} or {run_dir / 'checkpoints'}"
+        )
+
     ppo_metrics_path = run_dir / "ppo_metrics.jsonl"
     if ppo_metrics_path.exists():
         update_rows = tuple(read_jsonl(ppo_metrics_path))
@@ -126,6 +134,47 @@ def load_run_data(run_dir: Path) -> RunData:
         test_metrics=test_metrics,
         warnings=tuple(warnings),
     )
+
+
+def load_checkpoint_epoch_rows(
+    run_dir: Path,
+) -> tuple[dict[str, Any], tuple[dict[str, Any], ...]]:
+    """Recover upload metadata when training stdout was not redirected."""
+    try:
+        import torch
+    except ImportError as exc:
+        raise RuntimeError(
+            "torch is required to recover epoch summaries from checkpoints"
+        ) from exc
+
+    config: dict[str, Any] = {}
+    rows: list[dict[str, Any]] = []
+    checkpoint_dir = run_dir / "checkpoints"
+    for checkpoint in sorted(checkpoint_dir.glob("epoch_*.pt")):
+        payload = torch.load(checkpoint, map_location="cpu", weights_only=False)
+        if not isinstance(payload, dict):
+            continue
+        checkpoint_config = payload.get("config")
+        if isinstance(checkpoint_config, dict):
+            config = checkpoint_config
+        extra = payload.get("extra")
+        if not isinstance(extra, dict):
+            extra = {}
+        epoch = int(payload.get("epoch", len(rows)))
+        validation = extra.get("validation", {})
+        validations = extra.get("validations", [])
+        rows.append(
+            {
+                "epoch": epoch,
+                "update_step": int(payload.get("update_steps", epoch + 1)),
+                "train_question_count": int(
+                    extra.get("train_question_count", 0)
+                ),
+                "validation": validation if isinstance(validation, dict) else {},
+                "validations": validations if isinstance(validations, list) else [],
+            }
+        )
+    return config, tuple(rows)
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:

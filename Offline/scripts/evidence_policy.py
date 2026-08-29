@@ -34,6 +34,7 @@ from benchmarks.question_filter import (  # noqa: E402
     parse_excluded_categories,
 )
 from evidence_policy.evidence import (  # noqa: E402
+    EVIDENCE_ORDER,
     DialogueStore,
     EvidenceChainBuilder,
     EvidenceStrategy,
@@ -48,6 +49,7 @@ from evidence_policy.rollout import (  # noqa: E402
     RolloutCache,
 )
 from evidence_policy.split_manifest import SplitManifestIndex  # noqa: E402
+from evidence_policy.vp_store import VPArtifactIndex  # noqa: E402
 from hive_mem.retriever import SimpleMemoryIndex  # noqa: E402
 
 
@@ -65,6 +67,8 @@ def main() -> None:
 
     split_parser = subparsers.add_parser("prepare-split", help="Create balanced benchmark splits")
     split_parser.add_argument("--trials", type=int, default=20000)
+
+    subparsers.add_parser("audit-vp", help="Audit memory-image coverage in the VP run")
 
     train_parser = subparsers.add_parser("train", help="Train the PPO policy")
     train_parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
@@ -92,6 +96,8 @@ def main() -> None:
         config["split_manifest_file_sha256"] = split_index.file_sha256
     if args.command == "prepare-split":
         prepare_split(config, config_path, trials=args.trials)
+    elif args.command == "audit-vp":
+        audit_vp(config)
     elif args.command == "train":
         train(config, args)
     else:
@@ -113,7 +119,44 @@ def load_config(path: Path) -> dict[str, Any]:
         config["split_manifest"] = str(
             value if value.is_absolute() else (ROOT / value).resolve()
         )
+    evidence = config.setdefault("evidence", {})
+    if evidence.get("vp_run_dir"):
+        value = Path(evidence["vp_run_dir"])
+        evidence["vp_run_dir"] = str(
+            value if value.is_absolute() else (ROOT / value).resolve()
+        )
     return config
+
+
+def audit_vp(config: dict[str, Any]) -> None:
+    evidence = config.get("evidence") or {}
+    index = VPArtifactIndex(
+        evidence["vp_run_dir"],
+        max_vps_per_image=int(evidence.get("max_vps_per_image", 0)),
+    )
+    paths = memory_image_paths(config["memory_bank"])
+    report = {
+        "vp_run_id": index.run_id,
+        "vp_signature": index.signature,
+        **index.audit(paths),
+    }
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+
+
+def memory_image_paths(memory_bank: str | Path) -> list[str]:
+    paths: list[str] = []
+    for memories_path in (Path(memory_bank) / "datasets").glob("*/memories.jsonl"):
+        with memories_path.open(encoding="utf-8") as handle:
+            for line in handle:
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                paths.extend(
+                    str(value)
+                    for value in (row.get("metadata") or {}).get("image_paths", [])
+                    if str(value)
+                )
+    return paths
 
 
 def prepare_split(config: dict[str, Any], config_path: Path, *, trials: int) -> None:
@@ -834,7 +877,18 @@ def build_environment(
         if benchmark == "wma"
         else DialogueStore(config["data_dir"])
     )
-    builder = EvidenceChainBuilder(store, visual_categories=visual_categories)
+    evidence = config.get("evidence") or {}
+    vp_index = (
+        VPArtifactIndex(
+            evidence["vp_run_dir"],
+            max_vps_per_image=int(evidence.get("max_vps_per_image", 0)),
+        )
+        if evidence.get("vp_run_dir")
+        else None
+    )
+    builder = EvidenceChainBuilder(
+        store, vp_index=vp_index, visual_categories=visual_categories
+    )
     return client, EvidenceSelectionEnv(
         client,
         builder,
@@ -848,6 +902,23 @@ def validate_runtime(config: dict[str, Any], *, require_split: bool) -> None:
     for key in ("data_dir", "memory_bank"):
         if not Path(config[key]).exists():
             raise FileNotFoundError(f"Missing {key}: {config[key]}")
+    evidence = config.get("evidence") or {}
+    configured_order = evidence.get("order")
+    expected_order = [kind.value for kind in EVIDENCE_ORDER]
+    if int(evidence.get("schema_version", 0)) != 2 or configured_order != expected_order:
+        raise ValueError(
+            f"Evidence schema must be version 2 with order {expected_order}, "
+            f"got version={evidence.get('schema_version')}, order={configured_order!r}"
+        )
+    if evidence.get("vp_run_dir"):
+        vp_index = VPArtifactIndex(
+            evidence["vp_run_dir"],
+            max_vps_per_image=int(evidence.get("max_vps_per_image", 0)),
+        )
+        if bool(evidence.get("strict_vp_coverage", False)):
+            coverage = vp_index.audit(memory_image_paths(config["memory_bank"]))
+            if coverage["missing_records"] or coverage["missing_crop_files"]:
+                raise ValueError(f"Incomplete VP coverage for memory bank: {coverage}")
     query_cache = Path(config["query_cache"])
     missing = [name for name in ("vectors.npy", "metadata.jsonl") if not (query_cache / name).exists()]
     if missing:
@@ -942,10 +1013,12 @@ def summarize_evidence_actions(rollouts: Sequence[dict[str, Any]]) -> dict[str, 
     counts: Counter[str] = Counter()
     for rollout in rollouts:
         for action in rollout.get("actions", []):
-            counts[str(action["text"])] += 1
-            visual = action.get("visual")
-            if visual:
-                counts[str(visual)] += 1
+            mask = str(action.get("mask", "00000"))
+            counts[f"mask:{mask}"] += 1
+            if mask == "00000":
+                counts["all-zero"] += 1
+            for kind in action.get("selected", []):
+                counts[str(kind)] += 1
     return dict(sorted(counts.items()))
 
 

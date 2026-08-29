@@ -294,7 +294,9 @@ class WMAEvidenceAndMetricsTest(unittest.TestCase):
             [1.0, 0.0], [MemoryHit(item=item, score=1.0, rank=1)], "VFR",
             visual_categories={"VFR", "VS", "VU", "CMR"},
         )
-        self.assertTrue(bool(observation.visual_action_mask[0]))
+        self.assertTrue(bool(observation.evidence_availability_mask[0, 2]))
+        self.assertTrue(bool(observation.evidence_availability_mask[0, 3]))
+        self.assertFalse(bool(observation.evidence_availability_mask[0, 4]))
 
     def test_metrics_group_by_category_and_difficulty(self):
         metrics = summarize_results(
