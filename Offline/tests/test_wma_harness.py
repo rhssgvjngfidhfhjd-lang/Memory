@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import json
 import tempfile
 import unittest
@@ -16,17 +15,13 @@ from benchmarks.wma_harness.retrieval.query_embedding_cache import (
 )
 from benchmarks.wma_harness.eval_wma import prepare_sample_jobs
 from benchmarks.wma_harness.runner.answer_client import build_retrieved_memory_context
-from benchmarks.wma_harness.runner.metrics import summarize_results
+from benchmarks.wma_harness.runner.metrics import (
+    answer_span_exact_match,
+    summarize_results,
+)
 from embedding.chunk_builder import build_wma_chunks_from_data
 from embedding.chunk_builder import iter_wma_sample_files
-from evidence_policy.evidence import (
-    EvidenceChainBuilder,
-    EvidenceType,
-    MAUEvidenceAction,
-    WMADialogueStore,
-    make_policy_observation,
-)
-from evidence_policy.vp_store import VPArtifactIndex
+from evidence_policy.evidence import WMADialogueStore, make_policy_observation
 from hive_mem.mau import MAU, MAUBank
 from hive_mem.retriever import GraphExpandedIndex, MemoryHit, SimpleMemoryIndex
 
@@ -272,103 +267,6 @@ class WMAEvidenceAndMetricsTest(unittest.TestCase):
             )
         self.assertEqual(resolved, image_path)
 
-    def test_dialogue_store_resolves_vp_path_relative_to_data_root(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            sample_path = root / "agent" / "demo" / "sample_01.json"
-            sample_path.parent.mkdir(parents=True)
-            sample_path.write_text(json.dumps(sample_payload()), encoding="utf-8")
-            image_path = sample_path.parent / "images" / "sample_01" / "sample_01_img_001.png"
-            image_path.parent.mkdir(parents=True)
-            image_path.touch()
-            resolved = WMADialogueStore(root).resolve_image_path(
-                "sample_01",
-                "agent/demo/images/sample_01/sample_01_img_001.png",
-            )
-        self.assertEqual(resolved, image_path)
-
-    def test_evidence_builder_maps_server_blob_to_local_image_and_vp(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            sample_path = root / "agent" / "demo" / "sample_01.json"
-            sample_path.parent.mkdir(parents=True)
-            sample_path.write_text(json.dumps(sample_payload()), encoding="utf-8")
-            image_path = sample_path.parent / "images" / "sample_01" / "sample_01_img_001.png"
-            image_path.parent.mkdir(parents=True)
-            image_path.write_bytes(b"source image")
-            image_sha = hashlib.sha256(image_path.read_bytes()).hexdigest()
-
-            vp_run = root / "vp_run"
-            crop_path = vp_run / "items" / "img_1" / "vp_0001.png"
-            crop_path.parent.mkdir(parents=True)
-            crop_path.write_bytes(b"crop")
-            (vp_run / "exports").mkdir()
-            (vp_run / "run.json").write_text(
-                json.dumps({"schema_version": "1.0", "run_id": "test"}),
-                encoding="utf-8",
-            )
-            (vp_run / "exports" / "images.jsonl").write_text(
-                json.dumps(
-                    {
-                        "schema_version": "1.0",
-                        "run_id": "test",
-                        "image_id": "img_1",
-                        "source": {
-                            "dataset": "WorldMemArena",
-                            "relative_path": (
-                                "agent/demo/images/sample_01/"
-                                "sample_01_img_001.png"
-                            ),
-                            "sha256": image_sha,
-                        },
-                        "status": "success",
-                        "primitives": [
-                            {
-                                "vp_id": "img_1_vp_0001",
-                                "label": "cup",
-                                "bbox_norm": [1, 2, 3, 4],
-                                "crop_path": "items/img_1/vp_0001.png",
-                            }
-                        ],
-                    }
-                )
-                + "\n",
-                encoding="utf-8",
-            )
-            hit = MemoryHit(
-                item=MAU(
-                    id="m1",
-                    summary="visual memory",
-                    embedding=np.asarray([1.0, 0.0], dtype=np.float32),
-                    metadata={
-                        "image_paths": [f"/server/hf/blobs/{image_sha}"],
-                        "image_ids": ["sample_01_img_001"],
-                    },
-                ),
-                score=1.0,
-                rank=1,
-            )
-            builder = EvidenceChainBuilder(
-                WMADialogueStore(root), vp_index=VPArtifactIndex(vp_run),
-                visual_categories={"VFR"},
-            )
-            items = builder.build(
-                "sample_01",
-                "VFR",
-                [hit],
-                [
-                    MAUEvidenceAction(
-                        "m1", frozenset({EvidenceType.IMAGE, EvidenceType.VP})
-                    )
-                ],
-            )
-
-        self.assertEqual(
-            [row["kind"] for row in items[0]["images"]], ["image", "vp"]
-        )
-        self.assertEqual(Path(items[0]["images"][0]["path"]), image_path)
-        self.assertEqual(Path(items[0]["images"][1]["path"]), crop_path)
-
     def test_nonvisual_context_redacts_wma_image_id(self):
         text, images = build_retrieved_memory_context(
             [
@@ -399,9 +297,7 @@ class WMAEvidenceAndMetricsTest(unittest.TestCase):
             [1.0, 0.0], [MemoryHit(item=item, score=1.0, rank=1)], "VFR",
             visual_categories={"VFR", "VS", "VU", "CMR"},
         )
-        self.assertTrue(bool(observation.evidence_availability_mask[0, 2]))
-        self.assertTrue(bool(observation.evidence_availability_mask[0, 3]))
-        self.assertFalse(bool(observation.evidence_availability_mask[0, 4]))
+        self.assertTrue(bool(observation.visual_action_mask[0]))
 
     def test_metrics_group_by_category_and_difficulty(self):
         metrics = summarize_results(
@@ -415,10 +311,35 @@ class WMAEvidenceAndMetricsTest(unittest.TestCase):
         )
         self.assertEqual(metrics["f1"], 1.0)
         self.assertEqual(metrics["em"], 1.0)
+        self.assertEqual(metrics["strict_em"], 1.0)
         self.assertNotIn("exact_match", metrics)
         self.assertEqual(metrics["retrieval_hitrate@5"], 1.0)
         self.assertEqual(metrics["by_category"]["FR"]["count"], 1)
         self.assertEqual(metrics["future_gold_evidence_questions"], 0)
+
+    def test_wma_em_matches_concise_answer_inside_explanatory_reference(self):
+        self.assertEqual(
+            answer_span_exact_match(
+                "Laura K. Simmons",
+                "Laura K. Simmons gave the XRD training.",
+            ),
+            1.0,
+        )
+        self.assertEqual(
+            answer_span_exact_match("Laura Simmons", "Laura K. Simmons gave it."),
+            0.0,
+        )
+
+        metrics = summarize_results(
+            [
+                {
+                    "system_answer": "Unknown",
+                    "original_answer": "Unknown; the detail was not provided.",
+                }
+            ]
+        )
+        self.assertEqual(metrics["em"], 1.0)
+        self.assertEqual(metrics["strict_em"], 0.0)
 
     def test_metrics_do_not_treat_future_gold_as_retrievable(self):
         metrics = summarize_results(

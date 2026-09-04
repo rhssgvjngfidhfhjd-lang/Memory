@@ -138,8 +138,8 @@ class GraphRetriever:
         result.entities = unique_matched
         
         # Step 3: Traverse graph for related entities
-        all_entity_ids = set(e.entity_id for e in unique_matched)
-        related_with_path = []
+        seed_entity_ids = {e.entity_id for e in unique_matched}
+        related_candidates = []
         
         for seed_entity in unique_matched:
             neighbors = self.kg.get_neighbors(
@@ -148,23 +148,40 @@ class GraphRetriever:
             )
             
             for neighbor_id, (neighbor, hops) in neighbors.items():
-                if neighbor and neighbor_id not in all_entity_ids:
+                if neighbor and neighbor_id not in seed_entity_ids:
                     # Find path description
                     path = self._get_path_description(seed_entity.entity_id, neighbor_id)
-                    related_with_path.append((neighbor, hops, path))
-                    all_entity_ids.add(neighbor_id)
-        
-        # Sort by hop distance
-        related_with_path.sort(key=lambda x: x[1])
-        result.related_entities = related_with_path[:max_entities * 2]
+                    related_candidates.append((neighbor, hops, path))
+
+        # Bound the traversed subgraph before collecting relations.  Previously
+        # every two-hop neighbor was inserted into ``all_entity_ids`` and only
+        # the displayed list was sliced.  A generic hub such as "user" could
+        # therefore expand one query to tens of thousands of relations.
+        related_candidates.sort(
+            key=lambda row: (row[1], -row[0].mention_count, row[0].entity_id)
+        )
+        related_with_path = []
+        seen_related_ids = set()
+        for row in related_candidates:
+            entity = row[0]
+            if entity.entity_id in seen_related_ids:
+                continue
+            seen_related_ids.add(entity.entity_id)
+            related_with_path.append(row)
+            if len(related_with_path) >= max_entities * 2:
+                break
+        result.related_entities = related_with_path
+        all_entity_ids = seed_entity_ids | seen_related_ids
         
         # Step 4: Collect relations
         relations = []
+        seen_relation_ids = set()
         for eid in all_entity_ids:
             rels = self.kg.get_relations_for_entity(eid)
             for rel in rels:
                 if rel.subject_id in all_entity_ids and rel.object_id in all_entity_ids:
-                    if rel not in relations:
+                    if rel.relation_id not in seen_relation_ids:
+                        seen_relation_ids.add(rel.relation_id)
                         relations.append(rel)
         result.relations = relations
         
@@ -245,12 +262,14 @@ class GraphRetriever:
         
         # Get relations involving these entities
         relations = []
+        seen_relation_ids = set()
         entity_ids = set(e.entity_id for e in entities)
         for e in entities:
             rels = self.kg.get_relations_for_entity(e.entity_id)
             for rel in rels:
                 if rel.subject_id in entity_ids or rel.object_id in entity_ids:
-                    if rel not in relations:
+                    if rel.relation_id not in seen_relation_ids:
+                        seen_relation_ids.add(rel.relation_id)
                         relations.append(rel)
         
         return GraphRetrievalResult(

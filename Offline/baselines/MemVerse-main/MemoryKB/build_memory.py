@@ -1,6 +1,7 @@
 import os
 import json
 import numpy as np
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from openai import OpenAI
 
@@ -55,14 +56,18 @@ def cosine_sim(a, b):
 #     return memory_data
 
 
-def process_memory(json_data: list, check_duplicate: bool = False):
+def _process_memory_files(
+    json_data: list,
+    file_items: list[tuple[str, str]],
+    check_duplicate: bool = False,
+):
     required_fields = ["id", "query", "videocaption", "audiocaption", "imagecaption"]
     for item in json_data:
         for field in required_fields:
             if field not in item:
                 raise ValueError(f"Each object must have '{field}' field.")
 
-    for prompt_file, output_file in memory_files.items():
+    for prompt_file, output_file in file_items:
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
         with open(prompt_file, "r", encoding="utf-8") as f:
@@ -165,6 +170,20 @@ def process_memory(json_data: list, check_duplicate: bool = False):
                 f.write(json.dumps(m, ensure_ascii=False) + "\n")
 
         print(f"✅ {prompt_file} -> {output_file} Completed for {len(json_data)} entries!")
+
+
+def process_memory(json_data: list, check_duplicate: bool = False):
+    """Generate independent core/episodic/semantic memories concurrently."""
+    items = list(memory_files.items())
+    if len(items) <= 1:
+        return _process_memory_files(json_data, items, check_duplicate)
+    with ThreadPoolExecutor(max_workers=min(3, len(items))) as pool:
+        futures = [
+            pool.submit(_process_memory_files, json_data, [item], check_duplicate)
+            for item in items
+        ]
+        for future in futures:
+            future.result()
 
 
 if __name__ == "__main__":

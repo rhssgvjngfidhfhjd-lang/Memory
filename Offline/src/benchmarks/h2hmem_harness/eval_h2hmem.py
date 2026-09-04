@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import os
 from pathlib import Path
@@ -9,6 +10,12 @@ import time
 from typing import Any
 
 from benchmarks.baseline_runtime import baseline_metadata, canonical_name, create_adapter
+from benchmarks.baseline_runtime.parallel_runner import (
+    load_sample_artifact,
+    parallel_map_ordered,
+    save_sample_artifact,
+    signature_digest,
+)
 from benchmarks.baseline_runtime.openai_compat import embed_texts
 from benchmarks.baseline_runtime.output_layout import BaselineOutputLayout
 from benchmarks.baseline_runtime.protocol import (
@@ -16,7 +23,7 @@ from benchmarks.baseline_runtime.protocol import (
     result_context_items,
     result_trace_rows,
 )
-from benchmarks.io_utils import write_json_atomic, write_jsonl_atomic
+from benchmarks.io_utils import file_manifest, write_json_atomic, write_jsonl_atomic
 from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
 from embedding.chunk_builder import (
     build_h2h_chunks_from_directory,
@@ -83,23 +90,22 @@ def _question_prompt(text: str, category: str) -> str:
     )
 
 
-def run_conversation(
+def prepare_conversation_jobs(
     *,
     data_dir: Path,
     variant: str,
     conversation_id: str,
     baseline: str,
     state_root: Path,
-    client: VLMAnswerClient,
     config: dict[str, Any],
     max_qa: int = 0,
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+) -> dict[str, Any]:
     variant_dir = "multi-party" if variant == "multiparty" else variant
     conversation_dir = data_dir / variant_dir / conversation_id
     adapter = create_adapter(baseline, config_overrides=config)
     sample_id = f"{variant}_{conversation_id}"
-    adapter.reset(sample_id, state_root / variant / conversation_id)
     try:
+        adapter.reset(sample_id, state_root / variant / conversation_id)
         if baseline != "HiveMem":
             chunks = build_h2h_chunks_from_directory(
                 data_dir,
@@ -116,10 +122,9 @@ def run_conversation(
             if current_session:
                 adapter.end_session(current_session)
 
-        results: list[dict[str, Any]] = []
-        traces: list[dict[str, Any]] = []
+        jobs: list[dict[str, Any]] = []
         for question_file, qa_index, qa in _question_rows(conversation_dir):
-            if max_qa and len(results) >= max_qa:
+            if max_qa and len(jobs) >= max_qa:
                 break
             question_data = qa.get("question") or {}
             question = str(question_data.get("text") or "")
@@ -152,23 +157,7 @@ def run_conversation(
             memory_items = result_context_items(retrieval)
             trace_rows = result_trace_rows(retrieval)
             query_image = _question_image(question_file, question_data.get("image"))
-            started = time.time()
-            try:
-                response = client.answer_with_usage(
-                    system_prompt=SYSTEM_PROMPT,
-                    memory_items=memory_items,
-                    question_prompt=_question_prompt(question, category),
-                    query_image=query_image,
-                    # H2HMem is multimodal; attach any retrieved memory images.
-                    category="VR",
-                )
-                answer, error = response.text, ""
-                usage = response.usage
-                attempts = response.attempts
-            except Exception as exc:
-                answer, error, usage = "", str(exc), None
-                attempts = client.retries + 1
-            result = {
+            jobs.append({
                 "uid": query_id,
                 "query_id": query_id,
                 "question_id": question_id,
@@ -183,38 +172,97 @@ def run_conversation(
                 "question_type": question_type,
                 "category": category,
                 "difficulty": qa.get("difficulty", ""),
-                "system_answer": answer,
                 "original_answer": qa.get("original_answer", ""),
                 "answer_session": qa.get("answer_session") or [],
-                "retrieved_ids": [row["memory_id"] for row in trace_rows],
-                "retrieved_source_groups": [
-                    row["source_dialogue_ids"] for row in trace_rows
-                ],
-                "error": error,
-                "answer_seconds": time.time() - started,
-                "answer_token_usage": usage,
-                "answer_attempts": attempts,
-            }
-            results.append(result)
-            traces.append(
-                {
-                    "query_id": query_id,
-                    "conversation_id": conversation_id,
-                    "session_id": session_id,
-                    "question": question,
-                    "category": category,
-                    "top_k": trace_rows,
-                }
-            )
-            print(
-                f"[{variant}/{conversation_id}/{session_id}/{qa_index}] "
-                f"answer={answer[:80]!r} error={error[:80]!r}",
-                flush=True,
-            )
+                "question_prompt": _question_prompt(question, category),
+                "query_image_payload": query_image,
+                "memory_items": memory_items,
+                "retrieval_top_k": trace_rows,
+            })
         snapshots = [row.to_dict() for row in adapter.snapshot()]
-        return results, traces, snapshots
+        return {
+            "sample_id": sample_id,
+            "variant": variant,
+            "conversation_id": conversation_id,
+            "jobs": jobs,
+            "snapshots": snapshots,
+        }
     finally:
         adapter.close()
+
+
+def answer_conversation_job(
+    client: VLMAnswerClient,
+    job: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    started = time.time()
+    try:
+        response = client.answer_with_usage(
+            system_prompt=SYSTEM_PROMPT,
+            memory_items=job["memory_items"],
+            question_prompt=job["question_prompt"],
+            query_image=job.get("query_image_payload"),
+            category="VR",
+        )
+        answer, error = response.text, ""
+        usage, attempts = response.usage, response.attempts
+    except Exception as exc:
+        answer, error, usage = "", str(exc), None
+        attempts = client.retries + 1
+    result = {
+        key: value
+        for key, value in job.items()
+        if key not in {
+            "question_prompt", "query_image_payload", "memory_items", "retrieval_top_k"
+        }
+    }
+    result.update(
+        {
+            "system_answer": answer,
+            "retrieved_ids": [row["memory_id"] for row in job["retrieval_top_k"]],
+            "retrieved_source_groups": [
+                row["source_dialogue_ids"] for row in job["retrieval_top_k"]
+            ],
+            "error": error,
+            "answer_seconds": time.time() - started,
+            "answer_token_usage": usage,
+            "answer_attempts": attempts,
+        }
+    )
+    trace = {
+        "query_id": job["query_id"],
+        "conversation_id": job["conversation_id"],
+        "session_id": job["session_id"],
+        "question": job["question"],
+        "category": job["category"],
+        "top_k": job["retrieval_top_k"],
+    }
+    return result, trace
+
+
+def run_conversation(
+    *,
+    data_dir: Path,
+    variant: str,
+    conversation_id: str,
+    baseline: str,
+    state_root: Path,
+    client: VLMAnswerClient,
+    config: dict[str, Any],
+    max_qa: int = 0,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+    """Compatibility wrapper for one conversation."""
+    artifact = prepare_conversation_jobs(
+        data_dir=data_dir,
+        variant=variant,
+        conversation_id=conversation_id,
+        baseline=baseline,
+        state_root=state_root,
+        config=config,
+        max_qa=max_qa,
+    )
+    pairs = [answer_conversation_job(client, job) for job in artifact["jobs"]]
+    return [x[0] for x in pairs], [x[1] for x in pairs], artifact["snapshots"]
 
 
 def main() -> None:
@@ -226,6 +274,10 @@ def main() -> None:
     parser.add_argument("--index-root", default="")
     parser.add_argument("--baseline-state-dir", default="")
     parser.add_argument("--result-dir", required=True)
+    parser.add_argument("--sample-concurrency", type=int, default=4)
+    parser.add_argument("--answer-concurrency", type=int, default=16)
+    parser.add_argument("--checkpoint-every", type=int, default=10)
+    parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--max-qa", type=int, default=0)
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--embedding-dim", type=int, default=2048)
@@ -252,12 +304,15 @@ def main() -> None:
             "think", "top_k", "embedding_dim", "embedding_model",
             "embedding_base_url", "executor_model", "executor_base_url",
             "executor_temperature", "executor_visual_input",
+            "sample_concurrency", "answer_concurrency", "checkpoint_every",
         },
     )
     args = parser.parse_args()
     args.baseline = canonical_name(args.baseline)
     if args.baseline == "HiveMem" and not args.index_root:
         parser.error("--index-root is required when --baseline=HiveMem")
+    if args.sample_concurrency < 1 or args.answer_concurrency < 1 or args.checkpoint_every < 1:
+        parser.error("Sample/answer concurrency and checkpoint interval must be positive")
 
     data_dir = Path(args.data_dir)
     if (data_dir / "dataset").is_dir():
@@ -300,6 +355,9 @@ def main() -> None:
         "embedding_base_url": args.embedding_base_url,
         "answer_model": args.answer_model,
         "answer_base_url": args.answer_base_url,
+        "answer_temperature": args.answer_temperature,
+        "num_predict": args.num_predict,
+        "think": args.think,
         "executor_model": args.executor_model,
         "executor_base_url": args.executor_base_url,
         "executor_temperature": args.executor_temperature,
@@ -307,33 +365,163 @@ def main() -> None:
         "request_timeout": args.request_timeout,
         "retries": args.retries,
     }
-    results: list[dict[str, Any]] = []
-    traces: list[dict[str, Any]] = []
-    snapshots: list[dict[str, Any]] = []
+    sample_specs: list[tuple[str, str, int]] = []
+    remaining_limit = args.max_qa
     for variant in variants:
         for conversation_id in conversations[variant]:
-            remaining = max(args.max_qa - len(results), 0) if args.max_qa else 0
-            if args.max_qa and remaining == 0:
+            if args.max_qa and remaining_limit <= 0:
                 break
-            new_results, new_traces, new_snapshots = run_conversation(
+            conversation_dir = data_dir / (
+                "multi-party" if variant == "multiparty" else variant
+            ) / conversation_id
+            question_count = len(_question_rows(conversation_dir))
+            quota = min(remaining_limit, question_count) if args.max_qa else 0
+            sample_specs.append((variant, conversation_id, quota))
+            if args.max_qa:
+                remaining_limit -= quota
+
+    signature = {
+        "arguments": {
+            key: value
+            for key, value in vars(args).items()
+            if key not in {
+                "answer_api_key", "sample_concurrency", "answer_concurrency",
+                "checkpoint_every", "resume", "skip_model_check", "result_dir",
+            }
+        },
+        "inputs": file_manifest(
+            path
+            for variant, conversation_id, _ in sample_specs
+            for path in sorted(
+                (
+                    data_dir
+                    / ("multi-party" if variant == "multiparty" else variant)
+                    / conversation_id
+                ).rglob("*.json")
+            )
+        ),
+        "system_prompt": SYSTEM_PROMPT,
+    }
+    sample_signature = signature_digest(signature)
+
+    def prepare(spec: tuple[str, str, int]) -> dict[str, Any]:
+        variant, conversation_id, quota = spec
+        sample_id = f"{variant}/{conversation_id}"
+        if args.resume:
+            cached = load_sample_artifact(
+                layout.sample_checkpoint_dir,
+                sample_id,
+                signature=sample_signature,
+            )
+            if cached is not None:
+                print(f"[resume] skip prepared conversation: {sample_id}", flush=True)
+                return cached
+        artifact = prepare_conversation_jobs(
                 data_dir=data_dir,
                 variant=variant,
                 conversation_id=conversation_id,
                 baseline=args.baseline,
                 state_root=state_root,
-                client=client,
                 config=config,
-                max_qa=remaining,
+                max_qa=quota,
             )
-            results.extend(new_results)
-            traces.extend(new_traces)
-            snapshots.extend(new_snapshots)
+        save_sample_artifact(
+            layout.sample_checkpoint_dir,
+            sample_id,
+            signature=sample_signature,
+            artifact=artifact,
+        )
+        print(f"[prepared] {sample_id}: {len(artifact['jobs'])} question(s)", flush=True)
+        return artifact
+
+    artifacts = parallel_map_ordered(
+        sample_specs,
+        prepare,
+        max_workers=args.sample_concurrency,
+        item_key=lambda spec: f"{spec[0]}/{spec[1]}",
+    )
+    jobs = [job for artifact in artifacts for job in artifact["jobs"]]
+    snapshots = [row for artifact in artifacts for row in artifact["snapshots"]]
+    write_jsonl_atomic(layout.pipeline_qa, jobs)
+
+    checkpoint_results = layout.checkpoint_dir / "results.json"
+    checkpoint_traces = layout.checkpoint_dir / "retrieval_trace.jsonl"
+    checkpoint_manifest = layout.checkpoint_dir / "manifest.json"
+    results_by_id: dict[str, dict[str, Any]] = {}
+    traces_by_id: dict[str, dict[str, Any]] = {}
+    if args.resume and checkpoint_manifest.is_file():
+        saved = json.loads(checkpoint_manifest.read_text(encoding="utf-8"))
+        if saved.get("signature") == signature:
+            if checkpoint_results.is_file() and checkpoint_traces.is_file():
+                results_by_id = {
+                    str(row["query_id"]): row
+                    for row in json.loads(checkpoint_results.read_text(encoding="utf-8"))
+                    if row.get("query_id")
+                }
+                traces_by_id = {
+                    str(row["query_id"]): row
+                    for row in (
+                        json.loads(line)
+                        for line in checkpoint_traces.read_text(encoding="utf-8").splitlines()
+                        if line.strip()
+                    )
+                    if row.get("query_id")
+                }
+                print(f"[resume] loaded {len(results_by_id)} answer(s)", flush=True)
+
+    job_ids = [str(job["query_id"]) for job in jobs]
+
+    def save_checkpoint() -> None:
+        completed = [key for key in job_ids if key in results_by_id]
+        write_json_atomic(checkpoint_results, [results_by_id[key] for key in completed])
+        write_jsonl_atomic(
+            checkpoint_traces,
+            [traces_by_id[key] for key in completed if key in traces_by_id],
+        )
+        write_json_atomic(
+            checkpoint_manifest,
+            {
+                "signature": signature,
+                "completed": len(completed),
+                "expected": len(job_ids),
+                "updated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+            },
+        )
+
+    completed_answers = {
+        query_id
+        for query_id, row in results_by_id.items()
+        if not row.get("error") and query_id in traces_by_id
+    }
+    pending = [job for job in jobs if job["query_id"] not in completed_answers]
+    since_checkpoint = 0
+    with ThreadPoolExecutor(max_workers=args.answer_concurrency) as pool:
+        futures = {
+            pool.submit(answer_conversation_job, client, job): job for job in pending
+        }
+        for future in as_completed(futures):
+            job = futures[future]
+            result, trace = future.result()
+            query_id = str(job["query_id"])
+            results_by_id[query_id] = result
+            traces_by_id[query_id] = trace
+            since_checkpoint += 1
+            if since_checkpoint >= args.checkpoint_every:
+                save_checkpoint()
+                since_checkpoint = 0
+            print(
+                f"[{len(results_by_id)}/{len(jobs)}] {query_id} "
+                f"error={result['error'][:80]!r}",
+                flush=True,
+            )
+    save_checkpoint()
+    results = [results_by_id[key] for key in job_ids]
+    traces = [traces_by_id[key] for key in job_ids]
 
     result_dir.mkdir(parents=True, exist_ok=True)
     write_json_atomic(result_dir / "results.json", results)
     write_jsonl_atomic(result_dir / "retrieval_trace.jsonl", traces)
-    if snapshots:
-        write_jsonl_atomic(layout.snapshot, snapshots)
+    write_jsonl_atomic(layout.snapshot, snapshots)
     for variant in variants:
         filename = "prediction_multi_party.json" if variant == "multiparty" else "prediction_dyadic.json"
         write_json_atomic(
@@ -348,8 +536,13 @@ def main() -> None:
             "variants": list(variants),
             "conversations": conversations,
             "questions": len(results),
-            "configuration": config,
-            "memory_snapshot": str(layout.snapshot) if snapshots else "",
+            "configuration": {
+                **config,
+                "sample_concurrency": args.sample_concurrency,
+                "answer_concurrency": args.answer_concurrency,
+                "checkpoint_every": args.checkpoint_every,
+            },
+            "memory_snapshot": str(layout.snapshot),
         },
     )
 

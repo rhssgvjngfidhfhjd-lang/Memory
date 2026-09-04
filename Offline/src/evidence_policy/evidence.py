@@ -98,6 +98,16 @@ class PolicyObservation:
     # and excluded from policy log-probability and entropy.
     evidence_availability_mask: torch.Tensor
 
+    @property
+    def visual_action_mask(self) -> torch.Tensor:
+        """Return per-memory availability for the image evidence action.
+
+        This keeps WMA callers compatible with the pre-schema-v2 observation
+        API while the policy internally uses the full evidence mask.
+        """
+        image_index = EVIDENCE_ORDER.index(EvidenceType.IMAGE)
+        return self.evidence_availability_mask[:, image_index]
+
     def validate(self) -> None:
         if self.query_embedding.ndim != 1:
             raise ValueError("query_embedding must have shape [embedding_dim]")

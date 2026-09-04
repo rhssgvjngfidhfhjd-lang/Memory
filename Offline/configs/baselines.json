@@ -24,23 +24,27 @@
     "adapter": "mirix_family",
     "source_root": "baselines/MIRIX",
     "python_env": "MIRIX_PYTHON",
+    "python_default": ".venvs/mirix/bin/python",
     "compatibility_mode": "empty_semantic_fallback"
   },
   "MMA": {
     "adapter": "mirix_family",
     "source_root": "baselines/MMA-main/MMA",
     "python_env": "MMA_PYTHON",
+    "python_default": ".venvs/mma/bin/python",
     "compatibility_mode": "empty_semantic_fallback"
   },
   "MemVerse": {
     "adapter": "memverse",
     "source_root": "baselines/MemVerse-main",
-    "python_env": "MEMVERSE_PYTHON"
+    "python_env": "MEMVERSE_PYTHON",
+    "python_default": ".venvs/memverse/bin/python"
   },
   "M3-Agent-caption": {
     "adapter": "m3_agent",
     "source_root": "baselines/m3-agent-master",
     "python_env": "M3_AGENT_PYTHON",
+    "python_default": ".venvs/m3_agent/bin/python",
     "compatibility_mode": "dialogue_round_as_clip",
     "audio_enabled": false
   }

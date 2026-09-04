@@ -34,7 +34,16 @@ from benchmarks.memgallery_harness.runner.metrics import (
 from benchmarks.wma_harness.runner.metrics import summarize_results
 from benchmarks.wma_harness.runner.prompts import SYSTEM_PROMPT, format_question_prompt
 from benchmarks.baseline_runtime import baseline_metadata, canonical_name, create_adapter
-from benchmarks.baseline_runtime.output_layout import BaselineOutputLayout
+from benchmarks.baseline_runtime.parallel_runner import (
+    load_sample_artifact,
+    parallel_map_ordered,
+    save_sample_artifact,
+    signature_digest,
+)
+from benchmarks.baseline_runtime.output_layout import (
+    BaselineOutputLayout,
+    load_hivemem_snapshot,
+)
 from benchmarks.baseline_runtime.protocol import (
     RetrievalRequest,
     result_context_items,
@@ -79,11 +88,11 @@ def prepare_sample_jobs(
             "visual_categories": VISUAL_CATEGORIES,
         },
     )
-    adapter.reset(sample_id, Path())
     ordered_sessions = session_ids(payload)
     gold_points = build_gold_evidence_map(payload)
     jobs: list[dict[str, Any]] = []
     try:
+        adapter.reset(sample_id, Path())
         for checkpoint in payload.get("qa_checkpoints", []) or []:
             checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
             covered_sessions = [str(value) for value in checkpoint.get("covered_sessions", [])]
@@ -216,10 +225,10 @@ def prepare_native_sample_jobs(
     checkpoints.sort(key=lambda row: (row[0], row[1]))
 
     adapter = create_adapter(baseline, config_overrides=config_overrides)
-    adapter.reset(sample_id, state_root / sample_id)
     jobs: list[dict[str, Any]] = []
     ingested_through = -1
     try:
+        adapter.reset(sample_id, state_root / sample_id)
         for last_index, _, checkpoint, covered_sessions, visible_sessions in checkpoints:
             for session_index in range(ingested_through + 1, last_index + 1):
                 session_id = ordered_sessions[session_index]
@@ -408,6 +417,7 @@ def _run_signature(
     ignored = {
         "answer_api_key",
         "answer_concurrency",
+        "sample_concurrency",
         "allow_answer_errors",
         "checkpoint_every",
         "result_dir",
@@ -454,6 +464,7 @@ def main() -> None:
     parser.add_argument("--query-embedding-dir", default="")
     parser.add_argument("--baseline-state-dir", default="")
     parser.add_argument("--result-dir", required=True)
+    parser.add_argument("--sample-concurrency", type=int, default=4)
     parser.add_argument("--sample-id", action="append", default=[])
     parser.add_argument("--max-qa", type=int, default=0)
     parser.add_argument("--top-k", type=int, default=5)
@@ -500,6 +511,8 @@ def main() -> None:
         parser,
         allowed_keys={
             "answer_base_url",
+            "answer_concurrency",
+            "sample_concurrency",
             "answer_model",
             "answer_api_key",
             "answer_temperature",
@@ -531,10 +544,13 @@ def main() -> None:
         parser.error("--index-root is required when --baseline=HiveMem")
     if args.baseline == "HiveMem" and not args.query_embedding_dir:
         parser.error("--query-embedding-dir is required when --baseline=HiveMem")
-    if args.resume and args.baseline != "HiveMem":
-        parser.error("--resume currently supports only --baseline=HiveMem")
-    if args.answer_concurrency < 1 or args.top_k < 1 or args.checkpoint_every < 1:
-        parser.error("Answer concurrency, top-k, and checkpoint interval must be positive")
+    if (
+        args.answer_concurrency < 1
+        or args.sample_concurrency < 1
+        or args.top_k < 1
+        or args.checkpoint_every < 1
+    ):
+        parser.error("Sample/answer concurrency, top-k, and checkpoint interval must be positive")
     if args.max_qa < 0 or args.retries < 0 or args.request_timeout <= 0:
         parser.error("Invalid QA limit, retry count, or request timeout")
 
@@ -588,56 +604,86 @@ def main() -> None:
     result_dir = Path(args.result_dir)
     output_layout = BaselineOutputLayout(result_dir)
     baseline_state_root = output_layout.state_root(args.baseline_state_dir)
-    jobs: list[dict[str, Any]] = []
-    memory_snapshots: list[dict[str, Any]] = []
-    for path in paths:
+    signature = _run_signature(args, paths)
+    sample_signature = signature_digest(signature)
+
+    def prepare(path: Path) -> dict[str, Any]:
+        if args.resume:
+            cached = load_sample_artifact(
+                output_layout.sample_checkpoint_dir,
+                path.stem,
+                signature=sample_signature,
+            )
+            if cached is not None:
+                print(f"[resume] skip prepared WMA sample: {path.stem}", flush=True)
+                return cached
+        sample_snapshots: list[dict[str, Any]] = []
         if args.baseline == "HiveMem":
             if cache is None:
                 raise ValueError("HiveMem query embedding cache is unavailable")
-            jobs.extend(
-                prepare_sample_jobs(
-                    path, Path(args.index_root), cache,
-                    top_k=args.top_k, graph_options=graph_options,
-                    excluded_categories=excluded_categories,
-                )
+            sample_jobs = prepare_sample_jobs(
+                path, Path(args.index_root), cache,
+                top_k=args.top_k, graph_options=graph_options,
+                excluded_categories=excluded_categories,
             )
         else:
-            jobs.extend(
-                prepare_native_sample_jobs(
-                    path,
-                    cache,
-                    baseline=args.baseline,
-                    state_root=baseline_state_root,
-                    top_k=args.top_k,
-                    config_overrides={
-                        "answer_model": args.answer_model,
-                        "answer_base_url": args.answer_base_url,
-                        "answer_temperature": args.answer_temperature,
-                        "executor_model": args.executor_model,
-                        "executor_base_url": args.executor_base_url,
-                        "executor_temperature": args.executor_temperature,
-                        "executor_visual_input": args.executor_visual_input,
-                        "embedding_model": args.embedding_model,
-                        "embedding_base_url": args.embedding_base_url,
-                        "embedding_dim": args.embedding_dim,
-                        "top_k": args.top_k,
-                        "request_timeout": args.request_timeout,
-                        "retries": args.retries,
-                    },
-                    memory_snapshots=memory_snapshots,
-                    excluded_categories=excluded_categories,
-                )
+            sample_jobs = prepare_native_sample_jobs(
+                path,
+                cache,
+                baseline=args.baseline,
+                state_root=baseline_state_root,
+                top_k=args.top_k,
+                config_overrides={
+                    "answer_model": args.answer_model,
+                    "answer_base_url": args.answer_base_url,
+                    "answer_temperature": args.answer_temperature,
+                    "executor_model": args.executor_model,
+                    "executor_base_url": args.executor_base_url,
+                    "executor_temperature": args.executor_temperature,
+                    "executor_visual_input": args.executor_visual_input,
+                    "embedding_model": args.embedding_model,
+                    "embedding_base_url": args.embedding_base_url,
+                    "embedding_dim": args.embedding_dim,
+                    "top_k": args.top_k,
+                    "request_timeout": args.request_timeout,
+                    "retries": args.retries,
+                },
+                memory_snapshots=sample_snapshots,
+                excluded_categories=excluded_categories,
             )
-        if args.max_qa and len(jobs) >= args.max_qa:
-            jobs = jobs[: args.max_qa]
-            break
+        artifact = {
+            "sample_id": path.stem,
+            "jobs": sample_jobs,
+            "snapshots": sample_snapshots,
+        }
+        save_sample_artifact(
+            output_layout.sample_checkpoint_dir,
+            path.stem,
+            signature=sample_signature,
+            artifact=artifact,
+        )
+        print(f"[prepared] {path.stem}: {len(sample_jobs)} question(s)", flush=True)
+        return artifact
+
+    artifacts = parallel_map_ordered(
+        paths,
+        prepare,
+        max_workers=args.sample_concurrency,
+        item_key=lambda path: path.stem,
+    )
+    jobs = [job for artifact in artifacts for job in artifact["jobs"]]
+    memory_snapshots = [
+        row for artifact in artifacts for row in artifact.get("snapshots", [])
+    ]
+    if args.max_qa:
+        jobs = jobs[: args.max_qa]
 
     result_dir.mkdir(parents=True, exist_ok=True)
-    checkpoint_dir = result_dir / ".checkpoint"
+    checkpoint_dir = output_layout.checkpoint_dir
+    write_jsonl_atomic(checkpoint_dir / "prepared_qa.jsonl", jobs)
     checkpoint_manifest = checkpoint_dir / "manifest.json"
     checkpoint_results = checkpoint_dir / "results.json"
     checkpoint_traces = checkpoint_dir / "retrieval_trace.jsonl"
-    signature = _run_signature(args, paths)
     job_ids = [str(job["query_id"]) for job in jobs]
     job_id_set = set(job_ids)
     if len(job_ids) != len(job_id_set):
@@ -725,8 +771,12 @@ def main() -> None:
         )
     results = [results_by_id[query_id] for query_id in job_ids]
     write_json_atomic(result_dir / "results.json", results)
-    if args.baseline != "HiveMem":
-        write_jsonl_atomic(output_layout.snapshot, memory_snapshots)
+    if args.baseline == "HiveMem":
+        memory_snapshots = load_hivemem_snapshot(
+            args.index_root,
+            (path.stem for path in paths),
+        )
+    write_jsonl_atomic(output_layout.snapshot, memory_snapshots)
     trace_path = result_dir / "retrieval_trace.jsonl"
     write_jsonl_atomic(trace_path, [trace_by_id[query_id] for query_id in job_ids])
     answer_errors = sum(bool(row.get("error")) for row in results)
@@ -735,7 +785,7 @@ def main() -> None:
     }
     if args.baseline != "HiveMem":
         public_args["baseline_state_dir"] = str(baseline_state_root)
-        public_args["memory_snapshot"] = str(output_layout.snapshot)
+    public_args["memory_snapshot"] = str(output_layout.snapshot)
     manifest = public_args | {
         "samples": len(paths),
         "questions": len(jobs),

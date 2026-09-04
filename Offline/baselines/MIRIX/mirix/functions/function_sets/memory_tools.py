@@ -471,16 +471,30 @@ def trigger_memory_update(self: "Agent", user_message: object, memory_types: Lis
         responses = []
         overall_start = time.time()
 
-        # Use ThreadPoolExecutor for parallel processing
-        with ThreadPoolExecutor(max_workers=len(valid_agent_types)) as pool:
-            futures = [
-                pool.submit(message_queue.send_message_in_queue, 
-                           client, [agent for agent in agents if agent.agent_type == agent_type][0].id, payloads, agent_type) 
-                for agent_type in valid_agent_types
-            ]
-            
-            for future in tqdm(as_completed(futures), total=len(futures)):
-                response, agent_type = future.result()
+        # SQLite cannot safely sustain several agent transactions that each
+        # remain open across an LLM request. Use the original parallel path
+        # with Postgres, but serialize the same agent updates for the default
+        # local benchmark store to prevent fatal "database is locked" exits.
+        import os
+        if os.environ.get("MIRIX_PG_URI"):
+            with ThreadPoolExecutor(max_workers=len(valid_agent_types)) as pool:
+                futures = [
+                    pool.submit(message_queue.send_message_in_queue,
+                               client, [agent for agent in agents if agent.agent_type == agent_type][0].id, payloads, agent_type)
+                    for agent_type in valid_agent_types
+                ]
+
+                for future in tqdm(as_completed(futures), total=len(futures)):
+                    response, agent_type = future.result()
+                    responses.append(response)
+        else:
+            for agent_type in valid_agent_types:
+                response, _ = message_queue.send_message_in_queue(
+                    client,
+                    [agent for agent in agents if agent.agent_type == agent_type][0].id,
+                    payloads,
+                    agent_type,
+                )
                 responses.append(response)
 
         overall_end = time.time()

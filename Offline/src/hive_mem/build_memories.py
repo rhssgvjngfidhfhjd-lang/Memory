@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 
 from .llm_client import LLMClient
-from .builder import MAUBuilder, build_signatures_compatible
+from .builder import MAUBuilder
 from .builder import load_events
 from .executor import EXECUTOR_VISUAL_INPUTS
 from .output_layout import RunLayout
@@ -70,9 +70,7 @@ def completed_dataset_stats(
     stored_visual_input = str(stats.get("executor_visual_input") or "caption")
     if stored_visual_input != expected_executor_visual_input:
         return None
-    if expected_signature is not None and not build_signatures_compatible(
-        stats.get("build_signature"), expected_signature
-    ):
+    if expected_signature is not None and stats.get("build_signature") != expected_signature:
         return None
     return {**stats, "skipped_complete": True}
 
@@ -232,13 +230,18 @@ def main() -> None:
         print(json.dumps({dataset: summaries[dataset]}, ensure_ascii=False))
     manifest_path = layout.build_manifest
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    public_manifest = {
+        key: value
+        for key, value in vars(args).items()
+        if key not in {"executor_api_key", "embedding_api_key"}
+    }
+    write_json_atomic(manifest_path, public_manifest)
+    # H2HMEM builds dyadic and multiparty banks into the same root. Preserve
+    # both build configurations instead of letting the second overwrite the
+    # only audit record.
     write_json_atomic(
-        manifest_path,
-        {
-            key: value
-            for key, value in vars(args).items()
-            if key not in {"executor_api_key", "embedding_api_key"}
-        },
+        layout.root / f"build_manifest.{Path(chunks_path).stem}.json",
+        public_manifest,
     )
 
 

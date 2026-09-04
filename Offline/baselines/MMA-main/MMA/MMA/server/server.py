@@ -173,8 +173,9 @@ def db_error_handler():
         # Handle other SQLAlchemy errors
         print(e)
         print_sqlite_schema_error()
-        # raise ValueError(f"SQLite DB error: {str(e)}")
-        exit(1)
+        # A transient SQLite lock must not terminate the complete benchmark
+        # worker. Let the message queue surface/recover the failed operation.
+        raise
 
 if settings.mma_pg_uri_no_default:
     print("Creating engine", settings.mma_pg_uri)

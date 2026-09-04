@@ -339,7 +339,11 @@ def calculate_summarizer_cutoff(in_context_messages: List[Message], token_counts
                 )
                 break
         
-        while in_context_messages_openai[cutoff + 1]['role'] == MessageRole.tool:
+        while (
+            cutoff + 1 < len(in_context_messages_openai)
+            and in_context_messages_openai[cutoff + 1]["role"]
+            in {MessageRole.tool, getattr(MessageRole.tool, "value", "tool"), "tool"}
+        ):
             cutoff += 1
 
         logger.info(f"Evicting {cutoff}/{len(in_context_messages)} messages...")
