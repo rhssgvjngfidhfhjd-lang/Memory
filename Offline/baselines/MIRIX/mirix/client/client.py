@@ -1133,6 +1133,15 @@ class LocalClient(AbstractClient):
                 if m['type'] == 'text':
                     return TextContent(**m)
                 elif m['type'] == 'image_url':
+                    # TemporaryMessageAccumulator registers local images in the
+                    # file manager first and therefore emits an existing
+                    # ``image_id`` rather than another URL payload.
+                    if m.get('image_id'):
+                        return ImageContent(
+                            type=MessageContentType.image_url,
+                            image_id=m['image_id'],
+                            detail=m.get('detail', 'auto'),
+                        )
                     url = m['image_url']['url']
                     detail = m['image_url'].get("detail", "auto")
                     

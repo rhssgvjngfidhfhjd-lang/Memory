@@ -42,6 +42,7 @@ class MirixFamilyAdapter(BaselineAdapter):
         self.provenance = ProvenanceIndex()
         self._known_ids: set[str] = set()
         self._last_chunk: Chunk | None = None
+        self._ingested_chunks = 0
         if str(source_root) not in sys.path:
             sys.path.insert(0, str(source_root))
 
@@ -49,8 +50,12 @@ class MirixFamilyAdapter(BaselineAdapter):
         if state_dir.exists():
             shutil.rmtree(state_dir)
         state_dir.mkdir(parents=True)
+        temp_dir = state_dir / "tmp"
+        temp_dir.mkdir(parents=True, exist_ok=True)
         env_name = "MMA_DIR" if self.baseline == "MMA" else "MIRIX_DIR"
         os.environ[env_name] = str(state_dir)
+        os.environ["TMPDIR"] = str(temp_dir)
+        os.environ["SQLITE_TMPDIR"] = str(temp_dir)
         os.environ["OPENAI_API_BASE"] = str(self.config["executor_base_url"])
         os.environ["OPENAI_BASE_URL"] = str(self.config["executor_base_url"])
         os.environ.setdefault("OPENAI_API_KEY", str(self.config.get("executor_api_key") or "EMPTY"))
@@ -77,6 +82,7 @@ class MirixFamilyAdapter(BaselineAdapter):
         self.provenance.clear()
         self._known_ids = set()
         self._last_chunk = None
+        self._ingested_chunks = 0
 
     def _patch_openai_tool_compat(self) -> None:
         """Normalize Qwen tool tags when vLLM auto-tool parsing is disabled."""
@@ -88,15 +94,9 @@ class MirixFamilyAdapter(BaselineAdapter):
         original_request = client_class.request
 
         def build_request(client: Any, *args: Any, **kwargs: Any) -> dict[str, Any]:
-            data = original_build(client, *args, **kwargs)
-            tools = data.get("tools") or []
-            if data.get("tool_choice") == "required" and tools:
-                function = tools[0].get("function") or {}
-                data["tool_choice"] = {
-                    "type": "function",
-                    "function": {"name": function.get("name")},
-                }
-            return data
+            return _normalize_openai_tool_request(
+                original_build(client, *args, **kwargs)
+            )
 
         def request(client: Any, request_data: dict[str, Any]) -> dict[str, Any]:
             return _normalize_openai_tool_tags(original_request(client, request_data))
@@ -133,7 +133,7 @@ class MirixFamilyAdapter(BaselineAdapter):
             model_endpoint_type="openai",
             model_endpoint=str(self.config["executor_base_url"]),
             model_wrapper=None,
-            context_window=int(self.config.get("context_window") or 128000),
+            context_window=int(self.config.get("context_window") or 24000),
             temperature=float(self.config.get("executor_temperature") or 0.0),
             max_tokens=int(self.config.get("num_predict") or 512),
         )
@@ -194,8 +194,17 @@ class MirixFamilyAdapter(BaselineAdapter):
         timestamp = str(chunk.metadata.get("timestamp") or "")
         if timestamp:
             kwargs["specific_timestamps"] = [timestamp]
-        self.backend.send_message(**kwargs)
         self._last_chunk = chunk
+        if self._should_direct_insert(chunk):
+            self._insert_fallback_memory(chunk)
+        else:
+            try:
+                self.backend.send_message(**kwargs)
+            except Exception as exc:
+                if not _is_context_overflow_exception(exc):
+                    raise
+                if not self._has_new_or_changed_memory(before):
+                    self._insert_fallback_memory(chunk)
         current = self._memory_rows()
         if not current:
             self._insert_fallback_memory(chunk)
@@ -205,6 +214,36 @@ class MirixFamilyAdapter(BaselineAdapter):
             if memory_id not in before or before[memory_id] != row["text"]:
                 self.provenance.register(memory_id, chunk)
                 self._known_ids.add(memory_id)
+        self._ingested_chunks += 1
+
+    def _has_new_or_changed_memory(self, before: dict[str, str]) -> bool:
+        for row in self._memory_rows():
+            memory_id = row["memory_id"]
+            if memory_id not in before or before[memory_id] != row["text"]:
+                return True
+        return False
+
+    def _should_direct_insert(self, chunk: Chunk) -> bool:
+        """Avoid native agent context spirals on very long WMA samples.
+
+        MIRIX/MMA keep their memory-manager dialogue history inside each
+        per-sample database.  WorldMemArena lifelong samples have 400+ chunks;
+        after a few hundred native LLM tool turns, some manager agents hit
+        their own context-recovery recursion and can hang until the outer
+        worker watchdog kills the whole sample.  Direct semantic insertion is
+        only used after the configurable native-ingest prefix, preserving
+        chronological writes without letting late-session bookkeeping poison
+        the full run.
+        """
+        benchmark = str(chunk.metadata.get("benchmark") or "").lower()
+        is_wma_chunk = benchmark in {"worldmemarena", "wma"} or all(
+            key in chunk.metadata
+            for key in ("dataset", "dialogue_id", "round_id", "date")
+        )
+        if not is_wma_chunk:
+            return False
+        limit = int(self.config.get("native_ingest_chunk_limit") or 40)
+        return self._ingested_chunks >= limit
 
     def _insert_fallback_memory(self, chunk: Chunk) -> None:
         """Use the native semantic store only when the agent produced no memory."""
@@ -381,17 +420,61 @@ def _render_memory(manager: str, value: Any) -> str:
     return f"[{manager.removesuffix('_manager')}] " + " | ".join(fields)
 
 
+def _normalize_openai_tool_request(data: dict[str, Any]) -> dict[str, Any]:
+    tools = data.get("tools") or []
+    if data.get("tool_choice") == "required" and tools:
+        # These vLLM servers intentionally run without the automatic tool
+        # parser. A named choice would force tools[0], preventing the model
+        # from selecting insert/merge/finish and potentially creating an
+        # endless search_in_memory({}) loop. With "none", Qwen still sees the
+        # tool schemas and emits its selection as a textual <tool_call> tag,
+        # which _normalize_openai_tool_tags converts below.
+        data["tool_choice"] = "none"
+    return data
+
+
 def _normalize_openai_tool_tags(response: dict[str, Any]) -> dict[str, Any]:
     """Turn Qwen's textual tool envelope into valid OpenAI tool arguments."""
     for choice in response.get("choices") or []:
         message = choice.get("message") or {}
         for call in message.get("tool_calls") or []:
             function = call.get("function") or {}
-            payload = _tool_payload(str(function.get("arguments") or ""))
+            raw_arguments = str(function.get("arguments") or "")
+            payload = _tool_payload(raw_arguments)
             if payload is None:
+                # Qwen can occasionally return a correctly named forced tool
+                # call with an empty arguments string. MIRIX tries to unpack
+                # inner_thoughts before its normal tool-error recovery runs,
+                # so an empty string would abort the complete memory update.
+                # An empty object lets MIRIX report missing required arguments
+                # through its existing model-recovery path.
+                # Any non-JSON arguments would fail before MIRIX reaches its
+                # normal tool validation/recovery path.  Normalize those to an
+                # empty object as well; the tool schema can then request the
+                # missing required fields on the next model turn.
+                function["arguments"] = json.dumps(
+                    _normalize_native_tool_arguments(
+                        str(function.get("name") or ""), {}
+                    ),
+                    ensure_ascii=False,
+                )
                 continue
-            function["name"] = str(payload.get("name") or function.get("name") or "")
-            arguments = payload.get("arguments") or payload.get("args") or {}
+            is_envelope = "name" in payload and (
+                "arguments" in payload or "args" in payload
+            )
+            if is_envelope:
+                function["name"] = str(
+                    payload.get("name") or function.get("name") or ""
+                )
+                arguments = payload.get("arguments") or payload.get("args") or {}
+            else:
+                # A normal OpenAI structured tool call already stores only its
+                # argument object here.  Preserve it instead of discarding all
+                # fields while looking for an outer Qwen envelope.
+                arguments = payload
+            arguments = _normalize_native_tool_arguments(
+                str(function.get("name") or ""), arguments
+            )
             function["arguments"] = json.dumps(arguments, ensure_ascii=False)
         if message.get("tool_calls"):
             continue
@@ -399,18 +482,81 @@ def _normalize_openai_tool_tags(response: dict[str, Any]) -> dict[str, Any]:
         if payload is None:
             continue
         arguments = payload.get("arguments") or payload.get("args") or {}
+        function_name = str(payload.get("name") or "")
+        arguments = _normalize_native_tool_arguments(function_name, arguments)
         message["content"] = None
         message["tool_calls"] = [
             {
                 "id": f"call_{uuid.uuid4().hex}",
                 "type": "function",
                 "function": {
-                    "name": str(payload.get("name") or ""),
+                    "name": function_name,
                     "arguments": json.dumps(arguments, ensure_ascii=False),
                 },
             }
         ]
     return response
+
+
+def _is_context_overflow_exception(exc: Exception) -> bool:
+    text = f"{type(exc).__name__}: {exc}".lower()
+    markers = (
+        "context_window_exceeded",
+        "context length",
+        "context_length_exceeded",
+        "maximum context",
+        "decoder prompt",
+        "prompt is too long",
+        "not enough messages to compress",
+    )
+    return any(marker in text for marker in markers)
+
+
+def _normalize_native_tool_arguments(name: str, arguments: Any) -> Any:
+    """Repair unsupported MIRIX/MMA search field/method combinations.
+
+    Qwen occasionally chooses embedding search over a field for which the
+    native schema stores no embedding.  Preserve the requested semantic search
+    by switching to that partition's supported summary field instead of
+    persisting a failed native tool call.
+    """
+    if name != "search_in_memory" or not isinstance(arguments, dict):
+        return arguments
+    normalized = dict(arguments)
+    normalized.setdefault("memory_type", "all")
+    normalized.setdefault("query", "")
+    normalized.setdefault("search_method", "embedding")
+    memory_type = normalized.get("memory_type")
+    search_field = normalized.get("search_field")
+    defaults = {
+        "all": "null",
+        "episodic": "summary",
+        "resource": "summary" if normalized.get("search_method") == "embedding" else "content",
+        "procedural": "summary",
+        "knowledge_vault": "caption" if normalized.get("search_method") == "embedding" else "secret_value",
+        "semantic": "summary",
+    }
+    valid_fields = {
+        "all": {"null"},
+        "episodic": {"summary", "details"},
+        "resource": {"summary", "content"},
+        "procedural": {"summary", "steps", "description"},
+        "knowledge_vault": {"caption", "secret_value"},
+        "semantic": {"name", "summary", "details"},
+    }
+    if memory_type not in valid_fields:
+        normalized["memory_type"] = "all"
+        memory_type = "all"
+    if not search_field or search_field == "None":
+        normalized["search_field"] = defaults[memory_type]
+    elif search_field not in valid_fields[memory_type]:
+        normalized["search_field"] = defaults[memory_type]
+    if normalized.get("search_method") == "embedding":
+        if memory_type == "resource" and normalized.get("search_field") == "content":
+            normalized["search_field"] = "summary"
+        elif memory_type == "knowledge_vault" and normalized.get("search_field") == "secret_value":
+            normalized["search_field"] = "caption"
+    return normalized
 
 
 def _tool_payload(text: str) -> dict[str, Any] | None:

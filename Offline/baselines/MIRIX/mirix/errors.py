@@ -13,6 +13,10 @@ class ErrorCode(Enum):
     INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR"
     CONTEXT_WINDOW_EXCEEDED = "CONTEXT_WINDOW_EXCEEDED"
     RATE_LIMIT_EXCEEDED = "RATE_LIMIT_EXCEEDED"
+    INVALID_ARGUMENT = "INVALID_ARGUMENT"
+    UNAUTHENTICATED = "UNAUTHENTICATED"
+    PERMISSION_DENIED = "PERMISSION_DENIED"
+    NOT_FOUND = "NOT_FOUND"
 
 
 class MirixError(Exception):
@@ -205,4 +209,3 @@ class InvalidInnerMonologueError(MirixMessageError):
     """Error raised when a message has a malformed inner monologue."""
 
     default_error_message = "The message has a malformed inner monologue."
-

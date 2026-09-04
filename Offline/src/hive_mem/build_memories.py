@@ -230,13 +230,18 @@ def main() -> None:
         print(json.dumps({dataset: summaries[dataset]}, ensure_ascii=False))
     manifest_path = layout.build_manifest
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    public_manifest = {
+        key: value
+        for key, value in vars(args).items()
+        if key not in {"executor_api_key", "embedding_api_key"}
+    }
+    write_json_atomic(manifest_path, public_manifest)
+    # H2HMEM builds dyadic and multiparty banks into the same root. Preserve
+    # both build configurations instead of letting the second overwrite the
+    # only audit record.
     write_json_atomic(
-        manifest_path,
-        {
-            key: value
-            for key, value in vars(args).items()
-            if key not in {"executor_api_key", "embedding_api_key"}
-        },
+        layout.root / f"build_manifest.{Path(chunks_path).stem}.json",
+        public_manifest,
     )
 
 

@@ -3,7 +3,38 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Any
 
-from benchmarks.memgallery_harness.runner.metrics import exact_match, f1_score
+from benchmarks.memgallery_harness.runner.metrics import (
+    exact_match,
+    f1_score,
+    normalize_answer,
+)
+
+
+def answer_span_exact_match(prediction: str, ground_truth: str) -> float:
+    """WMA EM allowing a concise answer to match an explanatory reference.
+
+    WorldMemArena references often append supporting explanations to the direct
+    answer, while the answer prompt asks the model to be concise.  Compare
+    normalized token spans so ``Laura K. Simmons`` matches ``Laura K. Simmons
+    gave ...`` without treating unordered token overlap as an exact match.
+    """
+
+    prediction_tokens = normalize_answer(prediction).split()
+    ground_truth_tokens = normalize_answer(ground_truth).split()
+    if not prediction_tokens or not ground_truth_tokens:
+        return 0.0
+
+    def contains_span(shorter: list[str], longer: list[str]) -> bool:
+        width = len(shorter)
+        return any(
+            longer[start : start + width] == shorter
+            for start in range(len(longer) - width + 1)
+        )
+
+    return float(
+        contains_span(prediction_tokens, ground_truth_tokens)
+        or contains_span(ground_truth_tokens, prediction_tokens)
+    )
 
 
 def _row_metrics(row: dict[str, Any], k: int) -> dict[str, float]:
@@ -17,7 +48,10 @@ def _row_metrics(row: dict[str, Any], k: int) -> dict[str, float]:
     hit = float(bool(gold_sessions.intersection(retrieved))) if gold_sessions else 0.0
     return {
         "f1": f1_score(row.get("system_answer", ""), row.get("original_answer", "")),
-        "exact_match": exact_match(
+        "exact_match": answer_span_exact_match(
+            row.get("system_answer", ""), row.get("original_answer", "")
+        ),
+        "strict_exact_match": exact_match(
             row.get("system_answer", ""), row.get("original_answer", "")
         ),
         "retrieval_hit": hit,
@@ -31,6 +65,10 @@ def _aggregate(rows: list[dict[str, float]], k: int) -> dict[str, float | int]:
         "count": count,
         "f1": sum(row["f1"] for row in rows) / count if count else 0.0,
         "em": sum(row["exact_match"] for row in rows) / count if count else 0.0,
+        "strict_em": (
+            sum(row["strict_exact_match"] for row in rows) / count
+            if count else 0.0
+        ),
         f"retrieval_hitrate@{k}": (
             sum(row["retrieval_hit"] for row in rows) / count if count else 0.0
         ),

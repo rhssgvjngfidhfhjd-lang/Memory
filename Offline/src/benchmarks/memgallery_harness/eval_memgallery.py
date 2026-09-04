@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import os
 from pathlib import Path
@@ -31,7 +32,16 @@ from benchmarks.memgallery_harness.runner.metrics import (
     write_retrieval_memory_token,
 )
 from benchmarks.baseline_runtime import baseline_metadata, canonical_name, create_adapter
-from benchmarks.baseline_runtime.output_layout import BaselineOutputLayout
+from benchmarks.baseline_runtime.parallel_runner import (
+    load_sample_artifact,
+    parallel_map_ordered,
+    save_sample_artifact,
+    signature_digest,
+)
+from benchmarks.baseline_runtime.output_layout import (
+    BaselineOutputLayout,
+    load_hivemem_snapshot,
+)
 from benchmarks.io_utils import file_manifest, write_json_atomic, write_jsonl_atomic
 from benchmarks.baseline_runtime.protocol import (
     RetrievalRequest,
@@ -47,11 +57,10 @@ WORKSPACE_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_MEMGALLERY_DATA_DIR = WORKSPACE_ROOT / "Mem-Gallery" / "benchmark" / "data"
 
 
-def run_dataset(
+def prepare_dataset_jobs(
     dataset_path: Path,
     data_dir: Path,
     index_root: Path,
-    client: VLMAnswerClient,
     query_cache: QueryEmbeddingCache | None,
     *,
     top_k: int = 5,
@@ -63,11 +72,8 @@ def run_dataset(
     baseline: str = "HiveMem",
     state_root: Path | None = None,
     config_overrides: dict[str, Any] | None = None,
-    memory_snapshots: list[dict[str, Any]] | None = None,
-    allow_answer_errors: bool = True,
     excluded_categories: frozenset[str] = frozenset(),
-    qa_stats: dict[str, int] | None = None,
-) -> tuple[list[dict], list[dict]]:
+) -> dict[str, Any]:
     baseline = canonical_name(baseline)
     dataset = json.loads(dataset_path.read_text(encoding="utf-8"))
     dataset_name = dataset_path.stem
@@ -83,25 +89,24 @@ def run_dataset(
     )
     native_adapter = create_adapter(baseline, config_overrides=overrides)
     sample_state = (state_root or Path("outputs") / "memory" / "datasets") / dataset_name
-    native_adapter.reset(dataset_name, sample_state)
-    if baseline != "HiveMem":
-        chunks = build_chunks_from_data(dataset, data_dir, dataset_name)
-        current_session = ""
-        for chunk in chunks:
-            session_id = str(chunk.metadata.get("session_id") or "")
-            if current_session and session_id != current_session:
-                native_adapter.end_session(current_session)
-            native_adapter.ingest(chunk)
-            current_session = session_id
-        if current_session:
-            native_adapter.end_session(current_session)
     qa_pairs = dataset.get("human-annotated QAs", [])
     qa_end = qa_end or len(qa_pairs)
-    results = []
-    retrieval_traces = []
+    jobs: list[dict[str, Any]] = []
     processed = 0
     excluded = 0
     try:
+        native_adapter.reset(dataset_name, sample_state)
+        if baseline != "HiveMem":
+            chunks = build_chunks_from_data(dataset, data_dir, dataset_name)
+            current_session = ""
+            for chunk in chunks:
+                session_id = str(chunk.metadata.get("session_id") or "")
+                if current_session and session_id != current_session:
+                    native_adapter.end_session(current_session)
+                native_adapter.ingest(chunk)
+                current_session = session_id
+            if current_session:
+                native_adapter.end_session(current_session)
         for qa_index, qa in enumerate(qa_pairs, start=1):
             if qa_index < qa_start or qa_index > qa_end:
                 continue
@@ -144,78 +149,145 @@ def run_dataset(
             retrieved_ids = list(
                 dict.fromkeys(source for group in retrieved_groups for source in group)
             )
-            memory_context, _ = build_retrieved_memory_context(memory_items, category)
             prompt = format_question_prompt(question, category, speaker_a, "assistant")
-            try:
-                answer_response = client.answer_with_usage(
-                    system_prompt=system_prompt or SYSTEM_PROMPT,
-                    memory_items=memory_items,
-                    question_prompt=prompt,
-                    query_image=query_image,
-                    category=category,
-                )
-                answer = answer_response.text
-                answer_token_usage = answer_response.usage
-                answer_attempts = answer_response.attempts
-                answer_failed_attempts = answer_response.failed_attempts
-                error = ""
-            except Exception as exc:
-                if not allow_answer_errors:
-                    raise RuntimeError(
-                        f"Answer request failed for {dataset_name} QA {qa_index}: {exc}"
-                    ) from exc
-                answer = ""
-                answer_token_usage = None
-                answer_attempts = client.retries + 1
-                answer_failed_attempts = client.retries + 1
-                error = str(exc)
             clue = qa.get("clue", []) if isinstance(qa.get("clue", []), list) else []
-            result = {
-            "sample_id": profile.get("name", dataset_name),
-            "dataset": dataset_name,
-            "session_id": qa.get("session_id", ""),
-            "question": question,
-            "category": category,
-            "system_answer": answer,
-            "original_answer": qa.get("answer", ""),
-            "retrieved_ids": retrieved_ids,
-            "retrieved_source_groups": retrieved_groups,
-            "clue": clue,
-            "error": error,
-            "answer_token_usage": answer_token_usage,
-            "answer_attempts": answer_attempts,
-            "answer_failed_attempts": answer_failed_attempts,
-            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-        }
-            results.append(result)
-            retrieval_traces.append(
+            jobs.append(
                 {
-                "dataset": dataset_name,
-                "qa_index": qa_index,
-                "question": question,
-                "category": category,
-                "clue": clue,
-                "top_k": trace_rows,
-                "memory_context": memory_context,
+                    "query_id": query_id,
+                    "sample_id": profile.get("name", dataset_name),
+                    "dataset": dataset_name,
+                    "session_id": qa.get("session_id", ""),
+                    "qa_index": qa_index,
+                    "question": question,
+                    "category": category,
+                    "question_prompt": prompt,
+                    "system_prompt": system_prompt or SYSTEM_PROMPT,
+                    "query_image": query_image,
+                    "original_answer": qa.get("answer", ""),
+                    "retrieved_ids": retrieved_ids,
+                    "retrieved_source_groups": retrieved_groups,
+                    "clue": clue,
+                    "memory_items": memory_items,
+                    "retrieval_top_k": trace_rows,
                 }
             )
-            print(
-                f"[{dataset_name} {qa_index}/{len(qa_pairs)}] {category} "
-                f"answer={answer[:80]!r} error={error[:80]!r}",
-                flush=True,
-            )
-        if baseline != "HiveMem" and memory_snapshots is not None:
-            memory_snapshots.extend(row.to_dict() for row in native_adapter.snapshot())
+        snapshots = (
+            [row.to_dict() for row in native_adapter.snapshot()]
+            if baseline != "HiveMem"
+            else []
+        )
     finally:
         native_adapter.close()
+    return {
+        "sample_id": dataset_name,
+        "jobs": jobs,
+        "snapshots": snapshots,
+        "eligible_questions": processed,
+        "excluded_questions": excluded,
+    }
+
+
+def answer_dataset_job(
+    client: VLMAnswerClient,
+    job: dict[str, Any],
+    *,
+    allow_answer_errors: bool,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    try:
+        response = client.answer_with_usage(
+            system_prompt=job["system_prompt"],
+            memory_items=job["memory_items"],
+            question_prompt=job["question_prompt"],
+            query_image=job.get("query_image"),
+            category=job["category"],
+        )
+        answer, error = response.text, ""
+        usage = response.usage
+        attempts = response.attempts
+        failed_attempts = response.failed_attempts
+    except Exception as exc:
+        if not allow_answer_errors:
+            raise RuntimeError(
+                f"Answer request failed for {job['dataset']} QA {job['qa_index']}: {exc}"
+            ) from exc
+        answer, error, usage = "", str(exc), None
+        attempts = client.retries + 1
+        failed_attempts = client.retries + 1
+    memory_context, _ = build_retrieved_memory_context(
+        job["memory_items"], job["category"]
+    )
+    result = {
+        key: value
+        for key, value in job.items()
+        if key not in {
+            "qa_index", "question_prompt", "system_prompt",
+            "query_image", "memory_items", "retrieval_top_k",
+        }
+    }
+    result.update(
+        {
+            "system_answer": answer,
+            "error": error,
+            "answer_token_usage": usage,
+            "answer_attempts": attempts,
+            "answer_failed_attempts": failed_attempts,
+            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+        }
+    )
+    trace = {
+        "query_id": job["query_id"],
+        "dataset": job["dataset"],
+        "qa_index": job["qa_index"],
+        "question": job["question"],
+        "category": job["category"],
+        "clue": job["clue"],
+        "top_k": job["retrieval_top_k"],
+        "memory_context": memory_context,
+    }
+    return result, trace
+
+
+def run_dataset(
+    dataset_path: Path,
+    data_dir: Path,
+    index_root: Path,
+    client: VLMAnswerClient,
+    query_cache: QueryEmbeddingCache | None,
+    *,
+    top_k: int = 5,
+    max_qa: int = 0,
+    qa_start: int = 1,
+    qa_end: int = 0,
+    graph_options: dict | None = None,
+    system_prompt: str | None = None,
+    baseline: str = "HiveMem",
+    state_root: Path | None = None,
+    config_overrides: dict[str, Any] | None = None,
+    memory_snapshots: list[dict[str, Any]] | None = None,
+    allow_answer_errors: bool = True,
+    excluded_categories: frozenset[str] = frozenset(),
+    qa_stats: dict[str, int] | None = None,
+) -> tuple[list[dict], list[dict]]:
+    """Compatibility wrapper for a single dataset; the full runner uses two phases."""
+    artifact = prepare_dataset_jobs(
+        dataset_path, data_dir, index_root, query_cache,
+        top_k=top_k, max_qa=max_qa, qa_start=qa_start, qa_end=qa_end,
+        graph_options=graph_options, system_prompt=system_prompt, baseline=baseline,
+        state_root=state_root, config_overrides=config_overrides,
+        excluded_categories=excluded_categories,
+    )
+    pairs = [
+        answer_dataset_job(client, job, allow_answer_errors=allow_answer_errors)
+        for job in artifact["jobs"]
+    ]
+    if memory_snapshots is not None:
+        memory_snapshots.extend(artifact["snapshots"])
     if qa_stats is not None:
         qa_stats.update(
-            {
-                "eligible_questions": processed,
-                "excluded_questions": excluded,
-            }
+            eligible_questions=artifact["eligible_questions"],
+            excluded_questions=artifact["excluded_questions"],
         )
-    return results, retrieval_traces
+    return [row[0] for row in pairs], [row[1] for row in pairs]
 
 
 def _checkpoint_signature(
@@ -224,6 +296,9 @@ def _checkpoint_signature(
 ) -> dict[str, Any]:
     ignored = {
         "resume",
+        "sample_concurrency",
+        "answer_concurrency",
+        "checkpoint_every",
         "allow_answer_errors",
         "memory_tokenizer",
         "retrieval_memory_tokenizer",
@@ -292,6 +367,9 @@ def main() -> None:
     parser.add_argument("--embedding-model", default="Qwen/Qwen3-VL-Embedding-2B")
     parser.add_argument("--embedding-base-url", default="http://127.0.0.1:8001/v1")
     parser.add_argument("--result-dir", required=True)
+    parser.add_argument("--sample-concurrency", type=int, default=4)
+    parser.add_argument("--answer-concurrency", type=int, default=16)
+    parser.add_argument("--checkpoint-every", type=int, default=10)
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--max-qa", type=int, default=0)
     parser.add_argument("--qa-start", type=int, default=1)
@@ -373,10 +451,10 @@ def main() -> None:
         parser.error(str(exc))
     if args.baseline == "HiveMem" and not args.index_root:
         parser.error("--index-root is required when --baseline=HiveMem")
-    if args.resume and args.baseline != "HiveMem":
-        parser.error("--resume currently supports only --baseline=HiveMem")
     if args.top_k < 1 or args.max_qa < 0 or args.qa_start < 1 or args.qa_end < 0:
         parser.error("--top-k and --qa-start must be positive; QA limits cannot be negative")
+    if args.sample_concurrency < 1 or args.answer_concurrency < 1 or args.checkpoint_every < 1:
+        parser.error("Sample/answer concurrency and checkpoint interval must be positive")
     if args.qa_end and args.qa_end < args.qa_start:
         parser.error("--qa-end must be 0 or at least --qa-start")
     if args.retries < 0 or args.request_timeout <= 0 or args.num_predict < 1:
@@ -455,70 +533,32 @@ def main() -> None:
     result_dir = Path(args.result_dir)
     output_layout = BaselineOutputLayout(result_dir)
     baseline_state_root = output_layout.state_root(args.baseline_state_dir)
-    checkpoint_dir = result_dir / ".checkpoint"
+    checkpoint_dir = output_layout.checkpoint_dir
     checkpoint_results = checkpoint_dir / "results.json"
     checkpoint_traces = checkpoint_dir / "retrieval_trace.jsonl"
     checkpoint_manifest = checkpoint_dir / "manifest.json"
     signature = _checkpoint_signature(args, paths)
-    all_results: list[dict[str, Any]] = []
-    all_traces: list[dict[str, Any]] = []
-    excluded_questions = 0
-    completed_datasets: list[str] = []
-    if args.resume and checkpoint_manifest.exists():
-        saved_manifest = json.loads(checkpoint_manifest.read_text(encoding="utf-8"))
-        if not _checkpoint_signatures_match(
-            saved_manifest.get("signature") or {}, signature
-        ):
-            raise RuntimeError(
-                f"Checkpoint settings do not match this run: {checkpoint_manifest}"
+    sample_signature = signature_digest(signature)
+
+    def prepare(path: Path) -> dict[str, Any]:
+        if args.resume:
+            cached = load_sample_artifact(
+                output_layout.sample_checkpoint_dir,
+                path.stem,
+                signature=sample_signature,
             )
-        if not checkpoint_results.is_file() or not checkpoint_traces.is_file():
-            raise RuntimeError(
-                f"Incomplete checkpoint under {checkpoint_dir}; rerun with --no-resume"
-            )
-        all_results = json.loads(checkpoint_results.read_text(encoding="utf-8"))
-        all_traces = [
-            json.loads(line)
-            for line in checkpoint_traces.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        ]
-        completed_datasets = [
-            str(value) for value in saved_manifest.get("completed_datasets", [])
-        ]
-        excluded_questions = int(saved_manifest.get("excluded_questions", 0))
-        if len(all_results) != len(all_traces):
-            raise RuntimeError(
-                f"Checkpoint has {len(all_results)} results but {len(all_traces)} traces"
-            )
-        if int(saved_manifest.get("questions", -1)) != len(all_results):
-            raise RuntimeError("Checkpoint manifest question count does not match results")
-        completed_set = set(completed_datasets)
-        if any(str(row.get("dataset") or "") not in completed_set for row in all_results):
-            raise RuntimeError("Checkpoint contains results outside completed_datasets")
-        print(
-            f"[resume] loaded {len(all_results)} answers from "
-            f"{len(completed_datasets)} completed dataset(s)",
-            flush=True,
-        )
-    remaining_paths = [path for path in paths if path.stem not in completed_datasets]
-    if remaining_paths:
-        client.assert_model_available()
-    memory_snapshots: list[dict[str, Any]] = []
-    for path in paths:
-        if path.stem in completed_datasets:
-            print(f"[resume] skip completed dataset: {path.stem}", flush=True)
-            continue
+            if cached is not None:
+                print(f"[resume] skip prepared dataset: {path.stem}", flush=True)
+                return cached
         dataset_profile = profiles.get(path.stem, "")
         dataset_system_prompt = (
             SYSTEM_PROMPT + "\n\nUser profile (background about the person the "
             "memories are about):\n" + dataset_profile
         ) if dataset_profile else None
-        dataset_qa_stats: dict[str, int] = {}
-        results, traces = run_dataset(
+        artifact = prepare_dataset_jobs(
             path,
             data_dir,
             Path(args.index_root) if args.index_root else Path(),
-            client,
             query_cache,
             top_k=args.top_k,
             max_qa=args.max_qa,
@@ -545,45 +585,132 @@ def main() -> None:
                 "request_timeout": args.request_timeout,
                 "retries": args.retries,
             },
-            memory_snapshots=memory_snapshots,
-            allow_answer_errors=args.allow_answer_errors,
             excluded_categories=excluded_categories,
-            qa_stats=dataset_qa_stats,
         )
-        all_results.extend(results)
-        all_traces.extend(traces)
-        excluded_questions += dataset_qa_stats["excluded_questions"]
-        completed_datasets.append(path.stem)
-        write_json_atomic(checkpoint_results, all_results)
-        write_jsonl_atomic(checkpoint_traces, all_traces)
+        save_sample_artifact(
+            output_layout.sample_checkpoint_dir,
+            path.stem,
+            signature=sample_signature,
+            artifact=artifact,
+        )
+        print(
+            f"[prepared] {path.stem}: {len(artifact['jobs'])} question(s)",
+            flush=True,
+        )
+        return artifact
+
+    artifacts = parallel_map_ordered(
+        paths,
+        prepare,
+        max_workers=args.sample_concurrency,
+        item_key=lambda path: path.stem,
+    )
+    jobs = [job for artifact in artifacts for job in artifact["jobs"]]
+    write_jsonl_atomic(output_layout.pipeline_qa, jobs)
+    memory_snapshots = [
+        row for artifact in artifacts for row in artifact.get("snapshots", [])
+    ]
+    excluded_questions = sum(
+        int(artifact.get("excluded_questions", 0)) for artifact in artifacts
+    )
+
+    results_by_id: dict[str, dict[str, Any]] = {}
+    traces_by_id: dict[str, dict[str, Any]] = {}
+    if args.resume and checkpoint_manifest.is_file():
+        saved = json.loads(checkpoint_manifest.read_text(encoding="utf-8"))
+        if _checkpoint_signatures_match(saved.get("signature") or {}, signature):
+            if checkpoint_results.is_file() and checkpoint_traces.is_file():
+                results_by_id = {
+                    str(row.get("query_id") or ""): row
+                    for row in json.loads(checkpoint_results.read_text(encoding="utf-8"))
+                    if row.get("query_id")
+                }
+                traces_by_id = {
+                    str(row.get("query_id") or ""): row
+                    for row in (
+                        json.loads(line)
+                        for line in checkpoint_traces.read_text(encoding="utf-8").splitlines()
+                        if line.strip()
+                    )
+                    if row.get("query_id")
+                }
+                print(f"[resume] loaded {len(results_by_id)} answer(s)", flush=True)
+
+    job_ids = [str(job["query_id"]) for job in jobs]
+
+    def save_checkpoint() -> None:
+        completed = [query_id for query_id in job_ids if query_id in results_by_id]
+        write_json_atomic(checkpoint_results, [results_by_id[key] for key in completed])
+        write_jsonl_atomic(
+            checkpoint_traces,
+            [traces_by_id[key] for key in completed if key in traces_by_id],
+        )
         write_json_atomic(
             checkpoint_manifest,
             {
                 "signature": signature,
-                "completed_datasets": completed_datasets,
-                "questions": len(all_results),
-                "excluded_questions": excluded_questions,
+                "completed": len(completed),
+                "expected": len(job_ids),
                 "updated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
             },
         )
-        print(
-            f"[checkpoint] {len(completed_datasets)}/{len(paths)} datasets, "
-            f"{len(all_results)} answers",
-            flush=True,
-        )
+
+    completed_answers = {
+        query_id
+        for query_id, row in results_by_id.items()
+        if not row.get("error") and query_id in traces_by_id
+    }
+    pending = [job for job in jobs if job["query_id"] not in completed_answers]
+    if pending:
+        client.assert_model_available()
+    since_checkpoint = 0
+    with ThreadPoolExecutor(max_workers=args.answer_concurrency) as pool:
+        futures = {
+            pool.submit(
+                answer_dataset_job,
+                client,
+                job,
+                allow_answer_errors=args.allow_answer_errors,
+            ): job
+            for job in pending
+        }
+        for future in as_completed(futures):
+            job = futures[future]
+            result, trace = future.result()
+            query_id = str(job["query_id"])
+            result["query_id"] = query_id
+            trace["query_id"] = query_id
+            results_by_id[query_id] = result
+            traces_by_id[query_id] = trace
+            since_checkpoint += 1
+            if since_checkpoint >= args.checkpoint_every:
+                save_checkpoint()
+                since_checkpoint = 0
+            print(
+                f"[{len(results_by_id)}/{len(jobs)}] {job['dataset']} "
+                f"QA {job['qa_index']} error={result['error'][:80]!r}",
+                flush=True,
+            )
+    save_checkpoint()
+    all_results = [results_by_id[query_id] for query_id in job_ids]
+    all_traces = [traces_by_id[query_id] for query_id in job_ids]
 
     result_dir.mkdir(parents=True, exist_ok=True)
     write_json_atomic(result_dir / "results.json", all_results)
     write_jsonl_atomic(result_dir / "retrieval_trace.jsonl", all_traces)
-    if args.baseline != "HiveMem":
-        write_jsonl_atomic(output_layout.snapshot, memory_snapshots)
+    if args.baseline == "HiveMem":
+        memory_snapshots = load_hivemem_snapshot(
+            args.index_root,
+            (path.stem for path in paths),
+        )
+    write_jsonl_atomic(output_layout.snapshot, memory_snapshots)
     answer_errors = sum(bool(row.get("error")) for row in all_results)
     public_args = {
         key: value for key, value in vars(args).items() if key != "answer_api_key"
     }
     if args.baseline != "HiveMem":
         public_args["baseline_state_dir"] = str(baseline_state_root)
-        public_args["memory_snapshot"] = str(output_layout.snapshot)
+    public_args["memory_snapshot"] = str(output_layout.snapshot)
     manifest = public_args | prompt_manifest() | {
         "questions": len(all_results),
         "excluded_categories": sorted(excluded_categories),

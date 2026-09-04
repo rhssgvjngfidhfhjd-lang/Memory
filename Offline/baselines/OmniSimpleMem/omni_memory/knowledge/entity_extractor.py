@@ -7,12 +7,43 @@ Supports text, image captions, and video descriptions.
 
 import logging
 import json
+import time
 from typing import Optional, List, Dict, Any, Tuple
 from dataclasses import dataclass, field
 
 from omni_memory.core.mau import MultimodalAtomicUnit, ModalityType
 
 logger = logging.getLogger(__name__)
+
+
+def _coerce_text(value: Any) -> str:
+    """Normalize occasionally non-scalar Qwen JSON fields deterministically."""
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, list):
+        return ", ".join(
+            part for part in (_coerce_text(item) for item in value) if part
+        )
+    if isinstance(value, dict):
+        return json.dumps(value, ensure_ascii=False, sort_keys=True)
+    return str(value).strip()
+
+
+def _coerce_attributes(value: Any) -> Dict[str, Any]:
+    if isinstance(value, dict):
+        return value
+    if value in (None, "", []):
+        return {}
+    return {"value": value}
+
+
+def _coerce_confidence(value: Any, default: float = 0.8) -> float:
+    try:
+        return max(0.0, min(1.0, float(value)))
+    except (TypeError, ValueError):
+        return default
 
 
 @dataclass
@@ -259,49 +290,79 @@ class EntityExtractor:
         # Call LLM for extraction
         client = self._get_llm_client()
         
+        retries = int(getattr(getattr(self.config, "llm", None), "retries", 0) or 0)
+        for attempt in range(retries + 1):
+            try:
+                response = client.chat.completions.create(
+                    model=self.model_name,
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": self._get_system_prompt()
+                        },
+                        {
+                            "role": "user", 
+                            "content": prompt
+                        }
+                    ],
+                    temperature=0,
+                    response_format={"type": "json_object"},
+                )
+
+                result_text = response.choices[0].message.content
+                if result_text:
+                    result_json = json.loads(result_text)
+                else:
+                    result_json = {"entities": [], "relations": []}
+                if not isinstance(result_json, dict):
+                    raise TypeError(
+                        f"entity extraction response must be an object, got {type(result_json).__name__}"
+                    )
+                break
+            except Exception as exc:
+                if attempt >= retries:
+                    logger.error(f"Entity extraction failed: {exc}")
+                    return ExtractionResult(
+                        entities=[],
+                        relations=[],
+                        raw_text=raw_text,
+                        source_mau_id=mau_id,
+                    )
+                time.sleep(min(0.5 * (2 ** attempt), 2.0))
+
         try:
-            response = client.chat.completions.create(
-                model=self.model_name,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": self._get_system_prompt()
-                    },
-                    {
-                        "role": "user", 
-                        "content": prompt
-                    }
-                ],
-                temperature=0,
-                response_format={"type": "json_object"},
-            )
-            
-            result_text = response.choices[0].message.content
-            if result_text:
-                result_json = json.loads(result_text)
-            else:
-                result_json = {"entities": [], "relations": []}
 
             # Parse entities
             entities = []
             for e in result_json.get("entities", []):
+                if not isinstance(e, dict):
+                    continue
+                name = _coerce_text(e.get("name"))
+                if not name:
+                    continue
                 entities.append(ExtractedEntity(
-                    name=e.get("name", ""),
-                    entity_type=e.get("type", "CONCEPT"),
-                    attributes=e.get("attributes", {}),
-                    confidence=e.get("confidence", 0.8),
+                    name=name,
+                    entity_type=_coerce_text(e.get("type")) or "CONCEPT",
+                    attributes=_coerce_attributes(e.get("attributes")),
+                    confidence=_coerce_confidence(e.get("confidence")),
                     source_mau_id=mau_id,
                 ))
 
             # Parse relations
             relations = []
             for r in result_json.get("relations", []):
+                if not isinstance(r, dict):
+                    continue
+                subject = _coerce_text(r.get("subject"))
+                object_name = _coerce_text(r.get("object"))
+                if not subject or not object_name:
+                    continue
                 relations.append(ExtractedRelation(
-                    subject=r.get("subject", ""),
-                    predicate=r.get("predicate", "related_to"),
-                    object=r.get("object", ""),
-                    attributes=r.get("attributes", {}),
-                    confidence=r.get("confidence", 0.8),
+                    subject=subject,
+                    predicate=_coerce_text(r.get("predicate")) or "related_to",
+                    object=object_name,
+                    attributes=_coerce_attributes(r.get("attributes")),
+                    confidence=_coerce_confidence(r.get("confidence")),
                     source_mau_id=mau_id,
                 ))
 

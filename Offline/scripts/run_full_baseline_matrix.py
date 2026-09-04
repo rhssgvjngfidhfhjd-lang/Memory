@@ -10,12 +10,14 @@ of truth for progress.
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime
 import json
 import os
 from pathlib import Path
 import queue
+import sqlite3
 import subprocess
 import sys
 import threading
@@ -40,6 +42,17 @@ BASELINES = (
     "M3-Agent-caption",
 )
 BENCHMARKS = ("Mem-Gallery", "WorldMemArena", "H2HMEM")
+EXPECTED_RESULT_COUNTS = {
+    "Mem-Gallery": 1711,
+    "WorldMemArena": 2090,
+    "H2HMEM": 2207,
+}
+INFERENCE_ENDPOINTS = {
+    "http://127.0.0.1:8013/v1",
+    "http://127.0.0.1:8014/v1",
+    "http://127.0.0.1:8015/v1",
+}
+EMBEDDING_ENDPOINT = "http://127.0.0.1:8001/v1"
 
 
 def now() -> str:
@@ -54,7 +67,13 @@ class Job:
 
 
 class Status:
-    def __init__(self, ports: list[str], embedding_base_url: str) -> None:
+    def __init__(
+        self,
+        ports: list[str],
+        embedding_base_url: str,
+        *,
+        resume_completed: bool,
+    ) -> None:
         self.lock = threading.Lock()
         previous: dict[str, Any] = {}
         if STATUS_PATH.is_file():
@@ -68,7 +87,7 @@ class Status:
             "updated_at": now(),
             "inference_ports": ports,
             "embedding_base_url": embedding_base_url,
-            "jobs": previous.get("jobs") or {},
+            "jobs": (previous.get("jobs") or {}) if resume_completed else {},
         }
         for row in self.data["jobs"].values():
             if row.get("status") == "running":
@@ -171,8 +190,8 @@ def wait_for_inference(endpoint: str, job: Job, status: Status) -> None:
 def validate_inputs() -> None:
     required = (
         ROOT / "data/qwen3_vl_embedding_2b/chunks_no_profile.jsonl",
-        ROOT / "data/wma_qwen3_vl_embedding_2b/lifelong_chunks.jsonl",
-        ROOT / "data/wma_qwen3_vl_embedding_2b/lifelong_query_embeddings",
+        ROOT / "data/wma_qwen3_vl_embedding_2b/chunks_lifelong.jsonl",
+        ROOT / "data/wma_qwen3_vl_embedding_2b/query_embeddings_lifelong",
         ROOT / "data/h2hmem/chunks_dyadic.jsonl",
         ROOT / "data/h2hmem/chunks_multiparty.jsonl",
     )
@@ -188,9 +207,16 @@ def validate_inputs() -> None:
 
 def common_eval_args(endpoint: str, embedding_base_url: str) -> list[str]:
     return [
+        "--answer-model", MODEL,
         "--answer-base-url", endpoint,
+        "--answer-temperature", "0",
+        "--executor-model", MODEL,
         "--executor-base-url", endpoint,
+        "--executor-temperature", "0",
+        "--embedding-model", EMBEDDING_MODEL,
         "--embedding-base-url", embedding_base_url,
+        "--embedding-dim", "2048",
+        "--top-k", "5",
         "--request-timeout", "180",
         "--retries", "2",
     ]
@@ -203,13 +229,13 @@ def build_args(chunks: str, output_root: Path, endpoint: str, embedding_base_url
         "--all-datasets",
         "--output-root", str(output_root),
         "--executor-base-url", endpoint,
+        "--executor-model", MODEL,
         "--embedding-base-url", embedding_base_url,
+        "--embedding-model", EMBEDDING_MODEL,
+        "--embedding-dim", "2048",
         "--executor-timeout", "180",
         "--executor-retries", "2",
-        # Sixteen simultaneous multimodal generations saturated the forwarded
-        # vLLM queues and made even /models miss its 10-second harness probe.
-        # Four keeps each A100 busy without starving health checks.
-        "--executor-concurrency", "4",
+        "--executor-concurrency", "16",
     ]
 
 
@@ -232,13 +258,14 @@ def hive_commands(benchmark: str, endpoint: str, embedding_base_url: str) -> lis
                 "--index-root", str(memory_dir),
                 "--result-dir", str(result_dir),
                 "--resume",
+                "--exclude-categories", "",
                 *common,
             ],
         ]
     if benchmark == "WorldMemArena":
         return [
             build_args(
-                "data/wma_qwen3_vl_embedding_2b/lifelong_chunks.jsonl",
+                "data/wma_qwen3_vl_embedding_2b/chunks_lifelong.jsonl",
                 memory_dir,
                 endpoint,
                 embedding_base_url,
@@ -248,9 +275,10 @@ def hive_commands(benchmark: str, endpoint: str, embedding_base_url: str) -> lis
                 "--baseline", "HiveMem",
                 "--index-root", str(memory_dir),
                 "--query-embedding-dir",
-                "data/wma_qwen3_vl_embedding_2b/lifelong_query_embeddings",
+                "data/wma_qwen3_vl_embedding_2b/query_embeddings_lifelong",
                 "--result-dir", str(result_dir),
                 "--resume",
+                "--exclude-categories", "",
                 *common,
             ],
         ]
@@ -290,14 +318,17 @@ def baseline_commands(
         "--baseline", baseline,
         "--result-dir", str(result_dir),
         "--baseline-state-dir", str(state_dir),
+        "--resume",
+        "--sample-concurrency", "4",
+        "--answer-concurrency", "16",
         *common_eval_args(endpoint, embedding_base_url),
     ]
     if benchmark == "Mem-Gallery":
         module = "benchmarks.memgallery_harness.eval_memgallery"
-        extra = ["--all-datasets"]
+        extra = ["--all-datasets", "--exclude-categories", ""]
     elif benchmark == "WorldMemArena":
         module = "benchmarks.wma_harness.eval_wma"
-        extra = []
+        extra = ["--exclude-categories", ""]
     else:
         module = "benchmarks.h2hmem_harness.eval_h2hmem"
         extra = ["--variant", "all"]
@@ -308,6 +339,205 @@ def commands_for(job: Job, endpoint: str, embedding_base_url: str) -> list[list[
     if job.method == "HiveMem":
         return hive_commands(job.benchmark, endpoint, embedding_base_url)
     return baseline_commands(job.benchmark, job.method, endpoint, embedding_base_url)
+
+
+def validate_job_outputs(job: Job, result_dir: Path) -> None:
+    required = (
+        result_dir / "results.json",
+        result_dir / "retrieval_trace.jsonl",
+        result_dir / "memory" / "memory_snapshot.jsonl",
+        result_dir / "run_manifest.json",
+    )
+    missing = [str(path) for path in required if not path.is_file()]
+    if missing:
+        raise RuntimeError(f"{job.name} is missing required outputs: {missing}")
+    results = json.loads(required[0].read_text(encoding="utf-8"))
+    traces = [
+        json.loads(line)
+        for line in required[1].read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    snapshots = [
+        json.loads(line)
+        for line in required[2].read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    manifest = json.loads(required[3].read_text(encoding="utf-8"))
+    expected_count = EXPECTED_RESULT_COUNTS[job.benchmark]
+    if len(results) != expected_count:
+        raise RuntimeError(
+            f"{job.name} has {len(results)} results; expected {expected_count}"
+        )
+    if len(results) != len(traces):
+        raise RuntimeError(
+            f"{job.name} has {len(results)} results and {len(traces)} traces"
+        )
+    answer_errors = [row for row in results if row.get("error")]
+    if answer_errors:
+        raise RuntimeError(
+            f"{job.name} has {len(answer_errors)} answer errors"
+        )
+    if not snapshots:
+        raise RuntimeError(f"{job.name} produced an empty memory snapshot")
+    malformed_snapshots = [
+        row for row in snapshots
+        if not all(str(row.get(key) or "").strip() for key in ("memory_id", "text", "backend_type"))
+    ]
+    if malformed_snapshots:
+        raise RuntimeError(
+            f"{job.name} has {len(malformed_snapshots)} malformed memory snapshot rows"
+        )
+    if job.benchmark == "Mem-Gallery":
+        result_keys = Counter(
+            (row.get("dataset"), row.get("question"), row.get("category"))
+            for row in results
+        )
+        trace_keys = Counter(
+            (row.get("dataset"), row.get("question"), row.get("category"))
+            for row in traces
+        )
+        if result_keys != trace_keys:
+            raise RuntimeError(f"{job.name} result/trace question sets differ")
+        trace_ids = {
+            (row.get("dataset"), row.get("qa_index")) for row in traces
+        }
+        if len(trace_ids) != expected_count:
+            raise RuntimeError(f"{job.name} contains duplicate trace QA ids")
+        datasets = {str(row.get("dataset") or "") for row in results}
+        if "" in datasets or len(datasets) != 20:
+            raise RuntimeError(
+                f"{job.name} covers {len(datasets - {''})} Mem-Gallery datasets; expected 20"
+            )
+    else:
+        result_ids = [str(row.get("query_id") or "") for row in results]
+        trace_ids = [str(row.get("query_id") or "") for row in traces]
+        if "" in result_ids or len(set(result_ids)) != expected_count:
+            raise RuntimeError(f"{job.name} has missing or duplicate result query ids")
+        if "" in trace_ids or len(set(trace_ids)) != expected_count:
+            raise RuntimeError(f"{job.name} has missing or duplicate trace query ids")
+        if set(result_ids) != set(trace_ids):
+            raise RuntimeError(f"{job.name} result/trace query id sets differ")
+    oversized_traces = [
+        row for row in traces
+        if not isinstance(row.get("top_k"), list) or len(row["top_k"]) > 5
+    ]
+    if oversized_traces:
+        raise RuntimeError(
+            f"{job.name} has {len(oversized_traces)} malformed or oversized retrieval traces"
+        )
+    malformed_hits = [
+        hit
+        for row in traces
+        for hit in row["top_k"]
+        if not isinstance(hit, dict)
+        or not str(hit.get("memory_id") or "").strip()
+        or not str(hit.get("content") or "").strip()
+        or not isinstance(hit.get("rank"), int)
+    ]
+    if malformed_hits:
+        raise RuntimeError(
+            f"{job.name} has {len(malformed_hits)} malformed retrieved memory rows"
+        )
+    if job.benchmark == "H2HMEM":
+        variants = Counter(str(row.get("variant") or "") for row in results)
+        expected_variants = Counter({"dyadic": 2017, "multiparty": 190})
+        if variants != expected_variants:
+            raise RuntimeError(
+                f"{job.name} variant counts are {dict(variants)}; "
+                f"expected {dict(expected_variants)}"
+            )
+    if job.method in {"MIRIX", "MMA"}:
+        databases = sorted((result_dir / "memory" / "datasets").rglob("sqlite.db"))
+        if not databases:
+            raise RuntimeError(f"{job.name} produced no native SQLite databases")
+        failed_tools: list[str] = []
+        for database in databases:
+            try:
+                connection = sqlite3.connect(database)
+                try:
+                    contents = connection.execute(
+                        "SELECT content FROM messages WHERE role = 'tool'"
+                    ).fetchall()
+                finally:
+                    connection.close()
+            except sqlite3.Error as exc:
+                raise RuntimeError(
+                    f"{job.name} cannot inspect native database {database}: {exc}"
+                ) from exc
+            for (content,) in contents:
+                normalized = str(content or "").replace('\\"', '"')
+                if (
+                    '"status": "Failed"' in normalized
+                    or '"message": "Error executing function' in normalized
+                ):
+                    failed_tools.append(str(database))
+        if failed_tools:
+            raise RuntimeError(
+                f"{job.name} has {len(failed_tools)} failed native tool calls "
+                f"across {len(set(failed_tools))} databases"
+            )
+    expected = {
+        "answer_model": MODEL,
+        "answer_temperature": 0.0,
+        "executor_model": MODEL,
+        "executor_temperature": 0.0,
+        "executor_visual_input": "image",
+        "embedding_model": EMBEDDING_MODEL,
+        "embedding_base_url": EMBEDDING_ENDPOINT,
+        "embedding_dim": 2048,
+        "top_k": 5,
+        "request_timeout": 180,
+        "retries": 2,
+    }
+    recorded_config = (
+        manifest.get("configuration")
+        if isinstance(manifest.get("configuration"), dict)
+        else manifest
+    )
+    mismatched = {
+        key: {"expected": value, "actual": recorded_config.get(key)}
+        for key, value in expected.items()
+        if recorded_config.get(key) != value
+    }
+    if mismatched:
+        raise RuntimeError(f"{job.name} manifest mismatch: {mismatched}")
+    answer_endpoint = str(recorded_config.get("answer_base_url") or "")
+    executor_endpoint = str(recorded_config.get("executor_base_url") or "")
+    if answer_endpoint not in INFERENCE_ENDPOINTS:
+        raise RuntimeError(
+            f"{job.name} uses unexpected answer endpoint {answer_endpoint!r}"
+        )
+    if executor_endpoint != answer_endpoint:
+        raise RuntimeError(
+            f"{job.name} executor endpoint {executor_endpoint!r} does not match "
+            f"answer endpoint {answer_endpoint!r}"
+        )
+    manifest_baseline = manifest.get("baseline")
+    if isinstance(manifest_baseline, dict):
+        manifest_baseline = manifest_baseline.get("name")
+    if manifest_baseline != job.method:
+        raise RuntimeError(
+            f"{job.name} manifest baseline is {manifest_baseline!r}; "
+            f"expected {job.method!r}"
+        )
+    if job.benchmark == "Mem-Gallery":
+        if manifest.get("all_datasets") is not True or manifest.get("questions") != 1711:
+            raise RuntimeError(f"{job.name} manifest does not describe the full Mem-Gallery run")
+    elif job.benchmark == "WorldMemArena":
+        data_dir = str(manifest.get("data_dir") or "")
+        if Path(data_dir).name != "lifelong":
+            raise RuntimeError(
+                f"{job.name} data_dir is not the lifelong split: {data_dir!r}"
+            )
+        if manifest.get("samples") != 38 or manifest.get("questions") != 2090:
+            raise RuntimeError(f"{job.name} manifest does not describe full WMA lifelong")
+    else:
+        if manifest.get("variants") != ["dyadic", "multiparty"]:
+            raise RuntimeError(
+                f"{job.name} manifest variants are {manifest.get('variants')!r}"
+            )
+        if manifest.get("questions") != 2207:
+            raise RuntimeError(f"{job.name} manifest does not describe full H2HMEM")
 
 
 def run_job(job: Job, endpoint: str, embedding_base_url: str, status: Status) -> bool:
@@ -358,6 +588,7 @@ def run_job(job: Job, endpoint: str, embedding_base_url: str, status: Status) ->
                     failed_command=command,
                 )
                 return False
+        validate_job_outputs(job, result_dir)
         log.write(f"\n=== {job.name} completed {now()} ===\n")
     status.update(job.name, status="completed", finished_at=now(), child_pid=None)
     return True
@@ -374,9 +605,25 @@ def worker(
 ) -> None:
     job = first_job
     while job is not None:
+        completed_and_valid = False
         if status.completed(job.name):
-            status.update(job.name, skipped_at=now())
-        else:
+            result_dir = OUTPUT_ROOT / job.benchmark / job.method
+            try:
+                validate_job_outputs(job, result_dir)
+            except Exception as exc:
+                status.update(
+                    job.name,
+                    status="pending",
+                    resume_validation_error=f"{type(exc).__name__}: {exc}",
+                )
+            else:
+                completed_and_valid = True
+                status.update(
+                    job.name,
+                    skipped_at=now(),
+                    resume_validation_error=None,
+                )
+        if not completed_and_valid:
             attempts = hive_attempts if job.method == "HiveMem" else baseline_attempts
             for attempt in range(1, attempts + 1):
                 wait_for_inference(endpoint, job, status)
@@ -411,7 +658,7 @@ def all_jobs() -> tuple[list[Job], list[Job]]:
         Job("hivemem_wma_lifelong", "WorldMemArena", "HiveMem"),
         Job("hivemem_h2hmem", "H2HMEM", "HiveMem"),
     ]
-    rest = [
+    ordered = [
         Job(
             f"{baseline.lower().replace('-', '_')}_{benchmark.lower().replace('-', '_')}",
             benchmark,
@@ -420,6 +667,11 @@ def all_jobs() -> tuple[list[Job], list[Job]]:
         for benchmark in ("Mem-Gallery", "H2HMEM", "WorldMemArena")
         for baseline in BASELINES
     ]
+    # Keep the fast/medium baselines flowing first.  OmniSimpleMem and MemVerse
+    # have much heavier long-tail builds, so run them after the other methods.
+    deferred_methods = {"OmniSimpleMem", "MemVerse"}
+    rest = [job for job in ordered if job.method not in deferred_methods]
+    rest.extend(job for job in ordered if job.method in deferred_methods)
     return first, rest
 
 
@@ -436,13 +688,18 @@ def main() -> None:
         default="http://127.0.0.1:8001/v1",
     )
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--resume-completed",
+        action="store_true",
+        help="Reuse jobs marked complete in the existing status file.",
+    )
     parser.add_argument("--hive-attempts", type=int, default=10)
     parser.add_argument("--baseline-attempts", type=int, default=2)
     args = parser.parse_args()
     ports = args.port or [
-        "http://127.0.0.1:28001/v1",
-        "http://127.0.0.1:28002/v1",
-        "http://127.0.0.1:28003/v1",
+        "http://127.0.0.1:8013/v1",
+        "http://127.0.0.1:8014/v1",
+        "http://127.0.0.1:8015/v1",
     ]
     if len(ports) != 3:
         parser.error("exactly three --port values are required")
@@ -458,7 +715,11 @@ def main() -> None:
             print(f"queue -> {job.name}")
         return
 
-    status = Status(ports, args.embedding_base_url)
+    status = Status(
+        ports,
+        args.embedding_base_url,
+        resume_completed=args.resume_completed,
+    )
     pending: queue.Queue[Job] = queue.Queue()
     for job in rest:
         pending.put(job)
@@ -501,6 +762,16 @@ def main() -> None:
         status.heartbeat()
         time.sleep(29)
     status.heartbeat()
+    expected = [*first, *rest]
+    failed = [
+        job.name
+        for job in expected
+        if status.data["jobs"].get(job.name, {}).get("status") != "completed"
+    ]
+    if failed:
+        raise SystemExit(
+            "full matrix incomplete; failed jobs: " + ", ".join(failed)
+        )
 
 
 if __name__ == "__main__":

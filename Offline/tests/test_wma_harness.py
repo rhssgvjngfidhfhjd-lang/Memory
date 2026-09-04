@@ -15,7 +15,10 @@ from benchmarks.wma_harness.retrieval.query_embedding_cache import (
 )
 from benchmarks.wma_harness.eval_wma import prepare_sample_jobs
 from benchmarks.wma_harness.runner.answer_client import build_retrieved_memory_context
-from benchmarks.wma_harness.runner.metrics import summarize_results
+from benchmarks.wma_harness.runner.metrics import (
+    answer_span_exact_match,
+    summarize_results,
+)
 from embedding.chunk_builder import build_wma_chunks_from_data
 from embedding.chunk_builder import iter_wma_sample_files
 from evidence_policy.evidence import WMADialogueStore, make_policy_observation
@@ -308,10 +311,35 @@ class WMAEvidenceAndMetricsTest(unittest.TestCase):
         )
         self.assertEqual(metrics["f1"], 1.0)
         self.assertEqual(metrics["em"], 1.0)
+        self.assertEqual(metrics["strict_em"], 1.0)
         self.assertNotIn("exact_match", metrics)
         self.assertEqual(metrics["retrieval_hitrate@5"], 1.0)
         self.assertEqual(metrics["by_category"]["FR"]["count"], 1)
         self.assertEqual(metrics["future_gold_evidence_questions"], 0)
+
+    def test_wma_em_matches_concise_answer_inside_explanatory_reference(self):
+        self.assertEqual(
+            answer_span_exact_match(
+                "Laura K. Simmons",
+                "Laura K. Simmons gave the XRD training.",
+            ),
+            1.0,
+        )
+        self.assertEqual(
+            answer_span_exact_match("Laura Simmons", "Laura K. Simmons gave it."),
+            0.0,
+        )
+
+        metrics = summarize_results(
+            [
+                {
+                    "system_answer": "Unknown",
+                    "original_answer": "Unknown; the detail was not provided.",
+                }
+            ]
+        )
+        self.assertEqual(metrics["em"], 1.0)
+        self.assertEqual(metrics["strict_em"], 0.0)
 
     def test_metrics_do_not_treat_future_gold_as_retrievable(self):
         metrics = summarize_results(

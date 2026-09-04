@@ -122,23 +122,43 @@ async def initialize_single_rag(working_dir):
     await rag.initialize_storages()
     return rag
 
-async def insert_chunks_from_json(rag: LightRAG, json_path: str):
+def count_jsonl_rows(json_path: str) -> int:
+    """Return the number of non-empty records already persisted in a JSONL file."""
+    if not os.path.exists(json_path):
+        return 0
+    with open(json_path, "r", encoding="utf-8") as f:
+        return sum(bool(line.strip()) for line in f)
+
+
+async def insert_chunks_from_json(
+    rag: LightRAG,
+    json_path: str,
+    *,
+    start_row: int = 0,
+):
     if not os.path.exists(json_path):
         print(f"⚠️ JSON chunk file does not exist: {json_path}")
         return
+    new_texts = []
     with open(json_path, "r", encoding="utf-8") as f:
+        row_number = 0
         for line_num, line in enumerate(f, 1):
             line = line.strip()
             if not line:
+                continue
+            row_number += 1
+            if row_number <= start_row:
                 continue
             try:
                 chunk = json.loads(line)
                 text = chunk.get("output_text")
                 if text:
-                    await rag.ainsert(text)
+                    new_texts.append(text)
             except json.JSONDecodeError as e:
                 print(f"Warning: Invalid JSON format at line {line_num}, skipping this line: {e}")
                 continue
+    if new_texts:
+        await rag.ainsert(new_texts if len(new_texts) > 1 else new_texts[0])
 
 async def initialize_rag():
     global RAG_INITIALIZED, mem_core, mem_epi, mem_sem
@@ -165,15 +185,31 @@ def save_file(file_bytes, filename, subdir):
 # ======================================================
 #       Long-term Memory Update
 # ======================================================
-async def update_long_term_memory(entry):
+async def update_long_term_memory(entry, *, insert_graph: bool = True):
+    # ``process_memory`` appends one freshly generated record to each memory
+    # JSONL.  Record the old lengths so LightRAG receives only those new rows.
+    # Replaying the complete files for every conversation turn is quadratic and
+    # spends most of a full benchmark checking thousands of duplicate documents.
+    previous_rows = {
+        CORE_JSON: count_jsonl_rows(CORE_JSON),
+        EPISODIC_JSON: count_jsonl_rows(EPISODIC_JSON),
+        SEMANTIC_JSON: count_jsonl_rows(SEMANTIC_JSON),
+    }
     try:
         bm.process_memory([entry])
     except Exception as e:
         print(f"⚠️ Error processing memory: {e}")
 
-    await insert_chunks_from_json(mem_core, CORE_JSON)
-    await insert_chunks_from_json(mem_epi, EPISODIC_JSON)
-    await insert_chunks_from_json(mem_sem, SEMANTIC_JSON)
+    if insert_graph:
+        await insert_chunks_from_json(
+            mem_core, CORE_JSON, start_row=previous_rows[CORE_JSON]
+        )
+        await insert_chunks_from_json(
+            mem_epi, EPISODIC_JSON, start_row=previous_rows[EPISODIC_JSON]
+        )
+        await insert_chunks_from_json(
+            mem_sem, SEMANTIC_JSON, start_row=previous_rows[SEMANTIC_JSON]
+        )
 
 # ======================================================
 #       Parametric Memory / RAG Query

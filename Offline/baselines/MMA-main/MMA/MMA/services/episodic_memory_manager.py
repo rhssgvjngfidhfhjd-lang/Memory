@@ -189,21 +189,17 @@ class EpisodicMemoryManager:
             episodic_memory.id = generate_unique_short_id(self.session_maker, EpisodicEvent, "ep")
 
         from mma.services.embedding_utils import prepare_embeddings_from_config
-        new_embeds = prepare_embeddings_from_config(
-            embedding_config=getattr(episodic_memory, "embedding_config", None),
-            texts={
+        new_embeds, _ = prepare_embeddings_from_config(
+            getattr(episodic_memory, "embedding_config", None),
+            {
                 "summary": getattr(episodic_memory, "summary", None),
                 "details": getattr(episodic_memory, "details", None),
             },
-            existing_embeddings={
-                "summary_embedding": getattr(episodic_memory, "summary_embedding", None),
-                "details_embedding": getattr(episodic_memory, "details_embedding", None),
-            },
         )
-        if new_embeds.get("summary_embedding") is not None and episodic_memory.summary_embedding is None:
-            episodic_memory.summary_embedding = new_embeds["summary_embedding"]
-        if new_embeds.get("details_embedding") is not None and episodic_memory.details_embedding is None:
-            episodic_memory.details_embedding = new_embeds["details_embedding"]
+        if new_embeds.get("summary") is not None and episodic_memory.summary_embedding is None:
+            episodic_memory.summary_embedding = new_embeds["summary"]
+        if new_embeds.get("details") is not None and episodic_memory.details_embedding is None:
+            episodic_memory.details_embedding = new_embeds["details"]
 
         required_fields = ["event_type", "summary"]
         episodic_memory_dict = episodic_memory.model_dump()
@@ -246,21 +242,17 @@ class EpisodicMemoryManager:
                     i.id = generate_unique_short_id(self.session_maker, EpisodicEvent, "ep")
 
                 from mma.services.embedding_utils import prepare_embeddings_from_config
-                new_embeds = prepare_embeddings_from_config(
-                    embedding_config=getattr(i, "embedding_config", None),
-                    texts={
+                new_embeds, _ = prepare_embeddings_from_config(
+                    getattr(i, "embedding_config", None),
+                    {
                         "summary": getattr(i, "summary", None),
                         "details": getattr(i, "details", None),
                     },
-                    existing_embeddings={
-                        "summary_embedding": getattr(i, "summary_embedding", None),
-                        "details_embedding": getattr(i, "details_embedding", None),
-                    },
                 )
-                if new_embeds.get("summary_embedding") is not None and getattr(i, "summary_embedding", None) is None:
-                    i.summary_embedding = new_embeds["summary_embedding"]
-                if new_embeds.get("details_embedding") is not None and getattr(i, "details_embedding", None) is None:
-                    i.details_embedding = new_embeds["details_embedding"]
+                if new_embeds.get("summary") is not None and getattr(i, "summary_embedding", None) is None:
+                    i.summary_embedding = new_embeds["summary"]
+                if new_embeds.get("details") is not None and getattr(i, "details_embedding", None) is None:
+                    i.details_embedding = new_embeds["details"]
 
                 d = i.model_dump()
                 for field in ["event_type", "summary"]:

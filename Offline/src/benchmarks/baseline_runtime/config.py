@@ -42,7 +42,18 @@ def resolve_source_root(entry: dict[str, Any]) -> Path:
 
 def resolve_python(entry: dict[str, Any]) -> str:
     env_name = str(entry.get("python_env") or "")
-    return os.getenv(env_name) or os.getenv("BASELINE_PYTHON") or os.sys.executable
+    configured = os.getenv(env_name) or os.getenv("BASELINE_PYTHON")
+    if configured:
+        return configured
+    default = str(entry.get("python_default") or "")
+    if default:
+        path = Path(default)
+        resolved = path if path.is_absolute() else OFFLINE_ROOT / path
+        if resolved.is_file():
+            # Do not resolve the venv's ``bin/python`` symlink: resolving it to
+            # the base interpreter discards the venv site-packages at launch.
+            return str(resolved.absolute())
+    return os.sys.executable
 
 
 def runtime_config(overrides: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -53,11 +64,19 @@ def runtime_config(overrides: dict[str, Any] | None = None) -> dict[str, Any]:
     config.setdefault("embedding_base_url", "")
     config.setdefault("embedding_api_key_env", "EMBEDDING_API_KEY")
     config.setdefault("baseline_worker_timeout", 180)
+    config.setdefault("baseline_ingest_timeout", 1800)
+    config.setdefault("baseline_end_session_timeout", 1800)
     config.setdefault("baseline_strict_config", True)
     missing = [key for key in REQUIRED_RUNTIME_KEYS if config.get(key) in (None, "")]
     if missing:
         raise ValueError(f"missing baseline runtime config: {', '.join(missing)}")
-    for key in ("embedding_dim", "top_k", "baseline_worker_timeout"):
+    for key in (
+        "embedding_dim",
+        "top_k",
+        "baseline_worker_timeout",
+        "baseline_ingest_timeout",
+        "baseline_end_session_timeout",
+    ):
         if float(config[key]) <= 0:
             raise ValueError(f"{key} must be greater than zero")
     return config

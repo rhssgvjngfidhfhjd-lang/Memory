@@ -31,6 +31,14 @@ class BaselineProcess(BaselineAdapter):
         self.entry = dict(entry)
         self.config = dict(config)
         self.timeout = float(config.get("baseline_worker_timeout") or 180)
+        # Native memory writes can perform method-owned consolidation or LLM
+        # work before replying over the local JSONL protocol.  Keep that local
+        # watchdog separate from the shared HTTP request timeout so a valid,
+        # long ingest is not mistaken for a dead worker.
+        self.ingest_timeout = float(config.get("baseline_ingest_timeout") or 1800)
+        self.end_session_timeout = float(
+            config.get("baseline_end_session_timeout") or 1800
+        )
         env = os.environ.copy()
         source_path = str(OFFLINE_ROOT / "src")
         env["PYTHONPATH"] = os.pathsep.join(
@@ -78,7 +86,11 @@ class BaselineProcess(BaselineAdapter):
             self._process.stdin.write(json.dumps(message, ensure_ascii=True) + "\n")
             self._process.stdin.flush()
             try:
-                line = self._responses.get(timeout=self.timeout)
+                timeout = {
+                    "ingest": self.ingest_timeout,
+                    "end_session": self.end_session_timeout,
+                }.get(operation, self.timeout)
+                line = self._responses.get(timeout=timeout)
             except queue.Empty as exc:
                 self._terminate()
                 raise TimeoutError(

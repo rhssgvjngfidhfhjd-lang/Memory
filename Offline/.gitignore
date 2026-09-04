@@ -3,6 +3,7 @@ __pycache__/
 *.egg-info/
 .pytest_cache/
 .venv/
+.venvs/
 outputs/
 archive/data/
 archive/outputs_old/

@@ -142,7 +142,14 @@ class OmniMemoryOrchestrator:
         )
 
         # Initialize knowledge graph + graph retriever
-        self.knowledge_graph = KnowledgeGraph()
+        # Keep the knowledge graph in the same sample-owned data directory as
+        # the MAU and vector stores.  The default KnowledgeGraph path is
+        # process-CWD relative and caused unrelated benchmark samples to share
+        # one ever-growing graph.
+        self.knowledge_graph = KnowledgeGraph(
+            storage_path=str(Path(self.config.storage.base_dir) / "knowledge_graph"),
+            config=self.config,
+        )
         self.entity_extractor = EntityExtractor(self.config)
         # Pass an actual EntityExtractor into GraphRetriever (previously passed vector_store by mistake)
         self.graph_retriever = GraphRetriever(

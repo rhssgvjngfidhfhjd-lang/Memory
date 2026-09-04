@@ -16,6 +16,9 @@
   "executor_max_tokens": 512,
   "executor_visual_input": "image",
   "executor_concurrency": 16,
+  "sample_concurrency": 4,
+  "answer_concurrency": 16,
+  "checkpoint_every": 10,
   "cost_mb_input_price": null,
   "cost_mb_output_price": null,
   "cost_qa_input_price": null,
@@ -26,7 +29,9 @@
   "embedding_dim": 2048,
   "embedding_api_key_env": "EMBEDDING_API_KEY",
 
-  "baseline_worker_timeout": 180,
+  "baseline_worker_timeout": 900,
+  "baseline_ingest_timeout": 1800,
+  "baseline_end_session_timeout": 7200,
   "baseline_strict_config": true,
 
   "data_dir": "../Mem-Gallery/benchmark/data",

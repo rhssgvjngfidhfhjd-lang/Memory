@@ -492,16 +492,24 @@ class TemporaryMessageAccumulator:
                 
                 # Add each image
                 for file_ref in file_refs:
-                    if isinstance(file_ref, str):
-                        from .app_utils import encode_image
-                        message_parts.append({
-                            'type': 'image_url',
-                            'image_url': {'url': f"data:image/png;base64,{encode_image(file_ref)}", 'detail': 'low'}
-                        })
-                    else:
+                    if hasattr(file_ref, 'uri'):
                         message_parts.append({
                             'type': 'google_cloud_file_uri',
                             'google_cloud_file_uri': file_ref.uri
+                        })
+                    else:
+                        # OpenAI-compatible models retain local image paths.
+                        # Register the path so openai_client can resolve and
+                        # encode it through the native file manager.
+                        file_metadata = (
+                            file_ref
+                            if hasattr(file_ref, 'id')
+                            else self.client.save_file(str(file_ref))
+                        )
+                        message_parts.append({
+                            'type': 'image_url',
+                            'image_id': file_metadata.id,
+                            'detail': 'low',
                         })
         
         # Add voice transcription if any
