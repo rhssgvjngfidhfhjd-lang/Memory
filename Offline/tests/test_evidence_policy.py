@@ -4,6 +4,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import MagicMock, patch
 
 import numpy as np
 import torch
@@ -28,13 +29,49 @@ from evidence_policy.rollout import (
 from evidence_policy.vp_store import VPArtifactIndex
 from hive_mem.mau import MAU
 from hive_mem.retriever import MemoryHit
-from scripts.evidence_policy import validation_checkpoints
+from scripts.evidence_policy import (
+    initial_validation_signature,
+    prepare_initial_validation,
+    resume_configs_match,
+    rollout_with_endpoint_recovery,
+    validation_checkpoints,
+)
 
 
 EMBEDDING_DIM = 8
 
 
 class ValidationScheduleTest(unittest.TestCase):
+    def test_resume_allows_only_output_directory_to_change(self):
+        stored = {"seed": 42, "output_dir": "/old", "ppo": {"epochs": 6}}
+        current = {"seed": 42, "output_dir": "/new", "ppo": {"epochs": 6}}
+
+        self.assertTrue(resume_configs_match(stored, current))
+        current["seed"] = 43
+        self.assertFalse(resume_configs_match(stored, current))
+
+    def test_transient_endpoint_error_is_retried_without_zero_reward(self):
+        failed = MagicMock(error="Connection refused", reward=0.0)
+        successful = MagicMock(error="", reward=0.75)
+        env = MagicMock()
+        env.rollout.side_effect = [failed, successful]
+        episode = MagicMock(query_id="q1")
+
+        with patch("scripts.evidence_policy.time.sleep") as sleep:
+            result = rollout_with_endpoint_recovery(
+                env,
+                episode,
+                EvidenceStrategy.SUMMARY,
+                policy=None,
+                deterministic=True,
+                attempts=2,
+                delay_seconds=0.01,
+            )
+
+        self.assertIs(result, successful)
+        self.assertEqual(env.rollout.call_count, 2)
+        sleep.assert_called_once_with(0.01)
+
     def test_half_epoch_aligns_to_completed_rollout_batch(self):
         self.assertEqual(
             validation_checkpoints(
@@ -50,6 +87,58 @@ class ValidationScheduleTest(unittest.TestCase):
             ),
             {},
         )
+
+    def test_initial_validation_is_persisted_and_reused(self):
+        config = {"seed": 42, "ppo": {"validation_limit": 20}}
+        event = {
+            "phase": "initial",
+            "update_step": 0,
+            "train_question_count": 0,
+            "metrics": {"count": 20, "mean_reward": 0.5},
+            "rollouts": "initial_rollouts.jsonl",
+        }
+        trainer = MagicMock()
+        trainer.update_steps = 0
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            with patch(
+                "scripts.evidence_policy.run_training_validation",
+                return_value=dict(event),
+            ) as run_validation:
+                first = prepare_initial_validation(
+                    config,
+                    MagicMock(),
+                    MagicMock(),
+                    {},
+                    MagicMock(),
+                    trainer,
+                    output_dir=output,
+                    device=torch.device("cpu"),
+                    enabled=True,
+                )
+            metrics_path = output / "validation" / "initial_metrics.json"
+            self.assertTrue(metrics_path.is_file())
+            self.assertEqual(first["run_signature"], initial_validation_signature(config, "cpu"))
+            self.assertEqual(first["update_step"], 0)
+            run_validation.assert_called_once()
+            trainer.save_checkpoint.assert_called_once()
+
+            with patch(
+                "scripts.evidence_policy.run_training_validation",
+                side_effect=AssertionError("baseline must be reused"),
+            ):
+                second = prepare_initial_validation(
+                    config,
+                    MagicMock(),
+                    MagicMock(),
+                    {},
+                    MagicMock(),
+                    trainer,
+                    output_dir=output,
+                    device=torch.device("cpu"),
+                    enabled=True,
+                )
+            self.assertEqual(second, first)
 
 
 def make_hit(

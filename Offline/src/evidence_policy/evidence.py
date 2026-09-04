@@ -228,10 +228,18 @@ class WMADialogueStore(DialogueStore):
             sample_dir = self._paths[dataset].parent
         except KeyError as exc:
             raise FileNotFoundError(f"Missing WorldMemArena sample: {dataset}") from exc
-        candidate = sample_dir / str(raw_path).replace("\\", "/")
-        if not candidate.exists():
-            raise FileNotFoundError(f"Cannot map stored image path {raw_path!r} to {candidate}")
-        return candidate
+        normalized = str(raw_path).replace("\\", "/")
+        candidates = []
+        if not Path(normalized).is_absolute():
+            candidates.append(self.data_dir / normalized)
+        candidates.append(sample_dir / normalized)
+        for candidate in candidates:
+            if candidate.exists():
+                return candidate
+        raise FileNotFoundError(
+            f"Cannot map stored image path {raw_path!r}; tried "
+            + ", ".join(str(candidate) for candidate in candidates)
+        )
 
 
 class EvidenceChainBuilder:
@@ -319,7 +327,7 @@ class EvidenceChainBuilder:
             image_ids = self._values(metadata, "image_ids")
             if EvidenceType.IMAGE in action.selected:
                 resolved_paths = [
-                    self.dialogue_store.resolve_image_path(dataset, raw_path)
+                    self._resolve_image_path(dataset, raw_path)
                     for raw_path in image_paths
                 ]
                 images.extend(
@@ -370,6 +378,21 @@ class EvidenceChainBuilder:
         except FileNotFoundError:
             return ()
         return self.vp_index.primitives_for(resolved)
+
+    def _resolve_image_path(self, dataset: str, raw_path: str) -> Path:
+        try:
+            return self.dialogue_store.resolve_image_path(dataset, raw_path)
+        except FileNotFoundError as original_error:
+            if self.vp_index is not None:
+                record = self.vp_index.record_for(raw_path)
+                if record is not None:
+                    try:
+                        return self.dialogue_store.resolve_image_path(
+                            dataset, record.relative_path
+                        )
+                    except FileNotFoundError:
+                        pass
+            raise original_error
 
     @staticmethod
     def _values(metadata: dict[str, Any], key: str) -> list[str]:

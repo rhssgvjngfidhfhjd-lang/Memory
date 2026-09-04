@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import random
 import sys
+import time
 from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence
@@ -51,6 +53,23 @@ from evidence_policy.rollout import (  # noqa: E402
 from evidence_policy.split_manifest import SplitManifestIndex  # noqa: E402
 from evidence_policy.vp_store import VPArtifactIndex  # noqa: E402
 from hive_mem.retriever import SimpleMemoryIndex  # noqa: E402
+
+
+ROLLOUT_RETRY_ATTEMPTS = 360
+ROLLOUT_RETRY_DELAY_SECONDS = 5.0
+TRANSIENT_ENDPOINT_ERROR_MARKERS = (
+    "connection refused",
+    "failed to establish a new connection",
+    "max retries exceeded",
+    "connection reset",
+    "connection aborted",
+    "read timed out",
+    "connect timeout",
+    "remote end closed connection",
+    "502 bad gateway",
+    "503 service unavailable",
+    "504 gateway timeout",
+)
 
 
 def main() -> None:
@@ -117,7 +136,7 @@ def load_config(path: Path) -> dict[str, Any]:
     if config.get("split_manifest"):
         value = Path(config["split_manifest"])
         config["split_manifest"] = str(
-            value if value.is_absolute() else (ROOT / value).resolve()
+            value if value.is_absolute() else (path.parent / value).resolve()
         )
     evidence = config.setdefault("evidence", {})
     if evidence.get("vp_run_dir"):
@@ -301,9 +320,10 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
     train_question_count = 0
     if args.resume:
         state = trainer.load_checkpoint(args.resume)
-        if state.get("config") != config:
+        if not resume_configs_match(state.get("config"), config):
             raise ValueError(
-                "Checkpoint configuration does not match the current evidence-policy config"
+                "Checkpoint configuration does not match the current evidence-policy "
+                "config (only output_dir may differ for a clean recovery run)"
             )
         start_epoch = int(state["epoch"]) + 1
         train_question_count = int(
@@ -322,6 +342,20 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
     if epochs <= 0:
         raise ValueError("epochs must be positive")
     output_dir = Path(config["output_dir"])
+    initial_validation = prepare_initial_validation(
+        config,
+        env,
+        query_cache,
+        profiles,
+        policy,
+        trainer,
+        output_dir=output_dir,
+        device=device,
+        enabled=(
+            start_epoch == 0
+            and bool(config["ppo"].get("validation_at_start", False))
+        ),
+    )
     ppo_metrics_path = output_dir / "ppo_metrics.jsonl"
     if start_epoch == 0 and ppo_metrics_path.exists():
         ppo_metrics_path.unlink()
@@ -341,12 +375,22 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
         updates: list[dict[str, float]] = []
         rewards: list[float] = []
         train_rollouts: list[dict[str, Any]] = []
-        validations: list[dict[str, Any]] = []
+        validations: list[dict[str, Any]] = (
+            [initial_validation]
+            if epoch == 0 and initial_validation is not None
+            else []
+        )
         failed_rollouts = 0
         for episode_index, episode in enumerate(episodes, start=1):
             train_question_count += 1
             with torch.no_grad():
-                rollout = env.rollout(episode, EvidenceStrategy.PPO, policy=policy)
+                rollout = rollout_with_endpoint_recovery(
+                    env,
+                    episode,
+                    EvidenceStrategy.PPO,
+                    policy=policy,
+                    deterministic=False,
+                )
             step = rollout.policy_step
             assert step is not None
             train_rollouts.append(rollout_record(rollout, episode))
@@ -501,11 +545,12 @@ def run_training_validation(
     finally:
         if was_training:
             policy.train()
-    filename = (
-        f"epoch_{epoch:03d}_rollouts.jsonl"
-        if phase == "end"
-        else f"epoch_{epoch:03d}_{phase}_rollouts.jsonl"
-    )
+    if phase == "initial":
+        filename = "initial_rollouts.jsonl"
+    elif phase == "end":
+        filename = f"epoch_{epoch:03d}_rollouts.jsonl"
+    else:
+        filename = f"epoch_{epoch:03d}_{phase}_rollouts.jsonl"
     trace = output_dir / "validation" / filename
     write_jsonl(trace, validation["rollouts"])
     return {
@@ -515,6 +560,92 @@ def run_training_validation(
         "metrics": validation["metrics"],
         "rollouts": str(trace),
     }
+
+
+def prepare_initial_validation(
+    config: dict[str, Any],
+    env: EvidenceSelectionEnv,
+    query_cache: QueryEmbeddingCache,
+    profiles: dict[str, str],
+    policy: EvidenceSelectionPolicy,
+    trainer: PPOTrainer,
+    *,
+    output_dir: Path,
+    device: torch.device,
+    enabled: bool,
+) -> dict[str, Any] | None:
+    """Run or recover the real pre-update validation point.
+
+    The event is persisted before the first training rollout so retries cannot
+    lose or silently change the step-zero baseline.
+    """
+    if not enabled:
+        return None
+    metrics_path = output_dir / "validation" / "initial_metrics.json"
+    checkpoint_path = output_dir / "checkpoints" / "initial.pt"
+    signature = initial_validation_signature(config, device)
+    if metrics_path.is_file():
+        event = json.loads(metrics_path.read_text(encoding="utf-8"))
+        if str(event.get("run_signature", "")) != signature:
+            raise ValueError(
+                "Stored initial validation does not match the current config/device: "
+                f"{metrics_path}"
+            )
+        if (
+            str(event.get("phase", "")) != "initial"
+            or int(event.get("update_step", -1)) != 0
+            or int(event.get("train_question_count", -1)) != 0
+        ):
+            raise ValueError(f"Invalid initial validation event: {metrics_path}")
+        if not checkpoint_path.is_file():
+            if trainer.update_steps != 0:
+                raise ValueError("Cannot recover an initial checkpoint after PPO updates")
+            trainer.save_checkpoint(
+                checkpoint_path,
+                config=config,
+                epoch=-1,
+                extra={"initial_validation": event, "device": str(device)},
+            )
+        return event
+
+    if trainer.update_steps != 0:
+        raise ValueError("Initial validation requires an untrained PPO policy")
+    event = run_training_validation(
+        config,
+        env,
+        query_cache,
+        profiles,
+        policy,
+        output_dir=output_dir,
+        epoch=0,
+        phase="initial",
+        update_step=0,
+        train_question_count=0,
+    )
+    event.update(
+        {
+            "seed": int(config["seed"]),
+            "device": str(device),
+            "run_signature": signature,
+        }
+    )
+    save_json(metrics_path, event)
+    trainer.save_checkpoint(
+        checkpoint_path,
+        config=config,
+        epoch=-1,
+        extra={"initial_validation": event, "device": str(device)},
+    )
+    return event
+
+
+def initial_validation_signature(
+    config: dict[str, Any], device: torch.device | str
+) -> str:
+    payload = {"config": config, "device": str(device)}
+    return hashlib.sha256(
+        json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
+    ).hexdigest()
 
 
 def evaluate_command(config: dict[str, Any], args: argparse.Namespace) -> None:
@@ -571,7 +702,8 @@ def evaluate(
         if limit and index >= limit:
             break
         with torch.no_grad():
-            rollout = env.rollout(
+            rollout = rollout_with_endpoint_recovery(
+                env,
                 episode,
                 strategy,
                 policy=policy,
@@ -611,6 +743,62 @@ def evaluate(
     metrics["cached_rollouts"] = sum(bool(row["cached"]) for row in rollouts)
     metrics["errors"] = sum(bool(row["error"]) for row in rollouts)
     return {"metrics": metrics, "rollouts": rollouts}
+
+
+def resume_configs_match(stored: Any, current: dict[str, Any]) -> bool:
+    if not isinstance(stored, dict):
+        return False
+    stored_copy = dict(stored)
+    current_copy = dict(current)
+    stored_copy.pop("output_dir", None)
+    current_copy.pop("output_dir", None)
+    return stored_copy == current_copy
+
+
+def is_transient_endpoint_error(error: str) -> bool:
+    normalized = str(error).lower()
+    return any(marker in normalized for marker in TRANSIENT_ENDPOINT_ERROR_MARKERS)
+
+
+def rollout_with_endpoint_recovery(
+    env: EvidenceSelectionEnv,
+    episode: EvidenceEpisode,
+    strategy: EvidenceStrategy,
+    *,
+    policy: EvidenceSelectionPolicy | None,
+    deterministic: bool,
+    attempts: int = ROLLOUT_RETRY_ATTEMPTS,
+    delay_seconds: float = ROLLOUT_RETRY_DELAY_SECONDS,
+) -> EvidenceRollout:
+    """Pause on endpoint outages instead of turning them into zero rewards."""
+    if attempts <= 0:
+        raise ValueError("attempts must be positive")
+    for attempt in range(1, attempts + 1):
+        rollout = env.rollout(
+            episode,
+            strategy,
+            policy=policy,
+            deterministic=deterministic,
+        )
+        if not rollout.error:
+            return rollout
+        if not is_transient_endpoint_error(rollout.error):
+            raise RuntimeError(
+                f"Rollout failed for {episode.query_id}: {rollout.error}"
+            )
+        if attempt == attempts:
+            break
+        print(
+            f"Endpoint unavailable for {episode.query_id}; "
+            f"pausing {delay_seconds:g}s before retry {attempt + 1}/{attempts}",
+            file=sys.stderr,
+            flush=True,
+        )
+        time.sleep(delay_seconds)
+    raise RuntimeError(
+        f"Endpoint remained unavailable after {attempts} attempts for "
+        f"{episode.query_id}: {rollout.error}"
+    )
 
 
 def iter_episodes(

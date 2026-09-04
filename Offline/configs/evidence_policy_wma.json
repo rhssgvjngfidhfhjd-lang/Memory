@@ -1,10 +1,10 @@
 {
   "benchmark": "wma",
   "data_source": "worldmemarena_lifelong",
-  "split_manifest": "",
+  "split_manifest": "multimodal_split_manifest.json",
   "seed": 42,
   "data_dir": "../WorldMemArena/WorldMemArena/lifelong",
-  "memory_bank": "outputs/WorldMemArena/HiveMem/memory",
+  "memory_bank": "outputs/WMA_PPO/memory",
   "query_cache": "data/wma_qwen3_vl_embedding_2b/lifelong_query_embeddings",
   "output_dir": "outputs/evidence_policy_wma_lifelong_ppo",
   "top_k": 5,
@@ -55,6 +55,7 @@
     "gamma": 1.0,
     "gae_lambda": 1.0,
     "epochs": 6,
+    "validation_at_start": true,
     "validation_interval_fraction": 0.5,
     "validation_limit": 20
   },

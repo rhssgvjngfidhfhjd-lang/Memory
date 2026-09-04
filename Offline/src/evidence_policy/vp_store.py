@@ -123,6 +123,17 @@ class VPArtifactIndex:
             return self._path_cache[cache_key]
         normalized = _normalize_path(raw_path)
         basename = Path(normalized).name.lower()
+        blob_sha256 = (
+            basename
+            if len(basename) == 64
+            and all(character in "0123456789abcdef" for character in basename)
+            else ""
+        )
+        if blob_sha256:
+            record = self._by_sha256.get(blob_sha256)
+            if record is not None:
+                self._path_cache[cache_key] = record
+                return record
         candidates = self._by_basename.get(basename, ())
         suffix_matches = [
             row

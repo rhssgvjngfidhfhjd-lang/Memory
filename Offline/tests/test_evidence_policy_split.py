@@ -109,7 +109,7 @@ class FullLocalSplitIntegrationTest(unittest.TestCase):
             split: sum(row.split == split for row in rows)
             for split in ("train", "val", "test")
         }
-        self.assertEqual(counts, {"train": 3766, "val": 562, "test": 1075})
+        self.assertEqual(counts, {"train": 3268, "val": 1060, "test": 1075})
 
 
 if __name__ == "__main__":

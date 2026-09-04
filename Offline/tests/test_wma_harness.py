@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -18,7 +19,14 @@ from benchmarks.wma_harness.runner.answer_client import build_retrieved_memory_c
 from benchmarks.wma_harness.runner.metrics import summarize_results
 from embedding.chunk_builder import build_wma_chunks_from_data
 from embedding.chunk_builder import iter_wma_sample_files
-from evidence_policy.evidence import WMADialogueStore, make_policy_observation
+from evidence_policy.evidence import (
+    EvidenceChainBuilder,
+    EvidenceType,
+    MAUEvidenceAction,
+    WMADialogueStore,
+    make_policy_observation,
+)
+from evidence_policy.vp_store import VPArtifactIndex
 from hive_mem.mau import MAU, MAUBank
 from hive_mem.retriever import GraphExpandedIndex, MemoryHit, SimpleMemoryIndex
 
@@ -263,6 +271,103 @@ class WMAEvidenceAndMetricsTest(unittest.TestCase):
                 "sample_01", "images/sample_01/sample_01_img_001.png"
             )
         self.assertEqual(resolved, image_path)
+
+    def test_dialogue_store_resolves_vp_path_relative_to_data_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sample_path = root / "agent" / "demo" / "sample_01.json"
+            sample_path.parent.mkdir(parents=True)
+            sample_path.write_text(json.dumps(sample_payload()), encoding="utf-8")
+            image_path = sample_path.parent / "images" / "sample_01" / "sample_01_img_001.png"
+            image_path.parent.mkdir(parents=True)
+            image_path.touch()
+            resolved = WMADialogueStore(root).resolve_image_path(
+                "sample_01",
+                "agent/demo/images/sample_01/sample_01_img_001.png",
+            )
+        self.assertEqual(resolved, image_path)
+
+    def test_evidence_builder_maps_server_blob_to_local_image_and_vp(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sample_path = root / "agent" / "demo" / "sample_01.json"
+            sample_path.parent.mkdir(parents=True)
+            sample_path.write_text(json.dumps(sample_payload()), encoding="utf-8")
+            image_path = sample_path.parent / "images" / "sample_01" / "sample_01_img_001.png"
+            image_path.parent.mkdir(parents=True)
+            image_path.write_bytes(b"source image")
+            image_sha = hashlib.sha256(image_path.read_bytes()).hexdigest()
+
+            vp_run = root / "vp_run"
+            crop_path = vp_run / "items" / "img_1" / "vp_0001.png"
+            crop_path.parent.mkdir(parents=True)
+            crop_path.write_bytes(b"crop")
+            (vp_run / "exports").mkdir()
+            (vp_run / "run.json").write_text(
+                json.dumps({"schema_version": "1.0", "run_id": "test"}),
+                encoding="utf-8",
+            )
+            (vp_run / "exports" / "images.jsonl").write_text(
+                json.dumps(
+                    {
+                        "schema_version": "1.0",
+                        "run_id": "test",
+                        "image_id": "img_1",
+                        "source": {
+                            "dataset": "WorldMemArena",
+                            "relative_path": (
+                                "agent/demo/images/sample_01/"
+                                "sample_01_img_001.png"
+                            ),
+                            "sha256": image_sha,
+                        },
+                        "status": "success",
+                        "primitives": [
+                            {
+                                "vp_id": "img_1_vp_0001",
+                                "label": "cup",
+                                "bbox_norm": [1, 2, 3, 4],
+                                "crop_path": "items/img_1/vp_0001.png",
+                            }
+                        ],
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            hit = MemoryHit(
+                item=MAU(
+                    id="m1",
+                    summary="visual memory",
+                    embedding=np.asarray([1.0, 0.0], dtype=np.float32),
+                    metadata={
+                        "image_paths": [f"/server/hf/blobs/{image_sha}"],
+                        "image_ids": ["sample_01_img_001"],
+                    },
+                ),
+                score=1.0,
+                rank=1,
+            )
+            builder = EvidenceChainBuilder(
+                WMADialogueStore(root), vp_index=VPArtifactIndex(vp_run),
+                visual_categories={"VFR"},
+            )
+            items = builder.build(
+                "sample_01",
+                "VFR",
+                [hit],
+                [
+                    MAUEvidenceAction(
+                        "m1", frozenset({EvidenceType.IMAGE, EvidenceType.VP})
+                    )
+                ],
+            )
+
+        self.assertEqual(
+            [row["kind"] for row in items[0]["images"]], ["image", "vp"]
+        )
+        self.assertEqual(Path(items[0]["images"][0]["path"]), image_path)
+        self.assertEqual(Path(items[0]["images"][1]["path"]), crop_path)
 
     def test_nonvisual_context_redacts_wma_image_id(self):
         text, images = build_retrieved_memory_context(

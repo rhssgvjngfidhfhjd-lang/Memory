@@ -7,7 +7,12 @@ from pathlib import Path
 
 import torch
 
-from scripts.upload_evidence_policy_wandb import load_run_data
+from scripts.upload_evidence_policy_wandb import (
+    ALL_EVIDENCE_MASKS,
+    evidence_level_distribution,
+    load_run_data,
+    mask_distribution,
+)
 
 
 def write_jsonl(path: Path, rows: list[dict]) -> None:
@@ -18,6 +23,106 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 class WandbUploadTest(unittest.TestCase):
+    def test_loads_step_zero_and_train_mask_ratios(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_jsonl(
+                root / "train.log",
+                [
+                    {
+                        "epoch": 0,
+                        "update_step": 2,
+                        "validations": [
+                            {
+                                "phase": "end",
+                                "update_step": 2,
+                                "metrics": {
+                                    "mean_reward": 0.75,
+                                    "evidence_actions": {"mask:11000": 4},
+                                },
+                            }
+                        ],
+                    }
+                ],
+            )
+            write_jsonl(
+                root / "ppo_metrics.jsonl",
+                [{"epoch": 0, "update_step": 2, "ppo_kl": 0.01}],
+            )
+            initial = {
+                "epoch": 0,
+                "phase": "initial",
+                "update_step": 0,
+                "train_question_count": 0,
+                "metrics": {
+                    "mean_reward": 0.25,
+                    "evidence_actions": {
+                        "mask:00000": 3,
+                        "mask:11000": 1,
+                    },
+                },
+            }
+            (root / "validation").mkdir()
+            (root / "validation" / "initial_metrics.json").write_text(
+                json.dumps(initial), encoding="utf-8"
+            )
+            write_jsonl(
+                root / "train" / "epoch_000_rollouts.jsonl",
+                [
+                    {
+                        "actions": [
+                            {"mask": "00000"},
+                            {"mask": "00011"},
+                            {"mask": "00011"},
+                        ]
+                    }
+                ],
+            )
+
+            data = load_run_data(root)
+
+        self.assertEqual([row["update_step"] for row in data.validation_rows], [0, 2])
+        self.assertEqual(data.validation_rows[0]["phase"], "initial")
+        counts, ratios, total = mask_distribution(
+            data.validation_rows[0]["evidence_actions"]
+        )
+        self.assertEqual(total, 4)
+        self.assertEqual(counts["00000"], 3)
+        self.assertEqual(ratios["00000"], 0.75)
+        self.assertEqual(len(ratios), 32)
+        self.assertAlmostEqual(sum(ratios.values()), 1.0)
+        train_counts, train_ratios, train_total = mask_distribution(
+            data.train_action_rows[0]["evidence_actions"]
+        )
+        self.assertEqual(train_total, 3)
+        self.assertEqual(train_counts["00011"], 2)
+        self.assertAlmostEqual(train_ratios["00011"], 2 / 3)
+        self.assertEqual(set(train_ratios), set(ALL_EVIDENCE_MASKS))
+
+    def test_evidence_level_ratios_are_derived_from_independent_mask_bits(self) -> None:
+        counts, ratios, total = evidence_level_distribution(
+            {
+                "mask:00000": 2,
+                "mask:01000": 3,
+                "mask:00011": 5,
+            }
+        )
+
+        self.assertEqual(total, 10)
+        self.assertEqual(
+            counts,
+            {
+                "summary": 0,
+                "dialogue": 3,
+                "caption": 0,
+                "image": 5,
+                "vp": 5,
+            },
+        )
+        self.assertEqual(ratios["dialogue"], 0.3)
+        self.assertEqual(ratios["image"], 0.5)
+        self.assertEqual(ratios["vp"], 0.5)
+
     def test_recovers_epoch_summaries_from_checkpoints_without_train_log(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

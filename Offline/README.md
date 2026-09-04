@@ -143,8 +143,8 @@ original QA indices remain unchanged. Override the policy with
 
 The PPO evidence policy can use a conversation-level multimodal split manifest
 instead of the legacy per-config `split` lists. The checked manifest contains
-57/8/17 conversations and 3,766/562/1,075 questions for train/validation/test
-(approximately 70%/10%/20%). `validation` in the training CLI maps to `val` in
+49/16/17 conversations and 3,268/1,060/1,075 questions for train/validation/test
+(approximately 60%/20%/20%). `validation` in the training CLI maps to `val` in
 the manifest. A whole conversation always remains in one split.
 
 Validate an existing Mem-Gallery or WorldMemArena evidence-policy setup without
@@ -153,7 +153,6 @@ rewriting its config:
 ```bash
 python scripts/evidence_policy.py \
   --config configs/evidence_policy.json \
-  --split-manifest /path/to/multimodal_split_manifest.json \
   prepare-split
 ```
 
@@ -161,9 +160,9 @@ Train or evaluate with the same manifest:
 
 ```bash
 python scripts/evidence_policy.py --config configs/evidence_policy.json \
-  --split-manifest /path/to/multimodal_split_manifest.json train
+  train
 python scripts/evidence_policy.py --config configs/evidence_policy.json \
-  --split-manifest /path/to/multimodal_split_manifest.json eval \
+  eval \
   --strategy ppo --split validation --checkpoint <checkpoint.pt>
 ```
 
@@ -171,7 +170,7 @@ Materialize read-only JSONL indexes directly from all three source repositories:
 
 ```bash
 python -m evidence_policy.episode_sources \
-  --manifest /path/to/multimodal_split_manifest.json \
+  --manifest configs/multimodal_split_manifest.json \
   --workspace-root .. \
   --output outputs/evidence_policy_splits
 ```

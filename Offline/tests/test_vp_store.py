@@ -53,9 +53,14 @@ class VPArtifactIndexTest(unittest.TestCase):
             copy = root / "renamed.jpg"
             copy.write_bytes(b"source")
             by_hash = index.primitives_for(copy)
+            by_blob_sha = index.primitives_for(
+                "/home/user/.cache/huggingface/hub/datasets--demo/blobs/"
+                + hashlib.sha256(b"source").hexdigest()
+            )
 
         self.assertEqual(by_path[0].vp_id, "img_1_vp_0001")
         self.assertEqual(by_hash, by_path)
+        self.assertEqual(by_blob_sha, by_path)
 
     def test_audit_reports_missing_crop_without_eager_global_stat(self):
         with tempfile.TemporaryDirectory() as directory:

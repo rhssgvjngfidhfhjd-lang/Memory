@@ -8,7 +8,7 @@
   "request_timeout": 180,
   "retries": 2,
   "think": false,
-  "top_k": 5,
+  "top_k": 7,
 
   "executor_model": "Qwen/Qwen3-VL-4B-Instruct",
   "executor_base_url": "http://127.0.0.1:18000/v1",

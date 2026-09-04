@@ -11,6 +11,13 @@ from typing import Any, Iterable
 
 import numpy as np
 
+try:
+    from scripts.configure_evidence_policy_wandb_workspace import (
+        configure_workspace,
+    )
+except ModuleNotFoundError:
+    from configure_evidence_policy_wandb_workspace import configure_workspace
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = str(ROOT / "src")
@@ -35,6 +42,8 @@ CRITIC_FIELDS = (
     "reward_min",
     "reward_max",
 )
+EVIDENCE_ORDER = ("summary", "dialogue", "caption", "image", "vp")
+ALL_EVIDENCE_MASKS = tuple(f"{value:05b}" for value in range(32))
 
 
 @dataclass(frozen=True)
@@ -43,6 +52,7 @@ class RunData:
     epoch_rows: tuple[dict[str, Any], ...]
     update_rows: tuple[dict[str, Any], ...]
     validation_rows: tuple[dict[str, Any], ...]
+    train_action_rows: tuple[dict[str, Any], ...]
     test_metrics: dict[str, Any]
     warnings: tuple[str, ...]
 
@@ -57,6 +67,17 @@ def main() -> None:
     parser.add_argument("--name", default="")
     parser.add_argument("--run-id", default="")
     parser.add_argument("--tag", action="append", default=[])
+    parser.add_argument(
+        "--workspace-url",
+        default="",
+        help="Existing per-run saved-view URL to update",
+    )
+    parser.add_argument("--skip-workspace", action="store_true")
+    parser.add_argument(
+        "--charts-only",
+        action="store_true",
+        help="Only upload derived evidence charts; do not append scalar history",
+    )
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -65,7 +86,7 @@ def main() -> None:
     if args.dry_run:
         print(json.dumps(data_summary(data), ensure_ascii=False, indent=2))
         return
-    url = upload_to_wandb(
+    run_url = upload_to_wandb(
         data,
         run_dir=run_dir,
         project=args.project,
@@ -73,8 +94,48 @@ def main() -> None:
         name=args.name or run_dir.name,
         run_id=args.run_id or None,
         tags=args.tag,
+        charts_only=args.charts_only,
     )
-    print(json.dumps({"url": url, **data_summary(data)}, ensure_ascii=False, indent=2))
+    dashboard_url = ""
+    if not args.skip_workspace:
+        dashboard_file = run_dir / "run_control" / "wandb_dashboard.json"
+        workspace_url = args.workspace_url or load_dashboard_url(dashboard_file)
+        dashboard_url = configure_workspace(
+            entity=args.entity
+            or "rhssgvjngfidhfhjd-nanyang-technological-university-singapore",
+            project=args.project,
+            name=f"{args.name or run_dir.name} Dashboard",
+            workspace_url=workspace_url,
+            run_name=args.name or run_dir.name,
+            run_id=args.run_id or "",
+        )
+        dashboard_file.parent.mkdir(parents=True, exist_ok=True)
+        dashboard_file.write_text(
+            json.dumps({"url": dashboard_url}, indent=2) + "\n",
+            encoding="utf-8",
+        )
+    print(
+        json.dumps(
+            {
+                "url": dashboard_url or run_url,
+                "dashboard_url": dashboard_url,
+                "run_url": run_url,
+                **data_summary(data),
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+
+
+def load_dashboard_url(path: Path) -> str:
+    if not path.exists():
+        return ""
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return ""
+    return str(payload.get("url", "")) if isinstance(payload, dict) else ""
 
 
 def load_run_data(run_dir: Path) -> RunData:
@@ -117,10 +178,17 @@ def load_run_data(run_dir: Path) -> RunData:
             "Actor metrics unavailable and not fabricated: " + ", ".join(missing_actor)
         )
 
+    initial_path = run_dir / "validation" / "initial_metrics.json"
+    initial_validation = (
+        json.loads(initial_path.read_text(encoding="utf-8"))
+        if initial_path.exists()
+        else None
+    )
     validation_rows, validation_warnings = build_validation_rows(
-        epoch_rows, update_rows
+        epoch_rows, update_rows, initial_validation=initial_validation
     )
     warnings.extend(validation_warnings)
+    train_action_rows = build_train_action_rows(run_dir, epoch_rows)
 
     test_path = run_dir / "eval" / "test_ppo" / "metrics.json"
     test_metrics = (
@@ -131,6 +199,7 @@ def load_run_data(run_dir: Path) -> RunData:
         epoch_rows=epoch_rows,
         update_rows=update_rows,
         validation_rows=validation_rows,
+        train_action_rows=train_action_rows,
         test_metrics=test_metrics,
         warnings=tuple(warnings),
     )
@@ -195,6 +264,8 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
 def build_validation_rows(
     epoch_rows: Iterable[dict[str, Any]],
     update_rows: Iterable[dict[str, Any]],
+    *,
+    initial_validation: dict[str, Any] | None = None,
 ) -> tuple[tuple[dict[str, Any], ...], tuple[str, ...]]:
     updates_by_epoch: dict[int, int] = {}
     for row in update_rows:
@@ -206,6 +277,8 @@ def build_validation_rows(
 
     warnings: list[str] = []
     rows: list[dict[str, Any]] = []
+    if initial_validation is not None:
+        rows.append(validation_event_row(initial_validation, default_epoch=0))
     for epoch_row in epoch_rows:
         epoch = int(epoch_row.get("epoch", len(rows)))
         validation_events = epoch_row.get("validations")
@@ -220,29 +293,116 @@ def build_validation_rows(
                 }
             ]
         for event in validation_events:
-            validation = event.get("metrics", {})
-            update_step = event.get("update_step")
-            if update_step is None:
-                update_step = epoch + 1
+            if event.get("update_step") is None:
+                event = dict(event)
+                event["update_step"] = epoch + 1
                 warnings.append(
                     f"Epoch {epoch} validation has no PPO update step; epoch index was used"
                 )
-            rows.append(
-                {
-                    "update_step": int(update_step),
-                    "epoch": epoch,
-                    "phase": str(event.get("phase", "end")),
-                    "reward": float(validation.get("mean_reward", 0.0)),
-                    "f1": float(validation.get("f1", 0.0)),
-                    "exact_match": float(validation.get("exact_match", 0.0)),
-                    "retrieval_hitrate_at_5": float(
-                        validation.get("retrieval_hitrate@5", 0.0)
-                    ),
-                    "errors": float(validation.get("errors", 0)),
-                    "by_category": validation.get("by_category", {}),
-                }
-            )
-    return tuple(rows), tuple(warnings)
+            rows.append(validation_event_row(event, default_epoch=epoch))
+    unique: dict[tuple[int, str], dict[str, Any]] = {}
+    for row in rows:
+        key = (int(row["update_step"]), str(row["phase"]))
+        previous = unique.get(key)
+        if previous is not None and previous != row:
+            raise ValueError(f"Conflicting validation events for step/phase {key}")
+        unique[key] = row
+    ordered = sorted(
+        unique.values(), key=lambda row: (int(row["update_step"]), str(row["phase"]))
+    )
+    return tuple(ordered), tuple(warnings)
+
+
+def validation_event_row(
+    event: dict[str, Any], *, default_epoch: int
+) -> dict[str, Any]:
+    validation = event.get("metrics", {})
+    if not isinstance(validation, dict):
+        validation = {}
+    return {
+        "update_step": int(event.get("update_step", 0)),
+        "epoch": int(event.get("epoch", default_epoch)),
+        "phase": str(event.get("phase", "end")),
+        "reward": float(validation.get("mean_reward", 0.0)),
+        "f1": float(validation.get("f1", 0.0)),
+        "exact_match": float(
+            validation.get("exact_match", validation.get("em", 0.0))
+        ),
+        "retrieval_hitrate_at_5": float(validation.get("retrieval_hitrate@5", 0.0)),
+        "errors": float(validation.get("errors", 0)),
+        "by_category": validation.get("by_category", {}),
+        "evidence_actions": validation.get("evidence_actions", {}),
+    }
+
+
+def build_train_action_rows(
+    run_dir: Path, epoch_rows: Iterable[dict[str, Any]]
+) -> tuple[dict[str, Any], ...]:
+    updates = {
+        int(row.get("epoch", index)): int(row.get("update_step", index + 1))
+        for index, row in enumerate(epoch_rows)
+    }
+    rows: list[dict[str, Any]] = []
+    for path in sorted((run_dir / "train").glob("epoch_*_rollouts.jsonl")):
+        try:
+            epoch = int(path.stem.split("_")[1])
+        except (IndexError, ValueError):
+            continue
+        counts = {mask: 0 for mask in ALL_EVIDENCE_MASKS}
+        for rollout in read_jsonl(path):
+            for action in rollout.get("actions", []) or []:
+                mask = str(action.get("mask", ""))
+                if mask in counts:
+                    counts[mask] += 1
+        rows.append(
+            {
+                "epoch": epoch,
+                "update_step": updates.get(epoch, epoch + 1),
+                "evidence_actions": {
+                    f"mask:{mask}": count for mask, count in counts.items()
+                },
+            }
+        )
+    return tuple(rows)
+
+
+def mask_distribution(
+    evidence_actions: Any,
+) -> tuple[dict[str, int], dict[str, float], int]:
+    values = evidence_actions if isinstance(evidence_actions, dict) else {}
+    counts = {
+        mask: max(0, int(values.get(f"mask:{mask}", 0)))
+        for mask in ALL_EVIDENCE_MASKS
+    }
+    total = sum(counts.values())
+    ratios = {
+        mask: (count / total if total else 0.0) for mask, count in counts.items()
+    }
+    return counts, ratios, total
+
+
+def mask_label(mask: str) -> str:
+    selected = [name for bit, name in zip(mask, EVIDENCE_ORDER) if bit == "1"]
+    return f"{mask} ({'+'.join(selected) if selected else 'none'})"
+
+
+def evidence_level_distribution(
+    evidence_actions: Any,
+) -> tuple[dict[str, int], dict[str, float], int]:
+    counts, _, total = mask_distribution(evidence_actions)
+    selected_counts = {
+        evidence: sum(
+            count
+            for mask, count in counts.items()
+            if mask[index] == "1"
+        )
+        for index, evidence in enumerate(EVIDENCE_ORDER)
+    }
+    ratios = {
+        evidence: (count / total if total else 0.0)
+        for evidence, count in selected_counts.items()
+    }
+    return selected_counts, ratios, total
 
 
 def build_legacy_update_rows(
@@ -318,6 +478,7 @@ def upload_to_wandb(
     name: str,
     run_id: str | None,
     tags: Iterable[str],
+    charts_only: bool = False,
 ) -> str:
     try:
         import wandb
@@ -337,16 +498,20 @@ def upload_to_wandb(
     if run_id:
         init_kwargs.update({"id": run_id, "resume": "allow"})
     run = wandb.init(**init_kwargs)
-    run.define_metric("val/update_step")
-    run.define_metric("val/*", step_metric="val/update_step")
-    run.define_metric("actor/update_step")
-    run.define_metric("actor/*", step_metric="actor/update_step")
-    run.define_metric("critic/update_step")
-    run.define_metric("critic/*", step_metric="critic/update_step")
+    if not charts_only:
+        run.define_metric("val/update_step")
+        run.define_metric("val/*", step_metric="val/update_step")
+        run.define_metric("val/action_ratio/*", step_metric="val/update_step")
+        run.define_metric("train/update_step")
+        run.define_metric("train/action_ratio/*", step_metric="train/update_step")
+        run.define_metric("actor/update_step")
+        run.define_metric("actor/*", step_metric="actor/update_step")
+        run.define_metric("critic/update_step")
+        run.define_metric("critic/*", step_metric="critic/update_step")
 
-    for row in data.validation_rows:
-        run.log(
-            {
+        for row in data.validation_rows:
+            _, ratios, _ = mask_distribution(row.get("evidence_actions"))
+            payload = {
                 "val/update_step": row["update_step"],
                 "val/reward": row["reward"],
                 "val/f1": row["f1"],
@@ -354,12 +519,28 @@ def upload_to_wandb(
                 "val/retrieval_hitrate_at_5": row["retrieval_hitrate_at_5"],
                 "val/errors": row["errors"],
             }
-        )
+            payload.update(
+                {f"val/action_ratio/{mask}": ratio for mask, ratio in ratios.items()}
+            )
+            run.log(payload)
+
+        for row in data.train_action_rows:
+            _, ratios, _ = mask_distribution(row.get("evidence_actions"))
+            run.log(
+                {
+                    "train/update_step": row["update_step"],
+                    "train/epoch": row["epoch"],
+                    **{
+                        f"train/action_ratio/{mask}": ratio
+                        for mask, ratio in ratios.items()
+                    },
+                }
+            )
 
     predicted_values: list[float] = []
     target_values: list[float] = []
     critic_steps: list[int] = []
-    for row in data.update_rows:
+    for row in (() if charts_only else data.update_rows):
         update_step = int(row["update_step"])
         payload: dict[str, Any] = {
             "actor/update_step": update_step,
@@ -383,10 +564,10 @@ def upload_to_wandb(
             target_values.append(float(target))
 
     charts: dict[str, Any] = {}
-    category_chart = build_category_f1_chart(wandb, data)
+    category_chart = None if charts_only else build_category_f1_chart(wandb, data)
     if category_chart is not None:
         charts["val/category_f1"] = category_chart
-    if critic_steps:
+    if not charts_only and critic_steps:
         charts["critic/predicted_value_vs_reward"] = wandb.plot.line_series(
             xs=critic_steps,
             ys=[predicted_values, target_values],
@@ -394,10 +575,66 @@ def upload_to_wandb(
             title="Predicted Value vs Reward",
             xname="PPO update step",
         )
+    validation_mask_chart = build_mask_ratio_line_chart(
+        wandb,
+        data.validation_rows,
+        title="Validation Evidence Combination Selection Ratio",
+    )
+    if validation_mask_chart is not None:
+        charts["val/action_mask_ratio"] = validation_mask_chart
+    train_mask_chart = build_mask_ratio_line_chart(
+        wandb,
+        data.train_action_rows,
+        title="Training Evidence Combination Selection Ratio",
+    )
+    if train_mask_chart is not None:
+        charts["train/action_mask_ratio"] = train_mask_chart
+    ratio_table = build_mask_ratio_table(wandb, data)
+    if ratio_table is not None:
+        charts["evidence/action_mask_ratio_table"] = ratio_table
+    test_counts, test_ratios, test_total = mask_distribution(
+        data.test_metrics.get("evidence_actions")
+    )
+    if test_total:
+        test_table = wandb.Table(columns=["mask", "combination", "count", "ratio"])
+        for mask in ALL_EVIDENCE_MASKS:
+            run.summary[f"test/action_ratio/{mask}"] = test_ratios[mask]
+            if test_counts[mask]:
+                test_table.add_data(
+                    mask, mask_label(mask), test_counts[mask], test_ratios[mask]
+                )
+        charts["test/action_mask_ratio"] = wandb.plot.bar(
+            test_table,
+            "combination",
+            "ratio",
+            title="Test Evidence Combination Selection Ratio",
+        )
+        level_counts, level_ratios, _ = evidence_level_distribution(
+            data.test_metrics.get("evidence_actions")
+        )
+        level_table = wandb.Table(
+            columns=["evidence_level", "selected_count", "total", "ratio"]
+        )
+        for evidence in EVIDENCE_ORDER:
+            level_table.add_data(
+                evidence,
+                level_counts[evidence],
+                test_total,
+                level_ratios[evidence],
+            )
+            run.summary[f"test/evidence_level_ratio/{evidence}"] = level_ratios[
+                evidence
+            ]
+        charts["test/evidence_level_ratio"] = wandb.plot.bar(
+            level_table,
+            "evidence_level",
+            "ratio",
+            title="Final Evidence Level Selection Ratio",
+        )
     if charts:
         run.log(charts)
 
-    for key in ("count", "f1", "exact_match", "mean_reward", "errors"):
+    for key in ("count", "f1", "exact_match", "em", "mean_reward", "errors"):
         if key in data.test_metrics:
             run.summary[f"test/{key}"] = data.test_metrics[key]
     if "retrieval_hitrate@5" in data.test_metrics:
@@ -441,6 +678,88 @@ def build_category_f1_chart(wandb: Any, data: RunData) -> Any | None:
     )
 
 
+def build_mask_ratio_line_chart(
+    wandb: Any,
+    rows: Iterable[dict[str, Any]],
+    *,
+    title: str,
+) -> Any | None:
+    materialized = list(rows)
+    if not materialized:
+        return None
+    distributions = [mask_distribution(row.get("evidence_actions")) for row in materialized]
+    active_masks = [
+        mask
+        for mask in ALL_EVIDENCE_MASKS
+        if any(counts[mask] for counts, _, _ in distributions)
+    ]
+    if not active_masks:
+        return None
+    return wandb.plot.line_series(
+        xs=[int(row["update_step"]) for row in materialized],
+        ys=[
+            [ratios[mask] for _, ratios, _ in distributions]
+            for mask in active_masks
+        ],
+        keys=[mask_label(mask) for mask in active_masks],
+        title=title,
+        xname="PPO update step",
+    )
+
+
+def build_mask_ratio_table(wandb: Any, data: RunData) -> Any | None:
+    table = wandb.Table(
+        columns=[
+            "split",
+            "update_step",
+            "epoch",
+            "phase",
+            "mask",
+            "combination",
+            "count",
+            "ratio",
+        ]
+    )
+    added = False
+    for split, rows in (
+        ("train", data.train_action_rows),
+        ("validation", data.validation_rows),
+    ):
+        for row in rows:
+            counts, ratios, total = mask_distribution(row.get("evidence_actions"))
+            if not total:
+                continue
+            for mask in ALL_EVIDENCE_MASKS:
+                table.add_data(
+                    split,
+                    int(row["update_step"]),
+                    int(row.get("epoch", 0)),
+                    str(row.get("phase", "epoch")),
+                    mask,
+                    mask_label(mask),
+                    counts[mask],
+                    ratios[mask],
+                )
+                added = True
+    test_counts, test_ratios, test_total = mask_distribution(
+        data.test_metrics.get("evidence_actions")
+    )
+    if test_total:
+        for mask in ALL_EVIDENCE_MASKS:
+            table.add_data(
+                "test",
+                -1,
+                -1,
+                "final",
+                mask,
+                mask_label(mask),
+                test_counts[mask],
+                test_ratios[mask],
+            )
+            added = True
+    return table if added else None
+
+
 def safe_wandb_config(config: dict[str, Any], run_dir: Path) -> dict[str, Any]:
     model = config.get("model", {})
     split = config.get("split", {})
@@ -463,6 +782,7 @@ def data_summary(data: RunData) -> dict[str, Any]:
         "epochs": len(data.epoch_rows),
         "actor_critic_points": len(data.update_rows),
         "validation_points": len(data.validation_rows),
+        "train_action_points": len(data.train_action_rows),
         "warnings": list(data.warnings),
     }
 
