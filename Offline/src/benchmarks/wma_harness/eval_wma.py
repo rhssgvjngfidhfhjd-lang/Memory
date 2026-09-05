@@ -53,6 +53,11 @@ from benchmarks.io_utils import file_manifest, write_json_atomic, write_jsonl_at
 from benchmarks.question_filter import is_excluded_category, parse_excluded_categories
 from embedding.chunk_builder import build_wma_chunks_from_data, iter_wma_sample_files
 from evidence_policy.split_manifest import SplitManifestIndex, normalize_split_name
+from hive_mem.prefix_graph import (
+    PREFIX_GRAPH_SCHEMA_VERSION,
+    materialize_prefix_graph,
+)
+from hive_mem.output_layout import DatasetLayout
 
 
 VISUAL_CATEGORIES = {"VFR", "VS", "VU", "CMR", ""}
@@ -96,39 +101,62 @@ def prepare_sample_jobs(
     query_cache: QueryEmbeddingCache,
     *,
     top_k: int,
-    graph_options: dict[str, Any] | None,
+    graph_options: dict[str, Any] | bool | None,
+    prefix_graph_root: Path | None = None,
     excluded_categories: frozenset[str] = frozenset(),
     ordered_question_ids: tuple[str, ...] | None = None,
 ) -> list[dict[str, Any]]:
-    if graph_options is not None:
-        raise ValueError(
-            "Graph retrieval is disabled for WMA checkpoints: the current graph "
-            "statistics are built from the full memory bank and are not prefix-safe."
-        )
     payload = json.loads(sample_path.read_text(encoding="utf-8"))
     sample_id = str(payload["sample_id"])
-    adapter = create_adapter(
-        "HiveMem",
-        config_overrides={
-            "index_root": str(index_root),
-            "top_k": top_k,
-            "visual_categories": VISUAL_CATEGORIES,
-        },
-    )
     ordered_sessions = session_ids(payload)
     gold_points = build_gold_evidence_map(payload)
     jobs: list[dict[str, Any]] = []
     selected_question_ids = (
         set(ordered_question_ids) if ordered_question_ids is not None else None
     )
-    try:
-        adapter.reset(sample_id, Path())
-        for checkpoint in payload.get("qa_checkpoints", []) or []:
-            checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
-            covered_sessions = [str(value) for value in checkpoint.get("covered_sessions", [])]
-            visible_sessions = visible_sessions_for_checkpoint(
-                ordered_sessions, covered_sessions
+    prefix_graph_root = prefix_graph_root or index_root / ".prefix_graphs"
+    for checkpoint in payload.get("qa_checkpoints", []) or []:
+        checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
+        if (
+            not checkpoint_id
+            or Path(checkpoint_id).name != checkpoint_id
+            or checkpoint_id in {".", ".."}
+        ):
+            raise ValueError(f"Invalid WMA checkpoint id: {checkpoint_id!r}")
+        covered_sessions = [str(value) for value in checkpoint.get("covered_sessions", [])]
+        visible_sessions = visible_sessions_for_checkpoint(
+            ordered_sessions, covered_sessions
+        )
+        checkpoint_index_root = index_root
+        prefix_manifest = ""
+        if graph_options is not False:
+            checkpoint_index_root = (
+                prefix_graph_root / sample_id / checkpoint_id
             )
+            materialize_prefix_graph(
+                index_root / "datasets" / sample_id,
+                checkpoint_index_root,
+                sample_id=sample_id,
+                checkpoint_id=checkpoint_id,
+                visible_session_ids=visible_sessions,
+                graph_options=(
+                    graph_options if isinstance(graph_options, dict) else {}
+                ),
+            )
+            prefix_manifest = str(
+                checkpoint_index_root / "prefix_manifest.json"
+            )
+        adapter = create_adapter(
+            "HiveMem",
+            config_overrides={
+                "index_root": str(checkpoint_index_root),
+                "top_k": top_k,
+                "visual_categories": VISUAL_CATEGORIES,
+                "graph_options": graph_options,
+            },
+        )
+        try:
+            adapter.reset(sample_id, Path())
             visible_session_set = set(visible_sessions)
             for qa_index, qa in enumerate(checkpoint.get("questions", []) or [], start=1):
                 manifest_question_id = wma_manifest_question_id(
@@ -192,6 +220,7 @@ def prepare_sample_jobs(
                         "checkpoint_id": checkpoint_id,
                         "covered_sessions": covered_sessions,
                         "visible_sessions": visible_sessions,
+                        "graph_prefix_manifest": prefix_manifest,
                         "qa_index": qa_index,
                         "question": question,
                         "category": category,
@@ -226,11 +255,9 @@ def prepare_sample_jobs(
                         "retrieval_top_k": trace,
                     }
                 )
-    finally:
-        adapter.close()
-    return _order_wma_jobs(
-        jobs, ordered_question_ids, sample_id=sample_id
-    )
+        finally:
+            adapter.close()
+    return _order_wma_jobs(jobs, ordered_question_ids, sample_id=sample_id)
 
 
 def prepare_native_sample_jobs(
@@ -502,16 +529,18 @@ def _run_signature(
         input_paths.append(index_root / "build_manifest.json")
         for sample_path in sample_paths:
             bank = index_root / "datasets" / sample_path.stem
+            layout = DatasetLayout(bank)
             input_paths.extend(
                 [
                     bank / "memories.jsonl",
-                    bank / "text_vectors.npy",
-                    bank / "image_vectors.npy",
-                    bank / "image_mask.npy",
+                    layout.existing_vector_path("text.npy", "vectors.npy"),
+                    layout.existing_vector_path("image.npy", "image_vectors.npy"),
+                    layout.existing_vector_path("image_mask.npy", "image_mask.npy"),
                 ]
             )
     prompt_source = SYSTEM_PROMPT + "\n" + inspect.getsource(format_question_prompt)
     return {
+        "prefix_graph_schema_version": PREFIX_GRAPH_SCHEMA_VERSION,
         "arguments": {
             key: value for key, value in vars(args).items() if key not in ignored
         },
@@ -567,10 +596,14 @@ def main() -> None:
     parser.add_argument("--skip-model-check", action="store_true")
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--checkpoint-every", type=int, default=10)
-    parser.add_argument("--graph-retrieval", action="store_true")
+    parser.add_argument(
+        "--graph-retrieval",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
     parser.add_argument("--seed-k", type=int, default=0)
     parser.add_argument("--expansion-bonus", type=float, default=0.2)
-    parser.add_argument("--graph-mode", choices=("rerank", "append"), default="rerank")
+    parser.add_argument("--graph-mode", choices=("rerank", "append"), default="append")
     parser.add_argument("--append-k", type=int, default=2)
     from hive_mem.build_memories import apply_config_defaults
     apply_config_defaults(
@@ -598,6 +631,11 @@ def main() -> None:
             "executor_base_url",
             "executor_temperature",
             "executor_visual_input",
+            "graph_retrieval",
+            "graph_mode",
+            "append_k",
+            "seed_k",
+            "expansion_bonus",
         },
     )
     args = parser.parse_args()
@@ -698,7 +736,7 @@ def main() -> None:
             "mode": args.graph_mode,
             "append_k": args.append_k,
         }
-        if args.graph_retrieval else None
+        if args.graph_retrieval else False
     )
     result_dir = Path(args.result_dir)
     output_layout = BaselineOutputLayout(result_dir)
@@ -723,6 +761,7 @@ def main() -> None:
             sample_jobs = prepare_sample_jobs(
                 path, Path(args.index_root), cache,
                 top_k=args.top_k, graph_options=graph_options,
+                prefix_graph_root=output_layout.memory_dir / "prefix_graphs",
                 excluded_categories=excluded_categories,
                 ordered_question_ids=ordered_ids_by_sample.get(path.stem),
             )

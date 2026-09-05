@@ -11,12 +11,23 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
+import sys
 import time
 from datetime import datetime
 from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SRC_ROOT = PROJECT_ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
+
+from benchmarks.benchmark_manifest import (  # noqa: E402
+    BenchmarkExpectation,
+    load_benchmark_manifest,
+)
+
+
 OUTPUT_ROOT = PROJECT_ROOT / "outputs"
 JUDGE_SCRIPT = PROJECT_ROOT / "scripts" / "judge_results_llm_parallel.py"
 PYTHON = Path("/data/haozhen/miniconda3/envs/pipeline_repro/bin/python")
@@ -24,11 +35,8 @@ KEY_FILE = Path("/data/haozhen/Memory/Nvida_api/gpt-4o-mini")
 LOG_ROOT = PROJECT_ROOT / "logs" / "llm_judge_all_20260901"
 STATUS_PATH = LOG_ROOT / "status.json"
 
-BENCHMARKS = {
-    "Mem-Gallery": ("memgallery", 1711),
-    "WorldMemArena": ("worldmemarena", 2090),
-    "H2HMEM": ("h2hmem", 2207),
-}
+BENCHMARKS = ("Mem-Gallery", "WorldMemArena", "H2HMEM")
+DEFAULT_BENCHMARK_MANIFEST = PROJECT_ROOT / "configs" / "full_benchmark_manifest.json"
 METHODS = (
     "HiveMem",
     "AUGUSTUSMemory",
@@ -86,8 +94,15 @@ def write_status(state: dict) -> None:
     tmp.replace(STATUS_PATH)
 
 
-def run_judge(benchmark: str, method: str, workers: int, state: dict) -> bool:
-    benchmark_arg, expected = BENCHMARKS[benchmark]
+def run_judge(
+    benchmark: str,
+    method: str,
+    workers: int,
+    state: dict,
+    expectation: BenchmarkExpectation,
+) -> bool:
+    benchmark_arg = expectation.judge_name
+    expected = expectation.question_count
     result_dir = OUTPUT_ROOT / benchmark / method
     results_path = result_dir / "results.json"
     log_path = LOG_ROOT / f"{benchmark}__{method}.log"
@@ -142,21 +157,32 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=32)
     parser.add_argument("--watch", action="store_true")
     parser.add_argument("--poll-seconds", type=int, default=600)
+    parser.add_argument(
+        "--benchmark-manifest",
+        type=Path,
+        default=DEFAULT_BENCHMARK_MANIFEST,
+        help="Full-benchmark completeness manifest.",
+    )
     args = parser.parse_args()
+    expectations = load_benchmark_manifest(
+        args.benchmark_manifest,
+        required_benchmarks=BENCHMARKS,
+    )
     LOG_ROOT.mkdir(parents=True, exist_ok=True)
     state = {
         "workers": args.workers,
         "active": None,
         "tasks": {},
         "started_at": datetime.now().isoformat(timespec="seconds"),
+        "benchmark_manifest": str(args.benchmark_manifest.resolve()),
     }
 
     while True:
         pending_incomplete: list[str] = []
         made_progress = False
         for benchmark, method in task_order():
-            benchmark_arg, expected = BENCHMARKS[benchmark]
-            del benchmark_arg
+            expectation = expectations[benchmark]
+            expected = expectation.question_count
             result_dir = OUTPUT_ROOT / benchmark / method
             results_path = result_dir / "results.json"
             key = f"{benchmark}/{method}"
@@ -173,7 +199,7 @@ def main() -> None:
                 }
                 continue
             made_progress = True
-            run_judge(benchmark, method, args.workers, state)
+            run_judge(benchmark, method, args.workers, state, expectation)
 
         state["waiting_for_results"] = pending_incomplete
         completed = sum(

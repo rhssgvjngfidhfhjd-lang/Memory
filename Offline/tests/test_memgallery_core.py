@@ -1769,6 +1769,81 @@ class GraphExpandedRetrievalTest(unittest.TestCase):
             self.assertEqual(hits[2].rank, 3)
             self.assertEqual(hits[2].item.summary, "linked but dissimilar")
 
+    def test_append_mode_returns_five_vector_hits_plus_two_graph_hits(self):
+        from hive_mem.retriever import GraphExpandedIndex, SimpleMemoryIndex
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bank = MAUBank()
+            vectors = [
+                [1.0, 0.0],
+                [0.9, 0.1],
+                [0.8, 0.2],
+                [0.7, 0.3],
+                [0.6, 0.4],
+                [0.1, 0.9],
+                [0.05, 0.95],
+                [0.0, 1.0],
+            ]
+            for index, vector in enumerate(vectors):
+                bank.add_memory(
+                    f"memory {index}",
+                    np.asarray(vector, dtype=np.float32),
+                    metadata={"session_id": f"S{index:02d}"},
+                )
+            bank.memories[0].links["related"] = [
+                {"target": bank.memories[5].id, "type": "CAUSES"},
+                {"target": bank.memories[6].id, "type": "SAME_EPISODE"},
+            ]
+            bank.save(root)
+            baseline = SimpleMemoryIndex(root).search([1.0, 0.0], top_k=5)
+            graph = GraphExpandedIndex(
+                root,
+                mode="append",
+                append_k=2,
+                expand_temporal=False,
+                expand_entity=False,
+                expand_attribute=False,
+            ).search([1.0, 0.0], top_k=5)
+
+            self.assertEqual(len(graph), 7)
+            self.assertEqual(
+                [row.item.id for row in graph[:5]],
+                [row.item.id for row in baseline],
+            )
+            self.assertEqual([row.via for row in graph], ["vector"] * 5 + ["graph"] * 2)
+            self.assertEqual(
+                [row.item.summary for row in graph[5:]],
+                ["memory 5", "memory 6"],
+            )
+
+    def test_hivemem_adapter_defaults_to_append_graph_retrieval(self):
+        from benchmarks.baseline_runtime.adapters.hivemem import HiveMemAdapter
+        from benchmarks.baseline_runtime.protocol import RetrievalRequest
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dataset_dir = root / "datasets" / "toy"
+            self._build_index_dir(dataset_dir, graph=False)
+            adapter = HiveMemAdapter(
+                baseline="HiveMem",
+                source_root=Path(),
+                config={"index_root": str(root), "top_k": 2},
+            )
+            adapter.reset("toy", Path())
+            result = adapter.retrieve(
+                RetrievalRequest(
+                    query_id="q",
+                    text="q",
+                    top_k=2,
+                    query_vector=[1.0, 0.0],
+                )
+            )
+
+        self.assertEqual([row.metadata["via"] for row in result.items], ["vector", "vector", "graph"])
+        self.assertEqual(result.trace["mode"], "append")
+        self.assertEqual(result.trace["graph_append_k"], 2)
+
     def test_category_gating_uses_plain_vector_for_other_categories(self):
         from benchmarks.baseline_runtime.adapters.hivemem import HiveMemAdapter
         from benchmarks.baseline_runtime.protocol import RetrievalRequest, result_trace_rows

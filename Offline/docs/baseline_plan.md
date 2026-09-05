@@ -421,7 +421,7 @@ HiveMemAdapter 可以继续使用已有完整索引和 `allowed_session_ids`，�
 - `ingest()` 为 no-op，因为 HiveMem memory 已由现有构建流程生成。
 - `retrieve()` 使用 `query_vector` 和已有 query embedding cache。
 - WMA 继续传 `allowed_session_ids`。
-- graph retrieval 在 WMA 继续禁止，直到 graph statistics 能按 prefix 构建。
+- WMA 为每个 checkpoint 构建累计可见 session 的 prefix graph，并在该图上执行默认 5+2 检索。
 - 返回现有 `MemoryHit.to_context_item()` 的规范化结果。
 
 ### 9.2 AUGUSTUSMemory
@@ -759,7 +759,7 @@ M2A、MemVerse、MIRIX 等都带有自己的回答 agent。如果直接使用，
 
 - m3-agent 在这两个 benchmark 上只能形成明确标注的对话兼容变体。
 - MemVerse Parametric Memory 默认不启用，启用时必须作为单独实验变体。
-- WMA graph retrieval 继续保持关闭，直到图统计能够按照 checkpoint prefix 构建。
+- WMA graph retrieval 只使用 checkpoint 对应的 prefix graph；prefix 内重新计算图统计，禁止加载完整 sample 图。
 - 某些 baseline 会把多个源 round 合并成一条记忆，provenance 必须允许一对多。
 - 如果 baseline 不支持根配置指定的 embedding dimension，应先参数化 schema；不能静默换成另一个 embedding。
 - baseline worker 的环境路径属于机器部署信息，不应写死在仓库配置中。

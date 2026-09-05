@@ -5,7 +5,14 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from run_full_baseline_matrix import OUTPUT_ROOT, all_jobs, validate_job_outputs
+from run_full_baseline_matrix import (
+    BENCHMARKS,
+    DEFAULT_BENCHMARK_MANIFEST,
+    OUTPUT_ROOT,
+    all_jobs,
+    load_benchmark_manifest,
+    validate_job_outputs,
+)
 
 
 def main() -> None:
@@ -15,26 +22,37 @@ def main() -> None:
         action="store_true",
         help="Report incomplete jobs without returning a failing exit status.",
     )
+    parser.add_argument(
+        "--benchmark-manifest",
+        type=Path,
+        default=DEFAULT_BENCHMARK_MANIFEST,
+        help="Full-benchmark completeness manifest.",
+    )
     args = parser.parse_args()
+    expectations = load_benchmark_manifest(
+        args.benchmark_manifest,
+        required_benchmarks=BENCHMARKS,
+    )
 
     first, rest = all_jobs()
+    jobs = [*first, *rest]
     passed: list[str] = []
     incomplete: list[str] = []
     invalid: list[tuple[str, str]] = []
-    for job in [*first, *rest]:
+    for job in jobs:
         result_dir = OUTPUT_ROOT / job.benchmark / job.method
         if not (result_dir / "results.json").is_file():
             incomplete.append(job.name)
             continue
         try:
-            validate_job_outputs(job, result_dir)
+            validate_job_outputs(job, result_dir, expectations)
         except Exception as exc:
             invalid.append((job.name, f"{type(exc).__name__}: {exc}"))
         else:
             passed.append(job.name)
 
     print(
-        f"verified={len(passed)}/24 incomplete={len(incomplete)} "
+        f"verified={len(passed)}/{len(jobs)} incomplete={len(incomplete)} "
         f"invalid={len(invalid)}"
     )
     for name in passed:

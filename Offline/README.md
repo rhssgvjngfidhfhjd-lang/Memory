@@ -7,8 +7,8 @@ Each memory unit (MAU) is produced by a single LLM call over a dialogue chunk an
 carries `summary + entities + per-entity attributes` (closed 6-type / 28-key ontology,
 see `src/hive_mem/entity_schema.py`). Edges are built deterministically from these
 fields — temporal chain, shared-entity and shared-attribute commonality — plus optional
-LLM-confirmed event relations. Retrieval is vector top-k with optional one-hop graph
-expansion (best config: append mode, +1.6pp JudgeAcc, McNemar p=0.032).
+LLM-confirmed event relations. HiveMem retrieval defaults to vector top-5 plus up to
+two highest-scoring one-hop graph results in append mode.
 
 ## Layout
 
@@ -123,7 +123,7 @@ python -m hive_mem.build_memories --mode c \
 # 2. Deterministic edges (temporal chain; entity/attribute pairs derived at load time)
 python -m hive_mem.build_memory_edges outputs/<run>/datasets/*
 
-# 3. QA eval (baseline = pure vector; add --graph-retrieval --graph-mode append for graph)
+# 3. QA eval (default = vector top-5 + up to 2 graph results; use --no-graph-retrieval for vector-only)
 python -m benchmarks.memgallery_harness.eval_memgallery --all-datasets \
   --data-dir ../Mem-Gallery/benchmark/data \
   --index-root outputs/<run> \
@@ -138,6 +138,12 @@ The query stage excludes evidence-refusal questions by default: Mem-Gallery
 skips `AR`, and the WorldMemArena runner skips `MB`. The raw datasets and
 original QA indices remain unchanged. Override the policy with
 `--exclude-categories` (pass an empty value to include every category).
+
+WorldMemArena HiveMem evaluation builds a cumulative graph for each checkpoint
+under `<result-dir>/memory/prefix_graphs/<sample>/<checkpoint>/`. Each graph is
+rebuilt only from sessions visible at that checkpoint, so future MAUs and future
+graph statistics cannot affect retrieval. Matching prefix graphs are reused by
+content signature on resumed runs.
 
 ## Evidence-policy train/validation/test manifest
 

@@ -41,7 +41,8 @@
     "embedding_dim": 2048,
     "hidden_dim": 256,
     "hidden_layers": 3,
-    "deterministic_threshold": 0.5
+    "deterministic_threshold": 0.5,
+    "initial_action_probability": 0.5
   },
   "ppo": {
     "learning_rate": 0.0003,

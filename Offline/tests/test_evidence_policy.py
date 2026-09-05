@@ -99,11 +99,18 @@ class ValidationScheduleTest(unittest.TestCase):
         }
         trainer = MagicMock()
         trainer.update_steps = 0
+        torch.manual_seed(1234)
+        rng_state = torch.random.get_rng_state().clone()
+
+        def stochastic_validation(*args, **kwargs):
+            torch.rand(8)
+            return dict(event)
+
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
             with patch(
                 "scripts.evidence_policy.run_training_validation",
-                return_value=dict(event),
+                side_effect=stochastic_validation,
             ) as run_validation:
                 first = prepare_initial_validation(
                     config,
@@ -121,6 +128,10 @@ class ValidationScheduleTest(unittest.TestCase):
             self.assertEqual(first["run_signature"], initial_validation_signature(config, "cpu"))
             self.assertEqual(first["update_step"], 0)
             run_validation.assert_called_once()
+            self.assertFalse(run_validation.call_args.kwargs["deterministic"])
+            self.assertEqual(first["sampling_mode"], "independent_bernoulli")
+            self.assertEqual(first["initial_action_probability"], 0.5)
+            self.assertTrue(torch.equal(torch.random.get_rng_state(), rng_state))
             trainer.save_checkpoint.assert_called_once()
 
             with patch(
@@ -330,6 +341,37 @@ class EvidencePolicyTest(unittest.TestCase):
                 action.selected.issubset({EvidenceType.SUMMARY, EvidenceType.DIALOGUE})
                 for action in sampled.actions
             )
+        )
+
+    def test_policy_starts_with_independent_half_probability_per_bit(self):
+        policy = EvidenceSelectionPolicy(
+            embedding_dim=EMBEDDING_DIM,
+            hidden_dim=16,
+            hidden_layers=1,
+            initial_action_probability=0.5,
+        )
+
+        with torch.no_grad():
+            logits, _ = policy._forward(self.observation)
+
+        self.assertTrue(torch.equal(logits, torch.zeros_like(logits)))
+        self.assertTrue(
+            torch.equal(logits.sigmoid(), torch.full_like(logits, 0.5))
+        )
+
+    def test_initial_action_probability_sets_all_actor_logits(self):
+        policy = EvidenceSelectionPolicy(
+            embedding_dim=EMBEDDING_DIM,
+            hidden_dim=16,
+            hidden_layers=1,
+            initial_action_probability=0.25,
+        )
+
+        with torch.no_grad():
+            logits, _ = policy._forward(self.observation)
+
+        self.assertTrue(
+            torch.allclose(logits.sigmoid(), torch.full_like(logits, 0.25))
         )
 
     def test_ppo_update_changes_parameters(self):

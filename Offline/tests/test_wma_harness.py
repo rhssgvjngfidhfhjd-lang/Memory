@@ -23,6 +23,7 @@ from embedding.chunk_builder import build_wma_chunks_from_data
 from embedding.chunk_builder import iter_wma_sample_files
 from evidence_policy.evidence import WMADialogueStore, make_policy_observation
 from hive_mem.mau import MAU, MAUBank
+from hive_mem.prefix_graph import materialize_prefix_graph
 from hive_mem.retriever import GraphExpandedIndex, MemoryHit, SimpleMemoryIndex
 
 
@@ -230,14 +231,103 @@ class WMARetrievalTest(unittest.TestCase):
             )
         self.assertEqual([hit.item.metadata["session_id"] for hit in hits], ["S00"])
 
-    def test_wma_runner_rejects_non_prefix_safe_graph(self):
-        with self.assertRaisesRegex(ValueError, "not prefix-safe"):
-            prepare_sample_jobs(
-                Path("unused.json"),
-                Path("unused"),
-                None,
+    def test_prefix_graph_excludes_future_rows_and_slices_image_vectors(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source" / "datasets" / "sample_01"
+            bank = MAUBank()
+            for session_id, value in (("S00", 1.0), ("S01", 0.8), ("S02", 0.6)):
+                bank.add_memory(
+                    f"memory {session_id}",
+                    np.asarray([value, 1.0 - value], dtype=np.float32),
+                    metadata={
+                        "session_id": session_id,
+                        "source_dialogue_ids": [f"{session_id}:R0001"],
+                    },
+                )
+            bank.memories[0].links["related"] = [
+                {"target": bank.memories[2].id, "type": "SAME_EPISODE"}
+            ]
+            bank.save(source)
+            vectors_dir = source / "vectors"
+            np.save(
+                vectors_dir / "image.npy",
+                np.asarray([[1.0, 0.0], [0.8, 0.2], [0.6, 0.4]], dtype=np.float32),
+            )
+            np.save(vectors_dir / "image_mask.npy", np.asarray([True, False, True]))
+
+            checkpoint_root = root / "prefix" / "sample_01" / "QA01"
+            materialize_prefix_graph(
+                source,
+                checkpoint_root,
+                sample_id="sample_01",
+                checkpoint_id="QA01",
+                visible_session_ids=("S00", "S01"),
+                graph_options={"mode": "append", "append_k": 2},
+            )
+
+            prefix_dir = checkpoint_root / "datasets" / "sample_01"
+            prefix = MAUBank.load(prefix_dir)
+            self.assertEqual(
+                [row.metadata["session_id"] for row in prefix.memories],
+                ["S00", "S01"],
+            )
+            self.assertEqual(prefix.memories[0].links["next"], prefix.memories[1].id)
+            self.assertEqual(prefix.memories[1].links["prev"], prefix.memories[0].id)
+            self.assertTrue(all(not row.links["related"] for row in prefix.memories))
+            self.assertEqual(np.load(prefix_dir / "vectors" / "image.npy").shape, (2, 2))
+            self.assertEqual(
+                np.load(prefix_dir / "vectors" / "image_mask.npy").tolist(),
+                [True, False],
+            )
+            manifest = json.loads(
+                (checkpoint_root / "prefix_manifest.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(manifest["visible_session_ids"], ["S00", "S01"])
+            self.assertEqual(manifest["memory_count"], 2)
+
+    def test_wma_runner_uses_checkpoint_prefix_graph(self):
+        class QueryCache:
+            @staticmethod
+            def get_by_id(_query_id):
+                return np.asarray([1.0, 0.0], dtype=np.float32)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sample_path = root / "lifelong" / "personal" / "sample_01.json"
+            sample_path.parent.mkdir(parents=True)
+            sample_path.write_text(json.dumps(sample_payload()), encoding="utf-8")
+            source = root / "index" / "datasets" / "sample_01"
+            bank = MAUBank()
+            for session_id, vector in (
+                ("S00", [1.0, 0.0]),
+                ("S01", [0.9, 0.1]),
+                ("S02", [0.8, 0.2]),
+            ):
+                bank.add_memory(
+                    f"memory {session_id}",
+                    np.asarray(vector, dtype=np.float32),
+                    metadata={
+                        "session_id": session_id,
+                        "source_dialogue_ids": [f"{session_id}:R0001"],
+                    },
+                )
+            bank.save(source)
+            jobs = prepare_sample_jobs(
+                sample_path,
+                root / "index",
+                QueryCache(),
                 top_k=5,
-                graph_options={"mode": "rerank"},
+                graph_options={"mode": "append", "append_k": 2},
+                prefix_graph_root=root / "prefix_graphs",
+            )
+
+            self.assertEqual(len(jobs), 1)
+            self.assertEqual(jobs[0]["visible_sessions"], ["S00"])
+            self.assertTrue(Path(jobs[0]["graph_prefix_manifest"]).is_file())
+            self.assertEqual(
+                {row["session_id"] for row in jobs[0]["retrieval_top_k"]},
+                {"S00"},
             )
 
 

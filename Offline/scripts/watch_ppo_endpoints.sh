@@ -44,7 +44,7 @@ while pgrep -f 'scripts/evidence_policy.py.*(18000|18001)' >/dev/null; do
     done
   fi
 
-  sleep 60
+  sleep 600
 done
 
 printf '%s status=stopped reason=no_active_ppo_process\n' "$(timestamp)" >> "$log"

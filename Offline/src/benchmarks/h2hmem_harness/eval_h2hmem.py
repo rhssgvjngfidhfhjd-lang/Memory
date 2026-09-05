@@ -330,6 +330,15 @@ def main() -> None:
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--max-qa", type=int, default=0)
     parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument(
+        "--graph-retrieval",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
+    parser.add_argument("--seed-k", type=int, default=0)
+    parser.add_argument("--expansion-bonus", type=float, default=0.2)
+    parser.add_argument("--graph-mode", choices=("rerank", "append"), default="append")
+    parser.add_argument("--append-k", type=int, default=2)
     parser.add_argument("--embedding-dim", type=int, default=2048)
     parser.add_argument("--embedding-model", default="Qwen/Qwen3-VL-Embedding-2B")
     parser.add_argument("--embedding-base-url", default="http://127.0.0.1:8001/v1")
@@ -355,6 +364,8 @@ def main() -> None:
             "embedding_base_url", "executor_model", "executor_base_url",
             "executor_temperature", "executor_visual_input",
             "sample_concurrency", "answer_concurrency", "checkpoint_every",
+            "graph_retrieval", "graph_mode", "append_k", "seed_k",
+            "expansion_bonus",
         },
     )
     args = parser.parse_args()
@@ -429,6 +440,16 @@ def main() -> None:
     config = {
         "top_k": args.top_k,
         "index_root": args.index_root,
+        "graph_options": (
+            {
+                "seed_k": args.seed_k,
+                "expansion_bonus": args.expansion_bonus,
+                "mode": args.graph_mode,
+                "append_k": args.append_k,
+            }
+            if args.graph_retrieval
+            else False
+        ),
         "embedding_dim": args.embedding_dim,
         "embedding_model": args.embedding_model,
         "embedding_base_url": args.embedding_base_url,

@@ -527,6 +527,7 @@ def run_training_validation(
     phase: str,
     update_step: int,
     train_question_count: int,
+    deterministic: bool = True,
 ) -> dict[str, Any]:
     was_training = policy.training
     policy.eval()
@@ -539,7 +540,7 @@ def run_training_validation(
             query_cache,
             profiles,
             policy=policy,
-            deterministic=True,
+            deterministic=deterministic,
             limit=int(config["ppo"].get("validation_limit", 0)),
         )
     finally:
@@ -610,21 +611,35 @@ def prepare_initial_validation(
 
     if trainer.update_steps != 0:
         raise ValueError("Initial validation requires an untrained PPO policy")
-    event = run_training_validation(
-        config,
-        env,
-        query_cache,
-        profiles,
-        policy,
-        output_dir=output_dir,
-        epoch=0,
-        phase="initial",
-        update_step=0,
-        train_question_count=0,
+    validation_seed = int(config["seed"]) + 10_000_019
+    cuda_devices = (
+        [device.index if device.index is not None else torch.cuda.current_device()]
+        if device.type == "cuda"
+        else []
     )
+    with torch.random.fork_rng(devices=cuda_devices):
+        torch.manual_seed(validation_seed)
+        event = run_training_validation(
+            config,
+            env,
+            query_cache,
+            profiles,
+            policy,
+            output_dir=output_dir,
+            epoch=0,
+            phase="initial",
+            update_step=0,
+            train_question_count=0,
+            deterministic=False,
+        )
     event.update(
         {
             "seed": int(config["seed"]),
+            "sampling_seed": validation_seed,
+            "sampling_mode": "independent_bernoulli",
+            "initial_action_probability": float(
+                config.get("policy", {}).get("initial_action_probability", 0.5)
+            ),
             "device": str(device),
             "run_signature": signature,
         }
@@ -642,7 +657,11 @@ def prepare_initial_validation(
 def initial_validation_signature(
     config: dict[str, Any], device: torch.device | str
 ) -> str:
-    payload = {"config": config, "device": str(device)}
+    payload = {
+        "config": config,
+        "device": str(device),
+        "initial_validation_version": "independent_bernoulli_v1",
+    }
     return hashlib.sha256(
         json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
     ).hexdigest()

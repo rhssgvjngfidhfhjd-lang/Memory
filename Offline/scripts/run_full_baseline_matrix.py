@@ -27,6 +27,16 @@ import urllib.request
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SRC_ROOT = ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
+
+from benchmarks.benchmark_manifest import (  # noqa: E402
+    BenchmarkExpectation,
+    load_benchmark_manifest,
+)
+
+
 OUTPUT_ROOT = ROOT / "outputs"
 LOG_ROOT = ROOT / "logs" / "full_matrix"
 STATUS_PATH = LOG_ROOT / "status.json"
@@ -42,11 +52,7 @@ BASELINES = (
     "M3-Agent-caption",
 )
 BENCHMARKS = ("Mem-Gallery", "WorldMemArena", "H2HMEM")
-EXPECTED_RESULT_COUNTS = {
-    "Mem-Gallery": 1711,
-    "WorldMemArena": 2090,
-    "H2HMEM": 2207,
-}
+DEFAULT_BENCHMARK_MANIFEST = ROOT / "configs" / "full_benchmark_manifest.json"
 INFERENCE_ENDPOINTS = {
     "http://127.0.0.1:8013/v1",
     "http://127.0.0.1:8014/v1",
@@ -341,7 +347,11 @@ def commands_for(job: Job, endpoint: str, embedding_base_url: str) -> list[list[
     return baseline_commands(job.benchmark, job.method, endpoint, embedding_base_url)
 
 
-def validate_job_outputs(job: Job, result_dir: Path) -> None:
+def validate_job_outputs(
+    job: Job,
+    result_dir: Path,
+    expectations: dict[str, BenchmarkExpectation],
+) -> None:
     required = (
         result_dir / "results.json",
         result_dir / "retrieval_trace.jsonl",
@@ -363,7 +373,8 @@ def validate_job_outputs(job: Job, result_dir: Path) -> None:
         if line.strip()
     ]
     manifest = json.loads(required[3].read_text(encoding="utf-8"))
-    expected_count = EXPECTED_RESULT_COUNTS[job.benchmark]
+    expectation = expectations[job.benchmark]
+    expected_count = expectation.question_count
     if len(results) != expected_count:
         raise RuntimeError(
             f"{job.name} has {len(results)} results; expected {expected_count}"
@@ -404,9 +415,13 @@ def validate_job_outputs(job: Job, result_dir: Path) -> None:
         if len(trace_ids) != expected_count:
             raise RuntimeError(f"{job.name} contains duplicate trace QA ids")
         datasets = {str(row.get("dataset") or "") for row in results}
-        if "" in datasets or len(datasets) != 20:
+        expected_datasets = expectation.dataset_count
+        if expected_datasets is None:
+            raise RuntimeError(f"{job.benchmark} has no dataset_count in benchmark manifest")
+        if "" in datasets or len(datasets) != expected_datasets:
             raise RuntimeError(
-                f"{job.name} covers {len(datasets - {''})} Mem-Gallery datasets; expected 20"
+                f"{job.name} covers {len(datasets - {''})} Mem-Gallery datasets; "
+                f"expected {expected_datasets}"
             )
     else:
         result_ids = [str(row.get("query_id") or "") for row in results]
@@ -440,7 +455,9 @@ def validate_job_outputs(job: Job, result_dir: Path) -> None:
         )
     if job.benchmark == "H2HMEM":
         variants = Counter(str(row.get("variant") or "") for row in results)
-        expected_variants = Counter({"dyadic": 2017, "multiparty": 190})
+        expected_variants = Counter(expectation.variants)
+        if not expected_variants:
+            raise RuntimeError("H2HMEM has no variants in benchmark manifest")
         if variants != expected_variants:
             raise RuntimeError(
                 f"{job.name} variant counts are {dict(variants)}; "
@@ -521,26 +538,39 @@ def validate_job_outputs(job: Job, result_dir: Path) -> None:
             f"expected {job.method!r}"
         )
     if job.benchmark == "Mem-Gallery":
-        if manifest.get("all_datasets") is not True or manifest.get("questions") != 1711:
+        if (
+            manifest.get("all_datasets") is not expectation.require_all_datasets
+            or manifest.get("questions") != expected_count
+        ):
             raise RuntimeError(f"{job.name} manifest does not describe the full Mem-Gallery run")
     elif job.benchmark == "WorldMemArena":
         data_dir = str(manifest.get("data_dir") or "")
-        if Path(data_dir).name != "lifelong":
+        if Path(data_dir).name != expectation.data_dir_name:
             raise RuntimeError(
-                f"{job.name} data_dir is not the lifelong split: {data_dir!r}"
+                f"{job.name} data_dir is not the configured "
+                f"{expectation.data_dir_name!r} split: {data_dir!r}"
             )
-        if manifest.get("samples") != 38 or manifest.get("questions") != 2090:
+        if (
+            manifest.get("samples") != expectation.sample_count
+            or manifest.get("questions") != expected_count
+        ):
             raise RuntimeError(f"{job.name} manifest does not describe full WMA lifelong")
     else:
-        if manifest.get("variants") != ["dyadic", "multiparty"]:
+        if manifest.get("variants") != list(expectation.variants):
             raise RuntimeError(
                 f"{job.name} manifest variants are {manifest.get('variants')!r}"
             )
-        if manifest.get("questions") != 2207:
+        if manifest.get("questions") != expected_count:
             raise RuntimeError(f"{job.name} manifest does not describe full H2HMEM")
 
 
-def run_job(job: Job, endpoint: str, embedding_base_url: str, status: Status) -> bool:
+def run_job(
+    job: Job,
+    endpoint: str,
+    embedding_base_url: str,
+    status: Status,
+    expectations: dict[str, BenchmarkExpectation],
+) -> bool:
     log_path = LOG_ROOT / f"{job.name}.log"
     result_dir = OUTPUT_ROOT / job.benchmark / job.method
     result_dir.mkdir(parents=True, exist_ok=True)
@@ -588,7 +618,7 @@ def run_job(job: Job, endpoint: str, embedding_base_url: str, status: Status) ->
                     failed_command=command,
                 )
                 return False
-        validate_job_outputs(job, result_dir)
+        validate_job_outputs(job, result_dir, expectations)
         log.write(f"\n=== {job.name} completed {now()} ===\n")
     status.update(job.name, status="completed", finished_at=now(), child_pid=None)
     return True
@@ -600,6 +630,7 @@ def worker(
     pending: queue.Queue[Job],
     embedding_base_url: str,
     status: Status,
+    expectations: dict[str, BenchmarkExpectation],
     hive_attempts: int,
     baseline_attempts: int,
 ) -> None:
@@ -609,7 +640,7 @@ def worker(
         if status.completed(job.name):
             result_dir = OUTPUT_ROOT / job.benchmark / job.method
             try:
-                validate_job_outputs(job, result_dir)
+                validate_job_outputs(job, result_dir, expectations)
             except Exception as exc:
                 status.update(
                     job.name,
@@ -629,7 +660,13 @@ def worker(
                 wait_for_inference(endpoint, job, status)
                 status.update(job.name, attempt=attempt, max_attempts=attempts)
                 try:
-                    succeeded = run_job(job, endpoint, embedding_base_url, status)
+                    succeeded = run_job(
+                        job,
+                        endpoint,
+                        embedding_base_url,
+                        status,
+                        expectations,
+                    )
                 except Exception as exc:  # keep the endpoint queue alive after one bad job
                     succeeded = False
                     status.update(
@@ -689,6 +726,12 @@ def main() -> None:
     )
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument(
+        "--benchmark-manifest",
+        type=Path,
+        default=DEFAULT_BENCHMARK_MANIFEST,
+        help="Full-benchmark completeness manifest.",
+    )
+    parser.add_argument(
         "--resume-completed",
         action="store_true",
         help="Reuse jobs marked complete in the existing status file.",
@@ -705,6 +748,10 @@ def main() -> None:
         parser.error("exactly three --port values are required")
     if args.hive_attempts < 1 or args.baseline_attempts < 1:
         parser.error("retry counts must be positive")
+    expectations = load_benchmark_manifest(
+        args.benchmark_manifest,
+        required_benchmarks=BENCHMARKS,
+    )
     validate_inputs()
     check_endpoints(ports, args.embedding_base_url)
     first, rest = all_jobs()
@@ -747,6 +794,7 @@ def main() -> None:
                 pending,
                 args.embedding_base_url,
                 status,
+                expectations,
                 args.hive_attempts,
                 args.baseline_attempts,
             ),

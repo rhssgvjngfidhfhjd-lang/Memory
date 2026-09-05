@@ -84,7 +84,7 @@ monitor() {
     printf '%s endpoint=%s checkpoints=%s cache_lines=%s metrics_lines=%s\n' \
       "$(timestamp)" "$endpoint" "$checkpoint_count" "$cache_lines" "$metrics_lines" \
       >> "$control/monitor.log"
-    sleep 1800
+    sleep 600
   done
 }
 

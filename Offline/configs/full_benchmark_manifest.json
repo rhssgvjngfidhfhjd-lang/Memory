@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "benchmarks": {
+    "Mem-Gallery": {
+      "judge_name": "memgallery",
+      "question_count": 1711,
+      "dataset_count": 20,
+      "require_all_datasets": true
+    },
+    "WorldMemArena": {
+      "judge_name": "worldmemarena",
+      "question_count": 2090,
+      "sample_count": 38,
+      "data_dir_name": "lifelong"
+    },
+    "H2HMEM": {
+      "judge_name": "h2hmem",
+      "question_count": 2207,
+      "variants": {
+        "dyadic": 2017,
+        "multiparty": 190
+      }
+    }
+  }
+}

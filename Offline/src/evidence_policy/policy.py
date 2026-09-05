@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+import math
 
 import torch
 from torch import nn
@@ -23,12 +24,15 @@ class EvidenceSelectionPolicy(nn.Module):
         hidden_dim: int = 256,
         hidden_layers: int = 2,
         deterministic_threshold: float = 0.5,
+        initial_action_probability: float = 0.5,
     ):
         super().__init__()
         if embedding_dim <= 0 or hidden_dim <= 0 or hidden_layers <= 0:
             raise ValueError("Policy dimensions and hidden_layers must be positive")
         if not 0.0 <= deterministic_threshold <= 1.0:
             raise ValueError("deterministic_threshold must be in [0, 1]")
+        if not 0.0 < initial_action_probability < 1.0:
+            raise ValueError("initial_action_probability must be in (0, 1)")
         layers: list[nn.Module] = []
         input_dim = embedding_dim * 2
         for _ in range(hidden_layers):
@@ -38,8 +42,17 @@ class EvidenceSelectionPolicy(nn.Module):
         self.hidden_dim = int(hidden_dim)
         self.hidden_layers = int(hidden_layers)
         self.deterministic_threshold = float(deterministic_threshold)
+        self.initial_action_probability = float(initial_action_probability)
         self.encoder = nn.Sequential(*layers)
         self.evidence_head = nn.Linear(hidden_dim, len(EVIDENCE_ORDER))
+        nn.init.zeros_(self.evidence_head.weight)
+        nn.init.constant_(
+            self.evidence_head.bias,
+            math.log(
+                self.initial_action_probability
+                / (1.0 - self.initial_action_probability)
+            ),
+        )
         self.value_head = nn.Linear(hidden_dim, 1)
 
     def sample(self, observation: PolicyObservation) -> PolicyStep:

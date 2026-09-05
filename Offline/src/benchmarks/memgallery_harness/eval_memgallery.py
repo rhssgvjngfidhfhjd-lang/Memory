@@ -450,15 +450,19 @@ def main() -> None:
         help="JSON file mapping dataset name -> profile_summary text; appended to the "
         "answer system prompt per dataset (use with profile-free memory banks).",
     )
-    parser.add_argument("--graph-retrieval", action="store_true",
-                        help="Plan-A graph-expanded retrieval: vector seeds + one-hop expansion + rerank")
+    parser.add_argument(
+        "--graph-retrieval",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Graph-expanded retrieval: keep vector top-k and append graph neighbours",
+    )
     parser.add_argument("--seed-k", type=int, default=0, help="Seed count for expansion (0 = top_k)")
     parser.add_argument("--expansion-bonus", type=float, default=0.2)
     parser.add_argument("--expand-temporal", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--expand-related", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--related-types", default="",
                         help="Comma-separated edge types to expand via links.related (empty = all)")
-    parser.add_argument("--graph-mode", default="rerank", choices=["rerank", "append"],
+    parser.add_argument("--graph-mode", default="append", choices=["rerank", "append"],
                         help="rerank: neighbours compete for top_k; append: vector top_k kept, neighbours appended")
     parser.add_argument("--append-k", type=int, default=2)
     parser.add_argument("--graph-categories", default="",
@@ -514,7 +518,7 @@ def main() -> None:
     if args.retries < 0 or args.request_timeout <= 0 or args.num_predict < 1:
         parser.error("Invalid answer retry, timeout, or token limit")
 
-    graph_options = None
+    graph_options: dict | bool = False
     if args.graph_retrieval:
         graph_options = {
             "seed_k": args.seed_k,
