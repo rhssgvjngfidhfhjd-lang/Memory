@@ -141,8 +141,14 @@ class MirixFamilyAdapter(BaselineAdapter):
         )
         if not getattr(legacy_module, "_offline_tool_compat", False):
             original_legacy_request = legacy_module.openai_chat_completions_request
+            legacy_max_tokens = int(self.config.get("num_predict") or 512)
 
             def legacy_request(*args: Any, **kwargs: Any) -> Any:
+                args, kwargs = _cap_legacy_request_tokens(
+                    args,
+                    kwargs,
+                    max_tokens=legacy_max_tokens,
+                )
                 return _normalize_openai_tool_response(
                     original_legacy_request(*args, **kwargs)
                 )
@@ -474,6 +480,57 @@ def _render_memory(manager: str, value: Any) -> str:
         if item:
             fields.append(f"{key}: {item}")
     return f"[{manager.removesuffix('_manager')}] " + " | ".join(fields)
+
+
+def _cap_legacy_request_tokens(
+    args: tuple[Any, ...],
+    kwargs: dict[str, Any],
+    *,
+    max_tokens: int,
+) -> tuple[tuple[Any, ...], dict[str, Any]]:
+    """Apply the configured output cap to MIRIX/MMA's legacy request path.
+
+    The legacy streaming fallback passes ``max_tokens=None`` to its request
+    model even when ``LLMConfig.max_tokens`` is set.  Without a cap, a local
+    vLLM request can generate until the context window and repeatedly outlive
+    the benchmark proxy timeout.
+    """
+    request = kwargs.get("chat_completion_request")
+    positional_index = 2
+    if request is None and len(args) > positional_index:
+        request = args[positional_index]
+    if request is None:
+        return args, kwargs
+
+    if isinstance(request, dict):
+        if (
+            request.get("max_tokens") is None
+            and request.get("max_completion_tokens") is None
+        ):
+            request["max_tokens"] = max_tokens
+        return args, kwargs
+
+    if (
+        getattr(request, "max_tokens", None) is not None
+        or getattr(request, "max_completion_tokens", None) is not None
+    ):
+        return args, kwargs
+    try:
+        request.max_tokens = max_tokens
+        return args, kwargs
+    except (AttributeError, TypeError, ValueError):
+        model_copy = getattr(request, "model_copy", None)
+        if not callable(model_copy):
+            return args, kwargs
+        request = model_copy(update={"max_tokens": max_tokens})
+        if "chat_completion_request" in kwargs:
+            kwargs = dict(kwargs)
+            kwargs["chat_completion_request"] = request
+        else:
+            mutable_args = list(args)
+            mutable_args[positional_index] = request
+            args = tuple(mutable_args)
+        return args, kwargs
 
 
 def _normalize_openai_tool_request(data: dict[str, Any]) -> dict[str, Any]:

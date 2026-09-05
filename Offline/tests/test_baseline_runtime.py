@@ -172,15 +172,20 @@ class BaselineProtocolTest(unittest.TestCase):
             def model_dump(self):
                 return self.payload
 
+        legacy_seen = {}
+
+        def fake_legacy_request(*_args, **kwargs):
+            legacy_seen["request"] = kwargs.get("chat_completion_request")
+            return FakeCompletion(**json.loads(json.dumps(textual)))
+
         legacy_module = SimpleNamespace(
-            openai_chat_completions_request=lambda *_args, **_kwargs: FakeCompletion(
-                **json.loads(json.dumps(textual))
-            )
+            openai_chat_completions_request=fake_legacy_request
         )
 
         module = SimpleNamespace(OpenAIClient=FakeOpenAIClient)
         adapter = object.__new__(MirixFamilyAdapter)
         adapter.package = "mirix"
+        adapter.config = {"num_predict": 512}
 
         def fake_import(name):
             if name.endswith(".openai_client"):
@@ -203,9 +208,10 @@ class BaselineProtocolTest(unittest.TestCase):
             json.loads(json.dumps(textual)), "converted"
         )
         converted_message = converted["choices"][0]["message"]
-        legacy_message = legacy_module.openai_chat_completions_request().model_dump()[
-            "choices"
-        ][0]["message"]
+        legacy_request = SimpleNamespace(max_tokens=None)
+        legacy_message = legacy_module.openai_chat_completions_request(
+            chat_completion_request=legacy_request
+        ).model_dump()["choices"][0]["message"]
         self.assertEqual(
             sync_message["tool_calls"][0]["function"]["name"], "insert_memory"
         )
@@ -220,6 +226,7 @@ class BaselineProtocolTest(unittest.TestCase):
         self.assertEqual(
             legacy_message["tool_calls"][0]["function"]["name"], "insert_memory"
         )
+        self.assertEqual(legacy_seen["request"].max_tokens, 512)
 
     def test_mirix_normalizes_pydantic_style_tool_response(self):
         class FakeCompletion:
