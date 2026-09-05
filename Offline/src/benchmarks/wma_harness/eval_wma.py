@@ -52,6 +52,7 @@ from benchmarks.baseline_runtime.protocol import (
 from benchmarks.io_utils import file_manifest, write_json_atomic, write_jsonl_atomic
 from benchmarks.question_filter import is_excluded_category, parse_excluded_categories
 from embedding.chunk_builder import build_wma_chunks_from_data, iter_wma_sample_files
+from evidence_policy.split_manifest import SplitManifestIndex, normalize_split_name
 
 
 VISUAL_CATEGORIES = {"VFR", "VS", "VU", "CMR", ""}
@@ -64,6 +65,31 @@ DEFAULT_WMA_DATA_DIR = Path(
 )
 
 
+def wma_manifest_question_id(
+    sample_id: str, checkpoint_id: str, qa_index: int
+) -> str:
+    """Canonical WMA question ID used by the split manifest."""
+    return f"{sample_id}:{checkpoint_id}:Q{qa_index:03d}"
+
+
+def _order_wma_jobs(
+    jobs: list[dict[str, Any]],
+    ordered_question_ids: tuple[str, ...] | None,
+    *,
+    sample_id: str,
+) -> list[dict[str, Any]]:
+    if ordered_question_ids is None:
+        return jobs
+    by_manifest_id = {str(row["manifest_question_id"]): row for row in jobs}
+    missing = [value for value in ordered_question_ids if value not in by_manifest_id]
+    if missing:
+        raise KeyError(
+            f"WMA manifest references {len(missing)} missing question(s) for "
+            f"{sample_id}: {missing[:5]}"
+        )
+    return [by_manifest_id[value] for value in ordered_question_ids]
+
+
 def prepare_sample_jobs(
     sample_path: Path,
     index_root: Path,
@@ -72,6 +98,7 @@ def prepare_sample_jobs(
     top_k: int,
     graph_options: dict[str, Any] | None,
     excluded_categories: frozenset[str] = frozenset(),
+    ordered_question_ids: tuple[str, ...] | None = None,
 ) -> list[dict[str, Any]]:
     if graph_options is not None:
         raise ValueError(
@@ -91,6 +118,9 @@ def prepare_sample_jobs(
     ordered_sessions = session_ids(payload)
     gold_points = build_gold_evidence_map(payload)
     jobs: list[dict[str, Any]] = []
+    selected_question_ids = (
+        set(ordered_question_ids) if ordered_question_ids is not None else None
+    )
     try:
         adapter.reset(sample_id, Path())
         for checkpoint in payload.get("qa_checkpoints", []) or []:
@@ -101,8 +131,18 @@ def prepare_sample_jobs(
             )
             visible_session_set = set(visible_sessions)
             for qa_index, qa in enumerate(checkpoint.get("questions", []) or [], start=1):
+                manifest_question_id = wma_manifest_question_id(
+                    sample_id, checkpoint_id, qa_index
+                )
+                if (
+                    selected_question_ids is not None
+                    and manifest_question_id not in selected_question_ids
+                ):
+                    continue
                 category = str(qa.get("question_type_abbrev", ""))
-                if is_excluded_category(category, excluded_categories):
+                if selected_question_ids is None and is_excluded_category(
+                    category, excluded_categories
+                ):
                     continue
                 question = str(qa.get("question", ""))
                 query_id = make_query_id(
@@ -146,6 +186,7 @@ def prepare_sample_jobs(
                 jobs.append(
                     {
                         "query_id": query_id,
+                        "manifest_question_id": manifest_question_id,
                         "sample_id": sample_id,
                         "dataset": sample_id,
                         "checkpoint_id": checkpoint_id,
@@ -187,7 +228,9 @@ def prepare_sample_jobs(
                 )
     finally:
         adapter.close()
-    return jobs
+    return _order_wma_jobs(
+        jobs, ordered_question_ids, sample_id=sample_id
+    )
 
 
 def prepare_native_sample_jobs(
@@ -200,6 +243,7 @@ def prepare_native_sample_jobs(
     config_overrides: dict[str, Any],
     memory_snapshots: list[dict[str, Any]] | None = None,
     excluded_categories: frozenset[str] = frozenset(),
+    ordered_question_ids: tuple[str, ...] | None = None,
 ) -> list[dict[str, Any]]:
     """Stream one WMA sample through a native baseline without future leakage."""
     baseline = canonical_name(baseline)
@@ -226,6 +270,9 @@ def prepare_native_sample_jobs(
 
     adapter = create_adapter(baseline, config_overrides=config_overrides)
     jobs: list[dict[str, Any]] = []
+    selected_question_ids = (
+        set(ordered_question_ids) if ordered_question_ids is not None else None
+    )
     ingested_through = -1
     try:
         adapter.reset(sample_id, state_root / sample_id)
@@ -239,8 +286,18 @@ def prepare_native_sample_jobs(
             checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
             visible_session_set = set(visible_sessions)
             for qa_index, qa in enumerate(checkpoint.get("questions", []) or [], start=1):
+                manifest_question_id = wma_manifest_question_id(
+                    sample_id, checkpoint_id, qa_index
+                )
+                if (
+                    selected_question_ids is not None
+                    and manifest_question_id not in selected_question_ids
+                ):
+                    continue
                 category = str(qa.get("question_type_abbrev", ""))
-                if is_excluded_category(category, excluded_categories):
+                if selected_question_ids is None and is_excluded_category(
+                    category, excluded_categories
+                ):
                     continue
                 question = str(qa.get("question", ""))
                 query_id = make_query_id(
@@ -271,6 +328,7 @@ def prepare_native_sample_jobs(
                 jobs.append(
                     {
                         "query_id": query_id,
+                        "manifest_question_id": manifest_question_id,
                         "sample_id": sample_id,
                         "dataset": sample_id,
                         "checkpoint_id": checkpoint_id,
@@ -314,7 +372,9 @@ def prepare_native_sample_jobs(
             memory_snapshots.extend(row.to_dict() for row in adapter.snapshot())
     finally:
         adapter.close()
-    return jobs
+    return _order_wma_jobs(
+        jobs, ordered_question_ids, sample_id=sample_id
+    )
 
 
 def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -355,6 +415,7 @@ def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, 
     )
     trace = {
         "query_id": job["query_id"],
+        "manifest_question_id": job["manifest_question_id"],
         "sample_id": job["sample_id"],
         "checkpoint_id": job["checkpoint_id"],
         "question": job["question"],
@@ -372,6 +433,7 @@ def to_pipeline_qa_record(result: dict[str, Any], trace: dict[str, Any]) -> dict
     return {
         "sample_id": result["sample_id"],
         "sample_uuid": result["sample_id"],
+        "manifest_question_id": result["manifest_question_id"],
         "checkpoint_id": result["checkpoint_id"],
         "question": result["question"],
         "gold_answer": result["original_answer"],
@@ -425,6 +487,8 @@ def _run_signature(
         "skip_model_check",
     }
     input_paths: list[Path] = list(sample_paths)
+    if args.split_manifest:
+        input_paths.append(Path(args.split_manifest))
     if args.baseline == "HiveMem":
         query_root = Path(args.query_embedding_dir)
         input_paths.extend(
@@ -460,6 +524,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run a memory baseline on WorldMemArena.")
     parser.add_argument("--baseline", default="HiveMem")
     parser.add_argument("--data-dir", default=str(DEFAULT_WMA_DATA_DIR))
+    parser.add_argument("--split-manifest", default="")
+    parser.add_argument("--split", default="")
     parser.add_argument("--index-root", default="")
     parser.add_argument("--query-embedding-dir", default="")
     parser.add_argument("--baseline-state-dir", default="")
@@ -535,7 +601,21 @@ def main() -> None:
         },
     )
     args = parser.parse_args()
-    excluded_categories = parse_excluded_categories(args.exclude_categories)
+    if bool(args.split_manifest) != bool(args.split):
+        parser.error("--split-manifest and --split must be provided together")
+    manifest_index = (
+        SplitManifestIndex(args.split_manifest) if args.split_manifest else None
+    )
+    manifest_split = normalize_split_name(args.split) if args.split else ""
+    if manifest_index is not None and (args.sample_id or args.max_qa):
+        parser.error(
+            "--sample-id/--max-qa cannot be combined with strict manifest selection"
+        )
+    excluded_categories = (
+        frozenset()
+        if manifest_index is not None
+        else parse_excluded_categories(args.exclude_categories)
+    )
     try:
         args.baseline = canonical_name(args.baseline)
     except KeyError as exc:
@@ -555,11 +635,30 @@ def main() -> None:
         parser.error("Invalid QA limit, retry count, or request timeout")
 
     data_dir = Path(args.data_dir)
-    selected = set(args.sample_id)
-    paths = [
-        path for path in iter_wma_sample_files(data_dir)
-        if not selected or path.stem in selected
-    ]
+    available_paths = iter_wma_sample_files(data_dir)
+    ordered_ids_by_sample: dict[str, tuple[str, ...]] = {}
+    if manifest_index is not None:
+        manifest_rows = manifest_index.conversations(
+            manifest_split, data_source="worldmemarena_lifelong"
+        )
+        paths_by_stem = {path.stem: path for path in available_paths}
+        missing_samples = [
+            row.source_id for row in manifest_rows if row.source_id not in paths_by_stem
+        ]
+        if missing_samples:
+            raise FileNotFoundError(
+                f"Missing WMA manifest sample(s): {missing_samples}"
+            )
+        paths = [paths_by_stem[row.source_id] for row in manifest_rows]
+        ordered_ids_by_sample = {
+            row.source_id: row.question_ids for row in manifest_rows
+        }
+    else:
+        selected = set(args.sample_id)
+        paths = [
+            path for path in available_paths
+            if not selected or path.stem in selected
+        ]
     if not paths:
         raise FileNotFoundError(f"No matching WorldMemArena samples under {data_dir}")
     source_questions = 0
@@ -625,6 +724,7 @@ def main() -> None:
                 path, Path(args.index_root), cache,
                 top_k=args.top_k, graph_options=graph_options,
                 excluded_categories=excluded_categories,
+                ordered_question_ids=ordered_ids_by_sample.get(path.stem),
             )
         else:
             sample_jobs = prepare_native_sample_jobs(
@@ -650,6 +750,7 @@ def main() -> None:
                 },
                 memory_snapshots=sample_snapshots,
                 excluded_categories=excluded_categories,
+                ordered_question_ids=ordered_ids_by_sample.get(path.stem),
             )
         artifact = {
             "sample_id": path.stem,
@@ -672,6 +773,19 @@ def main() -> None:
         item_key=lambda path: path.stem,
     )
     jobs = [job for artifact in artifacts for job in artifact["jobs"]]
+    expected_manifest_question_ids = (
+        manifest_index.ordered_question_ids(
+            manifest_split, data_source="worldmemarena_lifelong"
+        )
+        if manifest_index is not None
+        else None
+    )
+    if expected_manifest_question_ids is not None:
+        actual = tuple(str(job.get("manifest_question_id") or "") for job in jobs)
+        if actual != expected_manifest_question_ids:
+            raise RuntimeError(
+                "WMA prepared jobs do not exactly match manifest question order"
+            )
     memory_snapshots = [
         row for artifact in artifacts for row in artifact.get("snapshots", [])
     ]
@@ -770,6 +884,18 @@ def main() -> None:
             f"{len(missing_traces)} traces missing"
         )
     results = [results_by_id[query_id] for query_id in job_ids]
+    if expected_manifest_question_ids is not None:
+        result_ids = tuple(
+            str(row.get("manifest_question_id") or "") for row in results
+        )
+        trace_ids = tuple(
+            str(trace_by_id[query_id].get("manifest_question_id") or "")
+            for query_id in job_ids
+        )
+        if result_ids != expected_manifest_question_ids:
+            raise RuntimeError("WMA results do not match manifest question order")
+        if trace_ids != expected_manifest_question_ids:
+            raise RuntimeError("WMA retrieval traces do not match manifest question order")
     write_json_atomic(result_dir / "results.json", results)
     if args.baseline == "HiveMem":
         memory_snapshots = load_hivemem_snapshot(
@@ -796,6 +922,11 @@ def main() -> None:
         "completed": len(results),
         "answer_errors": answer_errors,
         "baseline_runtime": baseline_metadata(args.baseline),
+        "selection_mode": "strict_manifest" if manifest_index is not None else "legacy",
+        "split_manifest_sha256": (
+            manifest_index.file_sha256 if manifest_index is not None else ""
+        ),
+        "ordered_question_ids": list(expected_manifest_question_ids or ()),
     }
     write_json_atomic(result_dir / "run_manifest.json", manifest | {"run_signature": signature})
     pipeline_path = result_dir / "pipeline_qa.jsonl"

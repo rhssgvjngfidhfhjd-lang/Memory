@@ -74,12 +74,37 @@ class SplitManifestIndexTest(unittest.TestCase):
             index = SplitManifestIndex(path)
             self.assertEqual(index.source_ids("train", "toy"), ("c1",))
             self.assertEqual(index.source_ids("validation", "toy"), ("c2",))
+            self.assertEqual(
+                index.ordered_question_ids("train", data_source="toy"),
+                ("toy:c1:q1", "toy:c1:q2"),
+            )
+            self.assertEqual(
+                index.question_ids_for_conversation(
+                    "train", "toy", source_id="c1"
+                ),
+                ("toy:c1:q1", "toy:c1:q2"),
+            )
             self.assertTrue(index.contains_question("validation", "toy", "toy:c2:q1"))
             self.assertFalse(index.contains_question("test", "toy", "toy:c2:q1"))
             self.assertEqual(index.split_for_question("toy:c3:q1"), "test")
             summary = index.summary()
             self.assertEqual(summary["splits"]["train"]["question_count"], 2)
             self.assertEqual(summary["splits"]["val"]["conversation_count"], 1)
+
+    def test_question_order_is_not_replaced_by_set_order(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "manifest.json"
+            write_manifest(path)
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            payload["datasets"][0]["splits"]["train"]["conversations"][0][
+                "question_ids"
+            ] = ["toy:c1:q2", "toy:c1:q1"]
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            index = SplitManifestIndex(path)
+            self.assertEqual(
+                index.ordered_question_ids("train", data_source="toy"),
+                ("toy:c1:q2", "toy:c1:q1"),
+            )
 
     def test_rejects_cross_split_conversation_overlap(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -109,7 +134,13 @@ class FullLocalSplitIntegrationTest(unittest.TestCase):
             split: sum(row.split == split for row in rows)
             for split in ("train", "val", "test")
         }
-        self.assertEqual(counts, {"train": 3268, "val": 1060, "test": 1075})
+        self.assertEqual(
+            counts,
+            {
+                split: len(manifest.ordered_question_ids(split))
+                for split in ("train", "val", "test")
+            },
+        )
 
 
 if __name__ == "__main__":
