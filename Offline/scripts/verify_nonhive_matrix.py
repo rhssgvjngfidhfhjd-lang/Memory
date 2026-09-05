@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -45,6 +46,8 @@ EXPECTED_SAMPLE_COUNTS = {
     "WorldMemArena": 38,
     "H2HMEM": 25,
 }
+JUDGE_MODEL = "openai/gpt-4o-mini"
+JUDGE_BASE_URL = "https://openrouter.ai/api/v1"
 NATIVE_MEMORY_PATTERNS = {
     "OmniSimpleMem": ("index/mau_store/*.jsonl",),
     "M2A": ("raw.db",),
@@ -59,6 +62,14 @@ NATIVE_MEMORY_PATTERNS = {
         "graph/semantic/vdb_entities.json",
     ),
 }
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def _load_dict(path: Path) -> dict[str, Any]:
@@ -85,7 +96,7 @@ def validate_answer_metrics(path: Path, expected: int) -> None:
     _score(metrics.get("em"), "em")
 
 
-def validate_judge_metrics(path: Path, expected: int) -> None:
+def validate_judge_metrics(path: Path, expected: int, *, deep: bool = False) -> None:
     metrics = _load_dict(path)
     mismatched = {
         "count": metrics.get("count"),
@@ -101,6 +112,63 @@ def validate_judge_metrics(path: Path, expected: int) -> None:
     ):
         raise ValueError(f"incomplete judge metrics: {mismatched}")
     _score(metrics.get("accuracy"), "judge accuracy")
+    if not deep:
+        return
+    if metrics.get("model") != JUDGE_MODEL:
+        raise ValueError(f"unexpected Judge model: {metrics.get('model')!r}")
+
+    result_dir = path.parent
+    source_path = result_dir / "results.json"
+    raw_path = result_dir / "llm_judge_results.json"
+    checkpoint_path = result_dir / "llm_judge_checkpoint.json"
+    source = json.loads(source_path.read_text(encoding="utf-8"))
+    raw = json.loads(raw_path.read_text(encoding="utf-8"))
+    checkpoint = _load_dict(checkpoint_path)
+    if not isinstance(source, list) or len(source) != expected:
+        raise ValueError("Judge source result count mismatch")
+    if not isinstance(raw, list) or len(raw) != expected:
+        raise ValueError("raw Judge result count mismatch")
+    signature = checkpoint.get("signature") or {}
+    judge_config = signature.get("judge") or {}
+    if (
+        checkpoint.get("completed") != expected
+        or checkpoint.get("expected") != expected
+        or signature.get("results_sha256") != _sha256_file(source_path)
+        or judge_config.get("model") != JUDGE_MODEL
+        or judge_config.get("base_url") != JUDGE_BASE_URL
+        or float(judge_config.get("temperature")) != 0.0
+    ):
+        raise ValueError("Judge checkpoint does not match source results or configuration")
+
+    indexed = {int(row.get("index") or 0): row for row in raw}
+    if set(indexed) != set(range(1, expected + 1)):
+        raise ValueError("raw Judge indices are missing or duplicated")
+    score_sum = 0.0
+    correct = 0
+    for index, source_row in enumerate(source, start=1):
+        row = indexed[index]
+        score = _score(row.get("score"), f"Judge row {index} score")
+        score_sum += score
+        correct += int(score == 1.0)
+        judge = row.get("judge") or {}
+        if (
+            row.get("label") == "judge_error"
+            or judge.get("status") != "complete"
+            or judge.get("model") != JUDGE_MODEL
+            or str(row.get("question") or "") != str(source_row.get("question") or "")
+            or str(row.get("category") or "") != str(source_row.get("category") or "")
+            or str(row.get("prediction") or "")
+            != str(source_row.get("system_answer") or "")
+        ):
+            raise ValueError(f"raw Judge row {index} does not match its source result")
+    average = score_sum / expected
+    if (
+        int(metrics.get("correct")) != correct
+        or not math.isclose(float(metrics.get("score_sum")), score_sum, abs_tol=1e-12)
+        or not math.isclose(float(metrics.get("average_score")), average, abs_tol=1e-12)
+        or not math.isclose(float(metrics.get("accuracy")), average, abs_tol=1e-12)
+    ):
+        raise ValueError("Judge aggregate does not match raw per-question scores")
 
 
 def validate_mb_call_metrics(
@@ -360,6 +428,7 @@ def main() -> None:
         "judge": lambda job: validate_judge_metrics(
             output_root / job.benchmark / job.method / "llm_judge_metrics.json",
             EXPECTED_RESULT_COUNTS[job.benchmark],
+            deep=True,
         ),
         "mb_calls": lambda job: validate_mb_call_metrics(
             mb_call_root / job.benchmark / job.method / "metrics.json",

@@ -1,4 +1,5 @@
 import json
+import hashlib
 
 import pytest
 
@@ -38,6 +39,66 @@ def test_answer_and_judge_metric_validation(tmp_path):
     _write(answer, {"count": 2, "f1": 0.25, "em": 0.5})
     with pytest.raises(ValueError, match="expected 3"):
         validate_answer_metrics(answer, 3)
+
+
+def test_deep_judge_validation_ties_raw_scores_to_source(tmp_path):
+    source = [
+        {"question": "q1", "category": "FR", "system_answer": "a1"},
+        {"question": "q2", "category": "TR", "system_answer": "a2"},
+    ]
+    source_path = tmp_path / "results.json"
+    _write(source_path, source)
+    raw = [
+        {
+            "index": index,
+            "question": row["question"],
+            "category": row["category"],
+            "prediction": row["system_answer"],
+            "score": score,
+            "label": "Correct" if score == 1 else "Partial",
+            "judge": {
+                "status": "complete",
+                "model": "openai/gpt-4o-mini",
+            },
+        }
+        for index, (row, score) in enumerate(zip(source, (1.0, 0.5)), start=1)
+    ]
+    _write(tmp_path / "llm_judge_results.json", raw)
+    _write(
+        tmp_path / "llm_judge_checkpoint.json",
+        {
+            "completed": 2,
+            "expected": 2,
+            "signature": {
+                "results_sha256": hashlib.sha256(source_path.read_bytes()).hexdigest(),
+                "judge": {
+                    "model": "openai/gpt-4o-mini",
+                    "base_url": "https://openrouter.ai/api/v1",
+                    "temperature": 0.0,
+                },
+            },
+        },
+    )
+    metrics_path = tmp_path / "llm_judge_metrics.json"
+    _write(
+        metrics_path,
+        {
+            "model": "openai/gpt-4o-mini",
+            "count": 2,
+            "valid_count": 2,
+            "judge_errors": 0,
+            "provisional": False,
+            "correct": 1,
+            "score_sum": 1.5,
+            "average_score": 0.75,
+            "accuracy": 0.75,
+        },
+    )
+    validate_judge_metrics(metrics_path, 2, deep=True)
+    raw[1]["prediction"] = "wrong source row"
+    _write(tmp_path / "llm_judge_results.json", raw)
+    with pytest.raises(ValueError, match="source result"):
+        validate_judge_metrics(metrics_path, 2, deep=True)
 
 
 def test_mb_call_metric_validation(tmp_path):
