@@ -101,6 +101,13 @@ class MemVerseAdapter(BaselineAdapter):
         if state_dir.exists() and not self._reuse_existing_state:
             shutil.rmtree(state_dir)
         state_dir.mkdir(parents=True, exist_ok=True)
+        repaired_caches = _repair_corrupt_lightrag_caches(state_dir)
+        for cache_path, backup_path in repaired_caches:
+            print(
+                f"MemVerse quarantined corrupt cache {cache_path} as {backup_path}",
+                file=sys.stderr,
+                flush=True,
+            )
         self.state_dir = state_dir
         self._state_path = state_dir / "adapter_state.json"
         if self._loop.is_closed():
@@ -161,14 +168,22 @@ class MemVerseAdapter(BaselineAdapter):
                 kwargs,
                 configured_max_tokens=executor_max_tokens,
             )
-            history_messages = _bounded_history_messages(
-                history_messages or [],
-                prompt=str(prompt),
+            max_input_tokens = int(
+                config.get("memverse_max_input_tokens") or 24000
+            )
+            prompt = _bounded_prompt(
+                str(prompt),
                 system_prompt=str(system_prompt or ""),
                 tokenizer=tokenizer,
-                max_input_tokens=int(
-                    config.get("memverse_max_input_tokens") or 24000
-                ),
+                max_input_tokens=max_input_tokens,
+                history_message_count=len(history_messages or []),
+            )
+            history_messages = _bounded_history_messages(
+                history_messages or [],
+                prompt=prompt,
+                system_prompt=str(system_prompt or ""),
+                tokenizer=tokenizer,
+                max_input_tokens=max_input_tokens,
             )
             return await openai_complete_if_cache(
                 str(config["executor_model"]),
@@ -622,3 +637,80 @@ def _bounded_history_messages(
         break
     bounded.reverse()
     return bounded
+
+
+def _bounded_prompt(
+    prompt: str,
+    *,
+    system_prompt: str,
+    tokenizer: Any,
+    max_input_tokens: int,
+    history_message_count: int = 0,
+) -> str:
+    """Bound an oversized LightRAG prompt while retaining its useful ends.
+
+    LightRAG extraction prompts place the instructions and examples first and
+    the current source text last.  Retaining both ends is therefore safer than
+    keeping only a prefix or suffix.  History is bounded separately after this
+    function returns.
+    """
+    if max_input_tokens <= 0:
+        raise ValueError("max_input_tokens must be positive")
+    framing_reserve = 256 + 16 * (history_message_count + 2)
+    prompt_budget = max_input_tokens - framing_reserve
+    prompt_budget -= len(tokenizer.encode(system_prompt))
+    if prompt_budget <= 0:
+        return ""
+
+    tokens = tokenizer.encode(prompt)
+    if len(tokens) <= prompt_budget:
+        return prompt
+
+    marker_tokens = tokenizer.encode(
+        "\n[... middle truncated to fit executor context ...]\n"
+    )
+    # Leave a small retokenization margin because concatenated decoded spans
+    # can tokenize a few tokens differently at their boundaries.
+    content_budget = max(prompt_budget - len(marker_tokens) - 64, 1)
+    head_size = max(content_budget // 3, 1)
+    tail_size = max(content_budget - head_size, 0)
+    clipped_tokens = tokens[:head_size] + marker_tokens
+    if tail_size:
+        clipped_tokens += tokens[-tail_size:]
+    clipped = tokenizer.decode(clipped_tokens)
+    encoded = tokenizer.encode(clipped)
+    if len(encoded) <= prompt_budget:
+        return clipped
+    return tokenizer.decode(encoded[:prompt_budget])
+
+
+def _repair_corrupt_lightrag_caches(
+    state_dir: Path,
+) -> list[tuple[Path, Path]]:
+    """Quarantine truncated, disposable LightRAG response caches.
+
+    Interrupted JSON writes can leave a response cache unparsable and prevent
+    an otherwise intact graph from reopening.  Only the derived LLM cache is
+    eligible for repair; authoritative documents, graph data, and vectors are
+    deliberately left untouched.
+    """
+    repaired: list[tuple[Path, Path]] = []
+    graph_root = state_dir / "graph"
+    for cache_path in sorted(
+        graph_root.glob("*/kv_store_llm_response_cache.json")
+    ):
+        try:
+            with cache_path.open(encoding="utf-8") as handle:
+                json.load(handle)
+        except json.JSONDecodeError:
+            backup_path = cache_path.with_name(cache_path.name + ".corrupt")
+            suffix = 1
+            while backup_path.exists():
+                backup_path = cache_path.with_name(
+                    f"{cache_path.name}.corrupt.{suffix}"
+                )
+                suffix += 1
+            cache_path.replace(backup_path)
+            write_json_atomic(cache_path, {})
+            repaired.append((cache_path, backup_path))
+    return repaired

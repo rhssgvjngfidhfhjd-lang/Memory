@@ -40,6 +40,8 @@ from benchmarks.baseline_runtime.adapters.memverse import (
     _CappedOpenAIClientProxy,
     _apply_executor_max_tokens,
     _bounded_history_messages,
+    _bounded_prompt,
+    _repair_corrupt_lightrag_caches,
 )
 from benchmarks.baseline_runtime.provenance import ProvenanceIndex
 from benchmarks.memgallery_harness.runner.answer_client import AnswerResponse
@@ -647,6 +649,67 @@ class BaselineProtocolTest(unittest.TestCase):
         self.assertEqual(bounded[0]["role"], "assistant")
         self.assertGreater(len(bounded[0]["content"]), 0)
         self.assertLess(len(bounded[0]["content"]), 1000)
+
+    def test_memverse_bounds_oversized_prompt_and_preserves_ends(self):
+        class CharacterTokenizer:
+            @staticmethod
+            def encode(text):
+                return list(text)
+
+            @staticmethod
+            def decode(tokens):
+                return "".join(tokens)
+
+        prompt = "INSTRUCTIONS:" + "x" * 1000 + ":CURRENT_SOURCE"
+        bounded = _bounded_prompt(
+            prompt,
+            system_prompt="system",
+            tokenizer=CharacterTokenizer(),
+            max_input_tokens=600,
+            history_message_count=2,
+        )
+        self.assertTrue(bounded.startswith("INSTRUCTIONS:"))
+        self.assertTrue(bounded.endswith(":CURRENT_SOURCE"))
+        self.assertIn("middle truncated", bounded)
+        self.assertLessEqual(
+            len(CharacterTokenizer.encode(bounded)),
+            600 - (256 + 16 * 4) - len("system"),
+        )
+
+        short = "short prompt"
+        self.assertEqual(
+            _bounded_prompt(
+                short,
+                system_prompt="system",
+                tokenizer=CharacterTokenizer(),
+                max_input_tokens=400,
+            ),
+            short,
+        )
+
+    def test_memverse_repairs_only_corrupt_lightrag_response_cache(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            state_dir = Path(temporary)
+            core = state_dir / "graph" / "core"
+            core.mkdir(parents=True)
+            cache = core / "kv_store_llm_response_cache.json"
+            cache.write_text('{"unfinished":', encoding="utf-8")
+            authoritative = core / "kv_store_full_docs.json"
+            authoritative.write_text('{"keep": true}', encoding="utf-8")
+
+            repaired = _repair_corrupt_lightrag_caches(state_dir)
+
+            self.assertEqual(len(repaired), 1)
+            self.assertEqual(repaired[0][0], cache)
+            self.assertEqual(json.loads(cache.read_text(encoding="utf-8")), {})
+            self.assertEqual(
+                repaired[0][1].read_text(encoding="utf-8"),
+                '{"unfinished":',
+            )
+            self.assertEqual(
+                json.loads(authoritative.read_text(encoding="utf-8")),
+                {"keep": True},
+            )
 
     def test_memverse_replaces_explicit_none_max_tokens(self):
         kwargs = {"max_tokens": None, "temperature": 0}
