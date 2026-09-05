@@ -83,18 +83,37 @@ class MemVerseAdapter(BaselineAdapter):
             openai_embed,
         )
         from MemoryKB.Long_Term_Memory.Graph_Construction.lightrag.utils import (
+            TiktokenTokenizer,
             wrap_embedding_func_with_attrs,
         )
 
         config = self.config
+        tokenizer = TiktokenTokenizer()
 
         async def complete(prompt, system_prompt=None, history_messages=None, **kwargs):
             kwargs.pop("keyword_extraction", None)
+            kwargs.setdefault(
+                "max_tokens",
+                int(
+                    config.get("executor_max_tokens")
+                    or config.get("num_predict")
+                    or 512
+                ),
+            )
+            history_messages = _bounded_history_messages(
+                history_messages or [],
+                prompt=str(prompt),
+                system_prompt=str(system_prompt or ""),
+                tokenizer=tokenizer,
+                max_input_tokens=int(
+                    config.get("memverse_max_input_tokens") or 24000
+                ),
+            )
             return await openai_complete_if_cache(
                 str(config["executor_model"]),
                 prompt,
                 system_prompt=system_prompt,
-                history_messages=history_messages or [],
+                history_messages=history_messages,
                 base_url=str(config["executor_base_url"]),
                 api_key=os.getenv("OPENAI_API_KEY") or "EMPTY",
                 **kwargs,
@@ -500,3 +519,45 @@ def _last_jsonl_row(path: Path) -> dict[str, Any] | None:
             if lines and (position == 0 or len(lines) >= 2):
                 return json.loads(lines[-1].decode("utf-8-sig"))
     return None
+
+
+def _bounded_history_messages(
+    history_messages: list[dict[str, Any]],
+    *,
+    prompt: str,
+    system_prompt: str,
+    tokenizer: Any,
+    max_input_tokens: int,
+) -> list[dict[str, Any]]:
+    """Keep recent LightRAG history inside the executor context window.
+
+    Entity gleaning includes the complete previous extraction response.  A
+    verbose response can otherwise make the next request exceed the 32k vLLM
+    limit even though each source chunk is small.  Reserve room for chat
+    framing and retain the newest history first, clipping only the oldest part
+    that still fits.
+    """
+    if not history_messages:
+        return []
+    framing_reserve = 256 + 16 * (len(history_messages) + 2)
+    available = max_input_tokens - framing_reserve
+    available -= len(tokenizer.encode(system_prompt))
+    available -= len(tokenizer.encode(prompt))
+    if available <= 0:
+        return []
+
+    bounded: list[dict[str, Any]] = []
+    for message in reversed(history_messages):
+        content = str(message.get("content") or "")
+        tokens = tokenizer.encode(content)
+        if len(tokens) <= available:
+            bounded.append(dict(message))
+            available -= len(tokens)
+            continue
+        if available > 0:
+            clipped = dict(message)
+            clipped["content"] = tokenizer.decode(tokens[-available:])
+            bounded.append(clipped)
+        break
+    bounded.reverse()
+    return bounded

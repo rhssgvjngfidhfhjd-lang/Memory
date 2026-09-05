@@ -620,8 +620,14 @@ def _normalize_native_tool_arguments(name: str, arguments: Any) -> Any:
 
 
 def _tool_payload(text: str) -> dict[str, Any] | None:
-    match = re.search(r"<tool_call>\s*(\{.*?\})\s*</tool_call>", text, re.DOTALL)
-    candidate = match.group(1) if match else text
+    # Qwen occasionally finishes a valid JSON object at its generation limit
+    # without emitting the optional closing tag.  Treat the opening tag as the
+    # authoritative boundary so a valid native memory write is not discarded.
+    if "<tool_call>" in text:
+        candidate = text.split("<tool_call>", 1)[1]
+        candidate = candidate.split("</tool_call>", 1)[0].strip()
+    else:
+        candidate = text
     try:
         value = json.loads(candidate)
     except (json.JSONDecodeError, TypeError):

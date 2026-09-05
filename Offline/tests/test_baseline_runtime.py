@@ -36,6 +36,7 @@ from benchmarks.baseline_runtime.adapters.mirix_family import (
 )
 from benchmarks.baseline_runtime.adapters.omni_simplemem import OmniSimpleMemAdapter
 from benchmarks.baseline_runtime.adapters.memverse import MemVerseAdapter
+from benchmarks.baseline_runtime.adapters.memverse import _bounded_history_messages
 from benchmarks.baseline_runtime.provenance import ProvenanceIndex
 from benchmarks.memgallery_harness.runner.answer_client import AnswerResponse
 from benchmarks.memgallery_harness.eval_memgallery import run_dataset
@@ -253,6 +254,26 @@ class BaselineProtocolTest(unittest.TestCase):
                         "content": (
                             '<tool_call>\n{"name":"insert_memory",'
                             '"arguments":{"title":"Almond"}}\n</tool_call>'
+                        ),
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        }
+        message = _normalize_openai_tool_tags(response)["choices"][0]["message"]
+        self.assertIsNone(message["content"])
+        function = message["tool_calls"][0]["function"]
+        self.assertEqual(function["name"], "insert_memory")
+        self.assertEqual(json.loads(function["arguments"]), {"title": "Almond"})
+
+    def test_mirix_converts_tool_call_without_closing_tag(self):
+        response = {
+            "choices": [
+                {
+                    "message": {
+                        "content": (
+                            '<tool_call>\n{"name":"insert_memory",'
+                            '"arguments":{"title":"Almond"}}'
                         ),
                         "tool_calls": [],
                     }
@@ -544,6 +565,32 @@ class BaselineProtocolTest(unittest.TestCase):
             adapter._loop.close()
         self.assertEqual(max_active, 3)
         self.assertEqual(len(result.items), 3)
+
+    def test_memverse_bounds_verbose_gleaning_history(self):
+        class CharacterTokenizer:
+            @staticmethod
+            def encode(text):
+                return list(text)
+
+            @staticmethod
+            def decode(tokens):
+                return "".join(tokens)
+
+        history = [
+            {"role": "user", "content": "old-prompt"},
+            {"role": "assistant", "content": "x" * 1000},
+        ]
+        bounded = _bounded_history_messages(
+            history,
+            prompt="continue",
+            system_prompt="system",
+            tokenizer=CharacterTokenizer(),
+            max_input_tokens=400,
+        )
+        self.assertEqual(len(bounded), 1)
+        self.assertEqual(bounded[0]["role"], "assistant")
+        self.assertGreater(len(bounded[0]["content"]), 0)
+        self.assertLess(len(bounded[0]["content"]), 1000)
 
     def test_parallel_map_waits_for_other_samples_before_reporting_failure(self):
         visited: list[int] = []
