@@ -31,6 +31,7 @@ from benchmarks.baseline_runtime.registry import (
 from benchmarks.baseline_runtime.adapters.mirix_family import (
     MirixFamilyAdapter,
     _normalize_openai_tool_request,
+    _normalize_openai_tool_response,
     _normalize_openai_tool_tags,
 )
 from benchmarks.baseline_runtime.adapters.omni_simplemem import OmniSimpleMemAdapter
@@ -163,12 +164,33 @@ class BaselineProtocolTest(unittest.TestCase):
             def convert_response_to_chat_completion(self, response_data, marker):
                 return response_data, marker
 
+        class FakeCompletion:
+            def __init__(self, **payload):
+                self.payload = payload
+
+            def model_dump(self):
+                return self.payload
+
+        legacy_module = SimpleNamespace(
+            openai_chat_completions_request=lambda *_args, **_kwargs: FakeCompletion(
+                **json.loads(json.dumps(textual))
+            )
+        )
+
         module = SimpleNamespace(OpenAIClient=FakeOpenAIClient)
         adapter = object.__new__(MirixFamilyAdapter)
         adapter.package = "mirix"
+
+        def fake_import(name):
+            if name.endswith(".openai_client"):
+                return module
+            if name.endswith(".llm_api_tools"):
+                return legacy_module
+            raise AssertionError(name)
+
         with patch(
             "benchmarks.baseline_runtime.adapters.mirix_family.importlib.import_module",
-            return_value=module,
+            side_effect=fake_import,
         ):
             adapter._patch_openai_tool_compat()
 
@@ -180,6 +202,9 @@ class BaselineProtocolTest(unittest.TestCase):
             json.loads(json.dumps(textual)), "converted"
         )
         converted_message = converted["choices"][0]["message"]
+        legacy_message = legacy_module.openai_chat_completions_request().model_dump()[
+            "choices"
+        ][0]["message"]
         self.assertEqual(
             sync_message["tool_calls"][0]["function"]["name"], "insert_memory"
         )
@@ -191,6 +216,34 @@ class BaselineProtocolTest(unittest.TestCase):
             "insert_memory",
         )
         self.assertEqual(marker, "converted")
+        self.assertEqual(
+            legacy_message["tool_calls"][0]["function"]["name"], "insert_memory"
+        )
+
+    def test_mirix_normalizes_pydantic_style_tool_response(self):
+        class FakeCompletion:
+            def __init__(self, **payload):
+                self.payload = payload
+
+            def model_dump(self):
+                return self.payload
+
+        response = FakeCompletion(
+            choices=[
+                {
+                    "message": {
+                        "content": (
+                            '<tool_call>{"name":"finish",'
+                            '"arguments":{}}</tool_call>'
+                        ),
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        )
+        normalized = _normalize_openai_tool_response(response)
+        message = normalized.model_dump()["choices"][0]["message"]
+        self.assertEqual(message["tool_calls"][0]["function"]["name"], "finish")
 
     def test_mirix_converts_qwen_textual_tool_selection(self):
         response = {

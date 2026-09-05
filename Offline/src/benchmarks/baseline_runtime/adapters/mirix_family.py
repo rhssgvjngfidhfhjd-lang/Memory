@@ -131,6 +131,23 @@ class MirixFamilyAdapter(BaselineAdapter):
         )
         client_class._offline_tool_compat = True
 
+        # MIRIX/MMA still fall back to the legacy llm_api_tools.create path
+        # for streaming-enabled agent steps. That path bypasses OpenAIClient
+        # completely and calls this imported request function directly.
+        legacy_module = importlib.import_module(
+            f"{self.package}.llm_api.llm_api_tools"
+        )
+        if not getattr(legacy_module, "_offline_tool_compat", False):
+            original_legacy_request = legacy_module.openai_chat_completions_request
+
+            def legacy_request(*args: Any, **kwargs: Any) -> Any:
+                return _normalize_openai_tool_response(
+                    original_legacy_request(*args, **kwargs)
+                )
+
+            legacy_module.openai_chat_completions_request = legacy_request
+            legacy_module._offline_tool_compat = True
+
     def _ensure_package_importable(self) -> None:
         """Load MMA's uppercase source directory under its expected lowercase name."""
         if self.baseline != "MMA" or self.package in sys.modules:
@@ -522,6 +539,17 @@ def _normalize_openai_tool_tags(response: dict[str, Any]) -> dict[str, Any]:
             }
         ]
     return response
+
+
+def _normalize_openai_tool_response(response: Any) -> Any:
+    """Normalize either a raw dict or MIRIX's Pydantic response model."""
+    if isinstance(response, dict):
+        return _normalize_openai_tool_tags(response)
+    model_dump = getattr(response, "model_dump", None)
+    if not callable(model_dump):
+        return response
+    normalized = _normalize_openai_tool_tags(model_dump())
+    return type(response)(**normalized)
 
 
 def _is_context_overflow_exception(exc: Exception) -> bool:
