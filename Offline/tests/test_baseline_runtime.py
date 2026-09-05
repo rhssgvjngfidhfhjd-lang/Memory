@@ -29,6 +29,7 @@ from benchmarks.baseline_runtime.registry import (
     canonical_name,
 )
 from benchmarks.baseline_runtime.adapters.mirix_family import (
+    MirixFamilyAdapter,
     _normalize_openai_tool_request,
     _normalize_openai_tool_tags,
 )
@@ -130,6 +131,54 @@ class BaselineProtocolTest(unittest.TestCase):
         request = {"tools": [{"function": {"name": "insert_memory"}}], "tool_choice": choice}
         normalized = _normalize_openai_tool_request(request)
         self.assertEqual(normalized["tool_choice"], choice)
+
+    def test_mirix_tool_compat_wraps_sync_and_async_requests(self):
+        textual = {
+            "choices": [
+                {
+                    "message": {
+                        "content": (
+                            '<tool_call>{"name":"insert_memory",'
+                            '"arguments":{"title":"Almond"}}</tool_call>'
+                        ),
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        }
+
+        class FakeOpenAIClient:
+            def build_request_data(self):
+                return {
+                    "tools": [{"function": {"name": "insert_memory"}}],
+                    "tool_choice": "required",
+                }
+
+            def request(self, _request_data):
+                return json.loads(json.dumps(textual))
+
+            async def request_async(self, _request_data):
+                return json.loads(json.dumps(textual))
+
+        module = SimpleNamespace(OpenAIClient=FakeOpenAIClient)
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.package = "mirix"
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mirix_family.importlib.import_module",
+            return_value=module,
+        ):
+            adapter._patch_openai_tool_compat()
+
+        client = FakeOpenAIClient()
+        self.assertEqual(client.build_request_data()["tool_choice"], "none")
+        sync_message = client.request({})["choices"][0]["message"]
+        async_message = asyncio.run(client.request_async({}))["choices"][0]["message"]
+        self.assertEqual(
+            sync_message["tool_calls"][0]["function"]["name"], "insert_memory"
+        )
+        self.assertEqual(
+            async_message["tool_calls"][0]["function"]["name"], "insert_memory"
+        )
 
     def test_mirix_converts_qwen_textual_tool_selection(self):
         response = {

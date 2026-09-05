@@ -92,6 +92,7 @@ class MirixFamilyAdapter(BaselineAdapter):
             return
         original_build = client_class.build_request_data
         original_request = client_class.request
+        original_request_async = client_class.request_async
 
         def build_request(client: Any, *args: Any, **kwargs: Any) -> dict[str, Any]:
             return _normalize_openai_tool_request(
@@ -101,8 +102,15 @@ class MirixFamilyAdapter(BaselineAdapter):
         def request(client: Any, request_data: dict[str, Any]) -> dict[str, Any]:
             return _normalize_openai_tool_tags(original_request(client, request_data))
 
+        async def request_async(
+            client: Any, request_data: dict[str, Any]
+        ) -> dict[str, Any]:
+            response = await original_request_async(client, request_data)
+            return _normalize_openai_tool_tags(response)
+
         client_class.build_request_data = build_request
         client_class.request = request
+        client_class.request_async = request_async
         client_class._offline_tool_compat = True
 
     def _ensure_package_importable(self) -> None:

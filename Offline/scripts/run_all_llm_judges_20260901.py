@@ -67,13 +67,17 @@ def is_judge_complete(result_dir: Path, expected: int) -> bool:
     )
 
 
-def task_order() -> list[tuple[str, str]]:
+def task_order(methods: tuple[str, ...] = METHODS) -> list[tuple[str, str]]:
     # Finish all HiveMem judges before spending quota on baselines.
-    hive = [(benchmark, "HiveMem") for benchmark in BENCHMARKS]
+    hive = (
+        [(benchmark, "HiveMem") for benchmark in BENCHMARKS]
+        if "HiveMem" in methods
+        else []
+    )
     baselines = [
         (benchmark, method)
         for benchmark in BENCHMARKS
-        for method in METHODS
+        for method in methods
         if method != "HiveMem"
     ]
     return hive + baselines
@@ -142,7 +146,20 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=32)
     parser.add_argument("--watch", action="store_true")
     parser.add_argument("--poll-seconds", type=int, default=600)
+    parser.add_argument(
+        "--exclude-method",
+        action="append",
+        choices=METHODS,
+        default=[],
+        help="Method to omit entirely; may be passed more than once.",
+    )
     args = parser.parse_args()
+    excluded_methods = set(args.exclude_method)
+    selected_methods = tuple(
+        method for method in METHODS if method not in excluded_methods
+    )
+    if not selected_methods:
+        parser.error("At least one method must remain after exclusions")
     LOG_ROOT.mkdir(parents=True, exist_ok=True)
     state = {
         "workers": args.workers,
@@ -154,7 +171,7 @@ def main() -> None:
     while True:
         pending_incomplete: list[str] = []
         made_progress = False
-        for benchmark, method in task_order():
+        for benchmark, method in task_order(selected_methods):
             benchmark_arg, expected = BENCHMARKS[benchmark]
             del benchmark_arg
             result_dir = OUTPUT_ROOT / benchmark / method
@@ -180,7 +197,7 @@ def main() -> None:
             row.get("status") == "complete" for row in state["tasks"].values()
         )
         state["completed"] = completed
-        state["expected_tasks"] = len(BENCHMARKS) * len(METHODS)
+        state["expected_tasks"] = len(BENCHMARKS) * len(selected_methods)
         write_status(state)
         if completed == state["expected_tasks"] or not args.watch:
             break
