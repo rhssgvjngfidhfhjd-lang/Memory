@@ -93,6 +93,7 @@ class MirixFamilyAdapter(BaselineAdapter):
         original_build = client_class.build_request_data
         original_request = client_class.request
         original_request_async = client_class.request_async
+        original_convert = client_class.convert_response_to_chat_completion
 
         def build_request(client: Any, *args: Any, **kwargs: Any) -> dict[str, Any]:
             return _normalize_openai_tool_request(
@@ -108,9 +109,26 @@ class MirixFamilyAdapter(BaselineAdapter):
             response = await original_request_async(client, request_data)
             return _normalize_openai_tool_tags(response)
 
+        def convert_response_to_chat_completion(
+            client: Any, response_data: dict[str, Any], *args: Any, **kwargs: Any
+        ) -> Any:
+            # Keep the normalization at the final common conversion boundary
+            # as well. Some MIRIX/MMA agent paths obtain a raw response through
+            # an alternate async helper and reach this method without calling
+            # the patched request methods above.
+            return original_convert(
+                client,
+                _normalize_openai_tool_tags(response_data),
+                *args,
+                **kwargs,
+            )
+
         client_class.build_request_data = build_request
         client_class.request = request
         client_class.request_async = request_async
+        client_class.convert_response_to_chat_completion = (
+            convert_response_to_chat_completion
+        )
         client_class._offline_tool_compat = True
 
     def _ensure_package_importable(self) -> None:

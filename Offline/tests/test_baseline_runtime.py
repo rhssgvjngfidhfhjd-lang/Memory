@@ -160,6 +160,9 @@ class BaselineProtocolTest(unittest.TestCase):
             async def request_async(self, _request_data):
                 return json.loads(json.dumps(textual))
 
+            def convert_response_to_chat_completion(self, response_data, marker):
+                return response_data, marker
+
         module = SimpleNamespace(OpenAIClient=FakeOpenAIClient)
         adapter = object.__new__(MirixFamilyAdapter)
         adapter.package = "mirix"
@@ -173,12 +176,21 @@ class BaselineProtocolTest(unittest.TestCase):
         self.assertEqual(client.build_request_data()["tool_choice"], "none")
         sync_message = client.request({})["choices"][0]["message"]
         async_message = asyncio.run(client.request_async({}))["choices"][0]["message"]
+        converted, marker = client.convert_response_to_chat_completion(
+            json.loads(json.dumps(textual)), "converted"
+        )
+        converted_message = converted["choices"][0]["message"]
         self.assertEqual(
             sync_message["tool_calls"][0]["function"]["name"], "insert_memory"
         )
         self.assertEqual(
             async_message["tool_calls"][0]["function"]["name"], "insert_memory"
         )
+        self.assertEqual(
+            converted_message["tool_calls"][0]["function"]["name"],
+            "insert_memory",
+        )
+        self.assertEqual(marker, "converted")
 
     def test_mirix_converts_qwen_textual_tool_selection(self):
         response = {
