@@ -8,6 +8,11 @@ from typing import Any, List, Union
 
 import requests
 
+try:
+    from json_repair import repair_json
+except ImportError:  # pragma: no cover - optional upstream compatibility
+    repair_json = None
+
 from mirix.constants import OPENAI_CONTEXT_WINDOW_ERROR_SUBSTRING
 from mirix.schemas.message import Message
 from mirix.schemas.openai.chat_completion_response import (
@@ -303,6 +308,16 @@ def _drop_unmatched_json_closers(value: str) -> str:
     return "".join(output)
 
 
+def _repair_missing_steps_closer(value: str) -> str:
+    """Close a malformed ``steps`` array before its sibling ``tree_path``."""
+    return re.sub(
+        r'("steps"\s*:\s*\[.*?)(,\s*"tree_path"\s*:)',
+        r"\1]\2",
+        value,
+        flags=re.DOTALL,
+    )
+
+
 def _promote_textual_tool_call(choice: Choice) -> Choice:
     """Convert a textual ``<tool_call>`` envelope into the native schema."""
     message = choice.message
@@ -321,7 +336,13 @@ def _promote_textual_tool_call(choice: Choice) -> Choice:
         return choice
     raw_payload = match.group(1)
     payload = None
-    for candidate in (raw_payload, _drop_unmatched_json_closers(raw_payload)):
+    repaired_steps = _repair_missing_steps_closer(raw_payload)
+    for candidate in (
+        raw_payload,
+        _drop_unmatched_json_closers(raw_payload),
+        repaired_steps,
+        _drop_unmatched_json_closers(repaired_steps),
+    ):
         try:
             parsed = json.loads(candidate)
         except json.JSONDecodeError:
@@ -329,6 +350,10 @@ def _promote_textual_tool_call(choice: Choice) -> Choice:
         if isinstance(parsed, dict):
             payload = parsed
             break
+    if payload is None and repair_json is not None:
+        repaired = repair_json(raw_payload, return_objects=True)
+        if isinstance(repaired, dict):
+            payload = repaired
     if payload is None or not payload.get("name"):
         return choice
     arguments = payload.get("arguments") or payload.get("args") or {}

@@ -176,7 +176,13 @@ class MirixFamilyAdapter(BaselineAdapter):
             model_endpoint_type="openai",
             model_endpoint=str(self.config["executor_base_url"]),
             model_wrapper=None,
-            context_window=int(self.config.get("context_window") or 24000),
+            # MIRIX/MMA's manager system prompt plus the complete native tool
+            # schema can exceed the 24k internal pressure threshold before a
+            # second dialogue message exists. In that state its summarizer has
+            # no eligible messages and raises instead of issuing the request.
+            # The configured vLLM servers expose a 32k window, so use it fully
+            # unless an experiment explicitly overrides the value.
+            context_window=int(self.config.get("context_window") or 32000),
             temperature=float(self.config.get("executor_temperature") or 0.0),
             max_tokens=int(self.config.get("num_predict") or 512),
         )
