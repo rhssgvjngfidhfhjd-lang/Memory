@@ -380,6 +380,32 @@ class BaselineProtocolTest(unittest.TestCase):
         self.assertEqual(arguments["search_field"], "summary")
         self.assertEqual(arguments["search_method"], "embedding")
 
+    def test_mirix_falls_back_when_native_queue_silently_writes_nothing(self):
+        existing = {
+            "memory_id": "semantic_memory_manager:sem_old",
+            "text": "old memory",
+        }
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.backend = SimpleNamespace(send_message=Mock(return_value=None))
+        adapter._memory_rows = Mock(return_value=[existing])
+        adapter._should_direct_insert = Mock(return_value=False)
+        adapter._has_new_or_changed_memory = Mock(return_value=False)
+        adapter._insert_fallback_memory = Mock()
+        adapter.provenance = Mock()
+        adapter._known_ids = {existing["memory_id"]}
+        adapter._last_chunk = None
+        adapter._ingested_chunks = 0
+        chunk = Chunk(
+            chunk_id="S1:R1",
+            text="new memory",
+            metadata={"session_id": "S1"},
+        )
+
+        adapter.ingest(chunk)
+
+        adapter._insert_fallback_memory.assert_called_once_with(chunk)
+        self.assertEqual(adapter._ingested_chunks, 1)
+
     def test_output_layout_keeps_memory_under_baseline_root(self):
         layout = BaselineOutputLayout(Path("outputs/Mem-Gallery/M2A"))
         self.assertEqual(

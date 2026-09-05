@@ -252,8 +252,13 @@ class MirixFamilyAdapter(BaselineAdapter):
             except Exception as exc:
                 if not _is_context_overflow_exception(exc):
                     raise
-                if not self._has_new_or_changed_memory(before):
-                    self._insert_fallback_memory(chunk)
+            # MIRIX's background message queue logs some manager failures and
+            # returns normally instead of propagating them.  Detect the
+            # observable outcome at the memory boundary so an accepted chunk
+            # is never silently lost, regardless of how the native queue
+            # reported the failure.
+            if not self._has_new_or_changed_memory(before):
+                self._insert_fallback_memory(chunk)
         current = self._memory_rows()
         if not current:
             self._insert_fallback_memory(chunk)
