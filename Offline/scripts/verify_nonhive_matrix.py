@@ -7,6 +7,7 @@ import argparse
 import json
 import math
 from pathlib import Path
+import re
 from typing import Any, Callable
 
 try:
@@ -201,6 +202,41 @@ def validate_unified_metrics(result_dir: Path, expected: int) -> None:
             raise ValueError(f"summary and canonical metrics differ at {key!r}")
 
 
+def validate_wma_prefix_safety(result_dir: Path, expected: int) -> None:
+    """Ensure every retrieved WMA source was visible at its QA checkpoint."""
+    trace_path = result_dir / "retrieval_trace.jsonl"
+    traces = [
+        json.loads(line)
+        for line in trace_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    if len(traces) != expected:
+        raise ValueError(f"WMA prefix audit found {len(traces)} traces; expected {expected}")
+    violations: list[str] = []
+    for row_index, row in enumerate(traces, start=1):
+        visible = {str(value) for value in row.get("visible_sessions") or []}
+        covered = {str(value) for value in row.get("covered_sessions") or []}
+        if not visible or not covered.issubset(visible):
+            violations.append(f"row {row_index}: invalid visible/covered sessions")
+            continue
+        for hit in row.get("top_k") or []:
+            session_id = str(hit.get("session_id") or "")
+            if session_id and session_id not in visible:
+                violations.append(
+                    f"row {row_index}: retrieved future session {session_id}"
+                )
+            for source_id in hit.get("source_dialogue_ids") or []:
+                match = re.match(r"^(S\d+):", str(source_id))
+                if match and match.group(1) not in visible:
+                    violations.append(
+                        f"row {row_index}: retrieved future source {source_id}"
+                    )
+        if len(violations) >= 10:
+            break
+    if violations:
+        raise ValueError("; ".join(violations))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-root", default=str(OUTPUT_ROOT))
@@ -239,6 +275,14 @@ def main() -> None:
         "unified_metrics": lambda job: validate_unified_metrics(
             output_root / job.benchmark / job.method,
             EXPECTED_RESULT_COUNTS[job.benchmark],
+        ),
+        "prefix_safety": lambda job: (
+            validate_wma_prefix_safety(
+                output_root / job.benchmark / job.method,
+                EXPECTED_RESULT_COUNTS[job.benchmark],
+            )
+            if job.benchmark == "WorldMemArena"
+            else None
         ),
     }
     jobs = [

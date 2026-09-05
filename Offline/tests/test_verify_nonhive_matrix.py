@@ -9,6 +9,7 @@ from scripts.verify_nonhive_matrix import (
     validate_mb_call_metrics,
     validate_native_memory_artifacts,
     validate_unified_metrics,
+    validate_wma_prefix_safety,
 )
 
 
@@ -159,3 +160,33 @@ def test_unified_metrics_match_judge_and_summary(tmp_path):
     _write(tmp_path / "summary.json", metrics)
     with pytest.raises(ValueError, match="summary"):
         validate_unified_metrics(tmp_path, 2)
+
+
+def test_wma_prefix_safety_rejects_future_retrieval(tmp_path):
+    trace = tmp_path / "retrieval_trace.jsonl"
+    rows = [
+        {
+            "visible_sessions": ["S00", "S01"],
+            "covered_sessions": ["S01"],
+            "top_k": [
+                {
+                    "session_id": "S01",
+                    "source_dialogue_ids": ["S01:R0001"],
+                }
+            ],
+        },
+        {
+            "visible_sessions": ["S00", "S01", "S02"],
+            "covered_sessions": ["S02"],
+            "top_k": [],
+        },
+    ]
+    trace.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+    validate_wma_prefix_safety(tmp_path, 2)
+
+    rows[1]["top_k"] = [
+        {"session_id": "S03", "source_dialogue_ids": ["S03:R0001"]}
+    ]
+    trace.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+    with pytest.raises(ValueError, match="future"):
+        validate_wma_prefix_safety(tmp_path, 2)
