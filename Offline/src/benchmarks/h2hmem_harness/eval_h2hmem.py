@@ -30,6 +30,7 @@ from embedding.chunk_builder import (
     iter_h2h_session_files,
 )
 from hive_mem.build_memories import apply_config_defaults
+from evidence_policy.split_manifest import SplitManifestIndex, normalize_split_name
 
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[4]
@@ -90,6 +91,21 @@ def _question_prompt(text: str, category: str) -> str:
     )
 
 
+def h2hmem_manifest_question_id(
+    variant: str,
+    conversation_id: str,
+    session_id: str,
+    qa_index: int,
+    qa: dict[str, Any],
+) -> str:
+    """Canonical H2HMem question ID used by the split manifest."""
+    original_id = str(
+        qa.get("question_id") or qa.get("original_question_id") or ""
+    ).strip()
+    code = original_id if original_id else f"Q{qa_index:03d}"
+    return f"h2hmem:{variant}:{conversation_id}:{session_id}:{code}"
+
+
 def prepare_conversation_jobs(
     *,
     data_dir: Path,
@@ -99,6 +115,7 @@ def prepare_conversation_jobs(
     state_root: Path,
     config: dict[str, Any],
     max_qa: int = 0,
+    ordered_question_ids: tuple[str, ...] | None = None,
 ) -> dict[str, Any]:
     variant_dir = "multi-party" if variant == "multiparty" else variant
     conversation_dir = data_dir / variant_dir / conversation_id
@@ -123,8 +140,35 @@ def prepare_conversation_jobs(
                 adapter.end_session(current_session)
 
         jobs: list[dict[str, Any]] = []
+        indexed_questions = []
         for question_file, qa_index, qa in _question_rows(conversation_dir):
-            if max_qa and len(jobs) >= max_qa:
+            session_id = question_file.parent.name
+            manifest_question_id = h2hmem_manifest_question_id(
+                variant, conversation_id, session_id, qa_index, qa
+            )
+            indexed_questions.append(
+                (manifest_question_id, question_file, qa_index, qa)
+            )
+        if ordered_question_ids is not None:
+            by_manifest_id = {row[0]: row for row in indexed_questions}
+            missing = [
+                question_id
+                for question_id in ordered_question_ids
+                if question_id not in by_manifest_id
+            ]
+            if missing:
+                raise KeyError(
+                    f"H2HMem manifest references {len(missing)} missing question(s) "
+                    f"for {variant}/{conversation_id}: {missing[:5]}"
+                )
+            selected_questions = [
+                by_manifest_id[question_id] for question_id in ordered_question_ids
+            ]
+        else:
+            selected_questions = indexed_questions
+
+        for manifest_question_id, question_file, qa_index, qa in selected_questions:
+            if ordered_question_ids is None and max_qa and len(jobs) >= max_qa:
                 break
             question_data = qa.get("question") or {}
             question = str(question_data.get("text") or "")
@@ -160,6 +204,7 @@ def prepare_conversation_jobs(
             jobs.append({
                 "uid": query_id,
                 "query_id": query_id,
+                "manifest_question_id": manifest_question_id,
                 "question_id": question_id,
                 "sample_id": conversation_id,
                 "conversation_id": conversation_id,
@@ -231,6 +276,7 @@ def answer_conversation_job(
     )
     trace = {
         "query_id": job["query_id"],
+        "manifest_question_id": job["manifest_question_id"],
         "conversation_id": job["conversation_id"],
         "session_id": job["session_id"],
         "question": job["question"],
@@ -250,6 +296,7 @@ def run_conversation(
     client: VLMAnswerClient,
     config: dict[str, Any],
     max_qa: int = 0,
+    ordered_question_ids: tuple[str, ...] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     """Compatibility wrapper for one conversation."""
     artifact = prepare_conversation_jobs(
@@ -260,6 +307,7 @@ def run_conversation(
         state_root=state_root,
         config=config,
         max_qa=max_qa,
+        ordered_question_ids=ordered_question_ids,
     )
     pairs = [answer_conversation_job(client, job) for job in artifact["jobs"]]
     return [x[0] for x in pairs], [x[1] for x in pairs], artifact["snapshots"]
@@ -271,6 +319,8 @@ def main() -> None:
     parser.add_argument("--data-dir", default=str(DEFAULT_H2HMEM_DATA_DIR))
     parser.add_argument("--variant", choices=("dyadic", "multiparty", "all"), default="all")
     parser.add_argument("--conversation-id", action="append", default=[])
+    parser.add_argument("--split-manifest", default="")
+    parser.add_argument("--split", default="")
     parser.add_argument("--index-root", default="")
     parser.add_argument("--baseline-state-dir", default="")
     parser.add_argument("--result-dir", required=True)
@@ -308,6 +358,14 @@ def main() -> None:
         },
     )
     args = parser.parse_args()
+    if bool(args.split_manifest) != bool(args.split):
+        parser.error("--split-manifest and --split must be provided together")
+    manifest_index = (
+        SplitManifestIndex(args.split_manifest) if args.split_manifest else None
+    )
+    manifest_split = normalize_split_name(args.split) if args.split else ""
+    if manifest_index is not None and args.max_qa:
+        parser.error("--max-qa cannot be combined with strict manifest selection")
     args.baseline = canonical_name(args.baseline)
     if args.baseline == "HiveMem" and not args.index_root:
         parser.error("--index-root is required when --baseline=HiveMem")
@@ -317,19 +375,40 @@ def main() -> None:
     data_dir = Path(args.data_dir)
     if (data_dir / "dataset").is_dir():
         data_dir = data_dir / "dataset"
-    variants = ("dyadic", "multiparty") if args.variant == "all" else (args.variant,)
-    selected = set(args.conversation_id)
-    conversations: dict[str, list[str]] = {}
-    for variant in variants:
-        conversations[variant] = list(
-            dict.fromkeys(
-                path.parents[2].name
-                for path in iter_h2h_session_files(data_dir, variant=variant)
-                if not selected or path.parents[2].name in selected
+    manifest_rows = []
+    if manifest_index is not None:
+        if args.conversation_id or args.variant != "all":
+            parser.error(
+                "--variant/--conversation-id cannot be combined with strict manifest selection"
             )
-        )
-        if not conversations[variant]:
-            raise FileNotFoundError(f"No H2HMem conversations selected for {variant}")
+        for data_source in manifest_index.data_sources:
+            if data_source in {"h2hmem_dyadic", "h2hmem_multiparty"}:
+                manifest_rows.extend(
+                    manifest_index.conversations(
+                        manifest_split, data_source=data_source
+                    )
+                )
+        variants = tuple(dict.fromkeys(row.variant for row in manifest_rows))
+        conversations = {
+            variant: [
+                row.source_id for row in manifest_rows if row.variant == variant
+            ]
+            for variant in variants
+        }
+    else:
+        variants = ("dyadic", "multiparty") if args.variant == "all" else (args.variant,)
+        selected = set(args.conversation_id)
+        conversations = {}
+        for variant in variants:
+            conversations[variant] = list(
+                dict.fromkeys(
+                    path.parents[2].name
+                    for path in iter_h2h_session_files(data_dir, variant=variant)
+                    if not selected or path.parents[2].name in selected
+                )
+            )
+            if not conversations[variant]:
+                raise FileNotFoundError(f"No H2HMem conversations selected for {variant}")
 
     client = VLMAnswerClient(
         model=args.answer_model,
@@ -365,20 +444,30 @@ def main() -> None:
         "request_timeout": args.request_timeout,
         "retries": args.retries,
     }
-    sample_specs: list[tuple[str, str, int]] = []
+    sample_specs: list[tuple[str, str, int, tuple[str, ...] | None]] = []
     remaining_limit = args.max_qa
-    for variant in variants:
-        for conversation_id in conversations[variant]:
-            if args.max_qa and remaining_limit <= 0:
-                break
-            conversation_dir = data_dir / (
-                "multi-party" if variant == "multiparty" else variant
-            ) / conversation_id
-            question_count = len(_question_rows(conversation_dir))
-            quota = min(remaining_limit, question_count) if args.max_qa else 0
-            sample_specs.append((variant, conversation_id, quota))
-            if args.max_qa:
-                remaining_limit -= quota
+    ordered_rows = (
+        [(row.variant, row.source_id, row.question_ids) for row in manifest_rows]
+        if manifest_index is not None
+        else [
+            (variant, conversation_id, None)
+            for variant in variants
+            for conversation_id in conversations[variant]
+        ]
+    )
+    for variant, conversation_id, ordered_question_ids in ordered_rows:
+        if args.max_qa and remaining_limit <= 0:
+            break
+        conversation_dir = data_dir / (
+            "multi-party" if variant == "multiparty" else variant
+        ) / conversation_id
+        question_count = len(_question_rows(conversation_dir))
+        quota = min(remaining_limit, question_count) if args.max_qa else 0
+        sample_specs.append(
+            (variant, conversation_id, quota, ordered_question_ids)
+        )
+        if args.max_qa:
+            remaining_limit -= quota
 
     signature = {
         "arguments": {
@@ -391,7 +480,7 @@ def main() -> None:
         },
         "inputs": file_manifest(
             path
-            for variant, conversation_id, _ in sample_specs
+            for variant, conversation_id, _, _ in sample_specs
             for path in sorted(
                 (
                     data_dir
@@ -399,13 +488,18 @@ def main() -> None:
                     / conversation_id
                 ).rglob("*.json")
             )
+        ) | (
+            file_manifest([Path(args.split_manifest)])
+            if args.split_manifest else {}
         ),
         "system_prompt": SYSTEM_PROMPT,
     }
     sample_signature = signature_digest(signature)
 
-    def prepare(spec: tuple[str, str, int]) -> dict[str, Any]:
-        variant, conversation_id, quota = spec
+    def prepare(
+        spec: tuple[str, str, int, tuple[str, ...] | None]
+    ) -> dict[str, Any]:
+        variant, conversation_id, quota, ordered_question_ids = spec
         sample_id = f"{variant}/{conversation_id}"
         if args.resume:
             cached = load_sample_artifact(
@@ -424,6 +518,7 @@ def main() -> None:
                 state_root=state_root,
                 config=config,
                 max_qa=quota,
+                ordered_question_ids=ordered_question_ids,
             )
         save_sample_artifact(
             layout.sample_checkpoint_dir,
@@ -441,6 +536,21 @@ def main() -> None:
         item_key=lambda spec: f"{spec[0]}/{spec[1]}",
     )
     jobs = [job for artifact in artifacts for job in artifact["jobs"]]
+    expected_manifest_question_ids = (
+        tuple(
+            question_id
+            for row in manifest_rows
+            for question_id in row.question_ids
+        )
+        if manifest_index is not None
+        else None
+    )
+    if expected_manifest_question_ids is not None:
+        actual = tuple(str(job.get("manifest_question_id") or "") for job in jobs)
+        if actual != expected_manifest_question_ids:
+            raise RuntimeError(
+                "H2HMem prepared jobs do not exactly match manifest question order"
+            )
     snapshots = [row for artifact in artifacts for row in artifact["snapshots"]]
     write_jsonl_atomic(layout.pipeline_qa, jobs)
 
@@ -517,6 +627,13 @@ def main() -> None:
     save_checkpoint()
     results = [results_by_id[key] for key in job_ids]
     traces = [traces_by_id[key] for key in job_ids]
+    if expected_manifest_question_ids is not None:
+        for label, rows in (("results", results), ("retrieval traces", traces)):
+            actual = tuple(str(row.get("manifest_question_id") or "") for row in rows)
+            if actual != expected_manifest_question_ids:
+                raise RuntimeError(
+                    f"H2HMem {label} do not exactly match manifest question order"
+                )
 
     result_dir.mkdir(parents=True, exist_ok=True)
     write_json_atomic(result_dir / "results.json", results)
@@ -543,6 +660,15 @@ def main() -> None:
                 "checkpoint_every": args.checkpoint_every,
             },
             "memory_snapshot": str(layout.snapshot),
+            "selection_mode": (
+                "strict_manifest" if manifest_index is not None else "legacy"
+            ),
+            "split": manifest_split,
+            "split_manifest": str(manifest_index.path) if manifest_index else "",
+            "split_manifest_sha256": (
+                manifest_index.file_sha256 if manifest_index else ""
+            ),
+            "ordered_question_ids": list(expected_manifest_question_ids or ()),
         },
     )
 

@@ -50,11 +50,17 @@ from benchmarks.baseline_runtime.protocol import (
 )
 from benchmarks.question_filter import is_excluded_category, parse_excluded_categories
 from embedding.chunk_builder import build_chunks_from_data
+from evidence_policy.split_manifest import SplitManifestIndex, normalize_split_name
 from typing import Any
 
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_MEMGALLERY_DATA_DIR = WORKSPACE_ROOT / "Mem-Gallery" / "benchmark" / "data"
+
+
+def memgallery_manifest_question_id(dataset_name: str, qa_index: int) -> str:
+    """Canonical ID used by multimodal_split_manifest.json."""
+    return f"{dataset_name}_q{qa_index - 1:04d}"
 
 
 def prepare_dataset_jobs(
@@ -73,6 +79,7 @@ def prepare_dataset_jobs(
     state_root: Path | None = None,
     config_overrides: dict[str, Any] | None = None,
     excluded_categories: frozenset[str] = frozenset(),
+    ordered_question_ids: tuple[str, ...] | None = None,
 ) -> dict[str, Any]:
     baseline = canonical_name(baseline)
     dataset = json.loads(dataset_path.read_text(encoding="utf-8"))
@@ -107,14 +114,37 @@ def prepare_dataset_jobs(
                 current_session = session_id
             if current_session:
                 native_adapter.end_session(current_session)
-        for qa_index, qa in enumerate(qa_pairs, start=1):
-            if qa_index < qa_start or qa_index > qa_end:
-                continue
+        indexed_qas = [
+            (memgallery_manifest_question_id(dataset_name, qa_index), qa_index, qa)
+            for qa_index, qa in enumerate(qa_pairs, start=1)
+        ]
+        if ordered_question_ids is not None:
+            by_manifest_id = {row[0]: row for row in indexed_qas}
+            missing = [
+                question_id
+                for question_id in ordered_question_ids
+                if question_id not in by_manifest_id
+            ]
+            if missing:
+                raise KeyError(
+                    f"Mem-Gallery manifest references {len(missing)} missing "
+                    f"question(s) for {dataset_name}: {missing[:5]}"
+                )
+            selected_qas = [by_manifest_id[value] for value in ordered_question_ids]
+            excluded = len(indexed_qas) - len(selected_qas)
+        else:
+            selected_qas = [
+                row for row in indexed_qas if qa_start <= row[1] <= qa_end
+            ]
+
+        for manifest_question_id, qa_index, qa in selected_qas:
             category = str(qa.get("point", ""))
-            if is_excluded_category(category, excluded_categories):
+            if ordered_question_ids is None and is_excluded_category(
+                category, excluded_categories
+            ):
                 excluded += 1
                 continue
-            if max_qa and processed >= max_qa:
+            if ordered_question_ids is None and max_qa and processed >= max_qa:
                 break
             processed += 1
             question = str(qa.get("question", ""))
@@ -154,6 +184,7 @@ def prepare_dataset_jobs(
             jobs.append(
                 {
                     "query_id": query_id,
+                    "manifest_question_id": manifest_question_id,
                     "sample_id": profile.get("name", dataset_name),
                     "dataset": dataset_name,
                     "session_id": qa.get("session_id", ""),
@@ -236,6 +267,7 @@ def answer_dataset_job(
     )
     trace = {
         "query_id": job["query_id"],
+        "manifest_question_id": job["manifest_question_id"],
         "dataset": job["dataset"],
         "qa_index": job["qa_index"],
         "question": job["question"],
@@ -266,6 +298,7 @@ def run_dataset(
     memory_snapshots: list[dict[str, Any]] | None = None,
     allow_answer_errors: bool = True,
     excluded_categories: frozenset[str] = frozenset(),
+    ordered_question_ids: tuple[str, ...] | None = None,
     qa_stats: dict[str, int] | None = None,
 ) -> tuple[list[dict], list[dict]]:
     """Compatibility wrapper for a single dataset; the full runner uses two phases."""
@@ -275,6 +308,7 @@ def run_dataset(
         graph_options=graph_options, system_prompt=system_prompt, baseline=baseline,
         state_root=state_root, config_overrides=config_overrides,
         excluded_categories=excluded_categories,
+        ordered_question_ids=ordered_question_ids,
     )
     pairs = [
         answer_dataset_job(client, job, allow_answer_errors=allow_answer_errors)
@@ -306,6 +340,8 @@ def _checkpoint_signature(
         "answer_api_key",
     }
     input_paths: list[Path] = list(dataset_paths)
+    if args.split_manifest:
+        input_paths.append(Path(args.split_manifest))
     if args.profiles_file:
         input_paths.append(Path(args.profiles_file))
     if args.baseline == "HiveMem":
@@ -356,6 +392,8 @@ def main() -> None:
     parser.add_argument("--data-name", default="AI_Robotics_Automation_Future_Tech")
     parser.add_argument("--all-datasets", action="store_true")
     parser.add_argument("--data-dir", default=str(DEFAULT_MEMGALLERY_DATA_DIR))
+    parser.add_argument("--split-manifest", default="")
+    parser.add_argument("--split", default="")
     parser.add_argument(
         "--index-root",
         default="",
@@ -444,7 +482,23 @@ def main() -> None:
     from hive_mem.build_memories import apply_config_defaults
     apply_config_defaults(parser)
     args = parser.parse_args()
-    excluded_categories = parse_excluded_categories(args.exclude_categories)
+    if bool(args.split_manifest) != bool(args.split):
+        parser.error("--split-manifest and --split must be provided together")
+    manifest_index = (
+        SplitManifestIndex(args.split_manifest) if args.split_manifest else None
+    )
+    manifest_split = normalize_split_name(args.split) if args.split else ""
+    if manifest_index is not None and (
+        args.max_qa or args.qa_start != 1 or args.qa_end
+    ):
+        parser.error(
+            "QA ranges/limits cannot be combined with strict manifest selection"
+        )
+    excluded_categories = (
+        frozenset()
+        if manifest_index is not None
+        else parse_excluded_categories(args.exclude_categories)
+    )
     try:
         args.baseline = canonical_name(args.baseline)
     except KeyError as exc:
@@ -508,7 +562,21 @@ def main() -> None:
         else None
     )
     data_dir = Path(args.data_dir)
-    paths = sorted((data_dir / "dialog").glob("*.json")) if args.all_datasets else [data_dir / "dialog" / f"{args.data_name}.json"]
+    ordered_ids_by_dataset: dict[str, tuple[str, ...]] = {}
+    if manifest_index is not None:
+        manifest_rows = manifest_index.conversations(
+            manifest_split, data_source="mem_gallery"
+        )
+        paths = [data_dir / "dialog" / f"{row.source_id}.json" for row in manifest_rows]
+        ordered_ids_by_dataset = {
+            row.source_id: row.question_ids for row in manifest_rows
+        }
+    else:
+        paths = (
+            sorted((data_dir / "dialog").glob("*.json"))
+            if args.all_datasets
+            else [data_dir / "dialog" / f"{args.data_name}.json"]
+        )
     missing_paths = [str(path) for path in paths if not path.is_file()]
     if missing_paths:
         raise FileNotFoundError(f"MemGallery dataset file(s) not found: {missing_paths}")
@@ -586,6 +654,7 @@ def main() -> None:
                 "retries": args.retries,
             },
             excluded_categories=excluded_categories,
+            ordered_question_ids=ordered_ids_by_dataset.get(path.stem),
         )
         save_sample_artifact(
             output_layout.sample_checkpoint_dir,
@@ -606,6 +675,21 @@ def main() -> None:
         item_key=lambda path: path.stem,
     )
     jobs = [job for artifact in artifacts for job in artifact["jobs"]]
+    expected_manifest_question_ids = (
+        manifest_index.ordered_question_ids(
+            manifest_split, data_source="mem_gallery"
+        )
+        if manifest_index is not None
+        else None
+    )
+    if expected_manifest_question_ids is not None:
+        actual_manifest_question_ids = tuple(
+            str(job.get("manifest_question_id") or "") for job in jobs
+        )
+        if actual_manifest_question_ids != expected_manifest_question_ids:
+            raise RuntimeError(
+                "Mem-Gallery prepared jobs do not exactly match manifest question order"
+            )
     write_jsonl_atomic(output_layout.pipeline_qa, jobs)
     memory_snapshots = [
         row for artifact in artifacts for row in artifact.get("snapshots", [])
@@ -694,6 +778,13 @@ def main() -> None:
     save_checkpoint()
     all_results = [results_by_id[query_id] for query_id in job_ids]
     all_traces = [traces_by_id[query_id] for query_id in job_ids]
+    if expected_manifest_question_ids is not None:
+        for label, rows in (("results", all_results), ("retrieval traces", all_traces)):
+            actual = tuple(str(row.get("manifest_question_id") or "") for row in rows)
+            if actual != expected_manifest_question_ids:
+                raise RuntimeError(
+                    f"Mem-Gallery {label} do not exactly match manifest question order"
+                )
 
     result_dir.mkdir(parents=True, exist_ok=True)
     write_json_atomic(result_dir / "results.json", all_results)
@@ -721,6 +812,11 @@ def main() -> None:
         "answer_errors": answer_errors,
         "baseline_runtime": baseline_metadata(args.baseline),
         "run_signature": signature,
+        "selection_mode": "strict_manifest" if manifest_index is not None else "legacy",
+        "split_manifest_sha256": (
+            manifest_index.file_sha256 if manifest_index is not None else ""
+        ),
+        "ordered_question_ids": list(expected_manifest_question_ids or ()),
     }
     write_json_atomic(result_dir / "run_manifest.json", manifest)
     if answer_errors and not args.allow_answer_errors:
