@@ -126,14 +126,46 @@ class SplitManifestIndex:
     def source_ids(self, split: str, data_source: str) -> tuple[str, ...]:
         return tuple(row.source_id for row in self.conversations(split, data_source=data_source))
 
-    def question_ids(self, split: str, *, data_source: str | None = None) -> frozenset[str]:
-        normalized = normalize_split_name(split)
-        return frozenset(
+    def ordered_question_ids(
+        self, split: str, *, data_source: str | None = None
+    ) -> tuple[str, ...]:
+        """Return question IDs in the exact order recorded by the manifest."""
+        return tuple(
             question_id
-            for question_id, (current_source, current_split, _) in self._questions.items()
-            if current_split == normalized
-            and (data_source is None or current_source == data_source)
+            for conversation in self.conversations(split, data_source=data_source)
+            for question_id in conversation.question_ids
         )
+
+    def question_ids_for_conversation(
+        self,
+        split: str,
+        data_source: str,
+        *,
+        conversation_id: str | None = None,
+        source_id: str | None = None,
+    ) -> tuple[str, ...]:
+        """Return one conversation's question IDs without losing manifest order."""
+        if (conversation_id is None) == (source_id is None):
+            raise ValueError("Specify exactly one of conversation_id or source_id")
+        matches = [
+            row
+            for row in self.conversations(split, data_source=data_source)
+            if (
+                row.conversation_id == conversation_id
+                if conversation_id is not None
+                else row.source_id == source_id
+            )
+        ]
+        if len(matches) != 1:
+            key = conversation_id if conversation_id is not None else source_id
+            raise KeyError(
+                f"Expected one manifest conversation for {data_source}/{split}/{key}, "
+                f"found {len(matches)}"
+            )
+        return matches[0].question_ids
+
+    def question_ids(self, split: str, *, data_source: str | None = None) -> frozenset[str]:
+        return frozenset(self.ordered_question_ids(split, data_source=data_source))
 
     def contains_question(self, split: str, data_source: str, question_id: str) -> bool:
         row = self._questions.get(str(question_id))

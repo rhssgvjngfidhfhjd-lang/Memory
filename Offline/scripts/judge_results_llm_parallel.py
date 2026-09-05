@@ -801,8 +801,13 @@ def main() -> None:
     config_path = Path(__file__).resolve().parents[1] / "configs" / "defaults.json"
     if config_path.exists():
         config = json.loads(config_path.read_text(encoding="utf-8"))
-        # Provider/model/temperature/token defaults are protocol-controlled.
-        mapping = {"judge_timeout": "timeout"}
+        # Keep protocol behavior fixed while allowing the repository defaults
+        # to select the OpenRouter model and output limit used by a run.
+        mapping = {
+            "judge_model": "model",
+            "judge_timeout": "timeout",
+            "judge_max_tokens": "max_tokens",
+        }
         parser.set_defaults(**{dest: config[key] for key, dest in mapping.items() if key in config})
     args = parser.parse_args()
 
