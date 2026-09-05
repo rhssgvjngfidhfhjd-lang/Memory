@@ -35,8 +35,12 @@ from benchmarks.baseline_runtime.adapters.mirix_family import (
     _normalize_openai_tool_tags,
 )
 from benchmarks.baseline_runtime.adapters.omni_simplemem import OmniSimpleMemAdapter
-from benchmarks.baseline_runtime.adapters.memverse import MemVerseAdapter
-from benchmarks.baseline_runtime.adapters.memverse import _bounded_history_messages
+from benchmarks.baseline_runtime.adapters.memverse import (
+    MemVerseAdapter,
+    _CappedOpenAIClientProxy,
+    _apply_executor_max_tokens,
+    _bounded_history_messages,
+)
 from benchmarks.baseline_runtime.provenance import ProvenanceIndex
 from benchmarks.memgallery_harness.runner.answer_client import AnswerResponse
 from benchmarks.memgallery_harness.eval_memgallery import run_dataset
@@ -643,6 +647,41 @@ class BaselineProtocolTest(unittest.TestCase):
         self.assertEqual(bounded[0]["role"], "assistant")
         self.assertGreater(len(bounded[0]["content"]), 0)
         self.assertLess(len(bounded[0]["content"]), 1000)
+
+    def test_memverse_replaces_explicit_none_max_tokens(self):
+        kwargs = {"max_tokens": None, "temperature": 0}
+        _apply_executor_max_tokens(kwargs, configured_max_tokens=512)
+        self.assertEqual(kwargs["max_tokens"], 512)
+        self.assertEqual(kwargs["temperature"], 0)
+
+        explicit = {"max_tokens": 128}
+        _apply_executor_max_tokens(explicit, configured_max_tokens=512)
+        self.assertEqual(explicit["max_tokens"], 128)
+
+        oversized = {"max_tokens": 1200}
+        _apply_executor_max_tokens(oversized, configured_max_tokens=512)
+        self.assertEqual(oversized["max_tokens"], 512)
+
+    def test_memverse_caps_native_summary_client(self):
+        seen: list[dict[str, object]] = []
+
+        class Completions:
+            def create(self, **kwargs):
+                seen.append(kwargs)
+                return "ok"
+
+        delegate = SimpleNamespace(
+            chat=SimpleNamespace(completions=Completions())
+        )
+        client = _CappedOpenAIClientProxy(delegate, 512)
+        self.assertEqual(
+            client.chat.completions.create(
+                model="executor", max_tokens=1200, temperature=0
+            ),
+            "ok",
+        )
+        self.assertEqual(seen[0]["max_tokens"], 512)
+        self.assertEqual(seen[0]["temperature"], 0)
 
     def test_parallel_map_waits_for_other_samples_before_reporting_failure(self):
         visited: list[int] = []

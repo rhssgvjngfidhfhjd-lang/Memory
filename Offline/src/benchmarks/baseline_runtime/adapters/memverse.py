@@ -20,6 +20,58 @@ from benchmarks.io_utils import write_json_atomic, write_jsonl_atomic
 from embedding.chunk_builder import Chunk
 
 
+def _apply_executor_max_tokens(
+    kwargs: dict[str, Any], *, configured_max_tokens: int
+) -> None:
+    """Apply the configured executor output cap to every LightRAG request."""
+    configured_max_tokens = int(configured_max_tokens)
+    if configured_max_tokens <= 0:
+        raise ValueError("configured_max_tokens must be positive")
+    try:
+        current = int(kwargs.get("max_tokens"))
+    except (TypeError, ValueError):
+        current = 0
+    if current <= 0 or current > configured_max_tokens:
+        kwargs["max_tokens"] = configured_max_tokens
+
+
+class _CappedCompletionsProxy:
+    def __init__(self, delegate: Any, max_tokens: int) -> None:
+        self._delegate = delegate
+        self._max_tokens = max_tokens
+
+    def create(self, *args: Any, **kwargs: Any) -> Any:
+        _apply_executor_max_tokens(
+            kwargs, configured_max_tokens=self._max_tokens
+        )
+        return self._delegate.create(*args, **kwargs)
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._delegate, name)
+
+
+class _CappedChatProxy:
+    def __init__(self, delegate: Any, max_tokens: int) -> None:
+        self._delegate = delegate
+        self.completions = _CappedCompletionsProxy(
+            delegate.completions, max_tokens
+        )
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._delegate, name)
+
+
+class _CappedOpenAIClientProxy:
+    """Delegate an OpenAI client while capping synchronous chat outputs."""
+
+    def __init__(self, delegate: Any, max_tokens: int) -> None:
+        self._delegate = delegate
+        self.chat = _CappedChatProxy(delegate.chat, max_tokens)
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._delegate, name)
+
+
 class MemVerseAdapter(BaselineAdapter):
     def __init__(self, *, baseline: str, source_root: Path, config: dict[str, Any]) -> None:
         self.baseline = baseline
@@ -88,17 +140,26 @@ class MemVerseAdapter(BaselineAdapter):
         )
 
         config = self.config
+        executor_max_tokens = int(
+            config.get("executor_max_tokens")
+            or config.get("num_predict")
+            or 512
+        )
         tokenizer = TiktokenTokenizer()
+
+        # MemVerse's three per-chunk summary generators use the synchronous
+        # client held by build_memory rather than LightRAG's async callback.
+        # Cap that native path as well so it cannot silently inherit the
+        # server's full remaining context as its output allowance.
+        self.build_memory.client = _CappedOpenAIClientProxy(
+            self.build_memory.client, executor_max_tokens
+        )
 
         async def complete(prompt, system_prompt=None, history_messages=None, **kwargs):
             kwargs.pop("keyword_extraction", None)
-            kwargs.setdefault(
-                "max_tokens",
-                int(
-                    config.get("executor_max_tokens")
-                    or config.get("num_predict")
-                    or 512
-                ),
+            _apply_executor_max_tokens(
+                kwargs,
+                configured_max_tokens=executor_max_tokens,
             )
             history_messages = _bounded_history_messages(
                 history_messages or [],
