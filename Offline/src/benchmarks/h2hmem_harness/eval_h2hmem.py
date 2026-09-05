@@ -25,6 +25,7 @@ from benchmarks.baseline_runtime.protocol import (
 )
 from benchmarks.io_utils import file_manifest, write_json_atomic, write_jsonl_atomic
 from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
+from benchmarks.memgallery_harness.runner.metrics import summarize_results
 from embedding.chunk_builder import (
     build_h2h_chunks_from_directory,
     iter_h2h_session_files,
@@ -637,6 +638,10 @@ def main() -> None:
 
     result_dir.mkdir(parents=True, exist_ok=True)
     write_json_atomic(result_dir / "results.json", results)
+    write_json_atomic(
+        result_dir / "metrics.json",
+        summarize_results(results, k=args.top_k),
+    )
     write_jsonl_atomic(result_dir / "retrieval_trace.jsonl", traces)
     write_jsonl_atomic(layout.snapshot, snapshots)
     for variant in variants:
