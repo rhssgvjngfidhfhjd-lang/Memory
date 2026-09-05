@@ -6,6 +6,6 @@
 	url = https://github.com/google/langextract.git
 [submodule "H2HMEM-main/dataset"]
 	path = H2HMEM-main/dataset
-	url = https://github.com/rhssgvjngfidhfhjd-lang/Memory.git
+	url = ../Memory.git
 	branch = h2hmem-dataset-captions-20260905
 	shallow = true
