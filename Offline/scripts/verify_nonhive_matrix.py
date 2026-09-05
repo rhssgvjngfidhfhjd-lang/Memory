@@ -108,6 +108,38 @@ def validate_mb_call_metrics(path: Path, expected: int) -> None:
         )
 
 
+def validate_integrated_call_metrics(
+    formal_path: Path,
+    mb_call_path: Path,
+    expected: int,
+) -> None:
+    formal = _load_dict(formal_path)
+    measured = _load_dict(mb_call_path)
+    calls = formal.get("calls")
+    if not isinstance(calls, dict):
+        raise ValueError("formal metrics do not contain integrated call metrics")
+    memory_bank = calls.get("memory_bank") or {}
+    qa = calls.get("qa") or {}
+    total = calls.get("total") or {}
+    for key in ("total_calls", "failed_calls", "successful_calls", "num_samples"):
+        if memory_bank.get(key) != measured.get(key):
+            raise ValueError(
+                f"integrated MB-call {key}={memory_bank.get(key)!r}; "
+                f"measured={measured.get(key)!r}"
+            )
+    if not memory_bank.get("available") or memory_bank.get("num_samples") != expected:
+        raise ValueError("integrated MB-call metric is incomplete")
+    if not qa.get("available") or qa.get("num_samples") != expected:
+        raise ValueError("integrated QA-call metric is incomplete")
+    if not total.get("available") or total.get("num_samples") != expected:
+        raise ValueError("integrated total-call metric is incomplete")
+    expected_total = int(memory_bank["total_calls"]) + int(qa["total_calls"])
+    if total.get("total_calls") != expected_total:
+        raise ValueError(
+            f"integrated total calls are {total.get('total_calls')!r}; expected {expected_total}"
+        )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-root", default=str(OUTPUT_ROOT))
@@ -130,6 +162,11 @@ def main() -> None:
             EXPECTED_RESULT_COUNTS[job.benchmark],
         ),
         "mb_calls": lambda job: validate_mb_call_metrics(
+            mb_call_root / job.benchmark / job.method / "metrics.json",
+            EXPECTED_SAMPLE_COUNTS[job.benchmark],
+        ),
+        "integrated_calls": lambda job: validate_integrated_call_metrics(
+            output_root / job.benchmark / job.method / "metrics.json",
             mb_call_root / job.benchmark / job.method / "metrics.json",
             EXPECTED_SAMPLE_COUNTS[job.benchmark],
         ),

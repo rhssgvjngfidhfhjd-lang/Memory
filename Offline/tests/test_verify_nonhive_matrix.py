@@ -4,6 +4,7 @@ import pytest
 
 from scripts.verify_nonhive_matrix import (
     validate_answer_metrics,
+    validate_integrated_call_metrics,
     validate_judge_metrics,
     validate_mb_call_metrics,
 )
@@ -55,3 +56,39 @@ def test_mb_call_metric_validation(tmp_path):
     _write(path, payload)
     with pytest.raises(ValueError, match="invalid MB-call totals"):
         validate_mb_call_metrics(path, 2)
+
+
+def test_integrated_call_metric_validation(tmp_path):
+    measured = tmp_path / "measured.json"
+    formal = tmp_path / "formal.json"
+    _write(
+        measured,
+        {
+            "total_calls": 5,
+            "failed_calls": 1,
+            "successful_calls": 4,
+            "num_samples": 2,
+        },
+    )
+    _write(
+        formal,
+        {
+            "calls": {
+                "memory_bank": {
+                    "available": True,
+                    "total_calls": 5,
+                    "failed_calls": 1,
+                    "successful_calls": 4,
+                    "num_samples": 2,
+                },
+                "qa": {"available": True, "total_calls": 3, "num_samples": 2},
+                "total": {"available": True, "total_calls": 8, "num_samples": 2},
+            }
+        },
+    )
+    validate_integrated_call_metrics(formal, measured, 2)
+    payload = json.loads(formal.read_text())
+    payload["calls"]["memory_bank"]["total_calls"] = 6
+    _write(formal, payload)
+    with pytest.raises(ValueError, match="measured=5"):
+        validate_integrated_call_metrics(formal, measured, 2)
