@@ -41,6 +41,40 @@ def test_answer_and_judge_metric_validation(tmp_path):
         validate_answer_metrics(answer, 3)
 
 
+def test_answer_metric_recalculation_detects_stale_em(tmp_path):
+    results = [
+        {
+            "system_answer": "Laura K. Simmons",
+            "original_answer": "Laura K. Simmons",
+            "category": "FR",
+            "retrieved_source_groups": [["S01:R0001"]],
+            "clue": ["S01:R0001"],
+        }
+    ]
+    _write(tmp_path / "results.json", results)
+    metrics = {
+        "count": 1,
+        "f1": 1.0,
+        "em": 1.0,
+        "retrieval_hitrate@5": 1.0,
+        "by_category": {
+            "FR": {
+                "count": 1,
+                "f1": 1.0,
+                "em": 1.0,
+                "retrieval_hitrate@5": 1.0,
+            }
+        },
+    }
+    path = tmp_path / "metrics.json"
+    _write(path, metrics)
+    validate_answer_metrics(path, 1, benchmark="Mem-Gallery")
+    metrics["em"] = 0.0
+    _write(path, metrics)
+    with pytest.raises(ValueError, match="recalculated"):
+        validate_answer_metrics(path, 1, benchmark="Mem-Gallery")
+
+
 def test_deep_judge_validation_ties_raw_scores_to_source(tmp_path):
     source = [
         {"question": "q1", "category": "FR", "system_answer": "a1"},

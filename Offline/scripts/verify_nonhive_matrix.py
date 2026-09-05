@@ -9,6 +9,7 @@ import json
 import math
 from pathlib import Path
 import re
+import sys
 from typing import Any, Callable
 
 try:
@@ -86,7 +87,7 @@ def _score(value: Any, label: str) -> float:
     return score
 
 
-def validate_answer_metrics(path: Path, expected: int) -> None:
+def validate_answer_metrics(path: Path, expected: int, *, benchmark: str = "") -> None:
     metrics = _load_dict(path)
     if metrics.get("count") != expected:
         raise ValueError(
@@ -94,6 +95,56 @@ def validate_answer_metrics(path: Path, expected: int) -> None:
         )
     _score(metrics.get("f1"), "f1")
     _score(metrics.get("em"), "em")
+    if not benchmark:
+        return
+    source_path = path.parent / "results.json"
+    results = json.loads(source_path.read_text(encoding="utf-8"))
+    if not isinstance(results, list) or len(results) != expected:
+        raise ValueError("answer metric source result count mismatch")
+    src_path = str(ROOT / "src")
+    if src_path not in sys.path:
+        sys.path.insert(0, src_path)
+    if benchmark == "WorldMemArena":
+        from benchmarks.wma_harness.runner.metrics import summarize_results
+    else:
+        from benchmarks.memgallery_harness.runner.metrics import summarize_results
+
+    recalculated = summarize_results(results, k=5)
+    scalar_keys = {"count", "f1", "em", "retrieval_hitrate@5"}
+    if benchmark == "WorldMemArena":
+        scalar_keys.update({"strict_em", "errors"})
+    for key in scalar_keys:
+        actual = metrics.get(key)
+        expected_value = recalculated.get(key)
+        if isinstance(expected_value, float):
+            matches = math.isclose(
+                float(actual), expected_value, rel_tol=1e-12, abs_tol=1e-12
+            )
+        else:
+            matches = actual == expected_value
+        if not matches:
+            raise ValueError(
+                f"stored answer metric {key}={actual!r}; recalculated={expected_value!r}"
+            )
+    stored_categories = metrics.get("by_category") or {}
+    recalculated_categories = recalculated.get("by_category") or {}
+    if set(stored_categories) != set(recalculated_categories):
+        raise ValueError("stored answer metric categories differ from results")
+    for category, expected_row in recalculated_categories.items():
+        stored_row = stored_categories[category]
+        for key in ("count", "f1", "em"):
+            actual = stored_row.get(key)
+            expected_value = expected_row.get(key)
+            if isinstance(expected_value, float):
+                matches = math.isclose(
+                    float(actual), expected_value, rel_tol=1e-12, abs_tol=1e-12
+                )
+            else:
+                matches = actual == expected_value
+            if not matches:
+                raise ValueError(
+                    f"stored {category}/{key}={actual!r}; recalculated={expected_value!r}"
+                )
 
 
 def validate_judge_metrics(path: Path, expected: int, *, deep: bool = False) -> None:
@@ -424,6 +475,7 @@ def main() -> None:
         "metrics": lambda job: validate_answer_metrics(
             output_root / job.benchmark / job.method / "metrics.json",
             EXPECTED_RESULT_COUNTS[job.benchmark],
+            benchmark=job.benchmark,
         ),
         "judge": lambda job: validate_judge_metrics(
             output_root / job.benchmark / job.method / "llm_judge_metrics.json",
