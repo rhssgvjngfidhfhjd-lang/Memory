@@ -13,6 +13,7 @@ from benchmarks.io_utils import write_json_atomic
 from benchmarks.memgallery_harness.runner.metrics import (
     calculate_calls_qa,
     combine_call_metrics,
+    merge_llm_judge_metrics,
 )
 
 try:
@@ -102,6 +103,35 @@ def calculate_formal_qa_metric(
     return calculate_calls_qa(normalized, sample_id_field="_metric_sample_id")
 
 
+def merge_judge_and_summary(result_dir: Path, metrics: dict[str, Any]) -> dict[str, Any]:
+    """Merge a complete Judge artifact and retain summary-only derived fields."""
+    judge_path = result_dir / "llm_judge_metrics.json"
+    if judge_path.is_file():
+        judge = _load_dict(judge_path)
+        expected = int(metrics.get("count") or 0)
+        complete = (
+            judge.get("count") == expected
+            and judge.get("valid_count") == expected
+            and int(judge.get("judge_errors") or 0) == 0
+            and not judge.get("provisional", True)
+        )
+        if complete:
+            metrics = merge_llm_judge_metrics(metrics, judge)
+
+    summary_path = result_dir / "summary.json"
+    if summary_path.is_file():
+        previous_summary = _load_dict(summary_path)
+        for key, value in previous_summary.items():
+            metrics.setdefault(key, value)
+    return metrics
+
+
+def write_synchronized_metrics(result_dir: Path, metrics: dict[str, Any]) -> None:
+    """Keep the canonical metrics and backward-compatible summary in sync."""
+    write_json_atomic(result_dir / "metrics.json", metrics)
+    write_json_atomic(result_dir / "summary.json", metrics)
+
+
 def merge_job(
     benchmark: str,
     method: str,
@@ -119,13 +149,19 @@ def merge_job(
     metrics_path = result_dir / "metrics.json"
     results_path = result_dir / "results.json"
     mb_path = mb_call_root / benchmark / method / "metrics.json"
-    if not metrics_path.is_file() or not results_path.is_file() or not mb_path.is_file():
+    if not metrics_path.is_file() or not results_path.is_file():
+        return False
+
+    formal_metrics = merge_judge_and_summary(result_dir, _load_dict(metrics_path))
+    if not mb_path.is_file():
+        write_synchronized_metrics(result_dir, formal_metrics)
         return False
 
     expected = EXPECTED_SAMPLE_COUNTS[benchmark]
     try:
         memory_bank = normalize_mb_metric(_load_dict(mb_path), expected=expected)
     except ValueError:
+        write_synchronized_metrics(result_dir, formal_metrics)
         return False
     qa = calculate_formal_qa_metric(benchmark, _load_list(results_path))
     if not qa.get("available") or qa.get("num_samples") != expected:
@@ -133,9 +169,8 @@ def merge_job(
             f"formal QA calls are incomplete for {benchmark}/{method}: {qa.get('reason')}"
         )
 
-    formal_metrics = _load_dict(metrics_path)
     formal_metrics["calls"] = combine_call_metrics(memory_bank, qa)
-    write_json_atomic(metrics_path, formal_metrics)
+    write_synchronized_metrics(result_dir, formal_metrics)
     return True
 
 

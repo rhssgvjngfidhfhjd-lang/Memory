@@ -978,6 +978,10 @@ def main() -> None:
             combined = add_retrieval_memory_tokens(combined, retrieval_metrics)
         summary_path = out_dir / "summary.json"
         if not summary["provisional"] and len(ordered) == len(selected):
+            # ``metrics.json`` is the canonical machine-readable artifact;
+            # keep the historical ``summary.json`` alias byte-for-byte
+            # equivalent so Judge and later MB-call merges cannot diverge.
+            write_json_atomic(benchmark_metrics_path, combined)
             write_json_atomic(summary_path, combined)
         else:
             summary_path.unlink(missing_ok=True)

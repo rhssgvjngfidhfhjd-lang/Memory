@@ -183,6 +183,24 @@ def validate_native_memory_artifacts(
             )
 
 
+def validate_unified_metrics(result_dir: Path, expected: int) -> None:
+    metrics = _load_dict(result_dir / "metrics.json")
+    judge = _load_dict(result_dir / "llm_judge_metrics.json")
+    summary = _load_dict(result_dir / "summary.json")
+    if metrics.get("count") != expected:
+        raise ValueError("canonical metrics have the wrong result count")
+    if not math.isclose(
+        float(metrics.get("llm_judge")),
+        float(judge.get("accuracy")),
+        rel_tol=1e-12,
+        abs_tol=1e-12,
+    ):
+        raise ValueError("canonical metrics do not match the Judge artifact")
+    for key in ("f1", "em", "llm_judge", "count", "calls"):
+        if summary.get(key) != metrics.get(key):
+            raise ValueError(f"summary and canonical metrics differ at {key!r}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-root", default=str(OUTPUT_ROOT))
@@ -217,6 +235,10 @@ def main() -> None:
             output_root / job.benchmark / job.method,
             job.method,
             EXPECTED_SAMPLE_COUNTS[job.benchmark],
+        ),
+        "unified_metrics": lambda job: validate_unified_metrics(
+            output_root / job.benchmark / job.method,
+            EXPECTED_RESULT_COUNTS[job.benchmark],
         ),
     }
     jobs = [

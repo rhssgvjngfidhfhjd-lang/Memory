@@ -103,3 +103,41 @@ def test_merge_job_never_accepts_hivemem(tmp_path):
             output_root=tmp_path,
             mb_call_root=tmp_path,
         )
+
+
+def test_merge_job_synchronizes_judge_even_before_mb_is_ready(tmp_path):
+    output_root = tmp_path / "outputs"
+    result_dir = output_root / "Mem-Gallery" / "MIRIX"
+    _write(
+        result_dir / "metrics.json",
+        {"f1": 0.25, "em": 0.5, "llm_judge": None, "count": 2},
+    )
+    _write(
+        result_dir / "results.json",
+        [
+            {"dataset": "one", "answer_attempts": 1, "answer_failed_attempts": 0},
+            {"dataset": "two", "answer_attempts": 1, "answer_failed_attempts": 0},
+        ],
+    )
+    _write(
+        result_dir / "llm_judge_metrics.json",
+        {
+            "count": 2,
+            "valid_count": 2,
+            "judge_errors": 0,
+            "provisional": False,
+            "accuracy": 0.75,
+            "by_category": {},
+        },
+    )
+
+    assert not merge_job(
+        "Mem-Gallery",
+        "MIRIX",
+        output_root=output_root,
+        mb_call_root=tmp_path / "missing_mb",
+    )
+    metrics = json.loads((result_dir / "metrics.json").read_text())
+    summary = json.loads((result_dir / "summary.json").read_text())
+    assert metrics["llm_judge"] == 0.75
+    assert summary == metrics

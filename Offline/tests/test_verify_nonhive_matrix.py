@@ -8,6 +8,7 @@ from scripts.verify_nonhive_matrix import (
     validate_judge_metrics,
     validate_mb_call_metrics,
     validate_native_memory_artifacts,
+    validate_unified_metrics,
 )
 
 
@@ -140,3 +141,21 @@ def test_memverse_native_validation_requires_all_three_graphs_and_memories(tmp_p
     graph.unlink()
     with pytest.raises(ValueError, match="vdb_entities"):
         validate_native_memory_artifacts(result_dir, "MemVerse", 1)
+
+
+def test_unified_metrics_match_judge_and_summary(tmp_path):
+    metrics = {
+        "f1": 0.25,
+        "em": 0.5,
+        "llm_judge": 0.75,
+        "count": 2,
+        "calls": {"total": {"total_calls": 8}},
+    }
+    _write(tmp_path / "metrics.json", metrics)
+    _write(tmp_path / "summary.json", metrics)
+    _write(tmp_path / "llm_judge_metrics.json", {"accuracy": 0.75})
+    validate_unified_metrics(tmp_path, 2)
+    metrics["llm_judge"] = 0.5
+    _write(tmp_path / "summary.json", metrics)
+    with pytest.raises(ValueError, match="summary"):
+        validate_unified_metrics(tmp_path, 2)
