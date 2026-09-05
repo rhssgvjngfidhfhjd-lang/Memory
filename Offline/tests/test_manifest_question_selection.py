@@ -16,6 +16,7 @@ from benchmarks.memgallery_harness.eval_memgallery import (
     prepare_dataset_jobs,
 )
 from benchmarks.wma_harness.eval_wma import (
+    _with_manifest_question_id,
     prepare_native_sample_jobs,
     wma_manifest_question_id,
 )
@@ -76,6 +77,20 @@ class CanonicalManifestQuestionIdTest(unittest.TestCase):
             wma_manifest_question_id("academic_03", "QA00", 1),
             "academic_03:QA00:Q001",
         )
+
+    def test_wma_backfills_manifest_id_in_legacy_checkpoint_job(self):
+        legacy = {
+            "query_id": "academic_03::QA00::1::FR::hash",
+            "sample_id": "academic_03",
+            "checkpoint_id": "QA00",
+            "qa_index": 1,
+        }
+        normalized = _with_manifest_question_id(legacy)
+        self.assertEqual(
+            normalized["manifest_question_id"],
+            "academic_03:QA00:Q001",
+        )
+        self.assertNotIn("manifest_question_id", legacy)
 
 
 class StrictManifestSelectionTest(unittest.TestCase):

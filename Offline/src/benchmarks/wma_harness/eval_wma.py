@@ -72,6 +72,25 @@ def wma_manifest_question_id(
     return f"{sample_id}:{checkpoint_id}:Q{qa_index:03d}"
 
 
+def _with_manifest_question_id(job: dict[str, Any]) -> dict[str, Any]:
+    """Backfill canonical IDs in sample checkpoints written before manifests."""
+    if job.get("manifest_question_id"):
+        return job
+    qa_index = job.get("qa_index")
+    if qa_index is None:
+        raise KeyError(
+            "WMA job lacks both manifest_question_id and qa_index: "
+            f"{job.get('query_id', '<unknown>')}"
+        )
+    normalized = dict(job)
+    normalized["manifest_question_id"] = wma_manifest_question_id(
+        str(job["sample_id"]),
+        str(job["checkpoint_id"]),
+        int(qa_index),
+    )
+    return normalized
+
+
 def _order_wma_jobs(
     jobs: list[dict[str, Any]],
     ordered_question_ids: tuple[str, ...] | None,
@@ -378,6 +397,7 @@ def prepare_native_sample_jobs(
 
 
 def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    job = _with_manifest_question_id(job)
     started = time.time()
     try:
         answer_response = client.answer_with_usage(
@@ -772,7 +792,11 @@ def main() -> None:
         max_workers=args.sample_concurrency,
         item_key=lambda path: path.stem,
     )
-    jobs = [job for artifact in artifacts for job in artifact["jobs"]]
+    jobs = [
+        _with_manifest_question_id(job)
+        for artifact in artifacts
+        for job in artifact["jobs"]
+    ]
     expected_manifest_question_ids = (
         manifest_index.ordered_question_ids(
             manifest_split, data_source="worldmemarena_lifelong"
