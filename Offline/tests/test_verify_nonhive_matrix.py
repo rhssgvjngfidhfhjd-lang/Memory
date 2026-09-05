@@ -7,6 +7,7 @@ from scripts.verify_nonhive_matrix import (
     validate_integrated_call_metrics,
     validate_judge_metrics,
     validate_mb_call_metrics,
+    validate_native_memory_artifacts,
 )
 
 
@@ -92,3 +93,50 @@ def test_integrated_call_metric_validation(tmp_path):
     _write(formal, payload)
     with pytest.raises(ValueError, match="measured=5"):
         validate_integrated_call_metrics(formal, measured, 2)
+
+
+def test_native_memory_validation_for_persistent_and_in_memory_methods(tmp_path):
+    persistent = tmp_path / "persistent"
+    for sample in ("one", "two"):
+        path = persistent / "memory" / "datasets" / sample / "raw.db"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"sqlite")
+    validate_native_memory_artifacts(persistent, "M2A", 2)
+    with pytest.raises(ValueError, match="expected at least 3"):
+        validate_native_memory_artifacts(persistent, "M2A", 3)
+
+    in_memory = tmp_path / "in_memory"
+    snapshot = in_memory / "memory" / "memory_snapshot.jsonl"
+    snapshot.parent.mkdir(parents=True)
+    snapshot.write_text('{"memory_id":"one"}\n', encoding="utf-8")
+    validate_native_memory_artifacts(in_memory, "M3-Agent-caption", 2)
+
+
+def test_memverse_native_validation_requires_all_three_graphs_and_memories(tmp_path):
+    result_dir = tmp_path / "memverse"
+    for memory_type in ("core", "episodic", "semantic"):
+        chunk = (
+            result_dir
+            / "memory"
+            / "datasets"
+            / "sample"
+            / "memory_chunks"
+            / f"{memory_type}_memory.json"
+        )
+        graph = (
+            result_dir
+            / "memory"
+            / "datasets"
+            / "sample"
+            / "graph"
+            / memory_type
+            / "vdb_entities.json"
+        )
+        chunk.parent.mkdir(parents=True, exist_ok=True)
+        graph.parent.mkdir(parents=True, exist_ok=True)
+        chunk.write_text("[]", encoding="utf-8")
+        graph.write_text("{}", encoding="utf-8")
+    validate_native_memory_artifacts(result_dir, "MemVerse", 1)
+    graph.unlink()
+    with pytest.raises(ValueError, match="vdb_entities"):
+        validate_native_memory_artifacts(result_dir, "MemVerse", 1)

@@ -36,6 +36,20 @@ EXPECTED_SAMPLE_COUNTS = {
     "WorldMemArena": 38,
     "H2HMEM": 25,
 }
+NATIVE_MEMORY_PATTERNS = {
+    "OmniSimpleMem": ("index/mau_store/*.jsonl",),
+    "M2A": ("raw.db",),
+    "MIRIX": ("sqlite.db",),
+    "MMA": ("sqlite.db",),
+    "MemVerse": (
+        "memory_chunks/core_memory.json",
+        "memory_chunks/episodic_memory.json",
+        "memory_chunks/semantic_memory.json",
+        "graph/core/vdb_entities.json",
+        "graph/episodic/vdb_entities.json",
+        "graph/semantic/vdb_entities.json",
+    ),
+}
 
 
 def _load_dict(path: Path) -> dict[str, Any]:
@@ -140,6 +154,35 @@ def validate_integrated_call_metrics(
         )
 
 
+def validate_native_memory_artifacts(
+    result_dir: Path,
+    method: str,
+    expected: int,
+) -> None:
+    """Prove that each sample has a native store or serialized native snapshot."""
+    patterns = NATIVE_MEMORY_PATTERNS.get(method)
+    if patterns is None:
+        # AUGUSTUSMemory and M3-Agent are in-memory implementations. Their
+        # unified snapshot is the durable serialization of the native store.
+        snapshot = result_dir / "memory" / "memory_snapshot.jsonl"
+        if not snapshot.is_file() or snapshot.stat().st_size == 0:
+            raise ValueError(f"missing serialized native memory: {snapshot}")
+        return
+
+    state_root = result_dir / "memory" / "datasets"
+    for pattern in patterns:
+        artifacts = [
+            path
+            for path in state_root.rglob(pattern)
+            if path.is_file() and path.stat().st_size > 0
+        ]
+        if len(artifacts) < expected:
+            raise ValueError(
+                f"native memory pattern {pattern!r} has {len(artifacts)} "
+                f"non-empty artifacts; expected at least {expected}"
+            )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-root", default=str(OUTPUT_ROOT))
@@ -168,6 +211,11 @@ def main() -> None:
         "integrated_calls": lambda job: validate_integrated_call_metrics(
             output_root / job.benchmark / job.method / "metrics.json",
             mb_call_root / job.benchmark / job.method / "metrics.json",
+            EXPECTED_SAMPLE_COUNTS[job.benchmark],
+        ),
+        "native_memory": lambda job: validate_native_memory_artifacts(
+            output_root / job.benchmark / job.method,
+            job.method,
             EXPECTED_SAMPLE_COUNTS[job.benchmark],
         ),
     }
