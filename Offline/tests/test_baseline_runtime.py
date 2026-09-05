@@ -286,6 +286,25 @@ class BaselineProtocolTest(unittest.TestCase):
         self.assertEqual(function["name"], "insert_memory")
         self.assertEqual(json.loads(function["arguments"]), {"title": "Almond"})
 
+    def test_mirix_repairs_truncated_textual_tool_json(self):
+        response = {
+            "choices": [
+                {
+                    "message": {
+                        "content": (
+                            '<tool_call>{"name":"insert_memory",'
+                            '"arguments":{"title":"Almond"}'
+                        ),
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        }
+        message = _normalize_openai_tool_tags(response)["choices"][0]["message"]
+        function = message["tool_calls"][0]["function"]
+        self.assertEqual(function["name"], "insert_memory")
+        self.assertEqual(json.loads(function["arguments"]), {"title": "Almond"})
+
     def test_mirix_normalizes_empty_tool_arguments_to_json_object(self):
         response = {
             "choices": [

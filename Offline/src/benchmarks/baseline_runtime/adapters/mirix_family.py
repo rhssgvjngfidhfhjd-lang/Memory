@@ -12,6 +12,8 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
+from json_repair import repair_json
+
 from benchmarks.baseline_runtime.protocol import (
     BaselineAdapter,
     MemoryRecord,
@@ -636,5 +638,8 @@ def _tool_payload(text: str) -> dict[str, Any] | None:
     try:
         value = json.loads(candidate)
     except (json.JSONDecodeError, TypeError):
-        return None
+        try:
+            value = repair_json(candidate, return_objects=True)
+        except (TypeError, ValueError):
+            return None
     return value if isinstance(value, dict) else None
