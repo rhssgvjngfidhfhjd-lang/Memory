@@ -1,0 +1,36 @@
+{
+  "id": "7ace808b-855d-41e9-a2cc-a0652676993a",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:51.925877",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 295358,
+    "modified_time": "2026-08-23T21:35:23.732857"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an abstract artwork composed of intersecting blue brushstrokes on a white background. The strokes vary in shades of blue, creating a layered effect with a sense of dynamic movement. The overall mood is energetic and expressive, with no visible text or recognizable objects.",
+    "final_text": "The image features an abstract artwork composed of intersecting blue brushstrokes on a white background. The strokes vary in shades of blue, creating a layered effect with a sense of dynamic movement. The overall mood is energetic and expressive, with no visible text or recognizable objects.",
+    "token_stats": {
+      "original_tokens": 54,
+      "final_tokens": 54,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427012-m3LEbST9RnXasOdYwqAa",
+    "created": 1788427012,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 54,
+      "total_tokens": 399,
+      "cost": 0.0014025
+    }
+  }
+}

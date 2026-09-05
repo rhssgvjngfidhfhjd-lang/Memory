@@ -1,0 +1,36 @@
+{
+  "id": "ed725514-0910-4f06-ab00-0988d824f8be",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:45.707910",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session5/image/4.png",
+    "filename": "4.png",
+    "size": 1846414,
+    "modified_time": "2026-08-23T21:54:50.049752"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "This image features an illustrated scene from a book or magazine, depicting differences between dogs and cats. On the left, dogs are shown working collaboratively, with text discussing hunting methods and social behavior. Dialogue bubbles read \"OK! Let's go!\" and \"I see it, I see it.\" On the right, cats are portrayed as solitary, with text explaining lifestyle contrasts and independence. A cat says, \"What are you doing? Boring.\" The atmosphere is informative and educational, using playful illustrations to convey differences. Visible text is in Chinese, discussing evolutionary and behavioral traits.",
+    "final_text": "This image features an illustrated scene from a book or magazine, depicting differences between dogs and cats. On the left, dogs are shown working collaboratively, with text discussing hunting methods and social behavior. Dialogue bubbles read \"OK! Let's go!\" and \"I see it, I see it.\" On the right, cats are portrayed as solitary, with text explaining lifestyle contrasts and independence. A cat says, \"What are you doing? Boring.\" The atmosphere is informative and educational, using playful illustrations to convey differences. Visible text is in Chinese, discussing evolutionary and behavioral traits.",
+    "token_stats": {
+      "original_tokens": 116,
+      "final_tokens": 116,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427421-uG0vsWiyL2RFJH66KCAv",
+    "created": 1788427421,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 115,
+      "total_tokens": 1113,
+      "cost": 0.003645
+    }
+  }
+}

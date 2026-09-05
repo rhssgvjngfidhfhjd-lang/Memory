@@ -1,0 +1,36 @@
+{
+  "id": "cc07e8b4-1747-4731-871b-866448c3f3dc",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:29.075384",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session12/image/2.png",
+    "filename": "2.png",
+    "size": 486103,
+    "modified_time": "2026-08-23T21:38:02.358727"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image consists of four scenes from a movie, featuring a futuristic and dystopian atmosphere. \n\n1. **Top Scene**: A large holographic woman is pointing towards a solitary figure in a dark, urban environment, with bright neon colors creating a surreal mood.\n\n2. **Second Scene**: A person stands behind a desk in a grand, dimly lit hall with geometric designs, evoking a sense of authority and power.\n\n3. **Third Scene**: Two people walk through a corridor lined with glass cases containing human figures, suggesting a theme of artificial life or cloning in a sterile environment.\n\n4. **Bottom Scene**: A large crowd is gathered in a dark, open space. The atmosphere appears tense or somber.\n\nThe overall mood combines elements of futuristic technology with themes of isolation and control.",
+    "final_text": "The image consists of four scenes from a movie, featuring a futuristic and dystopian atmosphere. \n\n1. **Top Scene**: A large holographic woman is pointing towards a solitary figure in a dark, urban environment, with bright neon colors creating a surreal mood.\n\n2. **Second Scene**: A person stands behind a desk in a grand, dimly lit hall with geometric designs, evoking a sense of authority and power.\n\n3. **Third Scene**: Two people walk through a corridor lined with glass cases containing human figures, suggesting a theme of artificial life or cloning in a sterile environment.\n\n4. **Bottom Scene**: A large crowd is gathered in a dark, open space. The atmosphere appears tense or somber.\n\nThe overall mood combines elements of futuristic technology with themes of isolation and control.",
+    "token_stats": {
+      "original_tokens": 159,
+      "final_tokens": 159,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427228-aOlBTaTivN3rAF5aimiC",
+    "created": 1788427228,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 163,
+      "total_tokens": 678,
+      "cost": 0.0029175
+    }
+  }
+}

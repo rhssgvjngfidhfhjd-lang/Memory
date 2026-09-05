@@ -1,0 +1,36 @@
+{
+  "id": "d5ffecbe-39bc-4c33-af4d-597c4cc59a02",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:28.513301",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session14/image/2.png",
+    "filename": "2.png",
+    "size": 1528721,
+    "modified_time": "2026-08-23T21:32:30.494775"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a digital poster about a community culture festival preparation meeting. It features text in Chinese on a gradient blue background. The main headline reads \"社区文化节筹备会议情况,\" which translates to \"Community Culture Festival Preparation Meeting Situation.\" The poster details the festival theme as \"我们的家园，共同的节日\" (\"Our Home, Common Festival\"), scheduled around May Day next year. Responsibilities are confirmed, and a teacher will guide children in creating themed paintings. The atmosphere is informative and organized.",
+    "final_text": "The image is a digital poster about a community culture festival preparation meeting. It features text in Chinese on a gradient blue background. The main headline reads \"社区文化节筹备会议情况,\" which translates to \"Community Culture Festival Preparation Meeting Situation.\" The poster details the festival theme as \"我们的家园，共同的节日\" (\"Our Home, Common Festival\"), scheduled around May Day next year. Responsibilities are confirmed, and a teacher will guide children in creating themed paintings. The atmosphere is informative and organized.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426866-h314rFUvQmE9KbfK4wjm",
+    "created": 1788426866,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 103,
+      "total_tokens": 1101,
+      "cost": 0.003525
+    }
+  }
+}

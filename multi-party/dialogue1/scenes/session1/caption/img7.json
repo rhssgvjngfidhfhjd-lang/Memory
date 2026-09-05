@@ -1,0 +1,36 @@
+{
+  "id": "5b34cedb-893a-45e2-bd59-fe473a202036",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:55.472249",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 266423,
+    "modified_time": "2026-08-23T22:02:04.731243"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a close-up of a pile of glossy dried jujube fruits with a rich reddish-brown color. A golden fork holds one of the fruits, highlighting its smooth texture and visible seed cavity. The background is softly blurred and dark, adding warmth to the scene. The overall mood is inviting and appetizing, emphasizing the rich, natural aesthetics of the dried fruits. There is no visible text in the image.",
+    "final_text": "The image depicts a close-up of a pile of glossy dried jujube fruits with a rich reddish-brown color. A golden fork holds one of the fruits, highlighting its smooth texture and visible seed cavity. The background is softly blurred and dark, adding warmth to the scene. The overall mood is inviting and appetizing, emphasizing the rich, natural aesthetics of the dried fruits. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426534-V6rS98xXEzFju9NX91V7",
+    "created": 1788426534,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 86,
+      "total_tokens": 1084,
+      "cost": 0.003355
+    }
+  }
+}

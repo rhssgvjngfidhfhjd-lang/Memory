@@ -1,0 +1,36 @@
+{
+  "id": "33b7b94a-1a1c-4fb2-8d12-a6d7e9a93e4f",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:58.861803",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 565160,
+    "modified_time": "2026-08-23T21:34:32.725803"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a tall, rectangular air purifier in a room, positioned on a carpeted floor. The device has a sleek, modern design with a control panel on top. Next to it, there are several black and gray boxes or electronic devices stacked on the floor. A flexible duct is visible in the background, suggesting ventilation. The room has a neutral, business-like atmosphere with a partially visible TV screen on the left side. The lighting is soft, creating a calm and orderly mood.",
+    "final_text": "The image shows a tall, rectangular air purifier in a room, positioned on a carpeted floor. The device has a sleek, modern design with a control panel on top. Next to it, there are several black and gray boxes or electronic devices stacked on the floor. A flexible duct is visible in the background, suggesting ventilation. The room has a neutral, business-like atmosphere with a partially visible TV screen on the left side. The lighting is soft, creating a calm and orderly mood.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426957-eARC8WSyqwEVczsUL2Qu",
+    "created": 1788426957,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 98,
+      "total_tokens": 613,
+      "cost": 0.0022675
+    }
+  }
+}

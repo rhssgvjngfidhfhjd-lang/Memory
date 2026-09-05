@@ -1,0 +1,36 @@
+{
+  "id": "f42b2b2a-07c5-47be-b9a1-71a803a35fc0",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:59.511021",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session14/image/1.png",
+    "filename": "1.png",
+    "size": 31534,
+    "modified_time": "2026-08-23T21:31:37.384326"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a document with text in Chinese. The core scene consists of a title and a division of labor section. The title reads: \"关于整合电子病历文本与生理数据以探索‘社会心理因素’与健康关联的初步研究方案\" (Regarding the integration of electronic medical records and physiological data to explore the preliminary research plan on the association between 'social psychological factors' and health). Below, a division of labor is indicated: \"分工: 程玮秋 - 数据工程与建模 / 沈知微 - 叙事框架设计与结果解读\" (Division of labor: Cheng Weiqiu - Data engineering and modeling / Shen Zhiwei - Narrative framework design and result interpretation). The atmosphere is academic and formal.",
+    "final_text": "The image displays a document with text in Chinese. The core scene consists of a title and a division of labor section. The title reads: \"关于整合电子病历文本与生理数据以探索‘社会心理因素’与健康关联的初步研究方案\" (Regarding the integration of electronic medical records and physiological data to explore the preliminary research plan on the association between 'social psychological factors' and health). Below, a division of labor is indicated: \"分工: 程玮秋 - 数据工程与建模 / 沈知微 - 叙事框架设计与结果解读\" (Division of labor: Cheng Weiqiu - Data engineering and modeling / Shen Zhiwei - Narrative framework design and result interpretation). The atmosphere is academic and formal.",
+    "token_stats": {
+      "original_tokens": 185,
+      "final_tokens": 185,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426776-2rBDTkNzVNwYHhdVcNRK",
+    "created": 1788426776,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 162,
+      "total_tokens": 879,
+      "cost": 0.0034125
+    }
+  }
+}

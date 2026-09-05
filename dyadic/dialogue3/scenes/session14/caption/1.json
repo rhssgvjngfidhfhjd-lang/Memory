@@ -1,0 +1,36 @@
+{
+  "id": "35a83283-9fdb-4aba-9d2a-f744ebf29adf",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:17.511427",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session14/image/1.png",
+    "filename": "1.png",
+    "size": 868448,
+    "modified_time": "2026-08-23T21:54:32.138202"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a collage with a bright and cheerful atmosphere. It features four main sections: \n\n1. **Top Left:** A racing video game screenshot showing a vehicle on a track with game controls visible.\n2. **Top Right:** Three Shiba Inu dogs playing in a grassy area, looking happy and energetic.\n3. **Bottom Left:** Four people sitting at a table enjoying a meal, smiling at the camera.\n4. **Bottom Right:** An open cardboard box containing a gaming console and controller, with a monitor in the background.\n\nThe text \"年度混剪\" is prominently displayed at the top.",
+    "final_text": "The image is a collage with a bright and cheerful atmosphere. It features four main sections: \n\n1. **Top Left:** A racing video game screenshot showing a vehicle on a track with game controls visible.\n2. **Top Right:** Three Shiba Inu dogs playing in a grassy area, looking happy and energetic.\n3. **Bottom Left:** Four people sitting at a table enjoying a meal, smiling at the camera.\n4. **Bottom Right:** An open cardboard box containing a gaming console and controller, with a monitor in the background.\n\nThe text \"年度混剪\" is prominently displayed at the top.",
+    "token_stats": {
+      "original_tokens": 127,
+      "final_tokens": 127,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427395-zy3jwajQYnh807rNCPQ8",
+    "created": 1788427395,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 122,
+      "total_tokens": 977,
+      "cost": 0.0033575
+    }
+  }
+}

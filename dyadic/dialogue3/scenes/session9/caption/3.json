@@ -1,0 +1,36 @@
+{
+  "id": "7ab44ead-8b11-49c9-8b97-ffe57296997e",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:47.778020",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session9/image/3.png",
+    "filename": "3.png",
+    "size": 959804,
+    "modified_time": "2026-08-23T21:51:01.118289"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a luxurious dining room with a large round table set for a meal. The table is surrounded by elegant chairs, each with a dark exterior and orange seating. A modern, geometric chandelier hangs from the ceiling, casting a warm light. Large windows reveal a scenic outdoor view with lush greenery and a patio area. The atmosphere is sophisticated and inviting, ideal for formal gatherings. No visible text is present.",
+    "final_text": "The image depicts a luxurious dining room with a large round table set for a meal. The table is surrounded by elegant chairs, each with a dark exterior and orange seating. A modern, geometric chandelier hangs from the ceiling, casting a warm light. Large windows reveal a scenic outdoor view with lush greenery and a patio area. The atmosphere is sophisticated and inviting, ideal for formal gatherings. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427366-H4sneV7TWPhnDhieYQBz",
+    "created": 1788427366,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 82,
+      "total_tokens": 937,
+      "cost": 0.0029575
+    }
+  }
+}

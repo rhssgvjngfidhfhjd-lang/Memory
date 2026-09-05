@@ -1,0 +1,9 @@
+The image is divided into three sections: 
+
+1. **识别预警信号 (Recognize Warning Signs)**: A child appears unwell, coughing, and holding their throat. Text outlines warning signs like reduced PEF value, increased nighttime coughing, rapid breathing, and difficulty speaking.
+
+2. **紧急处理 (Emergency Handling)**: A child sits with an inhaler, maintaining a stable posture. An air purifier is nearby. Text advises immediate inhaler use, ensuring the child's posture, turning on air purification, and contacting a pediatrician.
+
+3. **就诊决策 (Decision Making)**: An adult carries a medical kit, indicating preparedness. Text suggests normal response if condition improves within 15 minutes, or seeking emergency help and keeping medical records if not.
+
+The overall mood is informative and urgent, focusing on asthma management.

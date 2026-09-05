@@ -1,0 +1,36 @@
+{
+  "id": "72dc7a8a-1351-4d9e-9f9c-a87e2c6b3632",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:32.374531",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session14/image/1.png",
+    "filename": "1.png",
+    "size": 234852,
+    "modified_time": "2026-08-23T21:37:14.588417"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an open camera bag filled with photography and videography equipment. Main elements include a DSLR camera with a lens attached, additional camera lenses, a drone, a tripod, and various protective cases. The equipment is neatly organized, suggesting readiness for a photography outing. The mood is professional and focused on creativity and exploration. The visible text includes brand names on the camera and lenses. The overall arrangement reflects a well-prepared photographer.",
+    "final_text": "The image shows an open camera bag filled with photography and videography equipment. Main elements include a DSLR camera with a lens attached, additional camera lenses, a drone, a tripod, and various protective cases. The equipment is neatly organized, suggesting readiness for a photography outing. The mood is professional and focused on creativity and exploration. The visible text includes brand names on the camera and lenses. The overall arrangement reflects a well-prepared photographer.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427171-3419Syij73hYmdNc989E",
+    "created": 1788427171,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 87,
+      "total_tokens": 432,
+      "cost": 0.0017325
+    }
+  }
+}

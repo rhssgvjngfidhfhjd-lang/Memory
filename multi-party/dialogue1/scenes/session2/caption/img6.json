@@ -1,0 +1,36 @@
+{
+  "id": "ab908946-d3cf-4155-8001-34888e28d03d",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:13.781400",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session2/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 459051,
+    "modified_time": "2026-08-23T22:02:30.425747"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an aquarium with a lively and whimsical setup. Inside, a turtle swims near the surface, while another turtle rests on a white platform. The tank is filled with various plants, including large green leaves and a potted plant on the platform. Decorative elements include a terracotta structure resembling a tiki face, a grassy-roofed miniature house, and small figurines of characters playing instruments and sunflowers. The gravel-covered bottom adds a natural touch. Above the tank, small cat figurines are displayed on a wooden shelf. The atmosphere is playful and serene.",
+    "final_text": "The image depicts an aquarium with a lively and whimsical setup. Inside, a turtle swims near the surface, while another turtle rests on a white platform. The tank is filled with various plants, including large green leaves and a potted plant on the platform. Decorative elements include a terracotta structure resembling a tiki face, a grassy-roofed miniature house, and small figurines of characters playing instruments and sunflowers. The gravel-covered bottom adds a natural touch. Above the tank, small cat figurines are displayed on a wooden shelf. The atmosphere is playful and serene.",
+    "token_stats": {
+      "original_tokens": 119,
+      "final_tokens": 119,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426549-3c4CrTrAGYOaxJP7XIIy",
+    "created": 1788426549,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 115,
+      "total_tokens": 835,
+      "cost": 0.00295
+    }
+  }
+}

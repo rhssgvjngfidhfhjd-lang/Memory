@@ -1,0 +1,36 @@
+{
+  "id": "01708682-e2f4-4646-a134-ea5e11012097",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:12.105049",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 178391,
+    "modified_time": "2026-08-23T21:35:30.918480"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a closed notebook placed on a wooden table. The notebook's cover features an illustration of a fluffy white kitten with big, expressive eyes, set against a soft blue sky background. The edges of the notebook are adorned with golden accents, adding a touch of elegance. The scene conveys a cozy and charming atmosphere, with the cute kitten illustration as the focal point, evoking a sense of warmth and friendliness. There is no visible text on the notebook.",
+    "final_text": "The image depicts a closed notebook placed on a wooden table. The notebook's cover features an illustration of a fluffy white kitten with big, expressive eyes, set against a soft blue sky background. The edges of the notebook are adorned with golden accents, adding a touch of elegance. The scene conveys a cozy and charming atmosphere, with the cute kitten illustration as the focal point, evoking a sense of warmth and friendliness. There is no visible text on the notebook.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427031-HfXbrbsJpfqsTS8cc7hg",
+    "created": 1788427031,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 92,
+      "total_tokens": 437,
+      "cost": 0.0017825
+    }
+  }
+}

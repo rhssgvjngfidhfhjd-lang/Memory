@@ -1,0 +1,36 @@
+{
+  "id": "be801bc0-e45a-480c-92ea-cf5c2e16b9f8",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:49.014866",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 261221,
+    "modified_time": "2026-08-23T22:04:25.761841"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a white rectangular plate with seven golden-brown onion rings arranged neatly on a light-colored countertop. The onion rings have a crispy texture, suggesting they are fried. In the background, there's a reflection of the onion rings in a glass surface, likely an oven or microwave door, with the brand name \"DACHOO\" visible on the appliance. The scene conveys a sense of readiness and appetizing appeal, with a clean and organized atmosphere.",
+    "final_text": "The image shows a white rectangular plate with seven golden-brown onion rings arranged neatly on a light-colored countertop. The onion rings have a crispy texture, suggesting they are fried. In the background, there's a reflection of the onion rings in a glass surface, likely an oven or microwave door, with the brand name \"DACHOO\" visible on the appliance. The scene conveys a sense of readiness and appetizing appeal, with a clean and organized atmosphere.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426585-8UE3zawvcc5PmJmksM33",
+    "created": 1788426585,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 92,
+      "total_tokens": 812,
+      "cost": 0.00272
+    }
+  }
+}

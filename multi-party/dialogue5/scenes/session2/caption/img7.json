@@ -1,0 +1,36 @@
+{
+  "id": "84efdfd1-c2d8-4481-b4d1-d5088962d03e",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:17.466996",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 348947,
+    "modified_time": "2026-08-23T22:09:36.412738"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a pair of winter boots with plush, gray fur lining visible from a top-down perspective. The boots are dark-colored, likely black, and are placed on a light wooden floor. The overall mood is cozy and warm, suggesting they are designed for cold weather. There is no visible text or significant interaction occurring in the scene.",
+    "final_text": "The image shows a pair of winter boots with plush, gray fur lining visible from a top-down perspective. The boots are dark-colored, likely black, and are placed on a light wooden floor. The overall mood is cozy and warm, suggesting they are designed for cold weather. There is no visible text or significant interaction occurring in the scene.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426856-2ZiVpKEKksdxVXxarhyc",
+    "created": 1788426856,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 68,
+      "total_tokens": 923,
+      "cost": 0.0028175
+    }
+  }
+}

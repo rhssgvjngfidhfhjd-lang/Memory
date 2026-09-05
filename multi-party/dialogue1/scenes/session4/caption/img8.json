@@ -1,0 +1,36 @@
+{
+  "id": "61306709-fe32-4113-a61a-0050b8289397",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:46.595289",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 379589,
+    "modified_time": "2026-08-23T22:03:52.805841"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a wooden cutting board with a sliced steak, cooked medium-rare, as the central focus. Accompanying the steak are grilled vegetables: a halved garlic bulb, several cherry tomatoes, and an asparagus spear. The steak is seasoned with visible pepper and glistens with juices, creating an appetizing appearance. The scene is set against a light-colored surface, enhancing the vibrant colors of the food. The overall mood is inviting and delicious, suggesting a freshly prepared meal ready to be served. No text is visible in the image.",
+    "final_text": "The image depicts a wooden cutting board with a sliced steak, cooked medium-rare, as the central focus. Accompanying the steak are grilled vegetables: a halved garlic bulb, several cherry tomatoes, and an asparagus spear. The steak is seasoned with visible pepper and glistens with juices, creating an appetizing appearance. The scene is set against a light-colored surface, enhancing the vibrant colors of the food. The overall mood is inviting and delicious, suggesting a freshly prepared meal ready to be served. No text is visible in the image.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426583-11I7aW3t3wI5iGHP1Pag",
+    "created": 1788426583,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 111,
+      "total_tokens": 831,
+      "cost": 0.00291
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "0affd9ee-3a53-4dd8-9c72-a801028d18e4",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:06.973707",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 2714906,
+    "modified_time": "2026-08-23T21:32:08.306570"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a line graph titled \"《中国奇谭》小猪的夏天评论情感倾向随时间变化趋势,\" depicting sentiment trends over time during a video playback. The x-axis represents video playback time in minutes, ranging from 0 to 700, while the y-axis shows sentiment inclination values from 0 to 100. Key data points are marked with numbers, indicating sentiment peaks and troughs. A dashed line highlights a peak labeled \"负面情绪激增峰值\" at the 11-minute mark. The graph suggests fluctuating sentiment, with notable peaks and valleys throughout the video duration. The overall atmosphere is analytical and data-driven.",
+    "final_text": "The image is a line graph titled \"《中国奇谭》小猪的夏天评论情感倾向随时间变化趋势,\" depicting sentiment trends over time during a video playback. The x-axis represents video playback time in minutes, ranging from 0 to 700, while the y-axis shows sentiment inclination values from 0 to 100. Key data points are marked with numbers, indicating sentiment peaks and troughs. A dashed line highlights a peak labeled \"负面情绪激增峰值\" at the 11-minute mark. The graph suggests fluctuating sentiment, with notable peaks and valleys throughout the video duration. The overall atmosphere is analytical and data-driven.",
+    "token_stats": {
+      "original_tokens": 153,
+      "final_tokens": 153,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426723-PyCYVePk43hgXnrENBIn",
+    "created": 1788426723,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 138,
+      "total_tokens": 1136,
+      "cost": 0.003875
+    }
+  }
+}

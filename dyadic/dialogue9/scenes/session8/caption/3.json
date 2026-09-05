@@ -1,0 +1,36 @@
+{
+  "id": "9131c561-df0f-4c4a-8b42-dc4798f13613",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:09.588311",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 878401,
+    "modified_time": "2026-08-23T22:02:01.317515"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a man sitting on a sofa, measuring his blood pressure. He is wearing a light brown shirt and holding a manual pump connected to a cuff wrapped around his arm. A blood pressure monitor is on the table in front of him. The background includes soft furnishings and a plant, creating a calm and relaxed atmosphere.",
+    "final_text": "The image depicts a man sitting on a sofa, measuring his blood pressure. He is wearing a light brown shirt and holding a manual pump connected to a cuff wrapped around his arm. A blood pressure monitor is on the table in front of him. The background includes soft furnishings and a plant, creating a calm and relaxed atmosphere.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427748-pQYTOerFzw1uLRkAg5rz",
+    "created": 1788427748,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 65,
+      "total_tokens": 1260,
+      "cost": 0.0036375
+    }
+  }
+}

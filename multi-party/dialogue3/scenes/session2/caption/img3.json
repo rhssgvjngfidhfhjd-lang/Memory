@@ -1,0 +1,36 @@
+{
+  "id": "90267615-daa3-424b-a34f-9c8a93aeef8c",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:36.854163",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 256767,
+    "modified_time": "2026-08-23T22:07:22.346149"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a digital character creation interface. The main focus is on a realistic, animated female character with light skin, brown eyes, and long light brown hair. She is wearing a black choker-like accessory. On the left side, there are options for customizing lips, displaying various shades and styles. The interface includes sliders and buttons for adjustments. Text in an Asian script appears on the right side. The atmosphere is modern and high-tech, suggesting a video game or graphic design application.",
+    "final_text": "The image shows a digital character creation interface. The main focus is on a realistic, animated female character with light skin, brown eyes, and long light brown hair. She is wearing a black choker-like accessory. On the left side, there are options for customizing lips, displaying various shades and styles. The interface includes sliders and buttons for adjustments. Text in an Asian script appears on the right side. The atmosphere is modern and high-tech, suggesting a video game or graphic design application.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426698-JpDnlrbLGT26JU78EmEu",
+    "created": 1788426698,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 98,
+      "total_tokens": 613,
+      "cost": 0.0022675
+    }
+  }
+}

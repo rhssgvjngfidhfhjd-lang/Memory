@@ -1,0 +1,36 @@
+{
+  "id": "9e3ad7de-127e-4495-9c91-d3581c520f8f",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:38.252892",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 2916578,
+    "modified_time": "2026-08-23T22:00:52.014136"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a mother cat and her kittens nestled inside a cozy box lined with soft fabric. The box has insulation material along the walls and a lid with circular cutouts. The mother cat appears relaxed and protective, while the kittens cuddle closely to her, creating a warm, nurturing atmosphere. The lighting suggests a calm and intimate setting, with no visible text.",
+    "final_text": "The image shows a mother cat and her kittens nestled inside a cozy box lined with soft fabric. The box has insulation material along the walls and a lid with circular cutouts. The mother cat appears relaxed and protective, while the kittens cuddle closely to her, creating a warm, nurturing atmosphere. The lighting suggests a calm and intimate setting, with no visible text.",
+    "token_stats": {
+      "original_tokens": 73,
+      "final_tokens": 73,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427715-UgGevNoJurJtT8mEEUSp",
+    "created": 1788427715,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 73,
+      "total_tokens": 1071,
+      "cost": 0.003225
+    }
+  }
+}

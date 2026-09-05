@@ -1,0 +1,36 @@
+{
+  "id": "d39043db-06e0-4692-b141-ca6200d0be9b",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:20.011270",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session12/image/3.png",
+    "filename": "3.png",
+    "size": 1061289,
+    "modified_time": "2026-08-23T21:56:50.959181"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant swing carousel against a bright blue sky. The carousel's canopy is ornately decorated with colorful and intricate designs featuring various figures and patterns. Riders in red swing seats are captured mid-air, creating a sense of motion and excitement. Multicolored balls are attached to the swings, adding to the festive atmosphere. The overall mood is lively and joyful, typical of an amusement park setting. No visible text is present.",
+    "final_text": "The image depicts a vibrant swing carousel against a bright blue sky. The carousel's canopy is ornately decorated with colorful and intricate designs featuring various figures and patterns. Riders in red swing seats are captured mid-air, creating a sense of motion and excitement. Multicolored balls are attached to the swings, adding to the festive atmosphere. The overall mood is lively and joyful, typical of an amusement park setting. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427637-npWByd5oqe9pFPHmwVXS",
+    "created": 1788427637,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 87,
+      "total_tokens": 942,
+      "cost": 0.0030075
+    }
+  }
+}

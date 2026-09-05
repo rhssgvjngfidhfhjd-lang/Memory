@@ -1,0 +1,36 @@
+{
+  "id": "349bf69a-04fc-499a-8b1f-501a4e412e61",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:14.786378",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session12/image/2.png",
+    "filename": "2.png",
+    "size": 520900,
+    "modified_time": "2026-08-23T21:57:35.978655"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a minimalist interior scene. The main elements include a tall cylindrical lamp with a design resembling traditional ink wash mountains, a light wooden table with a cut-out of a Chinese character, and a dark wooden box. The setting appears calm and serene, with natural light streaming through large windows, casting soft shadows on the floor. The overall mood is tranquil and modern, with a focus on simplicity and elegance.",
+    "final_text": "The image depicts a minimalist interior scene. The main elements include a tall cylindrical lamp with a design resembling traditional ink wash mountains, a light wooden table with a cut-out of a Chinese character, and a dark wooden box. The setting appears calm and serene, with natural light streaming through large windows, casting soft shadows on the floor. The overall mood is tranquil and modern, with a focus on simplicity and elegance.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427695-b00dP4B5C4I37r61sBzW",
+    "created": 1788427695,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 82,
+      "total_tokens": 1277,
+      "cost": 0.0038075
+    }
+  }
+}

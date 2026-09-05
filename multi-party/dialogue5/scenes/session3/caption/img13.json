@@ -1,0 +1,36 @@
+{
+  "id": "2bb89682-182b-4864-8123-586069ddf96a",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:36.713990",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 401924,
+    "modified_time": "2026-08-23T22:09:39.541264"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a detailed weekly schedule for Week 47, spanning November 22 to November 28. It is organized in a table format with columns representing days and rows indicating time slots from 5:00 AM to 11:00 PM. Activities include exercise, reading, work, travel planning, and phone calls, with specific tasks like \"游泳\" (swimming), \"读书\" (reading), and \"工作时间\" (work time) highlighted in varying shades of pink and red. The bottom section provides a color legend, naming shades like \"Soft Blush\" and \"Watermelon.\" The overall mood is structured and organized.",
+    "final_text": "The image is a detailed weekly schedule for Week 47, spanning November 22 to November 28. It is organized in a table format with columns representing days and rows indicating time slots from 5:00 AM to 11:00 PM. Activities include exercise, reading, work, travel planning, and phone calls, with specific tasks like \"游泳\" (swimming), \"读书\" (reading), and \"工作时间\" (work time) highlighted in varying shades of pink and red. The bottom section provides a color legend, naming shades like \"Soft Blush\" and \"Watermelon.\" The overall mood is structured and organized.",
+    "token_stats": {
+      "original_tokens": 133,
+      "final_tokens": 133,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426876-uIqAO39PEjbkTsjRsFSw",
+    "created": 1788426876,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 131,
+      "total_tokens": 1326,
+      "cost": 0.0042975
+    }
+  }
+}

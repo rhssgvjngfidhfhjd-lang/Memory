@@ -1,0 +1,36 @@
+{
+  "id": "1d6b22db-b8b3-4ed4-865c-32ac02578d30",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:23.328453",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session1/image/3.png",
+    "filename": "3.png",
+    "size": 98267,
+    "modified_time": "2026-08-23T21:57:23.415099"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains a list of commonly used movie ticket purchasing platforms, written in Chinese. The platforms mentioned include:\n\n- 淘票票: Offers various discounts and online seat selection.\n- 猫眼: A popular platform providing special discounts and reward points.\n- 万达电影APP: Official platform of Wanda Cinemas, offering convenient ticket services.\n- 大地服务: Ticket platform of Dadi Cinema Group, with comprehensive features.\n- 低价小程序: Provides lower ticket prices but requires advance purchase.\n\nThe scene is informative, with text and hyperlinks indicating further details. The mood is neutral and factual, aimed at guiding users in choosing suitable ticket purchasing channels based on their needs.",
+    "final_text": "The image contains a list of commonly used movie ticket purchasing platforms, written in Chinese. The platforms mentioned include:\n\n- 淘票票: Offers various discounts and online seat selection.\n- 猫眼: A popular platform providing special discounts and reward points.\n- 万达电影APP: Official platform of Wanda Cinemas, offering convenient ticket services.\n- 大地服务: Ticket platform of Dadi Cinema Group, with comprehensive features.\n- 低价小程序: Provides lower ticket prices but requires advance purchase.\n\nThe scene is informative, with text and hyperlinks indicating further details. The mood is neutral and factual, aimed at guiding users in choosing suitable ticket purchasing channels based on their needs.",
+    "token_stats": {
+      "original_tokens": 146,
+      "final_tokens": 146,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427641-Wza9iNapjptNQL4pIUXe",
+    "created": 1788427641,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 137,
+      "total_tokens": 576,
+      "cost": 0.0024675
+    }
+  }
+}

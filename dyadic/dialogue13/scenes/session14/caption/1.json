@@ -1,0 +1,36 @@
+{
+  "id": "d7d3bff2-5908-42e3-a258-0ddc7539d8fd",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:26.590286",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session14/image/1.png",
+    "filename": "1.png",
+    "size": 159888,
+    "modified_time": "2026-08-23T21:32:29.454997"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table titled \"社区文化节筹备第一次会议核心工作推进表 (扩写版)\" which translates to \"Community Culture Festival Preparation First Meeting Core Work Progress Table (Extended Version).\" It contains four columns: \"负责人\" (Person in Charge), \"核心工作内容\" (Core Work Content), \"具体完成/方案详情\" (Specific Completion/Plan Details), and \"备注\" (Remarks). Two entries are present with names \"林舒\" and \"周明远.\" The table outlines tasks related to the community culture festival, including meeting preparations, material synchronization, and event planning. The atmosphere is formal and organizational.",
+    "final_text": "The image is a table titled \"社区文化节筹备第一次会议核心工作推进表 (扩写版)\" which translates to \"Community Culture Festival Preparation First Meeting Core Work Progress Table (Extended Version).\" It contains four columns: \"负责人\" (Person in Charge), \"核心工作内容\" (Core Work Content), \"具体完成/方案详情\" (Specific Completion/Plan Details), and \"备注\" (Remarks). Two entries are present with names \"林舒\" and \"周明远.\" The table outlines tasks related to the community culture festival, including meeting preparations, material synchronization, and event planning. The atmosphere is formal and organizational.",
+    "token_stats": {
+      "original_tokens": 150,
+      "final_tokens": 150,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426865-bxFN7ADsf5yFLPR5sQmi",
+    "created": 1788426865,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 130,
+      "total_tokens": 1325,
+      "cost": 0.0042875
+    }
+  }
+}

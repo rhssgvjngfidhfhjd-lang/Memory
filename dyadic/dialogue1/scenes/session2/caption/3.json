@@ -1,0 +1,36 @@
+{
+  "id": "e93652eb-f970-4e44-bef5-72ca7b9f5c43",
+  "success": true,
+  "timestamp": "2026-09-03T17:07:45.538072",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 1040574,
+    "modified_time": "2026-08-23T21:30:06.668783"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an empty restaurant interior with wooden tables and benches arranged neatly. Each table has a built-in grill, suggesting a barbecue or hotpot dining style. Red and yellow lanterns hang from the ceiling, casting warm light and creating an inviting atmosphere. The walls feature decorative Asian scripts and designs, enhancing the cultural ambiance. The overall mood is cozy and welcoming, ready for guests to enjoy a meal. No people are present, and the scene feels tranquil and organized.",
+    "final_text": "The image depicts an empty restaurant interior with wooden tables and benches arranged neatly. Each table has a built-in grill, suggesting a barbecue or hotpot dining style. Red and yellow lanterns hang from the ceiling, casting warm light and creating an inviting atmosphere. The walls feature decorative Asian scripts and designs, enhancing the cultural ambiance. The overall mood is cozy and welcoming, ready for guests to enjoy a meal. No people are present, and the scene feels tranquil and organized.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426463-kY1RIcFQKfhK0sKyVA3U",
+    "created": 1788426463,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 95,
+      "total_tokens": 812,
+      "cost": 0.0027425
+    }
+  }
+}

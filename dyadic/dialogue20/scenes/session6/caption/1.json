@@ -1,0 +1,36 @@
+{
+  "id": "ce9ca72a-4081-4c69-8b16-02c43b44bf79",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:49.831022",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 33733,
+    "modified_time": "2026-08-23T21:42:20.064845"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a list of events written in Chinese, categorized by different time periods or festivals. It includes titles like \"腊月期间\" (During the Twelfth Lunar Month), \"除夕至春节\" (New Year's Eve to Spring Festival), \"元宵节期间\" (During the Lantern Festival), and \"全年特色活动\" (Special Activities Throughout the Year). Each category lists various activities such as sharing sessions, community clean-ups, traditional storytelling, group dinners, DIY workshops, and charity runs. The overall mood is informative and community-focused, highlighting cultural and festive events.",
+    "final_text": "The image is a list of events written in Chinese, categorized by different time periods or festivals. It includes titles like \"腊月期间\" (During the Twelfth Lunar Month), \"除夕至春节\" (New Year's Eve to Spring Festival), \"元宵节期间\" (During the Lantern Festival), and \"全年特色活动\" (Special Activities Throughout the Year). Each category lists various activities such as sharing sessions, community clean-ups, traditional storytelling, group dinners, DIY workshops, and charity runs. The overall mood is informative and community-focused, highlighting cultural and festive events.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427307-ALDgV3ESgcpjuw4isxfJ",
+    "created": 1788427307,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 119,
+      "total_tokens": 634,
+      "cost": 0.0024775
+    }
+  }
+}

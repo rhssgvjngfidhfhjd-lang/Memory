@@ -1,0 +1,36 @@
+{
+  "id": "6c6f781c-b6f0-46b0-a251-a48ea4cea1bd",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:05.284379",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 143358,
+    "modified_time": "2026-08-23T21:30:04.380047"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table in Chinese, detailing different levels of treatment, specific measures, main objectives, key components/types, and precautions with frequency. It includes sections on drug therapy for acute conditions and skin barrier restoration, environmental and lifestyle adjustments for fundamental management, and nutritional support. The table lists various medications like American corticosteroids, antibiotics, and anti-inflammatory drugs, alongside environmental management strategies and nutritional supplements such as Omega-3 fatty acids. The mood is informative and clinical.",
+    "final_text": "The image is a table in Chinese, detailing different levels of treatment, specific measures, main objectives, key components/types, and precautions with frequency. It includes sections on drug therapy for acute conditions and skin barrier restoration, environmental and lifestyle adjustments for fundamental management, and nutritional support. The table lists various medications like American corticosteroids, antibiotics, and anti-inflammatory drugs, alongside environmental management strategies and nutritional supplements such as Omega-3 fatty acids. The mood is informative and clinical.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426482-1WJohmPv9Lhta4AetvlX",
+    "created": 1788426482,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 95,
+      "total_tokens": 1093,
+      "cost": 0.003445
+    }
+  }
+}

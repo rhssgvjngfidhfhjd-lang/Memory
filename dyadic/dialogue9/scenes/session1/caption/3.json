@@ -1,0 +1,36 @@
+{
+  "id": "b506c309-dc7b-4982-8116-80e5bd139600",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:32.844432",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session1/image/3.png",
+    "filename": "3.png",
+    "size": 90744,
+    "modified_time": "2026-08-23T21:58:45.256767"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a diagram with text detailing the construction of a foam box shelter, designed for protection and warmth. The main elements include a large food-grade foam box, measuring 40cm x 30cm x 35cm, with a circular entrance at the bottom side, 10cm in diameter, to prevent cold wind entry and allow small animals to climb out. There are two small ventilation holes on the top, each 2cm in diameter, positioned to avoid direct cold wind. The structure comprises layers: outer waterproof cloth, foam box body, and inner layer with old clothes for insulation. The box top is cut for easy opening, and the lid has a thermal cotton layer for added warmth. Inside, a 15cm x 15cm area is designated as an activity zone, with padding for comfort.",
+    "final_text": "The image is a diagram with text detailing the construction of a foam box shelter, designed for protection and warmth. The main elements include a large food-grade foam box, measuring 40cm x 30cm x 35cm, with a circular entrance at the bottom side, 10cm in diameter, to prevent cold wind entry and allow small animals to climb out. There are two small ventilation holes on the top, each 2cm in diameter, positioned to avoid direct cold wind. The structure comprises layers: outer waterproof cloth, foam box body, and inner layer with old clothes for insulation. The box top is cut for easy opening, and the lid has a thermal cotton layer for added warmth. Inside, a 15cm x 15cm area is designated as an activity zone, with padding for comfort.",
+    "token_stats": {
+      "original_tokens": 164,
+      "final_tokens": 164,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427710-w8Hq0b7yCIcEVG9nbzCT",
+    "created": 1788427710,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 165,
+      "total_tokens": 882,
+      "cost": 0.0034425
+    }
+  }
+}

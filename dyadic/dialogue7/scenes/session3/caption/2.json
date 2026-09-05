@@ -1,0 +1,36 @@
+{
+  "id": "c9ed15b9-a272-452e-9f1c-d760ad87732e",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:42.041367",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session3/image/2.png",
+    "filename": "2.png",
+    "size": 507546,
+    "modified_time": "2026-08-23T22:06:38.255710"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an informational poster illustrating a step-by-step emergency response guide for respiratory issues. It is divided into three sections, each with a time frame and color-coded background: red for \"Emergency Treatment\" (15:15-15:20), yellow for \"Monitoring Phase\" (15:20-15:45), and green for \"Recovery Phase\" (15:15-16:30). \n\n1. **Emergency Treatment (Red Section)**: A woman sits on a couch using an inhaler, indicating the start of treatment when symptoms appear, with a PEF value of 70%.\n\n2. **Monitoring Phase (Yellow Section)**: The woman stands next to an air purifier, adjusting settings to improve air quality as symptoms ease, and the PEF value returns to 75%.\n\n3. **Recovery Phase (Green Section)**: The woman relaxes on a couch, indicating recovery progress with a PEF value reaching 85% and eventual full recovery.\n\nThe atmosphere is calm and instructional, emphasizing the importance of timely action and monitoring for respiratory health. Text provides specific actions and time frames for each phase.",
+    "final_text": "The image is an informational poster illustrating a step-by-step emergency response guide for respiratory issues. It is divided into three sections, each with a time frame and color-coded background: red for \"Emergency Treatment\" (15:15-15:20), yellow for \"Monitoring Phase\" (15:20-15:45), and green for \"Recovery Phase\" (15:15-16:30). \n\n1. **Emergency Treatment (Red Section)**: A woman sits on a couch using an inhaler, indicating the start of treatment when symptoms appear, with a PEF value of 70%.\n\n2. **Monitoring Phase (Yellow Section)**: The woman stands next to an air purifier, adjusting settings to improve air quality as symptoms ease, and the PEF value returns to 75%.\n\n3. **Recovery Phase (Green Section)**: The woman relaxes on a couch, indicating recovery progress with a PEF value reaching 85% and eventual full recovery.\n\nThe atmosphere is calm and instructional, emphasizing the importance of timely action and monitoring for respiratory health. Text provides specific actions and time frames for each phase.",
+    "token_stats": {
+      "original_tokens": 228,
+      "final_tokens": 228,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427599-ahQKLeORlqt725Tm6FzQ",
+    "created": 1788427599,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 225,
+      "total_tokens": 740,
+      "cost": 0.0035375
+    }
+  }
+}

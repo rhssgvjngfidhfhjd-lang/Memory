@@ -1,0 +1,36 @@
+{
+  "id": "78061ea2-472a-43a1-9538-50429910e8fb",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:14.901726",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session1/image/2.png",
+    "filename": "2.png",
+    "size": 662248,
+    "modified_time": "2026-08-23T21:49:56.947691"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a game interface showcasing various hero characters. Each character has an illustrated portrait, accompanied by details such as names, stats, and win rates. The screen features labeled sections on the left side, including options like \"首页\" (Home), \"战绩\" (Battle Record), and \"英雄\" (Heroes). The visible text includes character names and statistics, such as attack power and win percentages. The overall mood is dynamic and engaging, suitable for a gaming environment. The interface suggests strategic elements, focusing on character selection and performance metrics.",
+    "final_text": "The image displays a game interface showcasing various hero characters. Each character has an illustrated portrait, accompanied by details such as names, stats, and win rates. The screen features labeled sections on the left side, including options like \"首页\" (Home), \"战绩\" (Battle Record), and \"英雄\" (Heroes). The visible text includes character names and statistics, such as attack power and win percentages. The overall mood is dynamic and engaging, suitable for a gaming environment. The interface suggests strategic elements, focusing on character selection and performance metrics.",
+    "token_stats": {
+      "original_tokens": 114,
+      "final_tokens": 114,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427334-muzVdEHBfBZx17sSTFXw",
+    "created": 1788427334,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 110,
+      "total_tokens": 625,
+      "cost": 0.0023875
+    }
+  }
+}

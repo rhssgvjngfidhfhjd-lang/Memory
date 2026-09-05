@@ -1,0 +1,36 @@
+{
+  "id": "bdf744ff-617c-459a-9307-bb2d52ea7280",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:22.748153",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 304765,
+    "modified_time": "2026-08-23T22:02:19.035684"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person using wooden chopsticks to lift a piece of breaded, fried food from a takeout container. The food is crispy, with melted cheese stretching from the piece being lifted. It is topped with mustard and ketchup. The atmosphere is casual, likely indicating a street food or fast-food setting. In the background, there is a blurred view of a table and a wrapped item, possibly another food item. The mood is indulgent and appetizing.",
+    "final_text": "The image depicts a person using wooden chopsticks to lift a piece of breaded, fried food from a takeout container. The food is crispy, with melted cheese stretching from the piece being lifted. It is topped with mustard and ketchup. The atmosphere is casual, likely indicating a street food or fast-food setting. In the background, there is a blurred view of a table and a wrapped item, possibly another food item. The mood is indulgent and appetizing.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426560-89ZqiW7OXAq89py7zxws",
+    "created": 1788426560,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 94,
+      "total_tokens": 949,
+      "cost": 0.0030775
+    }
+  }
+}

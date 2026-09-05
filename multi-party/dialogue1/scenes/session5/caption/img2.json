@@ -1,0 +1,36 @@
+{
+  "id": "a827c2db-be50-48be-8223-dd7a774bbd62",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:57.506425",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session5/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 316966,
+    "modified_time": "2026-08-23T22:03:58.136302"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a hand holding two bottles of salad dressing. The left bottle contains \"Kewpie Roasted Sesame Dressing,\" with visible sesame seeds. The right bottle is labeled \"Kewpie Thousand Island Dressing.\" Both bottles have white caps and contain 200ml. The background is neutral, creating a straightforward and practical atmosphere. The person’s nails are painted a neutral color, adding a touch of elegance to the scene.",
+    "final_text": "The image shows a hand holding two bottles of salad dressing. The left bottle contains \"Kewpie Roasted Sesame Dressing,\" with visible sesame seeds. The right bottle is labeled \"Kewpie Thousand Island Dressing.\" Both bottles have white caps and contain 200ml. The background is neutral, creating a straightforward and practical atmosphere. The person’s nails are painted a neutral color, adding a touch of elegance to the scene.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426594-4jvERaTHFF6rc7HOiVdG",
+    "created": 1788426594,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 86,
+      "total_tokens": 806,
+      "cost": 0.00266
+    }
+  }
+}

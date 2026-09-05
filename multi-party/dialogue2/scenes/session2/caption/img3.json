@@ -1,0 +1,36 @@
+{
+  "id": "058bf22e-0669-48f0-b836-a9903d4f449a",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:28.966152",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 603296,
+    "modified_time": "2026-08-23T22:05:42.485379"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a pair of worn-out running shoes on a textured red surface. Both shoes exhibit significant damage, with frayed edges and holes, indicating extensive use. A plastic bag containing a white object is placed nearby on a blue mat. The atmosphere suggests a casual, perhaps post-workout setting. There is visible text on the shoes, possibly the brand name, though it's not entirely clear. A small, colorful object resembling a guitar pick is also visible on the carpet. The overall mood is relaxed and somewhat nostalgic, reflecting the wear and tear of the shoes.",
+    "final_text": "The image shows a pair of worn-out running shoes on a textured red surface. Both shoes exhibit significant damage, with frayed edges and holes, indicating extensive use. A plastic bag containing a white object is placed nearby on a blue mat. The atmosphere suggests a casual, perhaps post-workout setting. There is visible text on the shoes, possibly the brand name, though it's not entirely clear. A small, colorful object resembling a guitar pick is also visible on the carpet. The overall mood is relaxed and somewhat nostalgic, reflecting the wear and tear of the shoes.",
+    "token_stats": {
+      "original_tokens": 114,
+      "final_tokens": 114,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426626-pJOnFBt8AHplRaMxq7kU",
+    "created": 1788426626,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 114,
+      "total_tokens": 834,
+      "cost": 0.00294
+    }
+  }
+}

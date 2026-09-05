@@ -1,0 +1,36 @@
+{
+  "id": "c340f577-7128-43d9-b271-fbaea8a224bb",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:59.916567",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session2/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 659161,
+    "modified_time": "2026-08-23T22:08:26.495170"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a group of people standing in line outside a building on a city street. The building has a textured facade with windows and awnings. People are dressed in casual clothing, some holding phones or bags. A tree with bare branches is visible along the sidewalk. The mood is calm, with individuals engaged in waiting or using their phones. There is no visible text in the scene.",
+    "final_text": "The image shows a group of people standing in line outside a building on a city street. The building has a textured facade with windows and awnings. People are dressed in casual clothing, some holding phones or bags. A tree with bare branches is visible along the sidewalk. The mood is calm, with individuals engaged in waiting or using their phones. There is no visible text in the scene.",
+    "token_stats": {
+      "original_tokens": 78,
+      "final_tokens": 78,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426777-mUQG5XW4mEjr1yhF1Pan",
+    "created": 1788426777,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 78,
+      "total_tokens": 933,
+      "cost": 0.0029175
+    }
+  }
+}

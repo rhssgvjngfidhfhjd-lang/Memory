@@ -1,0 +1,36 @@
+{
+  "id": "ebc3f7ed-83f6-4595-87b6-b8f3eafb40bf",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:49.042530",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session7/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 39480,
+    "modified_time": "2026-08-23T21:30:33.529751"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a white cup filled with herbal tea, containing various dried herbs, flowers, and spices. The cup is set against a solid, light green background. The tea appears vibrant and colorful, showcasing an assortment of textures and colors. The overall mood is calm and soothing, evoking a sense of relaxation and warmth. There is no visible text or interaction in the scene.",
+    "final_text": "The image features a white cup filled with herbal tea, containing various dried herbs, flowers, and spices. The cup is set against a solid, light green background. The tea appears vibrant and colorful, showcasing an assortment of textures and colors. The overall mood is calm and soothing, evoking a sense of relaxation and warmth. There is no visible text or interaction in the scene.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426587-VCQPolqTMgQfQ35gqtR5",
+    "created": 1788426587,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 77,
+      "total_tokens": 516,
+      "cost": 0.0018675
+    }
+  }
+}

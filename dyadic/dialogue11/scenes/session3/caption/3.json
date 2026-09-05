@@ -1,0 +1,36 @@
+{
+  "id": "0fc408f1-3ad3-4290-b6ee-bddd00ee7482",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:47.293741",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 3502392,
+    "modified_time": "2026-08-23T21:31:07.534798"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an informational poster titled \"流浪动物关怀小贴士\" (Tips for Caring for Stray Animals). It features five main guidelines in Chinese, each accompanied by an icon: \n\n1. 固定时间地点 (Fixed time and place) with a clock icon.\n2. 提供干净饮食 (Provide clean food and water) with a bowl icon.\n3. 保持环境整洁 (Maintain a clean environment) with a broom icon.\n4. 与周边人员沟通 (Communicate with nearby people) with a handshake icon.\n5. 量力而行 (Act within your means) with a heart icon.\n\nThe overall mood is informative and compassionate, encouraging responsible care for stray animals.",
+    "final_text": "The image is an informational poster titled \"流浪动物关怀小贴士\" (Tips for Caring for Stray Animals). It features five main guidelines in Chinese, each accompanied by an icon: \n\n1. 固定时间地点 (Fixed time and place) with a clock icon.\n2. 提供干净饮食 (Provide clean food and water) with a bowl icon.\n3. 保持环境整洁 (Maintain a clean environment) with a broom icon.\n4. 与周边人员沟通 (Communicate with nearby people) with a handshake icon.\n5. 量力而行 (Act within your means) with a heart icon.\n\nThe overall mood is informative and compassionate, encouraging responsible care for stray animals.",
+    "token_stats": {
+      "original_tokens": 172,
+      "final_tokens": 172,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426645-XKENjcuEs0GEH9GZoald",
+    "created": 1788426645,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 149,
+      "total_tokens": 1004,
+      "cost": 0.0036275
+    }
+  }
+}

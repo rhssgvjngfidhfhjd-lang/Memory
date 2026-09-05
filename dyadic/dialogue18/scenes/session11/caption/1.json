@@ -1,0 +1,36 @@
+{
+  "id": "1cdfe04b-93aa-46fb-919b-f6a4d85aa89d",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:21.749195",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 6815063,
+    "modified_time": "2026-08-23T21:37:20.432237"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a camping meal setup on grass. A steaming metal container holds a hearty stew with visible chunks of meat and vegetables. Beside it, there's a package of mixed nuts and a camouflage-patterned energy bar labeled \"SOLDIERSOFT.\" The scene conveys an outdoor, rustic, and nourishing atmosphere.",
+    "final_text": "The image depicts a camping meal setup on grass. A steaming metal container holds a hearty stew with visible chunks of meat and vegetables. Beside it, there's a package of mixed nuts and a camouflage-patterned energy bar labeled \"SOLDIERSOFT.\" The scene conveys an outdoor, rustic, and nourishing atmosphere.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427159-lSR3XOimvsw4Mxs6TyUU",
+    "created": 1788427159,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 64,
+      "total_tokens": 1259,
+      "cost": 0.0036275
+    }
+  }
+}

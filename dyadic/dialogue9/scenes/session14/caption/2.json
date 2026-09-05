@@ -1,0 +1,36 @@
+{
+  "id": "aaa24bcb-a786-47ca-a4cc-dd8318042ee4",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:42.688810",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session14/image/2.png",
+    "filename": "2.png",
+    "size": 230959,
+    "modified_time": "2026-08-23T22:00:03.586650"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a table listing various items, each with detailed descriptions. Categories include a public tire pump, large wall-mounted medicine cabinet, common external medicine set, and a basic maintenance tool kit. Columns detail specific names, specifications, brand options, estimated prices, and quantities. The text is in Chinese, providing technical specifications, suggested brands, and pricing for each item. The atmosphere is informational, resembling a catalog or inventory list.",
+    "final_text": "The image displays a table listing various items, each with detailed descriptions. Categories include a public tire pump, large wall-mounted medicine cabinet, common external medicine set, and a basic maintenance tool kit. Columns detail specific names, specifications, brand options, estimated prices, and quantities. The text is in Chinese, providing technical specifications, suggested brands, and pricing for each item. The atmosphere is informational, resembling a catalog or inventory list.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427780-GSy719i7n80gBbOGIz5Z",
+    "created": 1788427780,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 87,
+      "total_tokens": 807,
+      "cost": 0.00267
+    }
+  }
+}

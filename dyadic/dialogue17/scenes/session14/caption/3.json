@@ -1,0 +1,36 @@
+{
+  "id": "55ce9e95-9192-4523-98fb-5859195ba754",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:30.395999",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session14/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 223885,
+    "modified_time": "2026-08-23T21:36:08.190474"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a triangular diagram illustrating the balance between Trust, Privacy, and Usability in system design. At each corner of the triangle, icons represent Trust, Privacy, and Usability with corresponding text in both Chinese and English. The arrows between each point indicate interactions and trade-offs, such as \"High Trust but hides sensitive info\" and \"Convenient but relies on third parties.\" The center is labeled \"Design Balance.\" The overall mood suggests a focus on achieving equilibrium in system design. Additional text at the bottom discusses the dynamic nature of this balance.",
+    "final_text": "The image depicts a triangular diagram illustrating the balance between Trust, Privacy, and Usability in system design. At each corner of the triangle, icons represent Trust, Privacy, and Usability with corresponding text in both Chinese and English. The arrows between each point indicate interactions and trade-offs, such as \"High Trust but hides sensitive info\" and \"Convenient but relies on third parties.\" The center is labeled \"Design Balance.\" The overall mood suggests a focus on achieving equilibrium in system design. Additional text at the bottom discusses the dynamic nature of this balance.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427110-bGZPDLexA4qZZyHyWko5",
+    "created": 1788427110,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 111,
+      "total_tokens": 1306,
+      "cost": 0.0040975
+    }
+  }
+}

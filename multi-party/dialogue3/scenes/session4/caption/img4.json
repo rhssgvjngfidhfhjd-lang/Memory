@@ -1,0 +1,36 @@
+{
+  "id": "dc6fc932-e0de-4672-87a1-9d4cb017ba3f",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:15.765952",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session4/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 205745,
+    "modified_time": "2026-08-23T22:07:45.395022"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a densely packed cluster of makeshift houses stacked on a hillside at night. The structures are constructed from various materials, likely metal and wood, with windows emitting a warm glow. Smoke rises from some of the rooftops, suggesting activity within. Below, a small storefront displays the text \"Café\" amidst debris and scattered items. The scene conveys a sense of bustling life and resilience despite apparent poverty, with a few figures moving in the foreground, adding to the lively yet precarious atmosphere.",
+    "final_text": "The image depicts a densely packed cluster of makeshift houses stacked on a hillside at night. The structures are constructed from various materials, likely metal and wood, with windows emitting a warm glow. Smoke rises from some of the rooftops, suggesting activity within. Below, a small storefront displays the text \"Café\" amidst debris and scattered items. The scene conveys a sense of bustling life and resilience despite apparent poverty, with a few figures moving in the foreground, adding to the lively yet precarious atmosphere.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426735-O5aE7OwfHbgWxU2amwGe",
+    "created": 1788426735,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 101,
+      "total_tokens": 956,
+      "cost": 0.0031475
+    }
+  }
+}

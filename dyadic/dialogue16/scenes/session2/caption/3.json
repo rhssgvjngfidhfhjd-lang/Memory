@@ -1,0 +1,36 @@
+{
+  "id": "fe9b7494-b82b-4f7b-a929-2eef47731872",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:52.870234",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session2/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 713510,
+    "modified_time": "2026-08-23T21:36:56.313638"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an orange tabby cat peacefully sleeping on a pile of colorful sacks. The scene is set against a rustic background of weathered wooden boards and a bamboo pole. The atmosphere is calm and serene, with the cat curled up comfortably, suggesting a sense of warmth and relaxation. There is some text visible on the sacks, but it is partially obscured and not fully legible.",
+    "final_text": "The image features an orange tabby cat peacefully sleeping on a pile of colorful sacks. The scene is set against a rustic background of weathered wooden boards and a bamboo pole. The atmosphere is calm and serene, with the cat curled up comfortably, suggesting a sense of warmth and relaxation. There is some text visible on the sacks, but it is partially obscured and not fully legible.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427012-d2Uv5pgsAALF06MtJNxl",
+    "created": 1788427012,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 78,
+      "total_tokens": 1273,
+      "cost": 0.0037675
+    }
+  }
+}

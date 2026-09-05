@@ -1,0 +1,36 @@
+{
+  "id": "d9dab6ca-fad9-4411-b0ca-e42692d2e423",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:10.878686",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 592113,
+    "modified_time": "2026-08-23T22:01:24.136497"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a structured chart titled \"血压监测记录表\" (Blood Pressure Monitoring Record). It includes columns labeled \"日期\" (Date), \"时间\" (Time), \"高压 (mmHg)\" (Systolic mmHg), \"低压 (mmHg)\" (Diastolic mmHg), and \"心率 (次/分钟)\" (Heart Rate bpm). The chart is empty, designed to record daily blood pressure and heart rate information. The mood is clinical and organized, suitable for health tracking purposes.",
+    "final_text": "The image depicts a structured chart titled \"血压监测记录表\" (Blood Pressure Monitoring Record). It includes columns labeled \"日期\" (Date), \"时间\" (Time), \"高压 (mmHg)\" (Systolic mmHg), \"低压 (mmHg)\" (Diastolic mmHg), and \"心率 (次/分钟)\" (Heart Rate bpm). The chart is empty, designed to record daily blood pressure and heart rate information. The mood is clinical and organized, suitable for health tracking purposes.",
+    "token_stats": {
+      "original_tokens": 118,
+      "final_tokens": 118,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427748-HfqPUttl3zuFOMTxYxps",
+    "created": 1788427748,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 109,
+      "total_tokens": 826,
+      "cost": 0.0028825
+    }
+  }
+}

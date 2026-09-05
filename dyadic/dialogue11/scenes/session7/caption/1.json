@@ -1,0 +1,36 @@
+{
+  "id": "d1bd2931-953d-4c11-89bc-fa65a19f2d8c",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:04.270028",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session7/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 256041,
+    "modified_time": "2026-08-23T21:31:15.552568"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a vibrant pink and gray backpack. It features a logo reading \"impact\" on the top and \"ergo dynamic\" with a stylized figure on the lower front pocket. The backpack is resting on a tiled floor. The mood is practical and functional, highlighting the backpack's design and branding.",
+    "final_text": "The image shows a vibrant pink and gray backpack. It features a logo reading \"impact\" on the top and \"ergo dynamic\" with a stylized figure on the lower front pocket. The backpack is resting on a tiled floor. The mood is practical and functional, highlighting the backpack's design and branding.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426662-fxJ7nRqLSAN9wgwCi6u7",
+    "created": 1788426662,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 62,
+      "total_tokens": 917,
+      "cost": 0.0027575
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "cdf4146c-31ad-42e8-b68d-9da1258a1cfd",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:46.729653",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session4/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 308837,
+    "modified_time": "2026-08-23T22:09:50.204067"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a large stack of papers piled on a marble surface. The papers are loosely organized, with visible text on some sheets, including printed and handwritten notes. The scene conveys a sense of clutter or disorganization, possibly indicating a busy or overwhelming atmosphere. There are no people, animals, or active interactions visible. The lighting is neutral, contributing to a mundane office or work environment.",
+    "final_text": "The image depicts a large stack of papers piled on a marble surface. The papers are loosely organized, with visible text on some sheets, including printed and handwritten notes. The scene conveys a sense of clutter or disorganization, possibly indicating a busy or overwhelming atmosphere. There are no people, animals, or active interactions visible. The lighting is neutral, contributing to a mundane office or work environment.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426883-yMYqzwQHCiLF2kcmbWpE",
+    "created": 1788426883,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 79,
+      "total_tokens": 799,
+      "cost": 0.00259
+    }
+  }
+}

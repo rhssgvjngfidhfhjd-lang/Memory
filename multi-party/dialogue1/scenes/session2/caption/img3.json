@@ -1,0 +1,36 @@
+{
+  "id": "1a10c1b0-89de-485c-9de3-20bacdaa8c45",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:06.458346",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session2/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 362442,
+    "modified_time": "2026-08-23T22:02:07.839574"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The scene depicts a nighttime setting on a paved walkway beside a grassy area with bushes. A small, fluffy dog stands on the pavement, looking towards the camera. Nearby, a disposable cup is placed on the ground. The atmosphere is dark with limited lighting, creating a quiet and serene mood. No visible text is present in the image.",
+    "final_text": "The scene depicts a nighttime setting on a paved walkway beside a grassy area with bushes. A small, fluffy dog stands on the pavement, looking towards the camera. Nearby, a disposable cup is placed on the ground. The atmosphere is dark with limited lighting, creating a quiet and serene mood. No visible text is present in the image.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426546-tb1VHb0xV53QxC9pcLJQ",
+    "created": 1788426546,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 68,
+      "total_tokens": 788,
+      "cost": 0.00248
+    }
+  }
+}

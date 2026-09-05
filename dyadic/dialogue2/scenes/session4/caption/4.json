@@ -1,0 +1,36 @@
+{
+  "id": "02a9bd46-c036-42ce-8f75-75dfff99b881",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:00.829549",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session4/image/4.png",
+    "filename": "4.png",
+    "size": 521154,
+    "modified_time": "2026-08-23T21:41:44.319256"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a cute, illustrated recipe guide for making tomato chicken noodle soup. It features a large bowl of noodles with various toppings at the top, surrounded by adorable bear characters. Ingredients are listed with icons: tomato, noodles, chicken, green onion, and garlic. The step-by-step instructions are shown with cartoon-style panels, each depicting a different stage of cooking in pink pots. The overall mood is playful and inviting, with soft colors and charming illustrations, creating a friendly and engaging atmosphere.",
+    "final_text": "The image is a cute, illustrated recipe guide for making tomato chicken noodle soup. It features a large bowl of noodles with various toppings at the top, surrounded by adorable bear characters. Ingredients are listed with icons: tomato, noodles, chicken, green onion, and garlic. The step-by-step instructions are shown with cartoon-style panels, each depicting a different stage of cooking in pink pots. The overall mood is playful and inviting, with soft colors and charming illustrations, creating a friendly and engaging atmosphere.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427261-3CJeKXrrMieqJR8SmJkL",
+    "created": 1788427261,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 99,
+      "total_tokens": 614,
+      "cost": 0.0022775
+    }
+  }
+}

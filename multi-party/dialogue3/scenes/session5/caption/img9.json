@@ -1,0 +1,36 @@
+{
+  "id": "4526a18f-9758-495f-bae0-7a2ba33e6112",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:33.841115",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 288850,
+    "modified_time": "2026-08-23T22:08:11.504516"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a movie theater seating chart from a booking app. All seats are marked as sold out, indicated by red icons. A pink heart is overlaid on the top right. Text at the top says the seats are full and suggests choosing another time. The time displayed is 23:10. Below, it shows available movie times and prices in Chinese, with 2D screenings at ¥39. The overall atmosphere is informative and focused on scheduling.",
+    "final_text": "The image shows a movie theater seating chart from a booking app. All seats are marked as sold out, indicated by red icons. A pink heart is overlaid on the top right. Text at the top says the seats are full and suggests choosing another time. The time displayed is 23:10. Below, it shows available movie times and prices in Chinese, with 2D screenings at ¥39. The overall atmosphere is informative and focused on scheduling.",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426751-l40Tf7KaasNDs7m617Am",
+    "created": 1788426751,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 93,
+      "total_tokens": 1373,
+      "cost": 0.00413
+    }
+  }
+}

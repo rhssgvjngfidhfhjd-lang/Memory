@@ -1,0 +1,954 @@
+{
+  "dialogue": "dialogue2",
+  "scenes_dir": "dataset/multi-party/dialogue2/scenes",
+  "caption_max_tokens": 256,
+  "total_sessions": 6,
+  "total_images": 70,
+  "total_successful": 70,
+  "total_failed": 0,
+  "total_skipped": 0,
+  "total_truncated": 0,
+  "usage": {
+    "prompt_tokens": 58150,
+    "completion_tokens": 6152,
+    "total_tokens": 64302,
+    "cost": 0.206895
+  },
+  "session_results": [
+    {
+      "session": "session0",
+      "status": "failed",
+      "error": "No image directory"
+    },
+    {
+      "session": "session1",
+      "image_dir": "dataset/multi-party/dialogue2/scenes/session1/image",
+      "caption_dir": "dataset/multi-party/dialogue2/scenes/session1/caption",
+      "caption_max_tokens": 256,
+      "total_images": 15,
+      "successful": 15,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 12694,
+        "completion_tokens": 1393,
+        "total_tokens": 14087,
+        "cost": 0.045665000000000004
+      },
+      "processed_files": [
+        {
+          "image": "img1.jpg",
+          "json_file": "img1.json",
+          "txt_file": "img1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 110,
+            "final_tokens": 110,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img2.jpg",
+          "json_file": "img2.json",
+          "txt_file": "img2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 62,
+            "final_tokens": 62,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img3.jpg",
+          "json_file": "img3.json",
+          "txt_file": "img3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 113,
+            "final_tokens": 113,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img4.jpg",
+          "json_file": "img4.json",
+          "txt_file": "img4.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 95,
+            "final_tokens": 95,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img5.jpg",
+          "json_file": "img5.json",
+          "txt_file": "img5.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 99,
+            "final_tokens": 99,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img6.jpg",
+          "json_file": "img6.json",
+          "txt_file": "img6.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 76,
+            "final_tokens": 76,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img7.jpg",
+          "json_file": "img7.json",
+          "txt_file": "img7.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 70,
+            "final_tokens": 70,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img8.jpg",
+          "json_file": "img8.json",
+          "txt_file": "img8.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 144,
+            "final_tokens": 144,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img9.jpg",
+          "json_file": "img9.json",
+          "txt_file": "img9.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 100,
+            "final_tokens": 100,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img10.jpg",
+          "json_file": "img10.json",
+          "txt_file": "img10.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 76,
+            "final_tokens": 76,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img11.jpg",
+          "json_file": "img11.json",
+          "txt_file": "img11.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 80,
+            "final_tokens": 80,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img12.jpg",
+          "json_file": "img12.json",
+          "txt_file": "img12.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 77,
+            "final_tokens": 77,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img13.jpg",
+          "json_file": "img13.json",
+          "txt_file": "img13.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 91,
+            "final_tokens": 91,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img14.jpg",
+          "json_file": "img14.json",
+          "txt_file": "img14.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 85,
+            "final_tokens": 85,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img15.jpg",
+          "json_file": "img15.json",
+          "txt_file": "img15.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 126,
+            "final_tokens": 126,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session2",
+      "image_dir": "dataset/multi-party/dialogue2/scenes/session2/image",
+      "caption_dir": "dataset/multi-party/dialogue2/scenes/session2/caption",
+      "caption_max_tokens": 256,
+      "total_images": 14,
+      "successful": 14,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 11728,
+        "completion_tokens": 1217,
+        "total_tokens": 12945,
+        "cost": 0.04148999999999999
+      },
+      "processed_files": [
+        {
+          "image": "img1.jpg",
+          "json_file": "img1.json",
+          "txt_file": "img1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 84,
+            "final_tokens": 84,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img2.jpg",
+          "json_file": "img2.json",
+          "txt_file": "img2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 118,
+            "final_tokens": 118,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img3.jpg",
+          "json_file": "img3.json",
+          "txt_file": "img3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 114,
+            "final_tokens": 114,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img4.jpg",
+          "json_file": "img4.json",
+          "txt_file": "img4.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 75,
+            "final_tokens": 75,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img5.jpg",
+          "json_file": "img5.json",
+          "txt_file": "img5.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 69,
+            "final_tokens": 69,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img6.jpg",
+          "json_file": "img6.json",
+          "txt_file": "img6.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 101,
+            "final_tokens": 101,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img7.jpg",
+          "json_file": "img7.json",
+          "txt_file": "img7.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 57,
+            "final_tokens": 57,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img8.jpg",
+          "json_file": "img8.json",
+          "txt_file": "img8.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 78,
+            "final_tokens": 78,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img9.jpg",
+          "json_file": "img9.json",
+          "txt_file": "img9.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 138,
+            "final_tokens": 138,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img10.jpg",
+          "json_file": "img10.json",
+          "txt_file": "img10.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 91,
+            "final_tokens": 91,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img11.jpg",
+          "json_file": "img11.json",
+          "txt_file": "img11.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 84,
+            "final_tokens": 84,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img12.jpg",
+          "json_file": "img12.json",
+          "txt_file": "img12.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 83,
+            "final_tokens": 83,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img13.jpg",
+          "json_file": "img13.json",
+          "txt_file": "img13.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 67,
+            "final_tokens": 67,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img14.jpg",
+          "json_file": "img14.json",
+          "txt_file": "img14.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 83,
+            "final_tokens": 83,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session3",
+      "image_dir": "dataset/multi-party/dialogue2/scenes/session3/image",
+      "caption_dir": "dataset/multi-party/dialogue2/scenes/session3/caption",
+      "caption_max_tokens": 256,
+      "total_images": 13,
+      "successful": 13,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 10563,
+        "completion_tokens": 1063,
+        "total_tokens": 11626,
+        "cost": 0.0370375
+      },
+      "processed_files": [
+        {
+          "image": "img1.jpg",
+          "json_file": "img1.json",
+          "txt_file": "img1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 64,
+            "final_tokens": 64,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img2.jpg",
+          "json_file": "img2.json",
+          "txt_file": "img2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 67,
+            "final_tokens": 67,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img3.jpg",
+          "json_file": "img3.json",
+          "txt_file": "img3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 91,
+            "final_tokens": 91,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img4.jpg",
+          "json_file": "img4.json",
+          "txt_file": "img4.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 71,
+            "final_tokens": 71,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img5.jpg",
+          "json_file": "img5.json",
+          "txt_file": "img5.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 96,
+            "final_tokens": 96,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img6.jpg",
+          "json_file": "img6.json",
+          "txt_file": "img6.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 104,
+            "final_tokens": 104,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img7.jpg",
+          "json_file": "img7.json",
+          "txt_file": "img7.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 88,
+            "final_tokens": 88,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img8.jpg",
+          "json_file": "img8.json",
+          "txt_file": "img8.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 61,
+            "final_tokens": 61,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img9.jpg",
+          "json_file": "img9.json",
+          "txt_file": "img9.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 79,
+            "final_tokens": 79,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img10.jpg",
+          "json_file": "img10.json",
+          "txt_file": "img10.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 99,
+            "final_tokens": 99,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img11.jpg",
+          "json_file": "img11.json",
+          "txt_file": "img11.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 83,
+            "final_tokens": 83,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img12.jpg",
+          "json_file": "img12.json",
+          "txt_file": "img12.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 104,
+            "final_tokens": 104,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img13.jpg",
+          "json_file": "img13.json",
+          "txt_file": "img13.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 64,
+            "final_tokens": 64,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session4",
+      "image_dir": "dataset/multi-party/dialogue2/scenes/session4/image",
+      "caption_dir": "dataset/multi-party/dialogue2/scenes/session4/caption",
+      "caption_max_tokens": 256,
+      "total_images": 16,
+      "successful": 16,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 12819,
+        "completion_tokens": 1449,
+        "total_tokens": 14268,
+        "cost": 0.046537499999999996
+      },
+      "processed_files": [
+        {
+          "image": "img1.jpg",
+          "json_file": "img1.json",
+          "txt_file": "img1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 116,
+            "final_tokens": 116,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img2.jpg",
+          "json_file": "img2.json",
+          "txt_file": "img2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 113,
+            "final_tokens": 113,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img3.jpg",
+          "json_file": "img3.json",
+          "txt_file": "img3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 118,
+            "final_tokens": 118,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img4.jpg",
+          "json_file": "img4.json",
+          "txt_file": "img4.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 85,
+            "final_tokens": 85,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img5.jpg",
+          "json_file": "img5.json",
+          "txt_file": "img5.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 77,
+            "final_tokens": 77,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img6.jpg",
+          "json_file": "img6.json",
+          "txt_file": "img6.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 88,
+            "final_tokens": 88,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img7.jpg",
+          "json_file": "img7.json",
+          "txt_file": "img7.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 74,
+            "final_tokens": 74,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img8.jpg",
+          "json_file": "img8.json",
+          "txt_file": "img8.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 124,
+            "final_tokens": 124,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img9.jpg",
+          "json_file": "img9.json",
+          "txt_file": "img9.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 54,
+            "final_tokens": 54,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img10.jpg",
+          "json_file": "img10.json",
+          "txt_file": "img10.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 76,
+            "final_tokens": 76,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img11.jpg",
+          "json_file": "img11.json",
+          "txt_file": "img11.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 75,
+            "final_tokens": 75,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img12.jpg",
+          "json_file": "img12.json",
+          "txt_file": "img12.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 80,
+            "final_tokens": 80,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img13.jpg",
+          "json_file": "img13.json",
+          "txt_file": "img13.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 112,
+            "final_tokens": 112,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img14.jpg",
+          "json_file": "img14.json",
+          "txt_file": "img14.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 104,
+            "final_tokens": 104,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img15.jpg",
+          "json_file": "img15.json",
+          "txt_file": "img15.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 96,
+            "final_tokens": 96,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img16.jpg",
+          "json_file": "img16.json",
+          "txt_file": "img16.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 64,
+            "final_tokens": 64,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session5",
+      "image_dir": "dataset/multi-party/dialogue2/scenes/session5/image",
+      "caption_dir": "dataset/multi-party/dialogue2/scenes/session5/caption",
+      "caption_max_tokens": 256,
+      "total_images": 12,
+      "successful": 12,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 10346,
+        "completion_tokens": 1030,
+        "total_tokens": 11376,
+        "cost": 0.036165
+      },
+      "processed_files": [
+        {
+          "image": "img1.jpg",
+          "json_file": "img1.json",
+          "txt_file": "img1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 77,
+            "final_tokens": 77,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img2.jpg",
+          "json_file": "img2.json",
+          "txt_file": "img2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 117,
+            "final_tokens": 117,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img3.jpg",
+          "json_file": "img3.json",
+          "txt_file": "img3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 86,
+            "final_tokens": 86,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img4.jpg",
+          "json_file": "img4.json",
+          "txt_file": "img4.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 112,
+            "final_tokens": 112,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img5.jpg",
+          "json_file": "img5.json",
+          "txt_file": "img5.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 80,
+            "final_tokens": 80,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img6.jpg",
+          "json_file": "img6.json",
+          "txt_file": "img6.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 85,
+            "final_tokens": 85,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img7.jpg",
+          "json_file": "img7.json",
+          "txt_file": "img7.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 81,
+            "final_tokens": 81,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img8.jpg",
+          "json_file": "img8.json",
+          "txt_file": "img8.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 86,
+            "final_tokens": 86,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img9.jpg",
+          "json_file": "img9.json",
+          "txt_file": "img9.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 71,
+            "final_tokens": 71,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img10.jpg",
+          "json_file": "img10.json",
+          "txt_file": "img10.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 90,
+            "final_tokens": 90,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img11.jpg",
+          "json_file": "img11.json",
+          "txt_file": "img11.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 91,
+            "final_tokens": 91,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "img12.jpg",
+          "json_file": "img12.json",
+          "txt_file": "img12.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 64,
+            "final_tokens": 64,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    }
+  ]
+}

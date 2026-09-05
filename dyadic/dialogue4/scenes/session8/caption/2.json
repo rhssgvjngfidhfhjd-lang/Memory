@@ -1,0 +1,36 @@
+{
+  "id": "bf155313-cc60-4ae4-aaa8-9108a02aeaeb",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:56.479211",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 140561,
+    "modified_time": "2026-08-23T21:54:54.782600"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a blurred, glowing orange ring against a dark background, representing the first-ever photograph of a black hole located in the galaxy M87. The ring is bright on one side, indicating the black hole's event horizon. The text \"M 87*\" and \"April 11, 2017\" is visible at the top. The mood is scientific and awe-inspiring, highlighting a significant achievement in astrophysics.",
+    "final_text": "The image shows a blurred, glowing orange ring against a dark background, representing the first-ever photograph of a black hole located in the galaxy M87. The ring is bright on one side, indicating the black hole's event horizon. The text \"M 87*\" and \"April 11, 2017\" is visible at the top. The mood is scientific and awe-inspiring, highlighting a significant achievement in astrophysics.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427435-hKJKdkIselPv22NonspP",
+    "created": 1788427435,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 86,
+      "total_tokens": 601,
+      "cost": 0.0021475
+    }
+  }
+}

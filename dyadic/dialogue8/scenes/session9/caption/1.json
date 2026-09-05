@@ -1,0 +1,36 @@
+{
+  "id": "a9ab8443-9b10-49ec-8037-404ffab86d9c",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:59.350479",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session9/image/1.png",
+    "filename": "1.png",
+    "size": 756573,
+    "modified_time": "2026-08-23T21:59:45.564005"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a grand architectural scene featuring three historical buildings adorned with intricate tile work and large arched entrances, set against a clear blue sky. Each building includes tall minarets and distinctive turquoise domes, characteristic of Islamic architecture. The foreground shows a spacious courtyard with a few people walking or standing, contributing to a serene and majestic atmosphere. The buildings are richly decorated, showcasing elaborate patterns and designs, highlighting the cultural heritage and artistic craftsmanship of the setting.",
+    "final_text": "The image depicts a grand architectural scene featuring three historical buildings adorned with intricate tile work and large arched entrances, set against a clear blue sky. Each building includes tall minarets and distinctive turquoise domes, characteristic of Islamic architecture. The foreground shows a spacious courtyard with a few people walking or standing, contributing to a serene and majestic atmosphere. The buildings are richly decorated, showcasing elaborate patterns and designs, highlighting the cultural heritage and artistic craftsmanship of the setting.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427677-kpKW9X1G2uQNsFkCfhnR",
+    "created": 1788427677,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 93,
+      "total_tokens": 810,
+      "cost": 0.0027225
+    }
+  }
+}

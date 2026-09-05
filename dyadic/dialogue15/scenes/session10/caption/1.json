@@ -1,0 +1,36 @@
+{
+  "id": "17803eb7-6362-4fe1-9432-f05bd4be3e17",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:24.577690",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 3485245,
+    "modified_time": "2026-08-23T21:34:50.146811"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic titled \"统计分析 断食试验统计分析摘要\" which translates to \"Statistical Analysis of Fasting Experiment Summary.\" It features a central section highlighting key findings with icons: one representing data accuracy with a non-significant increase (+X%, p=0.08) and another showing an afternoon mental performance score with a significant increase (+XX%, p<0.05). On the right, there are three recommendations for review and proxy suggestions, each numbered and illustrated with icons. The mood is informative and analytical.",
+    "final_text": "The image is an infographic titled \"统计分析 断食试验统计分析摘要\" which translates to \"Statistical Analysis of Fasting Experiment Summary.\" It features a central section highlighting key findings with icons: one representing data accuracy with a non-significant increase (+X%, p=0.08) and another showing an afternoon mental performance score with a significant increase (+XX%, p<0.05). On the right, there are three recommendations for review and proxy suggestions, each numbered and illustrated with icons. The mood is informative and analytical.",
+    "token_stats": {
+      "original_tokens": 117,
+      "final_tokens": 117,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426984-UbiQTpzVQtbEfzzwxa3v",
+    "created": 1788426984,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 110,
+      "total_tokens": 1305,
+      "cost": 0.0040875
+    }
+  }
+}

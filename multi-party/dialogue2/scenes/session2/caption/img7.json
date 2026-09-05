@@ -1,0 +1,36 @@
+{
+  "id": "673e600d-7ec0-4ec3-bf37-78669bff90aa",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:34.766041",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 256703,
+    "modified_time": "2026-08-23T22:05:59.434994"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a pair of white sneakers on a tiled floor, worn by a person in blue jeans. The sneakers have visible laces and perforated detailing. A red circle highlights a specific area on the right shoe. The overall mood is casual and observational, focusing on footwear details.",
+    "final_text": "The image shows a pair of white sneakers on a tiled floor, worn by a person in blue jeans. The sneakers have visible laces and perforated detailing. A red circle highlights a specific area on the right shoe. The overall mood is casual and observational, focusing on footwear details.",
+    "token_stats": {
+      "original_tokens": 57,
+      "final_tokens": 57,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426632-3V0xpT5BwTiRUOCRkHB9",
+    "created": 1788426632,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 58,
+      "total_tokens": 778,
+      "cost": 0.00238
+    }
+  }
+}

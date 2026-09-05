@@ -1,0 +1,36 @@
+{
+  "id": "35eff2c0-66a0-479f-b59c-6645557ea3e7",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:42.575972",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session2/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 141245,
+    "modified_time": "2026-08-23T21:36:13.782332"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a hand using tweezers to handle polished metal weights stored in a wooden box. The box contains various sizes of weights, each resting in slots lined with blue material. A white cloth is partially visible inside the box. The scene suggests a careful and precise activity, likely related to measurement or calibration, with a focused and meticulous atmosphere. Visible text includes a watermark from Dreamstime and the ID number \"150940067\" with the photographer's name.",
+    "final_text": "The image depicts a hand using tweezers to handle polished metal weights stored in a wooden box. The box contains various sizes of weights, each resting in slots lined with blue material. A white cloth is partially visible inside the box. The scene suggests a careful and precise activity, likely related to measurement or calibration, with a focused and meticulous atmosphere. Visible text includes a watermark from Dreamstime and the ID number \"150940067\" with the photographer's name.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427060-fMpot57OMiNKwzdKUKrx",
+    "created": 1788427060,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 93,
+      "total_tokens": 1288,
+      "cost": 0.0039175
+    }
+  }
+}

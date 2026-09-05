@@ -1,0 +1,36 @@
+{
+  "id": "fc98115f-685f-40c9-8e1f-e4a1c8bd646b",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:25.420846",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 160320,
+    "modified_time": "2026-08-23T21:57:31.452093"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a bar chart illustrating changes in pet cat consumption structure for 2023 and 2024, measured in percentages. The bars are color-coded: yellow for 2023 and green for 2024. Categories include food, supplies, medical, and services. Key elements are labeled in Chinese, showing items like staple food, snacks, nutritional products, supplies, drugs, diagnosis, vaccines, physical exams, grooming, training, donations, and insurance. The mood is analytical, focusing on comparative data for consumer trends in the pet industry.",
+    "final_text": "The image is a bar chart illustrating changes in pet cat consumption structure for 2023 and 2024, measured in percentages. The bars are color-coded: yellow for 2023 and green for 2024. Categories include food, supplies, medical, and services. Key elements are labeled in Chinese, showing items like staple food, snacks, nutritional products, supplies, drugs, diagnosis, vaccines, physical exams, grooming, training, donations, and insurance. The mood is analytical, focusing on comparative data for consumer trends in the pet industry.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427584-7wTBfToPpng0mVjsOO2l",
+    "created": 1788427584,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 111,
+      "total_tokens": 828,
+      "cost": 0.0029025
+    }
+  }
+}

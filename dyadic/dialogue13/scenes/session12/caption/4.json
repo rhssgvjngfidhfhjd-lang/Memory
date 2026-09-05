@@ -1,0 +1,36 @@
+{
+  "id": "3cedc730-e6af-4a45-a343-73cb950b8d6d",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:21.258612",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session12/image/4.png",
+    "filename": "4.png",
+    "size": 2609559,
+    "modified_time": "2026-08-23T21:32:25.190424"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a group of children in a classroom setting, engaging with a health education poster on the wall. One child points to the poster, which features anatomical diagrams and health information. Visible text on the poster is in Chinese. Nearby, a shelf holds medical kits and various pamphlets. The children, holding brochures, appear attentive and curious. Potted plants add a touch of greenery, creating an educational and informative atmosphere.",
+    "final_text": "The image depicts a group of children in a classroom setting, engaging with a health education poster on the wall. One child points to the poster, which features anatomical diagrams and health information. Visible text on the poster is in Chinese. Nearby, a shelf holds medical kits and various pamphlets. The children, holding brochures, appear attentive and curious. Potted plants add a touch of greenery, creating an educational and informative atmosphere.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426859-S3pOOrKAOkEQFjOK6emy",
+    "created": 1788426859,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 85,
+      "total_tokens": 1280,
+      "cost": 0.0038375
+    }
+  }
+}

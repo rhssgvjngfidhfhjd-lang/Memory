@@ -1,0 +1,36 @@
+{
+  "id": "2588959e-8399-4820-9261-d672e5dda064",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:51.902601",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session6/image/4.png",
+    "filename": "4.png",
+    "size": 245733,
+    "modified_time": "2026-08-23T21:54:52.978226"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a digital kitchen scale with a stainless steel weighing platform, placed on a wooden countertop. A 100g weight is positioned on the platform. The scale's display shows \"100.0g.\" Buttons with various functions are visible, including \"T\" for tare. The brand \"KTRUE\" is displayed on the scale and in the upper left, along with Chinese text indicating \"0.1克高精度\" (0.1g high precision). The atmosphere is clean and modern, suggesting precision and functionality.",
+    "final_text": "The image features a digital kitchen scale with a stainless steel weighing platform, placed on a wooden countertop. A 100g weight is positioned on the platform. The scale's display shows \"100.0g.\" Buttons with various functions are visible, including \"T\" for tare. The brand \"KTRUE\" is displayed on the scale and in the upper left, along with Chinese text indicating \"0.1克高精度\" (0.1g high precision). The atmosphere is clean and modern, suggesting precision and functionality.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427430-6POVRDPLuRUoKGwqzjzm",
+    "created": 1788427430,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 107,
+      "total_tokens": 452,
+      "cost": 0.0019325
+    }
+  }
+}

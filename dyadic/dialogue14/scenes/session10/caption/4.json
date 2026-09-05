@@ -1,0 +1,36 @@
+{
+  "id": "3728ece6-781f-4545-a58f-d3bb906f521d",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:25.177661",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session10/image/4.png",
+    "filename": "4.png",
+    "size": 222254,
+    "modified_time": "2026-08-23T21:32:59.580856"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table titled \"数字艺术沉浸展『技术-体验』双重视角观展报告表\" (Digital Art Immersion Exhibition 'Technology-Experience' Dual Perspective Exhibition Report Table). It is divided into two main perspectives: 技术视角 (Technical Perspective) and 体验视角 (Experience Perspective). Each perspective includes categories such as core dimensions and specific content. The table discusses topics like light installation technology, interactive installation issues, and recommendations for enhancing the experience. The overall mood is analytical and informational, focusing on improving digital art exhibitions.",
+    "final_text": "The image is a table titled \"数字艺术沉浸展『技术-体验』双重视角观展报告表\" (Digital Art Immersion Exhibition 'Technology-Experience' Dual Perspective Exhibition Report Table). It is divided into two main perspectives: 技术视角 (Technical Perspective) and 体验视角 (Experience Perspective). Each perspective includes categories such as core dimensions and specific content. The table discusses topics like light installation technology, interactive installation issues, and recommendations for enhancing the experience. The overall mood is analytical and informational, focusing on improving digital art exhibitions.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426923-iErTTMdw40MZtj7QKb94",
+    "created": 1788426923,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 116,
+      "total_tokens": 1311,
+      "cost": 0.0041475
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "504e2778-0e62-40c6-a131-ca4eaebbecd5",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:44.530327",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session1/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 247769,
+    "modified_time": "2026-08-23T22:08:25.135249"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person taking a mirror selfie. They are wearing a long brown coat over a white top and a blue skirt. Their feet are clad in beige shoes with white socks. The person is holding a light blue phone, partially covering their face. The background shows clothes and shoes in a storage area, creating a casual and cozy atmosphere.",
+    "final_text": "The image depicts a person taking a mirror selfie. They are wearing a long brown coat over a white top and a blue skirt. Their feet are clad in beige shoes with white socks. The person is holding a light blue phone, partially covering their face. The background shows clothes and shoes in a storage area, creating a casual and cozy atmosphere.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426764-sKAIWY5pfIeD7CEVOcPd",
+    "created": 1788426764,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 69,
+      "total_tokens": 1264,
+      "cost": 0.0036775
+    }
+  }
+}

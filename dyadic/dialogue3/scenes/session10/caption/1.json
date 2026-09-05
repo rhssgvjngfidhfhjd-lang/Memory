@@ -1,0 +1,36 @@
+{
+  "id": "e243745f-114a-44ab-a47e-9492771f3f30",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:53.492350",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 964551,
+    "modified_time": "2026-08-23T21:42:50.811570"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a dining scene in an elegant restaurant with a large round table set for a meal. The table is laden with a variety of dishes, including vegetables and meats. Three hands are seen toasting with glasses of red wine and beer, indicating a celebratory mood. The room features modern decor with warm lighting and a large window revealing a garden view outside. No visible text is present. The atmosphere is inviting and festive.",
+    "final_text": "The image depicts a dining scene in an elegant restaurant with a large round table set for a meal. The table is laden with a variety of dishes, including vegetables and meats. Three hands are seen toasting with glasses of red wine and beer, indicating a celebratory mood. The room features modern decor with warm lighting and a large window revealing a garden view outside. No visible text is present. The atmosphere is inviting and festive.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427371-yk9xbN8sLFsfdlwBYX6e",
+    "created": 1788427371,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 86,
+      "total_tokens": 941,
+      "cost": 0.0029975
+    }
+  }
+}

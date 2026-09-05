@@ -1,0 +1,36 @@
+{
+  "id": "6ddfb29a-3f17-4e40-9ad4-783663214b9e",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:27.987100",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session15/image/2.png",
+    "filename": "2.png",
+    "size": 622784,
+    "modified_time": "2026-08-23T21:52:33.979995"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a tablet displaying a health dashboard with various metrics. Key elements include:\n\n- \"Daily Steps: 8,500\" with a circular chart.\n- \"Sleep Quality: 7.2/10\" with a line graph.\n- \"Heart Rate: 65 BPM\" with a circular chart.\n- Graphs for daily steps and health trends, labeled \"Health Trend: Improving.\"\n\nThe interface is colorful and data-driven, indicating a focus on health and wellness tracking. The atmosphere is informative and analytical.",
+    "final_text": "The image shows a tablet displaying a health dashboard with various metrics. Key elements include:\n\n- \"Daily Steps: 8,500\" with a circular chart.\n- \"Sleep Quality: 7.2/10\" with a line graph.\n- \"Heart Rate: 65 BPM\" with a circular chart.\n- Graphs for daily steps and health trends, labeled \"Health Trend: Improving.\"\n\nThe interface is colorful and data-driven, indicating a focus on health and wellness tracking. The atmosphere is informative and analytical.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427466-TC2LSLD8LVTzyboi4Jvo",
+    "created": 1788427466,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 104,
+      "total_tokens": 959,
+      "cost": 0.0031775
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "ea351700-e027-40a1-899c-b1156f9bd680",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:42.144069",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session1/image/5.png",
+    "filename": "5.png",
+    "size": 678319,
+    "modified_time": "2026-08-23T21:56:33.054847"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a collage featuring a café or hostel interior, a meal with sandwiches and fries, a bunk bed, and an entrance. The café has a modern design with high stools and tables. The meal is on a wooden tray. The bunk bed has a green curtain, numbered \"213.\" The entrance showcases a glass storefront. Text includes a review praising the Tokyo Inaho Hostel, mentioning its convenient location near transportation and stores, good breakfast, and helpful service. Hashtags like #学生党旅游住宿 and #性价比高酒店 are visible. The atmosphere is welcoming and casual.",
+    "final_text": "The image is a collage featuring a café or hostel interior, a meal with sandwiches and fries, a bunk bed, and an entrance. The café has a modern design with high stools and tables. The meal is on a wooden tray. The bunk bed has a green curtain, numbered \"213.\" The entrance showcases a glass storefront. Text includes a review praising the Tokyo Inaho Hostel, mentioning its convenient location near transportation and stores, good breakfast, and helpful service. Hashtags like #学生党旅游住宿 and #性价比高酒店 are visible. The atmosphere is welcoming and casual.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427539-2dNy4gminnaZldk5IZSt",
+    "created": 1788427539,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 119,
+      "total_tokens": 1117,
+      "cost": 0.003685
+    }
+  }
+}

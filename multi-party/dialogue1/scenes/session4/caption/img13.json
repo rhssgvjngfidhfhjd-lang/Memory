@@ -1,0 +1,36 @@
+{
+  "id": "8da64846-b710-4bd8-ab8d-f1b986de3662",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:51.791287",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 343037,
+    "modified_time": "2026-08-23T22:03:52.075487"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image captures a kitchen scene with used bowls and utensils. Two bowls, one large and one smaller, contain remnants of a meal, likely noodle-based, with visible oil and sauce residues. Wooden chopsticks rest on the bowls. A green mug with a cat design holds a spoon and appears to have water. In the background, there are various kitchen items, including a lid, stacked bowls, and containers. The atmosphere is casual and slightly messy, suggesting a recently finished meal.",
+    "final_text": "The image captures a kitchen scene with used bowls and utensils. Two bowls, one large and one smaller, contain remnants of a meal, likely noodle-based, with visible oil and sauce residues. Wooden chopsticks rest on the bowls. A green mug with a cat design holds a spoon and appears to have water. In the background, there are various kitchen items, including a lid, stacked bowls, and containers. The atmosphere is casual and slightly messy, suggesting a recently finished meal.",
+    "token_stats": {
+      "original_tokens": 98,
+      "final_tokens": 98,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426589-wdKxKlEumoMhyy7HZmax",
+    "created": 1788426589,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 96,
+      "total_tokens": 951,
+      "cost": 0.0030975
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "4d9eb6a6-c2d4-40a2-905a-7633bd4c5b0d",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:49.659033",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session6/image/5.png",
+    "filename": "5.png",
+    "size": 440037,
+    "modified_time": "2026-08-23T21:58:12.467147"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains a data visualization with two main graphs and accompanying text in Chinese. The first graph, titled \"食欲反应维度,\" shows a purple bar chart illustrating the relationship between example days and the quantity consumed. The second graph, \"睡眠质量评分,\" is a line graph with red dots, representing sleep quality scores across days of activity. The text includes sections on adapting behavior, exploring environments, and recovery periods. The overall mood is analytical and informative, focusing on behavioral and environmental adaptation during a quarantine period.",
+    "final_text": "The image contains a data visualization with two main graphs and accompanying text in Chinese. The first graph, titled \"食欲反应维度,\" shows a purple bar chart illustrating the relationship between example days and the quantity consumed. The second graph, \"睡眠质量评分,\" is a line graph with red dots, representing sleep quality scores across days of activity. The text includes sections on adapting behavior, exploring environments, and recovery periods. The overall mood is analytical and informative, focusing on behavioral and environmental adaptation during a quarantine period.",
+    "token_stats": {
+      "original_tokens": 114,
+      "final_tokens": 114,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427666-HprlPPoi7L3Or9KIyUDp",
+    "created": 1788427666,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 107,
+      "total_tokens": 546,
+      "cost": 0.0021675
+    }
+  }
+}

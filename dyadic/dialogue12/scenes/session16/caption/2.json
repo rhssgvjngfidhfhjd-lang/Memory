@@ -1,0 +1,36 @@
+{
+  "id": "8c10bd20-dbf6-4f14-a8a7-7e85fa41ea82",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:14.680358",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session16/image/2.png",
+    "filename": "2.png",
+    "size": 4125624,
+    "modified_time": "2026-08-23T21:32:01.174311"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A fluffy white cat with striking blue eyes lies on a yellow surface next to an open laptop. In the foreground, a hand is holding an open book with text in Japanese. The scene conveys a cozy and relaxed atmosphere, suggesting a moment of study or work accompanied by the cat's calm presence.",
+    "final_text": "A fluffy white cat with striking blue eyes lies on a yellow surface next to an open laptop. In the foreground, a hand is holding an open book with text in Japanese. The scene conveys a cozy and relaxed atmosphere, suggesting a moment of study or work accompanied by the cat's calm presence.",
+    "token_stats": {
+      "original_tokens": 60,
+      "final_tokens": 60,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426791-KgnMjYDknxaFdnWkd94M",
+    "created": 1788426791,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 60,
+      "total_tokens": 777,
+      "cost": 0.0023925
+    }
+  }
+}

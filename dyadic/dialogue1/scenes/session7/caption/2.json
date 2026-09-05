@@ -1,0 +1,36 @@
+{
+  "id": "8d9848af-58c5-422e-b81c-0bb8cad1ea89",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:26.441380",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 942546,
+    "modified_time": "2026-08-23T21:30:12.974201"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features three women in black athletic outfits standing side by side with hands on their hips against a futuristic blue background with light patterns. The text reads \"30分钟有氧运动健身操\" and \"简单暴汗 高效燃脂,\" which translates to \"30-minute aerobic exercise\" and \"simple, sweat a lot, high efficiency in burning fat.\" The scene conveys an energetic, motivating mood focused on fitness and exercise.",
+    "final_text": "The image features three women in black athletic outfits standing side by side with hands on their hips against a futuristic blue background with light patterns. The text reads \"30分钟有氧运动健身操\" and \"简单暴汗 高效燃脂,\" which translates to \"30-minute aerobic exercise\" and \"simple, sweat a lot, high efficiency in burning fat.\" The scene conveys an energetic, motivating mood focused on fitness and exercise.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426506-MJptRy6BFjUv5KPeFlCe",
+    "created": 1788426506,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 87,
+      "total_tokens": 1282,
+      "cost": 0.0038575
+    }
+  }
+}

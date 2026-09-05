@@ -1,0 +1,36 @@
+{
+  "id": "8969effe-d613-4cdf-90ef-cf709b3106ae",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:19.370746",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 1085661,
+    "modified_time": "2026-08-23T21:45:34.936430"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts two fantasy characters with intricate, ethereal designs. One has green hair adorned with floral elements and the other has blue hair with metallic details. They are facing each other closely, creating an intimate atmosphere. The background is soft and dreamy, enhancing the mystical mood. Visible text includes stylized characters and phrases at the top and bottom, with a logo in the corner. The overall atmosphere is serene and otherworldly.",
+    "final_text": "The image depicts two fantasy characters with intricate, ethereal designs. One has green hair adorned with floral elements and the other has blue hair with metallic details. They are facing each other closely, creating an intimate atmosphere. The background is soft and dreamy, enhancing the mystical mood. Visible text includes stylized characters and phrases at the top and bottom, with a logo in the corner. The overall atmosphere is serene and otherworldly.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427339-nnn63AWArn5hzgk1whuJ",
+    "created": 1788427339,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 86,
+      "total_tokens": 1281,
+      "cost": 0.0038475
+    }
+  }
+}

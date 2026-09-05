@@ -1,0 +1,36 @@
+{
+  "id": "41bbb7bd-a1e7-420c-b98f-8d761a0be261",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:55.256751",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 514713,
+    "modified_time": "2026-08-23T22:01:52.230403"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a plate with slices of medium-rare steak. The steak pieces are arranged neatly on a white plate, displaying a pink center and seared edges. The atmosphere is appetizing and inviting, highlighting the juiciness and tenderness of the meat. There is no visible text or additional elements present.",
+    "final_text": "The image shows a plate with slices of medium-rare steak. The steak pieces are arranged neatly on a white plate, displaying a pink center and seared edges. The atmosphere is appetizing and inviting, highlighting the juiciness and tenderness of the meat. There is no visible text or additional elements present.",
+    "token_stats": {
+      "original_tokens": 63,
+      "final_tokens": 63,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426533-rvrCHKEWoJYu8K1sskt6",
+    "created": 1788426533,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 63,
+      "total_tokens": 783,
+      "cost": 0.00243
+    }
+  }
+}

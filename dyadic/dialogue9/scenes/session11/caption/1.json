@@ -1,0 +1,36 @@
+{
+  "id": "c9d1ead4-20d8-4238-9762-d2506ddf3f11",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:23.190130",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 700420,
+    "modified_time": "2026-08-23T22:00:48.296092"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a black-and-white CCTV snapshot showing a person standing in a hallway, wearing a jacket and carrying a backpack. The person's face is blurred. Visible text includes the date and time \"2022.11.20 14:51:42\" in the upper left corner. Bold, colorful text overlays the image, with phrases in Chinese such as \"上门免费清洗油烟机\" (free home cleaning service for range hoods), \"竟是人贩子?\" (could it be a human trafficker?), and \"家里有大人吗\" (are there adults at home?). The overall mood suggests a sense of caution or alertness.",
+    "final_text": "The image is a black-and-white CCTV snapshot showing a person standing in a hallway, wearing a jacket and carrying a backpack. The person's face is blurred. Visible text includes the date and time \"2022.11.20 14:51:42\" in the upper left corner. Bold, colorful text overlays the image, with phrases in Chinese such as \"上门免费清洗油烟机\" (free home cleaning service for range hoods), \"竟是人贩子?\" (could it be a human trafficker?), and \"家里有大人吗\" (are there adults at home?). The overall mood suggests a sense of caution or alertness.",
+    "token_stats": {
+      "original_tokens": 146,
+      "final_tokens": 146,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427762-8L8LTZ6eiGqQvtcu98jd",
+    "created": 1788427762,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 137,
+      "total_tokens": 1332,
+      "cost": 0.0043575
+    }
+  }
+}

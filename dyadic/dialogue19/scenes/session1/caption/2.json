@@ -1,0 +1,36 @@
+{
+  "id": "e60f361e-a7d7-4e99-bd8d-5ec25219a120",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:40.039900",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session1/image/2.png",
+    "filename": "2.png",
+    "size": 1005240,
+    "modified_time": "2026-08-23T21:37:52.500597"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a hand holding a heart-shaped white plate with a gold rim, containing a fresh salad of lettuce, lemon slices, and strawberry halves. Nearby is another identical plate stacked beneath it. A glass with a lemon slice sits on the table, along with a book or magazine. The overall mood is fresh and elegant, suggesting a focus on healthy dining and aesthetic presentation.",
+    "final_text": "The image shows a hand holding a heart-shaped white plate with a gold rim, containing a fresh salad of lettuce, lemon slices, and strawberry halves. Nearby is another identical plate stacked beneath it. A glass with a lemon slice sits on the table, along with a book or magazine. The overall mood is fresh and elegant, suggesting a focus on healthy dining and aesthetic presentation.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427178-SGFGxM7AW19zzLff5ujJ",
+    "created": 1788427178,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 75,
+      "total_tokens": 930,
+      "cost": 0.0028875
+    }
+  }
+}

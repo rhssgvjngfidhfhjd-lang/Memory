@@ -1,0 +1,36 @@
+{
+  "id": "5c33ab09-be24-432f-be52-1e796931c62c",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:42.764210",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session2/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 135170,
+    "modified_time": "2026-08-23T21:30:57.744680"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a bottle of disinfectant liquid with a red cap against a plain background. The label includes visible text in Chinese and the number \"84\" prominently displayed. The brand name appears as \"Hongruikang.\" The bottle has a capacity indication of 500 ml. The overall atmosphere is utilitarian, focused on hygiene and cleanliness.",
+    "final_text": "The image depicts a bottle of disinfectant liquid with a red cap against a plain background. The label includes visible text in Chinese and the number \"84\" prominently displayed. The brand name appears as \"Hongruikang.\" The bottle has a capacity indication of 500 ml. The overall atmosphere is utilitarian, focused on hygiene and cleanliness.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426642-UT8hWbRvsdCEV2OrRLYn",
+    "created": 1788426642,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 69,
+      "total_tokens": 1264,
+      "cost": 0.0036775
+    }
+  }
+}

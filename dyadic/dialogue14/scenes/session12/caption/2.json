@@ -1,0 +1,36 @@
+{
+  "id": "c3de2354-c509-48b9-9bc8-844b39def55a",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:31.582221",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session12/image/2.png",
+    "filename": "2.png",
+    "size": 133826,
+    "modified_time": "2026-08-23T21:33:02.875885"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a cute, cartoon-like character, resembling a bear or mouse, with pink cheeks. It is joyfully holding a frothy mug of beer. Above the character, the text \"恭喜恭喜\" (meaning \"congratulations\") is displayed in stylized font. The atmosphere is celebratory and cheerful.",
+    "final_text": "The image features a cute, cartoon-like character, resembling a bear or mouse, with pink cheeks. It is joyfully holding a frothy mug of beer. Above the character, the text \"恭喜恭喜\" (meaning \"congratulations\") is displayed in stylized font. The atmosphere is celebratory and cheerful.",
+    "token_stats": {
+      "original_tokens": 71,
+      "final_tokens": 71,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426931-NkIs83lbwZ4YGHX8JOQR",
+    "created": 1788426931,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 68,
+      "total_tokens": 923,
+      "cost": 0.0028175
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "fc68ee30-bf2a-4655-96d7-522cbc76bcf0",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:37.107347",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session16/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 843524,
+    "modified_time": "2026-08-23T21:37:27.310107"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an open camera bag on a dark surface, displaying neatly organized photography equipment. Inside, there are several camera lenses, a camera body, a drone, and battery packs. The bag is partitioned to securely hold each item. In the top right corner, there is a logo with the text \"TIPA WORLD AWARDS.\" The overall mood is organized and professional, emphasizing high-quality photography gear and preparation.",
+    "final_text": "The image features an open camera bag on a dark surface, displaying neatly organized photography equipment. Inside, there are several camera lenses, a camera body, a drone, and battery packs. The bag is partitioned to securely hold each item. In the top right corner, there is a logo with the text \"TIPA WORLD AWARDS.\" The overall mood is organized and professional, emphasizing high-quality photography gear and preparation.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427176-kp9sMB6VXgLZdex2Ge34",
+    "created": 1788427176,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 84,
+      "total_tokens": 1279,
+      "cost": 0.0038275
+    }
+  }
+}

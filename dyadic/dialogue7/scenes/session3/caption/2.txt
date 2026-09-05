@@ -1,0 +1,9 @@
+The image is an informational poster illustrating a step-by-step emergency response guide for respiratory issues. It is divided into three sections, each with a time frame and color-coded background: red for "Emergency Treatment" (15:15-15:20), yellow for "Monitoring Phase" (15:20-15:45), and green for "Recovery Phase" (15:15-16:30). 
+
+1. **Emergency Treatment (Red Section)**: A woman sits on a couch using an inhaler, indicating the start of treatment when symptoms appear, with a PEF value of 70%.
+
+2. **Monitoring Phase (Yellow Section)**: The woman stands next to an air purifier, adjusting settings to improve air quality as symptoms ease, and the PEF value returns to 75%.
+
+3. **Recovery Phase (Green Section)**: The woman relaxes on a couch, indicating recovery progress with a PEF value reaching 85% and eventual full recovery.
+
+The atmosphere is calm and instructional, emphasizing the importance of timely action and monitoring for respiratory health. Text provides specific actions and time frames for each phase.

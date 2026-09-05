@@ -1,0 +1,36 @@
+{
+  "id": "6cca449e-96ef-4bdf-9364-93edf5dbb9f7",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:53.579659",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session3/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 115106,
+    "modified_time": "2026-08-23T21:31:52.315425"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a medical document written in Chinese, structured in a table format. It includes details such as:\n\n- Patient information: Name, bed number, hospital number, ethnicity, gender, age, and care level.\n- Medical diagnoses: Chronic renal insufficiency, obstructive kidney disease, diabetes.\n- Brief medical history and auxiliary examinations: Describes symptoms like bleeding, nausea, vomiting, and lab results.\n- Nursing measures: Monitoring vital signs, assisting with bed rest to prevent bedsores, and observing wound conditions.\n- Current nursing difficulties: Challenges include patient’s poor self-care and disease severity.\n\nThe document has a clinical and professional atmosphere.",
+    "final_text": "The image is a medical document written in Chinese, structured in a table format. It includes details such as:\n\n- Patient information: Name, bed number, hospital number, ethnicity, gender, age, and care level.\n- Medical diagnoses: Chronic renal insufficiency, obstructive kidney disease, diabetes.\n- Brief medical history and auxiliary examinations: Describes symptoms like bleeding, nausea, vomiting, and lab results.\n- Nursing measures: Monitoring vital signs, assisting with bed rest to prevent bedsores, and observing wound conditions.\n- Current nursing difficulties: Challenges include patient’s poor self-care and disease severity.\n\nThe document has a clinical and professional atmosphere.",
+    "token_stats": {
+      "original_tokens": 131,
+      "final_tokens": 131,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426711-6uKVxalP3rLbYCr9LzCT",
+    "created": 1788426711,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 130,
+      "total_tokens": 985,
+      "cost": 0.0034375
+    }
+  }
+}

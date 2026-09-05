@@ -1,0 +1,36 @@
+{
+  "id": "fc5ef233-7340-4360-b103-e6ff6c3cd5e9",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:47.302483",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 70340,
+    "modified_time": "2026-08-23T21:42:19.575801"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a summary table of survey results for a community dinner event titled \"邻里共享年夜饭活动.\" It includes sections such as survey response details, overall satisfaction (4.7/5), satisfaction distribution (78% very satisfied), most popular activities (sharing dishes, group photos), main feelings and feedback (recognition, emotional connection), evaluation of organizational work (91% satisfied with venue setup), and key suggestions (improve seating, simplify dishes, reduce noise). The mood is analytical and informative, focusing on participants' feedback and improvement suggestions.",
+    "final_text": "The image is a summary table of survey results for a community dinner event titled \"邻里共享年夜饭活动.\" It includes sections such as survey response details, overall satisfaction (4.7/5), satisfaction distribution (78% very satisfied), most popular activities (sharing dishes, group photos), main feelings and feedback (recognition, emotional connection), evaluation of organizational work (91% satisfied with venue setup), and key suggestions (improve seating, simplify dishes, reduce noise). The mood is analytical and informative, focusing on participants' feedback and improvement suggestions.",
+    "token_stats": {
+      "original_tokens": 119,
+      "final_tokens": 119,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427305-BEuizmgyHTfTKuJJn6bD",
+    "created": 1788427305,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 113,
+      "total_tokens": 968,
+      "cost": 0.0032675
+    }
+  }
+}

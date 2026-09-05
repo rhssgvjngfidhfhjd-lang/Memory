@@ -1,0 +1,36 @@
+{
+  "id": "79b931c2-6199-4d27-b303-8ed8036c4cec",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:06.089315",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session5/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 683872,
+    "modified_time": "2026-08-23T22:03:54.635099"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a supermarket aisle with shelves filled with various flavored potato chips and snacks. The brands include Lay's and others, with packaging in vibrant colors like yellow, green, red, and blue. Visible text on the packaging is in a non-English language, likely Chinese. Price tags are visible, with prices ranging from 2.9 to 5.4. The atmosphere is bright and colorful, typical of a well-stocked snack section in a grocery store.",
+    "final_text": "The image depicts a supermarket aisle with shelves filled with various flavored potato chips and snacks. The brands include Lay's and others, with packaging in vibrant colors like yellow, green, red, and blue. Visible text on the packaging is in a non-English language, likely Chinese. Price tags are visible, with prices ranging from 2.9 to 5.4. The atmosphere is bright and colorful, typical of a well-stocked snack section in a grocery store.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426604-iw5q0ceycpzK3Lh5yOs3",
+    "created": 1788426604,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 94,
+      "total_tokens": 949,
+      "cost": 0.0030775
+    }
+  }
+}

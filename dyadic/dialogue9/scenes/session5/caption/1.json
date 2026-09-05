@@ -1,0 +1,36 @@
+{
+  "id": "f9530d00-39f2-40e0-a102-d5359f1a192f",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:52.326155",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 1195817,
+    "modified_time": "2026-08-23T22:01:07.153026"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a weathered wooden shelf unit with three tiers, sheltered by a transparent plastic roof. The structure appears rustic, made from aged wood painted gray, with visible signs of wear and peeling paint. The setting is outdoors, against a blurred wooden fence background, suggesting a garden or backyard. Sunlight casts a warm glow, creating a peaceful and serene atmosphere. There is no visible text, and no actions or interactions are depicted.",
+    "final_text": "The image shows a weathered wooden shelf unit with three tiers, sheltered by a transparent plastic roof. The structure appears rustic, made from aged wood painted gray, with visible signs of wear and peeling paint. The setting is outdoors, against a blurred wooden fence background, suggesting a garden or backyard. Sunlight casts a warm glow, creating a peaceful and serene atmosphere. There is no visible text, and no actions or interactions are depicted.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427731-xkwJtLj5vMUafHZ10wgw",
+    "created": 1788427731,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 88,
+      "total_tokens": 808,
+      "cost": 0.00268
+    }
+  }
+}

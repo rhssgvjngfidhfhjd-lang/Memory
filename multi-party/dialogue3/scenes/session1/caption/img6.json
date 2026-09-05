@@ -1,0 +1,36 @@
+{
+  "id": "fe90dcc2-f631-4904-87b4-2317330a3e61",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:27.975410",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 159031,
+    "modified_time": "2026-08-23T22:07:24.386319"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a medieval scene in a dimly lit stone chamber. A man in armor stands holding a torch, casting warm light around. In front of him, a pedestal holds a circular medallion engraved with a glowing symbol. The background features stone columns and walls with similar symbols, enhancing the mysterious atmosphere. The setting suggests an ancient or fantasy narrative, with an overall mood of intrigue and adventure. Visible text at the bottom shows a date and time: \"Wednesday, February 4, 2026 at 5:45:11 PM JST.\"",
+    "final_text": "The image depicts a medieval scene in a dimly lit stone chamber. A man in armor stands holding a torch, casting warm light around. In front of him, a pedestal holds a circular medallion engraved with a glowing symbol. The background features stone columns and walls with similar symbols, enhancing the mysterious atmosphere. The setting suggests an ancient or fantasy narrative, with an overall mood of intrigue and adventure. Visible text at the bottom shows a date and time: \"Wednesday, February 4, 2026 at 5:45:11 PM JST.\"",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426688-wTAIPeenHUwiiDbhXUlI",
+    "created": 1788426688,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 112,
+      "total_tokens": 967,
+      "cost": 0.0032575
+    }
+  }
+}

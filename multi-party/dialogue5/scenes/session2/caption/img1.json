@@ -1,0 +1,36 @@
+{
+  "id": "e978fc2d-d083-4d4d-b343-c1a252ed4cfa",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:14.968514",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 208070,
+    "modified_time": "2026-08-23T22:09:31.503211"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a damaged light blue suitcase on a wooden floor. A significant hole is visible on the side, revealing cardboard material inside. The suitcase has wheels, one of which is partially visible. The background features a blurred interior setting with a piece of furniture. The mood conveys a sense of disrepair or concern due to the visible damage. No text is present.",
+    "final_text": "The image shows a damaged light blue suitcase on a wooden floor. A significant hole is visible on the side, revealing cardboard material inside. The suitcase has wheels, one of which is partially visible. The background features a blurred interior setting with a piece of furniture. The mood conveys a sense of disrepair or concern due to the visible damage. No text is present.",
+    "token_stats": {
+      "original_tokens": 74,
+      "final_tokens": 74,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426852-jRmjgC6LMlggWTSN7E83",
+    "created": 1788426852,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 74,
+      "total_tokens": 794,
+      "cost": 0.00254
+    }
+  }
+}

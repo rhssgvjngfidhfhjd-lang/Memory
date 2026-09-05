@@ -1,0 +1,36 @@
+{
+  "id": "e4b15cea-2d02-4af1-ae95-5876722466d5",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:23.012981",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 2848674,
+    "modified_time": "2026-08-23T21:34:28.989704"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a pie chart illustrating the distribution of employment types among youths with different educational backgrounds. The chart is divided into sections with percentages: 79.3% for \"可及就业\" (purple), 18.8% for \"升学择造\" (orange), 10.3% each for \"单位就业\" (light orange) and \"待往就业\" (light yellow), 8.8% for \"自主创造\" (green), 1.2% for \"灵活就业\" (purple), and 0.5% for \"自主创业\" (blue). Labels in boxes provide additional context, and the background is black, creating a formal and analytical atmosphere.",
+    "final_text": "The image is a pie chart illustrating the distribution of employment types among youths with different educational backgrounds. The chart is divided into sections with percentages: 79.3% for \"可及就业\" (purple), 18.8% for \"升学择造\" (orange), 10.3% each for \"单位就业\" (light orange) and \"待往就业\" (light yellow), 8.8% for \"自主创造\" (green), 1.2% for \"灵活就业\" (purple), and 0.5% for \"自主创业\" (blue). Labels in boxes provide additional context, and the background is black, creating a formal and analytical atmosphere.",
+    "token_stats": {
+      "original_tokens": 157,
+      "final_tokens": 157,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426738-bSaGxRxOh3g8fsiU9EZR",
+    "created": 1788426738,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 144,
+      "total_tokens": 1142,
+      "cost": 0.003935
+    }
+  }
+}

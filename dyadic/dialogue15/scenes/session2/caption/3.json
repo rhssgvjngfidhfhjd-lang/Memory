@@ -1,0 +1,36 @@
+{
+  "id": "9c57d1d6-8079-47b0-a068-71e3d466632e",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:55.854138",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session2/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 401523,
+    "modified_time": "2026-08-23T21:35:01.328387"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a digital sound level meter labeled \"SLM130.\" It displays a reading of \"57.5 dB\" on its screen. The device has a black foam windscreen on top and buttons labeled \"MAX MIN.\" Text highlights features such as fast/slow display, backlight, real-time measurement, and alarm settings. Specifications include a measuring range of 30-130 dB, 1.5 dB accuracy, and 0.1 dB resolution. The device is powered by a 9V battery and weighs 64g. A QR code and the brand name \"ACCUD\" are visible. The overall mood is technical and informative.",
+    "final_text": "The image features a digital sound level meter labeled \"SLM130.\" It displays a reading of \"57.5 dB\" on its screen. The device has a black foam windscreen on top and buttons labeled \"MAX MIN.\" Text highlights features such as fast/slow display, backlight, real-time measurement, and alarm settings. Specifications include a measuring range of 30-130 dB, 1.5 dB accuracy, and 0.1 dB resolution. The device is powered by a 9V battery and weighs 64g. A QR code and the brand name \"ACCUD\" are visible. The overall mood is technical and informative.",
+    "token_stats": {
+      "original_tokens": 131,
+      "final_tokens": 131,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426953-i1MOaDd25A42UyzkE9T7",
+    "created": 1788426953,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 136,
+      "total_tokens": 1331,
+      "cost": 0.0043475
+    }
+  }
+}

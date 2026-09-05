@@ -1,0 +1,36 @@
+{
+  "id": "04b288fa-c2b0-44b9-9aa5-ef3e8782ef86",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:48.553091",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session1/image/1.jpeg",
+    "filename": "1.jpeg",
+    "size": 1072111,
+    "modified_time": "2026-08-23T21:34:29.880494"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image consists of two scatter plots comparing activity levels. \n\n- **Left Plot**: Titled \"Historical Baseline Activity (Widespread),\" it displays a widespread distribution of colored dots (yellow to red) indicating varying activity densities across room coordinates.\n\n- **Right Plot**: Titled \"This Week Activity (Restricted, -20% Volume),\" it shows a more concentrated cluster of dots with an arrow labeled \"Activity Drop\" pointing to the center, indicating reduced activity density.\n\n- **Color Bar**: On the right side, a gradient from yellow to black represents activity density, with corresponding values.\n\nThe mood is analytical, focusing on changes in spatial activity over time.",
+    "final_text": "The image consists of two scatter plots comparing activity levels. \n\n- **Left Plot**: Titled \"Historical Baseline Activity (Widespread),\" it displays a widespread distribution of colored dots (yellow to red) indicating varying activity densities across room coordinates.\n\n- **Right Plot**: Titled \"This Week Activity (Restricted, -20% Volume),\" it shows a more concentrated cluster of dots with an arrow labeled \"Activity Drop\" pointing to the center, indicating reduced activity density.\n\n- **Color Bar**: On the right side, a gradient from yellow to black represents activity density, with corresponding values.\n\nThe mood is analytical, focusing on changes in spatial activity over time.",
+    "token_stats": {
+      "original_tokens": 134,
+      "final_tokens": 134,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426948-lY0y4UfGCUkwZONB6ymr",
+    "created": 1788426948,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 136,
+      "total_tokens": 1671,
+      "cost": 0.0051975
+    }
+  }
+}

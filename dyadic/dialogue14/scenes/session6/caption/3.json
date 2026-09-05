@@ -1,0 +1,36 @@
+{
+  "id": "8327e76f-ce23-489c-a79f-cd15eb76df16",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:05.464101",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 2080430,
+    "modified_time": "2026-08-23T21:34:13.296395"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts two individuals seated at a table, engaged in a video call on a monitor showing a dog and a person. A smartphone displays a pet adoption app with the dog's profile. A card on the table provides information about the dog, mentioning vaccinations and temperament. Nearby, an open notebook labeled \"EXCEL\" is visible. The atmosphere is warm and inviting, suggesting a conversation about pet adoption. The lighting is soft, with a lamp illuminating the scene.",
+    "final_text": "The image depicts two individuals seated at a table, engaged in a video call on a monitor showing a dog and a person. A smartphone displays a pet adoption app with the dog's profile. A card on the table provides information about the dog, mentioning vaccinations and temperament. Nearby, an open notebook labeled \"EXCEL\" is visible. The atmosphere is warm and inviting, suggesting a conversation about pet adoption. The lighting is soft, with a lamp illuminating the scene.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426903-aFTRNakhOIBYgCO3Yaw8",
+    "created": 1788426903,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 93,
+      "total_tokens": 1091,
+      "cost": 0.003425
+    }
+  }
+}

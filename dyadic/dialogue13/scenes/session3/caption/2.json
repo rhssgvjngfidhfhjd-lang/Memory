@@ -1,0 +1,36 @@
+{
+  "id": "9faf2c86-54e2-45a1-8ce3-f7ba44070a52",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:25.442659",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session3/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 56071,
+    "modified_time": "2026-08-23T21:32:33.907473"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A girl with braided hair and a floral scarf is lovingly holding a golden retriever's face in her hands. They are in a grassy outdoor setting, both smiling and looking at each other, conveying a warm and joyful atmosphere. The dog appears content, with its tongue slightly out. The mood is cheerful and affectionate.",
+    "final_text": "A girl with braided hair and a floral scarf is lovingly holding a golden retriever's face in her hands. They are in a grassy outdoor setting, both smiling and looking at each other, conveying a warm and joyful atmosphere. The dog appears content, with its tongue slightly out. The mood is cheerful and affectionate.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426806-WO4YKdxtdwC2TlXGVFOe",
+    "created": 1788426806,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 63,
+      "total_tokens": 918,
+      "cost": 0.0027675
+    }
+  }
+}

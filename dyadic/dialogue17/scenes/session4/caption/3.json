@@ -1,0 +1,36 @@
+{
+  "id": "bf6d15b3-f87a-4b2c-8b56-975f1165683d",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:48.750352",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session4/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 52595,
+    "modified_time": "2026-08-23T21:55:08.560930"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a man wearing glasses, focused intently on a computer screen displaying lines of code. The code is superimposed over the image, suggesting intense concentration and work on programming or software development. The atmosphere is one of focus and productivity, highlighting a modern tech environment.",
+    "final_text": "The image depicts a man wearing glasses, focused intently on a computer screen displaying lines of code. The code is superimposed over the image, suggesting intense concentration and work on programming or software development. The atmosphere is one of focus and productivity, highlighting a modern tech environment.",
+    "token_stats": {
+      "original_tokens": 56,
+      "final_tokens": 56,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427067-PbLwM8ooMODA3hewHUBE",
+    "created": 1788427067,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 56,
+      "total_tokens": 911,
+      "cost": 0.0026975
+    }
+  }
+}

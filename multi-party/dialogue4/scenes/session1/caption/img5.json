@@ -1,0 +1,36 @@
+{
+  "id": "07cc5b84-3bff-42b9-a5be-b0ab84db15ed",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:44.786906",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session1/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 173048,
+    "modified_time": "2026-08-23T22:08:20.820940"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a camel-colored coat with a hood and belt, hanging on a wooden hanger from a natural branch. A cream-colored scarf and a small white handbag with a gold emblem are also hanging on the branch. The background is a plain wall, creating a minimalist and stylish atmosphere. The word \"PHOTOGRAPH\" is overlaid across the image in white text, adding a modern touch.",
+    "final_text": "The image features a camel-colored coat with a hood and belt, hanging on a wooden hanger from a natural branch. A cream-colored scarf and a small white handbag with a gold emblem are also hanging on the branch. The background is a plain wall, creating a minimalist and stylish atmosphere. The word \"PHOTOGRAPH\" is overlaid across the image in white text, adding a modern touch.",
+    "token_stats": {
+      "original_tokens": 81,
+      "final_tokens": 81,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426764-Sdlab3DeEabSFxgx3sEe",
+    "created": 1788426764,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 79,
+      "total_tokens": 1274,
+      "cost": 0.0037775
+    }
+  }
+}

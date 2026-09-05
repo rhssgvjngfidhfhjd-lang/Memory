@@ -1,0 +1,36 @@
+{
+  "id": "6f8fe86c-59bd-44ab-89fb-a24d524f369d",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:09.078585",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session6/image/2.png",
+    "filename": "2.png",
+    "size": 197933,
+    "modified_time": "2026-08-23T21:35:29.057654"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a fluffy, long-haired cat with a serene expression, sitting gracefully. The cat's fur is a mix of light shades, giving it a soft, pastel appearance. The background is a muted gray, which enhances the cat's gentle, elegant posture. The atmosphere is calm and tranquil, with no visible text or additional elements present.",
+    "final_text": "The image depicts a fluffy, long-haired cat with a serene expression, sitting gracefully. The cat's fur is a mix of light shades, giving it a soft, pastel appearance. The background is a muted gray, which enhances the cat's gentle, elegant posture. The atmosphere is calm and tranquil, with no visible text or additional elements present.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427027-oDetpniYWwrHrGJ2VGD5",
+    "created": 1788427027,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 69,
+      "total_tokens": 414,
+      "cost": 0.0015525
+    }
+  }
+}

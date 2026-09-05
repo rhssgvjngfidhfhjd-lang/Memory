@@ -1,0 +1,36 @@
+{
+  "id": "dfa39cd6-a5e3-4932-ad50-474d6beb4dcb",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:59.181903",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 254912,
+    "modified_time": "2026-08-23T22:01:55.046523"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a close-up of a metal surface, likely part of a kitchen appliance or sink. A rusty and corroded circular fixture with a protruding metal piece is visible, surrounded by brown discoloration and debris. The surface is shiny but appears worn and dirty. There is no visible text, and the mood is one of neglect or decay, indicating a need for cleaning or repair.",
+    "final_text": "The image shows a close-up of a metal surface, likely part of a kitchen appliance or sink. A rusty and corroded circular fixture with a protruding metal piece is visible, surrounded by brown discoloration and debris. The surface is shiny but appears worn and dirty. There is no visible text, and the mood is one of neglect or decay, indicating a need for cleaning or repair.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426537-g3NAZMFkx6eF7PbEERiY",
+    "created": 1788426537,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 80,
+      "total_tokens": 800,
+      "cost": 0.0026
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "eb2ff5ba-099a-449b-8ccb-5dbeae701baf",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:30.339607",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 255793,
+    "modified_time": "2026-08-23T22:09:44.077713"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a mobile app interface displaying a calendar for May 2025. The top section includes icons indicating network status and battery life, alongside a search bar with text related to real estate and accommodation management. Below, there's a list of important dates with text in Chinese, highlighting specific events and the number of days remaining. The calendar displays daily pricing, with options to book on certain days and some dates marked as fully booked. The interface has navigation icons for messages, calendar, order management, property management, and a personal section. The atmosphere is informative and utilitarian.",
+    "final_text": "The image shows a mobile app interface displaying a calendar for May 2025. The top section includes icons indicating network status and battery life, alongside a search bar with text related to real estate and accommodation management. Below, there's a list of important dates with text in Chinese, highlighting specific events and the number of days remaining. The calendar displays daily pricing, with options to book on certain days and some dates marked as fully booked. The interface has navigation icons for messages, calendar, order management, property management, and a personal section. The atmosphere is informative and utilitarian.",
+    "token_stats": {
+      "original_tokens": 116,
+      "final_tokens": 116,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426868-9X3YOhTCXrTCd5qg9z1W",
+    "created": 1788426868,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 115,
+      "total_tokens": 1650,
+      "cost": 0.0049875
+    }
+  }
+}

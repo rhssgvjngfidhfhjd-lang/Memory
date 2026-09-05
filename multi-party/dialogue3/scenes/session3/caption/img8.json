@@ -1,0 +1,36 @@
+{
+  "id": "cf3d78c0-f932-4f98-9ca3-ed98eb64c6a6",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:04.424644",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 63136,
+    "modified_time": "2026-08-23T22:07:38.523692"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a detailed figurine of a warrior in ornate armor, holding a curved sword with a blue-tinted blade. The armor is embellished with intricate gold patterns and red accents, including fur trim and decorative elements. The warrior's stance is dynamic, suggesting readiness or action, with one hand raised. The overall mood is intense and regal, highlighting craftsmanship and design intricacies.",
+    "final_text": "The image depicts a detailed figurine of a warrior in ornate armor, holding a curved sword with a blue-tinted blade. The armor is embellished with intricate gold patterns and red accents, including fur trim and decorative elements. The warrior's stance is dynamic, suggesting readiness or action, with one hand raised. The overall mood is intense and regal, highlighting craftsmanship and design intricacies.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426721-YG1jojjXfQh1W9n8leoz",
+    "created": 1788426721,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 76,
+      "total_tokens": 931,
+      "cost": 0.0028975
+    }
+  }
+}

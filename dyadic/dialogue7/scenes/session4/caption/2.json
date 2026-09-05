@@ -1,0 +1,36 @@
+{
+  "id": "30ab9b85-687b-4125-9c32-47185aed009b",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:45.476916",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 55441,
+    "modified_time": "2026-08-23T21:56:56.068863"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a line graph titled \"Impact of pets\" (图 2. 宠物的影响) with a blue line representing data points on a scale from 3.45 to 3.9. The horizontal axis includes labels in Chinese: 会分宠物诉说, 因为宠物运动量增加, 因为拥抱宠物而作息更健康, 因为宠物陪伴而不感到孤独, 因为宠物带来的质量面减少忧虑, 缓解了生活压力. The data points are marked at 3.62, 3.6, 3.62, 3.82, 3.87, and 3.79, indicating fluctuations in the perceived impact of pets. The mood is analytical, focusing on how pets influence various aspects of life.",
+    "final_text": "The image features a line graph titled \"Impact of pets\" (图 2. 宠物的影响) with a blue line representing data points on a scale from 3.45 to 3.9. The horizontal axis includes labels in Chinese: 会分宠物诉说, 因为宠物运动量增加, 因为拥抱宠物而作息更健康, 因为宠物陪伴而不感到孤独, 因为宠物带来的质量面减少忧虑, 缓解了生活压力. The data points are marked at 3.62, 3.6, 3.62, 3.82, 3.87, and 3.79, indicating fluctuations in the perceived impact of pets. The mood is analytical, focusing on how pets influence various aspects of life.",
+    "token_stats": {
+      "original_tokens": 208,
+      "final_tokens": 208,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427602-RhsWTET89THHiUeSug3S",
+    "created": 1788427602,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 177,
+      "total_tokens": 616,
+      "cost": 0.0028675
+    }
+  }
+}

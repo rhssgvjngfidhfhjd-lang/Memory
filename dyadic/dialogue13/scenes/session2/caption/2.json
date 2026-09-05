@@ -1,0 +1,36 @@
+{
+  "id": "e8718f9f-1179-4cc8-9b58-1e6666a79d3f",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:21.804146",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session2/image/2.png",
+    "filename": "2.png",
+    "size": 1408521,
+    "modified_time": "2026-08-23T21:32:45.851567"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an open medicine cabinet with labeled compartments. The text on the cabinet reads \"共享药箱\" and \"香逸华府居民小区党支部,\" indicating it's a shared medicine box for a community. Inside, there are a few medicine boxes and pills. The atmosphere appears organized and communal, with post-it notes visible in the background, suggesting community engagement or reminders.",
+    "final_text": "The image shows an open medicine cabinet with labeled compartments. The text on the cabinet reads \"共享药箱\" and \"香逸华府居民小区党支部,\" indicating it's a shared medicine box for a community. Inside, there are a few medicine boxes and pills. The atmosphere appears organized and communal, with post-it notes visible in the background, suggesting community engagement or reminders.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426801-jaFL2BN3yveOMKqnKXbT",
+    "created": 1788426801,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 78,
+      "total_tokens": 1273,
+      "cost": 0.0037675
+    }
+  }
+}

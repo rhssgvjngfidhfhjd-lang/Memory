@@ -1,0 +1,36 @@
+{
+  "id": "a9facfd4-5fc2-4ad7-9667-e4ee4223029d",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:33.518330",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 87817,
+    "modified_time": "2026-08-23T22:07:08.845169"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic scene with a large, sleek spaceship hovering above a modern cityscape. The spaceship features advanced technology with glowing blue lights and intricate mechanical details. The skyline is filled with towering skyscrapers under a clear sky, suggesting a high-tech and advanced civilization. The overall mood is futuristic and awe-inspiring, highlighting technological advancement and innovation. There is no visible text or discernible human presence, focusing on the grandeur of the spaceship and city.",
+    "final_text": "The image depicts a futuristic scene with a large, sleek spaceship hovering above a modern cityscape. The spaceship features advanced technology with glowing blue lights and intricate mechanical details. The skyline is filled with towering skyscrapers under a clear sky, suggesting a high-tech and advanced civilization. The overall mood is futuristic and awe-inspiring, highlighting technological advancement and innovation. There is no visible text or discernible human presence, focusing on the grandeur of the spaceship and city.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426694-VzbreXlG44fgf6GuNC3U",
+    "created": 1788426694,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 92,
+      "total_tokens": 392,
+      "cost": 0.00167
+    }
+  }
+}

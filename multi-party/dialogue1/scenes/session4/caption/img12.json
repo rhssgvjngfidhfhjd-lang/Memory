@@ -1,0 +1,36 @@
+{
+  "id": "ac30acff-c10c-4662-ad76-d5b06e3520f5",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:51.086724",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 102268,
+    "modified_time": "2026-08-23T22:03:45.561262"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a dessert styled to resemble a potted plant. It includes a brown pot filled with whipped cream and cocoa powder, mimicking soil. Two decorative elements, a yellow cactus and a green cactus, along with a white flower, adorn the top. A spoon rests in the dessert, indicating it's being eaten. The atmosphere is playful and creative. Visible text at the bottom right reads: \"Tuesday, February 3, 2026 at 9:10:05 PM JST.\"",
+    "final_text": "The image depicts a dessert styled to resemble a potted plant. It includes a brown pot filled with whipped cream and cocoa powder, mimicking soil. Two decorative elements, a yellow cactus and a green cactus, along with a white flower, adorn the top. A spoon rests in the dessert, indicating it's being eaten. The atmosphere is playful and creative. Visible text at the bottom right reads: \"Tuesday, February 3, 2026 at 9:10:05 PM JST.\"",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426588-kZMmb6K1fqpmpwKUis7G",
+    "created": 1788426588,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 100,
+      "total_tokens": 820,
+      "cost": 0.0028
+    }
+  }
+}

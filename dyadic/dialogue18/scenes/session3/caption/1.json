@@ -1,0 +1,36 @@
+{
+  "id": "525ae3bc-c44d-4f4f-95b8-5ddd0f4eed6f",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:43.734743",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 178532,
+    "modified_time": "2026-08-23T21:38:06.582641"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a document with detailed instructions in Chinese. It discusses risk levels and responses for outdoor adventures, classified into four levels: low, medium, high, and very high. Each level includes potential risks like weather changes or injuries and corresponding responses such as using GPS, contacting emergency services, and ensuring team safety. The document emphasizes communication, team coordination, and safety protocols. The overall tone is informative and precautionary, aimed at ensuring the safety and preparedness of adventure teams.",
+    "final_text": "The image is a document with detailed instructions in Chinese. It discusses risk levels and responses for outdoor adventures, classified into four levels: low, medium, high, and very high. Each level includes potential risks like weather changes or injuries and corresponding responses such as using GPS, contacting emergency services, and ensuring team safety. The document emphasizes communication, team coordination, and safety protocols. The overall tone is informative and precautionary, aimed at ensuring the safety and preparedness of adventure teams.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427124-43jAim6UExfEM6oC5mLB",
+    "created": 1788427124,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 95,
+      "total_tokens": 950,
+      "cost": 0.0030875
+    }
+  }
+}

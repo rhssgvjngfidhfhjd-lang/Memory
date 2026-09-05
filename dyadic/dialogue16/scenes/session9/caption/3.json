@@ -1,0 +1,36 @@
+{
+  "id": "c0b5c0b5-c6ef-4882-ac3d-17b32d271416",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:20.410223",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session9/image/3.png",
+    "filename": "3.png",
+    "size": 5037397,
+    "modified_time": "2026-08-23T21:36:22.700445"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an abstract composition of overlapping circles in various vibrant colors, including blues, reds, oranges, yellows, and purples. The circles create a dynamic interplay of hues and transparencies, forming a visually striking pattern. The background is a soft, neutral gray, highlighting the colorful elements. The overall mood is lively and energetic, evoking a sense of movement and harmony through the use of color and shape. There is no visible text or specific actions depicted in the scene.",
+    "final_text": "The image features an abstract composition of overlapping circles in various vibrant colors, including blues, reds, oranges, yellows, and purples. The circles create a dynamic interplay of hues and transparencies, forming a visually striking pattern. The background is a soft, neutral gray, highlighting the colorful elements. The overall mood is lively and energetic, evoking a sense of movement and harmony through the use of color and shape. There is no visible text or specific actions depicted in the scene.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427037-yhrFJoT35Dz4CYyX8iFc",
+    "created": 1788427037,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 97,
+      "total_tokens": 1632,
+      "cost": 0.0048075
+    }
+  }
+}

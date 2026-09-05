@@ -1,0 +1,36 @@
+{
+  "id": "4bbd9f16-4779-463c-9dd5-6aaccdee772e",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:17.282800",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 656973,
+    "modified_time": "2026-08-23T21:59:25.950459"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a policy briefing document from the Chongqing Civil Affairs Bureau about implementing a construction plan for elderly dining facilities. It includes sections on background, objectives, and core measures. The background emphasizes government and community cooperation to improve elderly services. Objectives include building 500 new dining facilities and 100 demonstration sites. Core measures involve optimizing resource allocation, promoting community elderly care services, and enhancing operational support. The layout features decorative elements and images of food, creating an informative and community-focused atmosphere.",
+    "final_text": "The image is a policy briefing document from the Chongqing Civil Affairs Bureau about implementing a construction plan for elderly dining facilities. It includes sections on background, objectives, and core measures. The background emphasizes government and community cooperation to improve elderly services. Objectives include building 500 new dining facilities and 100 demonstration sites. Core measures involve optimizing resource allocation, promoting community elderly care services, and enhancing operational support. The layout features decorative elements and images of food, creating an informative and community-focused atmosphere.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427756-rTcfq2CNkxPcd38IUAoE",
+    "created": 1788427756,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 98,
+      "total_tokens": 1293,
+      "cost": 0.0039675
+    }
+  }
+}

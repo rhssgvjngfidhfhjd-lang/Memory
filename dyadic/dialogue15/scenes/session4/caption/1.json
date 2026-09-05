@@ -1,0 +1,36 @@
+{
+  "id": "f5dcb596-3808-48ba-a13a-cde926789edb",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:05.491448",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 2832256,
+    "modified_time": "2026-08-23T21:35:09.129873"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a detailed guide titled \"A/B测试数据采集与分析指南 v1.0\" (A/B Test Data Collection and Analysis Guide v1.0), featuring mathematical formulas and procedural steps. It includes sections on correlation testing, data extraction models, and evaluation metrics, with visible text in Chinese. There is a table listing user IDs, groups, timestamps, metrics, and feedback text, such as \"体验良好\" (Good experience) and \"有点卡顿\" (A bit laggy). The guide references GitHub links and CSV templates, with a structured, informative atmosphere.",
+    "final_text": "The image is a detailed guide titled \"A/B测试数据采集与分析指南 v1.0\" (A/B Test Data Collection and Analysis Guide v1.0), featuring mathematical formulas and procedural steps. It includes sections on correlation testing, data extraction models, and evaluation metrics, with visible text in Chinese. There is a table listing user IDs, groups, timestamps, metrics, and feedback text, such as \"体验良好\" (Good experience) and \"有点卡顿\" (A bit laggy). The guide references GitHub links and CSV templates, with a structured, informative atmosphere.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426962-TNyfUWqCmzuSB4UuuBq3",
+    "created": 1788426962,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 123,
+      "total_tokens": 1318,
+      "cost": 0.0042175
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "fcd3477e-a7aa-4044-97d7-3a3ffde64252",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:07.700856",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session2/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 212831,
+    "modified_time": "2026-08-23T22:08:43.923580"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two young women posing for a selfie. The woman on the left is making a peace sign, while the woman on the right is winking. They are both smiling, creating a cheerful and friendly atmosphere. The background shows a wall covered with various posters and handwritten notes, including visible text like \"Natalie\" and \"Miss U.\" The overall mood is lighthearted and casual.",
+    "final_text": "The image features two young women posing for a selfie. The woman on the left is making a peace sign, while the woman on the right is winking. They are both smiling, creating a cheerful and friendly atmosphere. The background shows a wall covered with various posters and handwritten notes, including visible text like \"Natalie\" and \"Miss U.\" The overall mood is lighthearted and casual.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426787-b80zTU8UNoiOcKz0CAbE",
+    "created": 1788426787,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 79,
+      "total_tokens": 934,
+      "cost": 0.0029275
+    }
+  }
+}

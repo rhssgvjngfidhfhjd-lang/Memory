@@ -1,0 +1,36 @@
+{
+  "id": "c0066384-da81-44ca-9e35-1e7caf5345d8",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:27.046395",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session13/image/1.png",
+    "filename": "1.png",
+    "size": 2580610,
+    "modified_time": "2026-08-23T21:36:30.922952"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a composition highlighting the issue of deepfakes. At the top, there's a man at a podium with microphones, standing before a backdrop with the word \"FAKE\" in red. Text above him in Chinese discusses the emergence of news regarding public figures and deepfake videos, warning of societal trust crises. Below, there's a smartphone displaying a chat interface with Chinese text about trust system risks. The overall mood is cautionary, emphasizing the dangers and societal implications of deepfakes.",
+    "final_text": "The image is a composition highlighting the issue of deepfakes. At the top, there's a man at a podium with microphones, standing before a backdrop with the word \"FAKE\" in red. Text above him in Chinese discusses the emergence of news regarding public figures and deepfake videos, warning of societal trust crises. Below, there's a smartphone displaying a chat interface with Chinese text about trust system risks. The overall mood is cautionary, emphasizing the dangers and societal implications of deepfakes.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427105-yiGvIiNIr6l22zTMLHRe",
+    "created": 1788427105,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 99,
+      "total_tokens": 1294,
+      "cost": 0.0039775
+    }
+  }
+}

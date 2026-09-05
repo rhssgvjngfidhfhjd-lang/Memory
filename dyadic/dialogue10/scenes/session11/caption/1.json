@@ -1,0 +1,36 @@
+{
+  "id": "7f9c9fdb-0d18-412b-838f-375ec2ff3b07",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:07.491874",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session11/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 436812,
+    "modified_time": "2026-08-23T21:30:12.587092"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic explaining the process of withdrawing from a property sale contract. It includes six steps with corresponding icons and text:\n\n1. A contract for the sale of property is signed, starting the process.\n2. The cooling-off period begins the day you receive a signed agreement.\n3. Inspections and compliance checks occur during this period.\n4. You have until 5 pm on the last day to withdraw.\n5. To cancel, write a letter to the agent before the cooling-off period ends.\n6. A fee may be incurred for withdrawing, depending on the location.\n\nThe overall mood is informative and instructional.",
+    "final_text": "The image is an infographic explaining the process of withdrawing from a property sale contract. It includes six steps with corresponding icons and text:\n\n1. A contract for the sale of property is signed, starting the process.\n2. The cooling-off period begins the day you receive a signed agreement.\n3. Inspections and compliance checks occur during this period.\n4. You have until 5 pm on the last day to withdraw.\n5. To cancel, write a letter to the agent before the cooling-off period ends.\n6. A fee may be incurred for withdrawing, depending on the location.\n\nThe overall mood is informative and instructional.",
+    "token_stats": {
+      "original_tokens": 125,
+      "final_tokens": 125,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426606-tkRFUMgBD8gcR1bzMJeR",
+    "created": 1788426606,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 125,
+      "total_tokens": 980,
+      "cost": 0.0033875
+    }
+  }
+}

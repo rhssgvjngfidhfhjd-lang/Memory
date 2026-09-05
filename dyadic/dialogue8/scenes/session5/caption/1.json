@@ -1,0 +1,36 @@
+{
+  "id": "fda53e54-9adf-4833-a6f1-10cbe92942df",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:41.564495",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 521274,
+    "modified_time": "2026-08-23T21:58:03.939725"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a visually engaging infographic focused on the cultural politics of refined cuisine. It features three main sections connected by lines to a central blue circle with white text, \"精进料理的文化政治\" (The Cultural Politics of Refined Cuisine). The sections highlight connections between refined cuisine and Buddhism, its modern identity as a symbol of Japanese culture, and the authenticity and performance of cuisine. Images include a dish with green vegetables, Japanese food bowls, and a chef preparing food. The mood is educational and informative, emphasizing cultural exchanges and tourism.",
+    "final_text": "The image is a visually engaging infographic focused on the cultural politics of refined cuisine. It features three main sections connected by lines to a central blue circle with white text, \"精进料理的文化政治\" (The Cultural Politics of Refined Cuisine). The sections highlight connections between refined cuisine and Buddhism, its modern identity as a symbol of Japanese culture, and the authenticity and performance of cuisine. Images include a dish with green vegetables, Japanese food bowls, and a chef preparing food. The mood is educational and informative, emphasizing cultural exchanges and tourism.",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427660-pcJ0iTiYGVpRcVO9OpNE",
+    "created": 1788427660,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 110,
+      "total_tokens": 549,
+      "cost": 0.0021975
+    }
+  }
+}

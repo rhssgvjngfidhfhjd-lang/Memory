@@ -1,0 +1,36 @@
+{
+  "id": "f1a94030-d6bb-4e7a-a80a-301618c182ee",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:37.608950",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 329830,
+    "modified_time": "2026-08-23T22:03:40.687796"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an open menu on a dark wooden table. The menu cover features an illustration of a steak with utensils and the text \"MENU\" and \"HIGHLAND.\" The right page lists food categories: \"STEAK,\" \"RISOTTO & PASTA,\" and \"DESSERT\" with corresponding prices in smaller text. The menu's style is minimalist, creating a sophisticated and elegant atmosphere.",
+    "final_text": "The image depicts an open menu on a dark wooden table. The menu cover features an illustration of a steak with utensils and the text \"MENU\" and \"HIGHLAND.\" The right page lists food categories: \"STEAK,\" \"RISOTTO & PASTA,\" and \"DESSERT\" with corresponding prices in smaller text. The menu's style is minimalist, creating a sophisticated and elegant atmosphere.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426577-fpcMutiHNR1E4xL2OByS",
+    "created": 1788426577,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 82,
+      "total_tokens": 937,
+      "cost": 0.0029575
+    }
+  }
+}

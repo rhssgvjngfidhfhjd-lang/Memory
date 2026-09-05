@@ -1,0 +1,36 @@
+{
+  "id": "82740c5f-b74c-4cef-ad2b-b883f3c2e67a",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:48.967041",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session16/image/1.png",
+    "filename": "1.png",
+    "size": 1941738,
+    "modified_time": "2026-08-23T21:38:40.457127"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a tidy workspace with a digital art setup. A large monitor displays design software with sketches. Below is a graphic tablet and mouse. On the desk, there are three potted plants, art supplies organized in a holder, and a sketchbook with a drawing of a character. Papers with design references are scattered nearby. The atmosphere is organized and creative, suggesting a focus on digital illustration or design work.",
+    "final_text": "The image depicts a tidy workspace with a digital art setup. A large monitor displays design software with sketches. Below is a graphic tablet and mouse. On the desk, there are three potted plants, art supplies organized in a holder, and a sketchbook with a drawing of a character. Papers with design references are scattered nearby. The atmosphere is organized and creative, suggesting a focus on digital illustration or design work.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427247-9kJKAL1pbu6tGYkYP1hp",
+    "created": 1788427247,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 83,
+      "total_tokens": 1278,
+      "cost": 0.0038175
+    }
+  }
+}

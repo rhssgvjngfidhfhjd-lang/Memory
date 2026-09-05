@@ -1,0 +1,36 @@
+{
+  "id": "6008d92c-e622-4d60-be90-018ae1edb241",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:04.871502",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 202905,
+    "modified_time": "2026-08-23T22:06:54.827656"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a digital rendering of a soccer match scene, focusing on an offside check. Two players are visible: one in a black-and-white striped jersey with the number 39, and the other in a light blue jersey with the number 3. They are positioned near the field's boundary lines, with green graphics indicating the offside line. Text shows the score at \"NEW 2:1 MCI\" with a time of \"80:30\" and labels the situation as \"Onside\" with the Premier League logo. The atmosphere is analytical, emphasizing the use of technology in sports decision-making.",
+    "final_text": "The image depicts a digital rendering of a soccer match scene, focusing on an offside check. Two players are visible: one in a black-and-white striped jersey with the number 39, and the other in a light blue jersey with the number 3. They are positioned near the field's boundary lines, with green graphics indicating the offside line. Text shows the score at \"NEW 2:1 MCI\" with a time of \"80:30\" and labels the situation as \"Onside\" with the Premier League logo. The atmosphere is analytical, emphasizing the use of technology in sports decision-making.",
+    "token_stats": {
+      "original_tokens": 124,
+      "final_tokens": 124,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426661-q73bhNqeSw9tQHlgajy6",
+    "created": 1788426661,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 125,
+      "total_tokens": 1405,
+      "cost": 0.00445
+    }
+  }
+}

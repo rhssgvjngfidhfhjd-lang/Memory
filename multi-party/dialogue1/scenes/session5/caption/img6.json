@@ -1,0 +1,36 @@
+{
+  "id": "95e7d724-0e39-4be1-95e9-2a815a322f48",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:01.204448",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session5/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 518581,
+    "modified_time": "2026-08-23T22:04:02.870434"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a grocery store produce section with neatly arranged fresh vegetables, including celery and various greens. Signs with prices are visible above the produce. The background shows shelves stocked with various household items, and decorative elements like a green lantern and red umbrella add color. The atmosphere is organized and vibrant, suggesting a well-stocked and inviting shopping environment.",
+    "final_text": "The image depicts a grocery store produce section with neatly arranged fresh vegetables, including celery and various greens. Signs with prices are visible above the produce. The background shows shelves stocked with various household items, and decorative elements like a green lantern and red umbrella add color. The atmosphere is organized and vibrant, suggesting a well-stocked and inviting shopping environment.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426598-wmn0KJuLIcg9A8UxSotf",
+    "created": 1788426598,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 70,
+      "total_tokens": 790,
+      "cost": 0.0025
+    }
+  }
+}

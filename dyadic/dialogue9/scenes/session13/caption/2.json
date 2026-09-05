@@ -1,0 +1,36 @@
+{
+  "id": "c7b27ac0-6df1-4e26-a6db-ce8cb707f1bc",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:38.585080",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session13/image/2.png",
+    "filename": "2.png",
+    "size": 2042130,
+    "modified_time": "2026-08-23T22:00:51.140516"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a tabletop setup with a silver projector, two black speakers, and a wireless microphone. The projector is centrally positioned, flanked by the speakers, while the microphone lies in the foreground. The projector and microphone have a sleek, modern design, indicating a professional or presentation setting. The lighting is neutral and focused, creating a clean and organized atmosphere. No visible text is present on the objects. The overall mood suggests readiness for a presentation or audio-visual event.",
+    "final_text": "The image features a tabletop setup with a silver projector, two black speakers, and a wireless microphone. The projector is centrally positioned, flanked by the speakers, while the microphone lies in the foreground. The projector and microphone have a sleek, modern design, indicating a professional or presentation setting. The lighting is neutral and focused, creating a clean and organized atmosphere. No visible text is present on the objects. The overall mood suggests readiness for a presentation or audio-visual event.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427774-5eYmzGMqBJlnw1xLfrLI",
+    "created": 1788427774,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 96,
+      "total_tokens": 1094,
+      "cost": 0.003455
+    }
+  }
+}

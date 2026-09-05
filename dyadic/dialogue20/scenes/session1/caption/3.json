@@ -1,0 +1,36 @@
+{
+  "id": "5702dfac-69c3-46e5-ac0e-b5d9f3185870",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:28.121378",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session1/image/3.png",
+    "filename": "3.png",
+    "size": 312770,
+    "modified_time": "2026-08-23T21:41:18.677268"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a recipe card for a dish called \"糖醋排骨\" (Sweet and Sour Spare Ribs). At the top, there is a red and white banner with Chinese characters \"年夜饭菜谱,\" indicating it's a New Year's Eve dinner recipe. The core scene shows a plate of glazed spare ribs garnished with sesame seeds and red chilies. Chopsticks are picking up a piece of the rib. Below the image, there is a detailed recipe in Chinese, listing ingredients and steps for preparation. The overall atmosphere is appetizing and festive, suitable for a celebratory meal.",
+    "final_text": "The image features a recipe card for a dish called \"糖醋排骨\" (Sweet and Sour Spare Ribs). At the top, there is a red and white banner with Chinese characters \"年夜饭菜谱,\" indicating it's a New Year's Eve dinner recipe. The core scene shows a plate of glazed spare ribs garnished with sesame seeds and red chilies. Chopsticks are picking up a piece of the rib. Below the image, there is a detailed recipe in Chinese, listing ingredients and steps for preparation. The overall atmosphere is appetizing and festive, suitable for a celebratory meal.",
+    "token_stats": {
+      "original_tokens": 133,
+      "final_tokens": 133,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427286-yWqFrW10At3qKZ7esv0o",
+    "created": 1788427286,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 121,
+      "total_tokens": 636,
+      "cost": 0.0024975
+    }
+  }
+}

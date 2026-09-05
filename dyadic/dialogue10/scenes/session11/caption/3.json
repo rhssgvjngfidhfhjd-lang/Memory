@@ -1,0 +1,36 @@
+{
+  "id": "0a861e11-ca27-4a5e-9fe3-583f36d6b599",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:07.546586",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session11/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 171663,
+    "modified_time": "2026-08-23T21:30:12.086195"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a sunlit outdoor market scene. A woman in a floral dress is standing at a turquoise stall, reading a magazine or brochure. Shelves are lined with various skincare products. The market atmosphere is lively, with several people walking in the background. Warm lighting and shadows create a relaxed and inviting ambiance.",
+    "final_text": "The image depicts a sunlit outdoor market scene. A woman in a floral dress is standing at a turquoise stall, reading a magazine or brochure. Shelves are lined with various skincare products. The market atmosphere is lively, with several people walking in the background. Warm lighting and shadows create a relaxed and inviting ambiance.",
+    "token_stats": {
+      "original_tokens": 63,
+      "final_tokens": 63,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426606-nC9wqwBRRz1cGGnLamuy",
+    "created": 1788426606,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 64,
+      "total_tokens": 781,
+      "cost": 0.0024325
+    }
+  }
+}

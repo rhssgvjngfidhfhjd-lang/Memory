@@ -1,0 +1,36 @@
+{
+  "id": "f62ce3a1-0052-40ab-a27e-987f432059b7",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:47.615399",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session2/image/4.png",
+    "filename": "4.png",
+    "size": 1475887,
+    "modified_time": "2026-08-23T21:39:15.096302"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a woman seated at a table in a softly lit setting, possibly a restaurant. She is focused on reading a menu or booklet, held in both hands. Two empty wine glasses are in the foreground, suggesting a dining context. The atmosphere appears calm and contemplative.",
+    "final_text": "The image depicts a woman seated at a table in a softly lit setting, possibly a restaurant. She is focused on reading a menu or booklet, held in both hands. Two empty wine glasses are in the foreground, suggesting a dining context. The atmosphere appears calm and contemplative.",
+    "token_stats": {
+      "original_tokens": 56,
+      "final_tokens": 56,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427187-G5qOzRFF3YWJJ5pwM8k6",
+    "created": 1788427187,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 56,
+      "total_tokens": 1251,
+      "cost": 0.0035475
+    }
+  }
+}

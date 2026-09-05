@@ -1,0 +1,36 @@
+{
+  "id": "01997d09-3df1-49ec-b946-57fa73c70a2a",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:58.923841",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session7/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 70881,
+    "modified_time": "2026-08-23T21:36:36.188979"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic, immersive light installation with several silhouetted figures interacting with the environment. Vertical lines of light cascade from the ceiling, creating a dynamic, ethereal atmosphere. Circular light elements hover above, adding to the sense of depth. The scene conveys a mood of wonder and exploration, with individuals appearing to reach out or gesture towards the lights, engaging with the otherworldly display. There is no visible text.",
+    "final_text": "The image depicts a futuristic, immersive light installation with several silhouetted figures interacting with the environment. Vertical lines of light cascade from the ceiling, creating a dynamic, ethereal atmosphere. Circular light elements hover above, adding to the sense of depth. The scene conveys a mood of wonder and exploration, with individuals appearing to reach out or gesture towards the lights, engaging with the otherworldly display. There is no visible text.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427078-Nf3Z9R6ohT1Oe8vfJNlP",
+    "created": 1788427078,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 85,
+      "total_tokens": 600,
+      "cost": 0.0021375
+    }
+  }
+}

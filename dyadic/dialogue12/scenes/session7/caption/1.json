@@ -1,0 +1,36 @@
+{
+  "id": "a7479400-32b7-47a6-91d8-2459435e96fc",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:14.593126",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 3116684,
+    "modified_time": "2026-08-23T21:32:20.494331"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a line graph depicting the emotional and moral pressure values over time for a character named \"小猪的夏天\" from \"中国奇谭.\" The graph includes three curves labeled with stages: \"故事起点\" (story start), \"矛盾激化\" (conflict intensification), \"情感转折\" (emotional transition), \"行动爆发\" (action outbreak), and \"结局反思\" (ending reflection). Each curve is marked with percentages indicating emotional openness and action effectiveness. The atmosphere is analytical, focusing on character development and progression. The graph is titled \"人物孤光图,\" suggesting a focus on individual character analysis.",
+    "final_text": "The image is a line graph depicting the emotional and moral pressure values over time for a character named \"小猪的夏天\" from \"中国奇谭.\" The graph includes three curves labeled with stages: \"故事起点\" (story start), \"矛盾激化\" (conflict intensification), \"情感转折\" (emotional transition), \"行动爆发\" (action outbreak), and \"结局反思\" (ending reflection). Each curve is marked with percentages indicating emotional openness and action effectiveness. The atmosphere is analytical, focusing on character development and progression. The graph is titled \"人物孤光图,\" suggesting a focus on individual character analysis.",
+    "token_stats": {
+      "original_tokens": 154,
+      "final_tokens": 154,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426732-2XHJjrd82A3bGWHh8syQ",
+    "created": 1788426732,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 139,
+      "total_tokens": 1137,
+      "cost": 0.003885
+    }
+  }
+}

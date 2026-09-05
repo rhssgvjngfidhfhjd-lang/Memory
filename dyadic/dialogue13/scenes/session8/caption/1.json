@@ -1,0 +1,36 @@
+{
+  "id": "a108d7a8-3b34-4f61-b654-18a35ca5c5e3",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:56.835776",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 2328316,
+    "modified_time": "2026-08-23T21:32:52.279135"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a neatly organized collection of children's items on a wooden floor. On the left, there are stacks of folded children's clothing in various colors. On the right, transparent plastic bins contain a variety of toys, including stuffed animals, colorful balls, and building blocks. Next to the bins, several stacks of children's books with colorful covers are lined up. The scene conveys a sense of orderliness and care, with a warm and tidy atmosphere.",
+    "final_text": "The image depicts a neatly organized collection of children's items on a wooden floor. On the left, there are stacks of folded children's clothing in various colors. On the right, transparent plastic bins contain a variety of toys, including stuffed animals, colorful balls, and building blocks. Next to the bins, several stacks of children's books with colorful covers are lined up. The scene conveys a sense of orderliness and care, with a warm and tidy atmosphere.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426836-aGnUFsBJYxWOIdrTnec4",
+    "created": 1788426836,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 89,
+      "total_tokens": 944,
+      "cost": 0.0030275
+    }
+  }
+}

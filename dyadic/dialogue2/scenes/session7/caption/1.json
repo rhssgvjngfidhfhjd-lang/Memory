@@ -1,0 +1,36 @@
+{
+  "id": "ed213f04-66f0-46db-943a-6b8a95383d80",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:08.165342",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 90133,
+    "modified_time": "2026-08-23T21:40:57.748488"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person standing outdoors, looking up at the sky. The scene is dramatic, with the sky divided into two contrasting halves: one side is clear and blue, while the other is dominated by dark, ominous clouds. The person appears to be observing the contrasting skies. Chinese text is visible at the bottom, adding a narrative element. The mood is tense and atmospheric, suggesting an impending storm or significant weather change.",
+    "final_text": "The image depicts a person standing outdoors, looking up at the sky. The scene is dramatic, with the sky divided into two contrasting halves: one side is clear and blue, while the other is dominated by dark, ominous clouds. The person appears to be observing the contrasting skies. Chinese text is visible at the bottom, adding a narrative element. The mood is tense and atmospheric, suggesting an impending storm or significant weather change.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427268-MWcTXXZnS7lwvCmtlurq",
+    "created": 1788427268,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 86,
+      "total_tokens": 431,
+      "cost": 0.0017225
+    }
+  }
+}

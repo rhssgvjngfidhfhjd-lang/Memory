@@ -1,0 +1,36 @@
+{
+  "id": "230e4a02-eb2e-4a2a-825a-fb87b8e55a06",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:30.378468",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session1/image/3.png",
+    "filename": "3.png",
+    "size": 414682,
+    "modified_time": "2026-08-23T21:56:37.076907"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a health risk assessment chart with insurance recommendations. On the left, it categorizes health risks into three levels: \"高风险\" (high risk) for acute severe diseases, \"中等风险\" (medium risk) for chronic diseases, and \"低风险\" (low risk) for routine examination abnormalities. Each category is represented by icons: a heart with a pulse for high risk, a clipboard for medium risk, and a clipboard with a checkmark for low risk. On the right, it suggests insurance options with annual premiums: \"重疾险\" (critical illness insurance) at 8000 yuan, \"百万医疗险\" (million medical insurance) at 1200 yuan, and \"普惠医疗险\" (universal medical insurance) at 300 yuan. Arrows connect risk categories to corresponding insurance options, illustrating the suggested coverage. The overall layout is organized and informative, with a focus on guiding insurance choices based on health risk levels.",
+    "final_text": "The image is a health risk assessment chart with insurance recommendations. On the left, it categorizes health risks into three levels: \"高风险\" (high risk) for acute severe diseases, \"中等风险\" (medium risk) for chronic diseases, and \"低风险\" (low risk) for routine examination abnormalities. Each category is represented by icons: a heart with a pulse for high risk, a clipboard for medium risk, and a clipboard with a checkmark for low risk. On the right, it suggests insurance options with annual premiums: \"重疾险\" (critical illness insurance) at 8000 yuan, \"百万医疗险\" (million medical insurance) at 1200 yuan, and \"普惠医疗险\" (universal medical insurance) at 300 yuan. Arrows connect risk categories to corresponding insurance options, illustrating the suggested coverage. The overall layout is organized and informative, with a focus on guiding insurance choices based on health risk levels.",
+    "token_stats": {
+      "original_tokens": 222,
+      "final_tokens": 222,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427590-GneNeZRImWUrGkvUqAbR",
+    "created": 1788427590,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 196,
+      "total_tokens": 541,
+      "cost": 0.0028225
+    }
+  }
+}

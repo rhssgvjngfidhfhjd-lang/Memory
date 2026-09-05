@@ -1,0 +1,36 @@
+{
+  "id": "37d3a418-06c3-4c55-b397-537661d39e59",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:25.366165",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session9/image/3.png",
+    "filename": "3.png",
+    "size": 51209,
+    "modified_time": "2026-08-23T21:32:15.870259"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a map with various regions labeled with text indicating prices per square meter in yuan. Each region is highlighted in different shades of blue, with annotations showing specific values. The central region, labeled as \"上城区,\" has the highest price of 60,549 yuan/m². Other regions such as \"余杭区,\" \"拱墅区,\" and \"西湖区\" show varying prices. On the left side, a color gradient bar ranges from red to blue, representing the price scale from 26,331 to 60,549 yuan/m². The overall atmosphere is informational and analytical.",
+    "final_text": "The image depicts a map with various regions labeled with text indicating prices per square meter in yuan. Each region is highlighted in different shades of blue, with annotations showing specific values. The central region, labeled as \"上城区,\" has the highest price of 60,549 yuan/m². Other regions such as \"余杭区,\" \"拱墅区,\" and \"西湖区\" show varying prices. On the left side, a color gradient bar ranges from red to blue, representing the price scale from 26,331 to 60,549 yuan/m². The overall atmosphere is informational and analytical.",
+    "token_stats": {
+      "original_tokens": 128,
+      "final_tokens": 128,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426743-V8ylJu7NpYurfFY4VWuj",
+    "created": 1788426743,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 126,
+      "total_tokens": 843,
+      "cost": 0.0030525
+    }
+  }
+}

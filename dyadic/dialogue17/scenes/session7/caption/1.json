@@ -1,0 +1,36 @@
+{
+  "id": "01bf86fe-9032-4edf-ad2f-4c632ebe543c",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:02.362163",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 5664995,
+    "modified_time": "2026-08-23T21:37:22.936499"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an announcement for a global \"Future Interactive Game\" design competition organized by the International Digital Entertainment Association. It features a futuristic, space-themed design with a holographic element. Key details include:\n\n- Title: \"Global 'Future Interactive Game' Design Competition Notice\"\n- Text highlights: \n  - Organizer: International Digital Entertainment Association\n  - Theme: Exploring new modes of interaction in the metaverse with immersive experiences and cross-dimensional social interaction.\n  - Registration period: October 1, 2024, to December 31, 2024.\n  - Requirements: Submission of a complete interactive design plan in PDF and video format, showcasing originality and technical innovation. Teams of up to 5 members are allowed.\n- Prizes: \n  - Gold: ¥500,000 + global exhibition qualification\n  - Silver (2 winners): ¥200,000 each\n  - Bronze (3 winners): ¥100,000 each\n  - Excellence (10 winners): Professional development tools\n\nThe atmosphere is innovative and competitive, aiming to inspire creativity in game design.",
+    "final_text": "The image is an announcement for a global \"Future Interactive Game\" design competition organized by the International Digital Entertainment Association. It features a futuristic, space-themed design with a holographic element. Key details include:\n\n- Title: \"Global 'Future Interactive Game' Design Competition Notice\"\n- Text highlights: \n  - Organizer: International Digital Entertainment Association\n  - Theme: Exploring new modes of interaction in the metaverse with immersive experiences and cross-dimensional social interaction.\n  - Registration period: October 1, 2024, to December 31, 2024.\n  - Requirements: Submission of a complete interactive design plan in PDF and video format, showcasing originality and technical innovation. Teams of up to 5 members are allowed.\n- Prizes: \n  - Gold: ¥500,000 + global exhibition qualification\n  - Silver (2 winners): ¥200,000 each\n  - Bronze (3 winners): ¥100,000 each\n  - Excellence (10 winners): Professional development tools\n\nThe atmosphere is innovative and competitive, aiming to inspire creativity in game design.",
+    "token_stats": {
+      "original_tokens": 218,
+      "final_tokens": 218,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427079-lMW6jiAVuhqFkB3YmL16",
+    "created": 1788427079,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 216,
+      "total_tokens": 1071,
+      "cost": 0.0042975
+    }
+  }
+}

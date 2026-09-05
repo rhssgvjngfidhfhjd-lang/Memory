@@ -1,0 +1,36 @@
+{
+  "id": "3893056f-ce58-4b20-be6b-a37d64c6f45d",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:00.317922",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session6/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 48299,
+    "modified_time": "2026-08-23T21:37:34.372341"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a series of illustrated exercises labeled MCLS-1 to MCLS-9, each depicted with a person performing a different movement. The exercises include:\n\n1. MCLS-1: Lying on a mat with knees bent.\n2. MCLS-2: Ankle rotation sitting on a mat.\n3. MCLS-3: Lying on the side with leg lifts.\n4. MCLS-4: Leg lifts while lying flat.\n5. MCLS-5: Side-lying leg lifts.\n6. MCLS-6 A: Standing knee raises using a door for support.\n7. MCLS-7 B: Outward leg extensions.\n8. MCLS-8 C: Backward leg extensions.\n9. MCLS-9 D: Inward leg extensions.\n\nThe illustrations convey a neutral, instructional atmosphere, with text in Chinese providing exercise names.",
+    "final_text": "The image shows a series of illustrated exercises labeled MCLS-1 to MCLS-9, each depicted with a person performing a different movement. The exercises include:\n\n1. MCLS-1: Lying on a mat with knees bent.\n2. MCLS-2: Ankle rotation sitting on a mat.\n3. MCLS-3: Lying on the side with leg lifts.\n4. MCLS-4: Leg lifts while lying flat.\n5. MCLS-5: Side-lying leg lifts.\n6. MCLS-6 A: Standing knee raises using a door for support.\n7. MCLS-7 B: Outward leg extensions.\n8. MCLS-8 C: Backward leg extensions.\n9. MCLS-9 D: Inward leg extensions.\n\nThe illustrations convey a neutral, instructional atmosphere, with text in Chinese providing exercise names.",
+    "token_stats": {
+      "original_tokens": 179,
+      "final_tokens": 179,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427137-6kuew4I3wjzgLkIom1xs",
+    "created": 1788427137,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 179,
+      "total_tokens": 694,
+      "cost": 0.0030775
+    }
+  }
+}

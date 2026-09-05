@@ -1,0 +1,36 @@
+{
+  "id": "d7009761-5cab-4a41-8f05-7322880fabc9",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:45.813327",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session6/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 97194,
+    "modified_time": "2026-08-23T21:32:44.275412"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a modern commercial kitchen with stainless steel appliances and fixtures. Main elements include an oven with a digital display, labeled \"Convotherm,\" a Vulcan-brand stove and fryer, and a refrigeration unit. There are also two large sinks with flexible faucets, a preparation counter, and overhead ventilation. The atmosphere is clean, structured, and professional, suggesting readiness for cooking activities. The visible text includes \"Vulcan\" and \"Convotherm,\" indicating brand names. No people or animals are present, and there is no action taking place.",
+    "final_text": "The image depicts a modern commercial kitchen with stainless steel appliances and fixtures. Main elements include an oven with a digital display, labeled \"Convotherm,\" a Vulcan-brand stove and fryer, and a refrigeration unit. There are also two large sinks with flexible faucets, a preparation counter, and overhead ventilation. The atmosphere is clean, structured, and professional, suggesting readiness for cooking activities. The visible text includes \"Vulcan\" and \"Convotherm,\" indicating brand names. No people or animals are present, and there is no action taking place.",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426824-lG9vFeY8zu6acSIiMXKX",
+    "created": 1788426824,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 112,
+      "total_tokens": 832,
+      "cost": 0.00292
+    }
+  }
+}

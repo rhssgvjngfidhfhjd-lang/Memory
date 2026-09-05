@@ -1,0 +1,36 @@
+{
+  "id": "cdfd3588-f7c1-4885-9e2f-483771aa4c88",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:06.028537",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session15/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 1604207,
+    "modified_time": "2026-08-23T21:31:50.774637"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a diagram titled \"城市青年居住现状联合报道\" (Urban Youth Living Conditions Joint Report), with a central blue circle connected to various nodes. The nodes are categorized and color-coded: green for \"采访对象分布\" (Interview Subject Distribution), purple for \"核心问题\" (Core Issues), and orange for \"叙事结构\" (Narrative Structure). Each category contains related subtopics such as \"城市各阶层居民\" (Residents of Various Urban Classes), \"共享车库\" (Shared Parking), \"空间与感受\" (Space and Feelings). The mood is analytical and informative, with a focus on data visualization, as indicated by \"数据：数据可视化呈现\" (Data: Visualization Presentation).",
+    "final_text": "The image is a diagram titled \"城市青年居住现状联合报道\" (Urban Youth Living Conditions Joint Report), with a central blue circle connected to various nodes. The nodes are categorized and color-coded: green for \"采访对象分布\" (Interview Subject Distribution), purple for \"核心问题\" (Core Issues), and orange for \"叙事结构\" (Narrative Structure). Each category contains related subtopics such as \"城市各阶层居民\" (Residents of Various Urban Classes), \"共享车库\" (Shared Parking), \"空间与感受\" (Space and Feelings). The mood is analytical and informative, with a focus on data visualization, as indicated by \"数据：数据可视化呈现\" (Data: Visualization Presentation).",
+    "token_stats": {
+      "original_tokens": 177,
+      "final_tokens": 177,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426782-I17wbgTeVchmrRvkBw6k",
+    "created": 1788426782,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 156,
+      "total_tokens": 873,
+      "cost": 0.0033525
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "72674532-18bd-4b6e-bce6-ba481340332f",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:48.845320",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session3/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 216957,
+    "modified_time": "2026-08-23T22:06:26.267784"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a person in a gym setting performing a calf stretch with a foam roller. They are seated on a mat, supporting themselves with one arm while the roller is placed under their leg. The person is wearing athletic clothing, including a black cap and red sneakers. The background features a wall with partially visible text that reads \"YOUR ALTITIUDE.\" The atmosphere is focused and athletic.",
+    "final_text": "The image shows a person in a gym setting performing a calf stretch with a foam roller. They are seated on a mat, supporting themselves with one arm while the roller is placed under their leg. The person is wearing athletic clothing, including a black cap and red sneakers. The background features a wall with partially visible text that reads \"YOUR ALTITIUDE.\" The atmosphere is focused and athletic.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426648-BiFTY3kUbyoMTkITO0zt",
+    "created": 1788426648,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 79,
+      "total_tokens": 1274,
+      "cost": 0.0037775
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "32468ac4-16eb-4896-908e-1d6028a1245f",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:25.608394",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img15.jpg",
+    "filename": "img15.jpg",
+    "size": 265327,
+    "modified_time": "2026-08-23T22:04:17.756946"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a screenshot of an Excel spreadsheet titled \"健身周记录.xlsx\" (Weekly Fitness Record). It displays a fitness plan with three sheets labeled \"Sheet1,\" \"Sheet2,\" and \"Sheet3.\" The visible sheet outlines a workout schedule divided by days of the week, focusing on different muscle groups such as chest, shoulders, and back. Exercises are listed with corresponding weights and repetitions. The table also includes sections for aerobic activities like swimming, climbing, running, cycling, and using an elliptical machine, specifying distances and durations. The overall atmosphere is organized and structured, aiming to track fitness progress efficiently.",
+    "final_text": "The image shows a screenshot of an Excel spreadsheet titled \"健身周记录.xlsx\" (Weekly Fitness Record). It displays a fitness plan with three sheets labeled \"Sheet1,\" \"Sheet2,\" and \"Sheet3.\" The visible sheet outlines a workout schedule divided by days of the week, focusing on different muscle groups such as chest, shoulders, and back. Exercises are listed with corresponding weights and repetitions. The table also includes sections for aerobic activities like swimming, climbing, running, cycling, and using an elliptical machine, specifying distances and durations. The overall atmosphere is organized and structured, aiming to track fitness progress efficiently.",
+    "token_stats": {
+      "original_tokens": 126,
+      "final_tokens": 126,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426622-3xvN7mHrm982NurgePtW",
+    "created": 1788426622,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 124,
+      "total_tokens": 1659,
+      "cost": 0.0050775
+    }
+  }
+}

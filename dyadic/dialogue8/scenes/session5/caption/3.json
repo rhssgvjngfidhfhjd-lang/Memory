@@ -1,0 +1,36 @@
+{
+  "id": "bb3595e0-3845-429d-8451-2470f3a3828e",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:40.762737",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session5/image/3.png",
+    "filename": "3.png",
+    "size": 414068,
+    "modified_time": "2026-08-23T21:58:17.015055"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a menu or informational board with text in Chinese, discussing cultural aspects related to food. The background shows a plated dish, possibly meat with vegetables, suggesting a dining setting. Key topics include the development process of local foods, global consumption patterns, and cultural identity construction. The board is organized into sections with bullet points, and the overall mood is informative and educational, focusing on cultural and culinary themes.",
+    "final_text": "The image features a menu or informational board with text in Chinese, discussing cultural aspects related to food. The background shows a plated dish, possibly meat with vegetables, suggesting a dining setting. Key topics include the development process of local foods, global consumption patterns, and cultural identity construction. The board is organized into sections with bullet points, and the overall mood is informative and educational, focusing on cultural and culinary themes.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427660-ZGPfvN9Z69VRb1UzHEJy",
+    "created": 1788427660,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 82,
+      "total_tokens": 597,
+      "cost": 0.0021075
+    }
+  }
+}

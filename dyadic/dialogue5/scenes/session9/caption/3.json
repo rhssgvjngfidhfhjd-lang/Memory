@@ -1,0 +1,36 @@
+{
+  "id": "f78daf44-ce1b-4fe5-9182-a5ea2a4cb42f",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:09.847980",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session9/image/3.png",
+    "filename": "3.png",
+    "size": 705198,
+    "modified_time": "2026-08-23T22:05:12.756969"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a vibrant illustration of a crab and two persimmons set against a background resembling an old medical text. The visible Chinese text alongside reads:\n\n\"柿蟹同食成砒霜？\n古医书载，柿蟹相克，\n实则过量鞣酸遇蛋白质易致胃不适\"\n\nThe text discusses the incompatibility of persimmons and crabs when consumed together, possibly causing digestive discomfort due to their chemical interaction. The atmosphere is educational and cautionary, blending traditional wisdom with a modern illustrative style.",
+    "final_text": "The image features a vibrant illustration of a crab and two persimmons set against a background resembling an old medical text. The visible Chinese text alongside reads:\n\n\"柿蟹同食成砒霜？\n古医书载，柿蟹相克，\n实则过量鞣酸遇蛋白质易致胃不适\"\n\nThe text discusses the incompatibility of persimmons and crabs when consumed together, possibly causing digestive discomfort due to their chemical interaction. The atmosphere is educational and cautionary, blending traditional wisdom with a modern illustrative style.",
+    "token_stats": {
+      "original_tokens": 137,
+      "final_tokens": 137,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427509-2KHd4T5kYqhW34N5HbSa",
+    "created": 1788427509,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 116,
+      "total_tokens": 971,
+      "cost": 0.0032975
+    }
+  }
+}

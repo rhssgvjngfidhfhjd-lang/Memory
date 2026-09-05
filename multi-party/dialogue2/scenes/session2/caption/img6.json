@@ -1,0 +1,36 @@
+{
+  "id": "012e8ddd-1c69-40c4-8f5e-40056d54be45",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:32.566019",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 347615,
+    "modified_time": "2026-08-23T22:06:13.047930"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two pairs of sports shoes displayed in their respective boxes. The left shoe is predominantly white with pastel purple and teal accents, while the right shoe is white with mint green details. Both shoes have \"Victor\" branding and \"Nitro Lite\" text visible on the sides. Above the shoes, there are packages of sport socks labeled \"Victor Sport Socks.\" The background includes cardboard and patterned packaging. The atmosphere is casual and sporty, showcasing a variety of athletic gear.",
+    "final_text": "The image features two pairs of sports shoes displayed in their respective boxes. The left shoe is predominantly white with pastel purple and teal accents, while the right shoe is white with mint green details. Both shoes have \"Victor\" branding and \"Nitro Lite\" text visible on the sides. Above the shoes, there are packages of sport socks labeled \"Victor Sport Socks.\" The background includes cardboard and patterned packaging. The atmosphere is casual and sporty, showcasing a variety of athletic gear.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426630-5DqCKCigemzPwwUpk9p0",
+    "created": 1788426630,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 96,
+      "total_tokens": 816,
+      "cost": 0.00276
+    }
+  }
+}

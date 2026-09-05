@@ -1,0 +1,36 @@
+{
+  "id": "9eb04cf2-581a-4534-a598-b293754f266f",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:55.818288",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 118873,
+    "modified_time": "2026-08-23T22:01:48.935127"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a sous-vide immersion circulator in action, heating water in a glass pot. The circulator displays a temperature of 60°C on its digital screen. A vacuum-sealed bag is submerged in the water, suggesting food is being cooked. The scene is set in a modern kitchen, with a blurred background showing a sink and a plant on the windowsill. The atmosphere is calm and focused on precision cooking. Visible text in the bottom corner reads: \"Monday, February 2, 2026 9:11:35 PM IST.\"",
+    "final_text": "The image depicts a sous-vide immersion circulator in action, heating water in a glass pot. The circulator displays a temperature of 60°C on its digital screen. A vacuum-sealed bag is submerged in the water, suggesting food is being cooked. The scene is set in a modern kitchen, with a blurred background showing a sink and a plant on the windowsill. The atmosphere is calm and focused on precision cooking. Visible text in the bottom corner reads: \"Monday, February 2, 2026 9:11:35 PM IST.\"",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426534-YiW7mIvOTVRQXZbu4aDL",
+    "created": 1788426534,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 114,
+      "total_tokens": 831,
+      "cost": 0.0029325
+    }
+  }
+}

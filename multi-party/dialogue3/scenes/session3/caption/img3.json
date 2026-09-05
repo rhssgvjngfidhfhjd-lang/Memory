@@ -1,0 +1,36 @@
+{
+  "id": "c7ddd9a8-b156-4c8b-8bd5-5162769aa018",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:57.409184",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 304036,
+    "modified_time": "2026-08-23T22:07:37.830823"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an open cardboard box filled with clear bubble wrap. The bubble wrap is neatly arranged, occupying most of the box’s interior. The box is situated on a light-colored surface, and there are no visible objects or text besides the packaging materials. The atmosphere is utilitarian, focusing on packaging and protection.",
+    "final_text": "The image depicts an open cardboard box filled with clear bubble wrap. The bubble wrap is neatly arranged, occupying most of the box’s interior. The box is situated on a light-colored surface, and there are no visible objects or text besides the packaging materials. The atmosphere is utilitarian, focusing on packaging and protection.",
+    "token_stats": {
+      "original_tokens": 63,
+      "final_tokens": 63,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426715-puWAsj8c3i4v6sQtZAgM",
+    "created": 1788426715,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 64,
+      "total_tokens": 784,
+      "cost": 0.00244
+    }
+  }
+}

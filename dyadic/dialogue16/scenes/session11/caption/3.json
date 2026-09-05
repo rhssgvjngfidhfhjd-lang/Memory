@@ -1,0 +1,36 @@
+{
+  "id": "c4b9e4e8-446d-4778-b51b-371dea4efe2a",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:24.190284",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session11/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 20865,
+    "modified_time": "2026-08-23T21:35:01.701165"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A clear glass bowl is filled with vibrant, dried orange, yellow, and red berries. Some of the berries have opened husks, revealing colorful interiors. A few loose berries are scattered at the base of the bowl. The overall mood is warm and autumnal, suggesting a decorative or natural theme.",
+    "final_text": "A clear glass bowl is filled with vibrant, dried orange, yellow, and red berries. Some of the berries have opened husks, revealing colorful interiors. A few loose berries are scattered at the base of the bowl. The overall mood is warm and autumnal, suggesting a decorative or natural theme.",
+    "token_stats": {
+      "original_tokens": 60,
+      "final_tokens": 60,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427044-qqgYUIMgqUfN2rFvCNbk",
+    "created": 1788427044,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 60,
+      "total_tokens": 405,
+      "cost": 0.0014625
+    }
+  }
+}

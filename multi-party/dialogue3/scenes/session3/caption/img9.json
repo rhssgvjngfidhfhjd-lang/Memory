@@ -1,0 +1,36 @@
+{
+  "id": "b521e0ef-b369-46e4-a157-2bc4826a8cb7",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:02.228959",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 488399,
+    "modified_time": "2026-08-23T22:07:42.299854"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a well-organized display case filled with various collectible figures and plush toys, arranged neatly across multiple shelves. The collection includes anime and cartoon characters, with some sections featuring themed groupings. The shelves are evenly lit, enhancing the vibrant colors and details of the figures. The overall mood is one of admiration and dedication, showcasing a collector's passion for these items.",
+    "final_text": "The image depicts a well-organized display case filled with various collectible figures and plush toys, arranged neatly across multiple shelves. The collection includes anime and cartoon characters, with some sections featuring themed groupings. The shelves are evenly lit, enhancing the vibrant colors and details of the figures. The overall mood is one of admiration and dedication, showcasing a collector's passion for these items.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426721-OqTPQWcKm9IO6CXpL7gH",
+    "created": 1788426721,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 75,
+      "total_tokens": 930,
+      "cost": 0.0028875
+    }
+  }
+}

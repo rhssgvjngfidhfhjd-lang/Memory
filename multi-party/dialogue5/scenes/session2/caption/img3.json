@@ -1,0 +1,36 @@
+{
+  "id": "4c7f2fdb-b43d-41a4-b65d-e48a4bddca78",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:15.350390",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img3.png",
+    "filename": "img3.png",
+    "size": 2045593,
+    "modified_time": "2026-08-23T22:09:52.924186"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a glossy black Rimowa suitcase with a close-up view of its top section. Attached to the suitcase is a black leather luggage tag embossed with \"GY\" and \"RIMOWA.\" A white paper tag with the number \"188888\" and some text in another language is also visible. The suitcase's shiny surface reflects light, creating a sleek and sophisticated atmosphere. The overall mood is luxurious and stylish, highlighting high-end travel accessories.",
+    "final_text": "The image features a glossy black Rimowa suitcase with a close-up view of its top section. Attached to the suitcase is a black leather luggage tag embossed with \"GY\" and \"RIMOWA.\" A white paper tag with the number \"188888\" and some text in another language is also visible. The suitcase's shiny surface reflects light, creating a sleek and sophisticated atmosphere. The overall mood is luxurious and stylish, highlighting high-end travel accessories.",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426853-27Zt6CaHGQUw6wzhRmhZ",
+    "created": 1788426853,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 91,
+      "total_tokens": 1286,
+      "cost": 0.0038975
+    }
+  }
+}

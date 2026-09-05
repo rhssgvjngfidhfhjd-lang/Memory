@@ -1,0 +1,36 @@
+{
+  "id": "8e73d834-4d2a-4095-98a5-9045db27a0d9",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:36.387915",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 168768,
+    "modified_time": "2026-08-23T22:07:54.356585"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a mobile chat interface discussing a transaction. At the top, there's a payment detail showing ¥1050.00 with no shipping fee. A warning message in red advises against being directed away from the platform. The chat shows a conversation about negotiating a price, with one person asking if the price can be cheaper, another responding that it can be slightly reduced, and a further negotiation attempt offering ¥300 per item. The mood is transactional and negotiation-focused. There are also user avatars and timestamps visible.",
+    "final_text": "The image depicts a mobile chat interface discussing a transaction. At the top, there's a payment detail showing ¥1050.00 with no shipping fee. A warning message in red advises against being directed away from the platform. The chat shows a conversation about negotiating a price, with one person asking if the price can be cheaper, another responding that it can be slightly reduced, and a further negotiation attempt offering ¥300 per item. The mood is transactional and negotiation-focused. There are also user avatars and timestamps visible.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426754-f9fxLzlPCP5Monj2eNse",
+    "created": 1788426755,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 102,
+      "total_tokens": 1637,
+      "cost": 0.0048575
+    }
+  }
+}

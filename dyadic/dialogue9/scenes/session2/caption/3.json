@@ -1,0 +1,36 @@
+{
+  "id": "345cbb9d-607e-4272-80ad-90237cf6b232",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:39.288745",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 2435584,
+    "modified_time": "2026-08-23T22:00:58.376100"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table comparing different aspects of a stray animal neutering project. It includes columns for \"项目名称\" (Project Name), \"费用(元)\" (Cost in Yuan), \"预约流程\" (Appointment Process), and \"术后护理\" (Post-Operative Care). The table lists three stages: \"术前检查\" (Pre-Operation Check), \"手术实施\" (Surgery Implementation), and \"术后护理\" (Post-Operative Care). Each stage describes the cost, procedure, and care instructions. The background is blue and white, creating a professional and informative atmosphere.",
+    "final_text": "The image is a table comparing different aspects of a stray animal neutering project. It includes columns for \"项目名称\" (Project Name), \"费用(元)\" (Cost in Yuan), \"预约流程\" (Appointment Process), and \"术后护理\" (Post-Operative Care). The table lists three stages: \"术前检查\" (Pre-Operation Check), \"手术实施\" (Surgery Implementation), and \"术后护理\" (Post-Operative Care). Each stage describes the cost, procedure, and care instructions. The background is blue and white, creating a professional and informative atmosphere.",
+    "token_stats": {
+      "original_tokens": 139,
+      "final_tokens": 139,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427715-pWl3Mvv1MOREIVw4gb6n",
+    "created": 1788427715,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 126,
+      "total_tokens": 1124,
+      "cost": 0.003755
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "d2a506d2-219c-4b54-92d0-296358960f95",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:49.956178",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session3/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 86613,
+    "modified_time": "2026-08-23T22:05:53.671675"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a man wearing a gray t-shirt and sweatpants, sitting on a black exercise mat, grimacing in discomfort. One leg is elevated by a yellow foam roller, while his other hand supports him on the mat. In the background, there is a wall with visible text reading \"YOUR ATTITUDE WRONG WAY.\" The overall mood suggests physical exertion or pain, likely from a workout or stretching session. The setting appears to be a gym or fitness area, emphasizing effort and determination.",
+    "final_text": "The image depicts a man wearing a gray t-shirt and sweatpants, sitting on a black exercise mat, grimacing in discomfort. One leg is elevated by a yellow foam roller, while his other hand supports him on the mat. In the background, there is a wall with visible text reading \"YOUR ATTITUDE WRONG WAY.\" The overall mood suggests physical exertion or pain, likely from a workout or stretching session. The setting appears to be a gym or fitness area, emphasizing effort and determination.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426649-SaUfhlUbvMsluFSvDpmJ",
+    "created": 1788426649,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 100,
+      "total_tokens": 820,
+      "cost": 0.0028
+    }
+  }
+}

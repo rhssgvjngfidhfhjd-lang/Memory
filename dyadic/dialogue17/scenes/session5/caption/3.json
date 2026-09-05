@@ -1,0 +1,36 @@
+{
+  "id": "5e68ac2a-9eb8-4439-bd41-bb489a9d5542",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:52.647059",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session5/image/3.png",
+    "filename": "3.png",
+    "size": 929704,
+    "modified_time": "2026-08-23T21:36:32.385160"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a flowchart outlining an experimental process. It consists of five stages:\n\n1. **Stage 1 - Experiment Preparation:** Recruitment of volunteers and signing of consent forms.\n2. **Stage 2 - Baseline Calibration and Equipment Testing:** Data collection, sensor configuration, and system training.\n3. **Stage 3 - Task Execution and Data Collection:** Simultaneous data logging of physiological, behavioral, and subjective data.\n4. **Stage 4 - Data Integration and Preliminary Analysis:** Data synchronization, cleaning, and visualization.\n5. **Stage 5 - Iteration and Validation:** Feedback collection, validation, and report output.\n\nThe mood is systematic and scientific, indicating a structured research approach.",
+    "final_text": "The image depicts a flowchart outlining an experimental process. It consists of five stages:\n\n1. **Stage 1 - Experiment Preparation:** Recruitment of volunteers and signing of consent forms.\n2. **Stage 2 - Baseline Calibration and Equipment Testing:** Data collection, sensor configuration, and system training.\n3. **Stage 3 - Task Execution and Data Collection:** Simultaneous data logging of physiological, behavioral, and subjective data.\n4. **Stage 4 - Data Integration and Preliminary Analysis:** Data synchronization, cleaning, and visualization.\n5. **Stage 5 - Iteration and Validation:** Feedback collection, validation, and report output.\n\nThe mood is systematic and scientific, indicating a structured research approach.",
+    "token_stats": {
+      "original_tokens": 143,
+      "final_tokens": 143,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427070-ygN0rJV23q0aVIwwyz3D",
+    "created": 1788427070,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 142,
+      "total_tokens": 1677,
+      "cost": 0.0052575
+    }
+  }
+}

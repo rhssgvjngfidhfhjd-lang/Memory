@@ -1,0 +1,36 @@
+{
+  "id": "73905e4f-b3ff-471f-b9ed-338e6129bdcd",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:43.492518",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session5/image/3.png",
+    "filename": "3.png",
+    "size": 1669997,
+    "modified_time": "2026-08-23T21:54:50.206611"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a colorful illustration depicting the evolutionary history of cats and dogs. It features cartoon-style animals, including a small, ancient cat and domestic dogs. The cat is shown with labels pointing to its large skull and tail, while the dogs are portrayed with labels related to their diet and habitat. The background includes trees and grass. Text in Chinese describes the evolution from ancient cats to domestic pets, detailing their physical traits and timelines. The mood is educational and engaging, aimed at explaining animal evolution in a simplified manner.",
+    "final_text": "The image is a colorful illustration depicting the evolutionary history of cats and dogs. It features cartoon-style animals, including a small, ancient cat and domestic dogs. The cat is shown with labels pointing to its large skull and tail, while the dogs are portrayed with labels related to their diet and habitat. The background includes trees and grass. Text in Chinese describes the evolution from ancient cats to domestic pets, detailing their physical traits and timelines. The mood is educational and engaging, aimed at explaining animal evolution in a simplified manner.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427418-iJbM6yYNxoBjN1qKoIHQ",
+    "created": 1788427418,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 104,
+      "total_tokens": 1102,
+      "cost": 0.003535
+    }
+  }
+}

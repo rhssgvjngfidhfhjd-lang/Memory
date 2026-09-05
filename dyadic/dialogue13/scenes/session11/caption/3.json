@@ -1,0 +1,36 @@
+{
+  "id": "859f7a61-11f2-47aa-bdd0-8ef7614f7a31",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:15.257703",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session11/image/3.png",
+    "filename": "3.png",
+    "size": 181183,
+    "modified_time": "2026-08-23T21:32:30.874128"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table titled \"2024年度‘家校社’合作项目构想成果梳理表,\" detailing various collaborative projects. The columns include \"项目名称\" (Project Name), \"核心内容构想\" (Core Concept), \"当前进展状态\" (Current Progress), \"负责人角色体现\" (Role of Responsible Person), and \"2025年落地优先级建议\" (2025 Implementation Priority). Projects listed are \"健康角倡议\" (Health Corner Initiative), \"宠物伙伴计划\" (Pet Partner Plan), \"邻里家宴/共享厨房构想\" (Neighbor Gathering/Shared Kitchen Concept), \"旧物置换活动规划\" (Old Item Exchange Activity Planning), and \"社区文化节\" (Community Cultural Festival). The mood is informative and structured, aimed at evaluating project progress and future priorities.",
+    "final_text": "The image is a table titled \"2024年度‘家校社’合作项目构想成果梳理表,\" detailing various collaborative projects. The columns include \"项目名称\" (Project Name), \"核心内容构想\" (Core Concept), \"当前进展状态\" (Current Progress), \"负责人角色体现\" (Role of Responsible Person), and \"2025年落地优先级建议\" (2025 Implementation Priority). Projects listed are \"健康角倡议\" (Health Corner Initiative), \"宠物伙伴计划\" (Pet Partner Plan), \"邻里家宴/共享厨房构想\" (Neighbor Gathering/Shared Kitchen Concept), \"旧物置换活动规划\" (Old Item Exchange Activity Planning), and \"社区文化节\" (Community Cultural Festival). The mood is informative and structured, aimed at evaluating project progress and future priorities.",
+    "token_stats": {
+      "original_tokens": 214,
+      "final_tokens": 214,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426852-MqXYAoEHOMVBtLFYyF7h",
+    "created": 1788426852,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 177,
+      "total_tokens": 1175,
+      "cost": 0.004265
+    }
+  }
+}

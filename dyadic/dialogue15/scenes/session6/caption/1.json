@@ -1,0 +1,36 @@
+{
+  "id": "ff80e7d5-1ea4-40e0-b449-f36911c5582d",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:11.073039",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 145465,
+    "modified_time": "2026-08-23T21:34:57.390730"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a flowchart illustrating a randomized crossover trial for four workplace interventions aimed at improving musculoskeletal health. It is divided into four phases with a washout period between each. The interventions are labeled A, B, C, and D, with corresponding colors: blue, green, yellow, and gray. Each phase lasts two weeks, followed by a one-week washout. The image includes text in both Chinese and English, explaining the interventions: A (Scheduled App Exercises), B (Desk Adjustment), C (Muscle Relaxation), and D (Control Group). The overall atmosphere is informative and structured.",
+    "final_text": "The image is a flowchart illustrating a randomized crossover trial for four workplace interventions aimed at improving musculoskeletal health. It is divided into four phases with a washout period between each. The interventions are labeled A, B, C, and D, with corresponding colors: blue, green, yellow, and gray. Each phase lasts two weeks, followed by a one-week washout. The image includes text in both Chinese and English, explaining the interventions: A (Scheduled App Exercises), B (Desk Adjustment), C (Muscle Relaxation), and D (Control Group). The overall atmosphere is informative and structured.",
+    "token_stats": {
+      "original_tokens": 123,
+      "final_tokens": 123,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426970-iEUZm4rp8y0xBwDl9zXO",
+    "created": 1788426970,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 122,
+      "total_tokens": 1317,
+      "cost": 0.0042075
+    }
+  }
+}

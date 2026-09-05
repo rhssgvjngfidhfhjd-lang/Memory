@@ -1,0 +1,36 @@
+{
+  "id": "85c0843e-6351-4dfc-9ce6-dc80189e0cf7",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:53.864619",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session2/image/2.png",
+    "filename": "2.png",
+    "size": 41063,
+    "modified_time": "2026-08-23T21:40:04.813076"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table in Chinese, detailing treatment directions, specific plans, advantages, and disadvantages for different therapies. Key sections include \"核心支持治疗\" (Core support therapy), \"抗炎/免疫抑制\" (Anti-inflammatory/immunosuppression), \"抗感染治疗\" (Anti-infection therapy), \"手术治疗\" (Surgical treatment), and \"对症与营养支持\" (Symptom and nutritional support). Each section outlines specific therapies, like fluid infusion and antibiotics, with their benefits and risks, such as side effects or the need for monitoring. The overall mood is informative and clinical.",
+    "final_text": "The image is a table in Chinese, detailing treatment directions, specific plans, advantages, and disadvantages for different therapies. Key sections include \"核心支持治疗\" (Core support therapy), \"抗炎/免疫抑制\" (Anti-inflammatory/immunosuppression), \"抗感染治疗\" (Anti-infection therapy), \"手术治疗\" (Surgical treatment), and \"对症与营养支持\" (Symptom and nutritional support). Each section outlines specific therapies, like fluid infusion and antibiotics, with their benefits and risks, such as side effects or the need for monitoring. The overall mood is informative and clinical.",
+    "token_stats": {
+      "original_tokens": 154,
+      "final_tokens": 154,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427253-aYtKrPSQ1uyqxY1GF8wY",
+    "created": 1788427253,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 128,
+      "total_tokens": 983,
+      "cost": 0.0034175
+    }
+  }
+}

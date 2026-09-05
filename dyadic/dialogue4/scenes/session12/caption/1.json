@@ -1,0 +1,36 @@
+{
+  "id": "8f1fc081-0326-439c-a091-a284e7ba14de",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:13.424817",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session12/image/1.png",
+    "filename": "1.png",
+    "size": 40392,
+    "modified_time": "2026-08-23T21:50:31.326890"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a text-based comparison chart divided into three sections: A组, B组, and C组. Each section describes different attributes related to texture and structure, such as 气孔均匀度 (uniformity of pores), 气孔平均大小 (average pore size), 孔壁外观 (appearance of pore walls), 整体结构强度 (overall structural strength), and 底部沉积 (bottom sedimentation). The descriptions detail characteristics like size, distribution, texture, and strength, using terms like \"最高\" (highest) and \"最低\" (lowest) to indicate levels. The mood is analytical, focusing on technical evaluations and comparisons.",
+    "final_text": "The image features a text-based comparison chart divided into three sections: A组, B组, and C组. Each section describes different attributes related to texture and structure, such as 气孔均匀度 (uniformity of pores), 气孔平均大小 (average pore size), 孔壁外观 (appearance of pore walls), 整体结构强度 (overall structural strength), and 底部沉积 (bottom sedimentation). The descriptions detail characteristics like size, distribution, texture, and strength, using terms like \"最高\" (highest) and \"最低\" (lowest) to indicate levels. The mood is analytical, focusing on technical evaluations and comparisons.",
+    "token_stats": {
+      "original_tokens": 154,
+      "final_tokens": 154,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427452-dk96wRnZp0rZelLWymYi",
+    "created": 1788427452,
+    "usage": {
+      "prompt_tokens": 580,
+      "completion_tokens": 139,
+      "total_tokens": 719,
+      "cost": 0.00284
+    }
+  }
+}

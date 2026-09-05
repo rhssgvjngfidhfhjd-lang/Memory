@@ -1,0 +1,36 @@
+{
+  "id": "a96ffcff-534e-4187-8562-5b6901676184",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:08.056588",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session8/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 106599,
+    "modified_time": "2026-08-23T21:37:38.607883"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a man in a blue shirt using binoculars to observe a distant landscape. He stands in an expansive, open area with rolling hills and mountains under a cloudy sky. The atmosphere is calm and contemplative, suggesting an interest in nature or wildlife. The word \"alamy\" appears repeatedly as a watermark across the image.",
+    "final_text": "The image depicts a man in a blue shirt using binoculars to observe a distant landscape. He stands in an expansive, open area with rolling hills and mountains under a cloudy sky. The atmosphere is calm and contemplative, suggesting an interest in nature or wildlife. The word \"alamy\" appears repeatedly as a watermark across the image.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427144-L4OO6tFjjK074g7ElM4Y",
+    "created": 1788427144,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 68,
+      "total_tokens": 1066,
+      "cost": 0.003175
+    }
+  }
+}

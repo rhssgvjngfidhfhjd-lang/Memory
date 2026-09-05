@@ -1,0 +1,36 @@
+{
+  "id": "ff9ece00-4d42-4a34-93ce-a71f1ee00b71",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:01.288844",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 231728,
+    "modified_time": "2026-08-23T22:06:54.800566"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a winding road illuminated by streetlights under a cloudy night sky. The moon is partially visible, casting a soft glow over the scene. In the background, silhouetted mountains create a serene and mysterious atmosphere. The road is wet, reflecting the moonlight, adding to the tranquil yet slightly eerie mood. Distant lights suggest a small town nestled between the mountains. No visible text or people are present in the image.",
+    "final_text": "The image depicts a winding road illuminated by streetlights under a cloudy night sky. The moon is partially visible, casting a soft glow over the scene. In the background, silhouetted mountains create a serene and mysterious atmosphere. The road is wet, reflecting the moonlight, adding to the tranquil yet slightly eerie mood. Distant lights suggest a small town nestled between the mountains. No visible text or people are present in the image.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426658-5RopqLhgRjVSw8B7u3id",
+    "created": 1788426658,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 87,
+      "total_tokens": 807,
+      "cost": 0.00267
+    }
+  }
+}

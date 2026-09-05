@@ -1,0 +1,36 @@
+{
+  "id": "06d46c9f-b88c-467b-946a-ad3e5edf67cd",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:54.471282",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 198144,
+    "modified_time": "2026-08-23T21:54:53.618692"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image showcases an electronic scale with a cylindrical weight placed on its platform. A hand is pressing a button on the weight. The scale's display reads \"1200.0g\" in green digits. Text in the image highlights features such as high precision (0.1g/0.01g/0.001g), quick reading in about one second, free receipt, and a 10-year warranty. Additional text is featured in red and black boxes, advertising the product's price of ¥159 and immediate purchase options. The overall mood is informative and promotional, emphasizing the scale's precision and reliability.",
+    "final_text": "The image showcases an electronic scale with a cylindrical weight placed on its platform. A hand is pressing a button on the weight. The scale's display reads \"1200.0g\" in green digits. Text in the image highlights features such as high precision (0.1g/0.01g/0.001g), quick reading in about one second, free receipt, and a 10-year warranty. Additional text is featured in red and black boxes, advertising the product's price of ¥159 and immediate purchase options. The overall mood is informative and promotional, emphasizing the scale's precision and reliability.",
+    "token_stats": {
+      "original_tokens": 123,
+      "final_tokens": 123,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427432-lLD6xGJ8xVHYicc9wx7i",
+    "created": 1788427432,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 124,
+      "total_tokens": 563,
+      "cost": 0.0023375
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "63836097-7650-4f61-ba68-c1e8d2be2c26",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:00.353401",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session1/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 597176,
+    "modified_time": "2026-08-23T22:09:32.567601"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a dining scene with various skewered foods arranged on plates and racks. The main elements include skewers of raw meat, marinated in different sauces, and skewers of grilled bread with sesame seeds. A red condiment bottle is visible alongside jars of spices. Plates are neatly arranged on a wooden table, creating a casual and inviting atmosphere. Text in the image includes a visible green and white label on a plate, suggesting restaurant branding. The overall mood is warm and appetizing, suitable for a communal dining experience.",
+    "final_text": "The image depicts a dining scene with various skewered foods arranged on plates and racks. The main elements include skewers of raw meat, marinated in different sauces, and skewers of grilled bread with sesame seeds. A red condiment bottle is visible alongside jars of spices. Plates are neatly arranged on a wooden table, creating a casual and inviting atmosphere. Text in the image includes a visible green and white label on a plate, suggesting restaurant branding. The overall mood is warm and appetizing, suitable for a communal dining experience.",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426838-Yzk3ZaqqsgLRdfjxTq8F",
+    "created": 1788426838,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 106,
+      "total_tokens": 826,
+      "cost": 0.00286
+    }
+  }
+}

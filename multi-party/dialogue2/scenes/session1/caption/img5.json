@@ -1,0 +1,36 @@
+{
+  "id": "c0f174d1-6714-4a49-a309-14ac6b09b2cb",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:13.068623",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 424707,
+    "modified_time": "2026-08-23T22:06:25.746713"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A person is outdoors in a garden or park setting, surrounded by greenery and palm trees. They are dressed in a black outfit, including a long-sleeved top and pants, with a wide-brimmed hat and sunglasses. Their face is covered by a cloth, possibly for sun protection. The atmosphere is casual and relaxed, with no visible text. The person appears to be taking a selfie, with their arm extended. The mood is solitary and somewhat mysterious due to the face covering.",
+    "final_text": "A person is outdoors in a garden or park setting, surrounded by greenery and palm trees. They are dressed in a black outfit, including a long-sleeved top and pants, with a wide-brimmed hat and sunglasses. Their face is covered by a cloth, possibly for sun protection. The atmosphere is casual and relaxed, with no visible text. The person appears to be taking a selfie, with their arm extended. The mood is solitary and somewhat mysterious due to the face covering.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426612-L5PYWegTObu5iQ3QxEmd",
+    "created": 1788426612,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 99,
+      "total_tokens": 819,
+      "cost": 0.00279
+    }
+  }
+}

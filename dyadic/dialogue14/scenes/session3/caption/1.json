@@ -1,0 +1,36 @@
+{
+  "id": "b5ab93bb-d839-421e-aafb-c7fb8803f6c6",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:49.980753",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 946948,
+    "modified_time": "2026-08-23T21:34:09.856105"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a text-based document titled \"校园游戏社交文化观察\" (Campus Game Social Culture Observation) with the subtitle \"专题策划案提纲\" (Special Planning Outline). It includes sections labeled \"研究背景\" (Research Background) and \"核心案例\" (Core Example), discussing cooperative two-player game experiences. Games mentioned are \"双人成行\" (It Takes Two) and \"胡闹厨房\" (Overcooked). The mood is academic and structured, focusing on analysis and planning.",
+    "final_text": "The image is a text-based document titled \"校园游戏社交文化观察\" (Campus Game Social Culture Observation) with the subtitle \"专题策划案提纲\" (Special Planning Outline). It includes sections labeled \"研究背景\" (Research Background) and \"核心案例\" (Core Example), discussing cooperative two-player game experiences. Games mentioned are \"双人成行\" (It Takes Two) and \"胡闹厨房\" (Overcooked). The mood is academic and structured, focusing on analysis and planning.",
+    "token_stats": {
+      "original_tokens": 132,
+      "final_tokens": 132,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426887-3ex65LegWwO8LwEywj9P",
+    "created": 1788426887,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 106,
+      "total_tokens": 1104,
+      "cost": 0.003555
+    }
+  }
+}

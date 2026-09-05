@@ -1,0 +1,36 @@
+{
+  "id": "38df3515-900a-4e85-bf1a-85ff1ec60f80",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:53.704497",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session4/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 434922,
+    "modified_time": "2026-08-23T21:37:33.466971"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a breathtaking mountainous landscape at sunrise or sunset. Jagged rock formations rise prominently from a landscape covered in lush green vegetation. The sun casts warm light across the scene, creating long shadows and a misty atmosphere in the distant valleys. The mood is serene and majestic, emphasizing the beauty and tranquility of nature. No people or animals are present, and there is no visible text.",
+    "final_text": "The image depicts a breathtaking mountainous landscape at sunrise or sunset. Jagged rock formations rise prominently from a landscape covered in lush green vegetation. The sun casts warm light across the scene, creating long shadows and a misty atmosphere in the distant valleys. The mood is serene and majestic, emphasizing the beauty and tranquility of nature. No people or animals are present, and there is no visible text.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427126-DtOULysw2LEzs1T0us2w",
+    "created": 1788427126,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 78,
+      "total_tokens": 933,
+      "cost": 0.0029175
+    }
+  }
+}

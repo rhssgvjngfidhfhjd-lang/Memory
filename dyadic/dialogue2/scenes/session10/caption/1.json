@@ -1,0 +1,36 @@
+{
+  "id": "a1e2e583-4617-4103-9a87-984c8f5b6653",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:18.401549",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 461510,
+    "modified_time": "2026-08-23T21:39:50.269982"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an advertisement for a Haier neck and shoulder massager. It features a woman using the device, which emits a warm glow, indicating heat therapy. The left side displays the product's core, while the right side shows two usage styles: handheld and strap-on, with the woman at a desk and relaxing. Text highlights comfort and posture benefits, with promotional details like a 15% discount and a price of 199 yuan. The atmosphere is soothing and promotional, focusing on relaxation and convenience.",
+    "final_text": "The image is an advertisement for a Haier neck and shoulder massager. It features a woman using the device, which emits a warm glow, indicating heat therapy. The left side displays the product's core, while the right side shows two usage styles: handheld and strap-on, with the woman at a desk and relaxing. Text highlights comfort and posture benefits, with promotional details like a 15% discount and a price of 199 yuan. The atmosphere is soothing and promotional, focusing on relaxation and convenience.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427280-HL2jgfT096HdgoHzHiGN",
+    "created": 1788427280,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 102,
+      "total_tokens": 617,
+      "cost": 0.0023075
+    }
+  }
+}

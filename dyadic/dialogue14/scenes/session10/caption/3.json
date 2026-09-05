@@ -1,0 +1,36 @@
+{
+  "id": "348a129b-4f11-4713-8166-6e64aa9edd8e",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:24.722284",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 2150320,
+    "modified_time": "2026-08-23T21:33:08.069112"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an interactive art installation in a modern gallery. Several people are engaging with illuminated panels that emit soft, colorful light in hues of blue, pink, and orange. Each person is touching a panel, creating an immersive and contemplative atmosphere. The space is well-lit, with a sleek, minimalistic design. The overall mood is calm and introspective, encouraging interaction and reflection among the visitors. No visible text is present.",
+    "final_text": "The image depicts an interactive art installation in a modern gallery. Several people are engaging with illuminated panels that emit soft, colorful light in hues of blue, pink, and orange. Each person is touching a panel, creating an immersive and contemplative atmosphere. The space is well-lit, with a sleek, minimalistic design. The overall mood is calm and introspective, encouraging interaction and reflection among the visitors. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426921-Rz5nduOIdOVX0GT6RPb7",
+    "created": 1788426921,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 87,
+      "total_tokens": 1282,
+      "cost": 0.0038575
+    }
+  }
+}

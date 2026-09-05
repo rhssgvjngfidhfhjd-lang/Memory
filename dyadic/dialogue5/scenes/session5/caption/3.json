@@ -1,0 +1,36 @@
+{
+  "id": "bcbd27ee-cc95-45c4-898f-b9baf0e13d41",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:47.766715",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session5/image/3.png",
+    "filename": "3.png",
+    "size": 628303,
+    "modified_time": "2026-08-23T21:55:29.902567"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a round, dark brown disc of compressed tea leaves, known as pu-erh tea, resting against a stack of similarly wrapped discs bound with bamboo leaves and secured with bamboo strips. The scene is set on a wooden surface against a plain dark background, creating a rustic and natural atmosphere. There is no visible text.",
+    "final_text": "The image depicts a round, dark brown disc of compressed tea leaves, known as pu-erh tea, resting against a stack of similarly wrapped discs bound with bamboo leaves and secured with bamboo strips. The scene is set on a wooden surface against a plain dark background, creating a rustic and natural atmosphere. There is no visible text.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427487-0bTQ3EHuW7ZzfNXVxeEg",
+    "created": 1788427487,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 66,
+      "total_tokens": 921,
+      "cost": 0.0027975
+    }
+  }
+}

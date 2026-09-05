@@ -1,0 +1,36 @@
+{
+  "id": "4d04a561-91ca-4623-9981-b4fba21345d5",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:04.967953",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 1013686,
+    "modified_time": "2026-08-23T21:41:00.065896"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts four people walking barefoot along a sandy beach with gentle waves lapping at the shore. They are casually dressed, with one wearing a blue skirt, another in a plaid shirt, and one in a pink top. The scene is serene and peaceful, with a light, overcast sky creating a calm atmosphere. There is no visible text.",
+    "final_text": "The image depicts four people walking barefoot along a sandy beach with gentle waves lapping at the shore. They are casually dressed, with one wearing a blue skirt, another in a plaid shirt, and one in a pink top. The scene is serene and peaceful, with a light, overcast sky creating a calm atmosphere. There is no visible text.",
+    "token_stats": {
+      "original_tokens": 72,
+      "final_tokens": 72,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427266-QuwF3W7JtBiAh20GBhvE",
+    "created": 1788427266,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 70,
+      "total_tokens": 1265,
+      "cost": 0.0036875
+    }
+  }
+}

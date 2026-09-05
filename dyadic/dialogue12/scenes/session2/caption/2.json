@@ -1,0 +1,36 @@
+{
+  "id": "87bba818-c9bc-4699-b352-d51a72c90136",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:51.174153",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session2/image/2.png",
+    "filename": "2.png",
+    "size": 5630536,
+    "modified_time": "2026-08-23T21:32:00.377891"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a \"Chronic Disease Monitoring Data Sheet\" dated October 26, 2023. It belongs to a person named Jane Doe, born on January 15, 1960, with chronic conditions including Type 2 Diabetes, Hypertension, and Hyperlipidemia. The sheet includes a table with measurements and results for various tests, some marked with check marks. Dr. Lee suggests a follow-up for medication adjustment and lifestyle counseling. The overall mood is clinical and informative.",
+    "final_text": "The image is a \"Chronic Disease Monitoring Data Sheet\" dated October 26, 2023. It belongs to a person named Jane Doe, born on January 15, 1960, with chronic conditions including Type 2 Diabetes, Hypertension, and Hyperlipidemia. The sheet includes a table with measurements and results for various tests, some marked with check marks. Dr. Lee suggests a follow-up for medication adjustment and lifestyle counseling. The overall mood is clinical and informative.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426707-Lwx8mTTTKU7OHlfjekmk",
+    "created": 1788426707,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 99,
+      "total_tokens": 954,
+      "cost": 0.0031275
+    }
+  }
+}

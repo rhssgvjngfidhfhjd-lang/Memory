@@ -1,0 +1,36 @@
+{
+  "id": "fd429e6e-bf69-4e46-ab50-3fb1c252b13b",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:32.871972",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session12/image/1.png",
+    "filename": "1.png",
+    "size": 6258943,
+    "modified_time": "2026-08-23T21:32:18.037748"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a young boy riding a bicycle and a woman jogging beside him on a sunny day. They are on a path lined with trees, next to a river. The boy wears a helmet and a gray T-shirt, while the woman is dressed in athletic wear. The atmosphere is lively and cheerful, suggesting a pleasant outdoor activity.",
+    "final_text": "The image depicts a young boy riding a bicycle and a woman jogging beside him on a sunny day. They are on a path lined with trees, next to a river. The boy wears a helmet and a gray T-shirt, while the woman is dressed in athletic wear. The atmosphere is lively and cheerful, suggesting a pleasant outdoor activity.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426691-3HwvJ3ofcyl3YzsYBqgX",
+    "created": 1788426691,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 67,
+      "total_tokens": 1262,
+      "cost": 0.0036575
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "1bf2fdb3-cc0d-4202-b474-3c0a214185d5",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:57.819807",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session5/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 224356,
+    "modified_time": "2026-08-23T21:31:08.583682"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a buffet-style food counter with six metal trays filled with various dishes. The top row contains orange chunks, a dark brown dish with a ladle, and a pale dish with vegetables. The bottom row has a dish with light vegetables in broth, a spicy tofu dish with red sauce, and shredded green vegetables. Two serving spoons are visible, one with a green handle. The atmosphere is casual and appetizing, typical of a self-service restaurant setting.",
+    "final_text": "The image shows a buffet-style food counter with six metal trays filled with various dishes. The top row contains orange chunks, a dark brown dish with a ladle, and a pale dish with vegetables. The bottom row has a dish with light vegetables in broth, a spicy tofu dish with red sauce, and shredded green vegetables. Two serving spoons are visible, one with a green handle. The atmosphere is casual and appetizing, typical of a self-service restaurant setting.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426655-oZFCSlT6rt9BZA6178Bk",
+    "created": 1788426655,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 94,
+      "total_tokens": 949,
+      "cost": 0.0030775
+    }
+  }
+}

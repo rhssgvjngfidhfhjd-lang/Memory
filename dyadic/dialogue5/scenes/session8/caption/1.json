@@ -1,0 +1,36 @@
+{
+  "id": "5e34d05c-6d7a-43f8-b8e3-13fdd2a78560",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:04.581583",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 579990,
+    "modified_time": "2026-08-23T21:55:29.336720"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an elderly woman with gray hair, looking up with a distressed expression. She is being held or supported by two individuals whose arms are visible but faces are out of frame. The interaction suggests a moment of urgency or emotional intensity. The background is blurred, focusing on the woman's expression. The atmosphere is tense and dramatic, with no visible text.",
+    "final_text": "The image depicts an elderly woman with gray hair, looking up with a distressed expression. She is being held or supported by two individuals whose arms are visible but faces are out of frame. The interaction suggests a moment of urgency or emotional intensity. The background is blurred, focusing on the woman's expression. The atmosphere is tense and dramatic, with no visible text.",
+    "token_stats": {
+      "original_tokens": 72,
+      "final_tokens": 72,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427502-eNxFciUblxFAdjvZKlTD",
+    "created": 1788427502,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 72,
+      "total_tokens": 789,
+      "cost": 0.0025125
+    }
+  }
+}

@@ -1,0 +1,10 @@
+The image showcases a detailed analysis using multivariate analysis of variance (MANOVA) to evaluate the impact of four interventions on musculoskeletal health indicators. It includes:
+
+- A heatmap (A) showing effect sizes of interventions like "拉伸App提醒" and "升降桌使用" on various factors, with significant differences highlighted.
+- An interaction network diagram (B) illustrating connections between interventions.
+- A radar chart (C) comparing the effectiveness of each intervention.
+- A bar chart (D) displaying average interaction effects.
+- A donut chart (E) showing significance distribution levels.
+- Summary of findings (F) with statistical insights and recommendations in text.
+
+The overall atmosphere is analytical and data-driven, focusing on statistical outcomes and interactions.

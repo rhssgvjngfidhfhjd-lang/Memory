@@ -1,0 +1,36 @@
+{
+  "id": "6c3b1f14-2913-4f2f-a481-a594ed73f29f",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:50.086444",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 238938,
+    "modified_time": "2026-08-23T22:03:23.595000"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a whimsical dessert styled to resemble a potted plant. A brown pot is filled with chocolate cereal pieces mimicking soil. Inside the pot are two cactus-shaped sweets—one yellow and ribbed, the other green and smooth—and a couple of small, white flower decorations with yellow centers, made to look like daisies. The pot rests on a matching saucer. The scene is playful and creative, set against a light wooden table, creating a cheerful and imaginative atmosphere. No visible text is present.",
+    "final_text": "The image depicts a whimsical dessert styled to resemble a potted plant. A brown pot is filled with chocolate cereal pieces mimicking soil. Inside the pot are two cactus-shaped sweets—one yellow and ribbed, the other green and smooth—and a couple of small, white flower decorations with yellow centers, made to look like daisies. The pot rests on a matching saucer. The scene is playful and creative, set against a light wooden table, creating a cheerful and imaginative atmosphere. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426586-pDdHz7cmWwvX64CZH4YX",
+    "created": 1788426586,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 104,
+      "total_tokens": 824,
+      "cost": 0.00284
+    }
+  }
+}

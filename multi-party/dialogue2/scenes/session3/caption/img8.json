@@ -1,0 +1,36 @@
+{
+  "id": "7862df06-b2c6-4a7f-9087-f4951b30329a",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:46.939446",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session3/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 326576,
+    "modified_time": "2026-08-23T22:06:22.685575"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two packages of a traditional pain relief product. The packages are bright yellow with red borders and contain text in Chinese and Tibetan. The visible text includes \"OTC\" and the product name. Both packages feature a small circular image of a medicinal patch. The overall atmosphere is clinical and traditional.",
+    "final_text": "The image shows two packages of a traditional pain relief product. The packages are bright yellow with red borders and contain text in Chinese and Tibetan. The visible text includes \"OTC\" and the product name. Both packages feature a small circular image of a medicinal patch. The overall atmosphere is clinical and traditional.",
+    "token_stats": {
+      "original_tokens": 61,
+      "final_tokens": 61,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426647-KccrANv4tHjwsZtMSk6O",
+    "created": 1788426647,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 61,
+      "total_tokens": 916,
+      "cost": 0.0027475
+    }
+  }
+}

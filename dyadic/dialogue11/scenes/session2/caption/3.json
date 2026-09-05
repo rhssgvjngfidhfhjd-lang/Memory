@@ -1,0 +1,36 @@
+{
+  "id": "53c7477e-59d6-4fab-b65b-3a9d74dbd622",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:42.934865",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 270568,
+    "modified_time": "2026-08-23T21:30:59.217025"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a wooden table inside a bus with various items on it. There is a blue emergency medicine box labeled \"急救药品,\" a stack of booklets titled \"健康生活指南,\" and a digital blood pressure monitor displaying numbers. The bus interior and window reveal an outside view of a street with another bus in the background. The scene conveys a sense of preparedness and health awareness, with a calm and organized atmosphere.",
+    "final_text": "The image shows a wooden table inside a bus with various items on it. There is a blue emergency medicine box labeled \"急救药品,\" a stack of booklets titled \"健康生活指南,\" and a digital blood pressure monitor displaying numbers. The bus interior and window reveal an outside view of a street with another bus in the background. The scene conveys a sense of preparedness and health awareness, with a calm and organized atmosphere.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426642-y9KTCqQiYlsuneLu9wce",
+    "created": 1788426642,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 87,
+      "total_tokens": 387,
+      "cost": 0.00162
+    }
+  }
+}

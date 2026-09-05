@@ -1,0 +1,36 @@
+{
+  "id": "44bfda64-82e9-460b-a698-c2f62dbc7fbf",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:30.173875",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 309392,
+    "modified_time": "2026-08-23T22:07:59.246538"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a Chinese promotional guide for watching a film in different formats, focusing on IMAX. It features three screenshots of an ocean scene, each labeled with different aspect ratios: IMAX (1.9:1), standard widescreen (1.85:1), and ultra-widescreen (2.39:1). The text highlights the benefits of the IMAX format, such as improved visuals and specific scene enhancements. Additional text sections provide detailed explanations of these benefits, labeled as \"亮点一\" (Highlight One), \"亮点二\" (Highlight Two), and \"亮点三\" (Highlight Three). The overall mood is informative and promotional.",
+    "final_text": "The image is a Chinese promotional guide for watching a film in different formats, focusing on IMAX. It features three screenshots of an ocean scene, each labeled with different aspect ratios: IMAX (1.9:1), standard widescreen (1.85:1), and ultra-widescreen (2.39:1). The text highlights the benefits of the IMAX format, such as improved visuals and specific scene enhancements. Additional text sections provide detailed explanations of these benefits, labeled as \"亮点一\" (Highlight One), \"亮点二\" (Highlight Two), and \"亮点三\" (Highlight Three). The overall mood is informative and promotional.",
+    "token_stats": {
+      "original_tokens": 138,
+      "final_tokens": 138,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426748-bTBJv3mwvllZGpqFi1ZR",
+    "created": 1788426748,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 135,
+      "total_tokens": 1330,
+      "cost": 0.0043375
+    }
+  }
+}

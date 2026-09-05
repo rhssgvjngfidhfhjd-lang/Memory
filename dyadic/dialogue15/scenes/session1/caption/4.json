@@ -1,0 +1,36 @@
+{
+  "id": "c01e47c7-fe62-4ad5-b976-3af30d52461b",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:50.518391",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session1/image/4.png",
+    "filename": "4.png",
+    "size": 505295,
+    "modified_time": "2026-08-23T21:33:51.067586"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A golden retriever is sleeping peacefully on a sofa, wearing a glowing blue collar. The room is warmly lit by a lamp on a side table, creating a cozy and relaxed atmosphere. The background shows a soft, inviting living space with muted colors.",
+    "final_text": "A golden retriever is sleeping peacefully on a sofa, wearing a glowing blue collar. The room is warmly lit by a lamp on a side table, creating a cozy and relaxed atmosphere. The background shows a soft, inviting living space with muted colors.",
+    "token_stats": {
+      "original_tokens": 50,
+      "final_tokens": 50,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426951-U8Y3WBe8zwimZloeP7BV",
+    "created": 1788426951,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 50,
+      "total_tokens": 905,
+      "cost": 0.0026375
+    }
+  }
+}

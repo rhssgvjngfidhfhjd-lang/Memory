@@ -1,0 +1,36 @@
+{
+  "id": "a24be8bb-02a9-47bb-8371-03896b720041",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:20.223066",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session3/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 60876,
+    "modified_time": "2026-08-23T22:08:47.074872"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a modern, minimalist room corner featuring a sleek white wall unit with vertical panels and integrated shelving. On the shelf are a small plant and several books, including visible titles like \"NATURKUNDE.\" A contemporary floor lamp with a warm light stands nearby, casting a cozy glow. A light-colored ottoman with a draped blanket is positioned on the wooden floor. The overall atmosphere is calm and inviting, characterized by clean lines and a neutral color palette.",
+    "final_text": "The image depicts a modern, minimalist room corner featuring a sleek white wall unit with vertical panels and integrated shelving. On the shelf are a small plant and several books, including visible titles like \"NATURKUNDE.\" A contemporary floor lamp with a warm light stands nearby, casting a cozy glow. A light-colored ottoman with a draped blanket is positioned on the wooden floor. The overall atmosphere is calm and inviting, characterized by clean lines and a neutral color palette.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426800-2GAxLSVN3BzDjetvAq4t",
+    "created": 1788426800,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 96,
+      "total_tokens": 951,
+      "cost": 0.0030975
+    }
+  }
+}

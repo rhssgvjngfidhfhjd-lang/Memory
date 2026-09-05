@@ -1,0 +1,36 @@
+{
+  "id": "956936fd-0e41-4625-a173-6c9bb5c40b0c",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:11.941980",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session7/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 37995,
+    "modified_time": "2026-08-23T21:35:37.684028"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a dimly lit room with a wooden door slightly ajar, allowing warm light to stream in, creating a contrast with the otherwise dark atmosphere. The floor is wooden, and a small bench sits to the right with a stack of books on it. The walls show signs of wear, adding a sense of age and mystery to the scene. Dust particles are visible in the light, enhancing the nostalgic and serene mood. No visible text or people are present.",
+    "final_text": "The image depicts a dimly lit room with a wooden door slightly ajar, allowing warm light to stream in, creating a contrast with the otherwise dark atmosphere. The floor is wooden, and a small bench sits to the right with a stack of books on it. The walls show signs of wear, adding a sense of age and mystery to the scene. Dust particles are visible in the light, enhancing the nostalgic and serene mood. No visible text or people are present.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427031-bj61OpvwTH6Im3WJr5E7",
+    "created": 1788427031,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 94,
+      "total_tokens": 609,
+      "cost": 0.0022275
+    }
+  }
+}

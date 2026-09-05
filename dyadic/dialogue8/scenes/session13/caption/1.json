@@ -1,0 +1,36 @@
+{
+  "id": "7ae5ce5b-8ce4-4502-9579-406294530f28",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:19.407953",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session13/image/1.png",
+    "filename": "1.png",
+    "size": 480928,
+    "modified_time": "2026-08-23T21:57:41.709630"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an open notebook on a wooden surface, with a pen resting on it. The page displays the heading \"2024年度文化关键词\" followed by three keywords with descriptions: \"后真相,\" \"在地性,\" and \"算法审美.\" The overall mood is thoughtful and scholarly, enhanced by the warm, natural lighting.",
+    "final_text": "The image shows an open notebook on a wooden surface, with a pen resting on it. The page displays the heading \"2024年度文化关键词\" followed by three keywords with descriptions: \"后真相,\" \"在地性,\" and \"算法审美.\" The overall mood is thoughtful and scholarly, enhanced by the warm, natural lighting.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427700-N6ZQalD3STpzW9zljI8y",
+    "created": 1788427700,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 69,
+      "total_tokens": 584,
+      "cost": 0.0019775
+    }
+  }
+}

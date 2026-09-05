@@ -1,0 +1,36 @@
+{
+  "id": "0d524383-b5ad-486f-a8c9-66f86f9ed283",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:15.332756",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session8/image/d3af5d92e3384fee8ef749986d2a26f2.jpeg~tplv-a9rns2rl98-downsize_watermark_1_6_b.png",
+    "filename": "d3af5d92e3384fee8ef749986d2a26f2.jpeg~tplv-a9rns2rl98-downsize_watermark_1_6_b.png",
+    "size": 92752,
+    "modified_time": "2026-08-23T21:33:30.054845"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table titled \"校园热点传播路径与情绪地图项目梳理表,\" which translates to \"Campus Hotspot Transmission Path and Emotional Map Project Overview.\" It contains four rows with headers: 项目构想 (Project Concept), 价值 (Value), 伦理边界 (Ethical Boundaries), and 潜在应用 (Potential Applications). Each row describes aspects of the project, such as integrating campus social platform data, enhancing information management, maintaining ethical standards, and potential applications like campus safety and student behavior research. The image has a structured and informative atmosphere.",
+    "final_text": "The image is a table titled \"校园热点传播路径与情绪地图项目梳理表,\" which translates to \"Campus Hotspot Transmission Path and Emotional Map Project Overview.\" It contains four rows with headers: 项目构想 (Project Concept), 价值 (Value), 伦理边界 (Ethical Boundaries), and 潜在应用 (Potential Applications). Each row describes aspects of the project, such as integrating campus social platform data, enhancing information management, maintaining ethical standards, and potential applications like campus safety and student behavior research. The image has a structured and informative atmosphere.",
+    "token_stats": {
+      "original_tokens": 137,
+      "final_tokens": 137,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426915-QFqf3l7t0xDd8Zxz5nP0",
+    "created": 1788426915,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 120,
+      "total_tokens": 420,
+      "cost": 0.00195
+    }
+  }
+}

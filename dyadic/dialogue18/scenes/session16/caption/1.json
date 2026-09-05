@@ -1,0 +1,36 @@
+{
+  "id": "ce89fb85-0561-4aec-9078-e5497fbbf625",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:36.392228",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session16/image/1.webp",
+    "filename": "1.webp",
+    "size": 8030,
+    "modified_time": "2026-08-23T21:37:26.798115"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an open black camera backpack revealing its contents. Inside, there are various camera equipment including a camera body, several lenses, and accessories, all secured in padded compartments. A laptop is partially visible, tucked into a side pocket. The backpack appears organized and well-designed for photographers, with the logo \"Lowepro\" visible on the front. The overall mood is practical and professional, emphasizing readiness and organization for photography enthusiasts.",
+    "final_text": "The image features an open black camera backpack revealing its contents. Inside, there are various camera equipment including a camera body, several lenses, and accessories, all secured in padded compartments. A laptop is partially visible, tucked into a side pocket. The backpack appears organized and well-designed for photographers, with the logo \"Lowepro\" visible on the front. The overall mood is practical and professional, emphasizing readiness and organization for photography enthusiasts.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427175-rB0Sf3ZsVTPlhZC4bzeB",
+    "created": 1788427175,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 87,
+      "total_tokens": 432,
+      "cost": 0.0017325
+    }
+  }
+}

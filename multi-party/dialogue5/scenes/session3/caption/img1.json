@@ -1,0 +1,36 @@
+{
+  "id": "671d7491-7c2c-4595-8254-d8a43769e10e",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:27.122403",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 277282,
+    "modified_time": "2026-08-23T22:09:38.613079"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a travel guide for visiting Changbai Mountain and Yanji, featuring colorful illustrations and text in Chinese. It includes a map with routes and key locations marked, such as scenic spots and cultural sites. Text boxes provide ticket prices, highlights, and recommendations for different areas: North Slope, South Slope, and West Slope, plus Yanji. Illustrations depict tourists, landscapes, and cultural experiences. The mood is informative and inviting, encouraging exploration of natural beauty and cultural heritage.",
+    "final_text": "The image is a travel guide for visiting Changbai Mountain and Yanji, featuring colorful illustrations and text in Chinese. It includes a map with routes and key locations marked, such as scenic spots and cultural sites. Text boxes provide ticket prices, highlights, and recommendations for different areas: North Slope, South Slope, and West Slope, plus Yanji. Illustrations depict tourists, landscapes, and cultural experiences. The mood is informative and inviting, encouraging exploration of natural beauty and cultural heritage.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426865-KJIlOfRQ2CFEW2MAPM4a",
+    "created": 1788426865,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 102,
+      "total_tokens": 822,
+      "cost": 0.00282
+    }
+  }
+}

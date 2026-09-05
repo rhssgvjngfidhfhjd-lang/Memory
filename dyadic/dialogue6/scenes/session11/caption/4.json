@@ -1,0 +1,36 @@
+{
+  "id": "a71607ef-c65d-4c5f-a13a-76739e11abda",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:28.085029",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session11/image/4.png",
+    "filename": "4.png",
+    "size": 183912,
+    "modified_time": "2026-08-23T21:55:48.990257"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two pie charts with Chinese text, illustrating survey results about human-pet relationships. The top pie chart shows preferences for describing relationships, with segments for \"亲子关系\" (41.70%), \"朋友关系\" (21.30%), \"搭子关系\" (8.10%), among others. The bottom pie chart reflects desired relationships, with \"朋友伙伴关系\" (33.90%), \"亲子关系\" (25.42%), and \"搭子关系\" (15.25%). Below the charts, a table compares actual and ideal relationship choices, highlighting differences. The overall mood is informative and analytical, with bright colors enhancing engagement.",
+    "final_text": "The image features two pie charts with Chinese text, illustrating survey results about human-pet relationships. The top pie chart shows preferences for describing relationships, with segments for \"亲子关系\" (41.70%), \"朋友关系\" (21.30%), \"搭子关系\" (8.10%), among others. The bottom pie chart reflects desired relationships, with \"朋友伙伴关系\" (33.90%), \"亲子关系\" (25.42%), and \"搭子关系\" (15.25%). Below the charts, a table compares actual and ideal relationship choices, highlighting differences. The overall mood is informative and analytical, with bright colors enhancing engagement.",
+    "token_stats": {
+      "original_tokens": 153,
+      "final_tokens": 153,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427587-55bTsSH1tTmWxwvqkkKk",
+    "created": 1788427587,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 135,
+      "total_tokens": 574,
+      "cost": 0.0024475
+    }
+  }
+}

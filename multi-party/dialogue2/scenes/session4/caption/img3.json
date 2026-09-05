@@ -1,0 +1,36 @@
+{
+  "id": "3ac53df9-9104-41b1-bcb8-0eea06104717",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:57.664420",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 126812,
+    "modified_time": "2026-08-23T22:12:14.382380"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts two screens in a dimly lit environment, likely a bedroom or living room. On the left, a tablet shows a soccer video game with players on a green field. The scoreboard displays \"MND 1 - MUN 0\" with a timer at 21:20. On the right, another tablet shows a soccer lineup with player numbers arranged on a field graphic. The Manchester City logo is visible in the corner, and the word \"LIVE\" is highlighted in red. The atmosphere is relaxed and focused, suggesting someone is watching or playing soccer-related content.",
+    "final_text": "The image depicts two screens in a dimly lit environment, likely a bedroom or living room. On the left, a tablet shows a soccer video game with players on a green field. The scoreboard displays \"MND 1 - MUN 0\" with a timer at 21:20. On the right, another tablet shows a soccer lineup with player numbers arranged on a field graphic. The Manchester City logo is visible in the corner, and the word \"LIVE\" is highlighted in red. The atmosphere is relaxed and focused, suggesting someone is watching or playing soccer-related content.",
+    "token_stats": {
+      "original_tokens": 118,
+      "final_tokens": 118,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426654-CMdxgcQZEi2WlowcAAze",
+    "created": 1788426654,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 118,
+      "total_tokens": 838,
+      "cost": 0.00298
+    }
+  }
+}

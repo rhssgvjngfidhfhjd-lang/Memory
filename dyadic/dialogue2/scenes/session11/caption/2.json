@@ -1,0 +1,36 @@
+{
+  "id": "bebd65f2-f710-40ed-b448-02fc0170a773",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:20.754500",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session11/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 56645,
+    "modified_time": "2026-08-23T21:40:01.398560"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a serene kitchen scene with a Chemex coffee maker on a wooden board, brewing fresh coffee. Beside it, a clear glass mug holds coffee beans. Steam rises from the Chemex, adding to the warm and inviting atmosphere. In the background, out of focus, are potted plants and a knife block, contributing to the cozy, homey feel. The lighting is soft and natural, suggesting a calm morning setting.",
+    "final_text": "The image shows a serene kitchen scene with a Chemex coffee maker on a wooden board, brewing fresh coffee. Beside it, a clear glass mug holds coffee beans. Steam rises from the Chemex, adding to the warm and inviting atmosphere. In the background, out of focus, are potted plants and a knife block, contributing to the cozy, homey feel. The lighting is soft and natural, suggesting a calm morning setting.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427282-6oGLlHItEDcYfhbHofhp",
+    "created": 1788427282,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 88,
+      "total_tokens": 943,
+      "cost": 0.0030175
+    }
+  }
+}

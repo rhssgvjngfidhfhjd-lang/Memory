@@ -1,0 +1,36 @@
+{
+  "id": "debe6fa6-16ae-4a9f-bdca-aba4ff330573",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:07.812766",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session5/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 320161,
+    "modified_time": "2026-08-23T22:04:12.405907"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a hand holding a lengthy receipt from a grocery store with visible text detailing various items and prices. The store's interior features shelves stocked with assorted products, including snacks and beverages. Prominent signage in red and white can be seen in the background. The mood appears busy and commercial, typical of a shopping environment. The receipt includes Chinese text with detailed purchase information.",
+    "final_text": "The image depicts a hand holding a lengthy receipt from a grocery store with visible text detailing various items and prices. The store's interior features shelves stocked with assorted products, including snacks and beverages. Prominent signage in red and white can be seen in the background. The mood appears busy and commercial, typical of a shopping environment. The receipt includes Chinese text with detailed purchase information.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426606-hSfl9IJoiLUmFkrlbaPD",
+    "created": 1788426606,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 76,
+      "total_tokens": 796,
+      "cost": 0.00256
+    }
+  }
+}

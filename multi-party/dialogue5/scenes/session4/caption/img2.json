@@ -1,0 +1,36 @@
+{
+  "id": "56820dcb-4cfe-4e38-b6a5-011d9d04496d",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:40.433284",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session4/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 113712,
+    "modified_time": "2026-08-23T22:09:46.996969"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a screenshot of a graphic design software interface, likely Photoshop, with a vertical banner design open. The banner includes several sections with illustrations and text in Chinese. The interface displays tools on the left, a color palette, and layers panel on the right. The atmosphere is technical and focused on design work, with elements suggesting a professional and organized workflow.",
+    "final_text": "The image shows a screenshot of a graphic design software interface, likely Photoshop, with a vertical banner design open. The banner includes several sections with illustrations and text in Chinese. The interface displays tools on the left, a color palette, and layers panel on the right. The atmosphere is technical and focused on design work, with elements suggesting a professional and organized workflow.",
+    "token_stats": {
+      "original_tokens": 72,
+      "final_tokens": 72,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426881-rXB4IdMNyLtcAKWpB2CT",
+    "created": 1788426881,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 72,
+      "total_tokens": 1267,
+      "cost": 0.0037075
+    }
+  }
+}

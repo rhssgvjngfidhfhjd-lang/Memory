@@ -1,0 +1,36 @@
+{
+  "id": "8f447328-8356-44f5-ad8a-c019ca3e5340",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:00.139479",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session5/image/3.png",
+    "filename": "3.png",
+    "size": 1281460,
+    "modified_time": "2026-08-23T21:39:56.238632"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a close-up of an old, worn leather-bound journal with frayed edges. Pages are slightly yellowed, indicating age. Some handwritten text is visible on a lined page, though not fully legible. The mood is nostalgic and intimate, suggesting personal reflections or memories captured within.",
+    "final_text": "The image depicts a close-up of an old, worn leather-bound journal with frayed edges. Pages are slightly yellowed, indicating age. Some handwritten text is visible on a lined page, though not fully legible. The mood is nostalgic and intimate, suggesting personal reflections or memories captured within.",
+    "token_stats": {
+      "original_tokens": 59,
+      "final_tokens": 59,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427198-Fv8O8axocsciFcZdmqOi",
+    "created": 1788427198,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 59,
+      "total_tokens": 914,
+      "cost": 0.0027275
+    }
+  }
+}

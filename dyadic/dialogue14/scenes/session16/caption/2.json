@@ -1,0 +1,36 @@
+{
+  "id": "bc88db0e-d57e-412b-accf-18afe59ba788",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:45.684229",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session16/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 77521,
+    "modified_time": "2026-08-23T21:33:07.301867"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a digital illustration of a robot hand and a human hand reaching towards each other, with fingers nearly touching, set against a dark blue background with circuit patterns. The text \"AI vs HUMAN\" is prominently displayed at the top, accompanied by placeholder text. The interaction suggests a connection or confrontation between technology and humanity. The overall mood is futuristic and thought-provoking.",
+    "final_text": "The image depicts a digital illustration of a robot hand and a human hand reaching towards each other, with fingers nearly touching, set against a dark blue background with circuit patterns. The text \"AI vs HUMAN\" is prominently displayed at the top, accompanied by placeholder text. The interaction suggests a connection or confrontation between technology and humanity. The overall mood is futuristic and thought-provoking.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426946-M7kqbhUj3honWitIf86Y",
+    "created": 1788426946,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 74,
+      "total_tokens": 929,
+      "cost": 0.0028775
+    }
+  }
+}

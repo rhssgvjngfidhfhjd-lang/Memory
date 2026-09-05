@@ -1,0 +1,36 @@
+{
+  "id": "c2c6a96d-4838-4159-8aa2-6a6ad2bb70da",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:54.034905",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 84347,
+    "modified_time": "2026-08-23T21:31:57.510623"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image appears to be a screenshot of a digital document or presentation discussing emotional states and physiological metrics. Key points include:\n\n- Core Scene: Analysis of text to extract emotional and social relationship features linked with physiological indicators.\n- Main Elements: Text with sections highlighted, possibly a software interface showing analysis results.\n- Visible Text: Details on emotional characteristics such as \"mental variance, low mood,\" and \"lack of concentration.\" Physiological indicators mentioned include blood glucose (17.9 mmol/L) and blood pressure (180/100 mmHg), with symptoms like nausea, vomiting, and breathlessness.\n- Actions: Description of how text analysis can reveal emotional and social features.\n- Overall Mood: Informative and analytical atmosphere, focusing on health and emotional insights.\n\nThe interface includes options for deep thinking and web search, suggesting an analytical tool or platform.",
+    "final_text": "The image appears to be a screenshot of a digital document or presentation discussing emotional states and physiological metrics. Key points include:\n\n- Core Scene: Analysis of text to extract emotional and social relationship features linked with physiological indicators.\n- Main Elements: Text with sections highlighted, possibly a software interface showing analysis results.\n- Visible Text: Details on emotional characteristics such as \"mental variance, low mood,\" and \"lack of concentration.\" Physiological indicators mentioned include blood glucose (17.9 mmol/L) and blood pressure (180/100 mmHg), with symptoms like nausea, vomiting, and breathlessness.\n- Actions: Description of how text analysis can reveal emotional and social features.\n- Overall Mood: Informative and analytical atmosphere, focusing on health and emotional insights.\n\nThe interface includes options for deep thinking and web search, suggesting an analytical tool or platform.",
+    "token_stats": {
+      "original_tokens": 171,
+      "final_tokens": 171,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426711-qlwaRIfGV1R0vLHkZaH4",
+    "created": 1788426711,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 169,
+      "total_tokens": 886,
+      "cost": 0.0034825
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "7280aa66-637a-415f-a96b-8986c09e91d1",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:51.619612",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 260258,
+    "modified_time": "2026-08-23T22:01:47.958670"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a wooden tray on a table with a bowl of colorful food, likely a Japanese rice dish topped with various ingredients such as salmon, tuna, cucumber, egg, and green onions. A small plate with a side dish and a spoon rests beside an empty bowl. A metal pot with a black lid is also on the tray. There's a note with Japanese text on the tray. The overall atmosphere is casual and inviting, suggesting a meal setting.",
+    "final_text": "The image depicts a wooden tray on a table with a bowl of colorful food, likely a Japanese rice dish topped with various ingredients such as salmon, tuna, cucumber, egg, and green onions. A small plate with a side dish and a spoon rests beside an empty bowl. A metal pot with a black lid is also on the tray. There's a note with Japanese text on the tray. The overall atmosphere is casual and inviting, suggesting a meal setting.",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426529-941PY9Q9j5P9LI0psbTo",
+    "created": 1788426529,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 92,
+      "total_tokens": 1090,
+      "cost": 0.003415
+    }
+  }
+}

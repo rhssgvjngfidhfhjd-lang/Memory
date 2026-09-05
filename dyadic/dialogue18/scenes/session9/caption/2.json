@@ -1,0 +1,36 @@
+{
+  "id": "529d5f70-9b8c-4532-be1f-af58098620dd",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:11.403934",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 194616,
+    "modified_time": "2026-08-23T21:37:48.759865"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a small dog with a white and brown coat, nestled comfortably between large rocks. The rocks have patches of green moss, adding a natural texture to the scene. The dog is lying down, gazing directly at the camera with its ears perked up, conveying a sense of alertness yet calmness. The overall mood is serene and cozy, suggesting a safe, sheltered spot for the dog. No visible text is present in the image.",
+    "final_text": "The image features a small dog with a white and brown coat, nestled comfortably between large rocks. The rocks have patches of green moss, adding a natural texture to the scene. The dog is lying down, gazing directly at the camera with its ears perked up, conveying a sense of alertness yet calmness. The overall mood is serene and cozy, suggesting a safe, sheltered spot for the dog. No visible text is present in the image.",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427149-JcSY6wcrbx8XV1kr7VFG",
+    "created": 1788427150,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 92,
+      "total_tokens": 392,
+      "cost": 0.00167
+    }
+  }
+}

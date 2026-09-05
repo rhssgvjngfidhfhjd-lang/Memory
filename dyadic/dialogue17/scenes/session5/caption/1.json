@@ -1,0 +1,36 @@
+{
+  "id": "4ecc0efe-8132-4eb6-8374-120a90725053",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:52.492985",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session5/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 373065,
+    "modified_time": "2026-08-23T21:36:40.327691"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a digital dashboard displaying a futuristic interface with various elements and graphs. It includes wave patterns, a brain and heart illustration, and a bar graph. Text in Chinese includes terms like \"神经交响乐\" (neuro symphony), \"心率变异性\" (heart rate variability), and \"输出日志\" (output log). The timeline highlights tasks such as \"任务A启动\" (Task A Start) and \"任务B完成\" (Task B Complete). The mood is high-tech and analytical, suggesting a focus on monitoring cognitive and physiological metrics. The logo \"NeuroSync Lab\" is visible at the bottom.",
+    "final_text": "The image is a digital dashboard displaying a futuristic interface with various elements and graphs. It includes wave patterns, a brain and heart illustration, and a bar graph. Text in Chinese includes terms like \"神经交响乐\" (neuro symphony), \"心率变异性\" (heart rate variability), and \"输出日志\" (output log). The timeline highlights tasks such as \"任务A启动\" (Task A Start) and \"任务B完成\" (Task B Complete). The mood is high-tech and analytical, suggesting a focus on monitoring cognitive and physiological metrics. The logo \"NeuroSync Lab\" is visible at the bottom.",
+    "token_stats": {
+      "original_tokens": 136,
+      "final_tokens": 136,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427070-57ZXNIBdPc5Oj0v1onkz",
+    "created": 1788427070,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 131,
+      "total_tokens": 1326,
+      "cost": 0.0042975
+    }
+  }
+}

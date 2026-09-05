@@ -1,0 +1,36 @@
+{
+  "id": "8574233b-a5be-4c10-a49c-98627dbc1654",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:52.734426",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 1298780,
+    "modified_time": "2026-08-23T22:01:07.252328"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a table designed for tracking item sharing, labeled \"在线分享\" (Online Sharing) in blue text. It includes columns with headers: 日期 (Date), 放入物品 (Items Added), 数量 (Quantity), 放入人 (Adder - room number optional), and 取走人/时间 (Receiver/Time). The table is empty, suggesting readiness for data entry. The atmosphere is organized and functional, suitable for collaborative or communal use.",
+    "final_text": "The image depicts a table designed for tracking item sharing, labeled \"在线分享\" (Online Sharing) in blue text. It includes columns with headers: 日期 (Date), 放入物品 (Items Added), 数量 (Quantity), 放入人 (Adder - room number optional), and 取走人/时间 (Receiver/Time). The table is empty, suggesting readiness for data entry. The atmosphere is organized and functional, suitable for collaborative or communal use.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427731-PxlKZR4c9ubryElUQqKZ",
+    "created": 1788427731,
+    "usage": {
+      "prompt_tokens": 1000,
+      "completion_tokens": 95,
+      "total_tokens": 1095,
+      "cost": 0.00345
+    }
+  }
+}

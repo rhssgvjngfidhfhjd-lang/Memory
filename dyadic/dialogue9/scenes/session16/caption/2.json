@@ -1,0 +1,36 @@
+{
+  "id": "7d42c62b-297b-4afe-ace9-9095181e5012",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:49.948515",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session16/image/2.png",
+    "filename": "2.png",
+    "size": 1118367,
+    "modified_time": "2026-08-23T22:01:15.377093"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an online registration form titled \"社区居民能人库在线登记表\" (Community Resident Talent Database Online Registration Form). It includes fields for entering a name, characteristics, service time, and service scope. There is a privacy protection option with two choices: \"仅社区管理员可见\" (Visible only to community administrators) and \"完全公开\" (Completely public). A blue \"提交\" (Submit) button is at the bottom. The overall design is clean with a blue and white color scheme, creating a formal and organized atmosphere.",
+    "final_text": "The image shows an online registration form titled \"社区居民能人库在线登记表\" (Community Resident Talent Database Online Registration Form). It includes fields for entering a name, characteristics, service time, and service scope. There is a privacy protection option with two choices: \"仅社区管理员可见\" (Visible only to community administrators) and \"完全公开\" (Completely public). A blue \"提交\" (Submit) button is at the bottom. The overall design is clean with a blue and white color scheme, creating a formal and organized atmosphere.",
+    "token_stats": {
+      "original_tokens": 120,
+      "final_tokens": 120,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427788-s4BXigPk5833a3gllrIp",
+    "created": 1788427788,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 112,
+      "total_tokens": 1307,
+      "cost": 0.0041075
+    }
+  }
+}

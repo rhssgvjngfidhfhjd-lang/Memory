@@ -1,0 +1,36 @@
+{
+  "id": "c69c58b6-18f0-4676-a062-1e9faa46579e",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:21.711677",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 233716,
+    "modified_time": "2026-08-23T22:16:48.300052"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a prescription form placed on a wooden surface. The form contains handwritten text in Chinese, listing various medicinal ingredients with specified quantities. Text includes sections for patient details such as name, gender, age, and department, though the name and age are not filled in. Instructions for preparation and consumption are noted, as well as a disclaimer about potential effects. The bottom section features the prescriber, dispenser, and checker names, along with the date, October 4, 2023, and a price. The atmosphere is clinical and informational.",
+    "final_text": "The image depicts a prescription form placed on a wooden surface. The form contains handwritten text in Chinese, listing various medicinal ingredients with specified quantities. Text includes sections for patient details such as name, gender, age, and department, though the name and age are not filled in. Instructions for preparation and consumption are noted, as well as a disclaimer about potential effects. The bottom section features the prescriber, dispenser, and checker names, along with the date, October 4, 2023, and a price. The atmosphere is clinical and informational.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426859-RiotaXIWmvUG7q4I11yX",
+    "created": 1788426859,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 111,
+      "total_tokens": 831,
+      "cost": 0.00291
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "377a72ad-46c9-4a5e-9349-4cceff655d37",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:01.586329",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session12/image/2.png",
+    "filename": "2.png",
+    "size": 539533,
+    "modified_time": "2026-08-23T21:45:10.828583"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an anime-style illustration of a fluffy, white kitten with light brown accents on its ears and tail. The kitten has large, expressive blue eyes and is sitting upright, looking directly at the viewer. The background is plain, emphasizing the cuteness and innocence of the kitten. The overall mood is charming and heartwarming.",
+    "final_text": "The image depicts an anime-style illustration of a fluffy, white kitten with light brown accents on its ears and tail. The kitten has large, expressive blue eyes and is sitting upright, looking directly at the viewer. The background is plain, emphasizing the cuteness and innocence of the kitten. The overall mood is charming and heartwarming.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427381-Yu4ZJtsqjrHoXdQ9ShlO",
+    "created": 1788427381,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 66,
+      "total_tokens": 921,
+      "cost": 0.0027975
+    }
+  }
+}

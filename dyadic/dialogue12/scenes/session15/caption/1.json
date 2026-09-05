@@ -1,0 +1,36 @@
+{
+  "id": "0e01ec22-06b8-4fee-96cf-4a5ccc2f77e5",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:08.494666",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session15/image/1.png",
+    "filename": "1.png",
+    "size": 3727172,
+    "modified_time": "2026-08-23T21:32:10.974820"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two main sections: a color-coded map on the left and a detailed map with routes on the right. The left map shows various regions shaded in red tones, indicating different levels of activity or density, with text labeling \"税金阶区\" and \"热力\". The right map displays a detailed urban area with numerous intersecting red lines representing routes, labeled \"通职OD路阵\". Key locations are marked, such as \"杭州市区中心\" and \"主要就业中心\". The atmosphere is analytical, focusing on transportation and urban planning insights. Visible text includes \"数据来源: 公开租房平台\".",
+    "final_text": "The image features two main sections: a color-coded map on the left and a detailed map with routes on the right. The left map shows various regions shaded in red tones, indicating different levels of activity or density, with text labeling \"税金阶区\" and \"热力\". The right map displays a detailed urban area with numerous intersecting red lines representing routes, labeled \"通职OD路阵\". Key locations are marked, such as \"杭州市区中心\" and \"主要就业中心\". The atmosphere is analytical, focusing on transportation and urban planning insights. Visible text includes \"数据来源: 公开租房平台\".",
+    "token_stats": {
+      "original_tokens": 142,
+      "final_tokens": 142,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426783-JeEonED6dfs8m2BojBs7",
+    "created": 1788426783,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 128,
+      "total_tokens": 1126,
+      "cost": 0.003775
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "9498bc6b-60b8-4570-9ce8-eedb8f6ede39",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:57.594035",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 641619,
+    "modified_time": "2026-08-23T21:43:13.046483"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is split into two sections comparing neck posture. On the left, a person is shown with a forward-leaning neck, illustrating poor posture with visible cervical vertebrae and muscles. On the right, the same person is depicted with an upright neck, showing improved posture. The anatomical details of the spine and muscles are highlighted in both images. The text in the image is in Chinese, indicating \"before improvement\" on the left and \"after improvement\" on the right. The overall mood is informative, focusing on posture correction.",
+    "final_text": "The image is split into two sections comparing neck posture. On the left, a person is shown with a forward-leaning neck, illustrating poor posture with visible cervical vertebrae and muscles. On the right, the same person is depicted with an upright neck, showing improved posture. The anatomical details of the spine and muscles are highlighted in both images. The text in the image is in Chinese, indicating \"before improvement\" on the left and \"after improvement\" on the right. The overall mood is informative, focusing on posture correction.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427315-lBI8pLRfV2DTgr3OCyd2",
+    "created": 1788427315,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 108,
+      "total_tokens": 963,
+      "cost": 0.0032175
+    }
+  }
+}

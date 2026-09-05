@@ -1,0 +1,36 @@
+{
+  "id": "19503288-eb90-463d-a508-8d4048634331",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:25.616070",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 251517,
+    "modified_time": "2026-08-23T21:56:09.241848"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a chart depicting the consumption market scale for urban pets (dogs and cats) in billions of yuan from 2021 to 2027. It features a stacked bar graph with segments for dogs in green and cats in yellow, showing growth over the years. The graph also includes a green line indicating total growth. Key data points are labeled for each year, showing a continuous increase. At the bottom, a table outlines percentage growth for dogs, cats, and the total market from 2021 to 2024. The mood of the image is analytical, focusing on economic growth trends. Visible text includes \"CAGR 6.4%\" and \"CAGR 8.4%,\" indicating compound annual growth rates.",
+    "final_text": "The image is a chart depicting the consumption market scale for urban pets (dogs and cats) in billions of yuan from 2021 to 2027. It features a stacked bar graph with segments for dogs in green and cats in yellow, showing growth over the years. The graph also includes a green line indicating total growth. Key data points are labeled for each year, showing a continuous increase. At the bottom, a table outlines percentage growth for dogs, cats, and the total market from 2021 to 2024. The mood of the image is analytical, focusing on economic growth trends. Visible text includes \"CAGR 6.4%\" and \"CAGR 8.4%,\" indicating compound annual growth rates.",
+    "token_stats": {
+      "original_tokens": 147,
+      "final_tokens": 147,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427584-xXxBbUHutENvqlPT1aA0",
+    "created": 1788427584,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 148,
+      "total_tokens": 865,
+      "cost": 0.0032725
+    }
+  }
+}

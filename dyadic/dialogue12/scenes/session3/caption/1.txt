@@ -1,0 +1,9 @@
+The image is a medical document written in Chinese, structured in a table format. It includes details such as:
+
+- Patient information: Name, bed number, hospital number, ethnicity, gender, age, and care level.
+- Medical diagnoses: Chronic renal insufficiency, obstructive kidney disease, diabetes.
+- Brief medical history and auxiliary examinations: Describes symptoms like bleeding, nausea, vomiting, and lab results.
+- Nursing measures: Monitoring vital signs, assisting with bed rest to prevent bedsores, and observing wound conditions.
+- Current nursing difficulties: Challenges include patient’s poor self-care and disease severity.
+
+The document has a clinical and professional atmosphere.

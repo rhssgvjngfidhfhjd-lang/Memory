@@ -1,0 +1,36 @@
+{
+  "id": "26647134-b849-4c07-878a-72205eb0d018",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:34.346593",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session12/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 47160,
+    "modified_time": "2026-08-23T21:34:06.688084"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a collection of weather app interfaces on a blue background. The main screen shows a phone displaying weather details for New York, with a large sun icon, temperature of 22°C, and \"Sunny\" description. Additional screens depict various weather conditions like cloudy, rainy, and windy, each with corresponding icons and temperatures ranging from 19°C to -9°C. Days of the week with temperature forecasts are shown. The mood is informative and tech-oriented, with a clean and modern design style.",
+    "final_text": "The image features a collection of weather app interfaces on a blue background. The main screen shows a phone displaying weather details for New York, with a large sun icon, temperature of 22°C, and \"Sunny\" description. Additional screens depict various weather conditions like cloudy, rainy, and windy, each with corresponding icons and temperatures ranging from 19°C to -9°C. Days of the week with temperature forecasts are shown. The mood is informative and tech-oriented, with a clean and modern design style.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426993-AgiJFBZQ13Vj611z5qC5",
+    "created": 1788426993,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 101,
+      "total_tokens": 616,
+      "cost": 0.0022975
+    }
+  }
+}

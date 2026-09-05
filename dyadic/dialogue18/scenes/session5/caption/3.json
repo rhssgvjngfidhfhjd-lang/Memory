@@ -1,0 +1,36 @@
+{
+  "id": "9b614ed3-e241-4f50-95f0-16ffd0c35be8",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:55.850612",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session5/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 77875,
+    "modified_time": "2026-08-23T21:37:34.999204"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a serene mountainous landscape with rolling green hills in the foreground and towering mountains in the background, partially covered with patches of snow. The scene is devoid of people or animals, emphasizing the untouched beauty of nature. The lighting suggests a clear day, adding a peaceful and majestic atmosphere to the image. There is no visible text.",
+    "final_text": "The image depicts a serene mountainous landscape with rolling green hills in the foreground and towering mountains in the background, partially covered with patches of snow. The scene is devoid of people or animals, emphasizing the untouched beauty of nature. The lighting suggests a clear day, adding a peaceful and majestic atmosphere to the image. There is no visible text.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427134-ELA4EXEoBewmjF4RPXI9",
+    "created": 1788427134,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 67,
+      "total_tokens": 582,
+      "cost": 0.0019575
+    }
+  }
+}

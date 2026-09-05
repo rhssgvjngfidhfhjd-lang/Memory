@@ -1,0 +1,36 @@
+{
+  "id": "7099117e-ae8b-45eb-bc49-329ffb5721d1",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:08.048191",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 1515866,
+    "modified_time": "2026-08-23T21:41:46.887718"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image showcases an awards ranking list for top technology brands, with a dark, elegant background and golden accents. Logos of companies like iFLYTEK, Lenovo, Xiaomi, Huawei, and others are displayed in white ovals with gold labels indicating categories such as AI, new products, and 3D printing. The text is mainly in Chinese, highlighting the theme of an annual trend leaderboard. The overall mood is formal and celebratory.",
+    "final_text": "The image showcases an awards ranking list for top technology brands, with a dark, elegant background and golden accents. Logos of companies like iFLYTEK, Lenovo, Xiaomi, Huawei, and others are displayed in white ovals with gold labels indicating categories such as AI, new products, and 3D printing. The text is mainly in Chinese, highlighting the theme of an annual trend leaderboard. The overall mood is formal and celebratory.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427325-pG7rEMCoCpXasHKYgUfw",
+    "created": 1788427325,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 88,
+      "total_tokens": 1623,
+      "cost": 0.0047175
+    }
+  }
+}

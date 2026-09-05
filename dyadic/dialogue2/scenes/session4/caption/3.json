@@ -1,0 +1,36 @@
+{
+  "id": "b2d5f8ca-3ead-400f-b5a1-c20108ba9901",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:00.316046",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 528282,
+    "modified_time": "2026-08-23T21:41:06.996117"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a colorful, illustrated recipe for making a dessert called \"Red Bean Cat Pudding.\" The scene features a large pink pot filled with red bean soup topped with cat-shaped dumplings, surrounded by cute cartoon cats. The recipe steps are illustrated with images and Chinese text, detailing the process and ingredients, such as glutinous rice flour and chocolate powder. The overall mood is playful and whimsical, with a pastel color scheme and decorative elements enhancing the cute aesthetic.",
+    "final_text": "The image is a colorful, illustrated recipe for making a dessert called \"Red Bean Cat Pudding.\" The scene features a large pink pot filled with red bean soup topped with cat-shaped dumplings, surrounded by cute cartoon cats. The recipe steps are illustrated with images and Chinese text, detailing the process and ingredients, such as glutinous rice flour and chocolate powder. The overall mood is playful and whimsical, with a pastel color scheme and decorative elements enhancing the cute aesthetic.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427259-eF1LTWB5ChNUR9Q5ubpp",
+    "created": 1788427259,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 94,
+      "total_tokens": 609,
+      "cost": 0.0022275
+    }
+  }
+}

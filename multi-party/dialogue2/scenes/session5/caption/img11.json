@@ -1,0 +1,36 @@
+{
+  "id": "d7da964e-5ab9-4867-8aef-7e4507056a70",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:20.809940",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session5/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 170117,
+    "modified_time": "2026-08-23T22:08:09.154491"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a plate of salad featuring halved boiled eggs, cherry tomatoes, lettuce, and shredded cabbage, drizzled with dressing. A fork is visible on the right side of the plate. There is red text in a circle over the salad that reads \"热量炸弹,\" which translates to \"calorie bomb.\" The mood is casual and focused on food presentation, suggesting a commentary on the dish's nutritional content.",
+    "final_text": "The image depicts a plate of salad featuring halved boiled eggs, cherry tomatoes, lettuce, and shredded cabbage, drizzled with dressing. A fork is visible on the right side of the plate. There is red text in a circle over the salad that reads \"热量炸弹,\" which translates to \"calorie bomb.\" The mood is casual and focused on food presentation, suggesting a commentary on the dish's nutritional content.",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426680-QkGHoLFEX7LgFl69hQi5",
+    "created": 1788426680,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 87,
+      "total_tokens": 807,
+      "cost": 0.00267
+    }
+  }
+}

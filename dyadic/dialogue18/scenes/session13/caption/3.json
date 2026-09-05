@@ -1,0 +1,36 @@
+{
+  "id": "c43e8d22-445b-4068-bd38-81c3b60c7319",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:28.181019",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session13/image/3.png",
+    "filename": "3.png",
+    "size": 156998,
+    "modified_time": "2026-08-23T21:37:14.137422"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A person is outdoors in a snowy mountainous landscape, preparing pour-over coffee. They are pouring hot water from a kettle into a dripper over a glass carafe on a small table. Next to the setup is a portable stove with a pot and a gas canister. The sun is setting or rising, casting a warm glow over the scene. The atmosphere is serene and cozy, contrasting the cold environment.",
+    "final_text": "A person is outdoors in a snowy mountainous landscape, preparing pour-over coffee. They are pouring hot water from a kettle into a dripper over a glass carafe on a small table. Next to the setup is a portable stove with a pot and a gas canister. The sun is setting or rising, casting a warm glow over the scene. The atmosphere is serene and cozy, contrasting the cold environment.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427166-j2i8vDjRquQkKoxRxkpY",
+    "created": 1788427166,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 81,
+      "total_tokens": 426,
+      "cost": 0.0016725
+    }
+  }
+}

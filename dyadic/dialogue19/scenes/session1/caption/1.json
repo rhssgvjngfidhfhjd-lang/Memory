@@ -1,0 +1,36 @@
+{
+  "id": "9b87249e-5576-4081-b174-8c2e4200a5e7",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:40.127743",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session1/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 65245,
+    "modified_time": "2026-08-23T21:37:48.435419"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a minimalist indoor café setting with a concrete and wooden aesthetic. It features wooden benches along the walls, black round tables, and small wooden stools. The walls are decorated with empty picture frames and industrial-style wall lamps. Potted plants are arranged along one side, adding a touch of greenery. The ceiling has a skylight, allowing natural light to illuminate the space. The atmosphere is calm and modern, suggesting a quiet place for relaxation or work. No visible text is present.",
+    "final_text": "The image depicts a minimalist indoor café setting with a concrete and wooden aesthetic. It features wooden benches along the walls, black round tables, and small wooden stools. The walls are decorated with empty picture frames and industrial-style wall lamps. Potted plants are arranged along one side, adding a touch of greenery. The ceiling has a skylight, allowing natural light to illuminate the space. The atmosphere is calm and modern, suggesting a quiet place for relaxation or work. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427178-nNfpBKo5rizQpLn0panr",
+    "created": 1788427178,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 98,
+      "total_tokens": 613,
+      "cost": 0.0022675
+    }
+  }
+}

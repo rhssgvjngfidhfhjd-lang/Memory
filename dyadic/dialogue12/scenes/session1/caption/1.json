@@ -1,0 +1,36 @@
+{
+  "id": "c43f8a0e-4aac-4edb-8fc2-7008c9e583c1",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:42.065925",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session1/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 378456,
+    "modified_time": "2026-08-23T21:31:19.054767"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a health dashboard interface from a website called \"my.aidlab.com.\" The core scene shows various health metrics, including heart rhythm, respiration rate, heart rate variability, steps, and blood glucose levels. Each metric is accompanied by average values and bar graphs indicating data trends over time. The interface features tabs labeled \"Summary,\" \"Measurements,\" and \"Data Records,\" with a date range selector set from October 6 to October 10. On the right, there is a \"Components\" section listing options such as heart rate, temperature, SpO2, and activity. The atmosphere is clinical and data-focused, emphasizing health monitoring and analysis.",
+    "final_text": "The image depicts a health dashboard interface from a website called \"my.aidlab.com.\" The core scene shows various health metrics, including heart rhythm, respiration rate, heart rate variability, steps, and blood glucose levels. Each metric is accompanied by average values and bar graphs indicating data trends over time. The interface features tabs labeled \"Summary,\" \"Measurements,\" and \"Data Records,\" with a date range selector set from October 6 to October 10. On the right, there is a \"Components\" section listing options such as heart rate, temperature, SpO2, and activity. The atmosphere is clinical and data-focused, emphasizing health monitoring and analysis.",
+    "token_stats": {
+      "original_tokens": 134,
+      "final_tokens": 134,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426703-pXTdgEDSjjryVnsmnN4f",
+    "created": 1788426703,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 133,
+      "total_tokens": 1131,
+      "cost": 0.003825
+    }
+  }
+}

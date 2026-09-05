@@ -1,0 +1,36 @@
+{
+  "id": "c7fb4260-223b-40a1-b22f-53dff8a71fb8",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:33.669752",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 449445,
+    "modified_time": "2026-08-23T21:56:50.212841"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a diagram outlining the \"儿童哮喘家庭管理路径图\" (Children's Asthma Family Management Pathway). It features a central node surrounded by four main modules: 症状监测模块 (Symptom Monitoring Module), 环境控制模块 (Environmental Control Module), 药物依从性模块 (Medication Compliance Module), and 急性发作应对流程模块 (Acute Episode Response Process Module). Each module contains specific elements such as allergen identification, air quality monitoring, medication schedule, and emergency contacts. The overall mood is informative and structured, aimed at guiding families in managing children's asthma effectively.",
+    "final_text": "The image is a diagram outlining the \"儿童哮喘家庭管理路径图\" (Children's Asthma Family Management Pathway). It features a central node surrounded by four main modules: 症状监测模块 (Symptom Monitoring Module), 环境控制模块 (Environmental Control Module), 药物依从性模块 (Medication Compliance Module), and 急性发作应对流程模块 (Acute Episode Response Process Module). Each module contains specific elements such as allergen identification, air quality monitoring, medication schedule, and emergency contacts. The overall mood is informative and structured, aimed at guiding families in managing children's asthma effectively.",
+    "token_stats": {
+      "original_tokens": 157,
+      "final_tokens": 157,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427593-K4R0tWjjrHbTsGPOSoI9",
+    "created": 1788427593,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 130,
+      "total_tokens": 569,
+      "cost": 0.0023975
+    }
+  }
+}

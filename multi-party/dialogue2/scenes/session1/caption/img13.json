@@ -1,0 +1,36 @@
+{
+  "id": "e2850562-b58a-44df-9e28-1771703b6219",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:22.623921",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 454646,
+    "modified_time": "2026-08-23T22:04:14.331731"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a healthy meal comprising a bowl filled with various foods: roasted shrimp, broccoli, mushrooms, corn, blueberries, roasted pumpkin slices, and a soft-boiled egg. Beside the bowl is a glass of iced coffee with visible text: \"When you want something, all the universe conspires in helping you to achieve it.\" A wooden fork is placed nearby. The atmosphere is fresh and vibrant, suggesting a focus on nutritious eating.",
+    "final_text": "The image features a healthy meal comprising a bowl filled with various foods: roasted shrimp, broccoli, mushrooms, corn, blueberries, roasted pumpkin slices, and a soft-boiled egg. Beside the bowl is a glass of iced coffee with visible text: \"When you want something, all the universe conspires in helping you to achieve it.\" A wooden fork is placed nearby. The atmosphere is fresh and vibrant, suggesting a focus on nutritious eating.",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426620-1miCze0okvBGHp5XhObj",
+    "created": 1788426620,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 89,
+      "total_tokens": 944,
+      "cost": 0.0030275
+    }
+  }
+}

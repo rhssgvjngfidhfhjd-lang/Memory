@@ -1,0 +1,36 @@
+{
+  "id": "131ffafa-bfd2-48ed-9f29-f4d5a459f19d",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:05.425666",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 1105501,
+    "modified_time": "2026-08-23T21:57:24.536654"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a promotional advertisement for a Xiaomi air purifier, model 6 Pro. The purifier is prominently displayed on the right, with visible branding and a digital screen. Text highlights its high CADR ratings: 1000 m³/h for formaldehyde and 1461 m³/h for particulate matter. The ad emphasizes its efficiency and features, such as advanced filtering technology. Various certification logos are visible. The mood is informative and commercial, with pricing details: ¥2399 with discounts leading to a final price of ¥2198.7. Buttons indicate options to purchase or add to a shopping cart.",
+    "final_text": "The image features a promotional advertisement for a Xiaomi air purifier, model 6 Pro. The purifier is prominently displayed on the right, with visible branding and a digital screen. Text highlights its high CADR ratings: 1000 m³/h for formaldehyde and 1461 m³/h for particulate matter. The ad emphasizes its efficiency and features, such as advanced filtering technology. Various certification logos are visible. The mood is informative and commercial, with pricing details: ¥2399 with discounts leading to a final price of ¥2198.7. Buttons indicate options to purchase or add to a shopping cart.",
+    "token_stats": {
+      "original_tokens": 125,
+      "final_tokens": 125,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427624-kPgDzmzj1DcFpQNjT7Si",
+    "created": 1788427624,
+    "usage": {
+      "prompt_tokens": 1002,
+      "completion_tokens": 124,
+      "total_tokens": 1126,
+      "cost": 0.003745
+    }
+  }
+}

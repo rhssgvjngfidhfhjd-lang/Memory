@@ -1,0 +1,36 @@
+{
+  "id": "0a2b22c3-5f8a-4c66-a01e-2470fd131bcd",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:48.538057",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session5/image/img5.png",
+    "filename": "img5.png",
+    "size": 220038,
+    "modified_time": "2026-08-23T22:09:19.894657"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a screenshot of an online shopping transaction. It features a product listing from \"淘宝 Dsix 邓六六\" with a small image of a woman in a white dress sitting by a window. The text includes the description of the dress, priced at ¥156.64, with a discount of ¥17.40. The text mentions a successful refund, free return shipping, and a 7-day return policy. The overall mood is transactional and informational.",
+    "final_text": "The image is a screenshot of an online shopping transaction. It features a product listing from \"淘宝 Dsix 邓六六\" with a small image of a woman in a white dress sitting by a window. The text includes the description of the dress, priced at ¥156.64, with a discount of ¥17.40. The text mentions a successful refund, free return shipping, and a 7-day return policy. The overall mood is transactional and informational.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426827-SD87tHEuYlCmWuth2weL",
+    "created": 1788426827,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 94,
+      "total_tokens": 609,
+      "cost": 0.0022275
+    }
+  }
+}

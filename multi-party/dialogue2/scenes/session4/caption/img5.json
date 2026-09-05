@@ -1,0 +1,36 @@
+{
+  "id": "b8ae1795-4b95-4041-b1c6-921f8665e86f",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:00.709436",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 173920,
+    "modified_time": "2026-08-23T22:06:58.183709"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a soccer player wearing a beige jersey with red accents, featuring the number 17 and the logo of Bayern Munich and Adidas. The player is making a gesture with one hand on his lips and the other pointing to his head, suggesting silence or focus. Other players are visible in the background. The setting appears to be a soccer stadium, creating a competitive and focused atmosphere.",
+    "final_text": "The image depicts a soccer player wearing a beige jersey with red accents, featuring the number 17 and the logo of Bayern Munich and Adidas. The player is making a gesture with one hand on his lips and the other pointing to his head, suggesting silence or focus. Other players are visible in the background. The setting appears to be a soccer stadium, creating a competitive and focused atmosphere.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426657-7ehcwtrtXwDGY2WMJWUJ",
+    "created": 1788426657,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 78,
+      "total_tokens": 795,
+      "cost": 0.0025725
+    }
+  }
+}

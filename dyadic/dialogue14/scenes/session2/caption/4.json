@@ -1,0 +1,36 @@
+{
+  "id": "b0d2e54f-c0c0-48ea-b32c-aea6e9208d95",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:46.603094",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session2/image/4.png",
+    "filename": "4.png",
+    "size": 239940,
+    "modified_time": "2026-08-23T21:33:12.077665"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table containing a health management plan focused on social supervision and points-based incentive systems, presented in Chinese text. The table is divided into sections: \"方案模块\" (Plan Module), \"具体实施内容\" (Specific Implementation Content), \"责任分工\" (Responsibility Distribution), \"实施细节与规则\" (Implementation Details and Rules), and \"核心价值\" (Core Value). Each section details aspects such as supervision models, responsibility allocation, and incentive mechanisms. The mood is informative and structured, aimed at enhancing participation and cooperation in health management tasks.",
+    "final_text": "The image is a table containing a health management plan focused on social supervision and points-based incentive systems, presented in Chinese text. The table is divided into sections: \"方案模块\" (Plan Module), \"具体实施内容\" (Specific Implementation Content), \"责任分工\" (Responsibility Distribution), \"实施细节与规则\" (Implementation Details and Rules), and \"核心价值\" (Core Value). Each section details aspects such as supervision models, responsibility allocation, and incentive mechanisms. The mood is informative and structured, aimed at enhancing participation and cooperation in health management tasks.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426883-lIlv0tPS6xXyqGlPUADm",
+    "created": 1788426883,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 117,
+      "total_tokens": 834,
+      "cost": 0.0029625
+    }
+  }
+}

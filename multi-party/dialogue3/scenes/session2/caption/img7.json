@@ -1,0 +1,36 @@
+{
+  "id": "68be2628-cf13-4176-b504-07095828bc40",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:41.538836",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 187572,
+    "modified_time": "2026-08-23T22:07:26.389720"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a settings menu from a video game interface, featuring options related to graphics quality, resolution, brightness, frame rate, and other visual settings. The text is in Chinese, with options for customizing image quality (\"图形质量预设\"), resolution (\"分辨率\"), and frame rate (\"最高帧率\") set at 30fps. The background shows a blurred scene of what appears to be a game environment. The mood is technical and user-focused, emphasizing customization and optimization of gameplay visuals.",
+    "final_text": "The image displays a settings menu from a video game interface, featuring options related to graphics quality, resolution, brightness, frame rate, and other visual settings. The text is in Chinese, with options for customizing image quality (\"图形质量预设\"), resolution (\"分辨率\"), and frame rate (\"最高帧率\") set at 30fps. The background shows a blurred scene of what appears to be a game environment. The mood is technical and user-focused, emphasizing customization and optimization of gameplay visuals.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426703-yEzoZL10kKGPBROXSU7N",
+    "created": 1788426703,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 102,
+      "total_tokens": 1297,
+      "cost": 0.0040075
+    }
+  }
+}

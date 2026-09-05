@@ -1,0 +1,36 @@
+{
+  "id": "7a5fd4d3-1d25-4bb3-a0f4-78c2208cef09",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:56.090942",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 1100632,
+    "modified_time": "2026-08-23T21:55:22.729332"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two transparent medical vials, one with a silver cap and the other with a blue cap, placed on a teal fabric. Beside them is a syringe marked with measurements up to 5 ml. The scene suggests a clinical or medical setting, with a focus on preparation or administration of medication. The mood is sterile and professional. No visible text is present on the vials or syringe, but subtle watermark text can be seen on the fabric.",
+    "final_text": "The image features two transparent medical vials, one with a silver cap and the other with a blue cap, placed on a teal fabric. Beside them is a syringe marked with measurements up to 5 ml. The scene suggests a clinical or medical setting, with a focus on preparation or administration of medication. The mood is sterile and professional. No visible text is present on the vials or syringe, but subtle watermark text can be seen on the fabric.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427256-3jkmEmBlsh6lBtvpRVAa",
+    "created": 1788427256,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 92,
+      "total_tokens": 947,
+      "cost": 0.0030575
+    }
+  }
+}

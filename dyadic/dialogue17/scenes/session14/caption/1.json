@@ -1,0 +1,36 @@
+{
+  "id": "cd5d233d-cb7c-4527-89a1-1a8b674d38b2",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:30.723587",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session14/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 270852,
+    "modified_time": "2026-08-23T21:36:07.176097"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional graphic for \"VeriMark,\" a content verification plugin. It features two identical images of a man, labeled \"用户上传图片\" (user-uploaded image) and \"无保护\" (unprotected), indicating a process of verification and protection. Icons and arrows illustrate steps from image upload to verification, with text like \"保护原创\" (protect originality) and \"任何编辑均留下可追溯记录\" (all edits leave a traceable record). The graphic conveys a technical and secure atmosphere, emphasizing protection and modification detection.",
+    "final_text": "The image is a promotional graphic for \"VeriMark,\" a content verification plugin. It features two identical images of a man, labeled \"用户上传图片\" (user-uploaded image) and \"无保护\" (unprotected), indicating a process of verification and protection. Icons and arrows illustrate steps from image upload to verification, with text like \"保护原创\" (protect originality) and \"任何编辑均留下可追溯记录\" (all edits leave a traceable record). The graphic conveys a technical and secure atmosphere, emphasizing protection and modification detection.",
+    "token_stats": {
+      "original_tokens": 126,
+      "final_tokens": 126,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427110-TeepWPWxxa72PfpEJLTP",
+    "created": 1788427110,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 113,
+      "total_tokens": 1308,
+      "cost": 0.0041175
+    }
+  }
+}

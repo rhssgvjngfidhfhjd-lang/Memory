@@ -1,0 +1,36 @@
+{
+  "id": "83e4b597-2064-4144-9b16-a7098da3cafc",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:45.906146",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session3/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 101118,
+    "modified_time": "2026-08-23T21:36:17.715611"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a gray tabby cat lying on a table, with a veterinarian in blue attire using a stethoscope to check the cat's health. The cat looks directly at the camera, appearing calm and slightly curious. The overall atmosphere is clinical yet gentle, suggesting a routine veterinary check-up. No visible text is present.",
+    "final_text": "The image shows a gray tabby cat lying on a table, with a veterinarian in blue attire using a stethoscope to check the cat's health. The cat looks directly at the camera, appearing calm and slightly curious. The overall atmosphere is clinical yet gentle, suggesting a routine veterinary check-up. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427064-zIyd2gEFJHgnxEXrPzLR",
+    "created": 1788427064,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 66,
+      "total_tokens": 1261,
+      "cost": 0.0036475
+    }
+  }
+}

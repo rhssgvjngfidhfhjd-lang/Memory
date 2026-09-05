@@ -1,0 +1,36 @@
+{
+  "id": "944320d2-c481-431e-b189-1e32ba8a6c9a",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:32.505808",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session15/image/3.png",
+    "filename": "3.png",
+    "size": 225361,
+    "modified_time": "2026-08-23T21:32:29.305927"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a structured table titled \"元旦‘邻里暖餐’试吃会反馈及经验总结表,\" which translates to \"New Year's Neighborhood Warm Meal Tasting Feedback and Experience Summary Table.\" The table contains multiple rows and columns with headings such as \"类别\" (Category), \"核心内容\" (Core Content), \"扩写说明\" (Detailed Explanation), and \"应用价值\" (Application Value). It includes feedback on activities and practical experiences, with points like creating a warm atmosphere and ensuring hygiene. The text is in Chinese, and the mood is informative and organizational, focusing on community event planning and evaluation.",
+    "final_text": "The image is a structured table titled \"元旦‘邻里暖餐’试吃会反馈及经验总结表,\" which translates to \"New Year's Neighborhood Warm Meal Tasting Feedback and Experience Summary Table.\" The table contains multiple rows and columns with headings such as \"类别\" (Category), \"核心内容\" (Core Content), \"扩写说明\" (Detailed Explanation), and \"应用价值\" (Application Value). It includes feedback on activities and practical experiences, with points like creating a warm atmosphere and ensuring hygiene. The text is in Chinese, and the mood is informative and organizational, focusing on community event planning and evaluation.",
+    "token_stats": {
+      "original_tokens": 143,
+      "final_tokens": 143,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426871-go0cj45LrTpgvMuPaAQz",
+    "created": 1788426871,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 128,
+      "total_tokens": 1126,
+      "cost": 0.003775
+    }
+  }
+}

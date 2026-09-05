@@ -1,0 +1,36 @@
+{
+  "id": "e811ea22-e313-4283-a726-a42841c7ef4b",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:59.864860",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 88104,
+    "modified_time": "2026-08-23T22:07:36.417461"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a detailed and ornate figurine of a warrior character. The character has a distinctive red lightning bolt pattern on his forehead and a long, black mustache. He wears elaborate armor with gold and red embellishments, including intricate patterns and fur lining. His right hand is gloved in red, holding a sword with a blue blade pointed forward. The atmosphere is intense and dramatic, highlighting the character's fierce and commanding presence.",
+    "final_text": "The image depicts a detailed and ornate figurine of a warrior character. The character has a distinctive red lightning bolt pattern on his forehead and a long, black mustache. He wears elaborate armor with gold and red embellishments, including intricate patterns and fur lining. His right hand is gloved in red, holding a sword with a blue blade pointed forward. The atmosphere is intense and dramatic, highlighting the character's fierce and commanding presence.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426719-afDyEgztbX6n9XopVLQa",
+    "created": 1788426719,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 87,
+      "total_tokens": 942,
+      "cost": 0.0030075
+    }
+  }
+}

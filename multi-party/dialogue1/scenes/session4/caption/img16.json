@@ -1,0 +1,36 @@
+{
+  "id": "75b1753c-7c8b-488a-a03f-56e5e4f3f2dc",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:53.696516",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img16.jpg",
+    "filename": "img16.jpg",
+    "size": 42562,
+    "modified_time": "2026-08-23T22:03:38.466475"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a screenshot of a mobile banking transaction confirmation. It displays a successful transfer of ¥15,850.00 to a recipient named 牛扒店. Details include the transaction ID, recipient account number, recipient bank (China Merchants Bank), sender account number, and transfer purpose (mobile transfer). The transaction fee is listed as 0.00. At the bottom, there are two buttons: one for an electronic receipt and another to transfer again. The time shown is 22:53, and there is a 5G network indicator. The mood is straightforward and professional, indicating a completed financial transaction.",
+    "final_text": "The image shows a screenshot of a mobile banking transaction confirmation. It displays a successful transfer of ¥15,850.00 to a recipient named 牛扒店. Details include the transaction ID, recipient account number, recipient bank (China Merchants Bank), sender account number, and transfer purpose (mobile transfer). The transaction fee is listed as 0.00. At the bottom, there are two buttons: one for an electronic receipt and another to transfer again. The time shown is 22:53, and there is a 5G network indicator. The mood is straightforward and professional, indicating a completed financial transaction.",
+    "token_stats": {
+      "original_tokens": 126,
+      "final_tokens": 126,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426592-Uqx2kxLQnFbOu5Ta0xmD",
+    "created": 1788426592,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 124,
+      "total_tokens": 639,
+      "cost": 0.0025275
+    }
+  }
+}

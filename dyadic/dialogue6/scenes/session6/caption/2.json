@@ -1,0 +1,36 @@
+{
+  "id": "f9938dcc-5f83-4be7-b3b2-fdb07aaf121e",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:06.991388",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session6/image/2.png",
+    "filename": "2.png",
+    "size": 670803,
+    "modified_time": "2026-08-23T21:56:16.877344"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a lined notepad with handwritten text in Chinese, detailing nutritional information and meal preparation times. The text includes protein, carbohydrate, fat content, and total calories. It also lists time estimates for shopping, washing, cooking, and packaging, totaling about 1 hour and 45 minutes. A black pen is placed next to the notepad, suggesting planning or organization. The overall mood is practical and organized, focusing on meal prep and dietary management.",
+    "final_text": "The image shows a lined notepad with handwritten text in Chinese, detailing nutritional information and meal preparation times. The text includes protein, carbohydrate, fat content, and total calories. It also lists time estimates for shopping, washing, cooking, and packaging, totaling about 1 hour and 45 minutes. A black pen is placed next to the notepad, suggesting planning or organization. The overall mood is practical and organized, focusing on meal prep and dietary management.",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427564-ywqy1buKo4mFUW1jwjug",
+    "created": 1788427564,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 93,
+      "total_tokens": 810,
+      "cost": 0.0027225
+    }
+  }
+}

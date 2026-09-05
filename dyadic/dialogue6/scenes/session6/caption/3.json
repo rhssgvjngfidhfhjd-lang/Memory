@@ -1,0 +1,36 @@
+{
+  "id": "6b36f0b4-4260-458a-b916-238a9831331e",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:06.641662",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 588856,
+    "modified_time": "2026-08-23T21:56:16.502801"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a menu showcasing various meal sets, titled \"营养套餐表\" (Nutrition Set Menu). It is divided into two sections. The left section lists meal sets such as chicken breast, shrimp, chicken leg, pork, and beef, along with their prices, ranging from 28 to 52. The right section includes light stir-fried dishes, soups, and noodle options, with prices from 12 to 50. Vegetables like cucumbers, tomatoes, carrots, and bell peppers decorate the border. Contact information includes a phone number, partially obscured as \"1998xxxxxx71.\" The mood is bright and healthy, emphasizing low-calorie and nutritious options.",
+    "final_text": "The image features a menu showcasing various meal sets, titled \"营养套餐表\" (Nutrition Set Menu). It is divided into two sections. The left section lists meal sets such as chicken breast, shrimp, chicken leg, pork, and beef, along with their prices, ranging from 28 to 52. The right section includes light stir-fried dishes, soups, and noodle options, with prices from 12 to 50. Vegetables like cucumbers, tomatoes, carrots, and bell peppers decorate the border. Contact information includes a phone number, partially obscured as \"1998xxxxxx71.\" The mood is bright and healthy, emphasizing low-calorie and nutritious options.",
+    "token_stats": {
+      "original_tokens": 147,
+      "final_tokens": 147,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427563-FQm2l43H0uFQYHx4A7zd",
+    "created": 1788427563,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 139,
+      "total_tokens": 856,
+      "cost": 0.0031825
+    }
+  }
+}

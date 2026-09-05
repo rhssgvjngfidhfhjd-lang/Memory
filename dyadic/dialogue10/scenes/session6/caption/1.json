@@ -1,0 +1,36 @@
+{
+  "id": "ea02c08e-f54a-4f0a-9abf-933137d1fd86",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:46.312152",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 3769757,
+    "modified_time": "2026-08-23T21:31:31.296964"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a small cake in a white box with a clear window, labeled \"Sunday i Cone.\" The box is placed on a light-colored table next to a plastic fork and a receipt with text. The setting appears cozy and warm, possibly in a café or restaurant. The atmosphere is relaxed, suggesting a personal or casual dining experience.",
+    "final_text": "The image shows a small cake in a white box with a clear window, labeled \"Sunday i Cone.\" The box is placed on a light-colored table next to a plastic fork and a receipt with text. The setting appears cozy and warm, possibly in a café or restaurant. The atmosphere is relaxed, suggesting a personal or casual dining experience.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426581-5eCFd3wf43dIqcddIgYt",
+    "created": 1788426581,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 68,
+      "total_tokens": 923,
+      "cost": 0.0028175
+    }
+  }
+}

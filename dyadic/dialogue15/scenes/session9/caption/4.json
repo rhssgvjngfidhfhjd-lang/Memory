@@ -1,0 +1,36 @@
+{
+  "id": "2266ee4a-735b-4381-a755-8a7858334414",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:21.505640",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session9/image/4.jpg",
+    "filename": "4.jpg",
+    "size": 57545,
+    "modified_time": "2026-08-23T21:34:55.250915"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a nutritional information interface for \"Milk, Whole.\" It includes fields for amount (100g), serving size, timestamp (3:31 pm), and group (Breakfast). The energy summary shows a pie chart with 61 kcal, breaking down macronutrients: Protein (22%) - 3.1g, Carbs (31%) - 4.8g, Fat (47%) - 3.3g. It notes \"78 Listed Nutrients\" and \"Data Source: NCCDB.\" The overall mood is informative and analytical, focusing on dietary tracking.",
+    "final_text": "The image displays a nutritional information interface for \"Milk, Whole.\" It includes fields for amount (100g), serving size, timestamp (3:31 pm), and group (Breakfast). The energy summary shows a pie chart with 61 kcal, breaking down macronutrients: Protein (22%) - 3.1g, Carbs (31%) - 4.8g, Fat (47%) - 3.3g. It notes \"78 Listed Nutrients\" and \"Data Source: NCCDB.\" The overall mood is informative and analytical, focusing on dietary tracking.",
+    "token_stats": {
+      "original_tokens": 122,
+      "final_tokens": 122,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426982-vZSzDSeWPlqrN1Feaywc",
+    "created": 1788426982,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 118,
+      "total_tokens": 973,
+      "cost": 0.0033175
+    }
+  }
+}

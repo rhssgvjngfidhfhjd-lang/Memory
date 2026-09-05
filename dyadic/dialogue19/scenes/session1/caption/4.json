@@ -1,0 +1,36 @@
+{
+  "id": "ce00c68f-ecfa-4ad2-afa4-7332f4b8e9b1",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:42.780977",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session1/image/4.png",
+    "filename": "4.png",
+    "size": 2243453,
+    "modified_time": "2026-08-23T21:38:28.511537"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a menu with sections for \"Starters\" and \"Main Courses.\" Items include \"Escart kuqe,\" \"Garlic Prawns,\" \"Grilled Salmon Svith,\" and \"Vegetable Lasagna.\" Prices are listed next to each dish. Illustrations of food items accompany some entries. The overall mood is classic and elegant, with a focus on gourmet cuisine. Visible text includes pricing and dish names.",
+    "final_text": "The image shows a menu with sections for \"Starters\" and \"Main Courses.\" Items include \"Escart kuqe,\" \"Garlic Prawns,\" \"Grilled Salmon Svith,\" and \"Vegetable Lasagna.\" Prices are listed next to each dish. Illustrations of food items accompany some entries. The overall mood is classic and elegant, with a focus on gourmet cuisine. Visible text includes pricing and dish names.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427182-QiHdOgAS0LnS7ZH6dfem",
+    "created": 1788427182,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 86,
+      "total_tokens": 1281,
+      "cost": 0.0038475
+    }
+  }
+}

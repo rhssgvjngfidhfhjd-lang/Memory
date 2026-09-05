@@ -1,0 +1,36 @@
+{
+  "id": "4825e2e7-2635-4077-9aaa-f533b974e37e",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:54.031401",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 197170,
+    "modified_time": "2026-08-23T21:54:53.390363"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an advertisement for a Tanita kitchen scale. The main elements include the scale itself with a stainless steel platform, a digital display showing \"0.0,\" and various buttons. The background features a kitchen setting with wooden countertops. Visible text includes promotional details like a price of ¥159, precision measurement of 0.1g, and a date range of 1.23 - 2.23. The ad has a festive theme with decorative elements and bold colors. The atmosphere is promotional and appealing, encouraging immediate purchase with buttons labeled for shopping.",
+    "final_text": "The image is an advertisement for a Tanita kitchen scale. The main elements include the scale itself with a stainless steel platform, a digital display showing \"0.0,\" and various buttons. The background features a kitchen setting with wooden countertops. Visible text includes promotional details like a price of ¥159, precision measurement of 0.1g, and a date range of 1.23 - 2.23. The ad has a festive theme with decorative elements and bold colors. The atmosphere is promotional and appealing, encouraging immediate purchase with buttons labeled for shopping.",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427432-W4TIeqdqjm8zjUM8iL2m",
+    "created": 1788427432,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 113,
+      "total_tokens": 628,
+      "cost": 0.0024175
+    }
+  }
+}

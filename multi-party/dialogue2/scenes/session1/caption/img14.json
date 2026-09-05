@@ -1,0 +1,36 @@
+{
+  "id": "3dc53aa4-5c8a-48d7-afd0-89b2ed095fa2",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:23.178782",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 291380,
+    "modified_time": "2026-08-23T22:04:19.698009"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a meal setting on a wooden table. The main elements include a bowl of white liquid, likely soy milk, with a metal spoon inside, a plate with a crispy, elongated fried dough, and a small dish containing pickled vegetables. The atmosphere is casual and inviting, suggesting a typical breakfast or snack. There is no visible text, and the focus is on the food items, with no apparent interactions.",
+    "final_text": "The image depicts a meal setting on a wooden table. The main elements include a bowl of white liquid, likely soy milk, with a metal spoon inside, a plate with a crispy, elongated fried dough, and a small dish containing pickled vegetables. The atmosphere is casual and inviting, suggesting a typical breakfast or snack. There is no visible text, and the focus is on the food items, with no apparent interactions.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426620-gKurG4E0JzKk5DKS76Yl",
+    "created": 1788426620,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 85,
+      "total_tokens": 805,
+      "cost": 0.00265
+    }
+  }
+}

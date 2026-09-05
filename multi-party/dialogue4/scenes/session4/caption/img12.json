@@ -1,0 +1,36 @@
+{
+  "id": "9108d39c-475f-422a-8b9d-235702395e1e",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:37.233111",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 559915,
+    "modified_time": "2026-08-23T22:09:11.195220"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a hand placed underneath a thin, translucent white fabric, creating a soft and ethereal effect. The fingers and palm are visible through the material, highlighting its sheer quality. The overall atmosphere is gentle and delicate, with no visible text or additional elements present.",
+    "final_text": "The image depicts a hand placed underneath a thin, translucent white fabric, creating a soft and ethereal effect. The fingers and palm are visible through the material, highlighting its sheer quality. The overall atmosphere is gentle and delicate, with no visible text or additional elements present.",
+    "token_stats": {
+      "original_tokens": 54,
+      "final_tokens": 54,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426815-nJianExMIu9kUYeTBOsc",
+    "created": 1788426815,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 54,
+      "total_tokens": 909,
+      "cost": 0.0026775
+    }
+  }
+}

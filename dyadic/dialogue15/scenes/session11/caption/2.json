@@ -1,0 +1,36 @@
+{
+  "id": "f2c17b9d-1dac-4e8e-8882-4f52d6a3efb7",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:30.770101",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session11/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 156840,
+    "modified_time": "2026-08-23T21:33:57.259140"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a power graph comparing engine performance between two different engine sizes: 3.2 liter and 3.4 liter. The graph plots power (y-axis) against RPM (x-axis) from 1000 to 8000 RPM. The 3.2 liter engine is represented by a red line, while the 3.4 liter engine is shown with a brown line. The graph indicates how power output changes with RPM for each engine. The overall atmosphere is analytical and technical, focusing on performance data visualization.",
+    "final_text": "The image displays a power graph comparing engine performance between two different engine sizes: 3.2 liter and 3.4 liter. The graph plots power (y-axis) against RPM (x-axis) from 1000 to 8000 RPM. The 3.2 liter engine is represented by a red line, while the 3.4 liter engine is shown with a brown line. The graph indicates how power output changes with RPM for each engine. The overall atmosphere is analytical and technical, focusing on performance data visualization.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426988-nPuNaFp4YKoFO5d9SL2i",
+    "created": 1788426988,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 107,
+      "total_tokens": 622,
+      "cost": 0.0023575
+    }
+  }
+}

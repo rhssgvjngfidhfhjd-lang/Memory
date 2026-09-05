@@ -1,0 +1,36 @@
+{
+  "id": "4ac08cb4-a0ca-4ac5-97ff-6ce803eb7f6a",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:15.038744",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 625514,
+    "modified_time": "2026-08-23T21:42:41.267617"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a game results screen with character icons, item builds, and performance statistics. The text on the left lists categories like \"英雄\" (heroes) and \"游戏\" (game). Each row shows a character's icon, the word \"失败\" (defeat) in red, and stats such as kills, deaths, and assists. Various game items are displayed beside each character. The overall atmosphere is competitive, highlighting a series of losses.",
+    "final_text": "The image displays a game results screen with character icons, item builds, and performance statistics. The text on the left lists categories like \"英雄\" (heroes) and \"游戏\" (game). Each row shows a character's icon, the word \"失败\" (defeat) in red, and stats such as kills, deaths, and assists. Various game items are displayed beside each character. The overall atmosphere is competitive, highlighting a series of losses.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427334-DfyzeBKfbXzsaUr2zNwa",
+    "created": 1788427334,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 91,
+      "total_tokens": 1286,
+      "cost": 0.0038975
+    }
+  }
+}

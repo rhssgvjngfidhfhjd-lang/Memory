@@ -1,0 +1,36 @@
+{
+  "id": "2aba315c-bd34-4964-93d1-0cd0af7872ca",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:44.479951",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 701586,
+    "modified_time": "2026-08-23T21:55:19.107335"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a digital presentation slide titled \"蓝染的历史\" (History of Indigo Dyeing). On the left, there are several columns of Chinese text discussing historical aspects of indigo dyeing and its significance. On the right, there's an artistic image of flowing fabric with blue and white patterns, resembling indigo-dyed textiles. The background includes subtle bamboo and floral motifs, contributing to a serene and traditional atmosphere. The overall mood is informative, emphasizing cultural heritage and art.",
+    "final_text": "The image features a digital presentation slide titled \"蓝染的历史\" (History of Indigo Dyeing). On the left, there are several columns of Chinese text discussing historical aspects of indigo dyeing and its significance. On the right, there's an artistic image of flowing fabric with blue and white patterns, resembling indigo-dyed textiles. The background includes subtle bamboo and floral motifs, contributing to a serene and traditional atmosphere. The overall mood is informative, emphasizing cultural heritage and art.",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427483-AMTuXnqarexRzXytj8SE",
+    "created": 1788427483,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 98,
+      "total_tokens": 1096,
+      "cost": 0.003475
+    }
+  }
+}

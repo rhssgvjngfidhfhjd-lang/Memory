@@ -1,0 +1,36 @@
+{
+  "id": "87cdff1c-1d70-48d5-bbc7-6eda3dffd47f",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:53.011725",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session8/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 34337,
+    "modified_time": "2026-08-23T21:30:36.480155"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a crowded subway train with several passengers standing close together. One person in a brown coat is visibly laughing, creating a lighthearted atmosphere amidst the typical hustle of public transport. The scene is viewed through a window, adding a sense of observation or reflection. There is text at the bottom of the image in both Chinese and English, reading: \"生活是自己的 怎么舒服怎么来\" and \"Life is your own How comfortable How come.\" This suggests a message about personal comfort and individuality. The overall mood is a mix of everyday routine with a touch of joy.",
+    "final_text": "The image depicts a crowded subway train with several passengers standing close together. One person in a brown coat is visibly laughing, creating a lighthearted atmosphere amidst the typical hustle of public transport. The scene is viewed through a window, adding a sense of observation or reflection. There is text at the bottom of the image in both Chinese and English, reading: \"生活是自己的 怎么舒服怎么来\" and \"Life is your own How comfortable How come.\" This suggests a message about personal comfort and individuality. The overall mood is a mix of everyday routine with a touch of joy.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426590-QliSyzLcHJOWnUw0CD5f",
+    "created": 1788426590,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 116,
+      "total_tokens": 555,
+      "cost": 0.0022575
+    }
+  }
+}

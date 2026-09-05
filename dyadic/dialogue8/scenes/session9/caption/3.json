@@ -1,0 +1,36 @@
+{
+  "id": "28673191-88ee-41ae-8e48-0750cb58f620",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:00.264161",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session9/image/3.png",
+    "filename": "3.png",
+    "size": 1579206,
+    "modified_time": "2026-08-23T21:58:46.025333"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant market stall displaying a variety of colorful ceramics. The core scene includes intricately designed plates and bowls, featuring patterns in blue, green, and other vivid colors. Among the ceramics are small figurines of people riding horses, adding a whimsical touch. The overall atmosphere is lively and artistic, with no visible text present.",
+    "final_text": "The image depicts a vibrant market stall displaying a variety of colorful ceramics. The core scene includes intricately designed plates and bowls, featuring patterns in blue, green, and other vivid colors. Among the ceramics are small figurines of people riding horses, adding a whimsical touch. The overall atmosphere is lively and artistic, with no visible text present.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427678-gM8zc9loqrnQC292uUUv",
+    "created": 1788427678,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 69,
+      "total_tokens": 789,
+      "cost": 0.00249
+    }
+  }
+}

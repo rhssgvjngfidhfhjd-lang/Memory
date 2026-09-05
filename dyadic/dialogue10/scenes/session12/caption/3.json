@@ -1,0 +1,36 @@
+{
+  "id": "5ae313f4-3af1-49e8-a11b-810d2598a462",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:10.223352",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session12/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 140250,
+    "modified_time": "2026-08-23T21:30:14.699088"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an informative poster titled \"Mood Words\" with sections explaining moods, emotions, and providing lists of positive and negative mood words. The core scene includes textual content with headers like \"What Are Moods?\", \"Moods vs. Emotions\", and \"List of Mood Words\". Positive mood words include \"Amused\", \"Happy\", \"Optimistic\", while negative mood words include \"Aggravated\", \"Depressed\", \"Sad\". An illustration of a person is present in the \"What Are Moods?\" section. The mood is educational and structured, aiming to clarify the concept of moods and their impact. The website \"7ESL.COM\" is visible at the bottom.",
+    "final_text": "The image is an informative poster titled \"Mood Words\" with sections explaining moods, emotions, and providing lists of positive and negative mood words. The core scene includes textual content with headers like \"What Are Moods?\", \"Moods vs. Emotions\", and \"List of Mood Words\". Positive mood words include \"Amused\", \"Happy\", \"Optimistic\", while negative mood words include \"Aggravated\", \"Depressed\", \"Sad\". An illustration of a person is present in the \"What Are Moods?\" section. The mood is educational and structured, aiming to clarify the concept of moods and their impact. The website \"7ESL.COM\" is visible at the bottom.",
+    "token_stats": {
+      "original_tokens": 143,
+      "final_tokens": 143,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426609-Z7l7teQvnyzc52SLwtfh",
+    "created": 1788426609,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 140,
+      "total_tokens": 1138,
+      "cost": 0.003895
+    }
+  }
+}

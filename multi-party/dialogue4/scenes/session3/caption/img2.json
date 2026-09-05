@@ -1,0 +1,36 @@
+{
+  "id": "cd71caa8-d641-4a0b-acc5-6a648c08dbab",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:11.932404",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session3/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 327851,
+    "modified_time": "2026-08-23T22:08:56.056437"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two white plastic storage bins placed on a black leather surface. The smaller bin is nested inside the larger one, both with handles on the sides. The background features a gray, marbled floor. The scene is simple and organized, with no visible text, creating a clean and minimalistic atmosphere.",
+    "final_text": "The image shows two white plastic storage bins placed on a black leather surface. The smaller bin is nested inside the larger one, both with handles on the sides. The background features a gray, marbled floor. The scene is simple and organized, with no visible text, creating a clean and minimalistic atmosphere.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426791-uIDE3vZ5iCUMCKXVykew",
+    "created": 1788426791,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 62,
+      "total_tokens": 917,
+      "cost": 0.0027575
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "e006caf6-0f3c-4e4c-a0db-0db91c2cc20c",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:49.407627",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 311265,
+    "modified_time": "2026-08-23T21:57:20.427472"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a bar chart titled \"拉布拉多犬常见疾病发病率分析\" (Labrador Common Disease Incidence Analysis) with \"兽医流行病学数据\" (Veterinary Epidemiology Data) underneath. It features four vertical bars representing different health issues in Labradors, each with a percentage: joint issues (25%), skin diseases (35%), ear infections (45%), and eye diseases (20%), with obesity at 40%. Each bar has an image of a Labrador dog. The mood is informative and analytical.",
+    "final_text": "The image is a bar chart titled \"拉布拉多犬常见疾病发病率分析\" (Labrador Common Disease Incidence Analysis) with \"兽医流行病学数据\" (Veterinary Epidemiology Data) underneath. It features four vertical bars representing different health issues in Labradors, each with a percentage: joint issues (25%), skin diseases (35%), ear infections (45%), and eye diseases (20%), with obesity at 40%. Each bar has an image of a Labrador dog. The mood is informative and analytical.",
+    "token_stats": {
+      "original_tokens": 126,
+      "final_tokens": 126,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427608-CNmjuCnC4Y2lsLuN2hrX",
+    "created": 1788427608,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 113,
+      "total_tokens": 413,
+      "cost": 0.00188
+    }
+  }
+}

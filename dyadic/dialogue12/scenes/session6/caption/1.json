@@ -1,0 +1,36 @@
+{
+  "id": "6fa7e170-2197-49f8-af13-a46c74edc0ce",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:03.842411",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session6/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 71267,
+    "modified_time": "2026-08-23T21:32:00.886666"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant and fantastical landscape with an artistic, painted style. It features a group of adventurers or travelers in silhouette, walking across a snowy mountain slope. Above them, a fiery sky transitions into a mystical scene filled with blue mountains, trees, and pagodas. There are various mythical elements, such as a flying dragon and ethereal clouds. The text \"浪浪山\" and \"Nobody\" is visible in the center. The atmosphere is adventurous and mythical, combining elements of traditional Asian art with fantasy themes.",
+    "final_text": "The image depicts a vibrant and fantastical landscape with an artistic, painted style. It features a group of adventurers or travelers in silhouette, walking across a snowy mountain slope. Above them, a fiery sky transitions into a mystical scene filled with blue mountains, trees, and pagodas. There are various mythical elements, such as a flying dragon and ethereal clouds. The text \"浪浪山\" and \"Nobody\" is visible in the center. The atmosphere is adventurous and mythical, combining elements of traditional Asian art with fantasy themes.",
+    "token_stats": {
+      "original_tokens": 109,
+      "final_tokens": 109,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426723-ZySSIk9wegMFAgX65E6R",
+    "created": 1788426723,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 107,
+      "total_tokens": 622,
+      "cost": 0.0023575
+    }
+  }
+}

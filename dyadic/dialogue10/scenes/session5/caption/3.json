@@ -1,0 +1,36 @@
+{
+  "id": "6655973c-57c5-4186-9fef-cd036279b2e7",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:31.373428",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session5/image/3.jpeg",
+    "filename": "3.jpeg",
+    "size": 210506,
+    "modified_time": "2026-08-23T21:30:27.636211"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a white cat with striking blue eyes intensely focused on a red laser dot on the ground. The cat's paw is extended towards the laser, indicating playfulness and curiosity. In the background, there's a stack of papers on a wooden surface. The overall atmosphere is playful and engaging, highlighting the cat's natural hunting instincts.",
+    "final_text": "The image features a white cat with striking blue eyes intensely focused on a red laser dot on the ground. The cat's paw is extended towards the laser, indicating playfulness and curiosity. In the background, there's a stack of papers on a wooden surface. The overall atmosphere is playful and engaging, highlighting the cat's natural hunting instincts.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426571-zmFroE1eFKI6yuSQkWih",
+    "created": 1788426571,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 67,
+      "total_tokens": 1262,
+      "cost": 0.0036575
+    }
+  }
+}

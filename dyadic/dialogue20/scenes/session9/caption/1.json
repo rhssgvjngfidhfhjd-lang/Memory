@@ -1,0 +1,36 @@
+{
+  "id": "033cea3e-8359-4913-9ee0-7857f691c34f",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:00.678993",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session9/image/1.png",
+    "filename": "1.png",
+    "size": 987373,
+    "modified_time": "2026-08-23T21:42:44.916065"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a snow-covered mountainous landscape with prominent rocky formations. A large stone slab stands in the foreground, featuring red Chinese characters carved into its surface. The sky is clear and vibrant blue, suggesting a serene and calm atmosphere. The overall mood is tranquil and majestic, highlighting the beauty of the natural, snowy environment.",
+    "final_text": "The image depicts a snow-covered mountainous landscape with prominent rocky formations. A large stone slab stands in the foreground, featuring red Chinese characters carved into its surface. The sky is clear and vibrant blue, suggesting a serene and calm atmosphere. The overall mood is tranquil and majestic, highlighting the beauty of the natural, snowy environment.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427318-ImKJIXoYJAvtwtV2EtbP",
+    "created": 1788427318,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 64,
+      "total_tokens": 919,
+      "cost": 0.0027775
+    }
+  }
+}

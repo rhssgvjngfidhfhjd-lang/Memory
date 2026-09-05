@@ -1,0 +1,36 @@
+{
+  "id": "eb6139b7-6c0e-4036-8820-d9dab99aa26a",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:13.357008",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session9/image/3.png",
+    "filename": "3.png",
+    "size": 710509,
+    "modified_time": "2026-08-23T22:01:27.775045"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a neatly arranged collection of various items on a blue background, resembling a survival or emergency kit. Main elements include a large red bag, plastic containers, sealed bags, scissors, tweezers, adhesive bandages, bottles, and packets. Visible text includes labels on some bottles, such as \"Lösungsmittel.\" The items are organized methodically, suggesting preparedness and order. The overall mood is practical, organized, and ready for use in a situation requiring these supplies.",
+    "final_text": "The image displays a neatly arranged collection of various items on a blue background, resembling a survival or emergency kit. Main elements include a large red bag, plastic containers, sealed bags, scissors, tweezers, adhesive bandages, bottles, and packets. Visible text includes labels on some bottles, such as \"Lösungsmittel.\" The items are organized methodically, suggesting preparedness and order. The overall mood is practical, organized, and ready for use in a situation requiring these supplies.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427752-W6MizcAcSU3uZWORXPty",
+    "created": 1788427752,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 99,
+      "total_tokens": 816,
+      "cost": 0.0027825
+    }
+  }
+}

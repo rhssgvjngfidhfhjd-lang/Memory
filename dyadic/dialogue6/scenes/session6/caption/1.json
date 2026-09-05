@@ -1,0 +1,36 @@
+{
+  "id": "532ac114-381f-4d41-ab6a-c95bdbf255ce",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:05.548245",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 969805,
+    "modified_time": "2026-08-23T21:56:10.608386"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a neatly arranged meal on a wooden table, featuring a white plate with grilled chicken breast garnished with rosemary and black sesame seeds, sliced avocado, broccoli, and a mound of rice topped with sesame seeds. Beside it, a glass of lemon water and a small bowl of colorful cherry tomatoes and blueberries are present. Sunlight streams in through blinds, creating a fresh and wholesome atmosphere.",
+    "final_text": "The image depicts a neatly arranged meal on a wooden table, featuring a white plate with grilled chicken breast garnished with rosemary and black sesame seeds, sliced avocado, broccoli, and a mound of rice topped with sesame seeds. Beside it, a glass of lemon water and a small bowl of colorful cherry tomatoes and blueberries are present. Sunlight streams in through blinds, creating a fresh and wholesome atmosphere.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427564-8anqma08jPIxOKywWCLo",
+    "created": 1788427564,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 80,
+      "total_tokens": 935,
+      "cost": 0.0029375
+    }
+  }
+}

@@ -1,0 +1,11 @@
+The image is divided into two sections: "过敏原警示" (Allergen Warning) on the left and "抗炎食物推荐" (Anti-inflammatory Food Recommendation) on the right. 
+
+**Left Side (Allergen Warning):**
+- Displays images of nuts, fish, milk, cheese, eggs, and tofu.
+- Text: Various allergens like nuts, seafood, dairy, eggs, and soy products.
+
+**Right Side (Anti-inflammatory Recommendation):**
+- Shows spinach, broccoli, berries, flaxseeds, green tea, and ginger.
+- Text: Recommendations for foods rich in Omega-3, dark leafy greens, and herbs.
+
+Overall, the mood is informative, providing guidance on foods that may cause allergies and those beneficial for reducing inflammation.

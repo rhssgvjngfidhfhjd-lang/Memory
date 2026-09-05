@@ -1,0 +1,36 @@
+{
+  "id": "4c56fdda-7712-4e03-a35e-3c1d90af8e5c",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:25.597714",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session4/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 714184,
+    "modified_time": "2026-08-23T22:07:44.193649"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant urban scene at night, showcasing a bustling street lined with tall buildings adorned with numerous colorful neon signs. A person in the foreground is taking a photo, adding to the lively atmosphere. The wet pavement reflects the bright lights and signs, enhancing the visual impact. Visible text includes various advertisements in a foreign language. The mood is energetic and dynamic, capturing the essence of a lively city nightlife.",
+    "final_text": "The image depicts a vibrant urban scene at night, showcasing a bustling street lined with tall buildings adorned with numerous colorful neon signs. A person in the foreground is taking a photo, adding to the lively atmosphere. The wet pavement reflects the bright lights and signs, enhancing the visual impact. Visible text includes various advertisements in a foreign language. The mood is energetic and dynamic, capturing the essence of a lively city nightlife.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426742-K94Cf28zWDqkafuyiNYA",
+    "created": 1788426742,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 83,
+      "total_tokens": 1081,
+      "cost": 0.003325
+    }
+  }
+}

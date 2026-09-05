@@ -1,0 +1,36 @@
+{
+  "id": "244292dd-6cbf-4849-9387-05b33cdc8ebd",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:55.317059",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 1755881,
+    "modified_time": "2026-08-23T21:39:40.218803"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a modern restaurant interior with wooden tables and chairs, pendant lights, and a visible kitchen area where a chef is working. Overlaying this scene are two blueprint designs of the restaurant layout, one labeled as \"顾视晤网格分析图\" and the other as \"白芷叙事动线图.\" The blueprints depict seating arrangements and flow paths. The atmosphere is clean and organized, with an emphasis on design and functionality.",
+    "final_text": "The image shows a modern restaurant interior with wooden tables and chairs, pendant lights, and a visible kitchen area where a chef is working. Overlaying this scene are two blueprint designs of the restaurant layout, one labeled as \"顾视晤网格分析图\" and the other as \"白芷叙事动线图.\" The blueprints depict seating arrangements and flow paths. The atmosphere is clean and organized, with an emphasis on design and functionality.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427195-LntRf0EfRQeLcIs8c55m",
+    "created": 1788427195,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 93,
+      "total_tokens": 1288,
+      "cost": 0.0039175
+    }
+  }
+}

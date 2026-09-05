@@ -1,0 +1,36 @@
+{
+  "id": "baf991e2-3c83-4300-aada-e0a4ec7e6644",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:02.964892",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 982357,
+    "modified_time": "2026-08-23T21:41:47.033919"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional advertisement for Camel brand boots. It is split into two sections. On the left, two brown leather boots with yellow laces are displayed on a wooden surface, showcasing their rugged design. Visible text includes pricing details, promotional offers, and a price of 319 yuan. On the right, a single boot is bent to demonstrate its flexibility, with Chinese text emphasizing comfort and flexibility. The overall mood is practical and promotional, focusing on the durability and comfort of the footwear.",
+    "final_text": "The image is a promotional advertisement for Camel brand boots. It is split into two sections. On the left, two brown leather boots with yellow laces are displayed on a wooden surface, showcasing their rugged design. Visible text includes pricing details, promotional offers, and a price of 319 yuan. On the right, a single boot is bent to demonstrate its flexibility, with Chinese text emphasizing comfort and flexibility. The overall mood is practical and promotional, focusing on the durability and comfort of the footwear.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427321-CGj9K1bMr7Y9V3X7Lpvt",
+    "created": 1788427321,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 99,
+      "total_tokens": 954,
+      "cost": 0.0031275
+    }
+  }
+}

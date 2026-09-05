@@ -1,0 +1,36 @@
+{
+  "id": "73d3aab8-2993-4e3b-94a6-ca69cbf9fa05",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:53.024439",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 941592,
+    "modified_time": "2026-08-23T21:42:37.018811"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A cyclist is riding uphill on a mountain road, surrounded by lush green hills and clear blue skies. The cyclist is wearing a black helmet, sunglasses, and a black cycling jersey with visible text \"GIANT\" and \"Alpecin.\" The road is curving with a metal guardrail on the side. The atmosphere is energetic and determined, suggesting a challenging ride in a scenic landscape.",
+    "final_text": "A cyclist is riding uphill on a mountain road, surrounded by lush green hills and clear blue skies. The cyclist is wearing a black helmet, sunglasses, and a black cycling jersey with visible text \"GIANT\" and \"Alpecin.\" The road is curving with a metal guardrail on the side. The atmosphere is energetic and determined, suggesting a challenging ride in a scenic landscape.",
+    "token_stats": {
+      "original_tokens": 78,
+      "final_tokens": 78,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427311-pOrY5ctwDSmj8unqnlU6",
+    "created": 1788427311,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 78,
+      "total_tokens": 933,
+      "cost": 0.0029175
+    }
+  }
+}

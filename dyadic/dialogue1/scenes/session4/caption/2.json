@@ -1,0 +1,36 @@
+{
+  "id": "7e73db7e-f17b-457d-bad3-4aa649f370d9",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:00.156869",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 92111,
+    "modified_time": "2026-08-23T21:30:02.577497"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a smartphone screen displaying a sleep tracking app. At the top, there is a graph illustrating sleep patterns over several days. Below the graph, there are metrics listed in Chinese, including total sleep duration (4 hours 20 minutes), deep sleep (1 hour 15 minutes), light sleep (2 hours 40 minutes), and awake time (45 minutes). Each section has an arrow for further details. The overall mood is analytical and informative, reflecting personal sleep data analysis.",
+    "final_text": "The image shows a smartphone screen displaying a sleep tracking app. At the top, there is a graph illustrating sleep patterns over several days. Below the graph, there are metrics listed in Chinese, including total sleep duration (4 hours 20 minutes), deep sleep (1 hour 15 minutes), light sleep (2 hours 40 minutes), and awake time (45 minutes). Each section has an arrow for further details. The overall mood is analytical and informative, reflecting personal sleep data analysis.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426477-CzpREzpLRqWuH4meiJu2",
+    "created": 1788426477,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 98,
+      "total_tokens": 398,
+      "cost": 0.00173
+    }
+  }
+}

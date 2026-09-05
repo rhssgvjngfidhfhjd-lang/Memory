@@ -1,0 +1,36 @@
+{
+  "id": "91760987-9dbf-431d-b704-2494a7bafc2f",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:07.793008",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session6/image/4.png",
+    "filename": "4.png",
+    "size": 35564,
+    "modified_time": "2026-08-23T21:56:46.248580"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a detailed daily nutritional plan written in Chinese. It is divided into two main columns: one for protein intake and the other for carbohydrate intake. Each column lists different times of the day, such as 7:00, 10:30, 12:30, 15:30, and others, along with specific types of food and their respective quantities, measured in grams. The plan includes various foods like eggs, milk, fruits, and grains, with suggestions for consumption before and after activities or meals. The overall mood is informative and structured, aimed at guiding dietary habits effectively.",
+    "final_text": "The image displays a detailed daily nutritional plan written in Chinese. It is divided into two main columns: one for protein intake and the other for carbohydrate intake. Each column lists different times of the day, such as 7:00, 10:30, 12:30, 15:30, and others, along with specific types of food and their respective quantities, measured in grams. The plan includes various foods like eggs, milk, fruits, and grains, with suggestions for consumption before and after activities or meals. The overall mood is informative and structured, aimed at guiding dietary habits effectively.",
+    "token_stats": {
+      "original_tokens": 121,
+      "final_tokens": 121,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427565-BRoL9GsPgJRrluwWrU8o",
+    "created": 1788427565,
+    "usage": {
+      "prompt_tokens": 580,
+      "completion_tokens": 122,
+      "total_tokens": 702,
+      "cost": 0.00267
+    }
+  }
+}

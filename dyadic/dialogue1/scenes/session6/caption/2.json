@@ -1,0 +1,36 @@
+{
+  "id": "d37e5501-afb9-45f0-9399-5b1c23f59ab6",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:12.286771",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session6/image/2.png",
+    "filename": "2.png",
+    "size": 83313,
+    "modified_time": "2026-08-23T21:30:05.332496"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a ranked list of stores on a website, with each entry including a number, store name, location, a numerical value, and a button for visiting the store. The list is numbered from 1 to 10, with each entry having a badge indicating its rank. The store names are in Chinese, with additional text indicating \"京东自营店\" or \"T品牌旗舰店,\" and numerical values beside each store name. The overall mood is organized and informative, suggesting a competitive ranking.",
+    "final_text": "The image displays a ranked list of stores on a website, with each entry including a number, store name, location, a numerical value, and a button for visiting the store. The list is numbered from 1 to 10, with each entry having a badge indicating its rank. The store names are in Chinese, with additional text indicating \"京东自营店\" or \"T品牌旗舰店,\" and numerical values beside each store name. The overall mood is organized and informative, suggesting a competitive ranking.",
+    "token_stats": {
+      "original_tokens": 109,
+      "final_tokens": 109,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426490-uwrrViY5ZxpxRAyTOUFQ",
+    "created": 1788426490,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 104,
+      "total_tokens": 821,
+      "cost": 0.0028325
+    }
+  }
+}

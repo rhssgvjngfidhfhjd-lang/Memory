@@ -1,0 +1,36 @@
+{
+  "id": "e90f79ab-632b-4ae1-9acd-7d50f4148b8c",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:39.532874",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 166128,
+    "modified_time": "2026-08-23T22:05:08.391868"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image illustrates six different shoelace patterns, each tailored for specific foot conditions or preferences. Each pattern is accompanied by Chinese text explaining its purpose. The designs include strategies for narrow feet, wide forefoot, heel lock, flat feet, swollen feet, and wide forefoot space, using varying lacing techniques to adjust tension and support. The atmosphere is informative, aiming to provide practical solutions for shoe fitting issues.",
+    "final_text": "The image illustrates six different shoelace patterns, each tailored for specific foot conditions or preferences. Each pattern is accompanied by Chinese text explaining its purpose. The designs include strategies for narrow feet, wide forefoot, heel lock, flat feet, swollen feet, and wide forefoot space, using varying lacing techniques to adjust tension and support. The atmosphere is informative, aiming to provide practical solutions for shoe fitting issues.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426639-GHVGseupIxOyjNSc05M5",
+    "created": 1788426639,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 83,
+      "total_tokens": 938,
+      "cost": 0.0029675
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "6cef7189-1c9d-4890-acc1-5184c14dc6a6",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:58.285953",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session11/image/4.png",
+    "filename": "4.png",
+    "size": 1195224,
+    "modified_time": "2026-08-23T21:49:36.207715"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a webpage from ZCOOL with a bright, modern design. The main section displays an Apple MacBook advertisement in Chinese, promoting easy computer migration with installment plans. Below are colorful graphics for various creative competitions and courses, including a 2025-2026 showreel, AIGC practical class, and a design contest involving vehicles. The atmosphere is vibrant and engaging, targeting creative professionals.",
+    "final_text": "The image features a webpage from ZCOOL with a bright, modern design. The main section displays an Apple MacBook advertisement in Chinese, promoting easy computer migration with installment plans. Below are colorful graphics for various creative competitions and courses, including a 2025-2026 showreel, AIGC practical class, and a design contest involving vehicles. The atmosphere is vibrant and engaging, targeting creative professionals.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427376-4j55iSv6DI6LX7EBBSuX",
+    "created": 1788427376,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 83,
+      "total_tokens": 1618,
+      "cost": 0.0046675
+    }
+  }
+}

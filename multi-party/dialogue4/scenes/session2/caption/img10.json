@@ -1,0 +1,36 @@
+{
+  "id": "c480bf11-62d6-43c7-9907-87071bfd674b",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:06.250431",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session2/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 171512,
+    "modified_time": "2026-08-23T22:08:45.004953"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a black leather handbag with a quilted texture, hanging on a hook against a plain white background. The bag has a silver chain strap and a prominent metallic logo on the front. A decorative red tassel with a knot design is attached to the handle. The overall atmosphere is elegant and minimalist.",
+    "final_text": "The image features a black leather handbag with a quilted texture, hanging on a hook against a plain white background. The bag has a silver chain strap and a prominent metallic logo on the front. A decorative red tassel with a knot design is attached to the handle. The overall atmosphere is elegant and minimalist.",
+    "token_stats": {
+      "original_tokens": 63,
+      "final_tokens": 63,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426785-LBYRRkGKe9ZTwVsQrXEo",
+    "created": 1788426785,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 62,
+      "total_tokens": 917,
+      "cost": 0.0027575
+    }
+  }
+}

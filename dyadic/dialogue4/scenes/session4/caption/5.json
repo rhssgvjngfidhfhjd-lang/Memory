@@ -1,0 +1,36 @@
+{
+  "id": "8435755e-fae8-46f3-bbfc-81df7b55e444",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:33.789686",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session4/image/5.png",
+    "filename": "5.png",
+    "size": 166547,
+    "modified_time": "2026-08-23T21:54:38.131807"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A person is outdoors, patting a black and white dog that is standing on its hind legs with its front paws on the person's leg. The scene includes a red mat on the grass with several orange frisbees on it. The mood appears friendly and playful, suggesting a training or play session. No visible text is present.",
+    "final_text": "A person is outdoors, patting a black and white dog that is standing on its hind legs with its front paws on the person's leg. The scene includes a red mat on the grass with several orange frisbees on it. The mood appears friendly and playful, suggesting a training or play session. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427414-XiP36GtMyjDV25a6jx5O",
+    "created": 1788427414,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 66,
+      "total_tokens": 411,
+      "cost": 0.0015225
+    }
+  }
+}

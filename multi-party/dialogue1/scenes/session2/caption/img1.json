@@ -1,0 +1,36 @@
+{
+  "id": "d0b90504-a0f9-4a69-8c84-226a08ef1fbe",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:06.899626",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session2/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 128673,
+    "modified_time": "2026-08-23T22:02:00.815875"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A fluffy cat with blue eyes is playfully pawing at a piece of salmon sushi resting on a wooden table. The scene is set in a cozy, softly lit room with wooden chairs visible in the background. The mood is lighthearted and amusing as the cat interacts with the food, creating a whimsical atmosphere. There is no visible text in the image.",
+    "final_text": "A fluffy cat with blue eyes is playfully pawing at a piece of salmon sushi resting on a wooden table. The scene is set in a cozy, softly lit room with wooden chairs visible in the background. The mood is lighthearted and amusing as the cat interacts with the food, creating a whimsical atmosphere. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426545-kH4hxlvIRyTA8fzjdh6Y",
+    "created": 1788426545,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 72,
+      "total_tokens": 789,
+      "cost": 0.0025125
+    }
+  }
+}

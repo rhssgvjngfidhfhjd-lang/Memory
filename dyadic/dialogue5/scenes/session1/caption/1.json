@@ -1,0 +1,36 @@
+{
+  "id": "caf80b75-1c0f-4061-a797-1f564ec655c0",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:33.082734",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 615034,
+    "modified_time": "2026-08-23T21:55:06.097998"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a bamboo steamer basket containing six glossy green buns, with a pair of chopsticks gently holding one. The buns are neatly arranged on a paper liner. The overall mood is appetizing and serene, emphasizing a traditional culinary setting with a focus on the vibrant green color and texture of the buns.",
+    "final_text": "The image depicts a bamboo steamer basket containing six glossy green buns, with a pair of chopsticks gently holding one. The buns are neatly arranged on a paper liner. The overall mood is appetizing and serene, emphasizing a traditional culinary setting with a focus on the vibrant green color and texture of the buns.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427471-21bKlsNwyJdBjXxdyurQ",
+    "created": 1788427471,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 63,
+      "total_tokens": 780,
+      "cost": 0.0024225
+    }
+  }
+}

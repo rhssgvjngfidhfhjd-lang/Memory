@@ -1,0 +1,36 @@
+{
+  "id": "9d8ab814-d04e-4466-b4e6-e3232221f090",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:16.648147",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 374113,
+    "modified_time": "2026-08-23T21:55:02.588370"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image portrays a delicate flower arrangement set in a tall, slender glass vase against a plain background. The bouquet features a variety of flowers including white hydrangeas, pink and purple roses, along with green foliage and small white blossoms. Text in Chinese labels different floral elements, such as \"中国桔梗,\" \"多头菊,\" and \"海洋之歌玫瑰.\" The arrangement exudes a serene and elegant atmosphere.",
+    "final_text": "The image portrays a delicate flower arrangement set in a tall, slender glass vase against a plain background. The bouquet features a variety of flowers including white hydrangeas, pink and purple roses, along with green foliage and small white blossoms. Text in Chinese labels different floral elements, such as \"中国桔梗,\" \"多头菊,\" and \"海洋之歌玫瑰.\" The arrangement exudes a serene and elegant atmosphere.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427514-LHSz29bT61MHE91MtKD0",
+    "created": 1788427514,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 92,
+      "total_tokens": 809,
+      "cost": 0.0027125
+    }
+  }
+}

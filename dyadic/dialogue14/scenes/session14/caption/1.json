@@ -1,0 +1,36 @@
+{
+  "id": "2099343c-1a2f-4c20-9232-cbc9fdb2026a",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:41.209716",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session14/image/1.png",
+    "filename": "1.png",
+    "size": 1301177,
+    "modified_time": "2026-08-23T21:33:04.668460"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an illustration of a cute brown puppy leaning on a blue backpack and a white kitten sleeping on a book. The background is a soft pink. The text at the top reads \"校园毛孩领养计划\" and \"给爱一个温暖的家,\" which translates to \"Campus Pet Adoption Program\" and \"Give love a warm home.\" Additional text includes \"扫码领养，让温暖延续\" and \"可—地,\" encouraging scanning a QR code for adoption. The mood is warm and inviting.",
+    "final_text": "The image features an illustration of a cute brown puppy leaning on a blue backpack and a white kitten sleeping on a book. The background is a soft pink. The text at the top reads \"校园毛孩领养计划\" and \"给爱一个温暖的家,\" which translates to \"Campus Pet Adoption Program\" and \"Give love a warm home.\" Additional text includes \"扫码领养，让温暖延续\" and \"可—地,\" encouraging scanning a QR code for adoption. The mood is warm and inviting.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426940-CUAWXNB9peWNH5UneHNp",
+    "created": 1788426940,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 106,
+      "total_tokens": 961,
+      "cost": 0.0031975
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "615a6252-773e-4a64-9ffa-e2ffd40e402e",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:47.137005",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session3/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 835753,
+    "modified_time": "2026-08-23T21:31:01.876097"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a bus stop with glass panels displaying schedules and routes. In the foreground, there are two bowls—one metallic and one plastic—placed on the ground, likely for feeding animals. Nearby, small plants are growing in a concrete planter. The text \"定点投喂\" is visible, suggesting a designated feeding point. The atmosphere is quiet and utilitarian, with no people present, emphasizing a community effort to care for animals.",
+    "final_text": "The image depicts a bus stop with glass panels displaying schedules and routes. In the foreground, there are two bowls—one metallic and one plastic—placed on the ground, likely for feeding animals. Nearby, small plants are growing in a concrete planter. The text \"定点投喂\" is visible, suggesting a designated feeding point. The atmosphere is quiet and utilitarian, with no people present, emphasizing a community effort to care for animals.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426645-5YV6snBtQ3GqMkszt4Iq",
+    "created": 1788426645,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 91,
+      "total_tokens": 1089,
+      "cost": 0.003405
+    }
+  }
+}

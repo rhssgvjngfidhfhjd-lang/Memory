@@ -1,0 +1,36 @@
+{
+  "id": "def213f0-ef84-4ef4-b63b-f62a337e224e",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:19.457350",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 350749,
+    "modified_time": "2026-08-23T22:09:41.182368"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a shopping cart interface from an online shopping app at 18:43. It features a list of items, including a hoodie, sneakers, a bag, and a sweatshirt, all from the Champion brand. Each item has a price listed, with discounts applied. The total for four selected items is ¥2152, with a noted discount of ¥175. The interface includes navigation icons at the bottom, such as home, message, and cart. The overall mood is functional and commercial, aimed at facilitating online purchases.",
+    "final_text": "The image shows a shopping cart interface from an online shopping app at 18:43. It features a list of items, including a hoodie, sneakers, a bag, and a sweatshirt, all from the Champion brand. Each item has a price listed, with discounts applied. The total for four selected items is ¥2152, with a noted discount of ¥175. The interface includes navigation icons at the bottom, such as home, message, and cart. The overall mood is functional and commercial, aimed at facilitating online purchases.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426858-vhMYrMMnGcF62beTlHWX",
+    "created": 1788426858,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 106,
+      "total_tokens": 1641,
+      "cost": 0.0048975
+    }
+  }
+}

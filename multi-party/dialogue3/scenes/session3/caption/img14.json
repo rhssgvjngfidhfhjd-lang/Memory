@@ -1,0 +1,36 @@
+{
+  "id": "b651f5b4-4c19-4ece-8a26-29a4854ad1cf",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:07.347478",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 85998,
+    "modified_time": "2026-08-23T22:07:33.800924"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an open Blu-ray case on a wooden surface, featuring two discs and accompanying artwork. The discs have visible text, including the Blu-ray logo and some text in a language other than English. The artwork inside the case shows several people in various poses and settings, suggesting a movie or TV series theme. In the background, a plant with green leaves and small red fruits is visible, adding a warm and cozy atmosphere to the scene. The lighting is soft, enhancing the mood of calm and relaxation.",
+    "final_text": "The image depicts an open Blu-ray case on a wooden surface, featuring two discs and accompanying artwork. The discs have visible text, including the Blu-ray logo and some text in a language other than English. The artwork inside the case shows several people in various poses and settings, suggesting a movie or TV series theme. In the background, a plant with green leaves and small red fruits is visible, adding a warm and cozy atmosphere to the scene. The lighting is soft, enhancing the mood of calm and relaxation.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426726-5BE5Q2AV6vBXuKmZU1j6",
+    "created": 1788426726,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 103,
+      "total_tokens": 823,
+      "cost": 0.00283
+    }
+  }
+}

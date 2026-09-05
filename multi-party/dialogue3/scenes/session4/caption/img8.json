@@ -1,0 +1,36 @@
+{
+  "id": "f6e55512-8aa7-4359-922e-da09f4e344e7",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:19.109527",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session4/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 157230,
+    "modified_time": "2026-08-23T22:07:51.682103"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a man sitting on a red stool, eating noodles from a large bowl with chopsticks in a rainy street. He is dressed in a denim jacket, focused on his meal. Beside him, a bottle of drink is placed on a small table. In the background, a brightly lit restaurant adorned with red lanterns and signs in Chinese characters is visible, creating a vibrant and inviting atmosphere. Pedestrians with umbrellas walk past, enhancing the rainy, urban scene. The overall mood is cozy and immersed in a bustling street ambiance.",
+    "final_text": "The image depicts a man sitting on a red stool, eating noodles from a large bowl with chopsticks in a rainy street. He is dressed in a denim jacket, focused on his meal. Beside him, a bottle of drink is placed on a small table. In the background, a brightly lit restaurant adorned with red lanterns and signs in Chinese characters is visible, creating a vibrant and inviting atmosphere. Pedestrians with umbrellas walk past, enhancing the rainy, urban scene. The overall mood is cozy and immersed in a bustling street ambiance.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426739-4EoIEF3sRw4A47FpvKVh",
+    "created": 1788426739,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 109,
+      "total_tokens": 829,
+      "cost": 0.00289
+    }
+  }
+}

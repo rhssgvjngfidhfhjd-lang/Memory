@@ -1,0 +1,36 @@
+{
+  "id": "d193605b-f7c9-4228-8d0f-ec11f2b40f15",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:10.457713",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session6/image/4.jpg",
+    "filename": "4.jpg",
+    "size": 86000,
+    "modified_time": "2026-08-23T21:35:32.376930"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a plain, textured beige paper background. There are no objects, persons, or animals present. Visible text at the bottom includes: \"编号：9480009 红动中国 (www.redocn.com) 乐图图.\" The overall mood is neutral and simplistic, suitable for use as a background or canvas.",
+    "final_text": "The image is a plain, textured beige paper background. There are no objects, persons, or animals present. Visible text at the bottom includes: \"编号：9480009 红动中国 (www.redocn.com) 乐图图.\" The overall mood is neutral and simplistic, suitable for use as a background or canvas.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427029-Svp1hbfDQLw29MCUGUFK",
+    "created": 1788427029,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 66,
+      "total_tokens": 921,
+      "cost": 0.0027975
+    }
+  }
+}

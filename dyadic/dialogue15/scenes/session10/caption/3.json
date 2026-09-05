@@ -1,0 +1,36 @@
+{
+  "id": "c4951963-8cac-4c08-9fb8-86e26df9fb80",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:25.695404",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 648094,
+    "modified_time": "2026-08-23T21:34:09.148634"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a flowchart divided into three main stages, each within a colored box. The first stage, \"设计与执行,\" includes defining hypotheses and execution with tools. The second stage, \"分析与洞察,\" involves statistical analysis, report generation, and effectiveness evaluation. The third stage, \"迭代与扩展,\" covers data contextualization, pattern identification, and template generation. Arrows connect the stages, showing progression and feedback loops. The final output is a reusable \"个人实验包.\" The mood is systematic and analytical, focusing on research and data-driven processes.",
+    "final_text": "The image is a flowchart divided into three main stages, each within a colored box. The first stage, \"设计与执行,\" includes defining hypotheses and execution with tools. The second stage, \"分析与洞察,\" involves statistical analysis, report generation, and effectiveness evaluation. The third stage, \"迭代与扩展,\" covers data contextualization, pattern identification, and template generation. Arrows connect the stages, showing progression and feedback loops. The final output is a reusable \"个人实验包.\" The mood is systematic and analytical, focusing on research and data-driven processes.",
+    "token_stats": {
+      "original_tokens": 124,
+      "final_tokens": 124,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426984-cDRsKnbAhNTgRZVbcWk8",
+    "created": 1788426984,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 118,
+      "total_tokens": 1313,
+      "cost": 0.0041675
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "55d10c1e-eb41-4c85-bf15-a0c13762303f",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:05.429728",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 597416,
+    "modified_time": "2026-08-23T21:40:28.277449"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a warm and cozy scene with three people sitting closely together, smiling. The person on the left is wearing a pink patterned top, the middle person is in a blue dress, and the person on the right is in a beige jacket, holding a small white dog. The atmosphere is friendly and relaxed. There is text in Chinese, with the title \"小森林\" and the date \"6月15日\", indicating a movie or event release. The overall mood is cheerful and inviting.",
+    "final_text": "The image features a warm and cozy scene with three people sitting closely together, smiling. The person on the left is wearing a pink patterned top, the middle person is in a blue dress, and the person on the right is in a beige jacket, holding a small white dog. The atmosphere is friendly and relaxed. There is text in Chinese, with the title \"小森林\" and the date \"6月15日\", indicating a movie or event release. The overall mood is cheerful and inviting.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427266-z6BXhbWcpwFLS8nKZPUR",
+    "created": 1788427266,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 100,
+      "total_tokens": 615,
+      "cost": 0.0022875
+    }
+  }
+}

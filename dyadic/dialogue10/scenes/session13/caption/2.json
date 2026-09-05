@@ -1,0 +1,36 @@
+{
+  "id": "c93cb8d1-cb14-4cb3-a6b2-8611101d708c",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:15.330385",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session13/image/2.png",
+    "filename": "2.png",
+    "size": 754475,
+    "modified_time": "2026-08-23T21:30:17.164476"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a diagram illustrating different aspects of sensory perception, centered around a circle labeled \"身体感受\" (physical sensation). It branches out to four colored circles: \"听觉 (频率)\" (auditory frequency) in blue, \"视觉 (光影)\" (visual light and shadow) in pink, \"嗅觉 (气味)\" (smell) in light blue, and \"触觉 (振动)\" (tactile vibration) in green. Each sensory category has associated concepts: \"视觉\" connects to \"情绪觉察\" (emotional awareness) and \"放松\" (relaxation); \"触觉\" connects to \"非评判\" (non-judgment) twice. The mood is informative and analytical, focusing on sensory experiences.",
+    "final_text": "The image is a diagram illustrating different aspects of sensory perception, centered around a circle labeled \"身体感受\" (physical sensation). It branches out to four colored circles: \"听觉 (频率)\" (auditory frequency) in blue, \"视觉 (光影)\" (visual light and shadow) in pink, \"嗅觉 (气味)\" (smell) in light blue, and \"触觉 (振动)\" (tactile vibration) in green. Each sensory category has associated concepts: \"视觉\" connects to \"情绪觉察\" (emotional awareness) and \"放松\" (relaxation); \"触觉\" connects to \"非评判\" (non-judgment) twice. The mood is informative and analytical, focusing on sensory experiences.",
+    "token_stats": {
+      "original_tokens": 183,
+      "final_tokens": 183,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426613-uX55KKsSTQqNmSkLSW5J",
+    "created": 1788426613,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 162,
+      "total_tokens": 879,
+      "cost": 0.0034125
+    }
+  }
+}

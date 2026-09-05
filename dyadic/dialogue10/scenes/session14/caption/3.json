@@ -1,0 +1,36 @@
+{
+  "id": "2800eec2-5a41-409b-8e5b-d60f5a2d6762",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:24.739345",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session14/image/3.png",
+    "filename": "3.png",
+    "size": 2774738,
+    "modified_time": "2026-08-23T21:30:27.585503"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table with three columns titled \"核心价值\" (Core Values), \"Alerting活动 (燃料)\" (Alerting Activities - Fuel), and \"Vagal Tone活动 (刹车)\" (Vagal Tone Activities - Brake). Each row presents concepts related to values:\n\n1. 美感 (Aesthetic) - 探索新面料纹理 (Explore new textile textures) / 拍摄静物光影 (Photograph still life lighting).\n2. 联结 (Connection) - 组织团队脑暴会 (Organize team brainstorming) / 撰写深度沟通信 (Write in-depth communication).\n3. 成长 (Growth) - 参加行业研讨会 (Attend industry seminars) / 复盘项目得失 (Review project gains and losses).\n4. 平衡 (Balance) - 进行HIIT训练 (Engage in HIIT training) / 练习正念呼吸 (Practice mindfulness breathing).\n\nThe mood is informative and structured, focusing on personal and professional development activities.",
+    "final_text": "The image is a table with three columns titled \"核心价值\" (Core Values), \"Alerting活动 (燃料)\" (Alerting Activities - Fuel), and \"Vagal Tone活动 (刹车)\" (Vagal Tone Activities - Brake). Each row presents concepts related to values:\n\n1. 美感 (Aesthetic) - 探索新面料纹理 (Explore new textile textures) / 拍摄静物光影 (Photograph still life lighting).\n2. 联结 (Connection) - 组织团队脑暴会 (Organize team brainstorming) / 撰写深度沟通信 (Write in-depth communication).\n3. 成长 (Growth) - 参加行业研讨会 (Attend industry seminars) / 复盘项目得失 (Review project gains and losses).\n4. 平衡 (Balance) - 进行HIIT训练 (Engage in HIIT training) / 练习正念呼吸 (Practice mindfulness breathing).\n\nThe mood is informative and structured, focusing on personal and professional development activities... [truncated]",
+    "token_stats": {
+      "original_tokens": 257,
+      "final_tokens": 256,
+      "was_truncated": true,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426619-w6xcGOVWYxHvJ8dkcFGL",
+    "created": 1788426619,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 215,
+      "total_tokens": 1213,
+      "cost": 0.004645
+    }
+  }
+}

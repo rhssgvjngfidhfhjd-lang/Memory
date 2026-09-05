@@ -1,0 +1,36 @@
+{
+  "id": "4f816279-8846-4930-abfa-ad4c9c716c29",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:05.281596",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session7/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 95917,
+    "modified_time": "2026-08-23T21:31:13.140349"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is split into two sections. The left side shows a young boy wearing a green shirt and carrying an orange and gray backpack with the visible text \"Prigin\" on it. He is walking in a grassy area with trees in the background. The right side depicts the same boy from behind, now carrying a blue and green backpack, walking on a paved sidewalk. Other people are visible in the distance. The overall atmosphere is bright and casual, suggesting a typical day outdoors or on the way to school.",
+    "final_text": "The image is split into two sections. The left side shows a young boy wearing a green shirt and carrying an orange and gray backpack with the visible text \"Prigin\" on it. He is walking in a grassy area with trees in the background. The right side depicts the same boy from behind, now carrying a blue and green backpack, walking on a paved sidewalk. Other people are visible in the distance. The overall atmosphere is bright and casual, suggesting a typical day outdoors or on the way to school.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426662-vjc02evdrAxcYPhoNVDD",
+    "created": 1788426662,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 103,
+      "total_tokens": 1101,
+      "cost": 0.003525
+    }
+  }
+}

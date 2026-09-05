@@ -1,0 +1,36 @@
+{
+  "id": "9c027dcc-37c6-40d6-8407-67c3c75b2393",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:52.051540",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session5/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 86824,
+    "modified_time": "2026-08-23T22:09:17.505538"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a gold ring with a butterfly-shaped design as its central element. The ring is simple and elegant, with a smooth, polished finish. The butterfly design adds a touch of whimsy and artistic flair to the piece. The background is plain white, highlighting the ring's luxurious appearance. The overall mood is one of elegance and sophistication.",
+    "final_text": "The image features a gold ring with a butterfly-shaped design as its central element. The ring is simple and elegant, with a smooth, polished finish. The butterfly design adds a touch of whimsy and artistic flair to the piece. The background is plain white, highlighting the ring's luxurious appearance. The overall mood is one of elegance and sophistication.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426832-9blmBAOhHYe6a8Qj3HaO",
+    "created": 1788426832,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 69,
+      "total_tokens": 924,
+      "cost": 0.0028275
+    }
+  }
+}

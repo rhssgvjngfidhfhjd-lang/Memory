@@ -1,0 +1,36 @@
+{
+  "id": "6f47d696-6550-4dfd-9bb7-a02e91a84e6e",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:02.747341",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 1692405,
+    "modified_time": "2026-08-23T21:39:12.542551"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a light blue, short-sleeved button-up shirt with visible frayed edges on the collar and sleeves. The shirt is laid out on a wooden surface and has noticeable stains and a worn appearance, suggesting frequent use. The overall mood is rustic and nostalgic, evoking a sense of history or past adventures.",
+    "final_text": "The image features a light blue, short-sleeved button-up shirt with visible frayed edges on the collar and sleeves. The shirt is laid out on a wooden surface and has noticeable stains and a worn appearance, suggesting frequent use. The overall mood is rustic and nostalgic, evoking a sense of history or past adventures.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427198-DwRD8KftqxZNyOQ4FKtz",
+    "created": 1788427198,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 65,
+      "total_tokens": 920,
+      "cost": 0.0027875
+    }
+  }
+}

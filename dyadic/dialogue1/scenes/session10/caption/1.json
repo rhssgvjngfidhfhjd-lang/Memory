@@ -1,0 +1,36 @@
+{
+  "id": "8e811251-b644-4880-b439-f61970c2a002",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:58.030910",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 245825,
+    "modified_time": "2026-08-23T21:30:00.371098"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a list in a table format, ranking technological trends. It includes the following items with their respective ranks:\n\n- **TOP1**: 人工智能（AI）向纵深发展 (Artificial Intelligence (AI) deep development)\n- **TOP2**: “云”技术多样化发展 (\"Cloud\" technology diversified development)\n- **TOP3**: 5G基站建设加速 (Acceleration of 5G base station construction)\n- **TOP4**: 虚拟连接现实向体验和场景纵深演进 (Virtual connection of reality evolving towards experience and scenarios)\n- **TOP5**: 物联网将进化为智联网 (Internet of Things evolving into an intelligent network)\n- **TOP6**: 产业区块链链接数据要素市场化 (Industrial blockchain linking data element marketization)\n- **TOP7**: 自动驾驶走向规模化商业应用 (Autonomous driving moving towards large-scale commercial application)\n- **TOP8**: 脑机接口帮助人类超越生物学极限 (Brain-computer interfaces helping humans surpass biological limits)\n- **TOP9**: 量子计算是和平时代的核武器 (Quantum computing is the nuclear weapon of the peaceful era)\n- **TOP10**: 芯片技术从模型化向智能化转变 (Chip technology transitioning from modeling to intelligence)\n\nThe overall mood is informative and focused on technological advancement.",
+    "final_text": "The image is a list in a table format, ranking technological trends. It includes the following items with their respective ranks:\n\n- **TOP1**: 人工智能（AI）向纵深发展 (Artificial Intelligence (AI) deep development)\n- **TOP2**: “云”技术多样化发展 (\"Cloud\" technology diversified development)\n- **TOP3**: 5G基站建设加速 (Acceleration of 5G base station construction)\n- **TOP4**: 虚拟连接现实向体验和场景纵深演进 (Virtual connection of reality evolving towards experience and scenarios)\n- **TOP5**: 物联网将进化为智联网 (Internet of Things evolving into an intelligent network)\n- **TOP6**: 产业区块链链接数据要素市场化 (Industrial blockchain linking data element marketization)\n- **TOP7**: 自动驾驶走向规模化商业应用 (Autonomous driving moving towards large-scale commercial application)\n- **TOP8**: 脑机接口帮助人类超越生物学极限 (Brain-com... [truncated]",
+    "token_stats": {
+      "original_tokens": 340,
+      "final_tokens": 256,
+      "was_truncated": true,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426536-CPMlC1Yfdrbl1Hs48HBM",
+    "created": 1788426536,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 301,
+      "total_tokens": 816,
+      "cost": 0.0042975
+    }
+  }
+}

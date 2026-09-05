@@ -1,0 +1,36 @@
+{
+  "id": "335e4305-9754-442b-ad0b-321fad41a4a1",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:51.396480",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session3/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 319036,
+    "modified_time": "2026-08-23T22:06:01.365456"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a person's leg with multiple adhesive bandages applied on the foot and shin. The leg is resting on a bedspread decorated with illustrations of a monstera leaf, an avocado, and a flower. The overall atmosphere is calm, suggesting a focus on recovery or healing. There is no visible text.",
+    "final_text": "The image shows a person's leg with multiple adhesive bandages applied on the foot and shin. The leg is resting on a bedspread decorated with illustrations of a monstera leaf, an avocado, and a flower. The overall atmosphere is calm, suggesting a focus on recovery or healing. There is no visible text.",
+    "token_stats": {
+      "original_tokens": 64,
+      "final_tokens": 64,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426652-jSDaVDIuW68S978BmIyg",
+    "created": 1788426652,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 62,
+      "total_tokens": 917,
+      "cost": 0.0027575
+    }
+  }
+}

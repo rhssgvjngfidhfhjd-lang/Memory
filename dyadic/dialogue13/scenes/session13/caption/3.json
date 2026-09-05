@@ -1,0 +1,36 @@
+{
+  "id": "fff2a525-5754-42e1-8bc8-3377f4e3a453",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:24.360393",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session13/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 123870,
+    "modified_time": "2026-08-23T21:32:23.489276"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a playful scene with a puppy sitting attentively, wearing a harness, and looking up at a hanging leash. The background is bright blue, contributing to an upbeat atmosphere. Large text reads: \"LEASH TRAINING A PUPPY: A STEP-BY-STEP GUIDE FOR OBEDIENT WALKS,\" and \"WALKIES!\" in a yellow, playful font. Below, \"Dog Mental Stimulation\" is written in bold on a yellow strip. The mood is educational and encouraging, suggesting a guide for dog training.",
+    "final_text": "The image features a playful scene with a puppy sitting attentively, wearing a harness, and looking up at a hanging leash. The background is bright blue, contributing to an upbeat atmosphere. Large text reads: \"LEASH TRAINING A PUPPY: A STEP-BY-STEP GUIDE FOR OBEDIENT WALKS,\" and \"WALKIES!\" in a yellow, playful font. Below, \"Dog Mental Stimulation\" is written in bold on a yellow strip. The mood is educational and encouraging, suggesting a guide for dog training.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426862-o64HhVTe3J3szUZKkpC4",
+    "created": 1788426862,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 110,
+      "total_tokens": 1108,
+      "cost": 0.003595
+    }
+  }
+}

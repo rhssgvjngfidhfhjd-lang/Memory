@@ -1,0 +1,36 @@
+{
+  "id": "9763be50-46f6-42f7-ab8b-09958ab787ce",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:03.530721",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session2/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 71892,
+    "modified_time": "2026-08-23T22:08:39.027929"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a receipt from \"Holiiland 好利来,\" placed on top of a pink box with partial text \"FLOWER CAKE\" visible. The receipt lists items with prices and quantities, totaling 653.00. There's a QR code at the bottom of the receipt and additional text detailing payment information. A metallic object resembling a pen clip and a decorative item are partially visible. The mood is neutral and commercial, typical of a transaction setting.",
+    "final_text": "The image shows a receipt from \"Holiiland 好利来,\" placed on top of a pink box with partial text \"FLOWER CAKE\" visible. The receipt lists items with prices and quantities, totaling 653.00. There's a QR code at the bottom of the receipt and additional text detailing payment information. A metallic object resembling a pen clip and a decorative item are partially visible. The mood is neutral and commercial, typical of a transaction setting.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426781-QowLWimXwK7duBJMSIPT",
+    "created": 1788426781,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 92,
+      "total_tokens": 812,
+      "cost": 0.00272
+    }
+  }
+}

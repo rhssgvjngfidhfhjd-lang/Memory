@@ -1,0 +1,36 @@
+{
+  "id": "7e67d32d-bb2f-4429-a2a4-2cdbdc2edb32",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:49.346623",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session1/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 138712,
+    "modified_time": "2026-08-23T21:33:41.259198"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a comparative illustration of sleep patterns and their relation to cardiovascular disease (CVD) risk. It features two bar graphs on the left showing the sleep schedules of a regular sleeper (green bars) and an irregular sleeper (red bars) over a week (Sunday to Saturday). The right side displays two line graphs with hazard ratios for CVD, highlighting increased risk with greater sleep duration and onset timing variability. Key figures show a hazard ratio of 2.14 for sleep duration variability over 120 minutes, and 2.11 for onset timing variability over 90 minutes. The mood is analytical, focusing on health implications.",
+    "final_text": "The image is a comparative illustration of sleep patterns and their relation to cardiovascular disease (CVD) risk. It features two bar graphs on the left showing the sleep schedules of a regular sleeper (green bars) and an irregular sleeper (red bars) over a week (Sunday to Saturday). The right side displays two line graphs with hazard ratios for CVD, highlighting increased risk with greater sleep duration and onset timing variability. Key figures show a hazard ratio of 2.14 for sleep duration variability over 120 minutes, and 2.11 for onset timing variability over 90 minutes. The mood is analytical, focusing on health implications.",
+    "token_stats": {
+      "original_tokens": 127,
+      "final_tokens": 127,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426948-bbUPu5VA89g58b69Smlr",
+    "created": 1788426948,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 127,
+      "total_tokens": 982,
+      "cost": 0.0034075
+    }
+  }
+}

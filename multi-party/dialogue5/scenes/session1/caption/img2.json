@@ -1,0 +1,36 @@
+{
+  "id": "a57262d6-dcfd-4a4f-8599-2228245e9d46",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:56.615854",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session1/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 439642,
+    "modified_time": "2026-08-23T22:09:32.055056"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an elaborate Japanese meal presentation. Central to the scene is a round platter with a variety of small dishes, including a glass containing a colorful salad, garnished with herbs. Surrounding the glass are various bite-sized items like grilled vegetables, seafood, and pickled elements in a yellow bowl. Decorative elements include a slice of lime, rice grains, and leaves. In the background, additional plates and a cup can be seen, suggesting a dining setting. The atmosphere is sophisticated and artistic, emphasizing culinary artistry and attention to detail.",
+    "final_text": "The image depicts an elaborate Japanese meal presentation. Central to the scene is a round platter with a variety of small dishes, including a glass containing a colorful salad, garnished with herbs. Surrounding the glass are various bite-sized items like grilled vegetables, seafood, and pickled elements in a yellow bowl. Decorative elements include a slice of lime, rice grains, and leaves. In the background, additional plates and a cup can be seen, suggesting a dining setting. The atmosphere is sophisticated and artistic, emphasizing culinary artistry and attention to detail.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426835-8IpMkyvQxcGiQacooVOn",
+    "created": 1788426835,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 109,
+      "total_tokens": 829,
+      "cost": 0.00289
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "f2d3bb6d-d055-4290-94c5-4afd93ce7690",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:51.197295",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session13/image/3.png",
+    "filename": "3.png",
+    "size": 3713461,
+    "modified_time": "2026-08-23T21:32:21.117417"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image consists of three sections. The top section shows a close-up of handwritten text on a beige paper, with cursive writing that isn't fully legible. The middle section features a mind map titled \"场景\" (scene) in Chinese, with branches labeled with various terms related to scenarios. The bottom section displays a pencil sketch of three faces on lined paper, accompanied by a pencil. The overall mood is calm and creative, focusing on writing, planning, and sketching. The interface elements at the top and bottom suggest a digital or app-based context.",
+    "final_text": "The image consists of three sections. The top section shows a close-up of handwritten text on a beige paper, with cursive writing that isn't fully legible. The middle section features a mind map titled \"场景\" (scene) in Chinese, with branches labeled with various terms related to scenarios. The bottom section displays a pencil sketch of three faces on lined paper, accompanied by a pencil. The overall mood is calm and creative, focusing on writing, planning, and sketching. The interface elements at the top and bottom suggest a digital or app-based context.",
+    "token_stats": {
+      "original_tokens": 114,
+      "final_tokens": 114,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426769-igbPOpdZzf9b5ptzP9zC",
+    "created": 1788426769,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 113,
+      "total_tokens": 1308,
+      "cost": 0.0041175
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "878e4f5d-be82-436b-9710-12dfecf62297",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:18.088142",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session2/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 312149,
+    "modified_time": "2026-08-23T22:02:04.046988"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a bowl of rice topped with neatly arranged slices of raw salmon, possibly sashimi, on a wooden table. The salmon is drizzled with a sauce or dressing. The mood is appetizing and fresh, suggesting a simple, elegant meal.",
+    "final_text": "The image shows a bowl of rice topped with neatly arranged slices of raw salmon, possibly sashimi, on a wooden table. The salmon is drizzled with a sauce or dressing. The mood is appetizing and fresh, suggesting a simple, elegant meal.",
+    "token_stats": {
+      "original_tokens": 53,
+      "final_tokens": 53,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426556-gZpOvHmtKUhdgW4f7pyv",
+    "created": 1788426556,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 52,
+      "total_tokens": 907,
+      "cost": 0.0026575
+    }
+  }
+}

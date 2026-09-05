@@ -1,0 +1,36 @@
+{
+  "id": "4fecc85c-aab6-4038-b150-199274b8f426",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:44.865543",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 446363,
+    "modified_time": "2026-08-23T21:55:24.797069"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a screenshot of a text conversation on a messaging app, displaying exchanges between two individuals in green and gray text bubbles. The conversation begins at 18:35 and ends at 18:46, discussing topics such as market observations, feelings about certain objects, and reflections on past experiences. The atmosphere is reflective and conversational, with mentions of personal thoughts and interactions with various objects.",
+    "final_text": "The image is a screenshot of a text conversation on a messaging app, displaying exchanges between two individuals in green and gray text bubbles. The conversation begins at 18:35 and ends at 18:46, discussing topics such as market observations, feelings about certain objects, and reflections on past experiences. The atmosphere is reflective and conversational, with mentions of personal thoughts and interactions with various objects.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427483-v0ZG5S8uHy7aeOxFt61F",
+    "created": 1788427483,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 79,
+      "total_tokens": 518,
+      "cost": 0.0018875
+    }
+  }
+}

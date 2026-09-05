@@ -1,0 +1,36 @@
+{
+  "id": "05fda697-88f2-4a62-8ac3-9b75925c9cb0",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:45.760203",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session1/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 235195,
+    "modified_time": "2026-08-23T22:08:19.045015"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a stylishly dressed woman walking through a brightly lit indoor setting, possibly an airport or mall. She is wearing a long beige coat, black scarf, and sunglasses, and is carrying a white handbag. The background is slightly blurred, emphasizing the bustling atmosphere with lights and indistinct figures. The mood is sophisticated and confident, with a sense of movement and purpose.",
+    "final_text": "The image depicts a stylishly dressed woman walking through a brightly lit indoor setting, possibly an airport or mall. She is wearing a long beige coat, black scarf, and sunglasses, and is carrying a white handbag. The background is slightly blurred, emphasizing the bustling atmosphere with lights and indistinct figures. The mood is sophisticated and confident, with a sense of movement and purpose.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426765-ekZk7TaSkd3wYnWO4tks",
+    "created": 1788426765,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 75,
+      "total_tokens": 1270,
+      "cost": 0.0037375
+    }
+  }
+}

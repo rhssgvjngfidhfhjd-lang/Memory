@@ -1,0 +1,36 @@
+{
+  "id": "8f0f0e7c-5b49-4044-99ca-ff732e93f7c5",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:02.187019",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 454238,
+    "modified_time": "2026-08-23T21:32:53.563139"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a \"Nature Walk Scavenger Hunt\" checklist with a grid format. There are twelve items depicted with illustrations: a leaf, stick, fly, flower, dandelion, feather, exercise machine, daisy, bin, playground, bird, and tree. Each item is accompanied by text labels. The top of the image displays the title, \"NATURE WALK SCAVENGER HUNT,\" and the \"Activity Hub\" logo is in the corner. The mood is playful and educational, encouraging outdoor exploration and interaction with nature.",
+    "final_text": "The image is a \"Nature Walk Scavenger Hunt\" checklist with a grid format. There are twelve items depicted with illustrations: a leaf, stick, fly, flower, dandelion, feather, exercise machine, daisy, bin, playground, bird, and tree. Each item is accompanied by text labels. The top of the image displays the title, \"NATURE WALK SCAVENGER HUNT,\" and the \"Activity Hub\" logo is in the corner. The mood is playful and educational, encouraging outdoor exploration and interaction with nature.",
+    "token_stats": {
+      "original_tokens": 112,
+      "final_tokens": 112,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426842-tFC0DKrEyKZe0Q1mahLv",
+    "created": 1788426842,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 112,
+      "total_tokens": 829,
+      "cost": 0.0029125
+    }
+  }
+}

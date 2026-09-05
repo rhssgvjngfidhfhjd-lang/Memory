@@ -1,0 +1,36 @@
+{
+  "id": "61d2a108-7152-4bb3-a021-377b6ea38c04",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:15.864036",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 164122,
+    "modified_time": "2026-08-23T22:09:35.497183"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an online shopping platform interface, featuring a purchase confirmation for a suitcase. The suitcase is described with features like multi-directional wheels, a phone holder, and a classic pull design. It is priced at ¥83.39, with a discount bringing it to ¥45.87. Text indicates successful group buying and packaging in progress, with options for refund requests and reminders. The mood is transactional and informative.",
+    "final_text": "The image shows an online shopping platform interface, featuring a purchase confirmation for a suitcase. The suitcase is described with features like multi-directional wheels, a phone holder, and a classic pull design. It is priced at ¥83.39, with a discount bringing it to ¥45.87. Text indicates successful group buying and packaging in progress, with options for refund requests and reminders. The mood is transactional and informative.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426854-Db2xyAFzHtrnwR7lPDxE",
+    "created": 1788426854,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 85,
+      "total_tokens": 802,
+      "cost": 0.0026425
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "7c70ee8c-b477-425f-a481-4bf3c0ee87e5",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:36.522557",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 694785,
+    "modified_time": "2026-08-23T21:57:58.917000"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a beautifully presented dish in a rustic, dark ceramic bowl. The main elements include a piece of fish, asparagus, shimeji mushrooms, and a garnish of herbs and leaves, all artistically arranged. Steam rises from the food, suggesting it is freshly cooked. In the background, there's a decorative bamboo screen and a Japanese-style paper window with a subtle pattern, contributing to an elegant and serene atmosphere. There is no visible text. The overall mood is warm and inviting, evoking a sense of refined culinary art.",
+    "final_text": "The image depicts a beautifully presented dish in a rustic, dark ceramic bowl. The main elements include a piece of fish, asparagus, shimeji mushrooms, and a garnish of herbs and leaves, all artistically arranged. Steam rises from the food, suggesting it is freshly cooked. In the background, there's a decorative bamboo screen and a Japanese-style paper window with a subtle pattern, contributing to an elegant and serene atmosphere. There is no visible text. The overall mood is warm and inviting, evoking a sense of refined culinary art.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427656-Xqc10R0Q2kJmTEbUhvAI",
+    "created": 1788427656,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 107,
+      "total_tokens": 962,
+      "cost": 0.0032075
+    }
+  }
+}

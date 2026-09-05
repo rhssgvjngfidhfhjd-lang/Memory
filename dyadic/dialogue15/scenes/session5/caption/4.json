@@ -1,0 +1,36 @@
+{
+  "id": "fc25e320-736d-46ab-aa4d-b4f1cd878064",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:08.717556",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session5/image/4.jpg",
+    "filename": "4.jpg",
+    "size": 62135,
+    "modified_time": "2026-08-23T21:34:36.971188"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person sitting in an office environment, grimacing and holding their lower back, suggesting discomfort or pain. They are seated at a desk with a computer, keyboard, and notepad. The setting appears modern and professional, with neutral tones and soft lighting, creating a focused atmosphere.",
+    "final_text": "The image depicts a person sitting in an office environment, grimacing and holding their lower back, suggesting discomfort or pain. They are seated at a desk with a computer, keyboard, and notepad. The setting appears modern and professional, with neutral tones and soft lighting, creating a focused atmosphere.",
+    "token_stats": {
+      "original_tokens": 59,
+      "final_tokens": 59,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426968-9LTRljCAbsxHIsx7y0pr",
+    "created": 1788426968,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 59,
+      "total_tokens": 914,
+      "cost": 0.0027275
+    }
+  }
+}

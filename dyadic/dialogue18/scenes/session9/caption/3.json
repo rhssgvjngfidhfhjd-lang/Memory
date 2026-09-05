@@ -1,0 +1,36 @@
+{
+  "id": "dc9f87fc-284d-48a1-8d88-7cd886f110db",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:10.024790",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session9/image/3.png",
+    "filename": "3.png",
+    "size": 202451,
+    "modified_time": "2026-08-23T21:37:42.897887"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A woman with braided hair is joyfully hugging a small white and brown dog. Both appear content, with the woman smiling and the dog looking directly at the camera. She is wearing a black jacket. The scene is bright and cheerful, suggesting a warm, affectionate moment between the two. The background is blurred, focusing attention on the woman and her pet. There is no visible text.",
+    "final_text": "A woman with braided hair is joyfully hugging a small white and brown dog. Both appear content, with the woman smiling and the dog looking directly at the camera. She is wearing a black jacket. The scene is bright and cheerful, suggesting a warm, affectionate moment between the two. The background is blurred, focusing attention on the woman and her pet. There is no visible text.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427149-Ud71gFzetCpRdAkh9lpp",
+    "created": 1788427149,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 77,
+      "total_tokens": 422,
+      "cost": 0.0016325
+    }
+  }
+}

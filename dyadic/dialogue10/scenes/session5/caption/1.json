@@ -1,0 +1,36 @@
+{
+  "id": "f6a6a87c-9685-434d-9a79-12a781135fad",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:36.104886",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 6667722,
+    "modified_time": "2026-08-23T21:31:59.147354"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A golden retriever on a leash is sniffing vibrant flowers along a garden path. The scene is peaceful, with the dog appearing curious and engaged with the colorful blooms. There is no visible text, and the atmosphere is serene and pleasant, suggesting a leisurely walk.",
+    "final_text": "A golden retriever on a leash is sniffing vibrant flowers along a garden path. The scene is peaceful, with the dog appearing curious and engaged with the colorful blooms. There is no visible text, and the atmosphere is serene and pleasant, suggesting a leisurely walk.",
+    "token_stats": {
+      "original_tokens": 54,
+      "final_tokens": 54,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426573-Sjh3PVZhkvfrYW37rnlH",
+    "created": 1788426573,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 54,
+      "total_tokens": 771,
+      "cost": 0.0023325
+    }
+  }
+}

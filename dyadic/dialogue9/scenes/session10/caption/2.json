@@ -1,0 +1,36 @@
+{
+  "id": "3bf4dddf-c01f-4a47-af27-3491bd5179a5",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:18.208051",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session10/image/2.png",
+    "filename": "2.png",
+    "size": 1617209,
+    "modified_time": "2026-08-23T22:02:15.946007"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table with text in Chinese, detailing policy points and questions. It includes columns for \"Policy Points,\" \"Key Clauses,\" \"Questions,\" and \"Analysis Explanation.\" Topics covered are application qualifications, subsidy standards, venue requirements, and food safety regulations. There is additional text at the bottom about venue cost composition and initial investment totals. The overall mood is informative and structured, likely aimed at providing clarity on policy-related queries.",
+    "final_text": "The image is a table with text in Chinese, detailing policy points and questions. It includes columns for \"Policy Points,\" \"Key Clauses,\" \"Questions,\" and \"Analysis Explanation.\" Topics covered are application qualifications, subsidy standards, venue requirements, and food safety regulations. There is additional text at the bottom about venue cost composition and initial investment totals. The overall mood is informative and structured, likely aimed at providing clarity on policy-related queries.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427757-SeoSwi5cjJkQxynpRkrj",
+    "created": 1788427757,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 88,
+      "total_tokens": 1283,
+      "cost": 0.0038675
+    }
+  }
+}

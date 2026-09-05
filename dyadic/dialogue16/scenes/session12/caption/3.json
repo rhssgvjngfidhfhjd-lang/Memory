@@ -1,0 +1,36 @@
+{
+  "id": "d2888dde-b19b-44c8-8e8f-3730828a6340",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:26.725334",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session12/image/3.png",
+    "filename": "3.png",
+    "size": 167843,
+    "modified_time": "2026-08-23T21:47:12.027606"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A serene scene featuring a hand holding a small, elegant blue-green ceramic teacup filled with tea. The cup is being held above a wooden tray with another upside-down cup nearby. The background includes a small potted plant, enhancing the calm and peaceful atmosphere. The setting suggests a tranquil tea-drinking moment, likely in a cozy indoor space. There is no visible text in the image.",
+    "final_text": "A serene scene featuring a hand holding a small, elegant blue-green ceramic teacup filled with tea. The cup is being held above a wooden tray with another upside-down cup nearby. The background includes a small potted plant, enhancing the calm and peaceful atmosphere. The setting suggests a tranquil tea-drinking moment, likely in a cozy indoor space. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427046-4R3SfIugjWuuO2Da9KNE",
+    "created": 1788427046,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 79,
+      "total_tokens": 424,
+      "cost": 0.0016525
+    }
+  }
+}

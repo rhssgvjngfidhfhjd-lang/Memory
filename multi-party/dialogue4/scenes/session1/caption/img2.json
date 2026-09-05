@@ -1,0 +1,36 @@
+{
+  "id": "f4233bc4-47bd-488f-a7d5-dc96dbb4ff78",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:42.748494",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session1/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 173131,
+    "modified_time": "2026-08-23T22:08:12.985492"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a camel-colored, mid-length wool coat with a notched collar and a matching belt tied at the waist. The coat is presented on a plain white background, giving it a clean and elegant look. The label inside reads \"Max Mara.\" The overall mood is sophisticated and classic, emphasizing the coat's timeless design.",
+    "final_text": "The image displays a camel-colored, mid-length wool coat with a notched collar and a matching belt tied at the waist. The coat is presented on a plain white background, giving it a clean and elegant look. The label inside reads \"Max Mara.\" The overall mood is sophisticated and classic, emphasizing the coat's timeless design.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426761-rtHMrKNWzzDfofMrUIXf",
+    "created": 1788426761,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 66,
+      "total_tokens": 921,
+      "cost": 0.0027975
+    }
+  }
+}

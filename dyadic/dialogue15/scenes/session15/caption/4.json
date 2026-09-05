@@ -1,0 +1,36 @@
+{
+  "id": "b91b7eb9-4455-4f91-a388-a8dd5ccf9be7",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:47.092922",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session15/image/4.jpg",
+    "filename": "4.jpg",
+    "size": 138195,
+    "modified_time": "2026-08-23T21:34:21.959034"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image captures a person working on the interior of a computer, focusing on the components inside the case. The individual appears to be adjusting or installing parts, with visible labels such as \"GIGABYTE\" and \"Nitro\" on the hardware. The scene is well-lit, with a warm, focused atmosphere suggesting concentration and technical work. The overall mood is one of precision and engagement in a tech-related task.",
+    "final_text": "The image captures a person working on the interior of a computer, focusing on the components inside the case. The individual appears to be adjusting or installing parts, with visible labels such as \"GIGABYTE\" and \"Nitro\" on the hardware. The scene is well-lit, with a warm, focused atmosphere suggesting concentration and technical work. The overall mood is one of precision and engagement in a tech-related task.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427006-pJDFA0dtDUViQ4SYqzqi",
+    "created": 1788427006,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 84,
+      "total_tokens": 1279,
+      "cost": 0.0038275
+    }
+  }
+}

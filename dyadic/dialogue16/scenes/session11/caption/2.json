@@ -1,0 +1,36 @@
+{
+  "id": "3d82056d-221c-4c75-83de-430ccd24487f",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:24.492282",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session11/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 58776,
+    "modified_time": "2026-08-23T21:36:07.148444"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a rustic, warmly lit scene on a wooden table, featuring an open ancient book with Asian script and an adjacent large jar filled with golden liquid, possibly honey. Surrounding the main objects are various pottery items, including cups and small bowls. The atmosphere is cozy and historical, suggesting a setting of quiet study or traditional practice. Light softly illuminates the scene, enhancing the vintage and serene mood.",
+    "final_text": "The image depicts a rustic, warmly lit scene on a wooden table, featuring an open ancient book with Asian script and an adjacent large jar filled with golden liquid, possibly honey. Surrounding the main objects are various pottery items, including cups and small bowls. The atmosphere is cozy and historical, suggesting a setting of quiet study or traditional practice. Light softly illuminates the scene, enhancing the vintage and serene mood.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427044-MnYFsTKt7AkgSmXf6JYH",
+    "created": 1788427044,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 82,
+      "total_tokens": 597,
+      "cost": 0.0021075
+    }
+  }
+}

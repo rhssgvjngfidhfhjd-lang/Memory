@@ -1,0 +1,36 @@
+{
+  "id": "a87369be-406c-43f4-adba-89b03117847f",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:38.531649",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 308322,
+    "modified_time": "2026-08-23T22:07:55.460242"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a signboard with a large QR code at the center, intended for scanning to purchase tickets online. The sign is blue with white and yellow text, primarily in Chinese, with some English phrases like \"SCAN QR CODE.\" The sign also includes instructions for entry using ID verification. Surrounding the QR code are smaller images showing steps for online ticket purchasing. The background features decorative panels with intricate designs, and there are two red flags visible. The overall mood is informative and functional, aimed at guiding visitors efficiently.",
+    "final_text": "The image depicts a signboard with a large QR code at the center, intended for scanning to purchase tickets online. The sign is blue with white and yellow text, primarily in Chinese, with some English phrases like \"SCAN QR CODE.\" The sign also includes instructions for entry using ID verification. Surrounding the QR code are smaller images showing steps for online ticket purchasing. The background features decorative panels with intricate designs, and there are two red flags visible. The overall mood is informative and functional, aimed at guiding visitors efficiently.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426757-T7bQdqRVRTDTkMCIhgOe",
+    "created": 1788426757,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 105,
+      "total_tokens": 822,
+      "cost": 0.0028425
+    }
+  }
+}

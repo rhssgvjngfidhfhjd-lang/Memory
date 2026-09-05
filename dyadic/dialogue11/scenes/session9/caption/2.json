@@ -1,0 +1,36 @@
+{
+  "id": "caa4805c-b9e2-403d-bcce-b99496cf6356",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:16.140420",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 157100,
+    "modified_time": "2026-08-23T21:31:18.644233"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains text in Chinese, presenting four case studies related to challenges faced by elderly individuals:\n\n1. **Case Study 1**: A 72-year-old woman struggles with walking due to knee arthritis, making it difficult to reach new bus stops that are 800 meters away.\n2. **Case Study 2**: A 68-year-old man experiences delays in medical treatment due to increased road congestion, affecting his 40-minute journey to the hospital.\n3. **Case Study 3**: An 81-year-old man living alone has difficulty shopping for groceries, needing to walk 1200 meters due to inconvenient transportation.\n4. **Case Study 4**: A 75-year-old woman with poor vision faces safety risks crossing streets, unable to see vehicles clearly.\n\nThe mood is informative, highlighting the struggles and safety concerns of elderly individuals in urban environments.",
+    "final_text": "The image contains text in Chinese, presenting four case studies related to challenges faced by elderly individuals:\n\n1. **Case Study 1**: A 72-year-old woman struggles with walking due to knee arthritis, making it difficult to reach new bus stops that are 800 meters away.\n2. **Case Study 2**: A 68-year-old man experiences delays in medical treatment due to increased road congestion, affecting his 40-minute journey to the hospital.\n3. **Case Study 3**: An 81-year-old man living alone has difficulty shopping for groceries, needing to walk 1200 meters due to inconvenient transportation.\n4. **Case Study 4**: A 75-year-old woman with poor vision faces safety risks crossing streets, unable to see vehicles clearly.\n\nThe mood is informative, highlighting the struggles and safety concerns of elderly individuals in urban environments.",
+    "token_stats": {
+      "original_tokens": 172,
+      "final_tokens": 172,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426675-ZOl3XgAy2Q2GTDyVHgvd",
+    "created": 1788426675,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 177,
+      "total_tokens": 477,
+      "cost": 0.00252
+    }
+  }
+}

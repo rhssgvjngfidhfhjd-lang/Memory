@@ -1,0 +1,36 @@
+{
+  "id": "833531ff-14c8-4c47-aaec-02655c74f781",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:36.734795",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 258342,
+    "modified_time": "2026-08-23T21:36:05.016097"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a cat with a futuristic, glowing collar in a neon-lit environment. The collar has intricate circuitry patterns and emits a bright, colorful light. The background is blurred with vibrant neon colors, creating a sci-fi or cyberpunk atmosphere. The cat gazes intently off to the side, giving a sense of curiosity or alertness. The overall mood is high-tech and otherworldly.",
+    "final_text": "The image features a cat with a futuristic, glowing collar in a neon-lit environment. The collar has intricate circuitry patterns and emits a bright, colorful light. The background is blurred with vibrant neon colors, creating a sci-fi or cyberpunk atmosphere. The cat gazes intently off to the side, giving a sense of curiosity or alertness. The overall mood is high-tech and otherworldly.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427057-eQ1pnnPo1cMLy4Sp3yLB",
+    "created": 1788427057,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 80,
+      "total_tokens": 425,
+      "cost": 0.0016625
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "5f46ca97-17f5-443c-857f-d9eb416da6dc",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:18.698211",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 401396,
+    "modified_time": "2026-08-23T22:09:35.325792"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a person standing indoors, wearing a black Arc'teryx jacket and olive green pants. The person’s face is pixelated. In the background, there is a wooden cabinet with a TV displaying text in a foreign language. Various objects, including a suitcase and a printer, are placed on and around the cabinet. The room has a casual atmosphere with typical household furnishings.",
+    "final_text": "The image shows a person standing indoors, wearing a black Arc'teryx jacket and olive green pants. The person’s face is pixelated. In the background, there is a wooden cabinet with a TV displaying text in a foreign language. Various objects, including a suitcase and a printer, are placed on and around the cabinet. The room has a casual atmosphere with typical household furnishings.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426856-EsUlnyySgp96sglM9jyO",
+    "created": 1788426856,
+    "usage": {
+      "prompt_tokens": 1002,
+      "completion_tokens": 78,
+      "total_tokens": 1080,
+      "cost": 0.003285
+    }
+  }
+}

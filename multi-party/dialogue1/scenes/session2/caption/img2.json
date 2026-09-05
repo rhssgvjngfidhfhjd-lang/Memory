@@ -1,0 +1,36 @@
+{
+  "id": "885edf9c-7eb2-4974-bb19-06299adebc46",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:06.547779",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session2/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 357944,
+    "modified_time": "2026-08-23T22:02:40.735811"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a spacious, modern cat café with a warm, inviting atmosphere. Several cats are lounging around the room, resting on the light wooden floor and circular benches. There are a few visitors interacting with the cats, some seated and engaged with their phones. A central wooden tree-like structure adds a natural element to the decor. Signs with text are visible, indicating rules or information. The lighting is soft, creating a relaxed and cozy mood.",
+    "final_text": "The image depicts a spacious, modern cat café with a warm, inviting atmosphere. Several cats are lounging around the room, resting on the light wooden floor and circular benches. There are a few visitors interacting with the cats, some seated and engaged with their phones. A central wooden tree-like structure adds a natural element to the decor. Signs with text are visible, indicating rules or information. The lighting is soft, creating a relaxed and cozy mood.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426546-LGaZe1py5qFdzXhGiblO",
+    "created": 1788426546,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 90,
+      "total_tokens": 810,
+      "cost": 0.0027
+    }
+  }
+}

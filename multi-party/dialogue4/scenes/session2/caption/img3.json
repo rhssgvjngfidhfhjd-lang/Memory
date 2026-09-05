@@ -1,0 +1,36 @@
+{
+  "id": "bf8589e3-710d-4a88-846a-1212dc3502be",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:58.999403",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session2/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 250983,
+    "modified_time": "2026-08-23T22:08:35.907807"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a minimalist tabletop setting in a cozy atmosphere. Key elements include a wooden coaster with a glass of iced coffee, a wooden box holding a lemon wedge, and a white plate with a pastry. A small pine cone and a golden spoon are also present. The lighting is warm, creating a relaxed and inviting mood.",
+    "final_text": "The image features a minimalist tabletop setting in a cozy atmosphere. Key elements include a wooden coaster with a glass of iced coffee, a wooden box holding a lemon wedge, and a white plate with a pastry. A small pine cone and a golden spoon are also present. The lighting is warm, creating a relaxed and inviting mood.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426777-psvWnpZ4pTgtOk8pkWuG",
+    "created": 1788426777,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 65,
+      "total_tokens": 920,
+      "cost": 0.0027875
+    }
+  }
+}

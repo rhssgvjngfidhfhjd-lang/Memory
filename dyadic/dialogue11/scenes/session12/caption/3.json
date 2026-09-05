@@ -1,0 +1,36 @@
+{
+  "id": "6b8b4656-e899-4bde-9c81-df6029898319",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:29.950877",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session12/image/3.png",
+    "filename": "3.png",
+    "size": 50446,
+    "modified_time": "2026-08-23T21:30:53.687296"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a mind map with three main categories, each connected to various activities. The categories are labeled in Chinese: \"户外类\" (Outdoor), \"室内类\" (Indoor), and \"公共资源类\" (Public Resources). Under \"户外类,\" activities include \"公园骑行\" (Park Cycling), \"绿道散步\" (Greenway Walking), and \"草坪野餐\" (Lawn Picnic). Under \"室内类,\" activities listed are \"亲子下棋\" (Parent-Child Chess), \"烘焙小点心\" (Baking Snacks), and \"看经典老电影\" (Watching Classic Movies). For \"公共资源类,\" the activities are \"图书馆读绘本\" (Reading Picture Books at the Library), \"免费博物馆参观\" (Free Museum Visits), and \"社区亲子手工坊\" (Community Parent-Child Workshops). The mood is organized and informative, displaying various leisure activities.",
+    "final_text": "The image is a mind map with three main categories, each connected to various activities. The categories are labeled in Chinese: \"户外类\" (Outdoor), \"室内类\" (Indoor), and \"公共资源类\" (Public Resources). Under \"户外类,\" activities include \"公园骑行\" (Park Cycling), \"绿道散步\" (Greenway Walking), and \"草坪野餐\" (Lawn Picnic). Under \"室内类,\" activities listed are \"亲子下棋\" (Parent-Child Chess), \"烘焙小点心\" (Baking Snacks), and \"看经典老电影\" (Watching Classic Movies). For \"公共资源类,\" the activities are \"图书馆读绘本\" (Reading Picture Books at the Library), \"免费博物馆参观\" (Free Museum Visits), and \"社区亲子手工坊\" (Community Parent-Child Workshops). The mood is organized and informative, displaying various leisure activities.",
+    "token_stats": {
+      "original_tokens": 239,
+      "final_tokens": 239,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426689-oDXRa6QFd6daEkWmnlRS",
+    "created": 1788426689,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 204,
+      "total_tokens": 719,
+      "cost": 0.0033275
+    }
+  }
+}

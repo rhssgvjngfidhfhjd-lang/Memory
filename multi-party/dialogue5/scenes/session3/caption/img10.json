@@ -1,0 +1,36 @@
+{
+  "id": "605a244d-2196-47d9-b9e5-8c8fa200bfc5",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:34.641558",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 186797,
+    "modified_time": "2026-08-23T22:09:37.782790"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a modern hotel room featuring two large, neatly made beds with white bedding, set against a sleek, minimalist wall with vertical panels. A small seating area with a couch and a suitcase is visible to the side. A framed picture hangs on the wall above the couch. The room is well-lit, creating a clean and tranquil atmosphere. There is a window with closed curtains on the far side, providing natural light. No visible text is present. Overall, the scene conveys a sense of comfort and relaxation.",
+    "final_text": "The image depicts a modern hotel room featuring two large, neatly made beds with white bedding, set against a sleek, minimalist wall with vertical panels. A small seating area with a couch and a suitcase is visible to the side. A framed picture hangs on the wall above the couch. The room is well-lit, creating a clean and tranquil atmosphere. There is a window with closed curtains on the far side, providing natural light. No visible text is present. Overall, the scene conveys a sense of comfort and relaxation.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426873-bVQkG2ls65k2vUEJmgfj",
+    "created": 1788426873,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 104,
+      "total_tokens": 824,
+      "cost": 0.00284
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "422c8b94-e663-4ca2-b84b-d68619f34c8e",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:42.287799",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session3/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 80791,
+    "modified_time": "2026-08-23T22:06:41.750231"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a detailed anatomical illustration of the human leg muscles viewed from the side. Various muscles are labeled in Chinese, including the gluteus medius, gluteus maximus, tensor fasciae latae, biceps femoris, quadriceps, and gastrocnemius. The muscles are depicted in red, with the bones depicted in white. The overall mood is educational and clinical, focusing on anatomy for learning or reference purposes.",
+    "final_text": "The image is a detailed anatomical illustration of the human leg muscles viewed from the side. Various muscles are labeled in Chinese, including the gluteus medius, gluteus maximus, tensor fasciae latae, biceps femoris, quadriceps, and gastrocnemius. The muscles are depicted in red, with the bones depicted in white. The overall mood is educational and clinical, focusing on anatomy for learning or reference purposes.",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426642-tUmSvl26VupILp1V32Qr",
+    "created": 1788426642,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 89,
+      "total_tokens": 944,
+      "cost": 0.0030275
+    }
+  }
+}

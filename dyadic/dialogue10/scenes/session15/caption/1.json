@@ -1,0 +1,36 @@
+{
+  "id": "b9ddd200-a465-40f2-8138-6fd134a2e731",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:28.037217",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session15/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 279265,
+    "modified_time": "2026-08-23T21:30:14.878119"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a newspaper article from The New York Times dated Sunday, July 16, 2023, under the \"Opinion\" section. The headline reads, \"If Loneliness Is an Epidemic, How Do We Treat It?\" The article is written by Eleanor Cummins and Andrew Zaleski, discussing loneliness as a widespread issue. It features Stephanie Cacioppo, a behavioral neuroscientist, who explores solutions to loneliness following her husband's death. The text highlights the challenge of addressing loneliness and the lack of a simple solution, emphasizing the complexity of social connections. The mood is contemplative and informative.",
+    "final_text": "The image shows a newspaper article from The New York Times dated Sunday, July 16, 2023, under the \"Opinion\" section. The headline reads, \"If Loneliness Is an Epidemic, How Do We Treat It?\" The article is written by Eleanor Cummins and Andrew Zaleski, discussing loneliness as a widespread issue. It features Stephanie Cacioppo, a behavioral neuroscientist, who explores solutions to loneliness following her husband's death. The text highlights the challenge of addressing loneliness and the lack of a simple solution, emphasizing the complexity of social connections. The mood is contemplative and informative.",
+    "token_stats": {
+      "original_tokens": 126,
+      "final_tokens": 126,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426625-YLckFZAMs1ObXtd9GM9g",
+    "created": 1788426625,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 125,
+      "total_tokens": 1123,
+      "cost": 0.003745
+    }
+  }
+}

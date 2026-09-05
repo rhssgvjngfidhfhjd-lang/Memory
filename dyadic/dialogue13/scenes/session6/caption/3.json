@@ -1,0 +1,36 @@
+{
+  "id": "2dc996aa-52e8-42be-8188-17f0a0b6663e",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:45.719178",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session6/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 135805,
+    "modified_time": "2026-08-23T21:32:45.191061"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a group of children engaged in a cooking activity, assembling food items on a foil-lined tray. They are wearing colorful aprons and plastic gloves. A young boy in a yellow jacket and a girl in a pink outfit are focused on the task. Adults in the background observe and assist. The mood is lively and collaborative, suggesting a learning environment. Some text is visible on the aprons and a bottle, but it's not clearly legible. The overall atmosphere is one of teamwork and enjoyment.",
+    "final_text": "The image depicts a group of children engaged in a cooking activity, assembling food items on a foil-lined tray. They are wearing colorful aprons and plastic gloves. A young boy in a yellow jacket and a girl in a pink outfit are focused on the task. Adults in the background observe and assist. The mood is lively and collaborative, suggesting a learning environment. Some text is visible on the aprons and a bottle, but it's not clearly legible. The overall atmosphere is one of teamwork and enjoyment.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426824-20zVmk5PciuRZz49Q1O9",
+    "created": 1788426824,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 101,
+      "total_tokens": 1296,
+      "cost": 0.0039975
+    }
+  }
+}

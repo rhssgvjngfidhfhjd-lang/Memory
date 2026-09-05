@@ -1,0 +1,36 @@
+{
+  "id": "fce64c56-a682-49ad-b1db-2959b9ec0260",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:43.841166",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session15/image/3.png",
+    "filename": "3.png",
+    "size": 986604,
+    "modified_time": "2026-08-23T21:38:26.094488"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is divided into three sections, each illustrating a step in a visual exercise routine known as the 20-20-20 rule. The first section shows two people working at desks with the text \"20分钟工作\" (20 minutes of work). The second section features an eye with the text \"20英尺远眺\" (look 20 feet away). The third section shows a person looking out a window with the text \"20秒持续\" (20 seconds duration). The overall atmosphere is informative and instructional, promoting eye health during prolonged screen use.",
+    "final_text": "The image is divided into three sections, each illustrating a step in a visual exercise routine known as the 20-20-20 rule. The first section shows two people working at desks with the text \"20分钟工作\" (20 minutes of work). The second section features an eye with the text \"20英尺远眺\" (look 20 feet away). The third section shows a person looking out a window with the text \"20秒持续\" (20 seconds duration). The overall atmosphere is informative and instructional, promoting eye health during prolonged screen use.",
+    "token_stats": {
+      "original_tokens": 119,
+      "final_tokens": 119,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427241-NXwhryTXCTOWoJoWR0KE",
+    "created": 1788427241,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 114,
+      "total_tokens": 1309,
+      "cost": 0.0041275
+    }
+  }
+}

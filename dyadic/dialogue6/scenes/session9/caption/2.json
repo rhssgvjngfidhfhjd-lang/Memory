@@ -1,0 +1,36 @@
+{
+  "id": "e2be1ace-e8a6-48a2-96f8-0880b64e2f54",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:15.023519",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 394911,
+    "modified_time": "2026-08-23T21:56:30.607082"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a lively scene where a cat is mid-air, leaping towards a toy butterfly attached to a mechanical base on the floor. The setting is a cozy living room with a beige sofa and a wooden coffee table. Sunlight streams in, creating a warm atmosphere. The cat appears playful and focused on the butterfly, enhancing the fun and energetic mood of the scene. No visible text is present.",
+    "final_text": "The image depicts a lively scene where a cat is mid-air, leaping towards a toy butterfly attached to a mechanical base on the floor. The setting is a cozy living room with a beige sofa and a wooden coffee table. Sunlight streams in, creating a warm atmosphere. The cat appears playful and focused on the butterfly, enhancing the fun and energetic mood of the scene. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 81,
+      "final_tokens": 81,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427573-57d6z63ZW7rmcNlLDOqu",
+    "created": 1788427573,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 81,
+      "total_tokens": 426,
+      "cost": 0.0016725
+    }
+  }
+}

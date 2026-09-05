@@ -1,0 +1,36 @@
+{
+  "id": "74e681db-c100-46b1-861c-af9c726cc21c",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:33.658174",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session12/image/4.png",
+    "filename": "4.png",
+    "size": 178765,
+    "modified_time": "2026-08-23T21:32:57.056705"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table titled \"健康习惯可持续化落地方案探讨表\" (Discussion Table for Sustainable Implementation of Healthy Habits). It consists of five columns: 探讨维度 (Exploration Dimension), 具体落地措施 (Specific Implementation Measures), 责任角色 (Responsible Roles), 预期效果 (Expected Results), and 助力习惯内化 (Aid Habit Internalization). The rows cover aspects like technical tools, social supervision, habit goals, and protection mechanisms. The text discusses strategies for integrating health management into daily life, enhancing self-discipline, and avoiding project abandonment. The atmosphere is informative and structured.",
+    "final_text": "The image is a table titled \"健康习惯可持续化落地方案探讨表\" (Discussion Table for Sustainable Implementation of Healthy Habits). It consists of five columns: 探讨维度 (Exploration Dimension), 具体落地措施 (Specific Implementation Measures), 责任角色 (Responsible Roles), 预期效果 (Expected Results), and 助力习惯内化 (Aid Habit Internalization). The rows cover aspects like technical tools, social supervision, habit goals, and protection mechanisms. The text discusses strategies for integrating health management into daily life, enhancing self-discipline, and avoiding project abandonment. The atmosphere is informative and structured.",
+    "token_stats": {
+      "original_tokens": 160,
+      "final_tokens": 160,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426932-OuSi6hU7aEHIhXc1WpPr",
+    "created": 1788426932,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 133,
+      "total_tokens": 1328,
+      "cost": 0.0043175
+    }
+  }
+}

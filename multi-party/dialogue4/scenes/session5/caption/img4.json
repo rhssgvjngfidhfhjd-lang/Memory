@@ -1,0 +1,36 @@
+{
+  "id": "1d215a85-7123-46af-a1d0-9b5974509269",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:47.462902",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session5/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 201683,
+    "modified_time": "2026-08-23T22:09:26.585496"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a close-up of an embroidery hoop containing a fabric with an embroidered design. The central element is a pill-shaped embroidery, split into two halves: yellow on top and blue on the bottom, surrounded by a black outline. Around the pill shape, there are blue lines and shapes on the fabric, possibly part of a larger design. The atmosphere is calm and focused, suggesting a crafting or artistic activity. There is no visible text.",
+    "final_text": "The image depicts a close-up of an embroidery hoop containing a fabric with an embroidered design. The central element is a pill-shaped embroidery, split into two halves: yellow on top and blue on the bottom, surrounded by a black outline. Around the pill shape, there are blue lines and shapes on the fabric, possibly part of a larger design. The atmosphere is calm and focused, suggesting a crafting or artistic activity. There is no visible text.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426826-bXerDA31lNUC0Vv9FnvE",
+    "created": 1788426826,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 90,
+      "total_tokens": 810,
+      "cost": 0.0027
+    }
+  }
+}

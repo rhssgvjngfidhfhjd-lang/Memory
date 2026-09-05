@@ -1,0 +1,36 @@
+{
+  "id": "5d0170f6-e419-45d8-843e-feb0e802132a",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:28.032375",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 3233531,
+    "modified_time": "2026-08-23T21:32:27.209158"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic titled \"杭州巿青年居住数据画像,\" focusing on housing data for young residents in Hangzhou. It includes three main sections: \"租金收入比\" showing rental income ratios with percentages for different districts; \"通勤时间\" depicting commuting times with a line graph; and \"周边配套\" providing ratings for district amenities. The atmosphere is informative, aiming to present housing statistics. Visible text includes district names, percentages, commuting times, and star ratings. The data source is noted as \"2024年杭州市青年居住调查.\"",
+    "final_text": "The image is an infographic titled \"杭州巿青年居住数据画像,\" focusing on housing data for young residents in Hangzhou. It includes three main sections: \"租金收入比\" showing rental income ratios with percentages for different districts; \"通勤时间\" depicting commuting times with a line graph; and \"周边配套\" providing ratings for district amenities. The atmosphere is informative, aiming to present housing statistics. Visible text includes district names, percentages, commuting times, and star ratings. The data source is noted as \"2024年杭州市青年居住调查.\"",
+    "token_stats": {
+      "original_tokens": 137,
+      "final_tokens": 137,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426743-CZpCFHTahBE2LgdCOSIf",
+    "created": 1788426743,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 119,
+      "total_tokens": 1117,
+      "cost": 0.003685
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "339ca070-7bf1-4345-8cd5-1487684cb6fe",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:59.598518",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 129227,
+    "modified_time": "2026-08-23T22:09:58.035820"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a weather forecast on a smartphone screen for Pai Yen, Changbaishan Ziran Baohuqu. The current temperature is -31°C, with snowflake icons indicating snowy conditions. The forecast includes hourly predictions showing snow and varying temperatures from -33°C to -32°C. Below, a weekly forecast is presented with icons for snow, clouds, and sun, alongside temperatures ranging from -23°C to -10°C. Wind speeds and directions are also noted. The background features a snowy landscape with pine trees, creating a cold, wintry atmosphere.",
+    "final_text": "The image displays a weather forecast on a smartphone screen for Pai Yen, Changbaishan Ziran Baohuqu. The current temperature is -31°C, with snowflake icons indicating snowy conditions. The forecast includes hourly predictions showing snow and varying temperatures from -33°C to -32°C. Below, a weekly forecast is presented with icons for snow, clouds, and sun, alongside temperatures ranging from -23°C to -10°C. Wind speeds and directions are also noted. The background features a snowy landscape with pine trees, creating a cold, wintry atmosphere.",
+    "token_stats": {
+      "original_tokens": 116,
+      "final_tokens": 116,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426898-iXEXHPzGCgF3WKQ7DPT7",
+    "created": 1788426898,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 115,
+      "total_tokens": 415,
+      "cost": 0.0019
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "7e883e88-497e-4024-9872-7f9c4107c78d",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:49.805088",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session5/image/3.png",
+    "filename": "3.png",
+    "size": 508427,
+    "modified_time": "2026-08-23T21:57:01.647027"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic detailing medical insurance coverage scenarios. It includes three sections: joint surgery, skin disease recurrence, and ear infection. Each section lists total costs, insurance payments, and out-of-pocket expenses in Chinese yuan. Specific figures are given for each scenario, such as 28,000 yuan total for joint surgery, with insurance covering 18,850 yuan and 9,150 yuan out-of-pocket. Additional notes explain cost reduction percentages and conditions. The design is organized with a clear layout, using different background colors for each section. The mood is informative and structured.",
+    "final_text": "The image is an infographic detailing medical insurance coverage scenarios. It includes three sections: joint surgery, skin disease recurrence, and ear infection. Each section lists total costs, insurance payments, and out-of-pocket expenses in Chinese yuan. Specific figures are given for each scenario, such as 28,000 yuan total for joint surgery, with insurance covering 18,850 yuan and 9,150 yuan out-of-pocket. Additional notes explain cost reduction percentages and conditions. The design is organized with a clear layout, using different background colors for each section. The mood is informative and structured.",
+    "token_stats": {
+      "original_tokens": 116,
+      "final_tokens": 116,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427608-fsrrTeV3QR6cD9w0m8zC",
+    "created": 1788427608,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 116,
+      "total_tokens": 631,
+      "cost": 0.0024475
+    }
+  }
+}

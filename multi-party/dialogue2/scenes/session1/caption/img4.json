@@ -1,0 +1,36 @@
+{
+  "id": "eb512abd-ded3-47cf-ae0f-a79fc01749f0",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:14.388339",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 331144,
+    "modified_time": "2026-08-23T22:04:22.210528"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant garden filled with an array of colorful flowers, including pink, blue, and orange blooms. Dewdrops glisten on the petals and leaves, enhancing the scene's freshness. The background features a lush mix of foliage, creating a serene and lively atmosphere. Sunlight filters through, adding a soft, glowing effect that contributes to the overall peaceful and enchanting mood. There are no visible text or human elements, with the focus entirely on nature's beauty.",
+    "final_text": "The image depicts a vibrant garden filled with an array of colorful flowers, including pink, blue, and orange blooms. Dewdrops glisten on the petals and leaves, enhancing the scene's freshness. The background features a lush mix of foliage, creating a serene and lively atmosphere. Sunlight filters through, adding a soft, glowing effect that contributes to the overall peaceful and enchanting mood. There are no visible text or human elements, with the focus entirely on nature's beauty.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426612-r7O5U5Sryjbx3cAt6u1o",
+    "created": 1788426612,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 95,
+      "total_tokens": 1093,
+      "cost": 0.003445
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "81c681a5-e924-49ac-8cba-0822b9424c61",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:35.072748",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session10/image/2.png",
+    "filename": "2.png",
+    "size": 2720950,
+    "modified_time": "2026-08-23T21:31:50.727636"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a diagram explaining collaborative filtering and content recommendation principles. It is divided into two sections: \"协同过滤原理\" (Collaborative Filtering Principles) and \"内容推荐原理\" (Content Recommendation Principles). \n\n**Collaborative Filtering**:\n1. **用户行为分析** (User Behavior Analysis): Collects users' historical ratings/click data. A matrix of user-item ratings is shown.\n2. **相似用户匹配** (Similar User Matching): Calculates interest similarity using methods like Pearson correlation.\n3. **推荐生成** (Recommendation Generation): Recommends items based on similar users' preferences.\n\n**Content Recommendation**:\n1. **物品特征提取** (Item Feature Extraction): Analyzes attributes/tags like movie genres/book themes. A network diagram represents connections.\n2. **用户兴趣建模** (User Interest Modeling): Builds a user interest tag library using methods like TF-IDF/Word2Vec with examples \"科幻/悬疑\" (Sci-Fi/Suspense).\n3. **推荐生成** (Recommendation Generation): Matches user interests with item features for recommendations.\n\nOverall, the mood is informative and analytical, focusing on data-driven methodologies.",
+    "final_text": "The image is a diagram explaining collaborative filtering and content recommendation principles. It is divided into two sections: \"协同过滤原理\" (Collaborative Filtering Principles) and \"内容推荐原理\" (Content Recommendation Principles). \n\n**Collaborative Filtering**:\n1. **用户行为分析** (User Behavior Analysis): Collects users' historical ratings/click data. A matrix of user-item ratings is shown.\n2. **相似用户匹配** (Similar User Matching): Calculates interest similarity using methods like Pearson correlation.\n3. **推荐生成** (Recommendation Generation): Recommends items based on similar users' preferences.\n\n**Content Recommendation**:\n1. **物品特征提取** (Item Feature Extraction): Analyzes attributes/tags like movie genres/book themes. A network diagram represents connections.\n2. **用户兴趣建模** (User Interest Modeling): Builds a user interest tag library using methods like TF-IDF/Word2Vec with examples \"科幻/悬疑\" (Sci-Fi/Suspense).\n3. **推荐生成** (Recommendation Generation): Matches user interests with item features for recommendations.\n\nOverall, the mood is... [truncated]",
+    "token_stats": {
+      "original_tokens": 266,
+      "final_tokens": 256,
+      "was_truncated": true,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426749-vX42jD0J5XTFL4osSTck",
+    "created": 1788426749,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 246,
+      "total_tokens": 1526,
+      "cost": 0.00566
+    }
+  }
+}

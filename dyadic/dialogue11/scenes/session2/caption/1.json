@@ -1,0 +1,36 @@
+{
+  "id": "f13af182-5fbe-47e1-b051-e59f971df157",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:42.380244",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 293915,
+    "modified_time": "2026-08-23T21:30:56.927563"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts the interior of a bus with cleaning equipment, including mops and buckets, placed near a blue seat. A sign with red and black text in Chinese is visible, suggesting instructions or warnings. The scene is bathed in warm sunlight, creating a tidy and orderly atmosphere.",
+    "final_text": "The image depicts the interior of a bus with cleaning equipment, including mops and buckets, placed near a blue seat. A sign with red and black text in Chinese is visible, suggesting instructions or warnings. The scene is bathed in warm sunlight, creating a tidy and orderly atmosphere.",
+    "token_stats": {
+      "original_tokens": 57,
+      "final_tokens": 57,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426642-gFouTbSVotOoqXZ1cBB6",
+    "created": 1788426642,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 57,
+      "total_tokens": 402,
+      "cost": 0.0014325
+    }
+  }
+}

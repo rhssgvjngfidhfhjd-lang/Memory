@@ -1,0 +1,36 @@
+{
+  "id": "eae4f84d-9832-4746-a686-db5d89dd2047",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:51.240681",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session2/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 97567,
+    "modified_time": "2026-08-23T21:31:52.786191"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a patient laboratory report dated October 26, 2023. It lists various test results for a patient named Jane Doe, born on January 15, 1960. Chronic conditions include Type 2 Diabetes, Hypertension, and Hyperlipidemia. Test results show elevated levels of glucose (185 mg/dL), Hb1Ac (8.9%), total cholesterol (240 mg/dL), LDL cholesterol (260 mg/dL), and creatinine (1.5 mg/dL), all flagged as \"HIGH.\" HDL cholesterol and triglycerides are also noted, with triglycerides flagged as \"LOW.\" eGFR is 48 mL/min/1.73m², and potassium is 5.2 mEq/L, both flagged as \"HIGH.\" The report recommends follow-up for medication adjustment and lifestyle counseling by Dr. Lee. The atmosphere is clinical and informative, with a focus on health monitoring. Some text is marked as \"CONFIDENTIAL SCANNED.\"",
+    "final_text": "The image depicts a patient laboratory report dated October 26, 2023. It lists various test results for a patient named Jane Doe, born on January 15, 1960. Chronic conditions include Type 2 Diabetes, Hypertension, and Hyperlipidemia. Test results show elevated levels of glucose (185 mg/dL), Hb1Ac (8.9%), total cholesterol (240 mg/dL), LDL cholesterol (260 mg/dL), and creatinine (1.5 mg/dL), all flagged as \"HIGH.\" HDL cholesterol and triglycerides are also noted, with triglycerides flagged as \"LOW.\" eGFR is 48 mL/min/1.73m², and potassium is 5.2 mEq/L, both flagged as \"HIGH.\" The report recommends follow-up for medication adjustment and lifestyle counseling by Dr. Lee. The atmosphere is clinical and informative, with a focus on health monitoring. Some text is marked as \"CONFIDENTIAL SCANNED.\"",
+    "token_stats": {
+      "original_tokens": 206,
+      "final_tokens": 206,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426706-GZPIrNdX5pvvlXH7VzU2",
+    "created": 1788426706,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 203,
+      "total_tokens": 920,
+      "cost": 0.0038225
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "eab10fe4-f92d-4c53-85cc-bf14985bac05",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:29.480620",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 136122,
+    "modified_time": "2026-08-23T22:09:14.129163"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a chat conversation between two users, each represented by cartoon avatars. The dialogue is in Chinese and involves a customer asking if an order can be shipped the next day due to urgency. The seller responds that it cannot be shipped tomorrow but will be sent tonight. The customer inquires about using a specific courier, and the seller states they do not accept specific requests but will use \"Shunfeng\" for shipping. The interface includes options like customer reviews, member coupons, and a new 50cm product. The mood is business-like and straightforward.",
+    "final_text": "The image depicts a chat conversation between two users, each represented by cartoon avatars. The dialogue is in Chinese and involves a customer asking if an order can be shipped the next day due to urgency. The seller responds that it cannot be shipped tomorrow but will be sent tonight. The customer inquires about using a specific courier, and the seller states they do not accept specific requests but will use \"Shunfeng\" for shipping. The interface includes options like customer reviews, member coupons, and a new 50cm product. The mood is business-like and straightforward.",
+    "token_stats": {
+      "original_tokens": 114,
+      "final_tokens": 114,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426810-7p4adlTqa7CUdbWAdhS0",
+    "created": 1788426810,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 112,
+      "total_tokens": 967,
+      "cost": 0.0032575
+    }
+  }
+}

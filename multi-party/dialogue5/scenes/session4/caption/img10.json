@@ -1,0 +1,36 @@
+{
+  "id": "285a4e1c-045b-463a-a8f9-86cc11ecc6b3",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:54.349974",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session4/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 3885540,
+    "modified_time": "2026-08-23T22:10:06.762310"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person with long hair sitting at a desk in an office environment, focusing on a laptop screen. The screen displays images of plated food dishes, including pasta and greens. The person's attire includes a white blouse and a bracelet on the left wrist. The background features large windows with blinds, creating a neutral and calm atmosphere. Visible text at the bottom right corner reads \"豆豆AI生成.\" The mood is casual and focused, suggesting a work or leisure activity involving food imagery.",
+    "final_text": "The image depicts a person with long hair sitting at a desk in an office environment, focusing on a laptop screen. The screen displays images of plated food dishes, including pasta and greens. The person's attire includes a white blouse and a bracelet on the left wrist. The background features large windows with blinds, creating a neutral and calm atmosphere. Visible text at the bottom right corner reads \"豆豆AI生成.\" The mood is casual and focused, suggesting a work or leisure activity involving food imagery.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426891-Hnn6ST2OB3uDw2K4DXK3",
+    "created": 1788426891,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 99,
+      "total_tokens": 819,
+      "cost": 0.00279
+    }
+  }
+}

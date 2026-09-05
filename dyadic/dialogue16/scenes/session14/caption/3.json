@@ -1,0 +1,36 @@
+{
+  "id": "637b9a27-b69d-4e97-ba47-12d325a20698",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:31.026281",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session14/image/3.png",
+    "filename": "3.png",
+    "size": 718388,
+    "modified_time": "2026-08-23T21:35:31.785337"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a digital map showing a town with various labeled locations in Chinese. Key elements include a sidebar with a photo of a sunset and navigation options such as \"收藏\" (Collect), \"搜周边\" (Search Nearby), and \"去手机查看\" (View on Phone). The map displays locations like hospitals, schools, and businesses, marked with colorful icons. The mood is informational and navigational, typical for a map interface.",
+    "final_text": "The image is a digital map showing a town with various labeled locations in Chinese. Key elements include a sidebar with a photo of a sunset and navigation options such as \"收藏\" (Collect), \"搜周边\" (Search Nearby), and \"去手机查看\" (View on Phone). The map displays locations like hospitals, schools, and businesses, marked with colorful icons. The mood is informational and navigational, typical for a map interface.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427051-4FtPAapaMohtENoLy7Yk",
+    "created": 1788427051,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 89,
+      "total_tokens": 1284,
+      "cost": 0.0038775
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "848facdb-26b7-4009-b2ad-d5c6282fe1da",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:44.779013",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 2108794,
+    "modified_time": "2026-08-23T21:33:27.335208"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a brightly lit, modern office setting with two animated characters. A woman in the foreground is smiling and giving a thumbs-up gesture, while a man in the background points at a large monitor displaying a graph labeled \"Local Health Data.\" The graph shows fluctuating lines, and the screen includes visible text in both English and Chinese. The atmosphere is positive and engaging, suggesting a successful presentation or collaboration. The room features a blue wall, a desk with a computer, and warm lighting.",
+    "final_text": "The image depicts a brightly lit, modern office setting with two animated characters. A woman in the foreground is smiling and giving a thumbs-up gesture, while a man in the background points at a large monitor displaying a graph labeled \"Local Health Data.\" The graph shows fluctuating lines, and the screen includes visible text in both English and Chinese. The atmosphere is positive and engaging, suggesting a successful presentation or collaboration. The room features a blue wall, a desk with a computer, and warm lighting.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426880-EdxtjTznQaYORo6SQW2f",
+    "created": 1788426880,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 100,
+      "total_tokens": 1098,
+      "cost": 0.003495
+    }
+  }
+}

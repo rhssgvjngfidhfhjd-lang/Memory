@@ -1,0 +1,36 @@
+{
+  "id": "4d2167dc-22e2-40dc-b234-353832a3c9b3",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:49.508247",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 2402005,
+    "modified_time": "2026-08-23T21:37:09.247955"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a line graph with a blue line depicting data fluctuations over a 24-hour period. The vertical axis ranges from 0 to 50, while the horizontal axis is marked with hourly intervals. The graph is divided into three color-coded sections: red, blue, and green. The red section is labeled \"深度专注工作时段\" (Deep Focus Work Period), and the green section is labeled \"压力\" (Pressure). Text annotations note a slight increase in blood sugar during deep cognitive activity. The mood is analytical and informative.",
+    "final_text": "The image shows a line graph with a blue line depicting data fluctuations over a 24-hour period. The vertical axis ranges from 0 to 50, while the horizontal axis is marked with hourly intervals. The graph is divided into three color-coded sections: red, blue, and green. The red section is labeled \"深度专注工作时段\" (Deep Focus Work Period), and the green section is labeled \"压力\" (Pressure). Text annotations note a slight increase in blood sugar during deep cognitive activity. The mood is analytical and informative.",
+    "token_stats": {
+      "original_tokens": 115,
+      "final_tokens": 115,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427067-XDfXvOQzloXn4k4BkP4c",
+    "created": 1788427067,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 111,
+      "total_tokens": 1306,
+      "cost": 0.0040975
+    }
+  }
+}

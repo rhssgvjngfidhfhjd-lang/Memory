@@ -1,0 +1,36 @@
+{
+  "id": "94c81b6c-8615-43c4-b4a6-209dba6bdd28",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:19.958248",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 2791115,
+    "modified_time": "2026-08-23T21:30:55.464548"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is divided into two sections, titled \"有效方法\" (Effective Methods) and \"不推荐方法\" (Not Recommended Methods). On the left, effective methods include an open window for ventilation, hand sanitizer for cleaning hands, and disinfectant wipes for surface sterilization. On the right, not recommended methods feature a kettle with an \"X,\" suggesting vinegar lacks scientific basis, and a packet labeled \"不明草药\" (Unknown Herbal Medicine) with an \"X,\" indicating unverified effectiveness. The overall mood is informative and precautionary, emphasizing safe practices.",
+    "final_text": "The image is divided into two sections, titled \"有效方法\" (Effective Methods) and \"不推荐方法\" (Not Recommended Methods). On the left, effective methods include an open window for ventilation, hand sanitizer for cleaning hands, and disinfectant wipes for surface sterilization. On the right, not recommended methods feature a kettle with an \"X,\" suggesting vinegar lacks scientific basis, and a packet labeled \"不明草药\" (Unknown Herbal Medicine) with an \"X,\" indicating unverified effectiveness. The overall mood is informative and precautionary, emphasizing safe practices.",
+    "token_stats": {
+      "original_tokens": 120,
+      "final_tokens": 120,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426679-A5jPWLr6R9hN3mOYHcAw",
+    "created": 1788426679,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 116,
+      "total_tokens": 833,
+      "cost": 0.0029525
+    }
+  }
+}

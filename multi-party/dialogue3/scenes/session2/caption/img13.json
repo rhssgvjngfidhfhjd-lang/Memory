@@ -1,0 +1,36 @@
+{
+  "id": "5543fe94-dc4c-492f-b00b-2544a9b018e6",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:52.324650",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 286328,
+    "modified_time": "2026-08-23T22:07:21.575225"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a digital game-like scene with a wooden floor background. On the left, there is a cartoon-like character wearing traditional clothing, holding a scroll. The central focus is a parchment with handwritten Chinese text discussing a task involving names like 巴赫 (Bach) and 提尔 (Tir). The atmosphere is reminiscent of a historical or strategy game. At the bottom, a text prompt reads: \"---按下 确定键 收起文档---,\" instructing the player to press a confirmation key to collect the document.",
+    "final_text": "The image depicts a digital game-like scene with a wooden floor background. On the left, there is a cartoon-like character wearing traditional clothing, holding a scroll. The central focus is a parchment with handwritten Chinese text discussing a task involving names like 巴赫 (Bach) and 提尔 (Tir). The atmosphere is reminiscent of a historical or strategy game. At the bottom, a text prompt reads: \"---按下 确定键 收起文档---,\" instructing the player to press a confirmation key to collect the document.",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426709-meqLekiutNPYrCw9DZaQ",
+    "created": 1788426709,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 109,
+      "total_tokens": 964,
+      "cost": 0.0032275
+    }
+  }
+}

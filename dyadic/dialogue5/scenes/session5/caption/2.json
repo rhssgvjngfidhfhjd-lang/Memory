@@ -1,0 +1,36 @@
+{
+  "id": "03e7314f-acc1-4601-a86b-06ce6e1caae9",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:47.870282",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 963291,
+    "modified_time": "2026-08-23T21:55:23.151807"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a peaceful scene featuring a tabby cat sleeping curled up on a sunlit windowsill. Surrounding the cat are wooden bookshelves filled with books, creating a cozy and warm atmosphere. A brass lamp is positioned nearby, adding to the vintage feel of the setting. Sunlight streams through the window, casting soft shadows and highlighting the cat's fur. The mood is serene and tranquil, capturing a moment of relaxation and comfort.",
+    "final_text": "The image depicts a peaceful scene featuring a tabby cat sleeping curled up on a sunlit windowsill. Surrounding the cat are wooden bookshelves filled with books, creating a cozy and warm atmosphere. A brass lamp is positioned nearby, adding to the vintage feel of the setting. Sunlight streams through the window, casting soft shadows and highlighting the cat's fur. The mood is serene and tranquil, capturing a moment of relaxation and comfort.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427487-n0iZHel3wMQlJtuh8d5d",
+    "created": 1788427487,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 89,
+      "total_tokens": 806,
+      "cost": 0.0026825
+    }
+  }
+}

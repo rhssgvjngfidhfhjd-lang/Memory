@@ -1,0 +1,36 @@
+{
+  "id": "4cb89c70-8ad2-4c63-862a-886d42c14608",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:49.708679",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session6/image/2.png",
+    "filename": "2.png",
+    "size": 124805,
+    "modified_time": "2026-08-23T21:54:50.136211"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an advertisement for a BX8 D3 speaker, showcasing its dimensions (250 x 302 x 384 mm). The main elements include the speaker, a cable, and a vibration-reducing pad. Text highlights the speaker model, dimensions, and accessories. The price is shown as ¥1766.4, with a call to action to purchase immediately. The mood is informative, focusing on product details and pricing for potential buyers.",
+    "final_text": "The image depicts an advertisement for a BX8 D3 speaker, showcasing its dimensions (250 x 302 x 384 mm). The main elements include the speaker, a cable, and a vibration-reducing pad. Text highlights the speaker model, dimensions, and accessories. The price is shown as ¥1766.4, with a call to action to purchase immediately. The mood is informative, focusing on product details and pricing for potential buyers.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427427-J8UY6GnPpUXOiya5Gt01",
+    "created": 1788427427,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 91,
+      "total_tokens": 530,
+      "cost": 0.0020075
+    }
+  }
+}

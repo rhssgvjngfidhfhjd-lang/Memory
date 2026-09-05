@@ -1,0 +1,36 @@
+{
+  "id": "1f7f9bbb-3e31-4612-b2d7-3d0469b4a5cc",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:14.171182",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 541469,
+    "modified_time": "2026-08-23T22:01:36.736356"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a white card with rounded corners, displaying a lock symbol, a QR code, and Chinese text. The lock icon, situated on the left, signifies security or privacy. A vertical line separates the lock from the QR code in the center, which can be scanned for information. On the right side, the text reads \"扫码查看加密电子健康档案,\" translating to \"Scan to view encrypted electronic health records.\" The overall mood is professional and secure, emphasizing confidentiality and digital access.",
+    "final_text": "The image features a white card with rounded corners, displaying a lock symbol, a QR code, and Chinese text. The lock icon, situated on the left, signifies security or privacy. A vertical line separates the lock from the QR code in the center, which can be scanned for information. On the right side, the text reads \"扫码查看加密电子健康档案,\" translating to \"Scan to view encrypted electronic health records.\" The overall mood is professional and secure, emphasizing confidentiality and digital access.",
+    "token_stats": {
+      "original_tokens": 109,
+      "final_tokens": 109,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427752-nycpSqMWNiHnsa2Xrpsz",
+    "created": 1788427752,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 102,
+      "total_tokens": 1100,
+      "cost": 0.003515
+    }
+  }
+}

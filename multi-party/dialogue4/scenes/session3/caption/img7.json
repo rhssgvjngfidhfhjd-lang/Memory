@@ -1,0 +1,36 @@
+{
+  "id": "9276cb1e-27b7-44de-9be8-13ee59a82042",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:15.985731",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session3/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 265061,
+    "modified_time": "2026-08-23T22:09:02.657194"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a detailed architectural floor plan with precise measurements in millimeters. It features various rooms, including bedrooms, a kitchen, and a living area, with furniture arrangements indicated. The plan includes dimensions and annotations in a clear, technical style. A compass rose is visible, indicating orientation. The overall mood is technical and organized, typical of architectural designs.",
+    "final_text": "The image depicts a detailed architectural floor plan with precise measurements in millimeters. It features various rooms, including bedrooms, a kitchen, and a living area, with furniture arrangements indicated. The plan includes dimensions and annotations in a clear, technical style. A compass rose is visible, indicating orientation. The overall mood is technical and organized, typical of architectural designs.",
+    "token_stats": {
+      "original_tokens": 71,
+      "final_tokens": 71,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426795-Ue2kX0EUv86KTUdiB6EN",
+    "created": 1788426795,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 71,
+      "total_tokens": 926,
+      "cost": 0.0028475
+    }
+  }
+}

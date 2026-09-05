@@ -1,0 +1,36 @@
+{
+  "id": "1177d62d-9c50-4e30-b643-e3d571ec346f",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:30.182372",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 541385,
+    "modified_time": "2026-08-23T22:03:21.257371"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a frying pan filled with frothy yellow liquid, likely oil or a cooking mixture. The pan is placed on a kitchen countertop near a sink. The bubbles create a textured surface, giving an impression of activity or cooking in progress. The overall mood is dynamic and vibrant due to the bright yellow color and bubbling action. There's no visible text in the image.",
+    "final_text": "The image shows a frying pan filled with frothy yellow liquid, likely oil or a cooking mixture. The pan is placed on a kitchen countertop near a sink. The bubbles create a textured surface, giving an impression of activity or cooking in progress. The overall mood is dynamic and vibrant due to the bright yellow color and bubbling action. There's no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426569-vAGY8Y70clvDe0nOUgFe",
+    "created": 1788426569,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 74,
+      "total_tokens": 929,
+      "cost": 0.0028775
+    }
+  }
+}

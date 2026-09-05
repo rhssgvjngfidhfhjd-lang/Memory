@@ -1,0 +1,36 @@
+{
+  "id": "daee3780-39b3-4a96-b3ee-2ef2a319134e",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:43.868280",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 535659,
+    "modified_time": "2026-08-23T21:58:04.597119"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a split infographic comparing pet care systems in the EU and some Asian cities. On the left, it shows the EU's unified system featuring a pet passport, electronic chip identification, and efficient travel lanes, with a map indicating interconnected regions. A dog is shown using a pet passage. On the right, it depicts Asia's stringent quarantine requirements, with a veterinarian examining a cat, a dog in isolation, and a focus on disease prevention measures with vaccines. A security officer is inspecting documents. The mood is informative, highlighting efficiency versus thoroughness. Text is in Chinese, describing each section.",
+    "final_text": "The image is a split infographic comparing pet care systems in the EU and some Asian cities. On the left, it shows the EU's unified system featuring a pet passport, electronic chip identification, and efficient travel lanes, with a map indicating interconnected regions. A dog is shown using a pet passage. On the right, it depicts Asia's stringent quarantine requirements, with a veterinarian examining a cat, a dog in isolation, and a focus on disease prevention measures with vaccines. A security officer is inspecting documents. The mood is informative, highlighting efficiency versus thoroughness. Text is in Chinese, describing each section.",
+    "token_stats": {
+      "original_tokens": 121,
+      "final_tokens": 121,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427664-4SNOT68xBs8olfnmIqJU",
+    "created": 1788427664,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 120,
+      "total_tokens": 635,
+      "cost": 0.0024875
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "52798876-51e0-48aa-877b-b591e9173a12",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:13.816782",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session7/image/4.png",
+    "filename": "4.png",
+    "size": 1238078,
+    "modified_time": "2026-08-23T21:39:30.390887"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a piece of paper with handwritten Chinese text, possibly a brainstorming session or project plan. Key points include expanding frameworks, online exhibitions with virtual galleries, interactive tracks, photography collections using physical books and AR, and scanning to extend content. Technical requirements mentioned are 3D modeling and cloud storage. There is a timeline for completion in Q3. The atmosphere is focused and strategic.",
+    "final_text": "The image shows a piece of paper with handwritten Chinese text, possibly a brainstorming session or project plan. Key points include expanding frameworks, online exhibitions with virtual galleries, interactive tracks, photography collections using physical books and AR, and scanning to extend content. Technical requirements mentioned are 3D modeling and cloud storage. There is a timeline for completion in Q3. The atmosphere is focused and strategic.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427212-zoWFZ9hYnTJgoabweQ7g",
+    "created": 1788427212,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 78,
+      "total_tokens": 933,
+      "cost": 0.0029175
+    }
+  }
+}

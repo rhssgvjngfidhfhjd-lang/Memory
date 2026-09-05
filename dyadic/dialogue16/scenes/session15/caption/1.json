@@ -1,0 +1,36 @@
+{
+  "id": "2ee794ca-40ab-443a-8c2b-c1308a75a918",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:33.290935",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session15/image/1.png",
+    "filename": "1.png",
+    "size": 1246877,
+    "modified_time": "2026-08-23T21:35:14.110965"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a wooden frame with a mesh holding a slurry mixture, possibly used in paper-making. The frame is positioned over a wooden structure that appears to be a vat. A person, partially visible, is standing nearby. The atmosphere suggests a traditional or artisanal setting. Visible text in the upper right corner includes Chinese characters and English, indicating an association with a cultural heritage museum.",
+    "final_text": "The image depicts a wooden frame with a mesh holding a slurry mixture, possibly used in paper-making. The frame is positioned over a wooden structure that appears to be a vat. A person, partially visible, is standing nearby. The atmosphere suggests a traditional or artisanal setting. Visible text in the upper right corner includes Chinese characters and English, indicating an association with a cultural heritage museum.",
+    "token_stats": {
+      "original_tokens": 78,
+      "final_tokens": 78,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427053-6KA41qJYlF1mLkD3Apkd",
+    "created": 1788427053,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 77,
+      "total_tokens": 1272,
+      "cost": 0.0037575
+    }
+  }
+}

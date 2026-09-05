@@ -1,0 +1,36 @@
+{
+  "id": "0e315fd5-f5ae-4273-b728-02fc40d18cb3",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:53.339045",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 596491,
+    "modified_time": "2026-08-23T21:55:25.918840"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a diary page with handwritten notes in Chinese about a cat's activities and food intake. Dates listed include September 10th, 12th, and 15th, with details about the weather, food quantity, and observations. Illustrations of a cat appear beside the text, one with hearts and another with a playful expression. The overall mood is warm and attentive, reflecting care and affection for the pet.",
+    "final_text": "The image shows a diary page with handwritten notes in Chinese about a cat's activities and food intake. Dates listed include September 10th, 12th, and 15th, with details about the weather, food quantity, and observations. Illustrations of a cat appear beside the text, one with hearts and another with a playful expression. The overall mood is warm and attentive, reflecting care and affection for the pet.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427491-W0ViyD6R0J8b9H9gSGga",
+    "created": 1788427491,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 85,
+      "total_tokens": 940,
+      "cost": 0.0029875
+    }
+  }
+}

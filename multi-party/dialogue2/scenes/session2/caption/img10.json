@@ -1,0 +1,36 @@
+{
+  "id": "8b85333c-262c-48e6-8669-aac1226bcd1d",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:37.390830",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 349634,
+    "modified_time": "2026-08-23T22:04:40.648886"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a pair of Nike running shoes inside an open shoebox. The shoes are cream-colored with prominent black swoosh logos. The shoebox lid displays a quote: \"I don’t really enjoy talking about what could be because it’s easier to just do it. JAKOB INGEBRIGTSEN,\" along with the Nike logo. The atmosphere is sporty and motivational, highlighting the shoes as a product associated with athletic performance.",
+    "final_text": "The image shows a pair of Nike running shoes inside an open shoebox. The shoes are cream-colored with prominent black swoosh logos. The shoebox lid displays a quote: \"I don’t really enjoy talking about what could be because it’s easier to just do it. JAKOB INGEBRIGTSEN,\" along with the Nike logo. The atmosphere is sporty and motivational, highlighting the shoes as a product associated with athletic performance.",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426635-GNokpdYbcolnCMV1WLz2",
+    "created": 1788426635,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 90,
+      "total_tokens": 810,
+      "cost": 0.0027
+    }
+  }
+}

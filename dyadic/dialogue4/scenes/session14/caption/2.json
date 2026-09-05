@@ -1,0 +1,36 @@
+{
+  "id": "db14fdd2-0749-4bbd-8450-6221bf1a78a3",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:22.681006",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session14/image/2.png",
+    "filename": "2.png",
+    "size": 227585,
+    "modified_time": "2026-08-23T21:54:36.177289"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a screenshot of a text document discussing the game \"Tick Tock: A Tale for Two.\" It describes the game as a cooperative puzzle adventure suitable for mobile and tablet platforms, emphasizing teamwork and communication. The text covers gameplay mechanics, device compatibility, and the immersive narrative experience. It highlights the need for players to share information and work together to solve puzzles, enhancing problem-solving and cooperation skills. The document is in Chinese and provides a detailed overview of the game's features and playing conditions, creating an informative and instructional atmosphere.",
+    "final_text": "The image is a screenshot of a text document discussing the game \"Tick Tock: A Tale for Two.\" It describes the game as a cooperative puzzle adventure suitable for mobile and tablet platforms, emphasizing teamwork and communication. The text covers gameplay mechanics, device compatibility, and the immersive narrative experience. It highlights the need for players to share information and work together to solve puzzles, enhancing problem-solving and cooperation skills. The document is in Chinese and provides a detailed overview of the game's features and playing conditions, creating an informative and instructional atmosphere.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427461-bFbeVmkNw5dhAghiUCFC",
+    "created": 1788427461,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 106,
+      "total_tokens": 961,
+      "cost": 0.0031975
+    }
+  }
+}

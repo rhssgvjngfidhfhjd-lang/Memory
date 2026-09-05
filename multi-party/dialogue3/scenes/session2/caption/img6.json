@@ -1,0 +1,36 @@
+{
+  "id": "aeb71056-4653-42b1-a89c-9ef8f28c63d2",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:41.065688",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 598789,
+    "modified_time": "2026-08-23T22:07:29.875222"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a rainy, neon-lit urban street scene at night. A person in a long coat stands near a sleek black car with a license plate reading \"JADOOM.\" The street is bustling with cars and people, surrounded by tall buildings adorned with glowing signs and billboards. One prominent billboard displays a close-up of a face. The atmosphere is moody and futuristic, reminiscent of a cyberpunk aesthetic.",
+    "final_text": "The image depicts a rainy, neon-lit urban street scene at night. A person in a long coat stands near a sleek black car with a license plate reading \"JADOOM.\" The street is bustling with cars and people, surrounded by tall buildings adorned with glowing signs and billboards. One prominent billboard displays a close-up of a face. The atmosphere is moody and futuristic, reminiscent of a cyberpunk aesthetic.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426702-7Wf3qKPxrEQBx88inuLV",
+    "created": 1788426702,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 83,
+      "total_tokens": 938,
+      "cost": 0.0029675
+    }
+  }
+}

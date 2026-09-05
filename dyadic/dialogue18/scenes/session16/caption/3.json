@@ -1,0 +1,36 @@
+{
+  "id": "ddaae225-0ee3-44da-bec7-aa16211619a0",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:36.359234",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session16/image/3.png",
+    "filename": "3.png",
+    "size": 197816,
+    "modified_time": "2026-08-23T21:37:21.571973"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person outdoors in a grassy area with rolling hills in the background. They are wearing an olive green jacket and carrying a large backpack equipped with a camera and tripod. They appear to be enjoying the moment, smiling broadly while looking upwards. The lighting suggests it is either sunrise or sunset, creating a serene and joyful atmosphere. There is no visible text in the image.",
+    "final_text": "The image depicts a person outdoors in a grassy area with rolling hills in the background. They are wearing an olive green jacket and carrying a large backpack equipped with a camera and tripod. They appear to be enjoying the moment, smiling broadly while looking upwards. The lighting suggests it is either sunrise or sunset, creating a serene and joyful atmosphere. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427175-P9BmmFqjs0yHX4vwswDK",
+    "created": 1788427175,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 76,
+      "total_tokens": 421,
+      "cost": 0.0016225
+    }
+  }
+}

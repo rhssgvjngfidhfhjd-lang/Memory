@@ -1,0 +1,36 @@
+{
+  "id": "42e8e03c-50bc-4b3d-9781-3580710a75bf",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:26.419421",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 2179057,
+    "modified_time": "2026-08-23T21:32:42.486665"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A joyful family scene in a sunny park features a golden retriever leading the way, held on a leash by an unseen adult. A boy and girl, both smiling, run alongside, holding hands with two adults, creating a lively, carefree atmosphere. The background is filled with soft-focus greenery and blossoms, enhancing the warm, cheerful mood.",
+    "final_text": "A joyful family scene in a sunny park features a golden retriever leading the way, held on a leash by an unseen adult. A boy and girl, both smiling, run alongside, holding hands with two adults, creating a lively, carefree atmosphere. The background is filled with soft-focus greenery and blossoms, enhancing the warm, cheerful mood.",
+    "token_stats": {
+      "original_tokens": 71,
+      "final_tokens": 71,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426806-TMBqX9PDFrRe9ruBVIt4",
+    "created": 1788426806,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 68,
+      "total_tokens": 1263,
+      "cost": 0.0036675
+    }
+  }
+}

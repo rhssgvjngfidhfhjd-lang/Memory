@@ -1,0 +1,36 @@
+{
+  "id": "76f805e3-b1cc-4a19-b752-bfa7c39d3db3",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:24.934243",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session14/image/4.png",
+    "filename": "4.png",
+    "size": 280787,
+    "modified_time": "2026-08-23T21:52:18.778877"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an open cardboard box containing a document with Chinese text. Next to the box is a gold pocket watch inscribed with \"Lanke 1917-1937.\" The scene suggests a focus on heritage or memory, with a nostalgic and contemplative atmosphere. The background is a wooden surface, adding a vintage feel.",
+    "final_text": "The image depicts an open cardboard box containing a document with Chinese text. Next to the box is a gold pocket watch inscribed with \"Lanke 1917-1937.\" The scene suggests a focus on heritage or memory, with a nostalgic and contemplative atmosphere. The background is a wooden surface, adding a vintage feel.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427463-3yjVsAo7g2uFqVJW04vm",
+    "created": 1788427463,
+    "usage": {
+      "prompt_tokens": 685,
+      "completion_tokens": 66,
+      "total_tokens": 751,
+      "cost": 0.0023725
+    }
+  }
+}

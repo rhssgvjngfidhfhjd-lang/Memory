@@ -1,0 +1,36 @@
+{
+  "id": "789b2bf5-ca44-469d-a846-550214a0b0a1",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:08.656484",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 3817092,
+    "modified_time": "2026-08-23T21:39:16.330977"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a visual analysis board titled \"痕迹\" (Traces), divided into four sections. Each section displays a different type of texture or pattern:\n\n1. \"形态痕迹\" (Morphological Traces) shows a close-up of tree rings.\n2. \"表面痕迹\" (Surface Traces) features a corroded metal surface with Chinese characters \"铜锈\" (copper rust).\n3. \"色彩痕迹\" (Color Traces) presents a fabric with white text on blue, including \"牛仔纹\" (denim pattern).\n4. \"结构痕迹\" (Structural Traces) displays cracked wooden planks.\n\nThe overall mood is analytical and educational.",
+    "final_text": "The image is a visual analysis board titled \"痕迹\" (Traces), divided into four sections. Each section displays a different type of texture or pattern:\n\n1. \"形态痕迹\" (Morphological Traces) shows a close-up of tree rings.\n2. \"表面痕迹\" (Surface Traces) features a corroded metal surface with Chinese characters \"铜锈\" (copper rust).\n3. \"色彩痕迹\" (Color Traces) presents a fabric with white text on blue, including \"牛仔纹\" (denim pattern).\n4. \"结构痕迹\" (Structural Traces) displays cracked wooden planks.\n\nThe overall mood is analytical and educational.",
+    "token_stats": {
+      "original_tokens": 168,
+      "final_tokens": 168,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427204-cD3k2Z8PtQphecWtxqVT",
+    "created": 1788427204,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 151,
+      "total_tokens": 1346,
+      "cost": 0.0044975
+    }
+  }
+}

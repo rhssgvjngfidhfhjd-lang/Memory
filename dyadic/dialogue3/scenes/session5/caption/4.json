@@ -1,0 +1,36 @@
+{
+  "id": "79eb3de8-7ae3-4442-935b-890b9e63db4d",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:29.012186",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session5/image/4.png",
+    "filename": "4.png",
+    "size": 32497,
+    "modified_time": "2026-08-23T21:49:57.285679"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table with three columns containing text in Chinese. The columns are labeled as \"类别\" (Category), \"物料名称\" (Material Name), and \"主要用途/说明\" (Main Use/Description). The categories include \"安全与医疗\" (Safety and Medical), \"流程与宣传\" (Process and Promotion), \"场地运营\" (Site Operations), and \"文件与信息\" (Documents and Information). Each row lists items like pet emergency kits, human first aid kits, interactive tools, and office supplies, along with their specific uses such as containing bandages, providing signage, or enabling Wi-Fi connectivity. The overall atmosphere is informative and organized, likely serving as a detailed checklist or inventory for event planning or operational logistics.",
+    "final_text": "The image is a table with three columns containing text in Chinese. The columns are labeled as \"类别\" (Category), \"物料名称\" (Material Name), and \"主要用途/说明\" (Main Use/Description). The categories include \"安全与医疗\" (Safety and Medical), \"流程与宣传\" (Process and Promotion), \"场地运营\" (Site Operations), and \"文件与信息\" (Documents and Information). Each row lists items like pet emergency kits, human first aid kits, interactive tools, and office supplies, along with their specific uses such as containing bandages, providing signage, or enabling Wi-Fi connectivity. The overall atmosphere is informative and organized, likely serving as a detailed checklist or inventory for event planning or operational logistics.",
+    "token_stats": {
+      "original_tokens": 167,
+      "final_tokens": 167,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427348-n32ci8qeBsuvV5MGP4un",
+    "created": 1788427348,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 153,
+      "total_tokens": 1008,
+      "cost": 0.0036675
+    }
+  }
+}

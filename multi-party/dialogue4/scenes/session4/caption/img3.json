@@ -1,0 +1,36 @@
+{
+  "id": "62b5da00-31b1-4f45-8cb3-a5cba957dded",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:26.224889",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 155977,
+    "modified_time": "2026-08-23T22:09:12.044928"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a woman standing by a serene waterfront. She is wearing a long black coat over a blue top and carries a black bag. A tree with sparse branches frames the left side of the image. The background features calm water and a blurred cityscape. The atmosphere is peaceful and contemplative, with soft, natural lighting enhancing the tranquil mood.",
+    "final_text": "The image shows a woman standing by a serene waterfront. She is wearing a long black coat over a blue top and carries a black bag. A tree with sparse branches frames the left side of the image. The background features calm water and a blurred cityscape. The atmosphere is peaceful and contemplative, with soft, natural lighting enhancing the tranquil mood.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426806-FejORHSIad9KpzUX2tPw",
+    "created": 1788426806,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 70,
+      "total_tokens": 925,
+      "cost": 0.0028375
+    }
+  }
+}

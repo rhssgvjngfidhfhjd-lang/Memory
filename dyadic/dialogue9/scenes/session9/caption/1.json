@@ -1,0 +1,36 @@
+{
+  "id": "072c54b6-9305-424f-8129-01f2ef71256e",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:15.105218",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session9/image/1.png",
+    "filename": "1.png",
+    "size": 1319230,
+    "modified_time": "2026-08-23T22:07:53.558494"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two orange cards against a light background. The left card displays the text \"紧急求助联系卡\" (\"Emergency Contact Card\"). The right card lists contact information and medical details, including phone numbers, blood type (A型), medical conditions (高血压, 冠心病), medications (氢氯地平, 阿司匹林), and allergies (青霉素过敏). The overall mood is informative and urgent, emphasizing preparedness in medical emergencies.",
+    "final_text": "The image features two orange cards against a light background. The left card displays the text \"紧急求助联系卡\" (\"Emergency Contact Card\"). The right card lists contact information and medical details, including phone numbers, blood type (A型), medical conditions (高血压, 冠心病), medications (氢氯地平, 阿司匹林), and allergies (青霉素过敏). The overall mood is informative and urgent, emphasizing preparedness in medical emergencies.",
+    "token_stats": {
+      "original_tokens": 115,
+      "final_tokens": 115,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427752-7Rxd8a75gdoCb14QGqUz",
+    "created": 1788427752,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 101,
+      "total_tokens": 1099,
+      "cost": 0.003505
+    }
+  }
+}

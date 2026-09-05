@@ -1,0 +1,36 @@
+{
+  "id": "b4c00b49-9bf3-4361-9f2f-eb3ea8e8973b",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:04.226168",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session9/image/4.png",
+    "filename": "4.png",
+    "size": 890063,
+    "modified_time": "2026-08-23T21:32:51.370274"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a handmade castle crafted from cardboard, featuring various turrets and towers. Small figurines resembling soldiers are positioned on the structure. Flags displaying the word \"HELLO\" are prominently placed on top of the towers. The castle is set on a colorful, patterned tablecloth. The overall mood is playful and creative, evoking a sense of childhood imagination and DIY craftsmanship.",
+    "final_text": "The image depicts a handmade castle crafted from cardboard, featuring various turrets and towers. Small figurines resembling soldiers are positioned on the structure. Flags displaying the word \"HELLO\" are prominently placed on top of the towers. The castle is set on a colorful, patterned tablecloth. The overall mood is playful and creative, evoking a sense of childhood imagination and DIY craftsmanship.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426845-gXjmpmMCNPELEYQ6i6dW",
+    "created": 1788426845,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 76,
+      "total_tokens": 931,
+      "cost": 0.0028975
+    }
+  }
+}

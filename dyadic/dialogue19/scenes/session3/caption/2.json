@@ -1,0 +1,36 @@
+{
+  "id": "e48fff5e-987b-49de-ae9e-311fc206b4b3",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:51.980348",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session3/image/2.png",
+    "filename": "2.png",
+    "size": 1535650,
+    "modified_time": "2026-08-23T21:38:52.437314"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic depicting a dining experience in a restaurant, structured in four stages: \"进门\" (enter), \"入座\" (seat), \"上菜\" (serve), and \"离开\" (leave). Each stage is represented by a yellow circle with accompanying text highlighting visual highlights and issues at each point. The background features a restaurant interior with tables, chairs, and a counter. The overall atmosphere suggests a customer journey analysis with a focus on enhancing the dining experience through visual and service improvements.",
+    "final_text": "The image is an infographic depicting a dining experience in a restaurant, structured in four stages: \"进门\" (enter), \"入座\" (seat), \"上菜\" (serve), and \"离开\" (leave). Each stage is represented by a yellow circle with accompanying text highlighting visual highlights and issues at each point. The background features a restaurant interior with tables, chairs, and a counter. The overall atmosphere suggests a customer journey analysis with a focus on enhancing the dining experience through visual and service improvements.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427190-ChnE5pxMeZXIGwgrGvuM",
+    "created": 1788427190,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 104,
+      "total_tokens": 1299,
+      "cost": 0.0040275
+    }
+  }
+}

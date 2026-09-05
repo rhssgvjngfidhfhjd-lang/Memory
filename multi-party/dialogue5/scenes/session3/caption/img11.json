@@ -1,0 +1,36 @@
+{
+  "id": "8031d7ea-9b3b-4b52-ba49-21e4a96142e7",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:34.200169",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 353560,
+    "modified_time": "2026-08-23T22:09:39.866755"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image captures a serene winter scene with a woman sitting on a wooden swing, surrounded by snow. She is wearing a red beanie, a white fluffy coat, and a long dark skirt. Snow-covered mountains and a village with wooden cabins are visible in the background. The atmosphere is peaceful and picturesque, evoking a sense of tranquility and winter wonder.",
+    "final_text": "The image captures a serene winter scene with a woman sitting on a wooden swing, surrounded by snow. She is wearing a red beanie, a white fluffy coat, and a long dark skirt. Snow-covered mountains and a village with wooden cabins are visible in the background. The atmosphere is peaceful and picturesque, evoking a sense of tranquility and winter wonder.",
+    "token_stats": {
+      "original_tokens": 72,
+      "final_tokens": 72,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426874-AeKlVkMVor6Nl7Ii4YTN",
+    "created": 1788426874,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 71,
+      "total_tokens": 926,
+      "cost": 0.0028475
+    }
+  }
+}

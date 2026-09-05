@@ -1,0 +1,36 @@
+{
+  "id": "490dc1b4-b554-4559-95b0-3be95a798c6a",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:10.241232",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session11/image/6.png",
+    "filename": "6.png",
+    "size": 29581,
+    "modified_time": "2026-08-23T21:50:31.148479"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a table with four columns and multiple rows of text in Chinese. The columns are labeled: \"组别\" (Group), \"喂养方案\" (Feeding Plan), \"pH值范围（稳定期）\" (pH Range - Stable Period), and \"pH值特征与成因分析\" (pH Characteristics and Cause Analysis). Three groups, A组, B组, and C组, are listed with different feeding plans: \"单一黑麦粉种\" (Single Rye Flour), \"混合谷物种\" (Mixed Grain), and \"水果液引种\" (Fruit Liquid). Each group has a pH range and a detailed description of pH characteristics and causes. The overall mood is informative and analytical, likely intended for a scientific or research context.",
+    "final_text": "The image displays a table with four columns and multiple rows of text in Chinese. The columns are labeled: \"组别\" (Group), \"喂养方案\" (Feeding Plan), \"pH值范围（稳定期）\" (pH Range - Stable Period), and \"pH值特征与成因分析\" (pH Characteristics and Cause Analysis). Three groups, A组, B组, and C组, are listed with different feeding plans: \"单一黑麦粉种\" (Single Rye Flour), \"混合谷物种\" (Mixed Grain), and \"水果液引种\" (Fruit Liquid). Each group has a pH range and a detailed description of pH characteristics and causes. The overall mood is informative and analytical, likely intended for a scientific or research context.",
+    "token_stats": {
+      "original_tokens": 183,
+      "final_tokens": 183,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427449-LwCbDldn7PkcNUzDqYC9",
+    "created": 1788427449,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 167,
+      "total_tokens": 682,
+      "cost": 0.0029575
+    }
+  }
+}

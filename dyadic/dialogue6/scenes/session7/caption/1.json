@@ -1,0 +1,36 @@
+{
+  "id": "6137517b-ad24-4101-a97b-8d4969826e5f",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:09.897479",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 301467,
+    "modified_time": "2026-08-23T21:56:17.415851"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic titled \"四重因素驱动全球市场高 速增长,\" which translates to \"Four Factors Driving Rapid Growth in the Global Market.\" It features a bar graph on the left, illustrating projected market growth from 2024 to 2034 with a CAGR of 7.8%. The bars are labeled with years and values in billions. On the right, there are four bullet points explaining the growth factors: health awareness, aging population, lifestyle upgrades, and innovation. The overall mood is informative and analytical, with a focus on market trends. The design uses a green and white color scheme, and the text is in Chinese.",
+    "final_text": "The image is an infographic titled \"四重因素驱动全球市场高 速增长,\" which translates to \"Four Factors Driving Rapid Growth in the Global Market.\" It features a bar graph on the left, illustrating projected market growth from 2024 to 2034 with a CAGR of 7.8%. The bars are labeled with years and values in billions. On the right, there are four bullet points explaining the growth factors: health awareness, aging population, lifestyle upgrades, and innovation. The overall mood is informative and analytical, with a focus on market trends. The design uses a green and white color scheme, and the text is in Chinese.",
+    "token_stats": {
+      "original_tokens": 138,
+      "final_tokens": 138,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427568-DqP7jPC3Y8FAOptoQcrQ",
+    "created": 1788427568,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 132,
+      "total_tokens": 647,
+      "cost": 0.0026075
+    }
+  }
+}

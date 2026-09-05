@@ -1,0 +1,36 @@
+{
+  "id": "481f883e-1b5e-40ea-a9d3-cc458044c604",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:14.826347",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 2723512,
+    "modified_time": "2026-08-23T21:32:29.678870"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a health corner with a wooden shelf. Key elements include two digital blood pressure monitors, a digital scale, a potted plant, and informational pamphlets. Visible text in Chinese includes phrases like \"健康小常识\" (Health Tips) and \"每日运动打卡表\" (Daily Exercise Check-in Chart). The overall atmosphere is educational and health-focused.",
+    "final_text": "The image depicts a health corner with a wooden shelf. Key elements include two digital blood pressure monitors, a digital scale, a potted plant, and informational pamphlets. Visible text in Chinese includes phrases like \"健康小常识\" (Health Tips) and \"每日运动打卡表\" (Daily Exercise Check-in Chart). The overall atmosphere is educational and health-focused.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426853-79UCxEGAyWx8vuB0ArEJ",
+    "created": 1788426853,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 75,
+      "total_tokens": 1270,
+      "cost": 0.0037375
+    }
+  }
+}

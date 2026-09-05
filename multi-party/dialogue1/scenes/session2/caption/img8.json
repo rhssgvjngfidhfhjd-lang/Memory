@@ -1,0 +1,36 @@
+{
+  "id": "25e9d47d-9954-455d-a295-a29485583497",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:14.829712",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session2/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 472554,
+    "modified_time": "2026-08-23T22:02:20.781361"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a close-up of a grey tabby cat with green eyes, displaying a relaxed yet slightly serious expression. The background includes a wall socket and some jars, suggesting a domestic setting. The atmosphere is calm and cozy.",
+    "final_text": "The image features a close-up of a grey tabby cat with green eyes, displaying a relaxed yet slightly serious expression. The background includes a wall socket and some jars, suggesting a domestic setting. The atmosphere is calm and cozy.",
+    "token_stats": {
+      "original_tokens": 46,
+      "final_tokens": 46,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426553-xcWTQ5tNwE82BmcqjLiY",
+    "created": 1788426553,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 46,
+      "total_tokens": 901,
+      "cost": 0.0025975
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "f6e6c560-3210-4cf9-8168-7597bdbc113c",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:30.660124",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 333140,
+    "modified_time": "2026-08-23T21:56:38.865873"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a data visualization dashboard displaying health statistics for the year 2023. It includes several charts: a line graph showing changes in blood pressure and other health metrics over months, bar graphs depicting monthly consultation frequencies across different medical departments, and circular progress indicators for heart rate, sleep quality, and exercise levels. There's a pie chart summarizing overall health department consultations and a risk assessment bar chart for cardiovascular, sleep, and metabolic risks. The atmosphere is informative and analytical.",
+    "final_text": "The image is a data visualization dashboard displaying health statistics for the year 2023. It includes several charts: a line graph showing changes in blood pressure and other health metrics over months, bar graphs depicting monthly consultation frequencies across different medical departments, and circular progress indicators for heart rate, sleep quality, and exercise levels. There's a pie chart summarizing overall health department consultations and a risk assessment bar chart for cardiovascular, sleep, and metabolic risks. The atmosphere is informative and analytical.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427590-yb9wYQEVZ7Fk18zRiv3T",
+    "created": 1788427590,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 96,
+      "total_tokens": 535,
+      "cost": 0.0020575
+    }
+  }
+}

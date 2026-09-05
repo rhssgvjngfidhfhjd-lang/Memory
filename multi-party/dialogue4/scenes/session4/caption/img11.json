@@ -1,0 +1,36 @@
+{
+  "id": "67d69570-5c5a-4270-9ac9-9319c3694677",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:38.338266",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 401414,
+    "modified_time": "2026-08-23T22:09:08.404548"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a chat interface on a mobile screen at 22:49. Two users are exchanging messages regarding a refund process. One user is represented by a small profile picture of a woman, and the other by a cartoon-like avatar. The conversation involves the return of goods and how to proceed with a refund. Text includes prompts like \"亲亲您别担心\" (Don't worry, dear) and \"小二帮您转保退您钱款哈\" (Assistant will help you with the refund). Various menu options are visible at the bottom, such as \"发订单给客服\" (Send order to customer service) and \"领取福利\" (Claim benefits), suggesting a customer service interaction. The mood is focused on resolving a transaction issue.",
+    "final_text": "The image depicts a chat interface on a mobile screen at 22:49. Two users are exchanging messages regarding a refund process. One user is represented by a small profile picture of a woman, and the other by a cartoon-like avatar. The conversation involves the return of goods and how to proceed with a refund. Text includes prompts like \"亲亲您别担心\" (Don't worry, dear) and \"小二帮您转保退您钱款哈\" (Assistant will help you with the refund). Various menu options are visible at the bottom, such as \"发订单给客服\" (Send order to customer service) and \"领取福利\" (Claim benefits), suggesting a customer service interaction. The mood is focused on resolving a transaction issue.",
+    "token_stats": {
+      "original_tokens": 164,
+      "final_tokens": 164,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426814-z40fxnN6Z5pAdpVcrcJH",
+    "created": 1788426814,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 154,
+      "total_tokens": 1434,
+      "cost": 0.00474
+    }
+  }
+}

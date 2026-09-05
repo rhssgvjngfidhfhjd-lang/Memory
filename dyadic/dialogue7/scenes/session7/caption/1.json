@@ -1,0 +1,36 @@
+{
+  "id": "bb75d642-5fa6-4ea3-afba-040f3005cfc5",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:59.494910",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 6259285,
+    "modified_time": "2026-08-23T21:57:20.688061"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a hand holding a yogurt cup in a grocery store aisle. The cup's label shows nutritional information in Chinese, including energy, protein, fat, and carbohydrate content. Highlighted text on the label indicates added sugar (9.8g) and sodium (65mg). The background shows shelves stocked with various products, blurred to focus on the yogurt cup. The atmosphere is typical of a retail setting, emphasizing consumer information and product details.",
+    "final_text": "The image depicts a hand holding a yogurt cup in a grocery store aisle. The cup's label shows nutritional information in Chinese, including energy, protein, fat, and carbohydrate content. Highlighted text on the label indicates added sugar (9.8g) and sodium (65mg). The background shows shelves stocked with various products, blurred to focus on the yogurt cup. The atmosphere is typical of a retail setting, emphasizing consumer information and product details.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427616-5K5DXgYeho7g29PxPFRO",
+    "created": 1788427616,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 91,
+      "total_tokens": 1089,
+      "cost": 0.003405
+    }
+  }
+}

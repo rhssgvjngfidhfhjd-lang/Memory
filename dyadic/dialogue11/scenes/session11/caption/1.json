@@ -1,0 +1,36 @@
+{
+  "id": "172061a3-fa66-4998-b678-10ad96837e28",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:26.326949",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 6635830,
+    "modified_time": "2026-08-23T21:31:04.497581"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows several colorful sticky notes scattered on a wooden surface, illuminated by sunlight. Each note contains handwritten Chinese text. The notes read: \"提醒消毒液气味,\" \"分享团购苹果,\" \"小吱响叽叽咕咕刺溜,\" \"互助助小事,\" \"提供线路反馈,\" and \"打听绝育资源.\" The atmosphere is casual and organized, suggesting planning or brainstorming.",
+    "final_text": "The image shows several colorful sticky notes scattered on a wooden surface, illuminated by sunlight. Each note contains handwritten Chinese text. The notes read: \"提醒消毒液气味,\" \"分享团购苹果,\" \"小吱响叽叽咕咕刺溜,\" \"互助助小事,\" \"提供线路反馈,\" and \"打听绝育资源.\" The atmosphere is casual and organized, suggesting planning or brainstorming.",
+    "token_stats": {
+      "original_tokens": 115,
+      "final_tokens": 115,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426684-UpaIyRgj5r5wu431rW5Y",
+    "created": 1788426684,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 92,
+      "total_tokens": 809,
+      "cost": 0.0027125
+    }
+  }
+}

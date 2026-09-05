@@ -1,0 +1,36 @@
+{
+  "id": "793d5eda-976e-457f-b8ff-b1fe563820e8",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:09.024191",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session1/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 27686,
+    "modified_time": "2026-08-23T22:09:24.456698"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a webpage with two charts. The top chart is a pie chart divided into two sections: a smaller yellow section labeled \"2票\" and a larger blue section labeled \"4票.\" Below is a bar chart with three vertical bars labeled \"小,\" \"大开,\" and \"大四.\" The bars represent percentages: 33.73% for \"小,\" 66.68% for \"大开,\" and 0% for \"大四.\" The webpage is from \"www.wjx.cn,\" with visible text options at the bottom for changing themes, downloading a PPT, and sharing a report. The mood is analytical, focused on data presentation.",
+    "final_text": "The image displays a webpage with two charts. The top chart is a pie chart divided into two sections: a smaller yellow section labeled \"2票\" and a larger blue section labeled \"4票.\" Below is a bar chart with three vertical bars labeled \"小,\" \"大开,\" and \"大四.\" The bars represent percentages: 33.73% for \"小,\" 66.68% for \"大开,\" and 0% for \"大四.\" The webpage is from \"www.wjx.cn,\" with visible text options at the bottom for changing themes, downloading a PPT, and sharing a report. The mood is analytical, focused on data presentation.",
+    "token_stats": {
+      "original_tokens": 137,
+      "final_tokens": 137,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426846-HaBAOzYecuMYMTo5YohQ",
+    "created": 1788426846,
+    "usage": {
+      "prompt_tokens": 441,
+      "completion_tokens": 136,
+      "total_tokens": 577,
+      "cost": 0.0024625
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "6d3d5c2a-4e77-48b8-ad62-3a41416b1873",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:18.082943",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session14/image/2.png",
+    "filename": "2.png",
+    "size": 126914,
+    "modified_time": "2026-08-23T21:45:17.650424"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a document with text in Chinese. It includes several sections discussing various topics such as game achievements, conversations about friends, the impact of \"老挝\" (Laos), and interactions involving \"约饭\" (meal arrangements). The text describes scenarios like running with dogs, eating with friends, and product unboxing. Mentioned are visual elements like game screenshots, dining environments, and product images. The mood seems informative and promotional, focusing on social interactions and product marketing.",
+    "final_text": "The image displays a document with text in Chinese. It includes several sections discussing various topics such as game achievements, conversations about friends, the impact of \"老挝\" (Laos), and interactions involving \"约饭\" (meal arrangements). The text describes scenarios like running with dogs, eating with friends, and product unboxing. Mentioned are visual elements like game screenshots, dining environments, and product images. The mood seems informative and promotional, focusing on social interactions and product marketing.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427395-06rJBSDl1ctgyXWjMX5k",
+    "created": 1788427395,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 99,
+      "total_tokens": 816,
+      "cost": 0.0027825
+    }
+  }
+}

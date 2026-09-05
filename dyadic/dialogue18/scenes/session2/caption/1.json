@@ -1,0 +1,36 @@
+{
+  "id": "d58475a8-84ea-4101-8191-12ccb0da41fd",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:39.685947",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session2/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 138514,
+    "modified_time": "2026-08-23T21:37:35.546758"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a collection of camping and photography gear arranged on a rocky terrain near a stream, with mountains in the background. Main elements include several backpacks in blue and green, camera lenses, a camera, and various pouches and equipment. The scene conveys a sense of adventure and preparation for outdoor exploration, with a focus on readiness and organization, set against a dramatic, natural landscape. The atmosphere is one of anticipation and connection with nature.",
+    "final_text": "The image depicts a collection of camping and photography gear arranged on a rocky terrain near a stream, with mountains in the background. Main elements include several backpacks in blue and green, camera lenses, a camera, and various pouches and equipment. The scene conveys a sense of adventure and preparation for outdoor exploration, with a focus on readiness and organization, set against a dramatic, natural landscape. The atmosphere is one of anticipation and connection with nature.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427119-VWv0LwRC5XVG41MC3Tvz",
+    "created": 1788427119,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 88,
+      "total_tokens": 1283,
+      "cost": 0.0038675
+    }
+  }
+}

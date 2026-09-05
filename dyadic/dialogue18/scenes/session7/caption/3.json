@@ -1,0 +1,36 @@
+{
+  "id": "ab4eebd3-0162-41e3-a2d8-3b67b69a7c4e",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:02.974377",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session7/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 251244,
+    "modified_time": "2026-08-23T21:37:48.660374"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a serene lakeside scene with a woman sitting in shallow, clear water. She is wearing a light-colored floral dress and facing away, enjoying the tranquil surroundings. The background features majestic mountains under a bright blue sky with scattered clouds. The rocky shore is visible in the foreground, adding to the natural setting. The overall mood is peaceful and reflective. Visible text includes \"dreamstime\" and photo credits \"ID 204396377 © Alicia Hess.\"",
+    "final_text": "The image depicts a serene lakeside scene with a woman sitting in shallow, clear water. She is wearing a light-colored floral dress and facing away, enjoying the tranquil surroundings. The background features majestic mountains under a bright blue sky with scattered clouds. The rocky shore is visible in the foreground, adding to the natural setting. The overall mood is peaceful and reflective. Visible text includes \"dreamstime\" and photo credits \"ID 204396377 © Alicia Hess.\"",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427141-u1Oqb0owK34nW8yLHsy9",
+    "created": 1788427141,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 92,
+      "total_tokens": 1287,
+      "cost": 0.0039075
+    }
+  }
+}

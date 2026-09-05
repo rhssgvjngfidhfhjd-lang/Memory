@@ -1,0 +1,36 @@
+{
+  "id": "094fa1a5-a548-4c9d-a244-01a0a5813b94",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:32.397572",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session15/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 155050,
+    "modified_time": "2026-08-23T21:35:19.920936"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a close-up of a woven basket filled with bundles of dried straw or grass. The texture is fibrous and tangled, giving a rustic and natural appearance. At the top, there is visible text that reads \"PHOTO BY YUFAN.\" The overall mood is earthy and organic, possibly indicating a rural or agricultural setting.",
+    "final_text": "The image features a close-up of a woven basket filled with bundles of dried straw or grass. The texture is fibrous and tangled, giving a rustic and natural appearance. At the top, there is visible text that reads \"PHOTO BY YUFAN.\" The overall mood is earthy and organic, possibly indicating a rural or agricultural setting.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427053-uLlFkaftIc8Js0bjdcED",
+    "created": 1788427053,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 67,
+      "total_tokens": 922,
+      "cost": 0.0028075
+    }
+  }
+}

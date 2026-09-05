@@ -1,0 +1,36 @@
+{
+  "id": "235ced8f-88f1-406c-bd40-e12324bbd620",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:41.037843",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session3/image/4.png",
+    "filename": "4.png",
+    "size": 563361,
+    "modified_time": "2026-08-23T21:42:10.526910"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a close-up view of several steamed dumplings arranged closely together. The dumplings have a glossy, slightly translucent skin with hints of a colorful filling visible inside, suggesting vegetables or meat. The arrangement is neat, creating an appetizing and inviting atmosphere. There is no visible text in the image. The mood is warm and savory, evoking a sense of comfort and culinary delight.",
+    "final_text": "The image depicts a close-up view of several steamed dumplings arranged closely together. The dumplings have a glossy, slightly translucent skin with hints of a colorful filling visible inside, suggesting vegetables or meat. The arrangement is neat, creating an appetizing and inviting atmosphere. There is no visible text in the image. The mood is warm and savory, evoking a sense of comfort and culinary delight.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427298-5s5QKHkbNnyPG832G8Te",
+    "created": 1788427298,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 79,
+      "total_tokens": 934,
+      "cost": 0.0029275
+    }
+  }
+}

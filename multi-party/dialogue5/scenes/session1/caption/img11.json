@@ -1,0 +1,36 @@
+{
+  "id": "bb55b668-f3b3-4eab-af25-a361814b5193",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:04.761583",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session1/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 111376,
+    "modified_time": "2026-08-23T22:09:24.094482"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a digital interface for selecting a questionnaire type, with a blue background and white overlay. It features six icons representing different options: 调查 (Survey), 考试 (Test), 投票 (Vote), 表单 (Form), 接龙 (Connect), and 360度评估 (360 Evaluation). The 投票 (Vote) option is highlighted with a red border and arrow pointing to it. The text above the icons reads \"选择创建问卷类型\" (Choose questionnaire type), and \"选择投票\" (Select vote) is prominently displayed. The mood is informative and focused on choice selection.",
+    "final_text": "The image shows a digital interface for selecting a questionnaire type, with a blue background and white overlay. It features six icons representing different options: 调查 (Survey), 考试 (Test), 投票 (Vote), 表单 (Form), 接龙 (Connect), and 360度评估 (360 Evaluation). The 投票 (Vote) option is highlighted with a red border and arrow pointing to it. The text above the icons reads \"选择创建问卷类型\" (Choose questionnaire type), and \"选择投票\" (Select vote) is prominently displayed. The mood is informative and focused on choice selection.",
+    "token_stats": {
+      "original_tokens": 135,
+      "final_tokens": 135,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426844-1PRAtHYON66jFR970kaV",
+    "created": 1788426844,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 126,
+      "total_tokens": 846,
+      "cost": 0.00306
+    }
+  }
+}

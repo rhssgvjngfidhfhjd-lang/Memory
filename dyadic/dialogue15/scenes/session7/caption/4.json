@@ -1,0 +1,36 @@
+{
+  "id": "3ec9ae2a-5580-41e2-80b5-a6772d917bce",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:15.699987",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session7/image/4.jpg",
+    "filename": "4.jpg",
+    "size": 66276,
+    "modified_time": "2026-08-23T21:34:45.597960"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a modern home office setup. The core scene features a wooden desk with two large computer monitors displaying the Windows desktop. Main elements include a sleek office chair, a desk lamp, a potted plant, and a cup. A set of drawers is integrated into the desk, and a bookshelf is visible in the background with books and decor items. The room has large windows allowing natural light, creating a bright and organized atmosphere. There is no visible text other than the Windows logo on the screens. The overall mood is professional and serene.",
+    "final_text": "The image depicts a modern home office setup. The core scene features a wooden desk with two large computer monitors displaying the Windows desktop. Main elements include a sleek office chair, a desk lamp, a potted plant, and a cup. A set of drawers is integrated into the desk, and a bookshelf is visible in the background with books and decor items. The room has large windows allowing natural light, creating a bright and organized atmosphere. There is no visible text other than the Windows logo on the screens. The overall mood is professional and serene.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426976-OlKnxJLpZzYnPBjePeBd",
+    "created": 1788426976,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 109,
+      "total_tokens": 624,
+      "cost": 0.0023775
+    }
+  }
+}

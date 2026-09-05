@@ -1,0 +1,36 @@
+{
+  "id": "3c137e2d-71fc-4198-9576-0268044c78b6",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:30.681671",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session14/image/2.png",
+    "filename": "2.png",
+    "size": 304482,
+    "modified_time": "2026-08-23T21:36:07.852875"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains text in Chinese, structured into sections with headings. It appears to be an abstract or summary of a research paper focused on decentralized identity verification systems. The sections include:\n\n1. **Abstract:** Introduces a digital framework for decentralized identity verification, addressing privacy and data isolation.\n2. **Core Innovations:** Lists key innovations like lightweight signature schemes and cross-domain interoperability.\n3. **Experimental Evaluation:** Discusses testing with Hyperledger Fabric, showing improved performance over traditional PKI systems.\n4. **Conclusion and Outlook:** Highlights the potential to enhance digital identity management and future exploration of the framework.\n\nThe overall atmosphere is academic and technical, aimed at discussing advancements in identity verification technology.",
+    "final_text": "The image contains text in Chinese, structured into sections with headings. It appears to be an abstract or summary of a research paper focused on decentralized identity verification systems. The sections include:\n\n1. **Abstract:** Introduces a digital framework for decentralized identity verification, addressing privacy and data isolation.\n2. **Core Innovations:** Lists key innovations like lightweight signature schemes and cross-domain interoperability.\n3. **Experimental Evaluation:** Discusses testing with Hyperledger Fabric, showing improved performance over traditional PKI systems.\n4. **Conclusion and Outlook:** Highlights the potential to enhance digital identity management and future exploration of the framework.\n\nThe overall atmosphere is academic and technical, aimed at discussing advancements in identity verification technology.",
+    "token_stats": {
+      "original_tokens": 140,
+      "final_tokens": 140,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427110-DUCpUJQQjv0ovu0S3Jt4",
+    "created": 1788427110,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 137,
+      "total_tokens": 992,
+      "cost": 0.0035075
+    }
+  }
+}

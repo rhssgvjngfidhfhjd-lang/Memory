@@ -1,0 +1,36 @@
+{
+  "id": "25688cde-2364-4868-9db6-3e50a7076b6e",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:16.111525",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 487593,
+    "modified_time": "2026-08-23T21:56:46.026352"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a selection of 30 items for practical use, arranged in a grid format. It includes various medical and emergency supplies such as bandages, scissors, antiseptic wipes, and adhesive strips. Each item is labeled with text describing its name and quantity. The text at the top reads \"高配实用套装 30件套配置如下,\" indicating a comprehensive kit setup. The mood is informative, focusing on preparedness and practicality.",
+    "final_text": "The image displays a selection of 30 items for practical use, arranged in a grid format. It includes various medical and emergency supplies such as bandages, scissors, antiseptic wipes, and adhesive strips. Each item is labeled with text describing its name and quantity. The text at the top reads \"高配实用套装 30件套配置如下,\" indicating a comprehensive kit setup. The mood is informative, focusing on preparedness and practicality.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427633-cB8JxjQqTUQYFhTGxlzL",
+    "created": 1788427633,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 91,
+      "total_tokens": 530,
+      "cost": 0.0020075
+    }
+  }
+}

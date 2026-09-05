@@ -1,0 +1,36 @@
+{
+  "id": "b8bdef09-67ef-41fd-937b-47833337218f",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:45.813243",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session4/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 146891,
+    "modified_time": "2026-08-23T21:37:48.297064"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an open backpack on a bench, revealing neatly packed outdoor gear. Inside, there are several items labeled \"NEAR ZERO,\" including a rain poncho, a tarp, and a water bottle. The backpack appears organized and ready for a camping or hiking trip, suggesting a mood of adventure and preparedness. The setting is outdoors, with grass visible in the background.",
+    "final_text": "The image shows an open backpack on a bench, revealing neatly packed outdoor gear. Inside, there are several items labeled \"NEAR ZERO,\" including a rain poncho, a tarp, and a water bottle. The backpack appears organized and ready for a camping or hiking trip, suggesting a mood of adventure and preparedness. The setting is outdoors, with grass visible in the background.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427126-g2vNvbB9CkUn4NlxDQzw",
+    "created": 1788427126,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 75,
+      "total_tokens": 930,
+      "cost": 0.0028875
+    }
+  }
+}

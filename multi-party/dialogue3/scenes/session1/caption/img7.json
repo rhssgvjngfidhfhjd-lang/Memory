@@ -1,0 +1,36 @@
+{
+  "id": "60769bae-201c-4691-aa93-522ea6ba2d46",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:31.119889",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 152435,
+    "modified_time": "2026-08-23T22:07:13.281098"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image showcases a movie poster for the film \"Underground\" (1995), with text in multiple languages including Chinese and Russian. The poster features dynamic imagery of two individuals in dramatic poses. The film is described as a winner of the Cannes Film Festival Palme d'Or. The rating section shows a score of 9.2, with additional ratings details and viewer statistics. The overall mood is energetic and celebratory, emphasizing the film's critical acclaim and popularity.",
+    "final_text": "The image showcases a movie poster for the film \"Underground\" (1995), with text in multiple languages including Chinese and Russian. The poster features dynamic imagery of two individuals in dramatic poses. The film is described as a winner of the Cannes Film Festival Palme d'Or. The rating section shows a score of 9.2, with additional ratings details and viewer statistics. The overall mood is energetic and celebratory, emphasizing the film's critical acclaim and popularity.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426691-eUJZkcCRXZYJg1bmmTIP",
+    "created": 1788426691,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 94,
+      "total_tokens": 811,
+      "cost": 0.0027325
+    }
+  }
+}

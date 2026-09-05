@@ -1,0 +1,36 @@
+{
+  "id": "97c58954-ba69-4cc2-8086-9ac5f096f015",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:25.822177",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 613003,
+    "modified_time": "2026-08-23T22:07:10.384475"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a collection of colorful IMAX gift cards with embossed patterns. The cards come in red, purple, and teal, with \"IMAX\" and \"EXTRAORDINARY AWAITS\" prominently displayed on each. They are arranged on a backdrop of blue and white patterned paper, adding a decorative touch. The overall atmosphere is vibrant and festive, suggesting a promotional or celebratory theme.",
+    "final_text": "The image features a collection of colorful IMAX gift cards with embossed patterns. The cards come in red, purple, and teal, with \"IMAX\" and \"EXTRAORDINARY AWAITS\" prominently displayed on each. They are arranged on a backdrop of blue and white patterned paper, adding a decorative touch. The overall atmosphere is vibrant and festive, suggesting a promotional or celebratory theme.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426685-S29BJLxxfdYziSC3lZLr",
+    "created": 1788426685,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 80,
+      "total_tokens": 935,
+      "cost": 0.0029375
+    }
+  }
+}

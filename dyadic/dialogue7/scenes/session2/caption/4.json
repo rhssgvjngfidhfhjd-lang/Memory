@@ -1,0 +1,36 @@
+{
+  "id": "7d549a65-fafe-4372-85f6-2244ee171cfd",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:39.164352",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session2/image/4.png",
+    "filename": "4.png",
+    "size": 399610,
+    "modified_time": "2026-08-23T21:56:52.656855"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is divided into three sections: \n\n1. **识别预警信号 (Recognize Warning Signs)**: A child appears unwell, coughing, and holding their throat. Text outlines warning signs like reduced PEF value, increased nighttime coughing, rapid breathing, and difficulty speaking.\n\n2. **紧急处理 (Emergency Handling)**: A child sits with an inhaler, maintaining a stable posture. An air purifier is nearby. Text advises immediate inhaler use, ensuring the child's posture, turning on air purification, and contacting a pediatrician.\n\n3. **就诊决策 (Decision Making)**: An adult carries a medical kit, indicating preparedness. Text suggests normal response if condition improves within 15 minutes, or seeking emergency help and keeping medical records if not.\n\nThe overall mood is informative and urgent, focusing on asthma management.",
+    "final_text": "The image is divided into three sections: \n\n1. **识别预警信号 (Recognize Warning Signs)**: A child appears unwell, coughing, and holding their throat. Text outlines warning signs like reduced PEF value, increased nighttime coughing, rapid breathing, and difficulty speaking.\n\n2. **紧急处理 (Emergency Handling)**: A child sits with an inhaler, maintaining a stable posture. An air purifier is nearby. Text advises immediate inhaler use, ensuring the child's posture, turning on air purification, and contacting a pediatrician.\n\n3. **就诊决策 (Decision Making)**: An adult carries a medical kit, indicating preparedness. Text suggests normal response if condition improves within 15 minutes, or seeking emergency help and keeping medical records if not.\n\nThe overall mood is informative and urgent, focusing on asthma management.",
+    "token_stats": {
+      "original_tokens": 182,
+      "final_tokens": 182,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427595-P4k6AsVDaQn7LnOLpss8",
+    "created": 1788427595,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 171,
+      "total_tokens": 471,
+      "cost": 0.00246
+    }
+  }
+}

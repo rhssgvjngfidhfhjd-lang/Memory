@@ -1,0 +1,36 @@
+{
+  "id": "57ade9aa-afd4-4dd1-896a-56d1d153fdba",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:28.582478",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session1/image/2.png",
+    "filename": "2.png",
+    "size": 599210,
+    "modified_time": "2026-08-23T21:41:19.759221"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a plate of crispy pork belly cubes arranged neatly on a light-colored dish. Accompanying the pork are fresh lettuce leaves, garlic cloves, and two small bowls containing spices. The background is a rich red, symbolizing festivity, with a decorative red envelope partially visible. Text on the image includes \"脆皮五花肉,\" \"2024 HAPPY NEW YEAR,\" and a logo. The overall atmosphere is celebratory, suggesting a festive occasion such as the Lunar New Year.",
+    "final_text": "The image features a plate of crispy pork belly cubes arranged neatly on a light-colored dish. Accompanying the pork are fresh lettuce leaves, garlic cloves, and two small bowls containing spices. The background is a rich red, symbolizing festivity, with a decorative red envelope partially visible. Text on the image includes \"脆皮五花肉,\" \"2024 HAPPY NEW YEAR,\" and a logo. The overall atmosphere is celebratory, suggesting a festive occasion such as the Lunar New Year.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427286-s8BkzyHWX85RCXb1u8Ik",
+    "created": 1788427286,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 100,
+      "total_tokens": 615,
+      "cost": 0.0022875
+    }
+  }
+}

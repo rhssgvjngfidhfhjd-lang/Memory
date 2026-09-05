@@ -1,0 +1,36 @@
+{
+  "id": "5a7377d7-6957-4bb5-8c84-b2a36a040e8b",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:34.330593",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 305517,
+    "modified_time": "2026-08-23T22:09:15.909720"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays text in Chinese, outlining the general principles of consumer protection laws. It includes several numbered articles, each focusing on different aspects of protecting consumers' legal rights and interests. The text emphasizes maintaining economic order, ensuring fairness and honesty in transactions, and the state's role in safeguarding consumer rights. The overall mood is formal and legislative.",
+    "final_text": "The image displays text in Chinese, outlining the general principles of consumer protection laws. It includes several numbered articles, each focusing on different aspects of protecting consumers' legal rights and interests. The text emphasizes maintaining economic order, ensuring fairness and honesty in transactions, and the state's role in safeguarding consumer rights. The overall mood is formal and legislative.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426812-AGQKZlLMnbJvxfjI8vW8",
+    "created": 1788426812,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 67,
+      "total_tokens": 1262,
+      "cost": 0.0036575
+    }
+  }
+}

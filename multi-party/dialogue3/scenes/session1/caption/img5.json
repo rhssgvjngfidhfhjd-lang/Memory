@@ -1,0 +1,36 @@
+{
+  "id": "6a2c59b8-fb28-45e9-a527-aa7ce5c10693",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:28.376644",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 247282,
+    "modified_time": "2026-08-23T22:07:14.655667"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a lone figure dressed in medieval-style armor and a tattered cloak, standing on the edge of a rocky cliff. The person gazes into a swirling, colorful galaxy in the night sky, suggesting a sense of wonder and exploration. The atmosphere is mystical and epic, evoking feelings of adventure and discovery. In the bottom right corner, there is a red circle with a symbol inside, resembling a cross atop a circle. Sunlight streams through the sky, enhancing the dramatic mood of the scene.",
+    "final_text": "The image depicts a lone figure dressed in medieval-style armor and a tattered cloak, standing on the edge of a rocky cliff. The person gazes into a swirling, colorful galaxy in the night sky, suggesting a sense of wonder and exploration. The atmosphere is mystical and epic, evoking feelings of adventure and discovery. In the bottom right corner, there is a red circle with a symbol inside, resembling a cross atop a circle. Sunlight streams through the sky, enhancing the dramatic mood of the scene.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426688-GJu0sz65729S2rOtBUjz",
+    "created": 1788426688,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 103,
+      "total_tokens": 820,
+      "cost": 0.0028225
+    }
+  }
+}

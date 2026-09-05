@@ -1,0 +1,36 @@
+{
+  "id": "e7c44a55-edfd-4870-9c72-569b8ffb0812",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:20.934152",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 1218693,
+    "modified_time": "2026-08-23T21:38:02.997034"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a manifesto with the text: \"Our Manifesto. We believe in equality, justice, and progress for all. We stand together to create a better future, where every voice is heard and every person is valued. Join us in making a difference.\" The background is a light blue gradient, and there are two icons of raised fists and a leaf on opposite corners, symbolizing solidarity and growth. The overall mood is inspirational and empowering.",
+    "final_text": "The image features a manifesto with the text: \"Our Manifesto. We believe in equality, justice, and progress for all. We stand together to create a better future, where every voice is heard and every person is valued. Join us in making a difference.\" The background is a light blue gradient, and there are two icons of raised fists and a leaf on opposite corners, symbolizing solidarity and growth. The overall mood is inspirational and empowering.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427220-9clNmyRFW12a6tXzgA3u",
+    "created": 1788427220,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 90,
+      "total_tokens": 1285,
+      "cost": 0.0038875
+    }
+  }
+}

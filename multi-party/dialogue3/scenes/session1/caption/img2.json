@@ -1,0 +1,36 @@
+{
+  "id": "84a39ae2-5173-455d-ac29-6f3a82a044f8",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:24.812480",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 70539,
+    "modified_time": "2026-08-23T22:07:09.855046"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts the interior of a movie theater with a large screen displaying credits. The text on the screen reads \"Co-Producers Jessica Derhammer, James Grant, Toby Hefferman\" against a backdrop of orange and blue hues. In the foreground, rows of empty seats are visible, suggesting a quiet, post-viewing atmosphere. The mood is calm and reflective, typical of a theater after a film has ended.",
+    "final_text": "The image depicts the interior of a movie theater with a large screen displaying credits. The text on the screen reads \"Co-Producers Jessica Derhammer, James Grant, Toby Hefferman\" against a backdrop of orange and blue hues. In the foreground, rows of empty seats are visible, suggesting a quiet, post-viewing atmosphere. The mood is calm and reflective, typical of a theater after a film has ended.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426684-vyqbCSQttRwBwlXIo5rz",
+    "created": 1788426684,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 85,
+      "total_tokens": 805,
+      "cost": 0.00265
+    }
+  }
+}

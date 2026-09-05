@@ -1,0 +1,36 @@
+{
+  "id": "2db4019f-3b69-42e9-b180-6ab4928c2453",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:13.068912",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session5/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 187971,
+    "modified_time": "2026-08-23T22:07:00.594981"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a weather app interface for Hangzhou City, displaying the current date as February 4, 2026. The main elements include a bright blue background, a sun icon, and the temperature range of 17°C to 7°C. Additional information includes a humidity level of 65%, weak UV index, and air pressure of 1021 hPa. The forecast mentions changing clouds with a southwest wind shifting to northeast at level 2. A graph shows hourly weather predictions, indicating cloudy and sunny intervals. The atmosphere is clear and informative, focusing on weather details.",
+    "final_text": "The image is a weather app interface for Hangzhou City, displaying the current date as February 4, 2026. The main elements include a bright blue background, a sun icon, and the temperature range of 17°C to 7°C. Additional information includes a humidity level of 65%, weak UV index, and air pressure of 1021 hPa. The forecast mentions changing clouds with a southwest wind shifting to northeast at level 2. A graph shows hourly weather predictions, indicating cloudy and sunny intervals. The atmosphere is clear and informative, focusing on weather details.",
+    "token_stats": {
+      "original_tokens": 117,
+      "final_tokens": 117,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426672-tFw0hsXXsnNdog2cvNBy",
+    "created": 1788426672,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 117,
+      "total_tokens": 1312,
+      "cost": 0.0041575
+    }
+  }
+}

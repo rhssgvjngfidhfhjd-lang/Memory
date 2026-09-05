@@ -1,0 +1,36 @@
+{
+  "id": "f275029e-e24c-44f5-a28e-8a4c5f3aec5f",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:57.152393",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 4473052,
+    "modified_time": "2026-08-23T21:36:44.816356"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic illustrating a brain-computer interface system. It features a human head with a highlighted brain connected to various wearable devices on the left, such as headbands and wristbands, indicating real-time physiological data flow. The text includes \"状态评估引擎\" (Status Evaluation Engine) and labels like \"深度酝酿期\" (Deep Brewing Period) and \"创意峰值期\" (Creative Peak Period). On the right, smart home devices like a smart light and speaker are shown. The bottom sections describe creative and health enhancement modes with graphs and charts. The overall mood is technological and futuristic.",
+    "final_text": "The image is an infographic illustrating a brain-computer interface system. It features a human head with a highlighted brain connected to various wearable devices on the left, such as headbands and wristbands, indicating real-time physiological data flow. The text includes \"状态评估引擎\" (Status Evaluation Engine) and labels like \"深度酝酿期\" (Deep Brewing Period) and \"创意峰值期\" (Creative Peak Period). On the right, smart home devices like a smart light and speaker are shown. The bottom sections describe creative and health enhancement modes with graphs and charts. The overall mood is technological and futuristic.",
+    "token_stats": {
+      "original_tokens": 138,
+      "final_tokens": 138,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427075-lQlkVP90MxUX8qTuF2KA",
+    "created": 1788427075,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 130,
+      "total_tokens": 1325,
+      "cost": 0.0042875
+    }
+  }
+}

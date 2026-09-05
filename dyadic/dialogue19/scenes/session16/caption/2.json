@@ -1,0 +1,36 @@
+{
+  "id": "d88032b9-9268-4220-b75d-adfa6efa494e",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:49.000003",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session16/image/2.png",
+    "filename": "2.png",
+    "size": 1861276,
+    "modified_time": "2026-08-23T21:38:45.579864"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a person sketching a scene on a spiral-bound notebook. The drawing features a tree and a building. The hand holds a pencil labeled \"HARD PENCIL\" and rests on a wooden surface by a window. The atmosphere is calm and focused, suggesting a moment of creative concentration.",
+    "final_text": "The image shows a person sketching a scene on a spiral-bound notebook. The drawing features a tree and a building. The hand holds a pencil labeled \"HARD PENCIL\" and rests on a wooden surface by a window. The atmosphere is calm and focused, suggesting a moment of creative concentration.",
+    "token_stats": {
+      "original_tokens": 60,
+      "final_tokens": 60,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427247-8qjzEiwbwVK1IZR1lQ9n",
+    "created": 1788427247,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 60,
+      "total_tokens": 1255,
+      "cost": 0.0035875
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "a704ca0f-cd16-4aad-8aa0-8c9a6b367025",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:56.090817",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 258144,
+    "modified_time": "2026-08-23T21:40:15.005034"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image showcases a promotional graphic for a to-do list application named \"Todo清单.\" It features a logo with a horse head icon and the tagline \"百万用户的最佳推荐,\" suggesting it's highly recommended by millions of users. The design includes screenshots of the app's interface, displaying various themes and organizational features. The atmosphere is modern and tech-savvy, emphasizing functionality and user-friendliness through clean layout and vibrant colors.",
+    "final_text": "The image showcases a promotional graphic for a to-do list application named \"Todo清单.\" It features a logo with a horse head icon and the tagline \"百万用户的最佳推荐,\" suggesting it's highly recommended by millions of users. The design includes screenshots of the app's interface, displaying various themes and organizational features. The atmosphere is modern and tech-savvy, emphasizing functionality and user-friendliness through clean layout and vibrant colors.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427255-n1b7QRAYAIswkpu8Y1zf",
+    "created": 1788427255,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 86,
+      "total_tokens": 601,
+      "cost": 0.0021475
+    }
+  }
+}

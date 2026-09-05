@@ -1,0 +1,36 @@
+{
+  "id": "7ed4a258-f945-47fb-860d-6b96483f8096",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:54.862129",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 825015,
+    "modified_time": "2026-08-23T22:07:23.835674"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant and colorful scene featuring a group of animated characters with elaborate costumes and hairstyles. The characters are posed dynamically, suggesting a lively and energetic atmosphere. The background is filled with a pattern of illuminated squares, enhancing the festive mood. Visible text in the upper left corner reads \"XSJH\" in bold letters. The overall atmosphere is playful and futuristic, with a strong emphasis on fashion and style.",
+    "final_text": "The image depicts a vibrant and colorful scene featuring a group of animated characters with elaborate costumes and hairstyles. The characters are posed dynamically, suggesting a lively and energetic atmosphere. The background is filled with a pattern of illuminated squares, enhancing the festive mood. Visible text in the upper left corner reads \"XSJH\" in bold letters. The overall atmosphere is playful and futuristic, with a strong emphasis on fashion and style.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426711-33sPcmVIPAKIHUi2Kk9b",
+    "created": 1788426711,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 84,
+      "total_tokens": 1082,
+      "cost": 0.003335
+    }
+  }
+}

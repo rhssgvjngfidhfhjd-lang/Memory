@@ -1,0 +1,36 @@
+{
+  "id": "71e4b681-e913-47a5-98e7-d229f2336006",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:19.825981",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session8/image/4.png",
+    "filename": "4.png",
+    "size": 1904938,
+    "modified_time": "2026-08-23T21:32:17.526898"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a line graph depicting percentages of different activities among graduates. The x-axis represents four categories: 专科毕业生 (college graduates), 本科毕业生 (bachelor graduates), 硕士毕业生 (master graduates), and 博士毕业生 (PhD graduates). The y-axis shows percentage values. Three lines represent different activities: 灵活就业 (flexible employment) in blue, 自主创业 (entrepreneurship) in green, and 升学深造 (further studies) in red. The red line peaks at 37.6% for bachelor graduates. The overall atmosphere is analytical, focusing on trends in graduate activities.",
+    "final_text": "The image is a line graph depicting percentages of different activities among graduates. The x-axis represents four categories: 专科毕业生 (college graduates), 本科毕业生 (bachelor graduates), 硕士毕业生 (master graduates), and 博士毕业生 (PhD graduates). The y-axis shows percentage values. Three lines represent different activities: 灵活就业 (flexible employment) in blue, 自主创业 (entrepreneurship) in green, and 升学深造 (further studies) in red. The red line peaks at 37.6% for bachelor graduates. The overall atmosphere is analytical, focusing on trends in graduate activities.",
+    "token_stats": {
+      "original_tokens": 153,
+      "final_tokens": 153,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426740-vQ1PUglns2ksriy5p8Ey",
+    "created": 1788426740,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 134,
+      "total_tokens": 1329,
+      "cost": 0.0043275
+    }
+  }
+}

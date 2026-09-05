@@ -1,0 +1,36 @@
+{
+  "id": "ed773a27-6492-4c22-9f9c-330ef72ff0a8",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:44.813200",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session15/image/1.png",
+    "filename": "1.png",
+    "size": 817645,
+    "modified_time": "2026-08-23T22:00:07.894195"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a cold wave warning with a blue icy theme. The main text at the top is stylized with icicles: \"寒潮预警\" (Cold Wave Warning). Below, it reads: \"寒潮来袭 注意保暖\" (Cold wave approaching, stay warm). Additional text advises on temperature drop and dressing warmly to prevent catching a cold. The background includes icy patterns, enhancing the cold and alert atmosphere.",
+    "final_text": "The image features a cold wave warning with a blue icy theme. The main text at the top is stylized with icicles: \"寒潮预警\" (Cold Wave Warning). Below, it reads: \"寒潮来袭 注意保暖\" (Cold wave approaching, stay warm). Additional text advises on temperature drop and dressing warmly to prevent catching a cold. The background includes icy patterns, enhancing the cold and alert atmosphere.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427783-JnSLRDadNZ1FxnfEJhjZ",
+    "created": 1788427783,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 87,
+      "total_tokens": 602,
+      "cost": 0.0021575
+    }
+  }
+}

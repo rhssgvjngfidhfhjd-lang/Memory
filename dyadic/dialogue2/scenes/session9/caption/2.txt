@@ -1,0 +1,16 @@
+The image is a sleep analysis report with a purple-themed design. It displays various metrics related to sleep, including:
+
+- Total sleep time: 5.8 hours per night
+- Deep sleep percentage: 12%
+- Light sleep percentage: 58%
+- REM sleep percentage: 15%
+- Wake times: 4.3 times
+
+A line graph shows sleep patterns over time. Additional metrics include:
+
+- Time to fall asleep: 32 minutes
+- Sleep efficiency: 76%
+- Snoring frequency: 3 nights per 7
+- Oxygen drop events: 8 times per hour
+
+There's a circular chart indicating a sleep type labeled "3 nights + color." The overall mood is analytical and informative, focusing on sleep quality and efficiency.

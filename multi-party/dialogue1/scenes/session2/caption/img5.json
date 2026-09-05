@@ -1,0 +1,36 @@
+{
+  "id": "c342d317-366c-42f0-ae9c-e64126c32d12",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:12.660400",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session2/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 272298,
+    "modified_time": "2026-08-23T22:02:05.191344"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a hairless cat, likely a Sphynx, sitting on a striped blanket in a modern indoor setting. The cat is positioned centrally, displaying its wrinkled skin and large ears. In the background, a white clock with black hands is mounted on a light-colored wall, showing a time around 2:10. Below the clock, a wooden table holds a small potted plant and a white cylindrical object, possibly a speaker or air purifier. A doorway is visible, suggesting a calm and relaxed atmosphere.",
+    "final_text": "The image features a hairless cat, likely a Sphynx, sitting on a striped blanket in a modern indoor setting. The cat is positioned centrally, displaying its wrinkled skin and large ears. In the background, a white clock with black hands is mounted on a light-colored wall, showing a time around 2:10. Below the clock, a wooden table holds a small potted plant and a white cylindrical object, possibly a speaker or air purifier. A doorway is visible, suggesting a calm and relaxed atmosphere.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426549-euEc1uAHCTzm5daRsP5b",
+    "created": 1788426549,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 108,
+      "total_tokens": 828,
+      "cost": 0.00288
+    }
+  }
+}

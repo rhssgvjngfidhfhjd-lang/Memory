@@ -1,0 +1,36 @@
+{
+  "id": "ff4ab547-a673-424c-aa27-58b9b0d92d16",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:56.795773",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 3202952,
+    "modified_time": "2026-08-23T21:37:15.051759"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a series of four line graphs labeled A to D, each depicting different metrics over time, centered around a significant event marked by a vertical red line and labeled \"t0\". The graphs measure: \n\n1. **Task Output** (A) - Blue line with a sharp peak at t0, described as the \"creativity burst point\".\n2. **EEG - Alpha Relative Power** (B) - Orange line, indicating brain activity, with a highlighted yellow zone around t0.\n3. **EDA/SSR** (C) - Green line showing an increase in skin conductance.\n4. **CGM Simulation** (D) - Purple line tracking glucose levels, annotated with a note on the synchronization of feature peaks.\n\nThe overall atmosphere is analytical, focusing on measuring physiological responses to a creative breakthrough.",
+    "final_text": "The image displays a series of four line graphs labeled A to D, each depicting different metrics over time, centered around a significant event marked by a vertical red line and labeled \"t0\". The graphs measure: \n\n1. **Task Output** (A) - Blue line with a sharp peak at t0, described as the \"creativity burst point\".\n2. **EEG - Alpha Relative Power** (B) - Orange line, indicating brain activity, with a highlighted yellow zone around t0.\n3. **EDA/SSR** (C) - Green line showing an increase in skin conductance.\n4. **CGM Simulation** (D) - Purple line tracking glucose levels, annotated with a note on the synchronization of feature peaks.\n\nThe overall atmosphere is analytical, focusing on measuring physiological responses to a creative breakthrough.",
+    "token_stats": {
+      "original_tokens": 168,
+      "final_tokens": 168,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427074-x7PfsgsrH9tyb9QYHWat",
+    "created": 1788427074,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 167,
+      "total_tokens": 1022,
+      "cost": 0.0038075
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "82bc707e-edae-4666-bafd-ea2f7ef9cc8e",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:48.815997",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session16/image/3.png",
+    "filename": "3.png",
+    "size": 1671354,
+    "modified_time": "2026-08-23T21:39:13.158386"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a sleek, modern workspace featuring a laptop elevated on an adjustable metal stand. To the left, there is a small glass vase with a green plant, adding a touch of nature. On the right, a simple, cylindrical mug sits on the white surface. The laptop stand has visible measurement markings, and the base has a subtle logo. The overall atmosphere is minimalist and organized, suggesting a clean, efficient work environment.",
+    "final_text": "The image depicts a sleek, modern workspace featuring a laptop elevated on an adjustable metal stand. To the left, there is a small glass vase with a green plant, adding a touch of nature. On the right, a simple, cylindrical mug sits on the white surface. The laptop stand has visible measurement markings, and the base has a subtle logo. The overall atmosphere is minimalist and organized, suggesting a clean, efficient work environment.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427247-QsrlDF5HPZ8ERv9xUN5C",
+    "created": 1788427247,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 86,
+      "total_tokens": 1281,
+      "cost": 0.0038475
+    }
+  }
+}

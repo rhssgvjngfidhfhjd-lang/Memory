@@ -1,0 +1,36 @@
+{
+  "id": "214fcf20-5082-40d3-98bf-1cc46af1172a",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:45.132618",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 450737,
+    "modified_time": "2026-08-23T21:42:17.875571"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a room with closed gray curtains on the left and two pet bowls on the right, one with cat food and the other with water. Musical notes are illustrated near the bowls, suggesting music is being played. The text at the bottom is in Chinese, providing a three-step guide: \n\n1. Close curtains to block outside light.\n2. Play soft music to relax.\n3. Ensure sufficient cat food and water for energy.\n\nThe atmosphere is calm and focused on pet care.",
+    "final_text": "The image depicts a room with closed gray curtains on the left and two pet bowls on the right, one with cat food and the other with water. Musical notes are illustrated near the bowls, suggesting music is being played. The text at the bottom is in Chinese, providing a three-step guide: \n\n1. Close curtains to block outside light.\n2. Play soft music to relax.\n3. Ensure sufficient cat food and water for energy.\n\nThe atmosphere is calm and focused on pet care.",
+    "token_stats": {
+      "original_tokens": 98,
+      "final_tokens": 98,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427302-TCP7pBDnWug8sfFef2eK",
+    "created": 1788427302,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 98,
+      "total_tokens": 953,
+      "cost": 0.0031175
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "c1002213-eef4-4429-8f88-c80741ef7ad8",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:47.019312",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session15/image/3.png",
+    "filename": "3.png",
+    "size": 1695317,
+    "modified_time": "2026-08-23T22:00:25.507390"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a wooden box with an open lid, lined with insulating material and filled with a brown blanket. Several colorful knitted sweaters hang over the side. The box is placed outdoors on a snowy surface, suggesting a cold environment. There is no visible text. The overall mood is practical, indicating a makeshift shelter likely intended for warmth and protection against the cold.",
+    "final_text": "The image depicts a wooden box with an open lid, lined with insulating material and filled with a brown blanket. Several colorful knitted sweaters hang over the side. The box is placed outdoors on a snowy surface, suggesting a cold environment. There is no visible text. The overall mood is practical, indicating a makeshift shelter likely intended for warmth and protection against the cold.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427784-9C6AEZgszafdKE8rdVBT",
+    "created": 1788427784,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 74,
+      "total_tokens": 791,
+      "cost": 0.0025325
+    }
+  }
+}

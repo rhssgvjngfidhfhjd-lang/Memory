@@ -1,0 +1,36 @@
+{
+  "id": "2b14e1ef-9f90-4ac9-aff3-77ead840ac07",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:19.639451",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session11/image/3.png",
+    "filename": "3.png",
+    "size": 548396,
+    "modified_time": "2026-08-23T21:55:04.725530"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a red hardcover book titled \"红楼梦\" (Dream of the Red Chamber), a classic Chinese novel. The cover features elegant illustrations of two traditional Chinese figures dressed in historical attire, suggesting a cultural and historical theme. Visible text includes the title and some additional descriptions related to the book's content and edition. The overall mood is sophisticated and traditional, reflecting the literary and cultural significance of the book.",
+    "final_text": "The image shows a red hardcover book titled \"红楼梦\" (Dream of the Red Chamber), a classic Chinese novel. The cover features elegant illustrations of two traditional Chinese figures dressed in historical attire, suggesting a cultural and historical theme. Visible text includes the title and some additional descriptions related to the book's content and edition. The overall mood is sophisticated and traditional, reflecting the literary and cultural significance of the book.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427518-a38NyhmzeKBaHOgKGokr",
+    "created": 1788427518,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 84,
+      "total_tokens": 801,
+      "cost": 0.0026325
+    }
+  }
+}

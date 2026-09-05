@@ -1,0 +1,36 @@
+{
+  "id": "03477013-3813-40d1-a47f-eabb77bf12e5",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:29.470479",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session4/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 2614871,
+    "modified_time": "2026-08-23T21:30:47.403726"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a golden retriever resting its head on a person's knees. The person is wearing light blue jeans, and the scene takes place on a paved surface with a brick pattern. The dog appears calm and affectionate, creating a warm and comforting atmosphere. There is no visible text in the image.",
+    "final_text": "The image shows a golden retriever resting its head on a person's knees. The person is wearing light blue jeans, and the scene takes place on a paved surface with a brick pattern. The dog appears calm and affectionate, creating a warm and comforting atmosphere. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426567-nJU5u3C0hUKGL7ji2QMW",
+    "created": 1788426567,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 61,
+      "total_tokens": 778,
+      "cost": 0.0024025
+    }
+  }
+}

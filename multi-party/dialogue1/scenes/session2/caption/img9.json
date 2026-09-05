@@ -1,0 +1,36 @@
+{
+  "id": "fc6bc556-929d-46ab-868e-e98babdb30ac",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:15.435234",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session2/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 14609,
+    "modified_time": "2026-08-23T22:02:44.687244"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a cartoon-style emoji of a dog with a yellow and white face, similar to a Shiba Inu. The dog has a mischievous expression with eyes looking sideways. There is no visible text. The overall mood is playful and humorous.",
+    "final_text": "The image shows a cartoon-style emoji of a dog with a yellow and white face, similar to a Shiba Inu. The dog has a mischievous expression with eyes looking sideways. There is no visible text. The overall mood is playful and humorous.",
+    "token_stats": {
+      "original_tokens": 52,
+      "final_tokens": 52,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426554-66bLK3TT8H4bBLoWFN0b",
+    "created": 1788426554,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 51,
+      "total_tokens": 396,
+      "cost": 0.0013725
+    }
+  }
+}

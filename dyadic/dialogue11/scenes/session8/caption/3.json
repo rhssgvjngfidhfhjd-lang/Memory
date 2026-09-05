@@ -1,0 +1,36 @@
+{
+  "id": "9b764c29-c0ac-4d7f-81e8-797aa2038ee9",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:08.679650",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 2511579,
+    "modified_time": "2026-08-23T21:31:24.916458"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a group chat on a messaging app titled \"XX社区医院工会团购\" (Community Hospital Union Group Purchase). The conversation involves multiple participants sharing details about orders, such as quantities and partially redacted phone numbers. Profile pictures of a woman appear next to some messages. The atmosphere is transactional and organized, focusing on coordinating group purchases. Green text bubbles contain instructions and acknowledgments, with some text redacted for privacy. There are small images of a cupcake beside the green messages.",
+    "final_text": "The image depicts a group chat on a messaging app titled \"XX社区医院工会团购\" (Community Hospital Union Group Purchase). The conversation involves multiple participants sharing details about orders, such as quantities and partially redacted phone numbers. Profile pictures of a woman appear next to some messages. The atmosphere is transactional and organized, focusing on coordinating group purchases. Green text bubbles contain instructions and acknowledgments, with some text redacted for privacy. There are small images of a cupcake beside the green messages.",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426666-Evr9RieiwTyBqSsGc3Qo",
+    "created": 1788426666,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 100,
+      "total_tokens": 1295,
+      "cost": 0.0039875
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "d7cea532-7ea7-4fbb-9ac6-4b4f6f668c0a",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:12.783182",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session3/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 221249,
+    "modified_time": "2026-08-23T22:08:56.664876"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a corner of a room featuring a wooden dresser with six drawers. On top of the dresser, there is a textured white canvas, a vase with branches and small red and orange leaves, a framed color palette, and a decorative lamp with a warm light. A glass container filled with pine cones is also present. The setting is calm and minimalist, with neutral tones and soft lighting, creating a cozy atmosphere. White curtains are visible on the left side.",
+    "final_text": "The image depicts a corner of a room featuring a wooden dresser with six drawers. On top of the dresser, there is a textured white canvas, a vase with branches and small red and orange leaves, a framed color palette, and a decorative lamp with a warm light. A glass container filled with pine cones is also present. The setting is calm and minimalist, with neutral tones and soft lighting, creating a cozy atmosphere. White curtains are visible on the left side.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426791-PH9mdN93aEcupOaEBzxB",
+    "created": 1788426791,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 94,
+      "total_tokens": 814,
+      "cost": 0.00274
+    }
+  }
+}

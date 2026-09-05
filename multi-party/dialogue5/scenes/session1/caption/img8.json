@@ -1,0 +1,36 @@
+{
+  "id": "e57e9fd3-8267-44da-b124-770eea9f2974",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:02.166911",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session1/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 310311,
+    "modified_time": "2026-08-23T22:09:30.753272"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a financial table for December 2025, detailing income and expenses. It is divided into various categories: dining, shopping, transportation, beauty, entertainment, fixed expenses, and others. Each category lists specific items with budgeted and actual amounts, mostly showing \"0\" except for some entries. The table exhibits a structured, organized layout, indicating a focus on budgeting and financial management. The overall mood is analytical and organized.",
+    "final_text": "The image is a financial table for December 2025, detailing income and expenses. It is divided into various categories: dining, shopping, transportation, beauty, entertainment, fixed expenses, and others. Each category lists specific items with budgeted and actual amounts, mostly showing \"0\" except for some entries. The table exhibits a structured, organized layout, indicating a focus on budgeting and financial management. The overall mood is analytical and organized.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426842-PHE4paPLxfCnPbMGNPF0",
+    "created": 1788426842,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 88,
+      "total_tokens": 1283,
+      "cost": 0.0038675
+    }
+  }
+}

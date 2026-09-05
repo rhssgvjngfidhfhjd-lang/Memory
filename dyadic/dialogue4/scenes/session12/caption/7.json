@@ -1,0 +1,36 @@
+{
+  "id": "33eab217-1eaa-45ac-9752-61cc252af36e",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:14.878131",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session12/image/7.png",
+    "filename": "7.png",
+    "size": 187885,
+    "modified_time": "2026-08-23T21:51:02.349841"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts freshly baked bread loaves cooling on a rack beside an open oven. The bread has a golden-brown crust, and there is steam coming from the oven, indicating warmth and freshness. The scene suggests a step in a baking process. The text in Chinese reads \"第五阶段: 烘烤与冷却,\" which translates to \"Step 5: Baking and Cooling.\" The atmosphere is warm and inviting, typical of a home baking setting.",
+    "final_text": "The image depicts freshly baked bread loaves cooling on a rack beside an open oven. The bread has a golden-brown crust, and there is steam coming from the oven, indicating warmth and freshness. The scene suggests a step in a baking process. The text in Chinese reads \"第五阶段: 烘烤与冷却,\" which translates to \"Step 5: Baking and Cooling.\" The atmosphere is warm and inviting, typical of a home baking setting.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427456-WgnsbsIkmqvOSguKgWzc",
+    "created": 1788427456,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 93,
+      "total_tokens": 438,
+      "cost": 0.0017925
+    }
+  }
+}

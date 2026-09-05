@@ -1,0 +1,36 @@
+{
+  "id": "7a9b1f5b-067d-4b9c-aede-2a41c0264617",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:27.969032",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 428901,
+    "modified_time": "2026-08-23T22:07:59.645097"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a collage of nine movie posters, each showcasing different scenes and themes. The posters feature a mix of landscapes, such as beaches and mountains, as well as intimate interactions between people. Some posters include visible text in both English and Chinese, with titles like \"Love in a Different World,\" \"Unexpected Summer,\" \"Moonlight Warrior,\" and \"Blue Tourist.\" The mood varies across the posters, ranging from adventurous and romantic to dramatic and mysterious. The overall atmosphere is diverse, highlighting different genres and storytelling styles.",
+    "final_text": "The image is a collage of nine movie posters, each showcasing different scenes and themes. The posters feature a mix of landscapes, such as beaches and mountains, as well as intimate interactions between people. Some posters include visible text in both English and Chinese, with titles like \"Love in a Different World,\" \"Unexpected Summer,\" \"Moonlight Warrior,\" and \"Blue Tourist.\" The mood varies across the posters, ranging from adventurous and romantic to dramatic and mysterious. The overall atmosphere is diverse, highlighting different genres and storytelling styles.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426746-L9LPqPiqTaFLt0lrvUYr",
+    "created": 1788426746,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 104,
+      "total_tokens": 959,
+      "cost": 0.0031775
+    }
+  }
+}

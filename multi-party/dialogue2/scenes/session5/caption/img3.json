@@ -1,0 +1,36 @@
+{
+  "id": "eb32ae27-1e9e-433c-9845-304fee3ee62b",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:13.791342",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session5/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 605223,
+    "modified_time": "2026-08-23T22:07:03.396752"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant street scene featuring a sports car parked on a paved area, partially on a sidewalk. The car is white with a pink gradient on the back. A yellow and black traffic cone is placed nearby. In the background, people are walking and riding bikes, with trees providing shade. Visible street signs indicate traffic rules, and the atmosphere is sunny and lively. The car's license plate reads \"京QL101.\"",
+    "final_text": "The image depicts a vibrant street scene featuring a sports car parked on a paved area, partially on a sidewalk. The car is white with a pink gradient on the back. A yellow and black traffic cone is placed nearby. In the background, people are walking and riding bikes, with trees providing shade. Visible street signs indicate traffic rules, and the atmosphere is sunny and lively. The car's license plate reads \"京QL101.\"",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426672-xelJDGg26FlThjroTAYD",
+    "created": 1788426672,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 87,
+      "total_tokens": 807,
+      "cost": 0.00267
+    }
+  }
+}

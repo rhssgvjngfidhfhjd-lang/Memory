@@ -1,0 +1,36 @@
+{
+  "id": "a38f16ff-f8f5-405b-b9bd-dbdf065bee3f",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:06.559785",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 1603670,
+    "modified_time": "2026-08-23T22:01:20.217149"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a lively scene at a toy giveaway or sale event. Several people, including adults and children, are gathered around large blue bins filled with colorful stuffed animals and toys. Most individuals are wearing face masks, indicating a concern for health safety. Children appear excited and engaged, picking and examining toys, while adults assist or supervise them. In the background, volunteers in orange vests stand near informational posters, suggesting an organized community event. The atmosphere is bustling and cheerful, with a sense of community and sharing.",
+    "final_text": "The image depicts a lively scene at a toy giveaway or sale event. Several people, including adults and children, are gathered around large blue bins filled with colorful stuffed animals and toys. Most individuals are wearing face masks, indicating a concern for health safety. Children appear excited and engaged, picking and examining toys, while adults assist or supervise them. In the background, volunteers in orange vests stand near informational posters, suggesting an organized community event. The atmosphere is bustling and cheerful, with a sense of community and sharing.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427743-4zb0L6cBaVpamVg3bq1H",
+    "created": 1788427743,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 104,
+      "total_tokens": 821,
+      "cost": 0.0028325
+    }
+  }
+}

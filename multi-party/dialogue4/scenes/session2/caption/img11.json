@@ -1,0 +1,36 @@
+{
+  "id": "c3e7a37d-8aba-4824-a8dd-c3dd092a3c37",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:09.758110",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session2/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 489091,
+    "modified_time": "2026-08-23T22:08:34.122912"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a partially eaten cake with layers of cream, chocolate topping, and visible fruit pieces. Red icing text is on top, but it's partially obscured. The cake is on a white surface with cream smeared around it, suggesting it was recently sliced. In the background, there is a metal bowl containing red tomatoes. The atmosphere is casual and informal, likely indicative of a gathering or celebration.",
+    "final_text": "The image features a partially eaten cake with layers of cream, chocolate topping, and visible fruit pieces. Red icing text is on top, but it's partially obscured. The cake is on a white surface with cream smeared around it, suggesting it was recently sliced. In the background, there is a metal bowl containing red tomatoes. The atmosphere is casual and informal, likely indicative of a gathering or celebration.",
+    "token_stats": {
+      "original_tokens": 81,
+      "final_tokens": 81,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426787-gCNWhYgVLvYzfBVp3VYT",
+    "created": 1788426787,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 82,
+      "total_tokens": 802,
+      "cost": 0.00262
+    }
+  }
+}

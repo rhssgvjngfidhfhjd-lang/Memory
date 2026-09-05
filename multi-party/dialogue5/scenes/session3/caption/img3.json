@@ -1,0 +1,36 @@
+{
+  "id": "a0c6c648-69ce-4601-8d09-1a0d87110f0c",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:27.354904",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 277372,
+    "modified_time": "2026-08-23T22:09:45.307917"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a bathroom with a squat toilet installed on a raised concrete platform. Above it is a white cistern connected by a pipe. On the left wall, there's a bottle of cleaning spray and a plastic bag holder containing a lavender-colored bag. A small trash bin with a pink liner is next to the cistern. Towels are visible on a shelf to the right. The floor is concrete with a drain. The atmosphere is utilitarian, suggesting a functional space. The walls are unfinished, adding a rustic feel.",
+    "final_text": "The image depicts a bathroom with a squat toilet installed on a raised concrete platform. Above it is a white cistern connected by a pipe. On the left wall, there's a bottle of cleaning spray and a plastic bag holder containing a lavender-colored bag. A small trash bin with a pink liner is next to the cistern. Towels are visible on a shelf to the right. The floor is concrete with a drain. The atmosphere is utilitarian, suggesting a functional space. The walls are unfinished, adding a rustic feel.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426865-o4rAgVtYX33cAb2WulrQ",
+    "created": 1788426865,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 106,
+      "total_tokens": 826,
+      "cost": 0.00286
+    }
+  }
+}

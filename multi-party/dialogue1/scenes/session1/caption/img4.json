@@ -1,0 +1,36 @@
+{
+  "id": "ca5ae943-4f49-4aa9-9eb8-b146cd9d9bb4",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:52.850845",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 10285,
+    "modified_time": "2026-08-23T22:01:51.856740"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a bowl of ramen noodles on a tiled surface, topped with a fried egg with a golden yolk and crispy edges. The dish is garnished with spices, adding texture and color. A spoon is placed in the bowl, suggesting readiness to eat. The atmosphere is cozy and appetizing, highlighting a homemade meal. No visible text is present.",
+    "final_text": "The image features a bowl of ramen noodles on a tiled surface, topped with a fried egg with a golden yolk and crispy edges. The dish is garnished with spices, adding texture and color. A spoon is placed in the bowl, suggesting readiness to eat. The atmosphere is cozy and appetizing, highlighting a homemade meal. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 73,
+      "final_tokens": 73,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426532-VBUC3sCONDqzq8YvGUww",
+    "created": 1788426532,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 73,
+      "total_tokens": 373,
+      "cost": 0.00148
+    }
+  }
+}

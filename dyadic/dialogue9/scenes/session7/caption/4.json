@@ -1,0 +1,36 @@
+{
+  "id": "0ca583a6-89c4-4da6-bbbd-f14090e28df6",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:07.081571",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session7/image/4.png",
+    "filename": "4.png",
+    "size": 37548,
+    "modified_time": "2026-08-23T22:01:18.270407"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains text written in Chinese. On the left side, there's a heading \"后续改进建议\" which translates to \"Suggestions for Further Improvement.\" Below are numbered suggestions: 1) Organizing items by categories like children's items, household appliances, and stationery, with labels; 2) Adding skill-sharing sessions; 3) Preparing item lists and estimating quantities; 4) Exploring regular events, suggesting monthly occurrences on fixed weekends. On the right, it mentions two people working together to implement measures and preparing for activities to optimize the situation. The overall mood is focused and organized, aimed at efficient planning and improvement.",
+    "final_text": "The image contains text written in Chinese. On the left side, there's a heading \"后续改进建议\" which translates to \"Suggestions for Further Improvement.\" Below are numbered suggestions: 1) Organizing items by categories like children's items, household appliances, and stationery, with labels; 2) Adding skill-sharing sessions; 3) Preparing item lists and estimating quantities; 4) Exploring regular events, suggesting monthly occurrences on fixed weekends. On the right, it mentions two people working together to implement measures and preparing for activities to optimize the situation. The overall mood is focused and organized, aimed at efficient planning and improvement.",
+    "token_stats": {
+      "original_tokens": 134,
+      "final_tokens": 134,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427745-3PQn9RdCh7d1UzbZHMD7",
+    "created": 1788427745,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 128,
+      "total_tokens": 567,
+      "cost": 0.0023775
+    }
+  }
+}

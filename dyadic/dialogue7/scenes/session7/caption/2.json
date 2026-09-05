@@ -1,0 +1,36 @@
+{
+  "id": "ae25708d-ad0d-4f6e-ab8e-e2a350579141",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:56.479342",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 608222,
+    "modified_time": "2026-08-23T21:57:10.498909"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a recommendation chart divided into three sections. \n\n1. **Recommended Purchases** (green section) includes:\n   - Sugar-free yogurt: 12 yuan\n   - Whole wheat bread: 8 yuan\n   - Fresh fruits: 6 yuan\n   - Mixed nuts: 25 yuan\n   - Low-sodium cookies: 15 yuan\n\n2. **Economic Optimization Suggestions** (yellow section) includes:\n   - Bulk purchase discount: 15%\n   - Store brand selection savings: 20%\n   - Seasonal fruit price fluctuations\n\n3. **Cautious Purchases** (red section) includes:\n   - Sugary yogurt: 10 yuan\n   - Sweet cookies: 12 yuan\n   - Processed foods: 18 yuan\n   - Sugary drinks: 5 yuan\n\nThe overall mood is informative, aimed at guiding purchasing decisions with a focus on health and economy.",
+    "final_text": "The image is a recommendation chart divided into three sections. \n\n1. **Recommended Purchases** (green section) includes:\n   - Sugar-free yogurt: 12 yuan\n   - Whole wheat bread: 8 yuan\n   - Fresh fruits: 6 yuan\n   - Mixed nuts: 25 yuan\n   - Low-sodium cookies: 15 yuan\n\n2. **Economic Optimization Suggestions** (yellow section) includes:\n   - Bulk purchase discount: 15%\n   - Store brand selection savings: 20%\n   - Seasonal fruit price fluctuations\n\n3. **Cautious Purchases** (red section) includes:\n   - Sugary yogurt: 10 yuan\n   - Sweet cookies: 12 yuan\n   - Processed foods: 18 yuan\n   - Sugary drinks: 5 yuan\n\nThe overall mood is informative, aimed at guiding purchasing decisions with a focus on health and economy.",
+    "token_stats": {
+      "original_tokens": 188,
+      "final_tokens": 188,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427615-z5vIL9h4CkM24zmfFBSZ",
+    "created": 1788427615,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 186,
+      "total_tokens": 1041,
+      "cost": 0.0039975
+    }
+  }
+}

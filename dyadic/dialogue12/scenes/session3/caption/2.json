@@ -1,0 +1,36 @@
+{
+  "id": "5b9ce30b-517b-4fb8-a295-5d620d2de683",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:53.646870",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session3/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 94656,
+    "modified_time": "2026-08-23T21:33:14.282278"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a patient laboratory report dated October 26, 2023, for Jane Doe, born January 15, 1960. It lists chronic conditions: Type 2 Diabetes, Hypertension, and Hyperlipidemia. The report details various test results, including Glucose (Fasting) at 185 mg/dL, Hb1Ac at 8.9, Total Cholesterol at 240 mg, LDL Cholesterol at 260 mg, HDL Cholesterol at 45, Triglycerides at 210 mg, Creatinine at 1.5 mg, eGFR at 48 mL/min/1.73m², and Potassium at 5.2 mEQ/L. Most results are flagged as high, except Triglycerides, which are low. Dr. Lee recommends medication adjustment and lifestyle counseling. The overall mood is clinical and informative.",
+    "final_text": "The image is a patient laboratory report dated October 26, 2023, for Jane Doe, born January 15, 1960. It lists chronic conditions: Type 2 Diabetes, Hypertension, and Hyperlipidemia. The report details various test results, including Glucose (Fasting) at 185 mg/dL, Hb1Ac at 8.9, Total Cholesterol at 240 mg, LDL Cholesterol at 260 mg, HDL Cholesterol at 45, Triglycerides at 210 mg, Creatinine at 1.5 mg, eGFR at 48 mL/min/1.73m², and Potassium at 5.2 mEQ/L. Most results are flagged as high, except Triglycerides, which are low. Dr. Lee recommends medication adjustment and lifestyle counseling. The overall mood is clinical and informative.",
+    "token_stats": {
+      "original_tokens": 184,
+      "final_tokens": 184,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426711-YJQ6nUiPQPn1Qw4Drv5u",
+    "created": 1788426711,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 182,
+      "total_tokens": 1037,
+      "cost": 0.0039575
+    }
+  }
+}

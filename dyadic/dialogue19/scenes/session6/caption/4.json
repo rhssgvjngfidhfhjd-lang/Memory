@@ -1,0 +1,36 @@
+{
+  "id": "ff43df71-283a-4c19-99de-a13ab9acf0d3",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:09.455717",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session6/image/4.png",
+    "filename": "4.png",
+    "size": 2266610,
+    "modified_time": "2026-08-23T21:39:42.752040"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a close-up of a knife with a wooden handle and a leather sheath. The handle displays natural wood grain patterns, while the blade is metallic and shiny with visible scratches. The leather sheath is a rich brown with visible stitching. The overall mood is rustic and tactile, highlighting the craftsmanship of the knife.",
+    "final_text": "The image features a close-up of a knife with a wooden handle and a leather sheath. The handle displays natural wood grain patterns, while the blade is metallic and shiny with visible scratches. The leather sheath is a rich brown with visible stitching. The overall mood is rustic and tactile, highlighting the craftsmanship of the knife.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427207-afQmVcRC3QS9r6DVNJk4",
+    "created": 1788427207,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 63,
+      "total_tokens": 1258,
+      "cost": 0.0036175
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "ff64194d-5b2e-4751-b1b7-02135cb5ed67",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:44.453904",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session8/image/4.png",
+    "filename": "4.png",
+    "size": 76456,
+    "modified_time": "2026-08-23T21:49:59.075026"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a comparison chart presenting information about two games, \"鲸鱼马戏团\" and \"告别诗.\" It includes categories such as game duration, number of players, core themes, emotional tone, story style, main plotlines, literary features, player age range, reasoning mechanism, and new player friendliness. Each category provides specific details for both games, contrasting aspects like themes of healing vs. youth and parting, and game styles from adult fairy tales to realistic youth literature. The overall mood is informative and analytical.",
+    "final_text": "The image is a comparison chart presenting information about two games, \"鲸鱼马戏团\" and \"告别诗.\" It includes categories such as game duration, number of players, core themes, emotional tone, story style, main plotlines, literary features, player age range, reasoning mechanism, and new player friendliness. Each category provides specific details for both games, contrasting aspects like themes of healing vs. youth and parting, and game styles from adult fairy tales to realistic youth literature. The overall mood is informative and analytical.",
+    "token_stats": {
+      "original_tokens": 116,
+      "final_tokens": 116,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427362-l6GK7Trzy6Dfg0Hk7nCF",
+    "created": 1788427362,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 107,
+      "total_tokens": 962,
+      "cost": 0.0032075
+    }
+  }
+}

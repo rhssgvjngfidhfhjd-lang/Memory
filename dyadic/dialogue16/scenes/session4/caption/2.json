@@ -1,0 +1,36 @@
+{
+  "id": "2374e69f-ec0c-42fe-93a8-2208cbaa7a06",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:57.904952",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 505698,
+    "modified_time": "2026-08-23T21:35:29.281002"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a mind map titled \"静心小指南 (苏予安 × 沈静言 共创)\" which translates to \"Calm Mind Guide (Co-created by Su Yian and Shen Jingyan).\" It features a central theme with branches extending into two main sections: \"指挥旁地诱式\" on the left and \"呼吸引导技术\" on the right. Each section contains subtopics, including \"基础技术,\" \"保护引导,\" \"户房互式,\" and others, with detailed text descriptions in Chinese. The map is color-coded, with green and red sections, and has a structured, informational atmosphere.",
+    "final_text": "The image is a mind map titled \"静心小指南 (苏予安 × 沈静言 共创)\" which translates to \"Calm Mind Guide (Co-created by Su Yian and Shen Jingyan).\" It features a central theme with branches extending into two main sections: \"指挥旁地诱式\" on the left and \"呼吸引导技术\" on the right. Each section contains subtopics, including \"基础技术,\" \"保护引导,\" \"户房互式,\" and others, with detailed text descriptions in Chinese. The map is color-coded, with green and red sections, and has a structured, informational atmosphere.",
+    "token_stats": {
+      "original_tokens": 155,
+      "final_tokens": 155,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427018-65XtMoLiBQK7v0Rk35W9",
+    "created": 1788427018,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 132,
+      "total_tokens": 987,
+      "cost": 0.0034575
+    }
+  }
+}

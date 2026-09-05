@@ -1,0 +1,36 @@
+{
+  "id": "d2e328c8-3f89-4bbd-b5ec-99895daea02e",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:48.499537",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 6098950,
+    "modified_time": "2026-08-23T21:31:47.851959"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a yellow Labrador sitting on a patch of dirt next to a bus stop sign. The sign displays route information with text in Chinese. A bus is partially visible in the background. The dog appears calm and relaxed. The scene has an urban setting, with a neutral, everyday atmosphere.",
+    "final_text": "The image depicts a yellow Labrador sitting on a patch of dirt next to a bus stop sign. The sign displays route information with text in Chinese. A bus is partially visible in the background. The dog appears calm and relaxed. The scene has an urban setting, with a neutral, everyday atmosphere.",
+    "token_stats": {
+      "original_tokens": 59,
+      "final_tokens": 59,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426646-dBs4cGV1bOaVcmoLOQXZ",
+    "created": 1788426646,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 59,
+      "total_tokens": 914,
+      "cost": 0.0027275
+    }
+  }
+}

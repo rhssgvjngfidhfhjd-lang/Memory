@@ -1,0 +1,36 @@
+{
+  "id": "cdb8f599-9fd5-4840-8488-34bbebf04b41",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:42.590374",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session3/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 253334,
+    "modified_time": "2026-08-23T22:05:51.036249"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two human knees side by side on a patterned surface. The right knee appears swollen and bruised, displaying a reddish-purple discoloration, while the left knee looks normal without any visible injuries. No text is present. The overall mood suggests discomfort or injury, focusing on a physical health issue.",
+    "final_text": "The image shows two human knees side by side on a patterned surface. The right knee appears swollen and bruised, displaying a reddish-purple discoloration, while the left knee looks normal without any visible injuries. No text is present. The overall mood suggests discomfort or injury, focusing on a physical health issue.",
+    "token_stats": {
+      "original_tokens": 64,
+      "final_tokens": 64,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426642-nmdi3rnn5zV5ssRyKFmf",
+    "created": 1788426642,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 62,
+      "total_tokens": 501,
+      "cost": 0.0017175
+    }
+  }
+}

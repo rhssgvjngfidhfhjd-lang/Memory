@@ -1,0 +1,36 @@
+{
+  "id": "714462e6-3c65-4b7a-a4a4-ceffd11c716f",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:10.348219",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session12/image/3.png",
+    "filename": "3.png",
+    "size": 257065,
+    "modified_time": "2026-08-23T21:41:52.524634"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table displaying real-time global subtitle tracking data. It includes a list of languages in the leftmost column, followed by columns for the number of occurrences, correct occurrences, differences, and accuracy percentages. The text is primarily in Chinese, with numerical data in each row corresponding to each language. The background is dark with a yellow header, creating a formal and informative atmosphere.",
+    "final_text": "The image is a table displaying real-time global subtitle tracking data. It includes a list of languages in the leftmost column, followed by columns for the number of occurrences, correct occurrences, differences, and accuracy percentages. The text is primarily in Chinese, with numerical data in each row corresponding to each language. The background is dark with a yellow header, creating a formal and informative atmosphere.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427329-ajLlEHsfzWOOWUCTIlPE",
+    "created": 1788427329,
+    "usage": {
+      "prompt_tokens": 685,
+      "completion_tokens": 77,
+      "total_tokens": 762,
+      "cost": 0.0024825
+    }
+  }
+}

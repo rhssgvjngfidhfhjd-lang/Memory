@@ -1,0 +1,36 @@
+{
+  "id": "5819b19e-a57d-4276-b068-97ff10cfed88",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:46.613640",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session12/image/2.png",
+    "filename": "2.png",
+    "size": 3935058,
+    "modified_time": "2026-08-23T21:31:47.320698"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a line graph with a blue and green line showing trends over time, labeled \"时间（年/月）\" on the x-axis. The y-axis on the left represents \"数据/模型驱动\" with values from 0 to 140, and the right y-axis represents \"叙事/意义驱动\" with similar values. Key points are labeled \"健康,\" \"宠物,\" \"影视,\" \"新闻,\" and \"购物,\" indicating different topics or categories. The graph shows peaks and troughs, suggesting varying levels of discussion or interest over time. The background is a textured gray, creating a professional and analytical atmosphere.",
+    "final_text": "The image is a line graph with a blue and green line showing trends over time, labeled \"时间（年/月）\" on the x-axis. The y-axis on the left represents \"数据/模型驱动\" with values from 0 to 140, and the right y-axis represents \"叙事/意义驱动\" with similar values. Key points are labeled \"健康,\" \"宠物,\" \"影视,\" \"新闻,\" and \"购物,\" indicating different topics or categories. The graph shows peaks and troughs, suggesting varying levels of discussion or interest over time. The background is a textured gray, creating a professional and analytical atmosphere.",
+    "token_stats": {
+      "original_tokens": 144,
+      "final_tokens": 144,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426765-0xO0AWBak6AFGpxoToU4",
+    "created": 1788426765,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 131,
+      "total_tokens": 1326,
+      "cost": 0.0042975
+    }
+  }
+}

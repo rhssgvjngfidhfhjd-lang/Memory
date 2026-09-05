@@ -1,0 +1,36 @@
+{
+  "id": "17fa3770-6a2d-4fce-97e7-823f4dbd0053",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:40.782681",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img16.jpg",
+    "filename": "img16.jpg",
+    "size": 91245,
+    "modified_time": "2026-08-23T22:09:09.265342"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a digital notification of a refund transfer. The main elements include the refund amount of ¥182.00, the refund method, the reason for the refund, and the date and time of the transaction, which is April 16, 2025, at 16:01:51. The text indicates that the refund has been processed and received. The overall mood is informative and transactional.",
+    "final_text": "The image shows a digital notification of a refund transfer. The main elements include the refund amount of ¥182.00, the refund method, the reason for the refund, and the date and time of the transaction, which is April 16, 2025, at 16:01:51. The text indicates that the refund has been processed and received. The overall mood is informative and transactional.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426819-HH34xP6jm8lzcSvWlLYT",
+    "created": 1788426819,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 81,
+      "total_tokens": 936,
+      "cost": 0.0029475
+    }
+  }
+}

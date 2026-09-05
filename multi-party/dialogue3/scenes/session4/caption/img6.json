@@ -1,0 +1,36 @@
+{
+  "id": "74a60926-ae47-4804-bed9-eb4c9e875a4c",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:17.246202",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session4/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 455613,
+    "modified_time": "2026-08-23T22:07:48.487438"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a fantastical scene in a dense forest with oversized, vibrant mushrooms. At the center, a young woman in a blue dress walks alongside two identical, rotund figures dressed in striped shirts and overalls. Behind them, a large, colorful bird with a striking blue neck and vibrant plumage is visible. The atmosphere is whimsical and surreal, suggesting an imaginative, fairy-tale setting. There is no visible text, and the characters seem to be on a journey or adventure together.",
+    "final_text": "The image depicts a fantastical scene in a dense forest with oversized, vibrant mushrooms. At the center, a young woman in a blue dress walks alongside two identical, rotund figures dressed in striped shirts and overalls. Behind them, a large, colorful bird with a striking blue neck and vibrant plumage is visible. The atmosphere is whimsical and surreal, suggesting an imaginative, fairy-tale setting. There is no visible text, and the characters seem to be on a journey or adventure together.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426737-YCksE0W1gzzMnAxMFuZz",
+    "created": 1788426737,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 100,
+      "total_tokens": 539,
+      "cost": 0.0020975
+    }
+  }
+}

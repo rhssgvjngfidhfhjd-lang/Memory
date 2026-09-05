@@ -1,0 +1,36 @@
+{
+  "id": "0ba769a8-e237-4fc5-959f-32d14cb06456",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:46.883324",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session4/image/4.png",
+    "filename": "4.png",
+    "size": 62489,
+    "modified_time": "2026-08-23T21:56:59.269043"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a document displaying health records, formatted in a tabular and list layout. \n\n**Core Scene:** Health monitoring and examination records.\n\n**Main Elements:**\n- Tables with columns and rows.\n- Sections labeled with numbers and Chinese text.\n\n**Visible Text (translated):**\n- Sections: \"Annual Physical Examination Records,\" \"Disease and Treatment Records,\" \"Daily Health Monitoring Log.\"\n- Dates and health metrics like weight, temperature, heart rate, and respiratory rate.\n- Diagnosis and treatment details, dietary habits, daily records, and behavior status.\n\n**Overall Mood:** Clinical and informative, conveying a structured health monitoring overview.",
+    "final_text": "The image is a document displaying health records, formatted in a tabular and list layout. \n\n**Core Scene:** Health monitoring and examination records.\n\n**Main Elements:**\n- Tables with columns and rows.\n- Sections labeled with numbers and Chinese text.\n\n**Visible Text (translated):**\n- Sections: \"Annual Physical Examination Records,\" \"Disease and Treatment Records,\" \"Daily Health Monitoring Log.\"\n- Dates and health metrics like weight, temperature, heart rate, and respiratory rate.\n- Diagnosis and treatment details, dietary habits, daily records, and behavior status.\n\n**Overall Mood:** Clinical and informative, conveying a structured health monitoring overview.",
+    "token_stats": {
+      "original_tokens": 127,
+      "final_tokens": 127,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427605-VjIvCFHAhwOGBmPyqfiN",
+    "created": 1788427605,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 126,
+      "total_tokens": 981,
+      "cost": 0.0033975
+    }
+  }
+}

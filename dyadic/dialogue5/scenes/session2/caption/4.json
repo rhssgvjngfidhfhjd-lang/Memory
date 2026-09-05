@@ -1,0 +1,36 @@
+{
+  "id": "21b74284-aa67-4d8e-9a24-c86b31c1e7bd",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:36.207814",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session2/image/4.png",
+    "filename": "4.png",
+    "size": 244194,
+    "modified_time": "2026-08-23T21:55:16.396583"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a bowl filled with a mound of reddish-brown paste, likely red bean paste. The texture appears smooth and slightly chunky. At the top, there is visible text in Chinese characters: \"红豆沙馅 400g/袋,\" indicating a 400g bag of red bean paste. The overall mood is neutral, typical of a food product display.",
+    "final_text": "The image features a bowl filled with a mound of reddish-brown paste, likely red bean paste. The texture appears smooth and slightly chunky. At the top, there is visible text in Chinese characters: \"红豆沙馅 400g/袋,\" indicating a 400g bag of red bean paste. The overall mood is neutral, typical of a food product display.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427476-4uRoz6N3Bfe2tVNCCfPx",
+    "created": 1788427476,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 76,
+      "total_tokens": 421,
+      "cost": 0.0016225
+    }
+  }
+}

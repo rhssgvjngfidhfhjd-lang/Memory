@@ -1,0 +1,36 @@
+{
+  "id": "0d6fceb5-f253-4b61-9223-2f20c8aeb6bd",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:20.040145",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session12/image/3.png",
+    "filename": "3.png",
+    "size": 2473825,
+    "modified_time": "2026-08-23T21:32:23.562253"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an informative poster in Chinese about common pediatric illnesses and their care. It features cartoon illustrations of children with symptoms such as a cold, fever, and cough. Each panel includes a child and a caregiver demonstrating care techniques. The poster also provides information about nearby hospitals, listing names, addresses, and phone numbers for \"阳光医院\" and \"爱心医院.\" The overall mood is educational and supportive, aimed at guiding parents or caregivers.",
+    "final_text": "The image is an informative poster in Chinese about common pediatric illnesses and their care. It features cartoon illustrations of children with symptoms such as a cold, fever, and cough. Each panel includes a child and a caregiver demonstrating care techniques. The poster also provides information about nearby hospitals, listing names, addresses, and phone numbers for \"阳光医院\" and \"爱心医院.\" The overall mood is educational and supportive, aimed at guiding parents or caregivers.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426857-JCMZZ7okJPBu5kiQambi",
+    "created": 1788426857,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 90,
+      "total_tokens": 1285,
+      "cost": 0.0038875
+    }
+  }
+}

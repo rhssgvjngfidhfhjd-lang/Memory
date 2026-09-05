@@ -1,0 +1,36 @@
+{
+  "id": "a8fe82c8-bb2d-4827-8dcc-7a446775dbcb",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:51.669946",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 966396,
+    "modified_time": "2026-08-23T21:32:47.834086"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a promotional poster for a children's book group purchase. It features a stack of colorful books and silhouettes of two children reading, set against a sky-blue background. The visible text reads: \"社区·出版社 儿童读物团购\" (Community·Publisher Children's Book Group Purchase), \"正版保障 限时优惠\" (Authentic Guarantee, Limited Time Offer), and details the event from \"2024.09.01-09.15\" at \"社区服务中心1楼自提点\" (Community Service Center 1st Floor Pick-up). It also mentions a local publisher's direct supply with discounts up to 20%. The atmosphere is educational and inviting.",
+    "final_text": "The image shows a promotional poster for a children's book group purchase. It features a stack of colorful books and silhouettes of two children reading, set against a sky-blue background. The visible text reads: \"社区·出版社 儿童读物团购\" (Community·Publisher Children's Book Group Purchase), \"正版保障 限时优惠\" (Authentic Guarantee, Limited Time Offer), and details the event from \"2024.09.01-09.15\" at \"社区服务中心1楼自提点\" (Community Service Center 1st Floor Pick-up). It also mentions a local publisher's direct supply with discounts up to 20%. The atmosphere is educational and inviting.",
+    "token_stats": {
+      "original_tokens": 157,
+      "final_tokens": 157,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426830-Qxmj0MgNTDRyzwnPkAS7",
+    "created": 1788426830,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 139,
+      "total_tokens": 994,
+      "cost": 0.0035275
+    }
+  }
+}

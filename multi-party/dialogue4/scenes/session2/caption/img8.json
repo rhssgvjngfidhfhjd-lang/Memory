@@ -1,0 +1,36 @@
+{
+  "id": "e0d45983-2828-4de8-b65e-a582e9880b59",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:06.101341",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session2/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 478369,
+    "modified_time": "2026-08-23T22:08:42.947546"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image captures a view through a window, showcasing a building with red and beige architectural features in the background. In the foreground, a tree with golden-yellow leaves is visible, indicating an autumn setting. The sky is clear and blue, adding a serene atmosphere. There is some text on the building, though it's not clearly readable. The overall mood is calm and picturesque, highlighting the beauty of a fall day.",
+    "final_text": "The image captures a view through a window, showcasing a building with red and beige architectural features in the background. In the foreground, a tree with golden-yellow leaves is visible, indicating an autumn setting. The sky is clear and blue, adding a serene atmosphere. There is some text on the building, though it's not clearly readable. The overall mood is calm and picturesque, highlighting the beauty of a fall day.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426783-OjjsW9RfqlPNSc5KpYzD",
+    "created": 1788426783,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 82,
+      "total_tokens": 937,
+      "cost": 0.0029575
+    }
+  }
+}

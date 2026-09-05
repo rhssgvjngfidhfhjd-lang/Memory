@@ -1,0 +1,36 @@
+{
+  "id": "ce5802b1-66c9-4b96-8312-1d16ab92b70c",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:58.756340",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 371603,
+    "modified_time": "2026-08-23T22:01:59.106887"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a black frying pan with a worn surface, showing signs of use with visible scratches and marks. It is placed on a wooden table, which has a polished finish. In the background, there are wooden chairs with carved designs. The scene is simple and focused on the pan, suggesting a domestic kitchen setting. The overall mood is neutral and utilitarian, with no visible text or interactions occurring.",
+    "final_text": "The image depicts a black frying pan with a worn surface, showing signs of use with visible scratches and marks. It is placed on a wooden table, which has a polished finish. In the background, there are wooden chairs with carved designs. The scene is simple and focused on the pan, suggesting a domestic kitchen setting. The overall mood is neutral and utilitarian, with no visible text or interactions occurring.",
+    "token_stats": {
+      "original_tokens": 81,
+      "final_tokens": 81,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426537-B5hySO8QWbRvXx56QP5N",
+    "created": 1788426537,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 82,
+      "total_tokens": 802,
+      "cost": 0.00262
+    }
+  }
+}

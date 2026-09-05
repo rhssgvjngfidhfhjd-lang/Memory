@@ -1,0 +1,36 @@
+{
+  "id": "efeb214e-e8f4-4e8d-aeec-c9e8cecfd5da",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:43.455689",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 63499,
+    "modified_time": "2026-08-23T21:49:49.527738"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a comparison chart between two items: 《鲸鱼马戏团》 and 《告别诗》. It includes the following sections: \n\n- 核心主题 (Core Themes): Healing, growth, and companionship vs. youth, regret, and farewell.\n- 情感基调 (Emotional Tone): Warm, hopeful vs. sharp, uncomfortable.\n- 故事风格 (Story Style): Adult fairy tale, life aphorism vs. realistic youth literature.\n- 主要情感线 (Main Emotional Line): Family love, friendship, self-growth vs. love, friendship.\n- 文笔特色 (Writing Style): Elegant, vivid vs. direct, oral.\n- 玩家的年龄 (Player's Age): All ages vs. youth.\n- 推理/机制 (Reasoning/Mechanism): Light reasoning vs. nearly no reasoning.\n- 新手友好度 (Newbie Friendliness): Very friendly vs. smooth experience.\n\nThe atmosphere is analytical and informative.",
+    "final_text": "The image is a comparison chart between two items: 《鲸鱼马戏团》 and 《告别诗》. It includes the following sections: \n\n- 核心主题 (Core Themes): Healing, growth, and companionship vs. youth, regret, and farewell.\n- 情感基调 (Emotional Tone): Warm, hopeful vs. sharp, uncomfortable.\n- 故事风格 (Story Style): Adult fairy tale, life aphorism vs. realistic youth literature.\n- 主要情感线 (Main Emotional Line): Family love, friendship, self-growth vs. love, friendship.\n- 文笔特色 (Writing Style): Elegant, vivid vs. direct, oral.\n- 玩家的年龄 (Player's Age): All ages vs. youth.\n- 推理/机制 (Reasoning/Mechanism): Light reasoning vs. nearly no reasoning.\n- 新手友好度 (Newbie Friendliness): Very friendly vs. smooth experience.\n\nThe atmosphere is analytical and informative.",
+    "token_stats": {
+      "original_tokens": 225,
+      "final_tokens": 225,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427360-pN9FPGaWrrLG4reQg6BV",
+    "created": 1788427360,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 200,
+      "total_tokens": 1055,
+      "cost": 0.0041375
+    }
+  }
+}

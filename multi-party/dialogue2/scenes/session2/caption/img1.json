@@ -1,0 +1,36 @@
+{
+  "id": "3fb12784-df92-4823-881d-1ca1cdf77647",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:29.279171",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 300649,
+    "modified_time": "2026-08-23T21:56:52.670491"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows the worn soles of a pair of athletic shoes. The first part displays the bottom view of both shoes, highlighting the brand \"Li-Ning\" and \"Light Foam Ultra,\" with visible wear on the treads. The second part provides a close-up of one shoe's sole, emphasizing the worn-out areas and details of the tread pattern. The mood is practical, focusing on the shoes' condition.",
+    "final_text": "The image shows the worn soles of a pair of athletic shoes. The first part displays the bottom view of both shoes, highlighting the brand \"Li-Ning\" and \"Light Foam Ultra,\" with visible wear on the treads. The second part provides a close-up of one shoe's sole, emphasizing the worn-out areas and details of the tread pattern. The mood is practical, focusing on the shoes' condition.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426626-YVhpNBPmDiu1RaKlprWq",
+    "created": 1788426626,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 83,
+      "total_tokens": 938,
+      "cost": 0.0029675
+    }
+  }
+}

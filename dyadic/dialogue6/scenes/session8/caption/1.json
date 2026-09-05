@@ -1,0 +1,36 @@
+{
+  "id": "0cc64f10-2a20-4675-b0ce-ef1635314851",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:12.716884",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 314576,
+    "modified_time": "2026-08-23T21:56:26.264304"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional poster for a badminton event. It features an illustrated player in action, wearing a red shirt and black shorts, holding a badminton racket. The background is predominantly teal. Visible text includes \"羽毛球公开赛\" (Badminton Open), \"激情无限 全民健身\" (Unlimited Passion, Nationwide Fitness), \"备战羽毛球\" (Prepare for Badminton), and details about the event date, \"09.11,\" and prizes, including gift cards of varying amounts for winners. The overall mood is energetic and motivating.",
+    "final_text": "The image is a promotional poster for a badminton event. It features an illustrated player in action, wearing a red shirt and black shorts, holding a badminton racket. The background is predominantly teal. Visible text includes \"羽毛球公开赛\" (Badminton Open), \"激情无限 全民健身\" (Unlimited Passion, Nationwide Fitness), \"备战羽毛球\" (Prepare for Badminton), and details about the event date, \"09.11,\" and prizes, including gift cards of varying amounts for winners. The overall mood is energetic and motivating.",
+    "token_stats": {
+      "original_tokens": 133,
+      "final_tokens": 133,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427571-cgWL3v5qCfazn1K89Oxz",
+    "created": 1788427571,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 112,
+      "total_tokens": 457,
+      "cost": 0.0019825
+    }
+  }
+}

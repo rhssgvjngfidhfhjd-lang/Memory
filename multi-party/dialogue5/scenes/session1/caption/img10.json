@@ -1,0 +1,36 @@
+{
+  "id": "40a3640a-ae2e-4eb4-8e42-11ca92140905",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:09.078226",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session1/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 538419,
+    "modified_time": "2026-08-23T22:09:25.554453"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a satellite view of an urban area with roads and buildings. A route is highlighted in blue on the map, indicating directions between locations. Various markers show estimated travel times, such as \"8分钟\" (8 minutes) and \"7分钟建议\" (7 minutes recommendation). Several labels are visible, including \"万达广场\" (Wanda Plaza) and \"海友酒店\" (Haiyou Hotel). The current time is displayed as 23:15, with weather information showing -2°C and AQI 70. The mood is informative and navigational, focused on route planning.",
+    "final_text": "The image depicts a satellite view of an urban area with roads and buildings. A route is highlighted in blue on the map, indicating directions between locations. Various markers show estimated travel times, such as \"8分钟\" (8 minutes) and \"7分钟建议\" (7 minutes recommendation). Several labels are visible, including \"万达广场\" (Wanda Plaza) and \"海友酒店\" (Haiyou Hotel). The current time is displayed as 23:15, with weather information showing -2°C and AQI 70. The mood is informative and navigational, focused on route planning.",
+    "token_stats": {
+      "original_tokens": 128,
+      "final_tokens": 128,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426844-j0MfakUFpnxZDA1VcAX5",
+    "created": 1788426844,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 124,
+      "total_tokens": 1404,
+      "cost": 0.00444
+    }
+  }
+}

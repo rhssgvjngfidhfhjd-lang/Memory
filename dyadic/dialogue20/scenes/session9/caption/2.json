@@ -1,0 +1,36 @@
+{
+  "id": "4f0f33a2-0da8-4156-b6ee-dcc342631f15",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:00.541888",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 867633,
+    "modified_time": "2026-08-23T21:42:44.746477"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a traditional Chinese temple with an ornate golden roof perched atop a rocky mountain peak. A stone pathway leads to the temple, surrounded by lush greenery. The sky is clear, offering a vast view of the distant landscape. The atmosphere is serene and majestic. Visible text in Chinese characters is present on the left and right sides of the image.",
+    "final_text": "The image depicts a traditional Chinese temple with an ornate golden roof perched atop a rocky mountain peak. A stone pathway leads to the temple, surrounded by lush greenery. The sky is clear, offering a vast view of the distant landscape. The atmosphere is serene and majestic. Visible text in Chinese characters is present on the left and right sides of the image.",
+    "token_stats": {
+      "original_tokens": 73,
+      "final_tokens": 73,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427318-htUV8bRUx5TsyoJBZraL",
+    "created": 1788427318,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 70,
+      "total_tokens": 925,
+      "cost": 0.0028375
+    }
+  }
+}

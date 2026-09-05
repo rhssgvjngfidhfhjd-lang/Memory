@@ -1,0 +1,36 @@
+{
+  "id": "122894ba-e3bd-487b-addc-a005ca3508b4",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:20.858057",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 278679,
+    "modified_time": "2026-08-23T22:09:31.364637"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a person with long hair wearing a grey beanie and matching hoodie. The beanie features an upside-down logo that reads \"adidas.\" The person appears to be indoors, posing playfully with one hand on their head. Decorative white doodles of a starfish, shell, and swirl are overlayed on the image. The atmosphere is lighthearted and casual.",
+    "final_text": "The image shows a person with long hair wearing a grey beanie and matching hoodie. The beanie features an upside-down logo that reads \"adidas.\" The person appears to be indoors, posing playfully with one hand on their head. Decorative white doodles of a starfish, shell, and swirl are overlayed on the image. The atmosphere is lighthearted and casual.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426859-GO0f3puqdYqmJBcuyi2F",
+    "created": 1788426859,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 76,
+      "total_tokens": 931,
+      "cost": 0.0028975
+    }
+  }
+}

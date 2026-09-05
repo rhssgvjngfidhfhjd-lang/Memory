@@ -1,0 +1,36 @@
+{
+  "id": "96d50ade-feac-4275-bbac-15c0008f2683",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:10.724499",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 364230,
+    "modified_time": "2026-08-23T21:56:14.396359"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a comparison chart of iron supplements from different brands and countries. It features four products: AmeriVital Fe+ Drink, Huangjin Dangdang Iron Soft Candy, Beijing Tongrentang Iron Soft Candy, and AmeriVital Iron Soft Candy. The chart includes details like product form, packaging size, iron type, recommended daily dosage, packaging style, storage conditions, and suitable demographics. The atmosphere is informative, aiming to help consumers choose the right supplement. The text is primarily in Chinese, with some English product names.",
+    "final_text": "The image is a comparison chart of iron supplements from different brands and countries. It features four products: AmeriVital Fe+ Drink, Huangjin Dangdang Iron Soft Candy, Beijing Tongrentang Iron Soft Candy, and AmeriVital Iron Soft Candy. The chart includes details like product form, packaging size, iron type, recommended daily dosage, packaging style, storage conditions, and suitable demographics. The atmosphere is informative, aiming to help consumers choose the right supplement. The text is primarily in Chinese, with some English product names.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427568-pS4Yvo1gJWvRco83C3aw",
+    "created": 1788427568,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 107,
+      "total_tokens": 546,
+      "cost": 0.0021675
+    }
+  }
+}

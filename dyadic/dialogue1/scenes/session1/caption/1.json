@@ -1,0 +1,36 @@
+{
+  "id": "ad026695-c398-452b-b924-a2c7b0216574",
+  "success": true,
+  "timestamp": "2026-09-03T17:07:30.860764",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 325237,
+    "modified_time": "2026-08-23T21:30:03.881652"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a fluffy cat with striking blue eyes, lying on a soft pink blanket. The cat has a cream and brown-colored coat and appears calm and relaxed. It is wearing a collar with a pendant displaying text in a stylized script. The cat's paws are adorned with pink nail caps, adding a playful touch. The background is softly blurred, contributing to a warm and cozy atmosphere.",
+    "final_text": "The image features a fluffy cat with striking blue eyes, lying on a soft pink blanket. The cat has a cream and brown-colored coat and appears calm and relaxed. It is wearing a collar with a pendant displaying text in a stylized script. The cat's paws are adorned with pink nail caps, adding a playful touch. The background is softly blurred, contributing to a warm and cozy atmosphere.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426447-mIH4X6fuhEPgEpCxPzM2",
+    "created": 1788426447,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 80,
+      "total_tokens": 519,
+      "cost": 0.0018975
+    }
+  }
+}

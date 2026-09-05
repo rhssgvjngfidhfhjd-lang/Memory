@@ -1,0 +1,36 @@
+{
+  "id": "d3ca87df-699f-4838-b101-23b4d86544f2",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:01.736045",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session14/image/2.png",
+    "filename": "2.png",
+    "size": 3953130,
+    "modified_time": "2026-08-23T21:31:45.536762"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a whiteboard with handwritten text primarily in Chinese, along with English. The central focus is \"赫尔墨斯计划 (Project Hermes)\" with arrows pointing to different elements: \"据工程与建模\" and \"可行性\" leading to \"叙事框架与\". There is an interactive element with a double-headed arrow connecting two sections. The overall mood is analytical and structured, suggesting planning or brainstorming. The atmosphere is professional and focused on project development.",
+    "final_text": "The image depicts a whiteboard with handwritten text primarily in Chinese, along with English. The central focus is \"赫尔墨斯计划 (Project Hermes)\" with arrows pointing to different elements: \"据工程与建模\" and \"可行性\" leading to \"叙事框架与\". There is an interactive element with a double-headed arrow connecting two sections. The overall mood is analytical and structured, suggesting planning or brainstorming. The atmosphere is professional and focused on project development.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426777-0plf3dDZbPxGkOElW63B",
+    "created": 1788426777,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 99,
+      "total_tokens": 1097,
+      "cost": 0.003485
+    }
+  }
+}

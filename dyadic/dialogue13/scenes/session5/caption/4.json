@@ -1,0 +1,36 @@
+{
+  "id": "1d2f674d-70aa-4a39-b5e4-eecf5bb4aa6e",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:43.516448",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session5/image/4.png",
+    "filename": "4.png",
+    "size": 1479638,
+    "modified_time": "2026-08-23T21:32:43.065816"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a list titled \"32 Breakfast Ideas for Kids.\" It includes various breakfast options, such as egg sandwiches, scrambled eggs, oatmeal, granola, pancakes, yogurt parfaits, and more. The list is accompanied by images of a sandwich, a bowl of raspberries, a banana, and a rooster. The text details ingredients and preparation methods, promoting a nutritious and fun breakfast experience. The overall mood is lively and encouraging, aimed at providing diverse meal ideas for children.",
+    "final_text": "The image is a list titled \"32 Breakfast Ideas for Kids.\" It includes various breakfast options, such as egg sandwiches, scrambled eggs, oatmeal, granola, pancakes, yogurt parfaits, and more. The list is accompanied by images of a sandwich, a bowl of raspberries, a banana, and a rooster. The text details ingredients and preparation methods, promoting a nutritious and fun breakfast experience. The overall mood is lively and encouraging, aimed at providing diverse meal ideas for children.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426820-Evm5mHi1Zm1z3sjKCobz",
+    "created": 1788426820,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 97,
+      "total_tokens": 1292,
+      "cost": 0.0039575
+    }
+  }
+}

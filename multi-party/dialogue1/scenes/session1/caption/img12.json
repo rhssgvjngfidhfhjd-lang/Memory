@@ -1,0 +1,36 @@
+{
+  "id": "56d214d3-76b4-4fd3-ae06-20740c86c870",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:02.687428",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 504234,
+    "modified_time": "2026-08-23T22:01:40.492092"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a plate filled with ripe, red strawberries. The strawberries are vibrant and glossy, with green leaves attached. The plate is placed on a checkered surface, possibly a tablecloth or board. The atmosphere is fresh and inviting, emphasizing the appealing nature of the fruit. There is no visible text or interaction, and the focus is solely on the strawberries' natural beauty.",
+    "final_text": "The image depicts a plate filled with ripe, red strawberries. The strawberries are vibrant and glossy, with green leaves attached. The plate is placed on a checkered surface, possibly a tablecloth or board. The atmosphere is fresh and inviting, emphasizing the appealing nature of the fruit. There is no visible text or interaction, and the focus is solely on the strawberries' natural beauty.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426541-JoOP18uSK8S5coCOPzui",
+    "created": 1788426541,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 77,
+      "total_tokens": 797,
+      "cost": 0.00257
+    }
+  }
+}

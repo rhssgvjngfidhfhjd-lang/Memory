@@ -1,0 +1,8 @@
+The image displays a voting interface with four culinary options, each illustrated and labeled in Chinese. 
+
+1. Hot Pot: A pot with steaming food inside.
+2. Skewers: Grilled skewers emitting smoke.
+3. Home Cooking: A plate of neatly arranged dishes.
+4. Japanese Cuisine: A platter of sushi.
+
+Each option shows "0%" indicating no votes yet. Below, there's a button labeled "确认投票[选项]" (Confirm Vote [Option]) and other options for adding reasons, sharing the vote, and viewing details. The background is predominantly orange, creating a warm and inviting atmosphere.

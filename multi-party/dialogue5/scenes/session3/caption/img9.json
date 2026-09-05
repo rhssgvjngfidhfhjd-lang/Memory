@@ -1,0 +1,36 @@
+{
+  "id": "2100034a-6688-4faa-9de7-bceaa4c5b93b",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:32.397327",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 230433,
+    "modified_time": "2026-08-23T22:09:47.004258"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a small, neatly arranged hotel room. The main elements include a double bed with white bedding and two pillows, a wooden headboard with built-in controls, and light blue curtains covering a window. On the bed, there are papers or a brochure. To the left, there's a wooden panel with hangers, a spray bottle, and some reading materials. The room is minimally furnished, with a calm and tidy atmosphere, suggesting a space for rest or relaxation.",
+    "final_text": "The image depicts a small, neatly arranged hotel room. The main elements include a double bed with white bedding and two pillows, a wooden headboard with built-in controls, and light blue curtains covering a window. On the bed, there are papers or a brochure. To the left, there's a wooden panel with hangers, a spray bottle, and some reading materials. The room is minimally furnished, with a calm and tidy atmosphere, suggesting a space for rest or relaxation.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426872-i36TfVDbJYD3zFXhZ693",
+    "created": 1788426872,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 95,
+      "total_tokens": 950,
+      "cost": 0.0030875
+    }
+  }
+}

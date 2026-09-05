@@ -1,0 +1,36 @@
+{
+  "id": "da7a7467-1041-4cc5-8411-0f554b52e080",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:31.430305",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 160660,
+    "modified_time": "2026-08-23T22:07:18.042171"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a person in profile against a bright yellow background. They have dark, styled hair and are wearing a light gray suit jacket over a collared shirt. The mood is calm and contemplative. The collar of the shirt has subtle text, but it is not clearly readable. The overall atmosphere is modern and stylish, focusing on the individual's expression and attire.",
+    "final_text": "The image features a person in profile against a bright yellow background. They have dark, styled hair and are wearing a light gray suit jacket over a collared shirt. The mood is calm and contemplative. The collar of the shirt has subtle text, but it is not clearly readable. The overall atmosphere is modern and stylish, focusing on the individual's expression and attire.",
+    "token_stats": {
+      "original_tokens": 74,
+      "final_tokens": 74,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426691-AWjUs3HxPza3W774SZxD",
+    "created": 1788426691,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 74,
+      "total_tokens": 1072,
+      "cost": 0.003235
+    }
+  }
+}

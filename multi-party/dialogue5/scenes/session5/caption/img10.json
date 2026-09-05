@@ -1,0 +1,36 @@
+{
+  "id": "0e6df76f-0bbf-420f-ae60-af0e421178d6",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:03.044057",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 431994,
+    "modified_time": "2026-08-23T22:09:53.684776"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a buffet-style dessert and fruit display. Central elements include a tiered stand with various cookies labeled \"Chinese traditional cookie,\" a tray of sliced green tea cakes, and orange-wrapped pastries labeled \"青柠泡芙蛋糕.\" To the right, bowls contain bananas and tangerines, with visible labels indicating \"tangerine.\" The scene conveys a vibrant and inviting atmosphere, emphasizing a variety of sweet treats and fresh fruits arranged neatly.",
+    "final_text": "The image depicts a buffet-style dessert and fruit display. Central elements include a tiered stand with various cookies labeled \"Chinese traditional cookie,\" a tray of sliced green tea cakes, and orange-wrapped pastries labeled \"青柠泡芙蛋糕.\" To the right, bowls contain bananas and tangerines, with visible labels indicating \"tangerine.\" The scene conveys a vibrant and inviting atmosphere, emphasizing a variety of sweet treats and fresh fruits arranged neatly.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426902-nu1oz1fQOxgNLHZcnZOW",
+    "created": 1788426902,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 94,
+      "total_tokens": 814,
+      "cost": 0.00274
+    }
+  }
+}

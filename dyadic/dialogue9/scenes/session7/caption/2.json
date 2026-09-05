@@ -1,0 +1,36 @@
+{
+  "id": "4aebb1dc-808d-4792-b566-5b23e77d4c55",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:04.777850",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 799260,
+    "modified_time": "2026-08-23T22:01:15.433128"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person focused on working with electronic components on a table, surrounded by circuit boards, a soldering iron, a multimeter with probes, and various tools. The setting is a casual indoor space with bookshelves and a sofa in the background, creating a workshop-like atmosphere. The person is engaged in testing or repairing the electronics, suggesting a mood of concentration and technical work.",
+    "final_text": "The image depicts a person focused on working with electronic components on a table, surrounded by circuit boards, a soldering iron, a multimeter with probes, and various tools. The setting is a casual indoor space with bookshelves and a sofa in the background, creating a workshop-like atmosphere. The person is engaged in testing or repairing the electronics, suggesting a mood of concentration and technical work.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427743-Qmz50nn5he7DUlXpHHIT",
+    "created": 1788427743,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 78,
+      "total_tokens": 933,
+      "cost": 0.0029175
+    }
+  }
+}

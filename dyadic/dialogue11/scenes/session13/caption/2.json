@@ -1,0 +1,36 @@
+{
+  "id": "2f6178e5-b058-490f-9260-0c129c0c2687",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:38.818079",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session13/image/2.png",
+    "filename": "2.png",
+    "size": 5572269,
+    "modified_time": "2026-08-23T21:31:56.876428"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an open blue first aid kit organized with various medical supplies. The kit contains cotton swabs, adhesive bandages, antiseptic wipes, bottles of medicine, and boxes labeled with Chinese text. The interior is neatly compartmentalized, creating a tidy and organized appearance. The atmosphere is practical and prepared, suggesting readiness for medical emergencies.",
+    "final_text": "The image depicts an open blue first aid kit organized with various medical supplies. The kit contains cotton swabs, adhesive bandages, antiseptic wipes, bottles of medicine, and boxes labeled with Chinese text. The interior is neatly compartmentalized, creating a tidy and organized appearance. The atmosphere is practical and prepared, suggesting readiness for medical emergencies.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426697-mOPtHMofjH5RagBess2M",
+    "created": 1788426697,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 70,
+      "total_tokens": 1068,
+      "cost": 0.003195
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "1f9445b9-d837-460a-a4ad-17e8bc0717e3",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:08.323730",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 442459,
+    "modified_time": "2026-08-23T22:09:54.674188"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a snow-covered urban street at night, creating a serene and quiet atmosphere. Several cars are parked along the side of the road, all dusted with snow. Snowflakes continue to fall, visible against the dark sky. Streetlights illuminate the scene, casting a warm glow on the snow-covered road. In the background, tall buildings are visible, with some windows lit. Traffic signals show green lights, and a few signs are visible, including one with Chinese text. The overall mood is peaceful and still, typical of a snowy night.",
+    "final_text": "The image depicts a snow-covered urban street at night, creating a serene and quiet atmosphere. Several cars are parked along the side of the road, all dusted with snow. Snowflakes continue to fall, visible against the dark sky. Streetlights illuminate the scene, casting a warm glow on the snow-covered road. In the background, tall buildings are visible, with some windows lit. Traffic signals show green lights, and a few signs are visible, including one with Chinese text. The overall mood is peaceful and still, typical of a snowy night.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426906-c738hLfNTQCuQOhnNEpo",
+    "created": 1788426906,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 111,
+      "total_tokens": 831,
+      "cost": 0.00291
+    }
+  }
+}

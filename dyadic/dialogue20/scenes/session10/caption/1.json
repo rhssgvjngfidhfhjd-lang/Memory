@@ -1,0 +1,36 @@
+{
+  "id": "cb9ef7e7-e1cf-4f69-88ed-5b0492b83ee3",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:02.525547",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 25905,
+    "modified_time": "2026-08-23T21:41:23.444812"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a checklist written in Chinese, detailing equipment and clothing necessary for an outdoor activity, possibly hiking or climbing. The list is divided into three sections: basic equipment, travel gear, and clothing system. Each item includes a description, and next to each is a checkmark indicating \"已准备\" (prepared) or a cross indicating \"未准备\" (not prepared). The mood is organized and informative, focusing on preparation and readiness.",
+    "final_text": "The image is a checklist written in Chinese, detailing equipment and clothing necessary for an outdoor activity, possibly hiking or climbing. The list is divided into three sections: basic equipment, travel gear, and clothing system. Each item includes a description, and next to each is a checkmark indicating \"已准备\" (prepared) or a cross indicating \"未准备\" (not prepared). The mood is organized and informative, focusing on preparation and readiness.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427321-9HRRlclLwe6OUsPyrYLv",
+    "created": 1788427321,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 89,
+      "total_tokens": 434,
+      "cost": 0.0017525
+    }
+  }
+}

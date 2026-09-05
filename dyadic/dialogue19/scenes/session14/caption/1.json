@@ -1,0 +1,36 @@
+{
+  "id": "ea9a70a6-3582-4368-91dd-83ba0673cfab",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:38.875553",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session14/image/1.png",
+    "filename": "1.png",
+    "size": 1696262,
+    "modified_time": "2026-08-23T21:38:30.285999"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a busy graphic design workspace. The core scene includes a cluttered desk with multiple computer monitors displaying design software, a graphics tablet with a color palette, and stacks of books and papers. Visible text on the screens shows design elements like fonts and color charts. Various color swatches are spread across the desk. The overall mood is creative and industrious, suggesting an environment focused on design and color work.",
+    "final_text": "The image depicts a busy graphic design workspace. The core scene includes a cluttered desk with multiple computer monitors displaying design software, a graphics tablet with a color palette, and stacks of books and papers. Visible text on the screens shows design elements like fonts and color charts. Various color swatches are spread across the desk. The overall mood is creative and industrious, suggesting an environment focused on design and color work.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427237-qAiPqeUThpMuDh8IsSja",
+    "created": 1788427237,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 83,
+      "total_tokens": 1278,
+      "cost": 0.0038175
+    }
+  }
+}

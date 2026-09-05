@@ -1,0 +1,36 @@
+{
+  "id": "0c95e44c-b70c-4358-9cf2-ea1aca62a6ad",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:02.465165",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 615988,
+    "modified_time": "2026-08-23T21:30:11.522048"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a bar chart depicting daily usage time in hours and minutes for each day of the week, with values ranging from 8 hours 30 minutes to 11 hours 20 minutes. The days are labeled in Chinese, from Monday (周一) to Sunday (周日). The highest usage is on Saturday (周六), and the lowest on Monday (周一). The right side displays the average weekly usage time as 9 hours 15 minutes, with a note indicating data collection from 00:00 to 24:00. The overall mood is analytical and informative.",
+    "final_text": "The image shows a bar chart depicting daily usage time in hours and minutes for each day of the week, with values ranging from 8 hours 30 minutes to 11 hours 20 minutes. The days are labeled in Chinese, from Monday (周一) to Sunday (周日). The highest usage is on Saturday (周六), and the lowest on Monday (周一). The right side displays the average weekly usage time as 9 hours 15 minutes, with a note indicating data collection from 00:00 to 24:00. The overall mood is analytical and informative.",
+    "token_stats": {
+      "original_tokens": 120,
+      "final_tokens": 120,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426480-gnVBhlIoHi3C1AU8nCxr",
+    "created": 1788426480,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 119,
+      "total_tokens": 1314,
+      "cost": 0.0041775
+    }
+  }
+}

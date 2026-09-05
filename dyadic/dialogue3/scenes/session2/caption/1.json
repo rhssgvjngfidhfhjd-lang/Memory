@@ -1,0 +1,36 @@
+{
+  "id": "773d367d-da21-4fc3-ad75-94093c4c33a2",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:16.880663",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 441437,
+    "modified_time": "2026-08-23T21:45:24.862450"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a game scoreboard with five players, each marked \"MVP\" with a red banner. Each player has a profile icon and statistics listed, such as victories (\"胜利\") and scores like \"7/4/11\". Various icons represent in-game items equipped by the players. The overall mood is competitive, highlighting successful gameplay outcomes.",
+    "final_text": "The image shows a game scoreboard with five players, each marked \"MVP\" with a red banner. Each player has a profile icon and statistics listed, such as victories (\"胜利\") and scores like \"7/4/11\". Various icons represent in-game items equipped by the players. The overall mood is competitive, highlighting successful gameplay outcomes.",
+    "token_stats": {
+      "original_tokens": 71,
+      "final_tokens": 71,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427336-nysjoaOzClY1cYMvFEJH",
+    "created": 1788427336,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 70,
+      "total_tokens": 585,
+      "cost": 0.0019875
+    }
+  }
+}

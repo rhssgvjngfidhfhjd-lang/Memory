@@ -1,0 +1,36 @@
+{
+  "id": "15fd9402-899b-4c99-a67d-8a35878912d6",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:56.724027",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 82194,
+    "modified_time": "2026-08-23T21:32:04.297895"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a line graph illustrating the learning curve of pet training, specifically the time required to find a toy. The graph shows a downward trend, starting at 60 seconds and decreasing to 15 seconds over nine attempts. A notable point indicates a 40% reduction at the third attempt, marked with an orange balloon. The graph is labeled in Chinese, with text such as \"宠物训练学习曲线\" (Pet Training Learning Curve) and \"找出玩具所需时间\" (Time Needed to Find Toy). The mood suggests improvement and efficiency over time.",
+    "final_text": "The image is a line graph illustrating the learning curve of pet training, specifically the time required to find a toy. The graph shows a downward trend, starting at 60 seconds and decreasing to 15 seconds over nine attempts. A notable point indicates a 40% reduction at the third attempt, marked with an orange balloon. The graph is labeled in Chinese, with text such as \"宠物训练学习曲线\" (Pet Training Learning Curve) and \"找出玩具所需时间\" (Time Needed to Find Toy). The mood suggests improvement and efficiency over time.",
+    "token_stats": {
+      "original_tokens": 124,
+      "final_tokens": 124,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426714-wuKS1K1Ajhn9R3KjHAEB",
+    "created": 1788426714,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 117,
+      "total_tokens": 834,
+      "cost": 0.0029625
+    }
+  }
+}

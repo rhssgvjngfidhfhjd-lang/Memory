@@ -1,0 +1,36 @@
+{
+  "id": "309bdef9-6488-4912-9311-52af4d0dae21",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:07.170052",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 342505,
+    "modified_time": "2026-08-23T21:42:33.846381"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a movie poster for \"Still Walking,\" featuring a group of people walking along a tree-lined path. A woman in a white dress holds a white umbrella, accompanied by a man and two children. The surrounding greenery and sunlight create a serene atmosphere. The poster includes awards for \"Bester Film\" and \"Beste Regie,\" with the text \"still walking\" and \"ein film von hirokazu kore-eda\" prominently displayed at the bottom. The overall mood is peaceful and reflective.",
+    "final_text": "The image is a movie poster for \"Still Walking,\" featuring a group of people walking along a tree-lined path. A woman in a white dress holds a white umbrella, accompanied by a man and two children. The surrounding greenery and sunlight create a serene atmosphere. The poster includes awards for \"Bester Film\" and \"Beste Regie,\" with the text \"still walking\" and \"ein film von hirokazu kore-eda\" prominently displayed at the bottom. The overall mood is peaceful and reflective.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427268-8GESkSxvO5MTPoQ8rdpc",
+    "created": 1788427268,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 102,
+      "total_tokens": 447,
+      "cost": 0.0018825
+    }
+  }
+}

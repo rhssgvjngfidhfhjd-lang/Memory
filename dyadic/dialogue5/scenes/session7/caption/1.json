@@ -1,0 +1,36 @@
+{
+  "id": "4eae7b61-eabc-4b97-a00d-80bde775468e",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:58.657983",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 907996,
+    "modified_time": "2026-08-23T21:55:32.445889"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a group of nine people sitting and standing in a warmly lit room, creating a cozy and familial atmosphere. They are smiling and appear relaxed, suggesting camaraderie or family bonds. The scene includes a window with light filtering through, and various decorations on the walls. Visible text includes \"CCTV 1\" and \"A Lifelong Journey,\" along with Chinese characters that likely relate to the title and production credits. The mood is warm and inviting, reflecting themes of togetherness and shared experiences.",
+    "final_text": "The image features a group of nine people sitting and standing in a warmly lit room, creating a cozy and familial atmosphere. They are smiling and appear relaxed, suggesting camaraderie or family bonds. The scene includes a window with light filtering through, and various decorations on the walls. Visible text includes \"CCTV 1\" and \"A Lifelong Journey,\" along with Chinese characters that likely relate to the title and production credits. The mood is warm and inviting, reflecting themes of togetherness and shared experiences.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427496-lluHDCev7ljthWI1KhPI",
+    "created": 1788427496,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 102,
+      "total_tokens": 819,
+      "cost": 0.0028125
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "570b6b45-a1b4-422f-b767-36b469851784",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:20.141478",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session10/image/4.png",
+    "filename": "4.png",
+    "size": 503946,
+    "modified_time": "2026-08-23T22:06:50.263642"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a wall with red and gold text and graphics promoting elderly care. The central design features houses and the phrase \"关爱老人\" (Care for the Elderly) in bold red. Below is a slogan \"人人食堂 人人共享\" (Everyone's Canteen, Everyone Shares) in gold. A red emblem with a heart shape contains \"爱心专座\" (Love Special Seat). The atmosphere is warm and welcoming, with an emphasis on community and support. Outside, trees and parked cars are visible through a window.",
+    "final_text": "The image depicts a wall with red and gold text and graphics promoting elderly care. The central design features houses and the phrase \"关爱老人\" (Care for the Elderly) in bold red. Below is a slogan \"人人食堂 人人共享\" (Everyone's Canteen, Everyone Shares) in gold. A red emblem with a heart shape contains \"爱心专座\" (Love Special Seat). The atmosphere is warm and welcoming, with an emphasis on community and support. Outside, trees and parked cars are visible through a window.",
+    "token_stats": {
+      "original_tokens": 120,
+      "final_tokens": 120,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427759-ilmjqUNNVUKPtCYwCfDx",
+    "created": 1788427759,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 111,
+      "total_tokens": 828,
+      "cost": 0.0029025
+    }
+  }
+}

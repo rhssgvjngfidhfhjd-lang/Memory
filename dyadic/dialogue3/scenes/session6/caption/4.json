@@ -1,0 +1,36 @@
+{
+  "id": "5d39ddaf-1472-46be-8e16-6258559d4af9",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:35.705897",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session6/image/4.png",
+    "filename": "4.png",
+    "size": 591121,
+    "modified_time": "2026-08-23T21:49:45.409056"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a digital profile card with a picture of a Shiba Inu dog at the top. Below the image, there's Chinese text: \"老板\" (which means \"boss\") and \"粉丝\" (meaning \"fans\"), followed by the number \"2390\". A button at the bottom says \"确认\" (meaning \"confirm\") in white text on an orange background. The overall design is clean and modern, with a warm and friendly atmosphere.",
+    "final_text": "The image displays a digital profile card with a picture of a Shiba Inu dog at the top. Below the image, there's Chinese text: \"老板\" (which means \"boss\") and \"粉丝\" (meaning \"fans\"), followed by the number \"2390\". A button at the bottom says \"确认\" (meaning \"confirm\") in white text on an orange background. The overall design is clean and modern, with a warm and friendly atmosphere.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427353-ZO4EPJ7UCRjluPR2EymY",
+    "created": 1788427353,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 92,
+      "total_tokens": 947,
+      "cost": 0.0030575
+    }
+  }
+}

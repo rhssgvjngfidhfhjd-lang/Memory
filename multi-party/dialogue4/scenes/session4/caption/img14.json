@@ -1,0 +1,36 @@
+{
+  "id": "6b53e602-1fcc-48d8-bee0-bae3bd1deb98",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:40.560513",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 170782,
+    "modified_time": "2026-08-23T22:09:07.354578"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a large cardboard box sealed with clear tape, placed on a dark floor. The box features three symbols: an umbrella indicating \"keep dry,\" arrows for \"this side up,\" and hands cradling a box representing \"handle with care.\" It has a number \"4\" written in purple on the top right corner. The mood is neutral and utilitarian, typical for packaging and shipping environments. No people or animals are present, and the focus is on the packaging and symbols.",
+    "final_text": "The image shows a large cardboard box sealed with clear tape, placed on a dark floor. The box features three symbols: an umbrella indicating \"keep dry,\" arrows for \"this side up,\" and hands cradling a box representing \"handle with care.\" It has a number \"4\" written in purple on the top right corner. The mood is neutral and utilitarian, typical for packaging and shipping environments. No people or animals are present, and the focus is on the packaging and symbols.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426817-DnoOorcfBVu4cffwhuCt",
+    "created": 1788426817,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 100,
+      "total_tokens": 820,
+      "cost": 0.0028
+    }
+  }
+}

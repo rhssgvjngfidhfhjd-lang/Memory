@@ -1,0 +1,10 @@
+The image is a list in a table format, ranking technological trends. It includes the following items with their respective ranks:
+
+- **TOP1**: 人工智能（AI）向纵深发展 (Artificial Intelligence (AI) deep development)
+- **TOP2**: “云”技术多样化发展 ("Cloud" technology diversified development)
+- **TOP3**: 5G基站建设加速 (Acceleration of 5G base station construction)
+- **TOP4**: 虚拟连接现实向体验和场景纵深演进 (Virtual connection of reality evolving towards experience and scenarios)
+- **TOP5**: 物联网将进化为智联网 (Internet of Things evolving into an intelligent network)
+- **TOP6**: 产业区块链链接数据要素市场化 (Industrial blockchain linking data element marketization)
+- **TOP7**: 自动驾驶走向规模化商业应用 (Autonomous driving moving towards large-scale commercial application)
+- **TOP8**: 脑机接口帮助人类超越生物学极限 (Brain-com... [truncated]

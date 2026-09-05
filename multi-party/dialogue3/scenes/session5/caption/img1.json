@@ -1,0 +1,36 @@
+{
+  "id": "79839d5e-a9c4-41c8-af15-d78b32a16249",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:27.392210",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img1.png",
+    "filename": "img1.png",
+    "size": 95294,
+    "modified_time": "2026-08-23T22:07:51.283728"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a movie poster for \"Mad Max: Fury Road.\" It features two characters, a woman with short hair and black face paint, and a man wearing a mask, both appearing intense and determined. The text includes the movie title \"MAD MAX: FURY ROAD\" in large, bold letters, and actor names Tom Hardy and Charlize Theron are listed above. The tagline \"THE FUTURE BELONGS TO THE MAD\" is at the top. The release date \"MAY 15\" is at the bottom. The atmosphere is gritty and action-packed, suggesting a high-energy film.",
+    "final_text": "The image is a movie poster for \"Mad Max: Fury Road.\" It features two characters, a woman with short hair and black face paint, and a man wearing a mask, both appearing intense and determined. The text includes the movie title \"MAD MAX: FURY ROAD\" in large, bold letters, and actor names Tom Hardy and Charlize Theron are listed above. The tagline \"THE FUTURE BELONGS TO THE MAD\" is at the top. The release date \"MAY 15\" is at the bottom. The atmosphere is gritty and action-packed, suggesting a high-energy film.",
+    "token_stats": {
+      "original_tokens": 124,
+      "final_tokens": 124,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426746-u1ZGucT3Nj8nTUgJWt4M",
+    "created": 1788426746,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 122,
+      "total_tokens": 467,
+      "cost": 0.0020825
+    }
+  }
+}

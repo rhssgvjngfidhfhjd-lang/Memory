@@ -1,0 +1,36 @@
+{
+  "id": "007a5b28-9197-446e-9059-a62927f9daec",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:38.183796",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 754846,
+    "modified_time": "2026-08-23T21:58:06.364856"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a menu or document with elegant Japanese calligraphy on textured paper. Visible text includes \"春の山菜\" (spring mountain vegetables), \"極海老\" (premium shrimp), and \"新茶和風焼き魚\" (new tea Japanese-style grilled fish). A decorative plate with intricate patterns is partially visible beside the paper, enhancing the traditional aesthetic. The overall mood is refined and cultural, suggesting a focus on high-quality, seasonal Japanese cuisine.",
+    "final_text": "The image depicts a menu or document with elegant Japanese calligraphy on textured paper. Visible text includes \"春の山菜\" (spring mountain vegetables), \"極海老\" (premium shrimp), and \"新茶和風焼き魚\" (new tea Japanese-style grilled fish). A decorative plate with intricate patterns is partially visible beside the paper, enhancing the traditional aesthetic. The overall mood is refined and cultural, suggesting a focus on high-quality, seasonal Japanese cuisine.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427656-AQ6HkiIGoNHc6K8Zr7a2",
+    "created": 1788427656,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 95,
+      "total_tokens": 812,
+      "cost": 0.0027425
+    }
+  }
+}

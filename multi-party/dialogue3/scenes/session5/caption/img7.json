@@ -1,0 +1,36 @@
+{
+  "id": "19bd5b66-9d25-482b-b1c2-9c30d0cfd0ab",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:33.870667",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 294618,
+    "modified_time": "2026-08-23T22:08:02.934077"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a woman in a winter setting, bundled in a brown coat and dark scarf, appearing to be in a mountainous, snowy landscape. The scene is displayed across three screens, with two instances showing subtitles. The text includes \"When will you return?\" in English and corresponding Chinese subtitles. The atmosphere is tense and dramatic, suggesting anticipation or concern. The environment is bright and cold, with clear blue skies and snow-covered mountains in the background. The image appears to be paused on media players, likely from a film or TV show.",
+    "final_text": "The image shows a woman in a winter setting, bundled in a brown coat and dark scarf, appearing to be in a mountainous, snowy landscape. The scene is displayed across three screens, with two instances showing subtitles. The text includes \"When will you return?\" in English and corresponding Chinese subtitles. The atmosphere is tense and dramatic, suggesting anticipation or concern. The environment is bright and cold, with clear blue skies and snow-covered mountains in the background. The image appears to be paused on media players, likely from a film or TV show.",
+    "token_stats": {
+      "original_tokens": 109,
+      "final_tokens": 109,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426750-pgI8tejdnX6VjpYpBqIq",
+    "created": 1788426750,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 109,
+      "total_tokens": 1107,
+      "cost": 0.003585
+    }
+  }
+}

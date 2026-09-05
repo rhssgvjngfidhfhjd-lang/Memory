@@ -1,0 +1,36 @@
+{
+  "id": "deac6049-8769-4c33-a810-2f85b5901a0a",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:41.714854",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session3/image/5.png",
+    "filename": "5.png",
+    "size": 604196,
+    "modified_time": "2026-08-23T21:42:14.587229"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image showcases a close-up of crispy roasted pork belly. The focus is on the golden, crackling skin and the tender, juicy layers of meat underneath. The texture of the crispy skin is highlighted with glistening surfaces, suggesting freshness and deliciousness. The overall mood is appetizing and savory, emphasizing the rich flavors of the dish.",
+    "final_text": "The image showcases a close-up of crispy roasted pork belly. The focus is on the golden, crackling skin and the tender, juicy layers of meat underneath. The texture of the crispy skin is highlighted with glistening surfaces, suggesting freshness and deliciousness. The overall mood is appetizing and savory, emphasizing the rich flavors of the dish.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427299-2jHCL4cPlYzD6q060q7d",
+    "created": 1788427299,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 69,
+      "total_tokens": 924,
+      "cost": 0.0028275
+    }
+  }
+}

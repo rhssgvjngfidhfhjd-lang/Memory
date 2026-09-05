@@ -1,0 +1,36 @@
+{
+  "id": "6dc53aa5-cf88-414b-b36a-71592cd94464",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:31.038136",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 257786,
+    "modified_time": "2026-08-23T22:07:15.591414"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a person with long black hair and a serious expression, standing amidst a backdrop of a blue sky with white clouds. Surrounding them are numerous vibrant red roses and a blue butterfly. Chinese text is visible, with the phrases \"金山\" and \"银山\" in yellow and gray, respectively, and \"健康才是靠山\" in green and blue on the right. The overall mood is whimsical and surreal, blending nature with a serene, dreamlike atmosphere.",
+    "final_text": "The image features a person with long black hair and a serious expression, standing amidst a backdrop of a blue sky with white clouds. Surrounding them are numerous vibrant red roses and a blue butterfly. Chinese text is visible, with the phrases \"金山\" and \"银山\" in yellow and gray, respectively, and \"健康才是靠山\" in green and blue on the right. The overall mood is whimsical and surreal, blending nature with a serene, dreamlike atmosphere.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426691-QFL39ZbMMvaWGBgkgSm3",
+    "created": 1788426691,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 97,
+      "total_tokens": 952,
+      "cost": 0.0031075
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "72842463-03af-4381-9262-876bbb8a0703",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:24.192982",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session14/image/3.png",
+    "filename": "3.png",
+    "size": 380333,
+    "modified_time": "2026-08-23T21:51:47.907924"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a newspaper with an article featuring a headline in Chinese, which translates to \"Another Missing Case Shock.\" The article is written by a reporter named 马克·D·汉森 (Mark D. Hansen). It reports the disappearance of a young member of the renowned clock family. A black-and-white photo of a building labeled \"RAIN'S CLOCKS\" is included. The mood is mysterious, suggesting a sense of intrigue or suspense surrounding the case. The background is dark, enhancing the overall atmosphere of mystery.",
+    "final_text": "The image shows a newspaper with an article featuring a headline in Chinese, which translates to \"Another Missing Case Shock.\" The article is written by a reporter named 马克·D·汉森 (Mark D. Hansen). It reports the disappearance of a young member of the renowned clock family. A black-and-white photo of a building labeled \"RAIN'S CLOCKS\" is included. The mood is mysterious, suggesting a sense of intrigue or suspense surrounding the case. The background is dark, enhancing the overall atmosphere of mystery.",
+    "token_stats": {
+      "original_tokens": 109,
+      "final_tokens": 109,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427461-eGYkyw7KmGGWI5QCnLeC",
+    "created": 1788427461,
+    "usage": {
+      "prompt_tokens": 580,
+      "completion_tokens": 105,
+      "total_tokens": 685,
+      "cost": 0.0025
+    }
+  }
+}

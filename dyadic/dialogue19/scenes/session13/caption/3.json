@@ -1,0 +1,36 @@
+{
+  "id": "a54d3100-3865-48ff-ba18-7d82683d4d72",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:36.416962",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session13/image/3.png",
+    "filename": "3.png",
+    "size": 3474649,
+    "modified_time": "2026-08-23T21:38:18.617974"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a serene, blue-toned interior scene with a row of decorative vases aligned on platforms. A large window in the background allows soft light to illuminate the space. On the right, there's a collage with images of blue pottery, including vases and plates with round objects, possibly fruits. Text elements in the image are in Chinese, with phrases like \"灵感: 电影场景\" and \"创作: 静物摄影/品牌海报.\" The overall mood is calm and artistic, emphasizing a refined aesthetic with a focus on blue hues.",
+    "final_text": "The image features a serene, blue-toned interior scene with a row of decorative vases aligned on platforms. A large window in the background allows soft light to illuminate the space. On the right, there's a collage with images of blue pottery, including vases and plates with round objects, possibly fruits. Text elements in the image are in Chinese, with phrases like \"灵感: 电影场景\" and \"创作: 静物摄影/品牌海报.\" The overall mood is calm and artistic, emphasizing a refined aesthetic with a focus on blue hues.",
+    "token_stats": {
+      "original_tokens": 124,
+      "final_tokens": 124,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427232-yxZcV5F4UfV509esx7d8",
+    "created": 1788427232,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 115,
+      "total_tokens": 1310,
+      "cost": 0.0041375
+    }
+  }
+}

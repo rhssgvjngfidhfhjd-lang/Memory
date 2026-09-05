@@ -1,0 +1,36 @@
+{
+  "id": "74d06d5e-1941-472f-b6d3-4afef6b66676",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:35.552819",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session4/image/9.png",
+    "filename": "9.png",
+    "size": 82718,
+    "modified_time": "2026-08-23T21:54:39.078215"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a fluffy cat with light fur and blue eyes emerging from a wooden cat house. The cat is stepping out with one paw extended, appearing curious or playful. The cat house has a simple design with a cylindrical scratching post on top. The setting is indoors with a soft carpet and a window nearby, allowing natural light to illuminate the scene. The atmosphere is calm and cozy.",
+    "final_text": "The image depicts a fluffy cat with light fur and blue eyes emerging from a wooden cat house. The cat is stepping out with one paw extended, appearing curious or playful. The cat house has a simple design with a cylindrical scratching post on top. The setting is indoors with a soft carpet and a window nearby, allowing natural light to illuminate the scene. The atmosphere is calm and cozy.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427416-5wlSBKaQXwAJFAs10PVf",
+    "created": 1788427416,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 77,
+      "total_tokens": 422,
+      "cost": 0.0016325
+    }
+  }
+}

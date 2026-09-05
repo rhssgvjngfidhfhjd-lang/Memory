@@ -1,0 +1,36 @@
+{
+  "id": "e12fe966-c7e7-4fba-ba7d-b67eda691c1a",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:26.830010",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session14/image/1.png",
+    "filename": "1.png",
+    "size": 161285,
+    "modified_time": "2026-08-23T21:58:01.388403"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a smartphone on a table displaying screen usage statistics for the past 7 days. The categories are: News Apps (42 hours), Social Media (38 hours), Academic Reading (12 hours). There's a warning in red text stating, \"Your information input has exceeded healthy limits.\" Surrounding the phone are a crumpled newspaper and a lit lamp, creating a cluttered and slightly tense atmosphere. The overall mood suggests concern over excessive screen time.",
+    "final_text": "The image shows a smartphone on a table displaying screen usage statistics for the past 7 days. The categories are: News Apps (42 hours), Social Media (38 hours), Academic Reading (12 hours). There's a warning in red text stating, \"Your information input has exceeded healthy limits.\" Surrounding the phone are a crumpled newspaper and a lit lamp, creating a cluttered and slightly tense atmosphere. The overall mood suggests concern over excessive screen time.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427704-wEk7glygxxcMsB0xQTI8",
+    "created": 1788427704,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 93,
+      "total_tokens": 393,
+      "cost": 0.00168
+    }
+  }
+}

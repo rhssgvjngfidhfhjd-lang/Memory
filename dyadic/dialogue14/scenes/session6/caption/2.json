@@ -1,0 +1,36 @@
+{
+  "id": "190529c8-b683-4a2f-b107-664b988bf0cd",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:04.389629",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session6/image/2.png",
+    "filename": "2.png",
+    "size": 614228,
+    "modified_time": "2026-08-23T21:33:32.201852"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a mobile app interface focused on pet adoption. At the top, there's a banner with a dog wearing glasses and a jacket against a yellow background. Text on the banner reads \"FAMILY\" and \"给它一个温暖的家\" (Give it a warm home). Below are sections listing animal shelters with small dog images, names, and the number of pets available for adoption. Icons for navigation are at the bottom. The mood is inviting and supportive, promoting care for stray dogs.",
+    "final_text": "The image depicts a mobile app interface focused on pet adoption. At the top, there's a banner with a dog wearing glasses and a jacket against a yellow background. Text on the banner reads \"FAMILY\" and \"给它一个温暖的家\" (Give it a warm home). Below are sections listing animal shelters with small dog images, names, and the number of pets available for adoption. Icons for navigation are at the bottom. The mood is inviting and supportive, promoting care for stray dogs.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426903-ranNgUmfFVMYsjlJaYgW",
+    "created": 1788426903,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 102,
+      "total_tokens": 819,
+      "cost": 0.0028125
+    }
+  }
+}

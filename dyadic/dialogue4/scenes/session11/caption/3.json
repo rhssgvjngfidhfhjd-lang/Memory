@@ -1,0 +1,36 @@
+{
+  "id": "bcad564b-0016-415f-9199-3e484999f058",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:06.486151",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session11/image/3.png",
+    "filename": "3.png",
+    "size": 128720,
+    "modified_time": "2026-08-23T21:50:15.332074"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a clear glass bowl with a ball of dough inside, marked with measurements indicating volume expansion. Above, there are illustrations of similar bowls showing dough at different rising stages. Text in Chinese details the fermentation process, with emphasis on dough volume increasing by 25%-50% during the initial phase. The atmosphere is educational, focusing on baking and dough fermentation.",
+    "final_text": "The image features a clear glass bowl with a ball of dough inside, marked with measurements indicating volume expansion. Above, there are illustrations of similar bowls showing dough at different rising stages. Text in Chinese details the fermentation process, with emphasis on dough volume increasing by 25%-50% during the initial phase. The atmosphere is educational, focusing on baking and dough fermentation.",
+    "token_stats": {
+      "original_tokens": 73,
+      "final_tokens": 73,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427446-yOPhOMiDETSSxM3nhcem",
+    "created": 1788427446,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 73,
+      "total_tokens": 418,
+      "cost": 0.0015925
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "29374b58-66b1-47a5-a498-9f0d86efd960",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:06.570364",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img15.jpg",
+    "filename": "img15.jpg",
+    "size": 332114,
+    "modified_time": "2026-08-23T22:09:55.309895"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A group of people is posing energetically in front of a white van amidst a snowy landscape. They are dressed in colorful winter clothing, including hats, gloves, and boots. The scene is dynamic with snow falling, and the sky is clear and blue. The group appears joyful and spirited, with some raising their hands and striking playful poses. The overall atmosphere is lively and cheerful, capturing a fun winter moment.",
+    "final_text": "A group of people is posing energetically in front of a white van amidst a snowy landscape. They are dressed in colorful winter clothing, including hats, gloves, and boots. The scene is dynamic with snow falling, and the sky is clear and blue. The group appears joyful and spirited, with some raising their hands and striking playful poses. The overall atmosphere is lively and cheerful, capturing a fun winter moment.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426906-8LQC6YDuDrUaasUVxN7D",
+    "created": 1788426906,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 82,
+      "total_tokens": 937,
+      "cost": 0.0029575
+    }
+  }
+}

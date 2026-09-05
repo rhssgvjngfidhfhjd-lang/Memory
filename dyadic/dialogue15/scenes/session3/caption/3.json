@@ -1,0 +1,36 @@
+{
+  "id": "6045ca0c-b54b-436b-ad10-00754d91884f",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:58.861123",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 619956,
+    "modified_time": "2026-08-23T21:34:28.784469"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a split bar and line graph comparing cat behavior indicators before and after installing a device. The left side shows a bar graph for food intake (grams per day), with \"安装前\" (before installation) at 200g and \"安装后\" (after installation) at 220g. The right side displays a line graph for playtime (minutes per day), increasing from 60 minutes before to 85 minutes after installation. The title reads \"主动降噪设备安装前后猫咪核心行为指标对比图,\" and a note at the bottom mentions data collection over seven days. The atmosphere is analytical and informative.",
+    "final_text": "The image is a split bar and line graph comparing cat behavior indicators before and after installing a device. The left side shows a bar graph for food intake (grams per day), with \"安装前\" (before installation) at 200g and \"安装后\" (after installation) at 220g. The right side displays a line graph for playtime (minutes per day), increasing from 60 minutes before to 85 minutes after installation. The title reads \"主动降噪设备安装前后猫咪核心行为指标对比图,\" and a note at the bottom mentions data collection over seven days. The atmosphere is analytical and informative.",
+    "token_stats": {
+      "original_tokens": 145,
+      "final_tokens": 145,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426957-X1Q4oAelQ1UdnKdveJ5d",
+    "created": 1788426957,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 131,
+      "total_tokens": 646,
+      "cost": 0.0025975
+    }
+  }
+}

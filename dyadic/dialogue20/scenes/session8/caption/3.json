@@ -1,0 +1,36 @@
+{
+  "id": "6d5b22c0-38ad-4271-89bb-93a5ef96328d",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:56.774865",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 668330,
+    "modified_time": "2026-08-23T21:42:42.593000"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts two climbers on a snowy mountain peak, celebrating their ascent. They are dressed in cold-weather gear, with one holding an ice axe. Both have their arms raised in triumph. Between them is a wooden marker with red text displaying \"哈巴雪山 5396,\" indicating the altitude. The background shows a vast landscape with mountains under a clear blue sky. The atmosphere is joyful and triumphant.",
+    "final_text": "The image depicts two climbers on a snowy mountain peak, celebrating their ascent. They are dressed in cold-weather gear, with one holding an ice axe. Both have their arms raised in triumph. Between them is a wooden marker with red text displaying \"哈巴雪山 5396,\" indicating the altitude. The background shows a vast landscape with mountains under a clear blue sky. The atmosphere is joyful and triumphant.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427315-ma5imaeyT5342Br8vxpB",
+    "created": 1788427315,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 84,
+      "total_tokens": 939,
+      "cost": 0.0029775
+    }
+  }
+}

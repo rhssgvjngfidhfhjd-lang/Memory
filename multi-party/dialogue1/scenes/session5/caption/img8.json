@@ -1,0 +1,36 @@
+{
+  "id": "baba094f-ee7e-476f-85f8-e4988095d090",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:03.095745",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session5/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 507886,
+    "modified_time": "2026-08-23T22:06:02.675159"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant salad in a ceramic bowl, featuring Romanesco broccoli, chickpeas, green leaves, and pumpkin seeds, drizzled with a creamy dressing. A fork rests on the side of the bowl. The dish is set against a textured, earthy background, creating a fresh and appetizing atmosphere.",
+    "final_text": "The image depicts a vibrant salad in a ceramic bowl, featuring Romanesco broccoli, chickpeas, green leaves, and pumpkin seeds, drizzled with a creamy dressing. A fork rests on the side of the bowl. The dish is set against a textured, earthy background, creating a fresh and appetizing atmosphere.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426601-ffOtYmjKQDfxE90TSMFW",
+    "created": 1788426601,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 63,
+      "total_tokens": 918,
+      "cost": 0.0027675
+    }
+  }
+}

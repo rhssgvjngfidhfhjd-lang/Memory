@@ -1,0 +1,36 @@
+{
+  "id": "6136538b-fc37-40f6-84a9-3ecfb801b0be",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:04.581448",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session5/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 234559,
+    "modified_time": "2026-08-23T22:03:55.016402"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a yogurt container placed on a wooden surface. The container is white with blue text printed on its side, which includes detailed nutritional information and ingredients in Chinese. The lid is slightly open, revealing the contents inside. The text provides information about fat, protein, and other nutritional values per 100 grams. The overall mood is neutral, focusing on the product's details and packaging.",
+    "final_text": "The image shows a yogurt container placed on a wooden surface. The container is white with blue text printed on its side, which includes detailed nutritional information and ingredients in Chinese. The lid is slightly open, revealing the contents inside. The text provides information about fat, protein, and other nutritional values per 100 grams. The overall mood is neutral, focusing on the product's details and packaging.",
+    "token_stats": {
+      "original_tokens": 78,
+      "final_tokens": 78,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426602-P2ytb0nBWTQC6Nh4DzVD",
+    "created": 1788426602,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 79,
+      "total_tokens": 1077,
+      "cost": 0.003285
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "e2a7f6cd-2e8a-4c74-a939-eabc4252e655",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:41.154957",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 524032,
+    "modified_time": "2026-08-23T21:58:14.417578"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic with a title in Chinese, \"传统与现代的辩证,\" meaning \"The Dialectic of Tradition and Modernity.\" It consists of two sections: \"传统本真性保留\" (Preservation of Traditional Authenticity) and \"面向游客的展演性\" (Performance for Tourists). The left side shows traditional scenes like a family preparing food and a chef cooking. The right side depicts modern interactions, such as a person using a tablet and tourists dining. The mood is informative, illustrating the coexistence of tradition and modernity. Text highlights the balance between preserving cultural heritage and adapting to contemporary experiences.",
+    "final_text": "The image is an infographic with a title in Chinese, \"传统与现代的辩证,\" meaning \"The Dialectic of Tradition and Modernity.\" It consists of two sections: \"传统本真性保留\" (Preservation of Traditional Authenticity) and \"面向游客的展演性\" (Performance for Tourists). The left side shows traditional scenes like a family preparing food and a chef cooking. The right side depicts modern interactions, such as a person using a tablet and tourists dining. The mood is informative, illustrating the coexistence of tradition and modernity. Text highlights the balance between preserving cultural heritage and adapting to contemporary experiences.",
+    "token_stats": {
+      "original_tokens": 139,
+      "final_tokens": 139,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427660-BpVsN7uvPnllIjlSkGZ0",
+    "created": 1788427660,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 134,
+      "total_tokens": 573,
+      "cost": 0.0024375
+    }
+  }
+}

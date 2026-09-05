@@ -1,0 +1,36 @@
+{
+  "id": "634ff24d-50b6-4d7f-beb9-3203bcecc737",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:17.597817",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session1/image/3.png",
+    "filename": "3.png",
+    "size": 92472,
+    "modified_time": "2026-08-23T21:32:13.689666"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a table with three columns containing text in Chinese. The columns are labeled: \"建议类别\" (Category of Recommendation), \"具体护理建议\" (Specific Care Suggestions), and \"专业说明\" (Professional Explanation). The rows cover topics such as \"发烧护理\" (Fever Care), \"咳嗽护理\" (Cough Care), \"防交叉感染\" (Preventing Cross-Infection), and \"日常照料\" (Daily Care). Each section provides detailed advice on managing fever, cough, preventing infection, and daily care routines. The overall atmosphere is informative and educational, aimed at providing guidance on health care practices.",
+    "final_text": "The image shows a table with three columns containing text in Chinese. The columns are labeled: \"建议类别\" (Category of Recommendation), \"具体护理建议\" (Specific Care Suggestions), and \"专业说明\" (Professional Explanation). The rows cover topics such as \"发烧护理\" (Fever Care), \"咳嗽护理\" (Cough Care), \"防交叉感染\" (Preventing Cross-Infection), and \"日常照料\" (Daily Care). Each section provides detailed advice on managing fever, cough, preventing infection, and daily care routines. The overall atmosphere is informative and educational, aimed at providing guidance on health care practices.",
+    "token_stats": {
+      "original_tokens": 154,
+      "final_tokens": 154,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426796-O8rSPcGj5AwrfDPYDQDG",
+    "created": 1788426796,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 135,
+      "total_tokens": 852,
+      "cost": 0.0031425
+    }
+  }
+}

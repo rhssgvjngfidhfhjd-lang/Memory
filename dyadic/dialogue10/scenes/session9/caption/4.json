@@ -1,0 +1,36 @@
+{
+  "id": "8f0d4352-2421-4bac-b44a-0d4b59003a93",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:58.172765",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session9/image/4.jpg",
+    "filename": "4.jpg",
+    "size": 109353,
+    "modified_time": "2026-08-23T21:30:43.404741"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a man and a woman sitting on a gray sofa in a living room. The man in the foreground is wearing a red sweater, holding a cushion, and looking contemplative, while the woman in the background is turned away, suggesting possible tension or disagreement. A decorated Christmas tree is visible in the background, adding a festive touch to the scene. The atmosphere appears tense despite the holiday setting.",
+    "final_text": "The image depicts a man and a woman sitting on a gray sofa in a living room. The man in the foreground is wearing a red sweater, holding a cushion, and looking contemplative, while the woman in the background is turned away, suggesting possible tension or disagreement. A decorated Christmas tree is visible in the background, adding a festive touch to the scene. The atmosphere appears tense despite the holiday setting.",
+    "token_stats": {
+      "original_tokens": 81,
+      "final_tokens": 81,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426597-0YxDIoGzzaaea7pZBlQI",
+    "created": 1788426597,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 81,
+      "total_tokens": 936,
+      "cost": 0.0029475
+    }
+  }
+}

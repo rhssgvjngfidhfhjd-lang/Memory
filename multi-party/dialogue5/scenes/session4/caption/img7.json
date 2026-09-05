@@ -1,0 +1,36 @@
+{
+  "id": "9e8ff75e-b86c-4d5f-9622-ef1fd52bd475",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:50.757867",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session4/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 237030,
+    "modified_time": "2026-08-23T22:09:48.882031"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a digital countdown interface titled \"Days Matter\" on a wooden background. The central element is a large number \"11\" indicating days remaining until an event. Below, the target date is shown as \"2026-2-19\" (Thursday). The interface includes buttons for sharing, saving as an image, and other options. The text is in Chinese, with a notification for \"more beautiful themes\" at the bottom. The overall mood is functional and anticipatory, with a clean and organized layout.",
+    "final_text": "The image displays a digital countdown interface titled \"Days Matter\" on a wooden background. The central element is a large number \"11\" indicating days remaining until an event. Below, the target date is shown as \"2026-2-19\" (Thursday). The interface includes buttons for sharing, saving as an image, and other options. The text is in Chinese, with a notification for \"more beautiful themes\" at the bottom. The overall mood is functional and anticipatory, with a clean and organized layout.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426887-ehviaE6nGOdSxpRIqskc",
+    "created": 1788426887,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 105,
+      "total_tokens": 1385,
+      "cost": 0.00425
+    }
+  }
+}

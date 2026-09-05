@@ -1,0 +1,36 @@
+{
+  "id": "18b0dc6c-4596-49db-bac7-5bb840b87944",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:29.462071",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session15/image/3.png",
+    "filename": "3.png",
+    "size": 1066302,
+    "modified_time": "2026-08-23T21:53:24.267486"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a serene, well-lit room with large windows revealing a view of lush greenery outside. The core scene features a yoga mat laid out on the floor, accompanied by a round cushion, suggesting a space for meditation or relaxation. Several potted plants are arranged around the room, enhancing the tranquil atmosphere. A minimalist wooden cabinet rests against the wall, with books placed on top. The overall mood is calming and peaceful, ideal for mindfulness activities.",
+    "final_text": "The image depicts a serene, well-lit room with large windows revealing a view of lush greenery outside. The core scene features a yoga mat laid out on the floor, accompanied by a round cushion, suggesting a space for meditation or relaxation. Several potted plants are arranged around the room, enhancing the tranquil atmosphere. A minimalist wooden cabinet rests against the wall, with books placed on top. The overall mood is calming and peaceful, ideal for mindfulness activities.",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427466-mLfWOKGwFgMc9H6kbzXm",
+    "created": 1788427466,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 91,
+      "total_tokens": 1089,
+      "cost": 0.003405
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "f422af6b-152c-47df-9004-c469dc66eab4",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:12.880751",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 229265,
+    "modified_time": "2026-08-23T21:33:34.446930"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a project planning table titled \"校园舆情分析与‘热点地图’项目规划表\" (Campus Public Opinion Analysis and \"Hotspot Map\" Project Planning Table). It is organized into columns with headings such as \"规划维度\" (Planning Dimension), \"具体项\" (Specific Items), and \"核心详情/要求\" (Core Details/Requirements). The table outlines various components: project core information, collaboration roles, core functional modules, and ethical regulations. It includes specific tasks like data collection, analysis, and visualization using NLP technology, focusing on campus events. The mood is structured and professional, providing a detailed framework for the project.",
+    "final_text": "The image is a project planning table titled \"校园舆情分析与‘热点地图’项目规划表\" (Campus Public Opinion Analysis and \"Hotspot Map\" Project Planning Table). It is organized into columns with headings such as \"规划维度\" (Planning Dimension), \"具体项\" (Specific Items), and \"核心详情/要求\" (Core Details/Requirements). The table outlines various components: project core information, collaboration roles, core functional modules, and ethical regulations. It includes specific tasks like data collection, analysis, and visualization using NLP technology, focusing on campus events. The mood is structured and professional, providing a detailed framework for the project.",
+    "token_stats": {
+      "original_tokens": 152,
+      "final_tokens": 152,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426913-ZCshWruXhyE9wEG1EdXP",
+    "created": 1788426913,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 134,
+      "total_tokens": 989,
+      "cost": 0.0034775
+    }
+  }
+}

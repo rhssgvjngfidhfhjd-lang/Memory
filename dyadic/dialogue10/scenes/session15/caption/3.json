@@ -1,0 +1,36 @@
+{
+  "id": "6c79ce6b-d93e-4b3d-b331-51337eac7a7c",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:29.588706",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session15/image/3.png",
+    "filename": "3.png",
+    "size": 3501780,
+    "modified_time": "2026-08-23T21:31:13.654899"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a diagram with two main sections, labeled \"标准化展示\" (Standardized Display) and \"内化体验\" (Internalized Experience). The \"标准化展示\" section includes phrases like \"社交媒体打卡\" (Social Media Check-in), \"追求网红同款\" (Chasing Influencer Products), and \"滤镜美化\" (Filter Beautification). The \"内化体验\" section contains phrases such as \"私人仪式感\" (Private Ritual Feeling), \"为情绪价值买单\" (Paying for Emotional Value), and \"美学滋养内心\" (Aesthetic Nourishment). The sections are connected by \"焦虑共谋\" (Anxiety Collusion) and \"自我关怀\" (Self-Care), indicating a transition from external to internal focus. The mood is analytical and introspective.",
+    "final_text": "The image is a diagram with two main sections, labeled \"标准化展示\" (Standardized Display) and \"内化体验\" (Internalized Experience). The \"标准化展示\" section includes phrases like \"社交媒体打卡\" (Social Media Check-in), \"追求网红同款\" (Chasing Influencer Products), and \"滤镜美化\" (Filter Beautification). The \"内化体验\" section contains phrases such as \"私人仪式感\" (Private Ritual Feeling), \"为情绪价值买单\" (Paying for Emotional Value), and \"美学滋养内心\" (Aesthetic Nourishment). The sections are connected by \"焦虑共谋\" (Anxiety Collusion) and \"自我关怀\" (Self-Care), indicating a transition from external to internal focus. The mood is analytical and introspective.",
+    "token_stats": {
+      "original_tokens": 208,
+      "final_tokens": 208,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426625-OquvqwHVvsJK2EaFLXXX",
+    "created": 1788426625,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 180,
+      "total_tokens": 1375,
+      "cost": 0.0047875
+    }
+  }
+}

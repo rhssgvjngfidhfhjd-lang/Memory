@@ -1,0 +1,36 @@
+{
+  "id": "1cbafd35-f69c-4eb9-8af0-331c04442bc3",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:40.113711",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session13/image/4.jpg",
+    "filename": "4.jpg",
+    "size": 60506,
+    "modified_time": "2026-08-23T21:34:21.541796"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a silver medal held in a hand. The front features a runner silhouette with a bridge, labeled \"Penang Bridge International Marathon.\" The back reads \"FINISHER 10 km Run,\" with logos, including one for EMICO as the medal sponsor. The medal is attached to a yellow, blue, and white ribbon. The atmosphere conveys achievement and celebration.",
+    "final_text": "The image shows a silver medal held in a hand. The front features a runner silhouette with a bridge, labeled \"Penang Bridge International Marathon.\" The back reads \"FINISHER 10 km Run,\" with logos, including one for EMICO as the medal sponsor. The medal is attached to a yellow, blue, and white ribbon. The atmosphere conveys achievement and celebration.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426999-ycrJbh5tMMsSxPE6f6Gx",
+    "created": 1788426999,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 75,
+      "total_tokens": 420,
+      "cost": 0.0016125
+    }
+  }
+}

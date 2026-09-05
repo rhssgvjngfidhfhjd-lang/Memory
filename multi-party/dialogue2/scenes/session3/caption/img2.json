@@ -1,0 +1,36 @@
+{
+  "id": "cea8ca7c-df50-47e7-b2ef-345103c76dcc",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:42.590239",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session3/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 40658,
+    "modified_time": "2026-08-23T22:06:36.187590"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a close-up of a person's swollen knee, wrapped with an elastic bandage. The leg is resting on a chair, which is partially visible. The floor appears to be made of concrete or a similar material. No visible text is present. The mood suggests discomfort or a medical issue, possibly indicating injury or recovery.",
+    "final_text": "The image depicts a close-up of a person's swollen knee, wrapped with an elastic bandage. The leg is resting on a chair, which is partially visible. The floor appears to be made of concrete or a similar material. No visible text is present. The mood suggests discomfort or a medical issue, possibly indicating injury or recovery.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426642-MhhoEdXyEHlTRPsvnnRO",
+    "created": 1788426642,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 67,
+      "total_tokens": 506,
+      "cost": 0.0017675
+    }
+  }
+}

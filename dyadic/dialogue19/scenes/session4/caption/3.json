@@ -1,0 +1,36 @@
+{
+  "id": "92329e2e-8b26-448a-b0c1-35d8836e4c3b",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:54.542034",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 1315575,
+    "modified_time": "2026-08-23T21:39:15.668013"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a smartphone on a wooden table, displaying a messaging app with Chinese text. The conversation includes a response thanking the recipient for feedback. Beside the phone, there's a black pen and a menu with images of food. Sunlight casts a warm glow, creating a relaxed and inviting atmosphere.",
+    "final_text": "The image shows a smartphone on a wooden table, displaying a messaging app with Chinese text. The conversation includes a response thanking the recipient for feedback. Beside the phone, there's a black pen and a menu with images of food. Sunlight casts a warm glow, creating a relaxed and inviting atmosphere.",
+    "token_stats": {
+      "original_tokens": 61,
+      "final_tokens": 61,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427195-Fjzwwc7D6InEBJakyuHd",
+    "created": 1788427195,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 60,
+      "total_tokens": 1255,
+      "cost": 0.0035875
+    }
+  }
+}

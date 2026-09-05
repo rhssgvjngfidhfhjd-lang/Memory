@@ -1,0 +1,36 @@
+{
+  "id": "81bddcf0-7234-4d21-9bdb-291fe1bc88da",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:59.876989",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 859975,
+    "modified_time": "2026-08-23T22:10:01.547086"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an open suitcase filled with a variety of colorful packaged snacks, predominantly with Asian branding. Visible text on the packages includes various languages, primarily Chinese. The snacks include chips, candies, and other treats, creating a vibrant and eclectic mix. The mood is playful and adventurous, suggesting a preparation for a trip or a sampling of international flavors.",
+    "final_text": "The image shows an open suitcase filled with a variety of colorful packaged snacks, predominantly with Asian branding. Visible text on the packages includes various languages, primarily Chinese. The snacks include chips, candies, and other treats, creating a vibrant and eclectic mix. The mood is playful and adventurous, suggesting a preparation for a trip or a sampling of international flavors.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426899-TMXPDUId5FONjId8wphO",
+    "created": 1788426899,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 70,
+      "total_tokens": 925,
+      "cost": 0.0028375
+    }
+  }
+}

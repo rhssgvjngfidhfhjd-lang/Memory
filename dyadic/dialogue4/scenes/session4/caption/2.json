@@ -1,0 +1,36 @@
+{
+  "id": "7ea5a903-cd86-4318-b492-fb7d8bdcc637",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:31.785283",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 190288,
+    "modified_time": "2026-08-23T21:54:31.867728"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A black and white dog is actively running on a grassy field, holding an orange frisbee in its mouth. Nearby, there are blue baskets on the grass. The scene conveys a playful and energetic atmosphere. The visible text at the bottom reads \"精准取物：锁定飞盘\" in Chinese, which translates to \"Precise retrieval: Targeting frisbee\" in English.",
+    "final_text": "A black and white dog is actively running on a grassy field, holding an orange frisbee in its mouth. Nearby, there are blue baskets on the grass. The scene conveys a playful and energetic atmosphere. The visible text at the bottom reads \"精准取物：锁定飞盘\" in Chinese, which translates to \"Precise retrieval: Targeting frisbee\" in English.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427412-cybnaUqEPcDLwm5Z0pMY",
+    "created": 1788427412,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 77,
+      "total_tokens": 422,
+      "cost": 0.0016325
+    }
+  }
+}

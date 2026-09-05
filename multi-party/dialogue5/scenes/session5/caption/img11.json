@@ -1,0 +1,36 @@
+{
+  "id": "782c175b-841e-4bd8-a096-a56b4a9a3e2b",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:04.064299",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 425820,
+    "modified_time": "2026-08-23T22:09:52.214208"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts the interior of a train with two people sitting on luggage. The person in the foreground has short hair and wears a colorful backpack, sitting on a striped suitcase. The person in the background, with long hair, is seated on a checkered suitcase, looking out the window. The train seats are blue with a yellow pattern, adding a vibrant touch. Overhead, a screen displays a cityscape. The atmosphere is casual and relaxed, suggesting travel or commuting.",
+    "final_text": "The image depicts the interior of a train with two people sitting on luggage. The person in the foreground has short hair and wears a colorful backpack, sitting on a striped suitcase. The person in the background, with long hair, is seated on a checkered suitcase, looking out the window. The train seats are blue with a yellow pattern, adding a vibrant touch. Overhead, a screen displays a cityscape. The atmosphere is casual and relaxed, suggesting travel or commuting.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426903-yXsy87prssb8CdzgoDdZ",
+    "created": 1788426903,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 95,
+      "total_tokens": 950,
+      "cost": 0.0030875
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "881cfb74-5b11-486f-ab31-331027850b96",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:24.102667",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session13/image/3.png",
+    "filename": "3.png",
+    "size": 632288,
+    "modified_time": "2026-08-23T21:57:40.345747"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a juxtaposition of traditional and modern elements. On the left, there's a wooden sign with the text \"百年和菓子铺\" next to a traditional lantern, suggesting an old confectionery shop. On the right, a bright neon sign reads \"东方茶韵,\" set against a backdrop of a modern cityscape with glass buildings. Additional text between the signs states \"在地性: 抵抗全球化的口号 vs 新的营销标签,\" highlighting a contrast between local identity and globalization. The mood reflects a dynamic tension between tradition and modernity.",
+    "final_text": "The image depicts a juxtaposition of traditional and modern elements. On the left, there's a wooden sign with the text \"百年和菓子铺\" next to a traditional lantern, suggesting an old confectionery shop. On the right, a bright neon sign reads \"东方茶韵,\" set against a backdrop of a modern cityscape with glass buildings. Additional text between the signs states \"在地性: 抵抗全球化的口号 vs 新的营销标签,\" highlighting a contrast between local identity and globalization. The mood reflects a dynamic tension between tradition and modernity.",
+    "token_stats": {
+      "original_tokens": 131,
+      "final_tokens": 131,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427700-8Q03JVCSHyfY9YAV6HHA",
+    "created": 1788427700,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 120,
+      "total_tokens": 559,
+      "cost": 0.0022975
+    }
+  }
+}

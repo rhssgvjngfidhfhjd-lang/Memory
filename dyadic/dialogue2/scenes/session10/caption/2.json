@@ -1,0 +1,36 @@
+{
+  "id": "3369e815-9f41-41a4-9036-924965080695",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:18.459631",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session10/image/2.png",
+    "filename": "2.png",
+    "size": 498469,
+    "modified_time": "2026-08-23T21:40:14.787626"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional graphic featuring a massage device. On the left, there is a depiction of the device with labeled components: 1) 44°-48° movable claws, 2) flexible silicone, 3) 17.3° incline, and 4) massage heads. The text describes it as a \"6D tiger mouth massage claw\" with functions like squeezing, pinching, and kneading. On the right, there is an illustration of carbon fiber heating technology with a temperature graph showing 40°C to 50°C. The atmosphere is technical and informative, emphasizing the product's features and benefits.",
+    "final_text": "The image is a promotional graphic featuring a massage device. On the left, there is a depiction of the device with labeled components: 1) 44°-48° movable claws, 2) flexible silicone, 3) 17.3° incline, and 4) massage heads. The text describes it as a \"6D tiger mouth massage claw\" with functions like squeezing, pinching, and kneading. On the right, there is an illustration of carbon fiber heating technology with a temperature graph showing 40°C to 50°C. The atmosphere is technical and informative, emphasizing the product's features and benefits.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427280-1cSNmTMBsk5PrwuFKwBY",
+    "created": 1788427280,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 128,
+      "total_tokens": 643,
+      "cost": 0.0025675
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "779b4c34-4de2-44fb-9bff-af5e13363eed",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:35.730321",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session6/image/5.png",
+    "filename": "5.png",
+    "size": 479663,
+    "modified_time": "2026-08-23T21:48:09.417776"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a smartphone screen displaying a social media or app profile. The main element is a profile picture of a Shiba Inu dog. The visible text includes \"老板\" (Boss), \"粉丝\" (Followers), and \"2.5万\" (25,000). The atmosphere is light and digital, likely representing an online presence or influencer profile.",
+    "final_text": "The image shows a smartphone screen displaying a social media or app profile. The main element is a profile picture of a Shiba Inu dog. The visible text includes \"老板\" (Boss), \"粉丝\" (Followers), and \"2.5万\" (25,000). The atmosphere is light and digital, likely representing an online presence or influencer profile.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427354-fYGK9wVT7BBzrVw2TB6F",
+    "created": 1788427354,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 73,
+      "total_tokens": 928,
+      "cost": 0.0028675
+    }
+  }
+}

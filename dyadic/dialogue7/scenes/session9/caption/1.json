@@ -1,0 +1,36 @@
+{
+  "id": "aee73dba-663c-40b3-9020-724a85bdf9e8",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:04.645773",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session9/image/1.png",
+    "filename": "1.png",
+    "size": 25384,
+    "modified_time": "2026-08-23T21:57:13.276672"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a comparison table of air purifier brands with various metrics. The columns are labeled with brands: 小米, Blueair, IQAir, 飞利浦, and include scores. The rows are labeled with dimensions such as CADR性能, 成本 (cost), 体验 (experience), 服务 (service). Metrics include particle CADR, formaldehyde CADR, price, noise levels, and warranty periods. The table provides scores for each dimension, with an overall score and ranking at the bottom. The mood is analytical, providing detailed information for comparison.",
+    "final_text": "The image displays a comparison table of air purifier brands with various metrics. The columns are labeled with brands: 小米, Blueair, IQAir, 飞利浦, and include scores. The rows are labeled with dimensions such as CADR性能, 成本 (cost), 体验 (experience), 服务 (service). Metrics include particle CADR, formaldehyde CADR, price, noise levels, and warranty periods. The table provides scores for each dimension, with an overall score and ranking at the bottom. The mood is analytical, providing detailed information for comparison.",
+    "token_stats": {
+      "original_tokens": 121,
+      "final_tokens": 121,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427624-nkAyqIpSixOSPgjEs7ll",
+    "created": 1788427624,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 114,
+      "total_tokens": 553,
+      "cost": 0.0022375
+    }
+  }
+}

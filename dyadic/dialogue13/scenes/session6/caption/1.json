@@ -1,0 +1,36 @@
+{
+  "id": "f55762d5-da95-4ac1-8fec-0167c671a27a",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:47.438907",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 1281828,
+    "modified_time": "2026-08-23T21:32:39.334239"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a festive scene celebrating the Mid-Autumn Festival and National Day. Children are seated at a table, engaging in crafts with colored pencils and paper. Nearby, adults are gathered around a table with dishes like braised pork, steamed fish, and dumplings, indicating a communal feast. In the background, the Great Wall of China and mountains are visible, creating a warm and celebratory atmosphere. The text includes phrases such as \"Mid-Autumn National Celebration,\" \"Neighborhood Feast,\" and \"Community Shared Kitchen.\" Lanterns and flowers enhance the festive mood.",
+    "final_text": "The image depicts a festive scene celebrating the Mid-Autumn Festival and National Day. Children are seated at a table, engaging in crafts with colored pencils and paper. Nearby, adults are gathered around a table with dishes like braised pork, steamed fish, and dumplings, indicating a communal feast. In the background, the Great Wall of China and mountains are visible, creating a warm and celebratory atmosphere. The text includes phrases such as \"Mid-Autumn National Celebration,\" \"Neighborhood Feast,\" and \"Community Shared Kitchen.\" Lanterns and flowers enhance the festive mood.",
+    "token_stats": {
+      "original_tokens": 117,
+      "final_tokens": 117,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426824-ryJi9jSHJR1sTI6cgGBF",
+    "created": 1788426824,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 116,
+      "total_tokens": 1114,
+      "cost": 0.003655
+    }
+  }
+}

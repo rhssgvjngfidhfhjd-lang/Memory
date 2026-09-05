@@ -1,0 +1,36 @@
+{
+  "id": "df46224b-f1ff-425e-968f-6c5111960f8d",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:02.470567",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 89723,
+    "modified_time": "2026-08-23T22:06:52.884352"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a soccer assistant referee on a field, wearing a yellow shirt and black shorts, holding a red and yellow checkered flag. The referee is looking intently at the field with a focused expression. The background features a blurred crowd in a stadium setting. The atmosphere is professional and concentrated, indicative of a live sports event. Visible text includes \"alamy.\"",
+    "final_text": "The image shows a soccer assistant referee on a field, wearing a yellow shirt and black shorts, holding a red and yellow checkered flag. The referee is looking intently at the field with a focused expression. The background features a blurred crowd in a stadium setting. The atmosphere is professional and concentrated, indicative of a live sports event. Visible text includes \"alamy.\"",
+    "token_stats": {
+      "original_tokens": 74,
+      "final_tokens": 74,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426661-wsTx1G2CdwOsWhTivgnk",
+    "created": 1788426661,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 74,
+      "total_tokens": 929,
+      "cost": 0.0028775
+    }
+  }
+}

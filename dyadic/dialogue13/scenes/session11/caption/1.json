@@ -1,0 +1,36 @@
+{
+  "id": "6fcb2705-a4e7-4b57-81e5-b46576f895b1",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:16.205911",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 1879660,
+    "modified_time": "2026-08-23T21:32:25.571734"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image outlines a plan for 2024 titled \"When the Classroom Meets the Community.\" It features five main initiatives: \"Health Corner Proposal\" with an illustration of a child, \"Pet Partner Plan Design\" with a form template, \"Neighborhood Feast/Shared Kitchen Concept\" showing a person and a dog, \"Old Item Exchange Activity Plan\" depicted with a table and clipboard, and \"Community Culture Festival\" illustrated with a coffee maker. The mood is community-focused and collaborative, promoting health, pet companionship, shared cooking, item exchange, and cultural activities.",
+    "final_text": "The image outlines a plan for 2024 titled \"When the Classroom Meets the Community.\" It features five main initiatives: \"Health Corner Proposal\" with an illustration of a child, \"Pet Partner Plan Design\" with a form template, \"Neighborhood Feast/Shared Kitchen Concept\" showing a person and a dog, \"Old Item Exchange Activity Plan\" depicted with a table and clipboard, and \"Community Culture Festival\" illustrated with a coffee maker. The mood is community-focused and collaborative, promoting health, pet companionship, shared cooking, item exchange, and cultural activities.",
+    "token_stats": {
+      "original_tokens": 115,
+      "final_tokens": 115,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426852-kkybeZ2o5i7ILxcbhTxw",
+    "created": 1788426852,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 113,
+      "total_tokens": 1111,
+      "cost": 0.003625
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "8f89e206-7ec5-498c-9a71-9ca3ae6b90b1",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:29.793938",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session15/image/1.png",
+    "filename": "1.png",
+    "size": 936463,
+    "modified_time": "2026-08-23T21:54:21.370300"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy, sunlit workspace with a wooden desk near a window. On the desk, there is a document titled \"Personal Health Optimization Agreement,\" accompanied by three sticky notes with the phrases \"data-driven health management,\" \"proactive design,\" and \"micro habits.\" A pen lies beside the document, suggesting it's ready for signing. A cup of tea sits on a coaster, adding warmth to the scene. A wooden container holds several pencils and pens, and a notebook is partially visible. The overall atmosphere is calm and focused, conducive to thoughtful work or planning.",
+    "final_text": "The image depicts a cozy, sunlit workspace with a wooden desk near a window. On the desk, there is a document titled \"Personal Health Optimization Agreement,\" accompanied by three sticky notes with the phrases \"data-driven health management,\" \"proactive design,\" and \"micro habits.\" A pen lies beside the document, suggesting it's ready for signing. A cup of tea sits on a coaster, adding warmth to the scene. A wooden container holds several pencils and pens, and a notebook is partially visible. The overall atmosphere is calm and focused, conducive to thoughtful work or planning.",
+    "token_stats": {
+      "original_tokens": 116,
+      "final_tokens": 116,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427466-RIJ8yh4ApexP3MwSPQoI",
+    "created": 1788427466,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 116,
+      "total_tokens": 833,
+      "cost": 0.0029525
+    }
+  }
+}

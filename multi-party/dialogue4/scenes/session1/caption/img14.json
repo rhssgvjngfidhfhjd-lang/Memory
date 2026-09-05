@@ -1,0 +1,36 @@
+{
+  "id": "592c7c35-bae6-4c09-8c33-e7e2d59d0681",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:54.511473",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session1/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 429774,
+    "modified_time": "2026-08-23T22:09:03.915214"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cluttered walk-in closet with clothes and accessories scattered across the floor. Shelves on both sides are filled with garments, while hangers and various clothing items are strewn about haphazardly. The lighting is warm, provided by ceiling lights, creating a chaotic yet intimate atmosphere. No visible text is present. The scene suggests disorganization and a need for tidying up.",
+    "final_text": "The image depicts a cluttered walk-in closet with clothes and accessories scattered across the floor. Shelves on both sides are filled with garments, while hangers and various clothing items are strewn about haphazardly. The lighting is warm, provided by ceiling lights, creating a chaotic yet intimate atmosphere. No visible text is present. The scene suggests disorganization and a need for tidying up.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426774-fKXsa0GMCVZDMdaE00qn",
+    "created": 1788426774,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 81,
+      "total_tokens": 801,
+      "cost": 0.00261
+    }
+  }
+}

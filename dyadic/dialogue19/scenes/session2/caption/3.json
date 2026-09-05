@@ -1,0 +1,36 @@
+{
+  "id": "dbceffb9-8e8d-4312-936e-d5747de0f601",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:45.335314",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 1655613,
+    "modified_time": "2026-08-23T21:38:55.298954"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a collage showing various food items and photography tips. The scenes include plates of raw meat, cooked dishes with eggs, and drinks on wooden tables. Visible text provides guidance on angles, framing, and zoom for capturing food photos, indicating techniques for creating visually appealing images. The atmosphere is casual and instructional, focusing on enhancing food photography skills.",
+    "final_text": "The image is a collage showing various food items and photography tips. The scenes include plates of raw meat, cooked dishes with eggs, and drinks on wooden tables. Visible text provides guidance on angles, framing, and zoom for capturing food photos, indicating techniques for creating visually appealing images. The atmosphere is casual and instructional, focusing on enhancing food photography skills.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427185-TNa5QOcSTwrXosyY3AnT",
+    "created": 1788427185,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 70,
+      "total_tokens": 925,
+      "cost": 0.0028375
+    }
+  }
+}

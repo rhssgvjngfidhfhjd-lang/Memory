@@ -1,0 +1,36 @@
+{
+  "id": "a20e8eb7-1e64-4f6f-9a5a-ad2b0a85a9cb",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:10.531910",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img15.jpg",
+    "filename": "img15.jpg",
+    "size": 200592,
+    "modified_time": "2026-08-23T22:06:45.230253"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a soccer player wearing a light green jersey with the Barcelona crest and a Spotify logo, appearing emotional with tears on his face. He stands with hands on hips, expressing disappointment or sadness. In the background, other players in similar jerseys seem to be clapping, possibly in a gesture of support. The atmosphere is tense and somber, suggesting a post-match reaction. Visible text includes \"FCB\" on the crest and \"AMBILIGHT\" on the sleeve.",
+    "final_text": "The image depicts a soccer player wearing a light green jersey with the Barcelona crest and a Spotify logo, appearing emotional with tears on his face. He stands with hands on hips, expressing disappointment or sadness. In the background, other players in similar jerseys seem to be clapping, possibly in a gesture of support. The atmosphere is tense and somber, suggesting a post-match reaction. Visible text includes \"FCB\" on the crest and \"AMBILIGHT\" on the sleeve.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426668-djbsb5EDdk9JtUnwa0Av",
+    "created": 1788426668,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 97,
+      "total_tokens": 814,
+      "cost": 0.0027625
+    }
+  }
+}

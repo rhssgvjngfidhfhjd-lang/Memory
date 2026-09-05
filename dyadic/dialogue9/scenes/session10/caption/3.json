@@ -1,0 +1,36 @@
+{
+  "id": "73a3718a-6e7e-4e2f-85e7-301ce777eacb",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:19.023991",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 1551349,
+    "modified_time": "2026-08-23T21:58:41.087446"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a smartphone displaying a group chat labeled \"社区互助群\" (Community Assistance Group). A hand holds the phone, showing a conversation about elderly care and community support. The visible text includes messages discussing meal convenience for seniors and potential involvement of retired chefs. Participants are collaborating to address the needs of elderly residents. The atmosphere is cooperative and supportive, emphasizing community engagement and problem-solving. The time on the phone is 10:30.",
+    "final_text": "The image shows a smartphone displaying a group chat labeled \"社区互助群\" (Community Assistance Group). A hand holds the phone, showing a conversation about elderly care and community support. The visible text includes messages discussing meal convenience for seniors and potential involvement of retired chefs. Participants are collaborating to address the needs of elderly residents. The atmosphere is cooperative and supportive, emphasizing community engagement and problem-solving. The time on the phone is 10:30.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427757-0jyNwoSvkZZWEexpRKag",
+    "created": 1788427757,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 91,
+      "total_tokens": 808,
+      "cost": 0.0027025
+    }
+  }
+}

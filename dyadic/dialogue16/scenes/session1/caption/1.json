@@ -1,0 +1,36 @@
+{
+  "id": "c6a9e1eb-9c1e-428a-acba-2f89edb34269",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:49.010855",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 262977,
+    "modified_time": "2026-08-23T21:35:13.926949"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an abstract, swirling vortex with a mix of deep blues, purples, and greens. The brushstrokes create a dynamic, spiral motion, evoking a sense of movement and depth. The absence of distinct objects or figures suggests an artistic representation of a galaxy or a whirlpool. The overall mood is mysterious and captivating, drawing the viewer into its swirling patterns.",
+    "final_text": "The image depicts an abstract, swirling vortex with a mix of deep blues, purples, and greens. The brushstrokes create a dynamic, spiral motion, evoking a sense of movement and depth. The absence of distinct objects or figures suggests an artistic representation of a galaxy or a whirlpool. The overall mood is mysterious and captivating, drawing the viewer into its swirling patterns.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427008-V47hLde7xEVkq74GP1ZH",
+    "created": 1788427008,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 76,
+      "total_tokens": 421,
+      "cost": 0.0016225
+    }
+  }
+}

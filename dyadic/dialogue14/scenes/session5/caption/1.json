@@ -1,0 +1,36 @@
+{
+  "id": "2abc0f40-fa19-435f-8222-62bf2d9bccd1",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:58.340517",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session5/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 255140,
+    "modified_time": "2026-08-23T21:33:25.892727"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a person wearing a textured sweater, gently petting an orange tabby cat sitting on their lap. The cat has its eyes closed, appearing relaxed and content. The background features blue curtains and part of an indoor setting with chairs. The atmosphere is calm and cozy, with a sense of warmth and affection between the person and the cat. There is no visible text in the image.",
+    "final_text": "The image shows a person wearing a textured sweater, gently petting an orange tabby cat sitting on their lap. The cat has its eyes closed, appearing relaxed and content. The background features blue curtains and part of an indoor setting with chairs. The atmosphere is calm and cozy, with a sense of warmth and affection between the person and the cat. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426897-K3ApqXjEoUFCUWSBi1N4",
+    "created": 1788426897,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 79,
+      "total_tokens": 934,
+      "cost": 0.0029275
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "01073c9d-a4ed-47b5-a603-93b2a9e05f76",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:04.175672",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 78628,
+    "modified_time": "2026-08-23T22:07:30.937385"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a highly detailed miniature figurine of a warrior in ornate armor. The figure stands on a rocky base, holding a shimmering sword with both hands. The armor is predominantly red and gold, featuring intricate designs with a flowing red cape adorned with a cross. The warrior has a focused expression and a topknot hairstyle. Below, a small blue creature is visible, adding a sense of scale and contrast. The scene has a dramatic and heroic atmosphere, with no visible text.",
+    "final_text": "The image depicts a highly detailed miniature figurine of a warrior in ornate armor. The figure stands on a rocky base, holding a shimmering sword with both hands. The armor is predominantly red and gold, featuring intricate designs with a flowing red cape adorned with a cross. The warrior has a focused expression and a topknot hairstyle. Below, a small blue creature is visible, adding a sense of scale and contrast. The scene has a dramatic and heroic atmosphere, with no visible text.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426723-BVkEPSHm5aFmOOpou8IR",
+    "created": 1788426723,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 98,
+      "total_tokens": 818,
+      "cost": 0.00278
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "d799f09a-a207-45bd-a617-545a84574bbc",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:20.552537",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session13/image/2.png",
+    "filename": "2.png",
+    "size": 680099,
+    "modified_time": "2026-08-23T21:52:15.738576"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a scenic view of a river flanked by steep, lush green mountains. The water appears calm, and the sky is overcast, creating a serene and tranquil atmosphere. There are no visible people, animals, or text in the image. The perspective suggests the view might be from a boat moving through the water, emphasizing the natural beauty and grandeur of the landscape.",
+    "final_text": "The image depicts a scenic view of a river flanked by steep, lush green mountains. The water appears calm, and the sky is overcast, creating a serene and tranquil atmosphere. There are no visible people, animals, or text in the image. The perspective suggests the view might be from a boat moving through the water, emphasizing the natural beauty and grandeur of the landscape.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427459-HDwQhm8f3DDi8FuFf4eP",
+    "created": 1788427459,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 76,
+      "total_tokens": 931,
+      "cost": 0.0028975
+    }
+  }
+}

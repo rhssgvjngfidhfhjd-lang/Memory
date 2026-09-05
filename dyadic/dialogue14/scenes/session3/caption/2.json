@@ -1,0 +1,36 @@
+{
+  "id": "00a2bf3c-2b22-40e1-ad40-bfeb3838ee4b",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:50.427324",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session3/image/2.png",
+    "filename": "2.png",
+    "size": 1616788,
+    "modified_time": "2026-08-23T21:33:41.997051"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a colorful promotional artwork for the video game \"It Takes Two.\" It features two animated characters, one with blue hair and glasses in patchwork pants, and the other with green hair wearing a red knitted sweater, swinging from a large dandelion stem. The atmosphere is adventurous and playful. The text \"It Takes Two\" is prominently displayed in bold yellow and red letters, along with \"FUNNY GAMEPLAY\" in black on a yellow banner. The background includes oversized plants, suggesting a whimsical, miniature world.",
+    "final_text": "The image is a colorful promotional artwork for the video game \"It Takes Two.\" It features two animated characters, one with blue hair and glasses in patchwork pants, and the other with green hair wearing a red knitted sweater, swinging from a large dandelion stem. The atmosphere is adventurous and playful. The text \"It Takes Two\" is prominently displayed in bold yellow and red letters, along with \"FUNNY GAMEPLAY\" in black on a yellow banner. The background includes oversized plants, suggesting a whimsical, miniature world.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426887-i3TMKRPajCMmsBLrokQJ",
+    "created": 1788426887,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 106,
+      "total_tokens": 1301,
+      "cost": 0.0040475
+    }
+  }
+}

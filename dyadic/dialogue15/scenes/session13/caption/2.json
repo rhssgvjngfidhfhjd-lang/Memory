@@ -1,0 +1,36 @@
+{
+  "id": "8c02a4a4-3c12-46a9-817d-b987531eb0bb",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:38.884471",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session13/image/2.png",
+    "filename": "2.png",
+    "size": 342201,
+    "modified_time": "2026-08-23T21:34:14.511110"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains a set of graphs analyzing marathon performance data. The top graph compares actual and predicted pace over distance, highlighting a faster early pace. The middle graph analyzes heart rate drift over time, showing actual vs. predicted heart rates with a legend for clarity. The right bar chart compares efficiency indices between two runners, 林测度 and 韩数据, with associated values and labels. The bottom graph shows strategy execution deviation across race segments. Text annotations provide insights and descriptions, creating an analytical and informative atmosphere.",
+    "final_text": "The image contains a set of graphs analyzing marathon performance data. The top graph compares actual and predicted pace over distance, highlighting a faster early pace. The middle graph analyzes heart rate drift over time, showing actual vs. predicted heart rates with a legend for clarity. The right bar chart compares efficiency indices between two runners, 林测度 and 韩数据, with associated values and labels. The bottom graph shows strategy execution deviation across race segments. Text annotations provide insights and descriptions, creating an analytical and informative atmosphere.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426997-iYMjrY5aLxWX9DpIH80J",
+    "created": 1788426997,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 101,
+      "total_tokens": 1296,
+      "cost": 0.0039975
+    }
+  }
+}

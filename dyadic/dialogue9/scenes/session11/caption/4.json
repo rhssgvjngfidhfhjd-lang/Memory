@@ -1,0 +1,36 @@
+{
+  "id": "d14c3d5e-410a-4e64-b744-4473d3b890ea",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:24.980288",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session11/image/4.png",
+    "filename": "4.png",
+    "size": 78647,
+    "modified_time": "2026-08-23T21:58:46.040208"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a table titled \"应急方案具体内容表格\" (Emergency Plan Specific Content Table) with two columns: \"应急类别\" (Emergency Type) and \"具体内容\" (Specific Content). It outlines responses to different emergency scenarios:\n\n1. Discovery of Suspected Personnel: Residents are advised to report suspicious individuals to property security and community network members, describing their location and features to avoid confrontation.\n\n2. Elderly Encountering Sudden Situations: Instructions for elderly individuals to contact community volunteers and property personnel for assistance within 15 minutes. If harmed, report to the police and coordinate with property security.\n\n3. Community Emergency Mobilization: Establish a four-level network among residents, volunteers, property, and police. Set response times and organize emergency drills while ensuring understanding without causing panic.\n\nThe mood is informative and procedural, focusing on safety and coordination.",
+    "final_text": "The image displays a table titled \"应急方案具体内容表格\" (Emergency Plan Specific Content Table) with two columns: \"应急类别\" (Emergency Type) and \"具体内容\" (Specific Content). It outlines responses to different emergency scenarios:\n\n1. Discovery of Suspected Personnel: Residents are advised to report suspicious individuals to property security and community network members, describing their location and features to avoid confrontation.\n\n2. Elderly Encountering Sudden Situations: Instructions for elderly individuals to contact community volunteers and property personnel for assistance within 15 minutes. If harmed, report to the police and coordinate with property security.\n\n3. Community Emergency Mobilization: Establish a four-level network among residents, volunteers, property, and police. Set response times and organize emergency drills while ensuring understanding without causing panic.\n\nThe mood is informative and procedural, focusing on safety and coordination.",
+    "token_stats": {
+      "original_tokens": 182,
+      "final_tokens": 182,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427764-hkzjQRx8B0M0troMLFzm",
+    "created": 1788427764,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 176,
+      "total_tokens": 1174,
+      "cost": 0.004255
+    }
+  }
+}

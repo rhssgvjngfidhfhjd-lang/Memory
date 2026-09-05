@@ -1,0 +1,36 @@
+{
+  "id": "cc2a5202-2191-4009-93eb-70e4516a5820",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:37.351586",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 1940897,
+    "modified_time": "2026-08-23T21:32:50.738592"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a workspace featuring a computer monitor displaying code in red text on a black background. A keyboard and mouse are on the desk, accompanied by a desk lamp casting a warm light. Several snack wrappers and a disposable coffee cup are scattered on the desk. The atmosphere suggests a late-night work session, characterized by focus and perhaps a bit of clutter.",
+    "final_text": "The image shows a workspace featuring a computer monitor displaying code in red text on a black background. A keyboard and mouse are on the desk, accompanied by a desk lamp casting a warm light. Several snack wrappers and a disposable coffee cup are scattered on the desk. The atmosphere suggests a late-night work session, characterized by focus and perhaps a bit of clutter.",
+    "token_stats": {
+      "original_tokens": 71,
+      "final_tokens": 71,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426876-OVTwACXDA99jUQeFyFvb",
+    "created": 1788426876,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 71,
+      "total_tokens": 1266,
+      "cost": 0.0036975
+    }
+  }
+}

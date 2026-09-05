@@ -1,0 +1,36 @@
+{
+  "id": "fb8881b5-d793-422f-b2b7-e16cafd26887",
+  "success": true,
+  "timestamp": "2026-09-03T17:07:52.685578",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 388923,
+    "modified_time": "2026-08-23T21:30:04.958938"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a map interface showing several veterinary hospitals marked with blue paw icons. It includes a specific location highlighted: \"北京佳友动物医院\" with a rating of 3.6 and operating hours from 08:30 to 20:30, noted as closed currently. The map features surrounding areas and roads, along with additional images of the veterinary hospital at the bottom. The mood is informational, aimed at helping users locate veterinary services.",
+    "final_text": "The image is a map interface showing several veterinary hospitals marked with blue paw icons. It includes a specific location highlighted: \"北京佳友动物医院\" with a rating of 3.6 and operating hours from 08:30 to 20:30, noted as closed currently. The map features surrounding areas and roads, along with additional images of the veterinary hospital at the bottom. The mood is informational, aimed at helping users locate veterinary services.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426473-Jwg7N1UzwbT0Iejl6lRC",
+    "created": 1788426473,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 90,
+      "total_tokens": 605,
+      "cost": 0.0021875
+    }
+  }
+}

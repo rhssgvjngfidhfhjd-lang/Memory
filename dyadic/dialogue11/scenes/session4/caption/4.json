@@ -1,0 +1,36 @@
+{
+  "id": "5db5485c-0461-448e-aaaa-ba22238a32ce",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:52.388470",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session4/image/4.png",
+    "filename": "4.png",
+    "size": 235342,
+    "modified_time": "2026-08-23T21:31:09.487265"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a poster with a beige background featuring text and two paw print icons. The main text reads about building harmonious communities and scientifically managing stray cats. Below, there’s a checklist with three items: reducing nighttime cat calls through TNR (Trap-Neuter-Return), preventing uncontrolled breeding, and improving community hygiene. The atmosphere is informative and community-focused.",
+    "final_text": "The image is a poster with a beige background featuring text and two paw print icons. The main text reads about building harmonious communities and scientifically managing stray cats. Below, there’s a checklist with three items: reducing nighttime cat calls through TNR (Trap-Neuter-Return), preventing uncontrolled breeding, and improving community hygiene. The atmosphere is informative and community-focused.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426653-2z7S5FkcJrEZTwBIA42C",
+    "created": 1788426653,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 72,
+      "total_tokens": 417,
+      "cost": 0.0015825
+    }
+  }
+}

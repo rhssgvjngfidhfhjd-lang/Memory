@@ -1,0 +1,36 @@
+{
+  "id": "2e294b85-fc29-4ae3-8d25-d0a1a0311533",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:45.719916",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session5/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 222326,
+    "modified_time": "2026-08-23T22:09:21.988556"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a fashion runway scene. A model walks confidently, wearing an elegant, flowing gown in shades of lavender and white. The dress features delicate floral embellishments and sheer fabric, creating an ethereal appearance. The background is softly lit with a blurred pattern, adding to the dreamy atmosphere. Another model is visible in the background, also dressed in a similarly styled outfit. The overall mood is sophisticated and serene, capturing the grace and artistry of high fashion.",
+    "final_text": "The image depicts a fashion runway scene. A model walks confidently, wearing an elegant, flowing gown in shades of lavender and white. The dress features delicate floral embellishments and sheer fabric, creating an ethereal appearance. The background is softly lit with a blurred pattern, adding to the dreamy atmosphere. Another model is visible in the background, also dressed in a similarly styled outfit. The overall mood is sophisticated and serene, capturing the grace and artistry of high fashion.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426823-qiE7xENwSacBjp1ZymhS",
+    "created": 1788426823,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 93,
+      "total_tokens": 1091,
+      "cost": 0.003425
+    }
+  }
+}

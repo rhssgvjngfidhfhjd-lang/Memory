@@ -1,0 +1,864 @@
+{
+  "dialogue": "dialogue5",
+  "scenes_dir": "dataset/dyadic/dialogue5/scenes",
+  "caption_max_tokens": 256,
+  "total_sessions": 15,
+  "total_images": 49,
+  "total_successful": 49,
+  "total_failed": 0,
+  "total_skipped": 0,
+  "total_truncated": 1,
+  "usage": {
+    "prompt_tokens": 33035,
+    "completion_tokens": 4945,
+    "total_tokens": 37980,
+    "cost": 0.1320375
+  },
+  "session_results": [
+    {
+      "session": "session0",
+      "status": "failed",
+      "error": "No image directory"
+    },
+    {
+      "session": "session1",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session1/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session1/caption",
+      "caption_max_tokens": 256,
+      "total_images": 3,
+      "successful": 3,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 2011,
+        "completion_tokens": 272,
+        "total_tokens": 2283,
+        "cost": 0.007747500000000001
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 65,
+            "final_tokens": 65,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 108,
+            "final_tokens": 108,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 106,
+            "final_tokens": 106,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session2",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session2/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session2/caption",
+      "caption_max_tokens": 256,
+      "total_images": 5,
+      "successful": 5,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 2809,
+        "completion_tokens": 601,
+        "total_tokens": 3410,
+        "cost": 0.0130325
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 169,
+            "final_tokens": 169,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 147,
+            "final_tokens": 147,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 107,
+            "final_tokens": 107,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "4.png",
+          "json_file": "4.json",
+          "txt_file": "4.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 82,
+            "final_tokens": 82,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "5.png",
+          "json_file": "5.json",
+          "txt_file": "5.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 132,
+            "final_tokens": 132,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session3",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session3/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session3/caption",
+      "caption_max_tokens": 256,
+      "total_images": 3,
+      "successful": 3,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 990,
+        "completion_tokens": 226,
+        "total_tokens": 1216,
+        "cost": 0.004735
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 58,
+            "final_tokens": 58,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 95,
+            "final_tokens": 95,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 73,
+            "final_tokens": 73,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session4",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session4/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session4/caption",
+      "caption_max_tokens": 256,
+      "total_images": 3,
+      "successful": 3,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 1782,
+        "completion_tokens": 246,
+        "total_tokens": 2028,
+        "cost": 0.006915
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 69,
+            "final_tokens": 69,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 79,
+            "final_tokens": 79,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 106,
+            "final_tokens": 106,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session5",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session5/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session5/caption",
+      "caption_max_tokens": 256,
+      "total_images": 3,
+      "successful": 3,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 2289,
+        "completion_tokens": 242,
+        "total_tokens": 2531,
+        "cost": 0.0081425
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 87,
+            "final_tokens": 87,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 89,
+            "final_tokens": 89,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 67,
+            "final_tokens": 67,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session6",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session6/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session6/caption",
+      "caption_max_tokens": 256,
+      "total_images": 4,
+      "successful": 4,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 3144,
+        "completion_tokens": 372,
+        "total_tokens": 3516,
+        "cost": 0.01158
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 85,
+            "final_tokens": 85,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 88,
+            "final_tokens": 88,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 98,
+            "final_tokens": 98,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "4.png",
+          "json_file": "4.json",
+          "txt_file": "4.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 100,
+            "final_tokens": 100,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session7",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session7/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session7/caption",
+      "caption_max_tokens": 256,
+      "total_images": 3,
+      "successful": 3,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 1876,
+        "completion_tokens": 265,
+        "total_tokens": 2141,
+        "cost": 0.007339999999999999
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 105,
+            "final_tokens": 105,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 69,
+            "final_tokens": 69,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 93,
+            "final_tokens": 93,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session8",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session8/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session8/caption",
+      "caption_max_tokens": 256,
+      "total_images": 4,
+      "successful": 4,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 3425,
+        "completion_tokens": 575,
+        "total_tokens": 4000,
+        "cost": 0.0143125
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 72,
+            "final_tokens": 72,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 79,
+            "final_tokens": 79,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 127,
+            "final_tokens": 127,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "4.png",
+          "json_file": "4.json",
+          "txt_file": "4.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 319,
+            "final_tokens": 256,
+            "was_truncated": true,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session9",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session9/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session9/caption",
+      "caption_max_tokens": 256,
+      "total_images": 5,
+      "successful": 5,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 3999,
+        "completion_tokens": 508,
+        "total_tokens": 4507,
+        "cost": 0.0150775
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 126,
+            "final_tokens": 126,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 81,
+            "final_tokens": 81,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 137,
+            "final_tokens": 137,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "4.png",
+          "json_file": "4.json",
+          "txt_file": "4.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 97,
+            "final_tokens": 97,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "5.png",
+          "json_file": "5.json",
+          "txt_file": "5.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 97,
+            "final_tokens": 97,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session10",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session10/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session10/caption",
+      "caption_max_tokens": 256,
+      "total_images": 3,
+      "successful": 3,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 2427,
+        "completion_tokens": 276,
+        "total_tokens": 2703,
+        "cost": 0.008827499999999999
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 96,
+            "final_tokens": 96,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 97,
+            "final_tokens": 97,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 90,
+            "final_tokens": 90,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session11",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session11/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session11/caption",
+      "caption_max_tokens": 256,
+      "total_images": 4,
+      "successful": 4,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 2590,
+        "completion_tokens": 344,
+        "total_tokens": 2934,
+        "cost": 0.009915
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 108,
+            "final_tokens": 108,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 100,
+            "final_tokens": 100,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 88,
+            "final_tokens": 88,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "4.png",
+          "json_file": "4.json",
+          "txt_file": "4.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 58,
+            "final_tokens": 58,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session12",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session12/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session12/caption",
+      "caption_max_tokens": 256,
+      "total_images": 3,
+      "successful": 3,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 1393,
+        "completion_tokens": 427,
+        "total_tokens": 1820,
+        "cost": 0.0077525
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 156,
+            "final_tokens": 156,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 140,
+            "final_tokens": 140,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 172,
+            "final_tokens": 172,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session13",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session13/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session13/caption",
+      "caption_max_tokens": 256,
+      "total_images": 3,
+      "successful": 3,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 2011,
+        "completion_tokens": 268,
+        "total_tokens": 2279,
+        "cost": 0.0077075
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 69,
+            "final_tokens": 69,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 91,
+            "final_tokens": 91,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 115,
+            "final_tokens": 115,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    },
+    {
+      "session": "session14",
+      "image_dir": "dataset/dyadic/dialogue5/scenes/session14/image",
+      "caption_dir": "dataset/dyadic/dialogue5/scenes/session14/caption",
+      "caption_max_tokens": 256,
+      "total_images": 3,
+      "successful": 3,
+      "failed": 0,
+      "skipped": 0,
+      "usage": {
+        "prompt_tokens": 2289,
+        "completion_tokens": 323,
+        "total_tokens": 2612,
+        "cost": 0.008952499999999999
+      },
+      "processed_files": [
+        {
+          "image": "1.png",
+          "json_file": "1.json",
+          "txt_file": "1.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 123,
+            "final_tokens": 123,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "2.png",
+          "json_file": "2.json",
+          "txt_file": "2.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 99,
+            "final_tokens": 99,
+            "was_truncated": false,
+            "limit": 256
+          }
+        },
+        {
+          "image": "3.png",
+          "json_file": "3.json",
+          "txt_file": "3.txt",
+          "success": true,
+          "token_stats": {
+            "original_tokens": 111,
+            "final_tokens": 111,
+            "was_truncated": false,
+            "limit": 256
+          }
+        }
+      ]
+    }
+  ]
+}

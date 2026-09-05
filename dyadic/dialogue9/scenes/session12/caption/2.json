@@ -1,0 +1,36 @@
+{
+  "id": "7fcc7edf-5ff0-4118-9426-b78f7fd06e82",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:28.183078",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session12/image/2.png",
+    "filename": "2.png",
+    "size": 224684,
+    "modified_time": "2026-08-23T21:59:05.536813"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table titled \"2024年度XX社区邻里互助项目成果表,\" detailing various community assistance projects. It consists of columns labeled \"项目名称,\" \"核心内容,\" \"成果数据与具体成效,\" and \"难忘瞬间 (唤起共同记忆).\" The projects include \"流浪猫TNR项目,\" \"共享菜篮项目,\" \"二手集市项目,\" and \"健康监测项目.\" Each row describes the project name, core content, specific results, and memorable moments. Activities range from stray cat management to health monitoring. The mood is informative, focused on community engagement and improvement.",
+    "final_text": "The image is a table titled \"2024年度XX社区邻里互助项目成果表,\" detailing various community assistance projects. It consists of columns labeled \"项目名称,\" \"核心内容,\" \"成果数据与具体成效,\" and \"难忘瞬间 (唤起共同记忆).\" The projects include \"流浪猫TNR项目,\" \"共享菜篮项目,\" \"二手集市项目,\" and \"健康监测项目.\" Each row describes the project name, core content, specific results, and memorable moments. Activities range from stray cat management to health monitoring. The mood is informative, focused on community engagement and improvement.",
+    "token_stats": {
+      "original_tokens": 156,
+      "final_tokens": 156,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427767-f7twHGmifLEMROlRRhAU",
+    "created": 1788427767,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 132,
+      "total_tokens": 849,
+      "cost": 0.0031125
+    }
+  }
+}

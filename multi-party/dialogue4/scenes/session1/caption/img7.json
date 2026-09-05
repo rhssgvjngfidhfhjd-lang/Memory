@@ -1,0 +1,36 @@
+{
+  "id": "3d2dfc6e-140c-441c-9efa-cafa759a5ade",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:47.621873",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session1/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 289136,
+    "modified_time": "2026-08-23T22:08:19.004694"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two side-by-side photos of a person in a room, taking mirror selfies. In both photos, the person is wearing a black cap with visible text resembling \"NY,\" a black mask, and holding a smartphone. On the left, they wear a tan double-breasted coat with hands in pockets. On the right, they wear a grey double-breasted coat and hold a beige bag. The room has wooden floors, white walls, and a wooden door. The atmosphere is casual and fashion-focused.",
+    "final_text": "The image features two side-by-side photos of a person in a room, taking mirror selfies. In both photos, the person is wearing a black cap with visible text resembling \"NY,\" a black mask, and holding a smartphone. On the left, they wear a tan double-breasted coat with hands in pockets. On the right, they wear a grey double-breasted coat and hold a beige bag. The room has wooden floors, white walls, and a wooden door. The atmosphere is casual and fashion-focused.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426766-Bwv9Yec21IY2MuO3VkD7",
+    "created": 1788426766,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 106,
+      "total_tokens": 826,
+      "cost": 0.00286
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "0e97e269-ca71-420e-bd1e-bfb52691f9ab",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:27.402435",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 38096,
+    "modified_time": "2026-08-23T22:08:00.679291"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a dramatic black and white scene of thick, billowing clouds above a dark silhouette of a mountain or landscape. The visible text in yellow reads \"SOTTO LE NUVOLE,\" suggesting a film or artistic presentation. There's a logo in the top right corner, likely related to a film festival. Below the main image, a red and white section shows a strawberry icon with \"30%\" and an \"m\" logo. The overall mood is atmospheric and intense, with an emphasis on natural elements and artistic expression.",
+    "final_text": "The image features a dramatic black and white scene of thick, billowing clouds above a dark silhouette of a mountain or landscape. The visible text in yellow reads \"SOTTO LE NUVOLE,\" suggesting a film or artistic presentation. There's a logo in the top right corner, likely related to a film festival. Below the main image, a red and white section shows a strawberry icon with \"30%\" and an \"m\" logo. The overall mood is atmospheric and intense, with an emphasis on natural elements and artistic expression.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426746-5G2HzIEJy85rbLqh2TT3",
+    "created": 1788426746,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 106,
+      "total_tokens": 621,
+      "cost": 0.0023475
+    }
+  }
+}

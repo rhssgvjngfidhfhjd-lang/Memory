@@ -1,0 +1,36 @@
+{
+  "id": "11147139-f5f9-4c16-abff-5d2b640aac92",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:47.981006",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img10.png",
+    "filename": "img10.png",
+    "size": 78543,
+    "modified_time": "2026-08-23T22:03:31.416707"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a text-based document discussing the dangers of trans fats, referred to as \"hidden killers on the dining table.\" It explains their sources, divided into natural and processed origins, with processed sources including hydrogenated oils and refined oils. The text highlights the severe health risks posed by trans fats, such as cardiovascular disease and metabolic issues. The overall mood is informative and cautionary, emphasizing the importance of awareness about trans fat consumption.",
+    "final_text": "The image is a text-based document discussing the dangers of trans fats, referred to as \"hidden killers on the dining table.\" It explains their sources, divided into natural and processed origins, with processed sources including hydrogenated oils and refined oils. The text highlights the severe health risks posed by trans fats, such as cardiovascular disease and metabolic issues. The overall mood is informative and cautionary, emphasizing the importance of awareness about trans fat consumption.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426586-9Hr821bZW6i2j1AOnaxW",
+    "created": 1788426586,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 88,
+      "total_tokens": 805,
+      "cost": 0.0026725
+    }
+  }
+}

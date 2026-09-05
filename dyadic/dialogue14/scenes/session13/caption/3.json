@@ -1,0 +1,36 @@
+{
+  "id": "b6d9a76f-9f1b-427b-9c26-b57fac121354",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:36.628109",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session13/image/3.png",
+    "filename": "3.png",
+    "size": 111368,
+    "modified_time": "2026-08-23T21:32:58.631078"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an informative graphic titled \"Professional/Business Attire,\" showcasing traditional dress code options for a job or internship interview. It features illustrations of a men's suit with a red tie, a women's suit with a skirt, black shoes, black socks, a pair of blue and red shoes, and a black handbag with a gold chain. The mood is formal and instructive. Text includes \"What should I wear?\" at the top and \"Temple University Career Center\" logo at the bottom.",
+    "final_text": "The image is an informative graphic titled \"Professional/Business Attire,\" showcasing traditional dress code options for a job or internship interview. It features illustrations of a men's suit with a red tie, a women's suit with a skirt, black shoes, black socks, a pair of blue and red shoes, and a black handbag with a gold chain. The mood is formal and instructive. Text includes \"What should I wear?\" at the top and \"Temple University Career Center\" logo at the bottom.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426935-Xl0qdrEurnRHjXICuNp5",
+    "created": 1788426935,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 99,
+      "total_tokens": 614,
+      "cost": 0.0022775
+    }
+  }
+}

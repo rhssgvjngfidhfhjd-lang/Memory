@@ -1,0 +1,36 @@
+{
+  "id": "c1639fb0-d4be-4c82-b050-f6afc2af16f4",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:35.720301",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session13/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 219179,
+    "modified_time": "2026-08-23T21:30:55.886030"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a health-related infographic with cartoon illustrations. It features two scenes. The first depicts a man experiencing back pain, with text indicating \"腰椎问题\" (lumbar spine issue) and a prevention suggestion using a traffic light for stretching, \"利用红灯做拉伸.\" The second scene shows a man with neck discomfort, \"颈椎不适,\" and suggests neck rotation, \"颈部转动,\" for prevention. The third scene shows a woman with stomach pain, \"胃病,\" recommending regular eating habits, \"饮食规律,\" with an illustration of her holding a bowl of food. The overall mood is informative and encouraging self-care practices.",
+    "final_text": "The image is a health-related infographic with cartoon illustrations. It features two scenes. The first depicts a man experiencing back pain, with text indicating \"腰椎问题\" (lumbar spine issue) and a prevention suggestion using a traffic light for stretching, \"利用红灯做拉伸.\" The second scene shows a man with neck discomfort, \"颈椎不适,\" and suggests neck rotation, \"颈部转动,\" for prevention. The third scene shows a woman with stomach pain, \"胃病,\" recommending regular eating habits, \"饮食规律,\" with an illustration of her holding a bowl of food. The overall mood is informative and encouraging self-care practices.",
+    "token_stats": {
+      "original_tokens": 157,
+      "final_tokens": 157,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426696-56QxblHJExYOk8DsjebS",
+    "created": 1788426696,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 138,
+      "total_tokens": 993,
+      "cost": 0.0035175
+    }
+  }
+}

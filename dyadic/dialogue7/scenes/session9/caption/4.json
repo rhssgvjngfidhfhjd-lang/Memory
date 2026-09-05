@@ -1,0 +1,36 @@
+{
+  "id": "460fc677-a8a5-4dd1-8495-360cd733dce7",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:06.490554",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session9/image/4.png",
+    "filename": "4.png",
+    "size": 422381,
+    "modified_time": "2026-08-23T21:57:19.716839"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an advertisement for an air purifier, prominently featuring the product with digital displays. It highlights its ability to remove formaldehyde and other pollutants, claiming a sales volume of over 400,000 units. There are various discount offers, including prices like 1139 and 1199, and promotions for 88VIP members. A cartoon character wearing a mask suggests health benefits. The overall mood is promotional and informative, emphasizing product efficiency with various statistics and certifications. Numerous logos and icons are present, indicating purchase and delivery options.",
+    "final_text": "The image is an advertisement for an air purifier, prominently featuring the product with digital displays. It highlights its ability to remove formaldehyde and other pollutants, claiming a sales volume of over 400,000 units. There are various discount offers, including prices like 1139 and 1199, and promotions for 88VIP members. A cartoon character wearing a mask suggests health benefits. The overall mood is promotional and informative, emphasizing product efficiency with various statistics and certifications. Numerous logos and icons are present, indicating purchase and delivery options.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427627-4fqBGdAcIFUwRmTXwwdY",
+    "created": 1788427627,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 108,
+      "total_tokens": 623,
+      "cost": 0.0023675
+    }
+  }
+}

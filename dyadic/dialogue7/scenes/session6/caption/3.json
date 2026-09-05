@@ -1,0 +1,36 @@
+{
+  "id": "d8cbdc60-74a6-4e78-a86f-9ded181ec29a",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:53.677227",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 456538,
+    "modified_time": "2026-08-23T21:57:05.909662"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is divided into two sections: \"过敏原警示\" (Allergen Warning) on the left and \"抗炎食物推荐\" (Anti-inflammatory Food Recommendation) on the right. \n\n**Left Side (Allergen Warning):**\n- Displays images of nuts, fish, milk, cheese, eggs, and tofu.\n- Text: Various allergens like nuts, seafood, dairy, eggs, and soy products.\n\n**Right Side (Anti-inflammatory Recommendation):**\n- Shows spinach, broccoli, berries, flaxseeds, green tea, and ginger.\n- Text: Recommendations for foods rich in Omega-3, dark leafy greens, and herbs.\n\nOverall, the mood is informative, providing guidance on foods that may cause allergies and those beneficial for reducing inflammation.",
+    "final_text": "The image is divided into two sections: \"过敏原警示\" (Allergen Warning) on the left and \"抗炎食物推荐\" (Anti-inflammatory Food Recommendation) on the right. \n\n**Left Side (Allergen Warning):**\n- Displays images of nuts, fish, milk, cheese, eggs, and tofu.\n- Text: Various allergens like nuts, seafood, dairy, eggs, and soy products.\n\n**Right Side (Anti-inflammatory Recommendation):**\n- Shows spinach, broccoli, berries, flaxseeds, green tea, and ginger.\n- Text: Recommendations for foods rich in Omega-3, dark leafy greens, and herbs.\n\nOverall, the mood is informative, providing guidance on foods that may cause allergies and those beneficial for reducing inflammation.",
+    "token_stats": {
+      "original_tokens": 167,
+      "final_tokens": 167,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427611-3NHMfsA8yzI7It9q1oLm",
+    "created": 1788427611,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 155,
+      "total_tokens": 872,
+      "cost": 0.0033425
+    }
+  }
+}

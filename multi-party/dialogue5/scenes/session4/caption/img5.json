@@ -1,0 +1,36 @@
+{
+  "id": "62a9707b-0b08-40ce-8260-4f8bade6a229",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:48.078815",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session4/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 160997,
+    "modified_time": "2026-08-23T22:09:48.396912"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a computer screen displaying a blue error message, commonly known as the \"Blue Screen of Death.\" The screen features a large sad face emoticon, and text in Chinese indicates the device has encountered a problem and needs to restart. There's a QR code, a URL for more information, and error details including \"SYSTEM_SERVICE_EXCEPTION\" and \"Invscenter.sys.\" The atmosphere is technical and urgent.",
+    "final_text": "The image shows a computer screen displaying a blue error message, commonly known as the \"Blue Screen of Death.\" The screen features a large sad face emoticon, and text in Chinese indicates the device has encountered a problem and needs to restart. There's a QR code, a URL for more information, and error details including \"SYSTEM_SERVICE_EXCEPTION\" and \"Invscenter.sys.\" The atmosphere is technical and urgent.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426885-dcZHGMwST44vKEZQVXFp",
+    "created": 1788426885,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 83,
+      "total_tokens": 803,
+      "cost": 0.00263
+    }
+  }
+}

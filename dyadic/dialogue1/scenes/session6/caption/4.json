@@ -1,0 +1,36 @@
+{
+  "id": "309ed479-f5c2-484e-97c6-1fed7116fdf0",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:17.927314",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session6/image/4.png",
+    "filename": "4.png",
+    "size": 276753,
+    "modified_time": "2026-08-23T21:30:08.199223"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional advertisement featuring pet food by Royal Canin, specifically designed for cats with food sensitivities. The main elements include the product packaging prominently displayed, with text emphasizing its hypoallergenic properties. The advertisement includes pricing information, ¥213.3, and a promotional offer. The background features a red and white color scheme with additional text in Chinese, highlighting features like \"official partnership\" and \"prevents counterfeit.\" The overall mood is informative and commercial, targeting pet owners seeking specialized cat food.",
+    "final_text": "The image is a promotional advertisement featuring pet food by Royal Canin, specifically designed for cats with food sensitivities. The main elements include the product packaging prominently displayed, with text emphasizing its hypoallergenic properties. The advertisement includes pricing information, ¥213.3, and a promotional offer. The background features a red and white color scheme with additional text in Chinese, highlighting features like \"official partnership\" and \"prevents counterfeit.\" The overall mood is informative and commercial, targeting pet owners seeking specialized cat food.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426496-FMJPr3lzewEur6gr8zCI",
+    "created": 1788426496,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 101,
+      "total_tokens": 616,
+      "cost": 0.0022975
+    }
+  }
+}

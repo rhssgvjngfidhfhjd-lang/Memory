@@ -1,0 +1,36 @@
+{
+  "id": "7f7592b7-464a-4ec1-bb68-1418c42c5dc5",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:25.247427",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 384067,
+    "modified_time": "2026-08-23T22:07:17.121129"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a series of movie posters lined up against a wall in a cinema or promotional setting. The posters feature various films with prominent characters and vibrant designs. Visible titles include \"The Dunging Queen,\" dated April 30, and \"A Gilded Game,\" dated May 1. Other posters depict animated characters and dramatic scenes. The atmosphere is lively and engaging, suggesting excitement for upcoming releases. The scene is well-lit, with a modern interior design featuring gray panels and a red accent.",
+    "final_text": "The image shows a series of movie posters lined up against a wall in a cinema or promotional setting. The posters feature various films with prominent characters and vibrant designs. Visible titles include \"The Dunging Queen,\" dated April 30, and \"A Gilded Game,\" dated May 1. Other posters depict animated characters and dramatic scenes. The atmosphere is lively and engaging, suggesting excitement for upcoming releases. The scene is well-lit, with a modern interior design featuring gray panels and a red accent.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426685-PlU1ZV1mJcmdVT7KdvYp",
+    "created": 1788426685,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 102,
+      "total_tokens": 822,
+      "cost": 0.00282
+    }
+  }
+}

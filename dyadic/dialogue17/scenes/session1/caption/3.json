@@ -1,0 +1,36 @@
+{
+  "id": "e5db4352-1bef-4f7c-bd91-aa0cc235a8d6",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:36.641664",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session1/image/3.png",
+    "filename": "3.png",
+    "size": 593381,
+    "modified_time": "2026-08-23T21:35:45.335775"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a diagram illustrating a smart home network system. It features interconnected devices such as a laptop, smartphone, TV, cameras, speakers, and various sensors. These devices are linked via wireless signals and networks like Ethernet and telephone lines. Visible text includes labels for each device and connection type, primarily in Chinese. The mood is technical and informative, showcasing the integration and automation of home devices for enhanced connectivity and control.",
+    "final_text": "The image is a diagram illustrating a smart home network system. It features interconnected devices such as a laptop, smartphone, TV, cameras, speakers, and various sensors. These devices are linked via wireless signals and networks like Ethernet and telephone lines. Visible text includes labels for each device and connection type, primarily in Chinese. The mood is technical and informative, showcasing the integration and automation of home devices for enhanced connectivity and control.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427057-FDKxDrMiKhfp4N9JfJqr",
+    "created": 1788427057,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 84,
+      "total_tokens": 1279,
+      "cost": 0.0038275
+    }
+  }
+}

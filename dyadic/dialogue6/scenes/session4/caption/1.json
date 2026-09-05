@@ -1,0 +1,36 @@
+{
+  "id": "9fd91ccb-bb7f-40ef-a3e1-821d13506fe2",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:55.513646",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 282870,
+    "modified_time": "2026-08-23T21:56:40.540781"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two smartphones side by side against a light background. The left phone displays a graph showing a weekly increase of 15% in heart rate variability. Below the graph are circular indicators, with text showing 89% and 92%, labeled as \"恢复率\" (Recovery Rate) and \"睡眠分数\" (Sleep Score). The right phone presents a stress monitoring report with three bars labeled \"压力水平\" (Pressure Level), \"日间精力\" (Daytime Energy), and \"情绪稳定性\" (Emotional Stability), with percentages of 1.5%, 3.2%, and 9.2% respectively. The overall mood is analytical and data-driven, suggesting health monitoring.",
+    "final_text": "The image features two smartphones side by side against a light background. The left phone displays a graph showing a weekly increase of 15% in heart rate variability. Below the graph are circular indicators, with text showing 89% and 92%, labeled as \"恢复率\" (Recovery Rate) and \"睡眠分数\" (Sleep Score). The right phone presents a stress monitoring report with three bars labeled \"压力水平\" (Pressure Level), \"日间精力\" (Daytime Energy), and \"情绪稳定性\" (Emotional Stability), with percentages of 1.5%, 3.2%, and 9.2% respectively. The overall mood is analytical and data-driven, suggesting health monitoring.",
+    "token_stats": {
+      "original_tokens": 159,
+      "final_tokens": 159,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427554-3g1Pd3XJDdnFxgdvi9W3",
+    "created": 1788427554,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 148,
+      "total_tokens": 587,
+      "cost": 0.0025775
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "87998e48-cddf-4e03-abf1-f4d16450eafd",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:37.645715",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session7/image/4.png",
+    "filename": "4.png",
+    "size": 260866,
+    "modified_time": "2026-08-23T21:30:09.548264"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows the app store page for the \"Keep\" fitness application. The main elements include the app icon, featuring a stylized \"K,\" and screenshots of the app interface on mobile devices. Visible text includes the app's name, description, star rating, and user reviews. The screenshots display fitness data and running statistics, with labels such as \"健身数据\" (Fitness Data) and \"户外跑步\" (Outdoor Running). The mood is professional and informative, targeting users interested in fitness tracking and exercise routines. The app is available for iPhone and iPad and is developed by Beijing Calorie Technology Co., Ltd.",
+    "final_text": "The image shows the app store page for the \"Keep\" fitness application. The main elements include the app icon, featuring a stylized \"K,\" and screenshots of the app interface on mobile devices. Visible text includes the app's name, description, star rating, and user reviews. The screenshots display fitness data and running statistics, with labels such as \"健身数据\" (Fitness Data) and \"户外跑步\" (Outdoor Running). The mood is professional and informative, targeting users interested in fitness tracking and exercise routines. The app is available for iPhone and iPad and is developed by Beijing Calorie Technology Co., Ltd.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426513-vw1ZzFheuFNDXk7ml4Zc",
+    "created": 1788426513,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 130,
+      "total_tokens": 847,
+      "cost": 0.0030925
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "3388b136-4aa5-41e6-9140-73994095e879",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:04.903122",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 18775,
+    "modified_time": "2026-08-23T21:54:39.437952"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table detailing different groups labeled A组, B组, and C组, related to fermentation plans. The columns include \"喂养方案,\" \"初始酵液来源,\" \"喂养比例,\" \"喂养频率,\" and \"预期目标.\" Each group has different instructions regarding fermentation ratios, frequencies, and expected outcomes. For example, A组 uses a single flour type with a ratio of 1:1:1 (黑麦粉) and a frequency of every 24 hours, aiming to establish stable lactic acid bacteria. B组 involves mixed grains and introduces diverse microbiota. C组 uses apple fermentation liquid to introduce fruit acids and aromas. The overall mood is scientific and instructional.",
+    "final_text": "The image is a table detailing different groups labeled A组, B组, and C组, related to fermentation plans. The columns include \"喂养方案,\" \"初始酵液来源,\" \"喂养比例,\" \"喂养频率,\" and \"预期目标.\" Each group has different instructions regarding fermentation ratios, frequencies, and expected outcomes. For example, A组 uses a single flour type with a ratio of 1:1:1 (黑麦粉) and a frequency of every 24 hours, aiming to establish stable lactic acid bacteria. B组 involves mixed grains and introduces diverse microbiota. C组 uses apple fermentation liquid to introduce fruit acids and aromas. The overall mood is scientific and instructional.",
+    "token_stats": {
+      "original_tokens": 162,
+      "final_tokens": 162,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427443-M6KGE0c4M3v5oWO07i0K",
+    "created": 1788427443,
+    "usage": {
+      "prompt_tokens": 580,
+      "completion_tokens": 151,
+      "total_tokens": 731,
+      "cost": 0.00296
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "06741523-f22a-4281-bfa8-34917f6e0f5d",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:46.524820",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 1594874,
+    "modified_time": "2026-08-23T22:01:06.503100"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a lush greenhouse filled with clusters of tomato plants. The tomatoes vary in ripeness, displaying shades from green to vibrant red. The plants are supported by stakes, and the ground is covered with a dark protective sheet. The atmosphere is fresh and thriving, suggesting a well-maintained agricultural setting.",
+    "final_text": "The image depicts a lush greenhouse filled with clusters of tomato plants. The tomatoes vary in ripeness, displaying shades from green to vibrant red. The plants are supported by stakes, and the ground is covered with a dark protective sheet. The atmosphere is fresh and thriving, suggesting a well-maintained agricultural setting.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427726-Urwjg4mvcNK0WfOro0bU",
+    "created": 1788427726,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 61,
+      "total_tokens": 916,
+      "cost": 0.0027475
+    }
+  }
+}

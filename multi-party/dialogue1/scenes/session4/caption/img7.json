@@ -1,0 +1,36 @@
+{
+  "id": "ea37ce5a-cf0f-40ab-af56-e1a44bc828cc",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:46.089206",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 225751,
+    "modified_time": "2026-08-23T22:03:46.155563"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image showcases a close-up of thinly sliced salmon arranged on a plate. The salmon is garnished with green herbs and small servings of black caviar. The lighting is focused on the center, creating a spotlight effect, giving the scene an elegant and sophisticated mood. There is no visible text.",
+    "final_text": "The image showcases a close-up of thinly sliced salmon arranged on a plate. The salmon is garnished with green herbs and small servings of black caviar. The lighting is focused on the center, creating a spotlight effect, giving the scene an elegant and sophisticated mood. There is no visible text.",
+    "token_stats": {
+      "original_tokens": 60,
+      "final_tokens": 60,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426583-zxJNq6QB66GKVrGEPkNA",
+    "created": 1788426583,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 60,
+      "total_tokens": 915,
+      "cost": 0.0027375
+    }
+  }
+}

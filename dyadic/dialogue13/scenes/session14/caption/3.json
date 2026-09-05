@@ -1,0 +1,36 @@
+{
+  "id": "2e2b2603-1051-45c9-8418-63d032b9f23b",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:29.342854",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session14/image/3.png",
+    "filename": "3.png",
+    "size": 1614184,
+    "modified_time": "2026-08-23T21:32:28.815654"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a form titled \"社区文化节志愿者报名表\" (Community Cultural Festival Volunteer Registration Form) on a light blue background. It includes fields for \"报名人姓名\" (Name), \"联系方式\" (Contact Information), and \"擅长领域\" (Expertise), with options like 美术指导 (Art Guidance), 剪纸教学 (Paper Cutting Teaching), 体育活动组织 (Sports Activity Organization), marked with checkboxes. There's a section for \"报名截止日期\" (Registration Deadline) with a blank line. The overall atmosphere is formal and organized.",
+    "final_text": "The image shows a form titled \"社区文化节志愿者报名表\" (Community Cultural Festival Volunteer Registration Form) on a light blue background. It includes fields for \"报名人姓名\" (Name), \"联系方式\" (Contact Information), and \"擅长领域\" (Expertise), with options like 美术指导 (Art Guidance), 剪纸教学 (Paper Cutting Teaching), 体育活动组织 (Sports Activity Organization), marked with checkboxes. There's a section for \"报名截止日期\" (Registration Deadline) with a blank line. The overall atmosphere is formal and organized.",
+    "token_stats": {
+      "original_tokens": 145,
+      "final_tokens": 145,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426866-5f87ES3hZbChV9cg2sye",
+    "created": 1788426866,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 119,
+      "total_tokens": 1117,
+      "cost": 0.003685
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "553cf70c-c28d-4c58-abf1-58a946e1cbf4",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:39.090925",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 568820,
+    "modified_time": "2026-08-23T22:05:55.295834"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person standing outdoors on a clear day. They are wearing a light beige jacket, blue leggings, green socks, white sneakers, a gray beanie, and sunglasses. The person is adjusting their mask, which has visible text reading \"OTW.\" Trees with bare branches are in the background, along with a trash bin. The atmosphere is bright and crisp, suggesting a chilly yet sunny winter day.",
+    "final_text": "The image depicts a person standing outdoors on a clear day. They are wearing a light beige jacket, blue leggings, green socks, white sneakers, a gray beanie, and sunglasses. The person is adjusting their mask, which has visible text reading \"OTW.\" Trees with bare branches are in the background, along with a trash bin. The atmosphere is bright and crisp, suggesting a chilly yet sunny winter day.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426638-qB5JwvCcYkdBmDIqrJgc",
+    "created": 1788426638,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 84,
+      "total_tokens": 804,
+      "cost": 0.00264
+    }
+  }
+}

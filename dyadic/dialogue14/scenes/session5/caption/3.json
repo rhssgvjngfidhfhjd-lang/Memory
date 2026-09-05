@@ -1,0 +1,36 @@
+{
+  "id": "0d830772-22b2-47e3-a84b-8959c5abd932",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:59.372010",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session5/image/3.png",
+    "filename": "3.png",
+    "size": 291355,
+    "modified_time": "2026-08-23T21:33:24.818782"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a cute, cartoon-style character resembling a duck, sitting on the ground. It has a simple design with a white body, black outlines, and an orange beak. The character wears a yellow hat. Above the character, there is Chinese text that reads \"非常感谢,\" meaning \"Thank you very much.\" The mood is cheerful and playful, conveying gratitude. The image includes a watermark from \"ibaotu.com,\" indicating its source.",
+    "final_text": "The image features a cute, cartoon-style character resembling a duck, sitting on the ground. It has a simple design with a white body, black outlines, and an orange beak. The character wears a yellow hat. Above the character, there is Chinese text that reads \"非常感谢,\" meaning \"Thank you very much.\" The mood is cheerful and playful, conveying gratitude. The image includes a watermark from \"ibaotu.com,\" indicating its source.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426897-Ee1eJtur9iqMNWkvVm3N",
+    "created": 1788426897,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 91,
+      "total_tokens": 808,
+      "cost": 0.0027025
+    }
+  }
+}

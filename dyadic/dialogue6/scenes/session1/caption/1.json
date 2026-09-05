@@ -1,0 +1,36 @@
+{
+  "id": "482bbc61-b16e-4408-8753-a2b957016c23",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:37.835662",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 679786,
+    "modified_time": "2026-08-23T22:06:47.737636"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a rustic table with a weathered paper listing a travel itinerary to Japan, featuring places like Tokyo Tower and Kyoto's Fushimi Inari Shrine, with some entries crossed out. A glass of iced coffee sits beside the paper. Below the list, there are handwritten notes in English and other text. The atmosphere is casual, suggesting travel planning or reflection. A map and other papers accompany the main list.",
+    "final_text": "The image shows a rustic table with a weathered paper listing a travel itinerary to Japan, featuring places like Tokyo Tower and Kyoto's Fushimi Inari Shrine, with some entries crossed out. A glass of iced coffee sits beside the paper. Below the list, there are handwritten notes in English and other text. The atmosphere is casual, suggesting travel planning or reflection. A map and other papers accompany the main list.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427536-aUZJTXYa5UojROBMS1Ou",
+    "created": 1788427536,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 84,
+      "total_tokens": 939,
+      "cost": 0.0029775
+    }
+  }
+}

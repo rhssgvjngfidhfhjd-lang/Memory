@@ -1,0 +1,36 @@
+{
+  "id": "8f5234b1-4ff9-4f67-884f-57621c1d2bd8",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:59.288422",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session9/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 508359,
+    "modified_time": "2026-08-23T21:30:43.837852"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "This image titled \"Types of Relationships\" is a colorful illustration featuring various couples and individuals representing different relationship types. Each scene is labeled and includes:\n\n1. **Long-Distance Relationship**: A couple holding a globe with hearts, indicating distance.\n2. **Toxic Relationship**: One person crying, the other pointing, with a broken heart symbol.\n3. **Platonic Relationship**: Two people holding a sign reading \"NO SEX OR PHYSICAL INTIMACY.\"\n4. **Codependent Relationship**: A couple bound together with rope, surrounded by lightning bolts.\n5. **Romantic Relationship**: A couple embracing with hearts and a key symbol.\n6. **Family Relationship**: A family with parents and a child, surrounded by hearts.\n7. **Mutual Relationship**: Two people holding hands, with a heart and shield symbol.\n8. **Monogamous Relationship**: A couple forming a heart shape together with their hands, wearing a \"MY LOVE\" shirt.\n9. **Open Relationship**: Three people sitting closely, surrounded by hearts and drinks.\n10. **Casual Relationship**: A couple with one person holding a phone showing a dating app.\n\nThe mood is light-hearted and illustrative, with playful depictions of various relationship dynamics.",
+    "final_text": "This image titled \"Types of Relationships\" is a colorful illustration featuring various couples and individuals representing different relationship types. Each scene is labeled and includes:\n\n1. **Long-Distance Relationship**: A couple holding a globe with hearts, indicating distance.\n2. **Toxic Relationship**: One person crying, the other pointing, with a broken heart symbol.\n3. **Platonic Relationship**: Two people holding a sign reading \"NO SEX OR PHYSICAL INTIMACY.\"\n4. **Codependent Relationship**: A couple bound together with rope, surrounded by lightning bolts.\n5. **Romantic Relationship**: A couple embracing with hearts and a key symbol.\n6. **Family Relationship**: A family with parents and a child, surrounded by hearts.\n7. **Mutual Relationship**: Two people holding hands, with a heart and shield symbol.\n8. **Monogamous Relationship**: A couple forming a heart shape together with their hands, wearing a \"MY LOVE\" shirt.\n9. **Open Relationship**: Three people sitting closely, surrounded by hearts and drinks.\n10. **Casual Relationship**: A couple with one person holding a phone showing a dating app.\n\nThe mood is light-hearted and illustrative, with playful depictions of various relationship dynamics.",
+    "token_stats": {
+      "original_tokens": 249,
+      "final_tokens": 249,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426595-A9UOlpOM8gNPQwpyI0k4",
+    "created": 1788426595,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 257,
+      "total_tokens": 1537,
+      "cost": 0.00577
+    }
+  }
+}

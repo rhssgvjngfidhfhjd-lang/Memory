@@ -1,0 +1,36 @@
+{
+  "id": "7793b6b5-3c7c-4dec-9c6d-074a692de750",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:01.205677",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 212293,
+    "modified_time": "2026-08-23T22:06:51.983119"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person standing on a soccer field, wearing a blue and red soccer jersey with the Nike logo and a team crest. They are also wearing Adidas pants, white Nike socks, and soccer cleats. In the background, several people are playing soccer on a field with multicolored bleachers. The sky is cloudy, creating a relaxed atmosphere. The person is smiling, adding a cheerful mood to the scene.",
+    "final_text": "The image depicts a person standing on a soccer field, wearing a blue and red soccer jersey with the Nike logo and a team crest. They are also wearing Adidas pants, white Nike socks, and soccer cleats. In the background, several people are playing soccer on a field with multicolored bleachers. The sky is cloudy, creating a relaxed atmosphere. The person is smiling, adding a cheerful mood to the scene.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426657-D9GLPxclBsaytcO4YU91",
+    "created": 1788426657,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 86,
+      "total_tokens": 806,
+      "cost": 0.00266
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "6a94e00a-8c15-47b9-80e6-a7cf3be8c171",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:21.854765",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session15/image/2.png",
+    "filename": "2.png",
+    "size": 309260,
+    "modified_time": "2026-08-23T21:45:23.331634"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a graph depicting the age structure changes of Chinese internet users from 2020 to 2024. It consists of a stacked area chart illustrating the percentage of different age groups over these years. The age categories are color-coded, ranging from under 10 years to 60 years and above. The text at the top explains trends in internet usage among older and younger demographics, highlighting the growing proportion of users aged 50 and above. The overall mood is analytical, focused on demographic shifts and consumer trends. The graph shows a slight increase in older age groups and a decrease in younger ones over time.",
+    "final_text": "The image is a graph depicting the age structure changes of Chinese internet users from 2020 to 2024. It consists of a stacked area chart illustrating the percentage of different age groups over these years. The age categories are color-coded, ranging from under 10 years to 60 years and above. The text at the top explains trends in internet usage among older and younger demographics, highlighting the growing proportion of users aged 50 and above. The overall mood is analytical, focused on demographic shifts and consumer trends. The graph shows a slight increase in older age groups and a decrease in younger ones over time.",
+    "token_stats": {
+      "original_tokens": 122,
+      "final_tokens": 122,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427399-HHVeB2TQAXpjCdEYj2Yf",
+    "created": 1788427399,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 123,
+      "total_tokens": 840,
+      "cost": 0.0030225
+    }
+  }
+}

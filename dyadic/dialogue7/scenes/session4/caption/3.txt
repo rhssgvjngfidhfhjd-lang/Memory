@@ -1,0 +1,17 @@
+The image displays a comprehensive health document for a Labrador dog named 多多. It includes three sections: 
+
+1. **Basic Information**: 
+   - Breed: Labrador Retriever
+   - Birth Date: May 15, 2020
+   - Coat Color: Golden
+   - Chip ID: 84001023456789
+   - Registration Date: August 10, 2020
+   - Owner Contact: 手机: 138×××××××× 
+
+2. **Vaccination Records**: 
+   - Lists dates, vaccine types (DHPPL), batch numbers, administering agency, and next vaccination due dates from August 2020 to November 2023.
+
+3. **Routine Check Records**: 
+   - Check dated March 15, 2023, with details on product name, dosage, and remarks. 
+
+Overall, the document is organized and informative, providing essential health and vaccination details.

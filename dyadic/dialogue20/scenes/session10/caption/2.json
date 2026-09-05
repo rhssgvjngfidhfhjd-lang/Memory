@@ -1,0 +1,36 @@
+{
+  "id": "93ec9701-36a5-4b02-8d97-18919cfeb549",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:02.932599",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session10/image/2.png",
+    "filename": "2.png",
+    "size": 836895,
+    "modified_time": "2026-08-23T21:41:41.619441"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional advertisement for outdoor trail running shoes, featuring a black shoe on a mossy surface with sunlight filtering through trees, creating a vibrant and energetic atmosphere. The left side shows the shoe with Chinese text describing its anti-slip and shock-absorbing features. A red tag indicates a discount offer. The right side showcases the shoe's sole with visual elements highlighting its cushioning technology. Additional text emphasizes energy return and foot support, targeting outdoor enthusiasts. The overall mood is dynamic and adventurous.",
+    "final_text": "The image is a promotional advertisement for outdoor trail running shoes, featuring a black shoe on a mossy surface with sunlight filtering through trees, creating a vibrant and energetic atmosphere. The left side shows the shoe with Chinese text describing its anti-slip and shock-absorbing features. A red tag indicates a discount offer. The right side showcases the shoe's sole with visual elements highlighting its cushioning technology. Additional text emphasizes energy return and foot support, targeting outdoor enthusiasts. The overall mood is dynamic and adventurous.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427321-kga1F92WwzJ6yyQcFQe6",
+    "created": 1788427321,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 99,
+      "total_tokens": 954,
+      "cost": 0.0031275
+    }
+  }
+}

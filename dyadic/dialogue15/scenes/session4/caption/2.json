@@ -1,0 +1,36 @@
+{
+  "id": "fb122089-b2ab-4aba-8aca-31c6a2d014e1",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:03.718405",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session4/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 96106,
+    "modified_time": "2026-08-23T21:34:29.771137"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a GitHub repository page for \"knightyun.github.io\" forked from another user. The page includes various tabs like Code, Pull requests, Projects, etc. The repository has 137 commits, 1 branch, and 2 contributors. A red arrow points to the \"Fork\" button with a count of 21. The file list includes folders like _includes, _layouts, and files like .gitignore, README.md, and index.html. The latest commit was made 4 hours ago. The mood is technical and organized, focused on web development and code management.",
+    "final_text": "The image shows a GitHub repository page for \"knightyun.github.io\" forked from another user. The page includes various tabs like Code, Pull requests, Projects, etc. The repository has 137 commits, 1 branch, and 2 contributors. A red arrow points to the \"Fork\" button with a count of 21. The file list includes folders like _includes, _layouts, and files like .gitignore, README.md, and index.html. The latest commit was made 4 hours ago. The mood is technical and organized, focused on web development and code management.",
+    "token_stats": {
+      "original_tokens": 121,
+      "final_tokens": 121,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426962-OPMbfBHh510w4UFzO7dG",
+    "created": 1788426962,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 121,
+      "total_tokens": 1656,
+      "cost": 0.0050475
+    }
+  }
+}

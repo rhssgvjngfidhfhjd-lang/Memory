@@ -1,0 +1,36 @@
+{
+  "id": "0d722251-5ada-4d49-91cc-bf4ccb5bacfe",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:51.044595",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session9/image/1.png",
+    "filename": "1.png",
+    "size": 632569,
+    "modified_time": "2026-08-23T21:49:53.409583"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a voting interface with four culinary options, each illustrated and labeled in Chinese. \n\n1. Hot Pot: A pot with steaming food inside.\n2. Skewers: Grilled skewers emitting smoke.\n3. Home Cooking: A plate of neatly arranged dishes.\n4. Japanese Cuisine: A platter of sushi.\n\nEach option shows \"0%\" indicating no votes yet. Below, there's a button labeled \"确认投票[选项]\" (Confirm Vote [Option]) and other options for adding reasons, sharing the vote, and viewing details. The background is predominantly orange, creating a warm and inviting atmosphere.",
+    "final_text": "The image displays a voting interface with four culinary options, each illustrated and labeled in Chinese. \n\n1. Hot Pot: A pot with steaming food inside.\n2. Skewers: Grilled skewers emitting smoke.\n3. Home Cooking: A plate of neatly arranged dishes.\n4. Japanese Cuisine: A platter of sushi.\n\nEach option shows \"0%\" indicating no votes yet. Below, there's a button labeled \"确认投票[选项]\" (Confirm Vote [Option]) and other options for adding reasons, sharing the vote, and viewing details. The background is predominantly orange, creating a warm and inviting atmosphere.",
+    "token_stats": {
+      "original_tokens": 128,
+      "final_tokens": 128,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427366-LBHwLgqXqrXwqVJXcQgA",
+    "created": 1788427366,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 125,
+      "total_tokens": 640,
+      "cost": 0.0025375
+    }
+  }
+}

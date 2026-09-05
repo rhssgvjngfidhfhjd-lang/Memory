@@ -1,0 +1,36 @@
+{
+  "id": "c2ee624c-371e-4fa7-a76e-4142df925bcf",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:00.447140",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 315446,
+    "modified_time": "2026-08-23T22:09:56.914700"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a hand holding a black leather glove with a fur cuff. The background features bare tree branches, suggesting a winter setting. The glove is the main focus, and the overall atmosphere is calm and neutral, with no visible text.",
+    "final_text": "The image shows a hand holding a black leather glove with a fur cuff. The background features bare tree branches, suggesting a winter setting. The glove is the main focus, and the overall atmosphere is calm and neutral, with no visible text.",
+    "token_stats": {
+      "original_tokens": 48,
+      "final_tokens": 48,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426900-D3Zhom0nNhqdVGNlrnbq",
+    "created": 1788426900,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 48,
+      "total_tokens": 1243,
+      "cost": 0.0034675
+    }
+  }
+}

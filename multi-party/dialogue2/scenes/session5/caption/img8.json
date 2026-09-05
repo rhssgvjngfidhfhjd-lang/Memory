@@ -1,0 +1,36 @@
+{
+  "id": "9f1006b0-12c3-4a3a-97ea-9f1a10c045b9",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:19.268288",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session5/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 312287,
+    "modified_time": "2026-08-23T22:07:06.558508"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant salad served on a white plate. The main elements include sliced hard-boiled eggs, halved cherry tomatoes, fresh lettuce, shredded purple cabbage, and diced potatoes. The salad is drizzled with a creamy dressing. A fork is placed on the side of the plate, suggesting readiness for eating. The overall atmosphere is fresh and appetizing, with a colorful array of ingredients creating an inviting meal presentation.",
+    "final_text": "The image depicts a vibrant salad served on a white plate. The main elements include sliced hard-boiled eggs, halved cherry tomatoes, fresh lettuce, shredded purple cabbage, and diced potatoes. The salad is drizzled with a creamy dressing. A fork is placed on the side of the plate, suggesting readiness for eating. The overall atmosphere is fresh and appetizing, with a colorful array of ingredients creating an inviting meal presentation.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426677-KCprVAcz9R6EdcE3aFcr",
+    "created": 1788426677,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 87,
+      "total_tokens": 807,
+      "cost": 0.00267
+    }
+  }
+}

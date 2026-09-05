@@ -1,0 +1,36 @@
+{
+  "id": "1378398c-7e30-4785-8e5c-950c40c3d7bf",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:54.705985",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session7/image/4.png",
+    "filename": "4.png",
+    "size": 804764,
+    "modified_time": "2026-08-23T21:42:35.389661"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A skier in a bright blue and green outfit is descending a snow-covered slope under a clear blue sky. The skier is wearing goggles and a helmet, gripping ski poles, and maneuvering confidently. Pine trees are visible in the background, adding a touch of nature to the scene. The atmosphere is dynamic and energetic, capturing the thrill of skiing on a sunny winter day.",
+    "final_text": "A skier in a bright blue and green outfit is descending a snow-covered slope under a clear blue sky. The skier is wearing goggles and a helmet, gripping ski poles, and maneuvering confidently. Pine trees are visible in the background, adding a touch of nature to the scene. The atmosphere is dynamic and energetic, capturing the thrill of skiing on a sunny winter day.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427313-4CybmInYBg4DUDZCC4KK",
+    "created": 1788427313,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 74,
+      "total_tokens": 929,
+      "cost": 0.0028775
+    }
+  }
+}

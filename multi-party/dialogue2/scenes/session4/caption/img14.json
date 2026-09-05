@@ -1,0 +1,36 @@
+{
+  "id": "55b80a14-26f6-4012-85ce-325fd3c01617",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:07.602382",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 347502,
+    "modified_time": "2026-08-23T22:06:50.411249"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a jubilant soccer team celebrating a victory. The team members, dressed in blue and yellow uniforms, are gathered on a podium, raising their hands and smiling. Confetti is falling, and smoke is visible in the background, creating a festive atmosphere. A trophy is held aloft by one of the players. The text \"K LEAGUE 1 2024\" is prominently displayed on a banner above them. Spectators can be seen in the stands, adding to the celebratory mood.",
+    "final_text": "The image depicts a jubilant soccer team celebrating a victory. The team members, dressed in blue and yellow uniforms, are gathered on a podium, raising their hands and smiling. Confetti is falling, and smoke is visible in the background, creating a festive atmosphere. A trophy is held aloft by one of the players. The text \"K LEAGUE 1 2024\" is prominently displayed on a banner above them. Spectators can be seen in the stands, adding to the celebratory mood.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426666-tfGz4bAf04BhWizeMVEY",
+    "created": 1788426666,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 103,
+      "total_tokens": 958,
+      "cost": 0.0031675
+    }
+  }
+}

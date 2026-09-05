@@ -1,0 +1,36 @@
+{
+  "id": "eb352946-0191-44ed-875e-9d862ef80946",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:59.400672",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 191834,
+    "modified_time": "2026-08-23T21:56:31.325972"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a sleek, modern design for a \"Smart Fitness\" app interface. The background is dark with the title \"Smart Fitness\" and \"2020 DESIGN\" in bold white text. Below the title, there is text in Chinese characters. A smartphone screen displays fitness data, showing numbers and icons related to gym activities. The app targets smart gym members to intelligently obtain fitness data. The overall atmosphere is tech-savvy and innovative.",
+    "final_text": "The image depicts a sleek, modern design for a \"Smart Fitness\" app interface. The background is dark with the title \"Smart Fitness\" and \"2020 DESIGN\" in bold white text. Below the title, there is text in Chinese characters. A smartphone screen displays fitness data, showing numbers and icons related to gym activities. The app targets smart gym members to intelligently obtain fitness data. The overall atmosphere is tech-savvy and innovative.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427560-KIIyAISA11BPBivYkm2D",
+    "created": 1788427560,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 88,
+      "total_tokens": 1283,
+      "cost": 0.0038675
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "58cc370f-64a1-4b33-90f7-8b0e2357e8a3",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:27.634335",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 323715,
+    "modified_time": "2026-08-23T22:09:12.865020"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a neatly arranged scene on a tiled floor, featuring a gray fabric item packaged in a clear plastic bag with visible text. The text includes \"TEENIE WEENIE ALL THAT BEAR\" alongside other warnings and recycling symbols. Next to it lies a textured blue envelope, partially opened, with gold bear logos and text. The atmosphere is tidy and organized, suggesting a recent unboxing or delivery.",
+    "final_text": "The image shows a neatly arranged scene on a tiled floor, featuring a gray fabric item packaged in a clear plastic bag with visible text. The text includes \"TEENIE WEENIE ALL THAT BEAR\" alongside other warnings and recycling symbols. Next to it lies a textured blue envelope, partially opened, with gold bear logos and text. The atmosphere is tidy and organized, suggesting a recent unboxing or delivery.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426806-dcv0FGB5q4sCiqOwTRun",
+    "created": 1788426806,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 84,
+      "total_tokens": 804,
+      "cost": 0.00264
+    }
+  }
+}

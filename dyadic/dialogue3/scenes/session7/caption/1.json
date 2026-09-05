@@ -1,0 +1,36 @@
+{
+  "id": "42b60256-02dd-47e6-9a27-e3b409915300",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:38.189460",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 590305,
+    "modified_time": "2026-08-23T21:49:27.426398"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional poster for a mystery-themed role-playing game. The main elements include large Chinese characters at the top, with additional text below promoting a \"new script\" and \"half-price\" discount. The background features dark, eerie imagery, creating a suspenseful and mysterious atmosphere. Torn paper edges are visible at the bottom, adding to the intrigue. Red circular elements highlight key offers, and the overall mood is ominous and engaging.",
+    "final_text": "The image is a promotional poster for a mystery-themed role-playing game. The main elements include large Chinese characters at the top, with additional text below promoting a \"new script\" and \"half-price\" discount. The background features dark, eerie imagery, creating a suspenseful and mysterious atmosphere. Torn paper edges are visible at the bottom, adding to the intrigue. Red circular elements highlight key offers, and the overall mood is ominous and engaging.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427356-PIfiAH5oDIoDDE6tK5kF",
+    "created": 1788427356,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 89,
+      "total_tokens": 604,
+      "cost": 0.0021775
+    }
+  }
+}

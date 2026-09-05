@@ -1,0 +1,36 @@
+{
+  "id": "da197fb2-3908-4ffe-8c40-560458680954",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:46.602727",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 933282,
+    "modified_time": "2026-08-23T22:01:04.076924"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a pencil sketch of a four-tiered wooden shelf. The structure is simple and sturdy, with each shelf having a grid pattern on its surface. The perspective shows the shelf from a slight angle, highlighting its depth and shadow. The overall mood is minimalistic and functional, with a focus on the craftsmanship of the wooden shelves. There is no visible text or additional elements present.",
+    "final_text": "The image features a pencil sketch of a four-tiered wooden shelf. The structure is simple and sturdy, with each shelf having a grid pattern on its surface. The perspective shows the shelf from a slight angle, highlighting its depth and shadow. The overall mood is minimalistic and functional, with a focus on the craftsmanship of the wooden shelves. There is no visible text or additional elements present.",
+    "token_stats": {
+      "original_tokens": 78,
+      "final_tokens": 78,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427726-6ntL8ouqJImNNySVXqjR",
+    "created": 1788427726,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 78,
+      "total_tokens": 933,
+      "cost": 0.0029175
+    }
+  }
+}

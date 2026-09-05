@@ -1,0 +1,36 @@
+{
+  "id": "502de377-5afa-449e-a3f6-f152f0d5aa5f",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:42.179848",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img15.jpg",
+    "filename": "img15.jpg",
+    "size": 1133922,
+    "modified_time": "2026-08-23T22:09:12.944221"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a delivery person sitting in a red JD Express vehicle, parked on a street. The person is wearing a red uniform and cap, holding a phone, possibly communicating or checking messages. Several large boxes are stacked on the back of the vehicle. In the background, a building with signage is visible, including text in Chinese. The mood appears busy and industrious, typical of a delivery setting. Text on the image reads \"上门取件上来吧,\" which translates to \"Come up for the pickup.\"",
+    "final_text": "The image depicts a delivery person sitting in a red JD Express vehicle, parked on a street. The person is wearing a red uniform and cap, holding a phone, possibly communicating or checking messages. Several large boxes are stacked on the back of the vehicle. In the background, a building with signage is visible, including text in Chinese. The mood appears busy and industrious, typical of a delivery setting. Text on the image reads \"上门取件上来吧,\" which translates to \"Come up for the pickup.\"",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426819-PlWXnAsBhwZNMW6V2sTQ",
+    "created": 1788426819,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 106,
+      "total_tokens": 1104,
+      "cost": 0.003555
+    }
+  }
+}

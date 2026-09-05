@@ -1,0 +1,36 @@
+{
+  "id": "6a01c623-f6ea-44d7-8dbc-9109deda8ece",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:16.960061",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 1212907,
+    "modified_time": "2026-08-23T21:39:43.562502"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a fluffy cat with striking blue eyes lounging on a bed. The bed is covered with a white blanket, and behind the cat are decorative pillows. One pillow is blue with an embroidered lighthouse design, while another has a fishbone pattern. The atmosphere is calm and cozy, highlighting the cat's relaxed demeanor.",
+    "final_text": "The image features a fluffy cat with striking blue eyes lounging on a bed. The bed is covered with a white blanket, and behind the cat are decorative pillows. One pillow is blue with an embroidered lighthouse design, while another has a fishbone pattern. The atmosphere is calm and cozy, highlighting the cat's relaxed demeanor.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427215-gm2sW4tFaPn39HfqBZrO",
+    "created": 1788427215,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 64,
+      "total_tokens": 1259,
+      "cost": 0.0036275
+    }
+  }
+}

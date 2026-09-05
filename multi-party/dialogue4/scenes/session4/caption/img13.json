@@ -1,0 +1,36 @@
+{
+  "id": "5ec287ff-5fbc-4cf4-aec0-47bde2729ec3",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:39.293466",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 478138,
+    "modified_time": "2026-08-23T22:09:11.656274"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a tall stack of flattened cardboard boxes, organized in a compressed manner. Various sizes and colors are visible, including brown, red, and orange. Some boxes have printed text, numbers, and symbols on them. The atmosphere is cluttered yet orderly, suggesting preparation for recycling or storage. No people or animals are present, and the mood is neutral and practical.",
+    "final_text": "The image shows a tall stack of flattened cardboard boxes, organized in a compressed manner. Various sizes and colors are visible, including brown, red, and orange. Some boxes have printed text, numbers, and symbols on them. The atmosphere is cluttered yet orderly, suggesting preparation for recycling or storage. No people or animals are present, and the mood is neutral and practical.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426815-H5Rqv8AwcgfWmBoJibuq",
+    "created": 1788426815,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 76,
+      "total_tokens": 1074,
+      "cost": 0.003255
+    }
+  }
+}

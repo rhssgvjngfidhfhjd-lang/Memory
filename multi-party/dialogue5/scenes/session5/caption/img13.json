@@ -1,0 +1,36 @@
+{
+  "id": "0437ba0a-8b1b-4dfb-93c8-5aafe92f9a70",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:06.529977",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 136594,
+    "modified_time": "2026-08-23T22:09:51.946350"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image captures the view from an airplane window during a flight. The main elements include the wing of the airplane and the engine, visible in the lower left corner. The scene is dominated by rain or snow streaks across the window, suggesting inclement weather. A red light is visible on the tip of the wing, indicating the aircraft's navigation lights. The overall mood is tense and atmospheric, with the weather adding a dramatic element to the scene. There is no visible text in the image.",
+    "final_text": "The image captures the view from an airplane window during a flight. The main elements include the wing of the airplane and the engine, visible in the lower left corner. The scene is dominated by rain or snow streaks across the window, suggesting inclement weather. A red light is visible on the tip of the wing, indicating the aircraft's navigation lights. The overall mood is tense and atmospheric, with the weather adding a dramatic element to the scene. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426904-p9H33kqrWGg6707Ni5SQ",
+    "created": 1788426904,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 100,
+      "total_tokens": 820,
+      "cost": 0.0028
+    }
+  }
+}

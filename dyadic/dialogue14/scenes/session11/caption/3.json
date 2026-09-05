@@ -1,0 +1,36 @@
+{
+  "id": "c5a5a1a7-7df9-4562-a8ae-0e8c063ca65d",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:30.086806",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session11/image/3.png",
+    "filename": "3.png",
+    "size": 2035481,
+    "modified_time": "2026-08-23T21:33:01.254045"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is divided into two sections, each highlighting different achievements. \n\nOn the left, there is a graph showing coding submissions over time, peaking at 12,000 lines in March 2024. Text mentions GitHub project results and an intelligent library management system with over 500 stars.\n\nOn the right, a bar graph represents article readership, with a high-read article about campus events. A photo shows a group of people in front of a stall at a creative market event in spring 2024, attended by over 200 people. The overall mood is informative and celebratory, showcasing success in coding and campus activities.",
+    "final_text": "The image is divided into two sections, each highlighting different achievements. \n\nOn the left, there is a graph showing coding submissions over time, peaking at 12,000 lines in March 2024. Text mentions GitHub project results and an intelligent library management system with over 500 stars.\n\nOn the right, a bar graph represents article readership, with a high-read article about campus events. A photo shows a group of people in front of a stall at a creative market event in spring 2024, attended by over 200 people. The overall mood is informative and celebratory, showcasing success in coding and campus activities.",
+    "token_stats": {
+      "original_tokens": 127,
+      "final_tokens": 127,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426926-Nd9yM88lUHad7n5tlsCj",
+    "created": 1788426926,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 127,
+      "total_tokens": 1322,
+      "cost": 0.0042575
+    }
+  }
+}

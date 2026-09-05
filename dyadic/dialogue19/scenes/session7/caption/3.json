@@ -1,0 +1,36 @@
+{
+  "id": "dc1f1e10-0ef5-41c8-a504-77f3c0987a46",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:11.623677",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 1350315,
+    "modified_time": "2026-08-23T21:39:40.524322"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a red circular stamp design with a smiling emoji at the center. Surrounding the emoji are concentric red circles with a serrated outer edge. Chinese characters are prominently displayed on either side of the emoji. The overall mood is cheerful and playful, suggesting approval or endorsement.",
+    "final_text": "The image features a red circular stamp design with a smiling emoji at the center. Surrounding the emoji are concentric red circles with a serrated outer edge. Chinese characters are prominently displayed on either side of the emoji. The overall mood is cheerful and playful, suggesting approval or endorsement.",
+    "token_stats": {
+      "original_tokens": 57,
+      "final_tokens": 57,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427210-c9xTemFAKvUUrj3pBRyR",
+    "created": 1788427210,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 57,
+      "total_tokens": 912,
+      "cost": 0.0027075
+    }
+  }
+}

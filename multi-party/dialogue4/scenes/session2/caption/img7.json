@@ -1,0 +1,36 @@
+{
+  "id": "c0de3cc4-3bb7-4da4-ae36-2d9f2a2e5302",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:04.714530",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session2/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 325405,
+    "modified_time": "2026-08-23T22:08:51.803691"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a luxury Louis Vuitton handbag inside an open box. The handbag is light-colored with a textured surface, featuring a prominent gold \"LV\" logo and a decorative chain. The box is orange with \"LOUIS VUITTON\" and \"MAISON FONDÉE EN 1854 PARIS\" printed on it. The atmosphere is elegant and sophisticated, emphasizing luxury and style.",
+    "final_text": "The image shows a luxury Louis Vuitton handbag inside an open box. The handbag is light-colored with a textured surface, featuring a prominent gold \"LV\" logo and a decorative chain. The box is orange with \"LOUIS VUITTON\" and \"MAISON FONDÉE EN 1854 PARIS\" printed on it. The atmosphere is elegant and sophisticated, emphasizing luxury and style.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426782-6NatFi2Y2MU3iuUCWOyi",
+    "created": 1788426782,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 79,
+      "total_tokens": 934,
+      "cost": 0.0029275
+    }
+  }
+}

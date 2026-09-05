@@ -1,0 +1,36 @@
+{
+  "id": "7b602180-c24c-4856-8e31-771dba7bda69",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:28.375156",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session12/image/3.png",
+    "filename": "3.png",
+    "size": 190549,
+    "modified_time": "2026-08-23T22:00:34.116971"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table titled \"2024年度社区邻里互助项目讨论分析表,\" which translates to \"2024 Community Neighborhood Mutual Assistance Project Discussion Analysis Table.\" The table contains five columns: 项目名称 (Project Name), 居民欢迎度 (Resident Welcome Level), 可持续性评级 (Sustainability Rating), 核心优势 (Core Advantages), and 遇到的阻力/待改进点 (Challenges/Areas for Improvement). Four projects are listed: 流浪猫TNR (Stray Cat TNR), 共享亲篮 (Shared Basket), 二手集市 (Second-hand Market), and 健康监测 (Health Monitoring). Each row evaluates the projects based on resident acceptance, sustainability, advantages, and challenges. The overall mood is analytical and structured, aiming for community improvement.",
+    "final_text": "The image is a table titled \"2024年度社区邻里互助项目讨论分析表,\" which translates to \"2024 Community Neighborhood Mutual Assistance Project Discussion Analysis Table.\" The table contains five columns: 项目名称 (Project Name), 居民欢迎度 (Resident Welcome Level), 可持续性评级 (Sustainability Rating), 核心优势 (Core Advantages), and 遇到的阻力/待改进点 (Challenges/Areas for Improvement). Four projects are listed: 流浪猫TNR (Stray Cat TNR), 共享亲篮 (Shared Basket), 二手集市 (Second-hand Market), and 健康监测 (Health Monitoring). Each row evaluates the projects based on resident acceptance, sustainability, advantages, and challenges. The overall mood is analytical and structured, aiming for community improvement.",
+    "token_stats": {
+      "original_tokens": 201,
+      "final_tokens": 201,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427767-tM0cHEuTDH468F5t03Mt",
+    "created": 1788427767,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 171,
+      "total_tokens": 888,
+      "cost": 0.0035025
+    }
+  }
+}

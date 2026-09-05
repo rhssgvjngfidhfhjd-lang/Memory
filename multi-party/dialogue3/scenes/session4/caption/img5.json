@@ -1,0 +1,36 @@
+{
+  "id": "c0f05273-551b-4879-8039-6f15dd0f5048",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:16.302002",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session4/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 289667,
+    "modified_time": "2026-08-23T22:07:45.077177"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a green screen set with four individuals in motion. Three people are wearing green suits, two of them with large, padded sections and stilts, indicating they are actors in a special effects scene. A woman in a silver and black striped dress stands in the center, walking forward. The atmosphere suggests a behind-the-scenes look at a film production, focusing on special effects and CGI elements. There is no visible text. The mood is professional and creative, highlighting the technical aspects of filmmaking.",
+    "final_text": "The image depicts a green screen set with four individuals in motion. Three people are wearing green suits, two of them with large, padded sections and stilts, indicating they are actors in a special effects scene. A woman in a silver and black striped dress stands in the center, walking forward. The atmosphere suggests a behind-the-scenes look at a film production, focusing on special effects and CGI elements. There is no visible text. The mood is professional and creative, highlighting the technical aspects of filmmaking.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426735-oSgk3oh85Zka5LIjQiCb",
+    "created": 1788426735,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 101,
+      "total_tokens": 540,
+      "cost": 0.0021075
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "888c8715-9c0b-459e-8d24-90816a5cc448",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:46.052769",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session16/image/3.png",
+    "filename": "3.png",
+    "size": 231765,
+    "modified_time": "2026-08-23T21:33:09.066155"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table titled \"AI成为‘副驾驭’而非‘替代者’的落地路径与共识表,\" focusing on AI's role as an assistant rather than a replacement. It presents two roles: 陆震光 (editing/technical development) and 林星晚 (content creation/operation). The table outlines AI's specific application scenarios, actions to avoid AI replacement, and mutual understandings and directions. Text emphasizes using AI to enhance efficiency, reduce errors, and support decision-making without replacing human input. The overall mood is informative and strategic, highlighting collaboration between humans and AI.",
+    "final_text": "The image is a table titled \"AI成为‘副驾驭’而非‘替代者’的落地路径与共识表,\" focusing on AI's role as an assistant rather than a replacement. It presents two roles: 陆震光 (editing/technical development) and 林星晚 (content creation/operation). The table outlines AI's specific application scenarios, actions to avoid AI replacement, and mutual understandings and directions. Text emphasizes using AI to enhance efficiency, reduce errors, and support decision-making without replacing human input. The overall mood is informative and strategic, highlighting collaboration between humans and AI.",
+    "token_stats": {
+      "original_tokens": 136,
+      "final_tokens": 136,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426946-i9HvsGyPy8oLKEmvvfDr",
+    "created": 1788426946,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 126,
+      "total_tokens": 1321,
+      "cost": 0.0042475
+    }
+  }
+}

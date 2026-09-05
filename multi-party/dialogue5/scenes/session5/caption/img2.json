@@ -1,0 +1,36 @@
+{
+  "id": "7694635d-60d8-4aff-9a01-2324b0f58ccd",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:56.329605",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 339560,
+    "modified_time": "2026-08-23T22:09:54.894518"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an open suitcase on a tiled floor, filled with various clothing items including a leopard print garment, a cream-colored sweater, and other folded clothes in dark colors. The suitcase is positioned next to a set of green curtains and a metal shelf containing books. The atmosphere suggests a scene of packing or unpacking, with a casual and slightly cluttered mood.",
+    "final_text": "The image depicts an open suitcase on a tiled floor, filled with various clothing items including a leopard print garment, a cream-colored sweater, and other folded clothes in dark colors. The suitcase is positioned next to a set of green curtains and a metal shelf containing books. The atmosphere suggests a scene of packing or unpacking, with a casual and slightly cluttered mood.",
+    "token_stats": {
+      "original_tokens": 73,
+      "final_tokens": 73,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426895-COU25ONVjic84K7Uj2g7",
+    "created": 1788426895,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 73,
+      "total_tokens": 928,
+      "cost": 0.0028675
+    }
+  }
+}

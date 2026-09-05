@@ -1,0 +1,36 @@
+{
+  "id": "0d43c551-2952-4fae-8161-092be249c10c",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:17.831980",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 714255,
+    "modified_time": "2026-08-23T21:32:16.710407"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a caring scene where a woman is gently touching the forehead of a sleeping child, possibly checking for fever or offering comfort. The child is resting on a blue pillow, and the woman is seated beside them, wearing a gray sweater. The atmosphere is tender and concerned, suggesting a nurturing relationship between the two. The setting appears to be a cozy indoor environment, with a couch and a pillow visible. There is no visible text in the image.",
+    "final_text": "The image depicts a caring scene where a woman is gently touching the forehead of a sleeping child, possibly checking for fever or offering comfort. The child is resting on a blue pillow, and the woman is seated beside them, wearing a gray sweater. The atmosphere is tender and concerned, suggesting a nurturing relationship between the two. The setting appears to be a cozy indoor environment, with a couch and a pillow visible. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426796-m67yjmKOpZjbg8U12hqh",
+    "created": 1788426796,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 92,
+      "total_tokens": 809,
+      "cost": 0.0027125
+    }
+  }
+}

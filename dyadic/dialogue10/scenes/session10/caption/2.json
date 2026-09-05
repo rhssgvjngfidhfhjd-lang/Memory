@@ -1,0 +1,36 @@
+{
+  "id": "1dc746d1-f3ca-4b5c-8b28-d249abeabfb3",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:04.462830",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session10/image/2.png",
+    "filename": "2.png",
+    "size": 5343986,
+    "modified_time": "2026-08-23T21:30:45.888995"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a Venn diagram with three overlapping circles. Each circle is labeled in Chinese: the pink circle represents \"感官愉悦 (嗅觉/触觉)\" which means \"sensory pleasure (smell/touch),\" the yellow circle is \"审美认同 (这很像我)\" meaning \"aesthetic identity (this is like me),\" and the blue circle is \"过渡性客体 (安全感)\" meaning \"transitional object (sense of security).\" The overlapping center is labeled \"氛围投资价值\" meaning \"atmosphere investment value.\" Below the circles, the text reads \"为情绪状态消费\" meaning \"consumption for emotional state.\" The overall mood is analytical and informative.",
+    "final_text": "The image depicts a Venn diagram with three overlapping circles. Each circle is labeled in Chinese: the pink circle represents \"感官愉悦 (嗅觉/触觉)\" which means \"sensory pleasure (smell/touch),\" the yellow circle is \"审美认同 (这很像我)\" meaning \"aesthetic identity (this is like me),\" and the blue circle is \"过渡性客体 (安全感)\" meaning \"transitional object (sense of security).\" The overlapping center is labeled \"氛围投资价值\" meaning \"atmosphere investment value.\" Below the circles, the text reads \"为情绪状态消费\" meaning \"consumption for emotional state.\" The overall mood is analytical and informative.",
+    "token_stats": {
+      "original_tokens": 166,
+      "final_tokens": 166,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426601-WQ1GpEBfwi35tL3fsfCe",
+    "created": 1788426601,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 150,
+      "total_tokens": 1005,
+      "cost": 0.0036375
+    }
+  }
+}

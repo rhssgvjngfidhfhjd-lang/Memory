@@ -1,0 +1,36 @@
+{
+  "id": "990af43e-8f5f-4c9a-9faf-551d6f980d2c",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:49.331901",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session5/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 93435,
+    "modified_time": "2026-08-23T22:09:21.110909"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a person with a comical, exaggerated facial expression, possibly indicating discomfort or confusion. The background is plain, with no visible text or additional objects. The atmosphere is humorous, as the expression is likely meant to evoke laughter or amusement.",
+    "final_text": "The image shows a person with a comical, exaggerated facial expression, possibly indicating discomfort or confusion. The background is plain, with no visible text or additional objects. The atmosphere is humorous, as the expression is likely meant to evoke laughter or amusement.",
+    "token_stats": {
+      "original_tokens": 50,
+      "final_tokens": 50,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426829-M4Onor1fe1uy5KfJXM3B",
+    "created": 1788426829,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 50,
+      "total_tokens": 905,
+      "cost": 0.0026375
+    }
+  }
+}

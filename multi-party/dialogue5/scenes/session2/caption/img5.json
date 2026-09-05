@@ -1,0 +1,36 @@
+{
+  "id": "ca3bb88f-9e29-4572-9b6c-21934de61ee0",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:18.668823",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 363447,
+    "modified_time": "2026-08-23T22:09:39.854351"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features six individuals in a store wearing colorful ski or snowboard outfits. Each person is taking a mirror selfie, showcasing different colored jackets and pants: pink, green, light blue, brown, yellow, and gray. They are wearing various beanies or hats and holding phones, obscuring their faces. Visible text on the clothing includes \"EXTREME\" and other logos. The background shows shelves with goggles and accessories, creating a sporty and casual atmosphere. The mood is vibrant and stylish, emphasizing winter sports fashion.",
+    "final_text": "The image features six individuals in a store wearing colorful ski or snowboard outfits. Each person is taking a mirror selfie, showcasing different colored jackets and pants: pink, green, light blue, brown, yellow, and gray. They are wearing various beanies or hats and holding phones, obscuring their faces. Visible text on the clothing includes \"EXTREME\" and other logos. The background shows shelves with goggles and accessories, creating a sporty and casual atmosphere. The mood is vibrant and stylish, emphasizing winter sports fashion.",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426855-7YyBXA8xBbO4uX4DeBjG",
+    "created": 1788426855,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 105,
+      "total_tokens": 825,
+      "cost": 0.00285
+    }
+  }
+}

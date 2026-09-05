@@ -1,0 +1,36 @@
+{
+  "id": "3572e288-60c4-4a70-92d6-d9e9f3f84809",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:20.575473",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session5/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 192462,
+    "modified_time": "2026-08-23T22:06:57.273350"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a split view of the same young man in two different settings. On the left, he wears clear glasses and a black shirt with visible text \"bestow.\" The background includes a wooden door and a wall with partial text in a different script. On the right, he is without glasses, standing in a dimly lit room with a neutral expression. Both images focus on close-up facial expressions, creating a personal and contemplative mood.",
+    "final_text": "The image features a split view of the same young man in two different settings. On the left, he wears clear glasses and a black shirt with visible text \"bestow.\" The background includes a wooden door and a wall with partial text in a different script. On the right, he is without glasses, standing in a dimly lit room with a neutral expression. Both images focus on close-up facial expressions, creating a personal and contemplative mood.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426680-EYmv7u5flHg7VnibP94O",
+    "created": 1788426680,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 91,
+      "total_tokens": 811,
+      "cost": 0.00271
+    }
+  }
+}

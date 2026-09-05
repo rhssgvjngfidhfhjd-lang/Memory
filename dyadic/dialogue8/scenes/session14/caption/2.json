@@ -1,0 +1,36 @@
+{
+  "id": "87e92995-7fa2-42e7-8421-06c781e4df4a",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:26.150467",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session14/image/2.png",
+    "filename": "2.png",
+    "size": 450419,
+    "modified_time": "2026-08-23T21:57:42.737120"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a tablet on a dark surface displaying an app interface with options in Chinese text. The options include \"深度新闻周刊,\" \"学术期刊订阅,\" and \"行业简报,\" each followed by \"每日限阅1小时.\" Next to the tablet is a cup of coffee, and an open book is partially visible. The scene has a calm and focused atmosphere, suggesting a work or study setting.",
+    "final_text": "The image shows a tablet on a dark surface displaying an app interface with options in Chinese text. The options include \"深度新闻周刊,\" \"学术期刊订阅,\" and \"行业简报,\" each followed by \"每日限阅1小时.\" Next to the tablet is a cup of coffee, and an open book is partially visible. The scene has a calm and focused atmosphere, suggesting a work or study setting.",
+    "token_stats": {
+      "original_tokens": 98,
+      "final_tokens": 98,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427704-GGwUzsPi2A5jibmVKNCP",
+    "created": 1788427704,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 87,
+      "total_tokens": 602,
+      "cost": 0.0021575
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "72322f67-c26c-49d6-b58e-0b71ac2e75aa",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:25.275309",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session9/image/1.png",
+    "filename": "1.png",
+    "size": 112230,
+    "modified_time": "2026-08-23T21:32:07.520925"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a data dashboard with a bar chart and a table. The chart shows monthly trends of transaction areas from January to December, with bars indicating varying values. Above the chart, statistics include \"成交套数\" (3,794 units), \"成交面积\" (55.34万㎡), \"批准上市套数\" (4,140 units), and \"批准上市面积\" (64.09万㎡). The table on the right ranks regions by transaction volume, area, and amount, with \"萧山区\" leading. The atmosphere is analytical and data-focused.",
+    "final_text": "The image displays a data dashboard with a bar chart and a table. The chart shows monthly trends of transaction areas from January to December, with bars indicating varying values. Above the chart, statistics include \"成交套数\" (3,794 units), \"成交面积\" (55.34万㎡), \"批准上市套数\" (4,140 units), and \"批准上市面积\" (64.09万㎡). The table on the right ranks regions by transaction volume, area, and amount, with \"萧山区\" leading. The atmosphere is analytical and data-focused.",
+    "token_stats": {
+      "original_tokens": 139,
+      "final_tokens": 139,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426743-Q7zDurkTaOq8pDSeU9NK",
+    "created": 1788426743,
+    "usage": {
+      "prompt_tokens": 685,
+      "completion_tokens": 118,
+      "total_tokens": 803,
+      "cost": 0.0028925
+    }
+  }
+}

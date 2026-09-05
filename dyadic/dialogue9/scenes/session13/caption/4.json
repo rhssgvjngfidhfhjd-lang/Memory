@@ -1,0 +1,36 @@
+{
+  "id": "5e90526b-89f2-4305-afa9-9fb6fbf2400f",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:39.298755",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session13/image/4.png",
+    "filename": "4.png",
+    "size": 814332,
+    "modified_time": "2026-08-23T21:59:59.940203"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a chat interface featuring a profile picture of a person, next to the name \"赵小棠.\" The conversation includes text bubbles over a blue background, discussing an upcoming event at the community activity center. The messages encourage talented residents to sign up and mention the event will be at 3 PM on Saturday, inviting others to chat. Tea and snacks like cakes, biscuits, and lemon tea will be prepared for participants. The atmosphere is inviting and communal.",
+    "final_text": "The image depicts a chat interface featuring a profile picture of a person, next to the name \"赵小棠.\" The conversation includes text bubbles over a blue background, discussing an upcoming event at the community activity center. The messages encourage talented residents to sign up and mention the event will be at 3 PM on Saturday, inviting others to chat. Tea and snacks like cakes, biscuits, and lemon tea will be prepared for participants. The atmosphere is inviting and communal.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427776-qRKGYz9iu2ZSxdX11JLU",
+    "created": 1788427776,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 95,
+      "total_tokens": 1093,
+      "cost": 0.003445
+    }
+  }
+}

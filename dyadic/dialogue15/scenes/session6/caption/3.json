@@ -1,0 +1,36 @@
+{
+  "id": "d6e22625-06b4-4ee0-9243-aa75b19424f4",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:10.943096",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 361943,
+    "modified_time": "2026-08-23T21:34:39.080701"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a dual-pane coding environment with Python code. The left pane includes code for importing libraries such as `matplotlib`, `numpy`, and `datetime`, and establishing parameters for plotting. There is a list of interventions and a Latin square design for a randomized crossover trial. The right pane includes logic for scheduling and plotting a calendar, with functions to set axis limits and text annotations. Visible comments in Chinese explain certain sections. The overall mood is analytical and technical, focused on data visualization and scheduling logic.",
+    "final_text": "The image displays a dual-pane coding environment with Python code. The left pane includes code for importing libraries such as `matplotlib`, `numpy`, and `datetime`, and establishing parameters for plotting. There is a list of interventions and a Latin square design for a randomized crossover trial. The right pane includes logic for scheduling and plotting a calendar, with functions to set axis limits and text annotations. Visible comments in Chinese explain certain sections. The overall mood is analytical and technical, focused on data visualization and scheduling logic.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426970-kklWbj53rUVg44FwhZcy",
+    "created": 1788426970,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 102,
+      "total_tokens": 1297,
+      "cost": 0.0040075
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "42ba611d-47e7-401b-82c1-613bf5269cbb",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:37.391581",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session1/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 182883,
+    "modified_time": "2026-08-23T21:36:49.661722"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an aerial view of a mountainous landscape with lush greenery. A winding river flows through the terrain, surrounded by steep cliffs and dense vegetation. On the right, there are distinct, curving paths or roads etched into the landscape, possibly for agriculture or trekking. The top left corner reveals a small cluster of buildings, suggesting a nearby settlement. The overall mood is serene and natural, highlighting the harmonious interaction between human development and nature.",
+    "final_text": "The image shows an aerial view of a mountainous landscape with lush greenery. A winding river flows through the terrain, surrounded by steep cliffs and dense vegetation. On the right, there are distinct, curving paths or roads etched into the landscape, possibly for agriculture or trekking. The top left corner reveals a small cluster of buildings, suggesting a nearby settlement. The overall mood is serene and natural, highlighting the harmonious interaction between human development and nature.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427116-lbFDUbvCeJ9nyCw8vVOd",
+    "created": 1788427116,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 88,
+      "total_tokens": 943,
+      "cost": 0.0030175
+    }
+  }
+}

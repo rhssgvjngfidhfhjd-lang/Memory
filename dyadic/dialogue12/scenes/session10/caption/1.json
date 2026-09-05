@@ -1,0 +1,36 @@
+{
+  "id": "c17851da-8b0c-4326-b54f-a5e906372e68",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:34.430178",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session10/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 2623341,
+    "modified_time": "2026-08-23T21:31:48.468524"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a collage of several product advertisements, likely from a mobile shopping app interface. It includes images of various items such as hand creams, body wash bottles, and a chocolate gift box. The ads feature promotional text in Chinese, mentioning prices, discounts, and popularity. Visible brands include Polaron, Ferrero, ASAKA, and WOYORO. The overall atmosphere is commercial and vibrant, emphasizing deals and enticing consumers with visually appealing product displays. The interface shows icons and notifications at the top, suggesting it's taken from a phone screen.",
+    "final_text": "The image is a collage of several product advertisements, likely from a mobile shopping app interface. It includes images of various items such as hand creams, body wash bottles, and a chocolate gift box. The ads feature promotional text in Chinese, mentioning prices, discounts, and popularity. Visible brands include Polaron, Ferrero, ASAKA, and WOYORO. The overall atmosphere is commercial and vibrant, emphasizing deals and enticing consumers with visually appealing product displays. The interface shows icons and notifications at the top, suggesting it's taken from a phone screen.",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426750-YTnpAeal7hBDyAGHrEHg",
+    "created": 1788426750,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 111,
+      "total_tokens": 1391,
+      "cost": 0.00431
+    }
+  }
+}

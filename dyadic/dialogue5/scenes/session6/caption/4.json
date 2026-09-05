@@ -1,0 +1,36 @@
+{
+  "id": "de971d40-9c51-4edd-9a50-462da55d6b89",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:55.554855",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session6/image/4.png",
+    "filename": "4.png",
+    "size": 583407,
+    "modified_time": "2026-08-23T21:55:37.997279"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic featuring six cartoon cats, each depicting different activities or conditions. The scenes include a cat with increased food intake, a cat being active, a cat drinking water, a cat in a litter box, a cat hiding, and a cat with abnormal behavior. Each illustration has accompanying Chinese text describing these observations. The overall mood is informative and educational, aimed at helping pet owners monitor their cats' health. Additional text advises observing changes, recording them, and consulting a vet if necessary.",
+    "final_text": "The image is an infographic featuring six cartoon cats, each depicting different activities or conditions. The scenes include a cat with increased food intake, a cat being active, a cat drinking water, a cat in a litter box, a cat hiding, and a cat with abnormal behavior. Each illustration has accompanying Chinese text describing these observations. The overall mood is informative and educational, aimed at helping pet owners monitor their cats' health. Additional text advises observing changes, recording them, and consulting a vet if necessary.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427493-gjDfC1CmcPsUKUvupGdI",
+    "created": 1788427493,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 100,
+      "total_tokens": 955,
+      "cost": 0.0031375
+    }
+  }
+}

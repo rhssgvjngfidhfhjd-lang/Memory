@@ -1,0 +1,36 @@
+{
+  "id": "7065bb0e-568c-429f-b9b7-91be2fae5b27",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:37.114518",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 731515,
+    "modified_time": "2026-08-23T21:58:26.650006"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a serene indoor space where a chef is meticulously preparing a dish at a wooden counter. He is focused on placing ingredients on a plate, creating a sense of precision and artistry. In the background, a tranquil Japanese rock garden is visible through a large window, featuring neatly raked gravel and strategically placed rocks. The atmosphere is calm and contemplative. A scroll with Japanese calligraphy hangs on the wall. The overall mood is harmonious, blending culinary art with traditional Japanese aesthetics.",
+    "final_text": "The image depicts a serene indoor space where a chef is meticulously preparing a dish at a wooden counter. He is focused on placing ingredients on a plate, creating a sense of precision and artistry. In the background, a tranquil Japanese rock garden is visible through a large window, featuring neatly raked gravel and strategically placed rocks. The atmosphere is calm and contemplative. A scroll with Japanese calligraphy hangs on the wall. The overall mood is harmonious, blending culinary art with traditional Japanese aesthetics.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427656-ffujeW8bGNF20TaGuvYS",
+    "created": 1788427656,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 98,
+      "total_tokens": 815,
+      "cost": 0.0027725
+    }
+  }
+}

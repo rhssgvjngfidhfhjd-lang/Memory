@@ -1,0 +1,36 @@
+{
+  "id": "cdd037ea-bf2d-4eda-92c6-f4fe5c604811",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:03.006141",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 1010504,
+    "modified_time": "2026-08-23T21:40:59.335235"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A cozy breakfast scene on a wooden tray features a variety of dishes: a bowl of mixed rice, fried eggs with a ketchup smiley face, slices of luncheon meat, kimchi, and vegetable pancakes. A white mug of tea accompanies the meal. The background is filled with lush potted plants, creating a warm and inviting atmosphere. The setting suggests a peaceful morning meal, possibly in a bedroom or living space.",
+    "final_text": "A cozy breakfast scene on a wooden tray features a variety of dishes: a bowl of mixed rice, fried eggs with a ketchup smiley face, slices of luncheon meat, kimchi, and vegetable pancakes. A white mug of tea accompanies the meal. The background is filled with lush potted plants, creating a warm and inviting atmosphere. The setting suggests a peaceful morning meal, possibly in a bedroom or living space.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427263-33Err6EGUodxne7yUlsi",
+    "created": 1788427263,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 83,
+      "total_tokens": 938,
+      "cost": 0.0029675
+    }
+  }
+}

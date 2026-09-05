@@ -1,0 +1,36 @@
+{
+  "id": "b353f4a3-7718-4d35-9cce-b0968985ed23",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:16.639224",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session9/image/4.png",
+    "filename": "4.png",
+    "size": 69663,
+    "modified_time": "2026-08-23T21:57:55.219070"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a digital interface displaying data related to a device or appliance, possibly a smart toilet. The main elements include a graphic of the device with labels indicating parts such as a deodorizer and cleaning system. Below, statistical data is shown: usage frequency (1 time) and average duration (1 minute 3 seconds). A graph illustrates usage over time, and a log entry notes activity at 07:45 with a duration of 1 minute 3 seconds, weight recorded at 7.0 units. The overall mood is analytical and informative, focusing on tracking and efficiency.",
+    "final_text": "The image depicts a digital interface displaying data related to a device or appliance, possibly a smart toilet. The main elements include a graphic of the device with labels indicating parts such as a deodorizer and cleaning system. Below, statistical data is shown: usage frequency (1 time) and average duration (1 minute 3 seconds). A graph illustrates usage over time, and a log entry notes activity at 07:45 with a duration of 1 minute 3 seconds, weight recorded at 7.0 units. The overall mood is analytical and informative, focusing on tracking and efficiency.",
+    "token_stats": {
+      "original_tokens": 118,
+      "final_tokens": 118,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427575-A0SIxVT05YImwC5XAKth",
+    "created": 1788427575,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 118,
+      "total_tokens": 557,
+      "cost": 0.0022775
+    }
+  }
+}

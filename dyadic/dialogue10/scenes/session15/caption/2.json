@@ -1,0 +1,36 @@
+{
+  "id": "7b1d45be-7891-4f4c-bb63-356c9e3f8d88",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:27.811541",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session15/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 592496,
+    "modified_time": "2026-08-23T21:30:24.392432"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a comparison chart for social media platforms tailored to boating businesses. It features columns for Facebook, Twitter, LinkedIn, Google+, YouTube, Instagram, and Pinterest, with rows detailing various aspects such as primary industry impact, audience, demographic focus, level of use, site focus, brand presence, exposure opportunities, website traffic impact, engagement opportunities, limitations, best tool for reach, shelf life of promotions, and advertising opportunities. Each cell provides concise insights for each platform regarding these criteria. The overall mood is informative, aiming to guide businesses in choosing the right social media strategy.",
+    "final_text": "The image is a comparison chart for social media platforms tailored to boating businesses. It features columns for Facebook, Twitter, LinkedIn, Google+, YouTube, Instagram, and Pinterest, with rows detailing various aspects such as primary industry impact, audience, demographic focus, level of use, site focus, brand presence, exposure opportunities, website traffic impact, engagement opportunities, limitations, best tool for reach, shelf life of promotions, and advertising opportunities. Each cell provides concise insights for each platform regarding these criteria. The overall mood is informative, aiming to guide businesses in choosing the right social media strategy.",
+    "token_stats": {
+      "original_tokens": 117,
+      "final_tokens": 117,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426625-2c9MqUR3NySwZe3i0YV8",
+    "created": 1788426625,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 119,
+      "total_tokens": 839,
+      "cost": 0.00299
+    }
+  }
+}

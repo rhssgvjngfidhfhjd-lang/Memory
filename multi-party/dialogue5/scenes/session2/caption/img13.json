@@ -1,0 +1,36 @@
+{
+  "id": "b88d2b15-5168-467a-a806-cc8ff3c78d39",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:23.924567",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 329397,
+    "modified_time": "2026-08-23T22:09:33.505324"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays two spreadsheet tables titled \"采购登记表\" and \"采购登记台帐,\" both in Chinese. The first table contains columns for date, purchase order number, product name, department, unit, quantity, unit price, total amount, partner, and product status. It includes various numeric entries and status indicators. The second table includes columns for purchase date, order number, description, dimensions, TG, supplier code, unit, unit price, total amount, and supplier region. The mood is analytical, focusing on purchase tracking and financial records.",
+    "final_text": "The image displays two spreadsheet tables titled \"采购登记表\" and \"采购登记台帐,\" both in Chinese. The first table contains columns for date, purchase order number, product name, department, unit, quantity, unit price, total amount, partner, and product status. It includes various numeric entries and status indicators. The second table includes columns for purchase date, order number, description, dimensions, TG, supplier code, unit, unit price, total amount, and supplier region. The mood is analytical, focusing on purchase tracking and financial records.",
+    "token_stats": {
+      "original_tokens": 118,
+      "final_tokens": 118,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426863-ZfpxLRaqn8imVITF9SVX",
+    "created": 1788426863,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 111,
+      "total_tokens": 966,
+      "cost": 0.0032475
+    }
+  }
+}

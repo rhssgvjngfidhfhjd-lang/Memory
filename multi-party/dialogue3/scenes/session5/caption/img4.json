@@ -1,0 +1,36 @@
+{
+  "id": "a4d4dc9c-9f51-42c6-b59e-5167e719802d",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:30.293683",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 77425,
+    "modified_time": "2026-08-23T22:07:59.868057"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a webpage screenshot featuring information about \"Better Call Saul Season 6.\" It displays the title in both Chinese and English, with the release year \"2022\" prominently highlighted. The director and cast are listed, along with genre details indicating a crime drama. The IMDb rating is shown as 8.8/10. The Douban rating is 9.7/10, based on 113,167 ratings, with a breakdown of star percentages. The overall mood suggests positive reception. An image of a person in a red jacket appears on the left, related to the show.",
+    "final_text": "The image is a webpage screenshot featuring information about \"Better Call Saul Season 6.\" It displays the title in both Chinese and English, with the release year \"2022\" prominently highlighted. The director and cast are listed, along with genre details indicating a crime drama. The IMDb rating is shown as 8.8/10. The Douban rating is 9.7/10, based on 113,167 ratings, with a breakdown of star percentages. The overall mood suggests positive reception. An image of a person in a red jacket appears on the left, related to the show.",
+    "token_stats": {
+      "original_tokens": 120,
+      "final_tokens": 120,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426747-zU4urtxjTwE6A27aDMSB",
+    "created": 1788426747,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 121,
+      "total_tokens": 560,
+      "cost": 0.0023075
+    }
+  }
+}

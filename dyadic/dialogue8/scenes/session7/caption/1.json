@@ -1,0 +1,36 @@
+{
+  "id": "380c06c9-c0f2-4f71-9962-bf48d0c511c7",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:52.015346",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 175199,
+    "modified_time": "2026-08-23T21:58:28.357279"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a ginger and white cat sitting on a windowsill, gazing outside at an urban sunset. The sky is vibrant with orange and blue hues, and city lights illuminate the streets below. A paw print is visible on the windowsill. The text in Chinese reads: \"它似乎比我更快地把这里当成了家的某个版本,\" which translates to \"It seems to have made this place a version of home faster than I did.\" The mood is peaceful and contemplative.",
+    "final_text": "The image shows a ginger and white cat sitting on a windowsill, gazing outside at an urban sunset. The sky is vibrant with orange and blue hues, and city lights illuminate the streets below. A paw print is visible on the windowsill. The text in Chinese reads: \"它似乎比我更快地把这里当成了家的某个版本,\" which translates to \"It seems to have made this place a version of home faster than I did.\" The mood is peaceful and contemplative.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427670-F1SSGF36NpMd19LMsuor",
+    "created": 1788427670,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 104,
+      "total_tokens": 404,
+      "cost": 0.00179
+    }
+  }
+}

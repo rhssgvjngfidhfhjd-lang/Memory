@@ -1,0 +1,9 @@
+The image depicts a flowchart outlining an experimental process. It consists of five stages:
+
+1. **Stage 1 - Experiment Preparation:** Recruitment of volunteers and signing of consent forms.
+2. **Stage 2 - Baseline Calibration and Equipment Testing:** Data collection, sensor configuration, and system training.
+3. **Stage 3 - Task Execution and Data Collection:** Simultaneous data logging of physiological, behavioral, and subjective data.
+4. **Stage 4 - Data Integration and Preliminary Analysis:** Data synchronization, cleaning, and visualization.
+5. **Stage 5 - Iteration and Validation:** Feedback collection, validation, and report output.
+
+The mood is systematic and scientific, indicating a structured research approach.

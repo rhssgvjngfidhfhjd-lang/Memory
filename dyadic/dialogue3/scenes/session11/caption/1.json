@@ -1,0 +1,36 @@
+{
+  "id": "b0c3d7c3-70a7-4e6a-94e6-5f85fc54728b",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:55.646536",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 341613,
+    "modified_time": "2026-08-23T21:45:02.395948"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a colorful advertisement featuring two cartoon cats, one sitting and the other lying down, with a playful and relaxed atmosphere. A purple bowl filled with cat food is prominently displayed in the foreground. There's a potted plant beside the cats. The text is in Chinese, promoting \"freeze-dried cat food\" with features like \"not soft, shiny fur.\" The price is listed as \"29.9 yuan,\" and there's an offer for \"10 trial packs.\" The overall mood is lighthearted and appealing to pet owners.",
+    "final_text": "The image is a colorful advertisement featuring two cartoon cats, one sitting and the other lying down, with a playful and relaxed atmosphere. A purple bowl filled with cat food is prominently displayed in the foreground. There's a potted plant beside the cats. The text is in Chinese, promoting \"freeze-dried cat food\" with features like \"not soft, shiny fur.\" The price is listed as \"29.9 yuan,\" and there's an offer for \"10 trial packs.\" The overall mood is lighthearted and appealing to pet owners.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427374-UW0GBnY0YqNYRHhVzZfV",
+    "created": 1788427374,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 106,
+      "total_tokens": 621,
+      "cost": 0.0023475
+    }
+  }
+}

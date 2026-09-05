@@ -1,0 +1,36 @@
+{
+  "id": "f312fe21-81af-4b81-9c1d-c47b1fff4a79",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:59.154792",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 450010,
+    "modified_time": "2026-08-23T21:55:30.360557"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy scene with a wooden table holding a wicker basket filled with knitting supplies, including yarn balls and fabric. Next to the basket are two small photographs showing pairs of people. A framed picture with visible text, though unclear, is also present. The overall atmosphere is warm and nostalgic, suggesting a personal and homely setting.",
+    "final_text": "The image depicts a cozy scene with a wooden table holding a wicker basket filled with knitting supplies, including yarn balls and fabric. Next to the basket are two small photographs showing pairs of people. A framed picture with visible text, though unclear, is also present. The overall atmosphere is warm and nostalgic, suggesting a personal and homely setting.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427496-DZ2gj819dAuEckA9N3ry",
+    "created": 1788427496,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 69,
+      "total_tokens": 508,
+      "cost": 0.0017875
+    }
+  }
+}

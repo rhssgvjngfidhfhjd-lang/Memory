@@ -1,0 +1,36 @@
+{
+  "id": "bdd68cfc-3b3f-479e-9580-da5fa4ec4f21",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:17.524905",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 237892,
+    "modified_time": "2026-08-23T21:34:49.999843"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table comparing different intermittent fasting methods. It includes columns for the plan name, fasting/eating ratio, daily schedule example, weekly frequency, suitable audience, difficulty level (1-5 stars), and potential health benefits. The plans listed are 16:8, 18:6, 20:4 (Warrior Diet), 5:2, and Alternate Day Fasting. Benefits mentioned include weight loss, metabolism improvement, and increased focus. The mood is informative and structured.",
+    "final_text": "The image is a table comparing different intermittent fasting methods. It includes columns for the plan name, fasting/eating ratio, daily schedule example, weekly frequency, suitable audience, difficulty level (1-5 stars), and potential health benefits. The plans listed are 16:8, 18:6, 20:4 (Warrior Diet), 5:2, and Alternate Day Fasting. Benefits mentioned include weight loss, metabolism improvement, and increased focus. The mood is informative and structured.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426977-vHvd0VKfQb30621DZcT8",
+    "created": 1788426977,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 101,
+      "total_tokens": 1636,
+      "cost": 0.0048475
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "41191b3a-bf13-4a0b-aab8-f4357b3c9841",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:38.552621",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 330765,
+    "modified_time": "2026-08-23T22:07:16.417120"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic cityscape at night, featuring a character with cat-like ears standing on a rooftop, gazing at illuminated skyscrapers and triangular structures. The scene has a cyberpunk aesthetic with floating geometric shapes and neon lights. Visible text includes \"破晓\" (Po Xiao) and \"开始游戏\" (Game Start). The atmosphere is mysterious and immersive, suggesting a video game setting.",
+    "final_text": "The image depicts a futuristic cityscape at night, featuring a character with cat-like ears standing on a rooftop, gazing at illuminated skyscrapers and triangular structures. The scene has a cyberpunk aesthetic with floating geometric shapes and neon lights. Visible text includes \"破晓\" (Po Xiao) and \"开始游戏\" (Game Start). The atmosphere is mysterious and immersive, suggesting a video game setting.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426698-NsOm4KLgfn3o17o63t0u",
+    "created": 1788426698,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 80,
+      "total_tokens": 1615,
+      "cost": 0.0046375
+    }
+  }
+}

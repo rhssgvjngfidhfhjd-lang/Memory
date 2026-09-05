@@ -1,0 +1,36 @@
+{
+  "id": "f4b4a16a-a1ac-4118-991b-908dd8fba7f9",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:53.237728",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session4/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 27190,
+    "modified_time": "2026-08-23T22:09:46.376344"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a cartoon penguin wearing sunglasses, holding a bouquet of red flowers. The penguin has a cheerful demeanor. Below it, there's a red banner with Chinese text that translates to \"I will always love you, hubby.\" The overall mood is lighthearted and affectionate.",
+    "final_text": "The image features a cartoon penguin wearing sunglasses, holding a bouquet of red flowers. The penguin has a cheerful demeanor. Below it, there's a red banner with Chinese text that translates to \"I will always love you, hubby.\" The overall mood is lighthearted and affectionate.",
+    "token_stats": {
+      "original_tokens": 61,
+      "final_tokens": 61,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426892-5y6HNMd5dbZ2xYNHaqJg",
+    "created": 1788426892,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 56,
+      "total_tokens": 401,
+      "cost": 0.0014225
+    }
+  }
+}

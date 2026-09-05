@@ -1,0 +1,36 @@
+{
+  "id": "ac825641-f282-4642-be8b-b09a9b2a4c55",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:25.370480",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 196854,
+    "modified_time": "2026-08-23T22:03:07.285799"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a kitchen scene with raw meat being prepared on a yellow cutting board. A hand holds a large cleaver, slicing through the meat. In the background, a colander with vegetables is visible near the sink. The atmosphere is utilitarian, with a focus on food preparation. A cloth is placed next to the cutting board, and the overall mood is practical and focused.",
+    "final_text": "The image depicts a kitchen scene with raw meat being prepared on a yellow cutting board. A hand holds a large cleaver, slicing through the meat. In the background, a colander with vegetables is visible near the sink. The atmosphere is utilitarian, with a focus on food preparation. A cloth is placed next to the cutting board, and the overall mood is practical and focused.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426564-ItqQ4pM3cMyQP3AkSG0H",
+    "created": 1788426564,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 78,
+      "total_tokens": 378,
+      "cost": 0.00153
+    }
+  }
+}

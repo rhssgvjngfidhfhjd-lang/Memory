@@ -1,0 +1,36 @@
+{
+  "id": "2f48f893-49d2-4a18-afa2-6657512b8d7b",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:40.436490",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 1081210,
+    "modified_time": "2026-08-23T21:34:05.880809"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays three panels with data visualizations related to daily activities. The first panel shows a bar graph titled \"电脑使用时间\" (Computer Usage Time) with the text \"久坐时间10.5h\" (Sedentary Time 10.5h) in red. The second panel features a line graph titled \"步数\" (Step Count) indicating an upward trend. The third panel contains a pie chart titled \"睡眠记录\" (Sleep Record) with \"日均睡眠4.8h\" (Average Sleep 4.8h) in red. The overall mood is analytical, focusing on personal health metrics.",
+    "final_text": "The image displays three panels with data visualizations related to daily activities. The first panel shows a bar graph titled \"电脑使用时间\" (Computer Usage Time) with the text \"久坐时间10.5h\" (Sedentary Time 10.5h) in red. The second panel features a line graph titled \"步数\" (Step Count) indicating an upward trend. The third panel contains a pie chart titled \"睡眠记录\" (Sleep Record) with \"日均睡眠4.8h\" (Average Sleep 4.8h) in red. The overall mood is analytical, focusing on personal health metrics.",
+    "token_stats": {
+      "original_tokens": 142,
+      "final_tokens": 142,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426880-IJy0SU0C88hjvweU8uaG",
+    "created": 1788426880,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 131,
+      "total_tokens": 1326,
+      "cost": 0.0042975
+    }
+  }
+}

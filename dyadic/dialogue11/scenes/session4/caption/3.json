@@ -1,0 +1,36 @@
+{
+  "id": "dd5d7284-338b-407a-8c81-049020457f3f",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:50.782340",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 149129,
+    "modified_time": "2026-08-23T21:31:05.176030"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a digital flyer featuring contact information and program details related to animal rescue and TNR (Trap-Neuter-Return) services. It includes cartoon cat illustrations with \"暖心救助站\" text, indicating a warm-hearted rescue station. The flyer provides two phone numbers and two WeChat IDs for city animal aid organizations. Below, the TNR cost structure is outlined in a blue speech bubble, listing fees for male and female surgeries, boarding costs, and post-operative care, with red text highlighting potential discounts. The mood is informative and supportive, aimed at encouraging community involvement in animal welfare activities.",
+    "final_text": "The image displays a digital flyer featuring contact information and program details related to animal rescue and TNR (Trap-Neuter-Return) services. It includes cartoon cat illustrations with \"暖心救助站\" text, indicating a warm-hearted rescue station. The flyer provides two phone numbers and two WeChat IDs for city animal aid organizations. Below, the TNR cost structure is outlined in a blue speech bubble, listing fees for male and female surgeries, boarding costs, and post-operative care, with red text highlighting potential discounts. The mood is informative and supportive, aimed at encouraging community involvement in animal welfare activities.",
+    "token_stats": {
+      "original_tokens": 126,
+      "final_tokens": 126,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426651-qbz5DRzEq4nLk3UPTWpJ",
+    "created": 1788426651,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 123,
+      "total_tokens": 423,
+      "cost": 0.00198
+    }
+  }
+}

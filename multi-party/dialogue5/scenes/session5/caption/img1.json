@@ -1,0 +1,36 @@
+{
+  "id": "ce0a8403-85ae-44a6-9b98-87e4512b6318",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:57.345762",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 299054,
+    "modified_time": "2026-08-23T22:09:51.772243"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows three identification cards placed on a light-colored surface. Each card displays text in a language that appears to be Chinese, with sections for name, gender, ethnicity, birth date, and address. The photos on the IDs are obscured by a crying face emoji, suggesting a humorous or ironic mood. The text \"公民身份证\" is visible, which translates to \"Citizen Identity Card.\" The overall atmosphere is playful due to the use of emojis.",
+    "final_text": "The image shows three identification cards placed on a light-colored surface. Each card displays text in a language that appears to be Chinese, with sections for name, gender, ethnicity, birth date, and address. The photos on the IDs are obscured by a crying face emoji, suggesting a humorous or ironic mood. The text \"公民身份证\" is visible, which translates to \"Citizen Identity Card.\" The overall atmosphere is playful due to the use of emojis.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426895-HhUFvBJ2LZ3dJ5uuGIU9",
+    "created": 1788426895,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 93,
+      "total_tokens": 813,
+      "cost": 0.00273
+    }
+  }
+}

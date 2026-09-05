@@ -1,0 +1,36 @@
+{
+  "id": "539b468d-1aaa-4a4e-90e2-aeca846dc2b8",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:51.881400",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session3/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 92005,
+    "modified_time": "2026-08-23T22:05:58.081533"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a man in a gym setting performing a stretching exercise. He is seated on the floor with his back arched and one hand supporting his weight. A yellow exercise ball is positioned under his legs. The man appears to be grimacing, indicating effort or discomfort. He wears a gray outfit and red sneakers. In the background, there is visible text: \"YOUR ATTITUDE WRONG WAY\" in English and additional Chinese text with a red arrow pointing to his torso. The mood suggests physical exertion or challenge.",
+    "final_text": "The image depicts a man in a gym setting performing a stretching exercise. He is seated on the floor with his back arched and one hand supporting his weight. A yellow exercise ball is positioned under his legs. The man appears to be grimacing, indicating effort or discomfort. He wears a gray outfit and red sneakers. In the background, there is visible text: \"YOUR ATTITUDE WRONG WAY\" in English and additional Chinese text with a red arrow pointing to his torso. The mood suggests physical exertion or challenge.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426651-v4EBtVM4FHA3xQr1FPKS",
+    "created": 1788426651,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 105,
+      "total_tokens": 825,
+      "cost": 0.00285
+    }
+  }
+}

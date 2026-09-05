@@ -1,0 +1,36 @@
+{
+  "id": "95d31ccc-b1e0-405e-8b94-163f4dd49e36",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:10.108285",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 63894,
+    "modified_time": "2026-08-23T22:04:07.365845"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a screenshot of a running app displaying workout data. It shows a completed outdoor run of 5.09 kilometers, with a medal icon indicating an achievement. A map outlines the running route in green and red. Key statistics include a duration of 24:54, an average pace of 4:30 per kilometer, 288 calories burned, an average heart rate of 143 bpm, and a step frequency of 178 steps per minute. The interface is in Chinese, and the mood is motivational, focusing on fitness progress.",
+    "final_text": "The image is a screenshot of a running app displaying workout data. It shows a completed outdoor run of 5.09 kilometers, with a medal icon indicating an achievement. A map outlines the running route in green and red. Key statistics include a duration of 24:54, an average pace of 4:30 per kilometer, 288 calories burned, an average heart rate of 143 bpm, and a step frequency of 178 steps per minute. The interface is in Chinese, and the mood is motivational, focusing on fitness progress.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426610-AXv1gHfza7UYBpKO3rLs",
+    "created": 1788426610,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 109,
+      "total_tokens": 624,
+      "cost": 0.0023775
+    }
+  }
+}

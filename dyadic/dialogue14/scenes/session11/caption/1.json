@@ -1,0 +1,36 @@
+{
+  "id": "15147af9-be02-43e7-9baa-dc741a43c6c1",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:28.197522",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 1836457,
+    "modified_time": "2026-08-23T21:32:54.836077"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a GitHub contribution activity chart highlighting coding peaks in March and October. It consists of a grid with columns representing months and rows indicating weeks. The grid has shaded green squares that form two peaks, one in March and another in October, indicating increased coding activity. The text \"GitHub Contribution Activity\" and \"March and October Coding Peaks\" is visible at the top. The overall mood is analytical and informative, focusing on data visualization.",
+    "final_text": "The image shows a GitHub contribution activity chart highlighting coding peaks in March and October. It consists of a grid with columns representing months and rows indicating weeks. The grid has shaded green squares that form two peaks, one in March and another in October, indicating increased coding activity. The text \"GitHub Contribution Activity\" and \"March and October Coding Peaks\" is visible at the top. The overall mood is analytical and informative, focusing on data visualization.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426926-czHJaxZIk7FiG7de4Yx2",
+    "created": 1788426926,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 90,
+      "total_tokens": 1625,
+      "cost": 0.0047375
+    }
+  }
+}

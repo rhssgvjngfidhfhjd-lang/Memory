@@ -1,0 +1,36 @@
+{
+  "id": "95b0ce80-dd38-4e8b-827c-2251d0871abd",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:39.945399",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 164533,
+    "modified_time": "2026-08-23T21:55:28.634998"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a close-up view of an antique brass keyhole. The focus is on the intricate details of the keyhole's design, showcasing its aged texture and craftsmanship. The lighting highlights the metal's patina, contributing to a vintage and mysterious atmosphere. No visible text is present.",
+    "final_text": "The image features a close-up view of an antique brass keyhole. The focus is on the intricate details of the keyhole's design, showcasing its aged texture and craftsmanship. The lighting highlights the metal's patina, contributing to a vintage and mysterious atmosphere. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 58,
+      "final_tokens": 58,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427480-JhLLxyvef3pfbTKs7FkK",
+    "created": 1788427480,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 58,
+      "total_tokens": 403,
+      "cost": 0.0014425
+    }
+  }
+}

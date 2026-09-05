@@ -1,0 +1,36 @@
+{
+  "id": "d92eb68a-b1f2-4481-a460-7938f360e31a",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:07.948639",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 459642,
+    "modified_time": "2026-08-23T21:34:34.685972"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a dual-line graph titled \"Cervical Forward Head Posture vs. Pain Score Trend (Upright Go Sensor Data - 1 Week Monitoring).\" The top graph shows \"Forward Head Angle (°)\" in blue, with peaks indicating excessive angles, particularly notable on Friday at 30.4°. The bottom graph illustrates \"Pain Score (VAS 0-10)\" in red, with a maximum pain score of 10 noted on Friday. The graphs cover a time span from Monday to Sunday, with shaded areas highlighting afternoons (12:00-18:00). The data suggests a correlation between forward head posture and increased pain, emphasizing a consistent pattern of worsening.",
+    "final_text": "The image displays a dual-line graph titled \"Cervical Forward Head Posture vs. Pain Score Trend (Upright Go Sensor Data - 1 Week Monitoring).\" The top graph shows \"Forward Head Angle (°)\" in blue, with peaks indicating excessive angles, particularly notable on Friday at 30.4°. The bottom graph illustrates \"Pain Score (VAS 0-10)\" in red, with a maximum pain score of 10 noted on Friday. The graphs cover a time span from Monday to Sunday, with shaded areas highlighting afternoons (12:00-18:00). The data suggests a correlation between forward head posture and increased pain, emphasizing a consistent pattern of worsening.",
+    "token_stats": {
+      "original_tokens": 142,
+      "final_tokens": 142,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426966-rPsiG5xqZghN7LViKSxm",
+    "created": 1788426966,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 138,
+      "total_tokens": 1333,
+      "cost": 0.0043675
+    }
+  }
+}

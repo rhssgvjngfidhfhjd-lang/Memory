@@ -1,0 +1,36 @@
+{
+  "id": "49579210-236f-4ee3-8e5c-2b69c200d797",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:57.927024",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 90676,
+    "modified_time": "2026-08-23T22:06:52.157588"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy indoor setting with a digital screen displaying various entertainment options, such as movies and apps, in a user interface format. The screen shows text in Chinese, including the time \"21:42\" and weather details. In front of the screen, a table holds snacks, including a bag of chips, a bowl of nuts, a soda can, and an instant noodle cup. A laptop is placed on the table, suggesting a relaxed atmosphere for leisure or entertainment. The mood is casual and inviting, suitable for unwinding or enjoying media content.",
+    "final_text": "The image depicts a cozy indoor setting with a digital screen displaying various entertainment options, such as movies and apps, in a user interface format. The screen shows text in Chinese, including the time \"21:42\" and weather details. In front of the screen, a table holds snacks, including a bag of chips, a bowl of nuts, a soda can, and an instant noodle cup. A laptop is placed on the table, suggesting a relaxed atmosphere for leisure or entertainment. The mood is casual and inviting, suitable for unwinding or enjoying media content.",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426654-8FUVKswlq3LdnEJJyzzV",
+    "created": 1788426654,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 113,
+      "total_tokens": 833,
+      "cost": 0.00293
+    }
+  }
+}

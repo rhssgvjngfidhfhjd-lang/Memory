@@ -1,0 +1,36 @@
+{
+  "id": "94c6eec6-a9de-488d-8a54-ae0207598b48",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:06.798908",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 146277,
+    "modified_time": "2026-08-23T21:50:22.092997"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a kitchen scene focused on bread-making. At the center, a ball of dough is placed in a transparent bowl, resting on a wooden surface. Above the bowl, there are illustrations of three stages of dough in separate bowls, indicating progression from flour to risen dough. Visible text includes \"家庭烘焙\" (home baking) and annotations explaining dough stages and percentages related to rising. The atmosphere is educational and instructive, aimed at guiding viewers through the baking process.",
+    "final_text": "The image depicts a kitchen scene focused on bread-making. At the center, a ball of dough is placed in a transparent bowl, resting on a wooden surface. Above the bowl, there are illustrations of three stages of dough in separate bowls, indicating progression from flour to risen dough. Visible text includes \"家庭烘焙\" (home baking) and annotations explaining dough stages and percentages related to rising. The atmosphere is educational and instructive, aimed at guiding viewers through the baking process.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427446-gKILQ7ugi0JXvp0uIgTB",
+    "created": 1788427446,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 99,
+      "total_tokens": 399,
+      "cost": 0.00174
+    }
+  }
+}

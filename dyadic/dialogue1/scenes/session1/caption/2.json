@@ -1,0 +1,36 @@
+{
+  "id": "c5050803-5122-48af-8f00-58d43938c6f9",
+  "success": true,
+  "timestamp": "2026-09-03T17:07:34.108064",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session1/image/2.png",
+    "filename": "2.png",
+    "size": 450923,
+    "modified_time": "2026-08-23T21:30:06.674902"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a fluffy cat with striking blue eyes, playfully holding a ball of yarn in its paws. The cat is lying on a soft pink blanket, creating a cozy and warm atmosphere. The cat wears a collar with a tag displaying text in a language that resembles Asian characters. The overall mood is cute and serene, capturing a moment of playful curiosity.",
+    "final_text": "The image features a fluffy cat with striking blue eyes, playfully holding a ball of yarn in its paws. The cat is lying on a soft pink blanket, creating a cozy and warm atmosphere. The cat wears a collar with a tag displaying text in a language that resembles Asian characters. The overall mood is cute and serene, capturing a moment of playful curiosity.",
+    "token_stats": {
+      "original_tokens": 73,
+      "final_tokens": 73,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426451-9QxUDpfLO09x7QpWvFLr",
+    "created": 1788426451,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 73,
+      "total_tokens": 790,
+      "cost": 0.0025225
+    }
+  }
+}

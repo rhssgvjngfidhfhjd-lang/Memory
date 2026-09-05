@@ -1,0 +1,36 @@
+{
+  "id": "3628e0b6-112f-4dd8-a27b-935e0cbef131",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:24.917041",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 4863152,
+    "modified_time": "2026-08-23T21:31:11.282250"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy and serene scene featuring an open book, a lit candle in a glass holder, and a hand holding a bottle of dōTERRA essential oil labeled \"Coffee Lemin.\" The setting suggests a relaxing atmosphere, possibly for reading or meditation. The candle's warm glow adds to the tranquil mood.",
+    "final_text": "The image depicts a cozy and serene scene featuring an open book, a lit candle in a glass holder, and a hand holding a bottle of dōTERRA essential oil labeled \"Coffee Lemin.\" The setting suggests a relaxing atmosphere, possibly for reading or meditation. The candle's warm glow adds to the tranquil mood.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426561-frFFUhLb7Ydc14YduJVn",
+    "created": 1788426561,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 64,
+      "total_tokens": 919,
+      "cost": 0.0027775
+    }
+  }
+}

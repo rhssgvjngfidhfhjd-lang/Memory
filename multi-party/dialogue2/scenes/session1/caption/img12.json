@@ -1,0 +1,36 @@
+{
+  "id": "5341244b-f6cc-4bf1-ac7f-dffa5d2f0896",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:22.498307",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 433365,
+    "modified_time": "2026-08-23T22:04:13.585406"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a simple breakfast scene featuring a slice of whole grain bread on a decorative white plate with blue patterns. Next to the plate is a tall glass of dark coffee with a light frothy top. The background is a neutral gray surface. In the top left corner, the word \"Niki\" is written in cursive text. The overall mood is calm and minimalistic.",
+    "final_text": "The image shows a simple breakfast scene featuring a slice of whole grain bread on a decorative white plate with blue patterns. Next to the plate is a tall glass of dark coffee with a light frothy top. The background is a neutral gray surface. In the top left corner, the word \"Niki\" is written in cursive text. The overall mood is calm and minimalistic.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426620-JiBeTqfeJpZJc4NaYvmw",
+    "created": 1788426620,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 77,
+      "total_tokens": 932,
+      "cost": 0.0029075
+    }
+  }
+}

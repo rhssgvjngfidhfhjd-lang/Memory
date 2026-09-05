@@ -1,0 +1,36 @@
+{
+  "id": "a618a379-6381-4422-8d81-013a88de75af",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:03.158977",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 203615,
+    "modified_time": "2026-08-23T22:06:55.894902"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a person with a beard and shaved head, wearing a white shirt, holding their head with both hands. The expression on their face suggests frustration or tension. The shirt has visible text that reads \"Fast Hydration System.\" The atmosphere appears tense or stressed.",
+    "final_text": "The image shows a person with a beard and shaved head, wearing a white shirt, holding their head with both hands. The expression on their face suggests frustration or tension. The shirt has visible text that reads \"Fast Hydration System.\" The atmosphere appears tense or stressed.",
+    "token_stats": {
+      "original_tokens": 54,
+      "final_tokens": 54,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426661-Mr6Hlmko0UJdrNWK1bQo",
+    "created": 1788426661,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 54,
+      "total_tokens": 909,
+      "cost": 0.0026775
+    }
+  }
+}

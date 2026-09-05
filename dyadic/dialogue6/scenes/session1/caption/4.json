@@ -1,0 +1,36 @@
+{
+  "id": "6a6e1340-d0e7-43ad-8e0c-41a052ee599d",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:40.448845",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session1/image/4.png",
+    "filename": "4.png",
+    "size": 729643,
+    "modified_time": "2026-08-23T21:55:36.714611"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image showcases a traditional Japanese guesthouse, HARU, located in Nara. The scene features a well-maintained exterior with a tiled roof and wooden gate, and an interior with tatami mats and wooden ceilings. A person is seated in the cozy reception area, which includes modern amenities like a coffee machine. The atmosphere is inviting and serene. Text describes the guesthouse as highly recommended, highlighting its historical architecture and convenient location near Nara Park. It mentions amenities such as free coffee and tea, and notes the absence of an elevator.",
+    "final_text": "The image showcases a traditional Japanese guesthouse, HARU, located in Nara. The scene features a well-maintained exterior with a tiled roof and wooden gate, and an interior with tatami mats and wooden ceilings. A person is seated in the cozy reception area, which includes modern amenities like a coffee machine. The atmosphere is inviting and serene. Text describes the guesthouse as highly recommended, highlighting its historical architecture and convenient location near Nara Park. It mentions amenities such as free coffee and tea, and notes the absence of an elevator.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427538-mVxMzRdFnUCYKNCs4pdG",
+    "created": 1788427538,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 110,
+      "total_tokens": 1108,
+      "cost": 0.003595
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "139dbb87-8e6b-44fe-b4e3-888aef27a585",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:36.300109",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 133137,
+    "modified_time": "2026-08-23T22:05:46.925007"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a screenshot of a financial transaction detail page. It features a small profile icon at the top with the name \"小明.\" The transaction amount is -168.00, indicating a successful transaction. The payment date is January 15, 2026, at 12:31:38. The payment method is \"账户余额,\" and the transaction description is \"经营码交易.\" The recipient's name is partially obscured. Order numbers are partially visible, with a play button overlay. Below, there is a section for account management and expenditure analysis, with additional options for categorizing and tagging the transaction. The overall atmosphere is informative and transactional.",
+    "final_text": "The image is a screenshot of a financial transaction detail page. It features a small profile icon at the top with the name \"小明.\" The transaction amount is -168.00, indicating a successful transaction. The payment date is January 15, 2026, at 12:31:38. The payment method is \"账户余额,\" and the transaction description is \"经营码交易.\" The recipient's name is partially obscured. Order numbers are partially visible, with a play button overlay. Below, there is a section for account management and expenditure analysis, with additional options for categorizing and tagging the transaction. The overall atmosphere is informative and transactional.",
+    "token_stats": {
+      "original_tokens": 138,
+      "final_tokens": 138,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426633-B2a8oMFQUCvI7plU7UMH",
+    "created": 1788426633,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 134,
+      "total_tokens": 1132,
+      "cost": 0.003835
+    }
+  }
+}

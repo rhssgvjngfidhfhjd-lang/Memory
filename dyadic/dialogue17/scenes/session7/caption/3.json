@@ -1,0 +1,36 @@
+{
+  "id": "4fa53dbd-8f5a-4aea-89b7-027c4196e785",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:58.825815",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session7/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 48022,
+    "modified_time": "2026-08-23T21:36:46.195811"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a black and gray electronic LEGO component connected by a black wire. The black piece resembles a LEGO brick with studs on top, and the gray piece appears to be a connector or sensor. The wire is coiled, suggesting readiness for integration. The overall atmosphere is technical, indicating a part of a larger LEGO project or build.",
+    "final_text": "The image shows a black and gray electronic LEGO component connected by a black wire. The black piece resembles a LEGO brick with studs on top, and the gray piece appears to be a connector or sensor. The wire is coiled, suggesting readiness for integration. The overall atmosphere is technical, indicating a part of a larger LEGO project or build.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427078-u27JsM8Q0SnzYHXPE2NN",
+    "created": 1788427078,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 68,
+      "total_tokens": 923,
+      "cost": 0.0028175
+    }
+  }
+}

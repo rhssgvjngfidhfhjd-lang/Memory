@@ -1,0 +1,36 @@
+{
+  "id": "336361b7-7fd9-4c4c-b218-58b24bbccd28",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:40.794236",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 227314,
+    "modified_time": "2026-08-23T22:08:02.514783"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a rainy, neon-lit cityscape at night, reminiscent of a cyberpunk setting. Tall buildings with glowing advertisements and signage, such as \"softsys\" and \"HOテル\" (HO Hotel), create a vibrant, futuristic atmosphere. A lone vehicle with headlights on is visible on the wet street below, reflecting the colorful lights. The scene exudes a moody, atmospheric vibe, enhanced by the heavy rain and the interplay of light and shadow.",
+    "final_text": "The image depicts a rainy, neon-lit cityscape at night, reminiscent of a cyberpunk setting. Tall buildings with glowing advertisements and signage, such as \"softsys\" and \"HOテル\" (HO Hotel), create a vibrant, futuristic atmosphere. A lone vehicle with headlights on is visible on the wet street below, reflecting the colorful lights. The scene exudes a moody, atmospheric vibe, enhanced by the heavy rain and the interplay of light and shadow.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426702-okbnvktBmBvs0Rqw2F9n",
+    "created": 1788426702,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 93,
+      "total_tokens": 1288,
+      "cost": 0.0039175
+    }
+  }
+}

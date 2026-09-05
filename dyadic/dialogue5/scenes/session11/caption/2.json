@@ -1,0 +1,36 @@
+{
+  "id": "75b6f76e-c64d-4214-a35f-a9a10ce47256",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:20.073017",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 548396,
+    "modified_time": "2026-08-23T21:55:07.111895"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a red book cover featuring traditional Chinese illustrations. Two figures in historical attire are seen on the front, suggesting a classical theme. The title \"红楼梦\" (Dream of the Red Chamber) is prominently displayed in large white characters. Additional text provides details about the edition, focusing on annotations and interpretations. A circular emblem reads \"足本珍藏版\" (Complete Collector's Edition). The overall mood is scholarly and culturally rich, emphasizing literary significance.",
+    "final_text": "The image depicts a red book cover featuring traditional Chinese illustrations. Two figures in historical attire are seen on the front, suggesting a classical theme. The title \"红楼梦\" (Dream of the Red Chamber) is prominently displayed in large white characters. Additional text provides details about the edition, focusing on annotations and interpretations. A circular emblem reads \"足本珍藏版\" (Complete Collector's Edition). The overall mood is scholarly and culturally rich, emphasizing literary significance.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427518-9fTTBgOTwgVjq2vhxicB",
+    "created": 1788427518,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 95,
+      "total_tokens": 812,
+      "cost": 0.0027425
+    }
+  }
+}

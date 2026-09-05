@@ -1,0 +1,36 @@
+{
+  "id": "28913e2c-835d-4284-8568-7d955354d638",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:06.626259",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session5/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 274764,
+    "modified_time": "2026-08-23T22:03:55.636952"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional poster showcasing various snacks under 100 calories, suitable for dieting. The background is brown with bold text in Chinese, highlighting \"减肥期\" (diet period) and \"<100kcal\" (less than 100 calories). Twelve snack items are displayed with their calorie count per package or item, including Taiwanese pineapple cake, shrimp flakes, and assorted pastries. Each snack is accompanied by a bright, colorful packaging. The overall mood is informative and encouraging, targeting individuals looking for low-calorie snack options.",
+    "final_text": "The image is a promotional poster showcasing various snacks under 100 calories, suitable for dieting. The background is brown with bold text in Chinese, highlighting \"减肥期\" (diet period) and \"<100kcal\" (less than 100 calories). Twelve snack items are displayed with their calorie count per package or item, including Taiwanese pineapple cake, shrimp flakes, and assorted pastries. Each snack is accompanied by a bright, colorful packaging. The overall mood is informative and encouraging, targeting individuals looking for low-calorie snack options.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426605-M0AbxMkg8k532FSZLH1O",
+    "created": 1788426605,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 107,
+      "total_tokens": 827,
+      "cost": 0.00287
+    }
+  }
+}

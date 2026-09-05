@@ -1,0 +1,36 @@
+{
+  "id": "95be0d24-ca87-4456-af26-42ec1d6c24e9",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:25.494552",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session14/image/1.png",
+    "filename": "1.png",
+    "size": 958674,
+    "modified_time": "2026-08-23T21:51:37.888286"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a webpage featuring the game \"Tick Tock: A Tale for Two.\" At the top, there's an illustration of two silhouetted figures facing each other, set against a dark background. The game's title is prominently displayed in stylized text. Below, there is a navigation bar with options like \"首页\" (Home), \"新闻\" (News), and \"攻略\" (Strategy). An advertisement banner shows a fantasy scene with armored characters. Text in the lower section discusses the game's release and promotional activities, with details in Chinese. The atmosphere is mysterious and engaging.",
+    "final_text": "The image is a webpage featuring the game \"Tick Tock: A Tale for Two.\" At the top, there's an illustration of two silhouetted figures facing each other, set against a dark background. The game's title is prominently displayed in stylized text. Below, there is a navigation bar with options like \"首页\" (Home), \"新闻\" (News), and \"攻略\" (Strategy). An advertisement banner shows a fantasy scene with armored characters. Text in the lower section discusses the game's release and promotional activities, with details in Chinese. The atmosphere is mysterious and engaging.",
+    "token_stats": {
+      "original_tokens": 126,
+      "final_tokens": 126,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427461-nnVjkRDhUsEyeDcTapaM",
+    "created": 1788427461,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 117,
+      "total_tokens": 1115,
+      "cost": 0.003665
+    }
+  }
+}

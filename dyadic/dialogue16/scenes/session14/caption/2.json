@@ -1,0 +1,36 @@
+{
+  "id": "ac7380a3-39bb-47f4-8787-0f427ebb733f",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:30.444176",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session14/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 103806,
+    "modified_time": "2026-08-23T21:35:17.176444"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a close-up of a textured, rough brown surface, possibly cardboard or paper. The texture features fibrous lines and small speckles scattered across it. There are no visible objects, people, or text. The overall atmosphere is plain and neutral, focusing on the material's texture.",
+    "final_text": "The image shows a close-up of a textured, rough brown surface, possibly cardboard or paper. The texture features fibrous lines and small speckles scattered across it. There are no visible objects, people, or text. The overall atmosphere is plain and neutral, focusing on the material's texture.",
+    "token_stats": {
+      "original_tokens": 60,
+      "final_tokens": 60,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427051-ekxlvjb0N7UskAzdQKaE",
+    "created": 1788427051,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 59,
+      "total_tokens": 914,
+      "cost": 0.0027275
+    }
+  }
+}

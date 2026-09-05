@@ -1,0 +1,36 @@
+{
+  "id": "2545f612-91c0-4b63-a2bf-58a48485ea11",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:57.391607",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 229568,
+    "modified_time": "2026-08-23T21:32:47.140922"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a detailed plan for organizing a community second-hand market event. It features a table with multiple columns, each outlining specific aspects of the plan. The main headings include \"组织维度\" (organizational dimension) and \"具体执行计划\" (specific execution plan). The sections cover topics such as location, pricing/exchange rules, product safety, and encouraging family participation. The text is primarily in Chinese, focusing on creating a functional and safe environment for the market, promoting community involvement, and ensuring the well-being of participants. The atmosphere is structured and informative, aimed at effective event management.",
+    "final_text": "The image is a detailed plan for organizing a community second-hand market event. It features a table with multiple columns, each outlining specific aspects of the plan. The main headings include \"组织维度\" (organizational dimension) and \"具体执行计划\" (specific execution plan). The sections cover topics such as location, pricing/exchange rules, product safety, and encouraging family participation. The text is primarily in Chinese, focusing on creating a functional and safe environment for the market, promoting community involvement, and ensuring the well-being of participants. The atmosphere is structured and informative, aimed at effective event management.",
+    "token_stats": {
+      "original_tokens": 127,
+      "final_tokens": 127,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426836-GXLeDGmwtX26jpBenMuV",
+    "created": 1788426836,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 122,
+      "total_tokens": 1120,
+      "cost": 0.003715
+    }
+  }
+}

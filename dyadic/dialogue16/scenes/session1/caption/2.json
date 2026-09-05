@@ -1,0 +1,36 @@
+{
+  "id": "483430fe-749c-4053-a481-03ffa00100ac",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:48.860968",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session1/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 47568,
+    "modified_time": "2026-08-23T21:34:58.471730"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a doctor sitting at a desk in a well-lit office. She appears stressed, rubbing her forehead while looking at a laptop. The desk has a lamp, clipboard, and a pen holder. Behind her, there is a shelf with books and decor, and a plant is visible. The atmosphere suggests tension or fatigue.",
+    "final_text": "The image shows a doctor sitting at a desk in a well-lit office. She appears stressed, rubbing her forehead while looking at a laptop. The desk has a lamp, clipboard, and a pen holder. Behind her, there is a shelf with books and decor, and a plant is visible. The atmosphere suggests tension or fatigue.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427008-8nOPK2MFObgvWr5Dac4P",
+    "created": 1788427008,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 66,
+      "total_tokens": 581,
+      "cost": 0.0019475
+    }
+  }
+}

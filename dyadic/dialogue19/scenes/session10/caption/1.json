@@ -1,0 +1,36 @@
+{
+  "id": "ee33daed-3858-4e50-89ab-802447220edd",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:23.232229",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 3186623,
+    "modified_time": "2026-08-23T21:37:58.972558"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is titled \"Ethical Pet Imagery\" and features three main sections:\n\n1. **Responsible Pet Ownership**: Shows a dog and a cat, emphasizing adoption and proper care.\n2. **Animal Welfare Guidelines**: Depicts a veterinarian examining a puppy, highlighting the importance of safe living environments.\n3. **Positive Representation Tips**: Displays a smiling person with a dog, encouraging the portrayal of pets as sentient beings.\n\nThe overall mood is educational and compassionate, with the text \"Treat all pets with kindness\" at the bottom.",
+    "final_text": "The image is titled \"Ethical Pet Imagery\" and features three main sections:\n\n1. **Responsible Pet Ownership**: Shows a dog and a cat, emphasizing adoption and proper care.\n2. **Animal Welfare Guidelines**: Depicts a veterinarian examining a puppy, highlighting the importance of safe living environments.\n3. **Positive Representation Tips**: Displays a smiling person with a dog, encouraging the portrayal of pets as sentient beings.\n\nThe overall mood is educational and compassionate, with the text \"Treat all pets with kindness\" at the bottom.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427221-ZdT2iXlvu0uxFvM9zy6O",
+    "created": 1788427221,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 110,
+      "total_tokens": 1305,
+      "cost": 0.0040875
+    }
+  }
+}

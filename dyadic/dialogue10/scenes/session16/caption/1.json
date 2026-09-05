@@ -1,0 +1,36 @@
+{
+  "id": "1c71c857-e969-4b6c-9885-3b5ad9c12671",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:31.914992",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session16/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 191593,
+    "modified_time": "2026-08-23T21:30:16.242170"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A fluffy white cat is peacefully sleeping on a wooden windowsill bathed in warm, golden sunlight. A person's hand gently cradles the cat's head, suggesting a tender interaction. The atmosphere is serene and cozy, enhanced by the soft glow streaming through the window.",
+    "final_text": "A fluffy white cat is peacefully sleeping on a wooden windowsill bathed in warm, golden sunlight. A person's hand gently cradles the cat's head, suggesting a tender interaction. The atmosphere is serene and cozy, enhanced by the soft glow streaming through the window.",
+    "token_stats": {
+      "original_tokens": 55,
+      "final_tokens": 55,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426630-y1GmXAEqN3UTCsAjcqQU",
+    "created": 1788426630,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 54,
+      "total_tokens": 909,
+      "cost": 0.0026775
+    }
+  }
+}

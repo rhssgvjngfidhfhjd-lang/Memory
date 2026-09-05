@@ -1,0 +1,36 @@
+{
+  "id": "4139ad0e-39bd-461d-ad72-c149a0dfee41",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:43.321728",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session3/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 38689,
+    "modified_time": "2026-08-23T21:37:31.518339"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an open first aid kit placed on a wooden surface. The kit contains various medical supplies, including bandages, antiseptic wipes, and a pair of scissors with blue handles. The supplies are organized in transparent pockets. The overall mood is practical and prepared, suggesting readiness for minor medical situations.",
+    "final_text": "The image shows an open first aid kit placed on a wooden surface. The kit contains various medical supplies, including bandages, antiseptic wipes, and a pair of scissors with blue handles. The supplies are organized in transparent pockets. The overall mood is practical and prepared, suggesting readiness for minor medical situations.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427124-5pi8RuTDNv2Yies3cWt2",
+    "created": 1788427124,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 61,
+      "total_tokens": 406,
+      "cost": 0.0014725
+    }
+  }
+}

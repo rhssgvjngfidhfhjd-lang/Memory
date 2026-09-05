@@ -1,0 +1,36 @@
+{
+  "id": "517cdf28-4025-44bf-ba34-31803d558a39",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:40.065405",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session14/image/2.png",
+    "filename": "2.png",
+    "size": 1671567,
+    "modified_time": "2026-08-23T21:38:30.218311"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a graphic design workspace featuring three monitors displaying text and design software. In the center, there's a drawing tablet with a pen, surrounded by color swatches, a color calibration chart, and a control panel device. Books and color guides are stacked to the right. The visible text includes \"Ac,\" \"Adm #ara,\" and \"Fwrcl Pass.\" The atmosphere is organized and creative, suggesting a focus on digital design and color accuracy.",
+    "final_text": "The image depicts a graphic design workspace featuring three monitors displaying text and design software. In the center, there's a drawing tablet with a pen, surrounded by color swatches, a color calibration chart, and a control panel device. Books and color guides are stacked to the right. The visible text includes \"Ac,\" \"Adm #ara,\" and \"Fwrcl Pass.\" The atmosphere is organized and creative, suggesting a focus on digital design and color accuracy.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427237-F2DHlX65nfEIUEN9YfhI",
+    "created": 1788427237,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 91,
+      "total_tokens": 1286,
+      "cost": 0.0038975
+    }
+  }
+}

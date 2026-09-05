@@ -1,0 +1,36 @@
+{
+  "id": "a817f799-6209-4437-be07-eec68cf9a0c2",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:44.858858",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session3/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 215664,
+    "modified_time": "2026-08-23T22:06:10.834851"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a digital display screen in a hospital setting, specifically the Children's Hospital. It lists various departments, consultation rooms, doctors, and patient queue numbers. The screen is divided into columns with headings such as departments, consultation rooms, doctors, currently consulting, and waiting numbers. The date and time are displayed in the top right corner as March 19, Wednesday, 15:32. A green banner at the bottom contains safety reminders about wearing masks and personal protection. The overall atmosphere is clinical and organized.",
+    "final_text": "The image shows a digital display screen in a hospital setting, specifically the Children's Hospital. It lists various departments, consultation rooms, doctors, and patient queue numbers. The screen is divided into columns with headings such as departments, consultation rooms, doctors, currently consulting, and waiting numbers. The date and time are displayed in the top right corner as March 19, Wednesday, 15:32. A green banner at the bottom contains safety reminders about wearing masks and personal protection. The overall atmosphere is clinical and organized.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426644-cqZEzHL84aPvsQF5pHVG",
+    "created": 1788426644,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 103,
+      "total_tokens": 1298,
+      "cost": 0.0040175
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "03d43535-b995-4219-9f03-73529011fc35",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:27.678447",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 41866,
+    "modified_time": "2026-08-23T21:54:46.591149"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table detailing a weekly schedule from March 16 to March 22, with columns for date, time, pain location, pain index, computer work duration, key activities/postures, and relaxation/stretch activities. Each day is divided into morning and afternoon sessions, with specific tasks and pain levels recorded. Activities include emailing, writing reports, video meetings, PPT creation, project planning, and team discussions. Relaxation suggestions include walking, stretching, and taking breaks. The atmosphere is structured and focused on managing workload and health.",
+    "final_text": "The image is a table detailing a weekly schedule from March 16 to March 22, with columns for date, time, pain location, pain index, computer work duration, key activities/postures, and relaxation/stretch activities. Each day is divided into morning and afternoon sessions, with specific tasks and pain levels recorded. Activities include emailing, writing reports, video meetings, PPT creation, project planning, and team discussions. Relaxation suggestions include walking, stretching, and taking breaks. The atmosphere is structured and focused on managing workload and health.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427405-7wEv4bY08EJM3YvLe3Da",
+    "created": 1788427405,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 107,
+      "total_tokens": 962,
+      "cost": 0.0032075
+    }
+  }
+}

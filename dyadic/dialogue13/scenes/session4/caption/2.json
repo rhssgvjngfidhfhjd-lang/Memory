@@ -1,0 +1,36 @@
+{
+  "id": "b1a59ace-3b9b-44aa-9733-807ad65b2f72",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:35.530175",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session4/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 180534,
+    "modified_time": "2026-08-23T21:32:35.715659"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts two children walking a dog in a grassy field surrounded by trees. The boy on the left is wearing a checkered shirt, jeans, and a cap, while the girl on the right is dressed in a pink checkered shirt and jeans, holding the dog's leash. The scene captures a sunlit, serene outdoor atmosphere, suggesting a peaceful and joyful moment. Visible text includes \"alamy\" watermarks throughout the image.",
+    "final_text": "The image depicts two children walking a dog in a grassy field surrounded by trees. The boy on the left is wearing a checkered shirt, jeans, and a cap, while the girl on the right is dressed in a pink checkered shirt and jeans, holding the dog's leash. The scene captures a sunlit, serene outdoor atmosphere, suggesting a peaceful and joyful moment. Visible text includes \"alamy\" watermarks throughout the image.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426812-ABUuRB6lc9ETj6F9kwf2",
+    "created": 1788426812,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 88,
+      "total_tokens": 1086,
+      "cost": 0.003375
+    }
+  }
+}

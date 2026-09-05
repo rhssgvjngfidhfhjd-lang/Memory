@@ -1,0 +1,36 @@
+{
+  "id": "0f59c720-9b07-42ed-ab92-23584cbbde8f",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:32.780338",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session12/image/1.png",
+    "filename": "1.png",
+    "size": 1374388,
+    "modified_time": "2026-08-23T21:33:01.157022"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a health report featuring two graphs. On the left, a blue line graph shows average sleep duration, starting at 4.8 hours and increasing to 6.2 hours throughout the months. On the right, a red bar graph illustrates instances of prolonged sitting, with a 40% overall decrease across seasons. The title reads, \"健康看板年度数据报告,\" and the graph labels indicate \"睡眠时长\" (Sleep Duration) and \"久坐警报\" (Prolonged Sitting Alert). The mood is informative, focusing on health trends.",
+    "final_text": "The image is a health report featuring two graphs. On the left, a blue line graph shows average sleep duration, starting at 4.8 hours and increasing to 6.2 hours throughout the months. On the right, a red bar graph illustrates instances of prolonged sitting, with a 40% overall decrease across seasons. The title reads, \"健康看板年度数据报告,\" and the graph labels indicate \"睡眠时长\" (Sleep Duration) and \"久坐警报\" (Prolonged Sitting Alert). The mood is informative, focusing on health trends.",
+    "token_stats": {
+      "original_tokens": 128,
+      "final_tokens": 128,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426931-ySxQ7UlXiFtTSxfkrIIm",
+    "created": 1788426931,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 117,
+      "total_tokens": 1312,
+      "cost": 0.0041575
+    }
+  }
+}

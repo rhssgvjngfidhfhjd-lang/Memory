@@ -1,0 +1,36 @@
+{
+  "id": "7ed8ec06-534a-4664-b202-767a1d7966f5",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:00.121896",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session10/image/4.png",
+    "filename": "4.png",
+    "size": 317161,
+    "modified_time": "2026-08-23T21:30:02.315873"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a complex arrangement of electronic components and circuit boards illuminated by bright lights, creating a futuristic and technological atmosphere. The components are organized in a symmetrical pattern, with beams of light connecting them, suggesting advanced technology. The visible text in Chinese reads: \"九章三号量子计算原型机首次突破了255个光子的操纵技术,\" which translates to \"Jiuzhang 3 quantum computing prototype machine first breaks through the manipulation technology of 255 photons.\" The mood is innovative and cutting-edge, emphasizing quantum computing advancements.",
+    "final_text": "The image depicts a complex arrangement of electronic components and circuit boards illuminated by bright lights, creating a futuristic and technological atmosphere. The components are organized in a symmetrical pattern, with beams of light connecting them, suggesting advanced technology. The visible text in Chinese reads: \"九章三号量子计算原型机首次突破了255个光子的操纵技术,\" which translates to \"Jiuzhang 3 quantum computing prototype machine first breaks through the manipulation technology of 255 photons.\" The mood is innovative and cutting-edge, emphasizing quantum computing advancements.",
+    "token_stats": {
+      "original_tokens": 125,
+      "final_tokens": 125,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426539-jzUt69oiWU6hwohtVY5x",
+    "created": 1788426539,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 111,
+      "total_tokens": 550,
+      "cost": 0.0022075
+    }
+  }
+}

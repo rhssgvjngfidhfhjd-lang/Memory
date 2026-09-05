@@ -1,0 +1,36 @@
+{
+  "id": "40e230c5-aed0-4bc4-a925-aea03ef86abf",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:05.399096",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session6/image/2.png",
+    "filename": "2.png",
+    "size": 446397,
+    "modified_time": "2026-08-23T21:40:50.688296"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a poster featuring four women seated on a porch, each holding an apple, suggesting a relaxed and harmonious atmosphere. They are casually dressed, sitting close together, and appear engaged with each other. The background includes a wooden structure with glass windows, indicating a homey setting. Visible text in Japanese includes the title \"海街日記\" (Our Little Sister), along with additional text likely related to the film's credits and tagline. The overall mood is serene and familial.",
+    "final_text": "The image is a poster featuring four women seated on a porch, each holding an apple, suggesting a relaxed and harmonious atmosphere. They are casually dressed, sitting close together, and appear engaged with each other. The background includes a wooden structure with glass windows, indicating a homey setting. Visible text in Japanese includes the title \"海街日記\" (Our Little Sister), along with additional text likely related to the film's credits and tagline. The overall mood is serene and familial.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427265-BbW7IcZRST5IilZe7ddM",
+    "created": 1788427265,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 97,
+      "total_tokens": 952,
+      "cost": 0.0031075
+    }
+  }
+}

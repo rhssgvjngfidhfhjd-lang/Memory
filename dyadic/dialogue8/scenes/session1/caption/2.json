@@ -1,0 +1,36 @@
+{
+  "id": "830216f1-7f6d-4e91-992b-f0aaefb6b6bf",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:23.140153",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session1/image/2.png",
+    "filename": "2.png",
+    "size": 285680,
+    "modified_time": "2026-08-23T21:57:38.468762"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional poster for the movie \"飞驰人生2 (Pegasus 2)\" set to release in 2024. It features a group of people sitting and standing in front of a building labeled \"专业驾校\" (Professional Driving School). The main text includes the film's title, director Han Han, and cast members such as Shen Teng and Yin Zheng. The film is categorized as a drama/comedy/action from China, with a runtime of 121 minutes. An IMDb link is provided. The Douban rating is 7.7 out of 10, with a breakdown of user ratings. The overall mood suggests an engaging and lively film.",
+    "final_text": "The image is a promotional poster for the movie \"飞驰人生2 (Pegasus 2)\" set to release in 2024. It features a group of people sitting and standing in front of a building labeled \"专业驾校\" (Professional Driving School). The main text includes the film's title, director Han Han, and cast members such as Shen Teng and Yin Zheng. The film is categorized as a drama/comedy/action from China, with a runtime of 121 minutes. An IMDb link is provided. The Douban rating is 7.7 out of 10, with a breakdown of user ratings. The overall mood suggests an engaging and lively film.",
+    "token_stats": {
+      "original_tokens": 142,
+      "final_tokens": 142,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427641-PzlQ3UFLGwkQm5zLxuSk",
+    "created": 1788427641,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 135,
+      "total_tokens": 650,
+      "cost": 0.0026375
+    }
+  }
+}

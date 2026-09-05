@@ -1,0 +1,36 @@
+{
+  "id": "262ef186-65af-4259-a847-c8be2f6977aa",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:05.839242",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 2122451,
+    "modified_time": "2026-08-23T22:01:22.419045"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy and playful scene featuring a collection of colorful toys. At the forefront are two plush teddy bears, one beige and one green, sitting amidst a pile of assorted toys including a toy airplane, a small white helicopter, and various animal figures. The background shows more toys in a cheerful mix of colors. The atmosphere is warm and inviting, evoking a sense of childhood joy and playfulness. No visible text is present in the image.",
+    "final_text": "The image depicts a cozy and playful scene featuring a collection of colorful toys. At the forefront are two plush teddy bears, one beige and one green, sitting amidst a pile of assorted toys including a toy airplane, a small white helicopter, and various animal figures. The background shows more toys in a cheerful mix of colors. The atmosphere is warm and inviting, evoking a sense of childhood joy and playfulness. No visible text is present in the image.",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427743-wd5wfbq2smORnpQ4Ibnl",
+    "created": 1788427743,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 91,
+      "total_tokens": 1286,
+      "cost": 0.0038975
+    }
+  }
+}

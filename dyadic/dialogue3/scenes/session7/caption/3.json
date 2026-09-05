@@ -1,0 +1,36 @@
+{
+  "id": "3cffd813-8922-4ea9-ad0a-1f58f4717875",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:39.203417",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 256194,
+    "modified_time": "2026-08-23T21:49:31.646821"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a menu or list with text written in Chinese characters. It is organized in a tabular format with columns labeled for \"剧本名称\" (script name), \"剧本价格\" (price per person), and \"剧本配置\" (configuration). The list features various script names along with corresponding prices, mostly around 38 to 88 yuan per person, and configurations indicating gender ratios such as \"3男3女\" (3 men, 3 women). The atmosphere is formal and structured, likely related to a business or entertainment service offering different script options for events or activities. The background includes subtle traditional Chinese elements like landscape art, enhancing an elegant and cultural vibe.",
+    "final_text": "The image is a menu or list with text written in Chinese characters. It is organized in a tabular format with columns labeled for \"剧本名称\" (script name), \"剧本价格\" (price per person), and \"剧本配置\" (configuration). The list features various script names along with corresponding prices, mostly around 38 to 88 yuan per person, and configurations indicating gender ratios such as \"3男3女\" (3 men, 3 women). The atmosphere is formal and structured, likely related to a business or entertainment service offering different script options for events or activities. The background includes subtle traditional Chinese elements like landscape art, enhancing an elegant and cultural vibe.",
+    "token_stats": {
+      "original_tokens": 142,
+      "final_tokens": 142,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427356-8LDvCcJmoRFQtcAhWxKf",
+    "created": 1788427356,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 139,
+      "total_tokens": 484,
+      "cost": 0.0022525
+    }
+  }
+}

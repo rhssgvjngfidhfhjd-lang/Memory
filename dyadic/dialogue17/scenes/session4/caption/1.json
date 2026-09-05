@@ -1,0 +1,36 @@
+{
+  "id": "4c04f621-5abd-4583-bc7d-d68759e38666",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:48.325087",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session4/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 31150,
+    "modified_time": "2026-08-23T21:37:07.866749"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a hand wearing a sleek black smartwatch against a light background. Above the watch, a futuristic digital interface with various holographic elements and diagrams is displayed, suggesting advanced technology or augmented reality. The atmosphere is innovative and high-tech. No visible text is discernible.",
+    "final_text": "The image features a hand wearing a sleek black smartwatch against a light background. Above the watch, a futuristic digital interface with various holographic elements and diagrams is displayed, suggesting advanced technology or augmented reality. The atmosphere is innovative and high-tech. No visible text is discernible.",
+    "token_stats": {
+      "original_tokens": 56,
+      "final_tokens": 56,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427067-M9FDiWQCjyYL3UjJDoUc",
+    "created": 1788427067,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 55,
+      "total_tokens": 570,
+      "cost": 0.0018375
+    }
+  }
+}

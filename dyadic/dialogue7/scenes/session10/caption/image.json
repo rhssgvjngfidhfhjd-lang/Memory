@@ -1,0 +1,36 @@
+{
+  "id": "f0720aef-3d41-446e-9cc0-c08286941818",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:12.986974",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session10/image/image.png",
+    "filename": "image.png",
+    "size": 52704,
+    "modified_time": "2026-08-23T21:56:43.786475"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a checklist written in Chinese, titled \"综合建议清单\" (Comprehensive Recommendation List). It includes six main points:\n\n1. **查询环境数据**: Check local pollen index, air quality (PM2.5), and weather forecasts before traveling.\n2. **住宿慎选**: Choose accommodations without carpets, pets, or smoking, with good ventilation; consider anti-mite bedding.\n3. **穿戴防护**: Prepare long sleeves and pants for children, wide-brimmed hats, and child-safe repellent.\n4. **应急演练**: Practice emergency steps for asthma, teach companions to use inhalers.\n5. **保险确认**: Ensure travel insurance covers medical emergencies or medical transportation.\n6. **避险计划**: Plan indoor activities for days with severe pollution or extreme weather.\n\nThe overall mood is informative and precautionary, focusing on health and safety measures.",
+    "final_text": "The image is a checklist written in Chinese, titled \"综合建议清单\" (Comprehensive Recommendation List). It includes six main points:\n\n1. **查询环境数据**: Check local pollen index, air quality (PM2.5), and weather forecasts before traveling.\n2. **住宿慎选**: Choose accommodations without carpets, pets, or smoking, with good ventilation; consider anti-mite bedding.\n3. **穿戴防护**: Prepare long sleeves and pants for children, wide-brimmed hats, and child-safe repellent.\n4. **应急演练**: Practice emergency steps for asthma, teach companions to use inhalers.\n5. **保险确认**: Ensure travel insurance covers medical emergencies or medical transportation.\n6. **避险计划**: Plan indoor activities for days with severe pollution or extreme weather.\n\nThe overall mood is informative and precautionary, focusing on health and safety measures.",
+    "token_stats": {
+      "original_tokens": 204,
+      "final_tokens": 204,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427629-bysPI1JMNaJVBZHlo2Be",
+    "created": 1788427629,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 187,
+      "total_tokens": 702,
+      "cost": 0.0031575
+    }
+  }
+}

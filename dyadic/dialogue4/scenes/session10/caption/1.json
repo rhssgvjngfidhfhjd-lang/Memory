@@ -1,0 +1,36 @@
+{
+  "id": "a3ae13c2-cec0-4e8e-999a-deb162cdd592",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:04.029110",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 388364,
+    "modified_time": "2026-08-23T21:50:05.136536"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a section of a scientific paper discussing the impact of different lactic acid bacteria on the quality and flavor of sourdough bread. The title is in bold Chinese characters, followed by author names and affiliations. The abstract, in Chinese, details the experiment using Lactobacillus plantarum and other strains to observe changes in acidity and bread quality. Key results and observations are summarized, mentioning specific bacterial combinations and their effects. Keywords listed include \"lactic acid bacteria,\" \"sourdough,\" \"quality,\" and \"flavor.\" The overall atmosphere is academic and informative.",
+    "final_text": "The image is a section of a scientific paper discussing the impact of different lactic acid bacteria on the quality and flavor of sourdough bread. The title is in bold Chinese characters, followed by author names and affiliations. The abstract, in Chinese, details the experiment using Lactobacillus plantarum and other strains to observe changes in acidity and bread quality. Key results and observations are summarized, mentioning specific bacterial combinations and their effects. Keywords listed include \"lactic acid bacteria,\" \"sourdough,\" \"quality,\" and \"flavor.\" The overall atmosphere is academic and informative.",
+    "token_stats": {
+      "original_tokens": 120,
+      "final_tokens": 120,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427443-uyjYdqhUmIiKJWy0w840",
+    "created": 1788427443,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 117,
+      "total_tokens": 1312,
+      "cost": 0.0041575
+    }
+  }
+}

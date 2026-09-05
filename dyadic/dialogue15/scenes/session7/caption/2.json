@@ -1,0 +1,36 @@
+{
+  "id": "95dc2db4-b87b-4055-a02b-50e92db5fa1a",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:14.121617",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 372705,
+    "modified_time": "2026-08-23T21:34:42.813519"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a comprehensive data visualization of a \"Personalized Intervention Recommendation System Based on Decision Tree Model.\" It includes a decision tree diagram for user evaluation, a radar chart evaluating intervention combinations across dimensions like cost efficiency and safety, and bar graphs displaying the importance of decision features and predicted effects for different user types. A timeline outlines recommended implementation phases. Text includes labels and metrics in both Chinese and English, indicating effectiveness and compatibility scores for various interventions. The mood is analytical and data-driven, aimed at optimizing personalized recommendations.",
+    "final_text": "The image features a comprehensive data visualization of a \"Personalized Intervention Recommendation System Based on Decision Tree Model.\" It includes a decision tree diagram for user evaluation, a radar chart evaluating intervention combinations across dimensions like cost efficiency and safety, and bar graphs displaying the importance of decision features and predicted effects for different user types. A timeline outlines recommended implementation phases. Text includes labels and metrics in both Chinese and English, indicating effectiveness and compatibility scores for various interventions. The mood is analytical and data-driven, aimed at optimizing personalized recommendations.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426973-nhZo5ASvOdGA4Mf2mfv8",
+    "created": 1788426973,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 103,
+      "total_tokens": 1298,
+      "cost": 0.0040175
+    }
+  }
+}

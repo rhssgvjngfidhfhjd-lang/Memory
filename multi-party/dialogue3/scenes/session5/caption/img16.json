@@ -1,0 +1,36 @@
+{
+  "id": "65400b0c-091d-484e-b64a-bd8afd7d82df",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:40.027773",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img16.jpg",
+    "filename": "img16.jpg",
+    "size": 351274,
+    "modified_time": "2026-08-23T22:07:59.175861"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts several people holding iced coffee cups, each with a straw, in a circle. Visible hands are making peace signs, suggesting a celebratory or casual gathering. In the background, there are brown paper bags with a recognizable logo. The atmosphere appears friendly and social.",
+    "final_text": "The image depicts several people holding iced coffee cups, each with a straw, in a circle. Visible hands are making peace signs, suggesting a celebratory or casual gathering. In the background, there are brown paper bags with a recognizable logo. The atmosphere appears friendly and social.",
+    "token_stats": {
+      "original_tokens": 56,
+      "final_tokens": 56,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426759-DN1NuxI235xdxVGdJJZ3",
+    "created": 1788426759,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 55,
+      "total_tokens": 910,
+      "cost": 0.0026875
+    }
+  }
+}

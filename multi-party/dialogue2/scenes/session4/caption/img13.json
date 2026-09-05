@@ -1,0 +1,36 @@
+{
+  "id": "783a8bdc-65da-42d3-8af2-a26aa8b31295",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:07.552360",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 653541,
+    "modified_time": "2026-08-23T22:06:42.225079"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image captures a tense moment in a soccer match where a player in red, wearing the number 7 jersey, is about to take a penalty kick. He stands poised with the ball placed ahead of him, facing a goalkeeper in yellow positioned at the goal line. The crowd in the background is filled with spectators, many dressed in red, creating an energetic atmosphere. Visible text on the advertising boards includes \"SPORTWETTEN\" and \"Betano.\" The overall mood is suspenseful and focused, as both player and goalkeeper prepare for the crucial play.",
+    "final_text": "The image captures a tense moment in a soccer match where a player in red, wearing the number 7 jersey, is about to take a penalty kick. He stands poised with the ball placed ahead of him, facing a goalkeeper in yellow positioned at the goal line. The crowd in the background is filled with spectators, many dressed in red, creating an energetic atmosphere. Visible text on the advertising boards includes \"SPORTWETTEN\" and \"Betano.\" The overall mood is suspenseful and focused, as both player and goalkeeper prepare for the crucial play.",
+    "token_stats": {
+      "original_tokens": 112,
+      "final_tokens": 112,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426665-2yUnPJJKLSd1pmLsRvkT",
+    "created": 1788426665,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 112,
+      "total_tokens": 829,
+      "cost": 0.0029125
+    }
+  }
+}

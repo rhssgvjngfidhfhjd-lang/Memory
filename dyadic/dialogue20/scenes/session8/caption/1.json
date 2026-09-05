@@ -1,0 +1,36 @@
+{
+  "id": "431976f9-7e73-403a-88ab-f38b0afc6bab",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:56.980624",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 657218,
+    "modified_time": "2026-08-23T21:42:34.824274"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A group of five people is practicing yoga on a sandy beach, facing the ocean. They are performing a tree pose, standing on one leg with arms raised. Each person is on a colorful yoga mat, and the scene is serene with gentle waves in the background. The atmosphere is calm and focused, with no visible text. The sky is slightly overcast, enhancing the tranquil setting.",
+    "final_text": "A group of five people is practicing yoga on a sandy beach, facing the ocean. They are performing a tree pose, standing on one leg with arms raised. Each person is on a colorful yoga mat, and the scene is serene with gentle waves in the background. The atmosphere is calm and focused, with no visible text. The sky is slightly overcast, enhancing the tranquil setting.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427315-ugiks5UV0ql8efbGlwIB",
+    "created": 1788427315,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 77,
+      "total_tokens": 932,
+      "cost": 0.0029075
+    }
+  }
+}

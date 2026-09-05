@@ -1,0 +1,36 @@
+{
+  "id": "8fd8958b-75a3-4c28-bf55-f01c5b97105b",
+  "success": true,
+  "timestamp": "2026-09-03T17:07:50.743239",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session3/image/2.png",
+    "filename": "2.png",
+    "size": 34068,
+    "modified_time": "2026-08-23T21:30:00.655996"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table displaying a weekly feeding schedule for a pet, with columns for time and meal types. The schedule includes breakfast at 8:00, afternoon snack at 15:00, and dinner at 20:00. Each day lists specific food items:\n\n- Monday: Chicken-based main meal and dried chicken breast pieces.\n- Tuesday: Fish-based main meal and cat grass.\n- Wednesday: Duck-based main meal and interactive reward.\n- Thursday: Main meal and hairball paste/cat grass.\n- Friday: Main meal and dried snacks.\n\nThe overall atmosphere is organized and routine-focused, suggesting careful planning for pet care.",
+    "final_text": "The image is a table displaying a weekly feeding schedule for a pet, with columns for time and meal types. The schedule includes breakfast at 8:00, afternoon snack at 15:00, and dinner at 20:00. Each day lists specific food items:\n\n- Monday: Chicken-based main meal and dried chicken breast pieces.\n- Tuesday: Fish-based main meal and cat grass.\n- Wednesday: Duck-based main meal and interactive reward.\n- Thursday: Main meal and hairball paste/cat grass.\n- Friday: Main meal and dried snacks.\n\nThe overall atmosphere is organized and routine-focused, suggesting careful planning for pet care.",
+    "token_stats": {
+      "original_tokens": 127,
+      "final_tokens": 127,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426470-OwnWIPRmbdVX0pdC4t8f",
+    "created": 1788426470,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 129,
+      "total_tokens": 568,
+      "cost": 0.0023875
+    }
+  }
+}

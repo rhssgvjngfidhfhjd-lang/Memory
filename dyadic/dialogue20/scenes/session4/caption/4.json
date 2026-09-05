@@ -1,0 +1,36 @@
+{
+  "id": "5363a507-6747-4dba-be7f-c7740ad5f18d",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:45.013753",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session4/image/4.png",
+    "filename": "4.png",
+    "size": 237903,
+    "modified_time": "2026-08-23T21:42:16.977810"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a transparent plastic storage container with a black handle on one side. A label with various images and text is attached to the front. The container is placed on a wooden floor in a bright room with natural light coming from a window. A red arrow and circle graphic are overlaid at the bottom left corner, pointing to the container. The atmosphere is clean and organized.",
+    "final_text": "The image shows a transparent plastic storage container with a black handle on one side. A label with various images and text is attached to the front. The container is placed on a wooden floor in a bright room with natural light coming from a window. A red arrow and circle graphic are overlaid at the bottom left corner, pointing to the container. The atmosphere is clean and organized.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427303-U0q25OXDXYjMTzONNOvZ",
+    "created": 1788427303,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 76,
+      "total_tokens": 591,
+      "cost": 0.0020475
+    }
+  }
+}

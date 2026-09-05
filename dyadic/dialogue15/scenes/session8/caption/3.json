@@ -1,0 +1,36 @@
+{
+  "id": "6c748b0a-15e3-4ed9-829a-d71915c39450",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:17.658294",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session8/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 82259,
+    "modified_time": "2026-08-23T21:34:45.034292"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a round electronic component, likely a sensor, with visible microchips and connectors. Above it, the text reads \"心电脉搏 HRV 传感器\" (Electrocardiogram HRV Sensor). Below, a blue banner includes text: \"送：源码/开发资料/上位机等/视频教程\" (Includes: source code/development materials/upper computer, etc./video tutorial). The scene is technical and informative, with a neutral, instructional atmosphere.",
+    "final_text": "The image features a round electronic component, likely a sensor, with visible microchips and connectors. Above it, the text reads \"心电脉搏 HRV 传感器\" (Electrocardiogram HRV Sensor). Below, a blue banner includes text: \"送：源码/开发资料/上位机等/视频教程\" (Includes: source code/development materials/upper computer, etc./video tutorial). The scene is technical and informative, with a neutral, instructional atmosphere.",
+    "token_stats": {
+      "original_tokens": 112,
+      "final_tokens": 112,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426977-mmzuMHz8pmVsSIGrfb7z",
+    "created": 1788426977,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 103,
+      "total_tokens": 958,
+      "cost": 0.0031675
+    }
+  }
+}

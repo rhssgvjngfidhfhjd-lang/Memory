@@ -1,0 +1,36 @@
+{
+  "id": "fc3767cb-a791-49a0-b288-751f308adc9e",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:30.045912",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session1/image/5.png",
+    "filename": "5.png",
+    "size": 82067,
+    "modified_time": "2026-08-23T21:41:41.780597"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a festive dish of fish, elegantly arranged on a white oval plate, garnished with red chili slices and shredded vegetables. The setting is a red tablecloth, with wooden chopsticks beside the plate. In the background, there are two red envelopes and a small bowl of chopped green onions. The atmosphere is celebratory, with the prominent text \"2024 Happy New Year\" in English and Chinese characters above the dish, suggesting a Chinese New Year theme. The mood is vibrant and festive.",
+    "final_text": "The image features a festive dish of fish, elegantly arranged on a white oval plate, garnished with red chili slices and shredded vegetables. The setting is a red tablecloth, with wooden chopsticks beside the plate. In the background, there are two red envelopes and a small bowl of chopped green onions. The atmosphere is celebratory, with the prominent text \"2024 Happy New Year\" in English and Chinese characters above the dish, suggesting a Chinese New Year theme. The mood is vibrant and festive.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427288-AweBq91AgjnrweE853Vy",
+    "created": 1788427288,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 101,
+      "total_tokens": 446,
+      "cost": 0.0018725
+    }
+  }
+}

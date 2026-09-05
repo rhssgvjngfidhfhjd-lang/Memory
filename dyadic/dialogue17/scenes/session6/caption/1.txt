@@ -1,0 +1,8 @@
+The image displays a series of four line graphs labeled A to D, each depicting different metrics over time, centered around a significant event marked by a vertical red line and labeled "t0". The graphs measure: 
+
+1. **Task Output** (A) - Blue line with a sharp peak at t0, described as the "creativity burst point".
+2. **EEG - Alpha Relative Power** (B) - Orange line, indicating brain activity, with a highlighted yellow zone around t0.
+3. **EDA/SSR** (C) - Green line showing an increase in skin conductance.
+4. **CGM Simulation** (D) - Purple line tracking glucose levels, annotated with a note on the synchronization of feature peaks.
+
+The overall atmosphere is analytical, focusing on measuring physiological responses to a creative breakthrough.

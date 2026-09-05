@@ -1,0 +1,36 @@
+{
+  "id": "e59be1bf-9891-4673-b26c-53316af9d4fc",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:40.087785",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session14/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 167073,
+    "modified_time": "2026-08-23T21:33:02.053575"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a collage highlighting pet adoption success stories. In the top left, a woman joyfully holds a puppy outdoors. The top right shows a brown dog holding a ball in a grassy area. Below that, a dog is comfortably curled up on a couch. In the bottom right, another woman happily holds a dog outside. The center features the text \"True Blue Animal Rescue: Adopted! Success Stories of the Week\" with paw prints and a heart. The overall mood is joyful and heartwarming, celebrating successful adoptions.",
+    "final_text": "The image is a collage highlighting pet adoption success stories. In the top left, a woman joyfully holds a puppy outdoors. The top right shows a brown dog holding a ball in a grassy area. Below that, a dog is comfortably curled up on a couch. In the bottom right, another woman happily holds a dog outside. The center features the text \"True Blue Animal Rescue: Adopted! Success Stories of the Week\" with paw prints and a heart. The overall mood is joyful and heartwarming, celebrating successful adoptions.",
+    "token_stats": {
+      "original_tokens": 109,
+      "final_tokens": 109,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426940-apBVCNBWNzrkDegnqDtU",
+    "created": 1788426940,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 107,
+      "total_tokens": 962,
+      "cost": 0.0032075
+    }
+  }
+}

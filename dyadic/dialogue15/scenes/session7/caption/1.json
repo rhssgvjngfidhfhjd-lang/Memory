@@ -1,0 +1,36 @@
+{
+  "id": "635ef3d4-fe7f-405f-9f45-4468b876ddfe",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:14.165076",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 577814,
+    "modified_time": "2026-08-23T21:34:52.763279"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image showcases a detailed analysis using multivariate analysis of variance (MANOVA) to evaluate the impact of four interventions on musculoskeletal health indicators. It includes:\n\n- A heatmap (A) showing effect sizes of interventions like \"拉伸App提醒\" and \"升降桌使用\" on various factors, with significant differences highlighted.\n- An interaction network diagram (B) illustrating connections between interventions.\n- A radar chart (C) comparing the effectiveness of each intervention.\n- A bar chart (D) displaying average interaction effects.\n- A donut chart (E) showing significance distribution levels.\n- Summary of findings (F) with statistical insights and recommendations in text.\n\nThe overall atmosphere is analytical and data-driven, focusing on statistical outcomes and interactions.",
+    "final_text": "The image showcases a detailed analysis using multivariate analysis of variance (MANOVA) to evaluate the impact of four interventions on musculoskeletal health indicators. It includes:\n\n- A heatmap (A) showing effect sizes of interventions like \"拉伸App提醒\" and \"升降桌使用\" on various factors, with significant differences highlighted.\n- An interaction network diagram (B) illustrating connections between interventions.\n- A radar chart (C) comparing the effectiveness of each intervention.\n- A bar chart (D) displaying average interaction effects.\n- A donut chart (E) showing significance distribution levels.\n- Summary of findings (F) with statistical insights and recommendations in text.\n\nThe overall atmosphere is analytical and data-driven, focusing on statistical outcomes and interactions.",
+    "token_stats": {
+      "original_tokens": 158,
+      "final_tokens": 158,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426973-g3cWhTcKccOFWZ84NyjK",
+    "created": 1788426973,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 149,
+      "total_tokens": 1344,
+      "cost": 0.0044775
+    }
+  }
+}

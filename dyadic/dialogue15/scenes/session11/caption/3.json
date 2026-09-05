@@ -1,0 +1,36 @@
+{
+  "id": "d7316cbe-32a8-4d37-86b0-8fc6f212ca33",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:30.499529",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session11/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 223995,
+    "modified_time": "2026-08-23T21:34:05.540154"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a chart titled \"Heart Rate Zones\" with a bright pink header. It outlines four intensity levels: Low, Moderate, High, and Max. Each level includes columns for RPE (Rate of Perceived Exertion), HR range (%HRmax), best for, and how it feels. The descriptions range from improving basic endurance to increasing total exercise capacity, with sensations from singing to difficulty talking. The chart provides a structured guide for exercise intensity.",
+    "final_text": "The image is a chart titled \"Heart Rate Zones\" with a bright pink header. It outlines four intensity levels: Low, Moderate, High, and Max. Each level includes columns for RPE (Rate of Perceived Exertion), HR range (%HRmax), best for, and how it feels. The descriptions range from improving basic endurance to increasing total exercise capacity, with sensations from singing to difficulty talking. The chart provides a structured guide for exercise intensity.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426988-65UJx2LNsktwu3rTmqKs",
+    "created": 1788426988,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 93,
+      "total_tokens": 1288,
+      "cost": 0.0039175
+    }
+  }
+}

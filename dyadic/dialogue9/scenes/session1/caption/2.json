@@ -1,0 +1,36 @@
+{
+  "id": "b3d99c80-7cef-4765-930c-c506ff155dcd",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:33.771748",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session1/image/2.png",
+    "filename": "2.png",
+    "size": 1563607,
+    "modified_time": "2026-08-23T21:54:57.042645"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a detailed diagram of a cat house. It features a cube-shaped structure with a circular entrance labeled \"cat entrance.\" The house includes a detachable top cover for easy cleaning and an insulation layer for warmth. Inside, there is a raised wooden floor to prevent moisture. Dimensions are provided as 30cm x 40cm x 25cm. The illustration has a practical and informative atmosphere, showcasing the design and functionality of the cat house.",
+    "final_text": "The image depicts a detailed diagram of a cat house. It features a cube-shaped structure with a circular entrance labeled \"cat entrance.\" The house includes a detachable top cover for easy cleaning and an insulation layer for warmth. Inside, there is a raised wooden floor to prevent moisture. Dimensions are provided as 30cm x 40cm x 25cm. The illustration has a practical and informative atmosphere, showcasing the design and functionality of the cat house.",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427711-ZwjlkkXO6mYhVzPVenNW",
+    "created": 1788427711,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 91,
+      "total_tokens": 808,
+      "cost": 0.0027025
+    }
+  }
+}

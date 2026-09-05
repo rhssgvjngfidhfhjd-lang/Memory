@@ -1,0 +1,36 @@
+{
+  "id": "c1e15267-2271-4eb1-bc32-b2cb3378fcf5",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:15.505236",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session10/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 479190,
+    "modified_time": "2026-08-23T21:35:44.936585"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic, digital cityscape with a complex network of tall, wireframe skyscrapers. Light beams ascend from the ground, suggesting a high-tech environment. The scene is abstract, with a monochromatic blue-gray color palette, creating a sleek and modern atmosphere. The overall mood is futuristic and technological. Visible text includes \"dreamstime\" and the watermark with \"ID 303901548 © Yuthana Rangdang.\"",
+    "final_text": "The image depicts a futuristic, digital cityscape with a complex network of tall, wireframe skyscrapers. Light beams ascend from the ground, suggesting a high-tech environment. The scene is abstract, with a monochromatic blue-gray color palette, creating a sleek and modern atmosphere. The overall mood is futuristic and technological. Visible text includes \"dreamstime\" and the watermark with \"ID 303901548 © Yuthana Rangdang.\"",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427093-1LYvUhvE6JNPfBIf0cYa",
+    "created": 1788427093,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 87,
+      "total_tokens": 942,
+      "cost": 0.0030075
+    }
+  }
+}

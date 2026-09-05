@@ -1,0 +1,36 @@
+{
+  "id": "660780f0-dace-4ab5-9480-464d0d9e70fc",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:13.198695",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session9/image/4.png",
+    "filename": "4.png",
+    "size": 959564,
+    "modified_time": "2026-08-23T21:55:33.786056"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a plate with several pieces of cooked lamb and slices of watermelon, placed on a table with intricate designs. Visible text in Chinese discusses dietary advice, warning against combining lamb, which is warm, with watermelon, which is cold, as it can harm digestion. The atmosphere is informative, possibly traditional, with an inset circular image depicting two individuals in historical attire preparing or discussing food, enhancing the cultural context. Steam rises from the meat, suggesting it is freshly cooked.",
+    "final_text": "The image shows a plate with several pieces of cooked lamb and slices of watermelon, placed on a table with intricate designs. Visible text in Chinese discusses dietary advice, warning against combining lamb, which is warm, with watermelon, which is cold, as it can harm digestion. The atmosphere is informative, possibly traditional, with an inset circular image depicting two individuals in historical attire preparing or discussing food, enhancing the cultural context. Steam rises from the meat, suggesting it is freshly cooked.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427511-Ne806cEZqtFgZ7pWBuwi",
+    "created": 1788427511,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 96,
+      "total_tokens": 813,
+      "cost": 0.0027525
+    }
+  }
+}

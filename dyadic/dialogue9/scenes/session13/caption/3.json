@@ -1,0 +1,36 @@
+{
+  "id": "a8f4c106-8068-49b0-aa2d-25b437157947",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:36.338991",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session13/image/3.png",
+    "filename": "3.png",
+    "size": 139448,
+    "modified_time": "2026-08-23T21:59:35.666465"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table listing items for a community event, titled \"社区‘邻里联欢会’补充/租赁物品清单及预估费用表,\" which translates to \"Community 'Neighborhood Gala' Supplement/Rental Item List and Estimated Costs.\" The table includes columns for item type, specifications, quantity, estimated unit price, and total estimated cost. Items listed include audio cables, projector mounts, wireless microphones, power strips, stage backdrops, windshields for microphones, and tool kits. Each item has specific requirements and associated costs. The total estimated cost is 337 yuan. The document has a professional and organized atmosphere.",
+    "final_text": "The image is a table listing items for a community event, titled \"社区‘邻里联欢会’补充/租赁物品清单及预估费用表,\" which translates to \"Community 'Neighborhood Gala' Supplement/Rental Item List and Estimated Costs.\" The table includes columns for item type, specifications, quantity, estimated unit price, and total estimated cost. Items listed include audio cables, projector mounts, wireless microphones, power strips, stage backdrops, windshields for microphones, and tool kits. Each item has specific requirements and associated costs. The total estimated cost is 337 yuan. The document has a professional and organized atmosphere.",
+    "token_stats": {
+      "original_tokens": 144,
+      "final_tokens": 144,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427774-PAx0tD8DROBrj15141j3",
+    "created": 1788427774,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 132,
+      "total_tokens": 1327,
+      "cost": 0.0043075
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "28e08690-c4ac-49bc-b90a-1d6dfd803bce",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:15.819661",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session5/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 344855,
+    "modified_time": "2026-08-23T22:07:02.397221"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person taking a mirror selfie in a bedroom. The individual is dressed in a casual sports outfit, consisting of a black T-shirt with a colorful graphic, black shorts with red and orange accents, white leggings, and white sneakers. They are holding a pair of shoes in one hand and a phone in the other. A white backpack is worn on their back. The room features a bed with a gray blanket, a small shelf, and a wall poster. The atmosphere is casual and sporty. Visible text on the T-shirt includes colorful designs.",
+    "final_text": "The image depicts a person taking a mirror selfie in a bedroom. The individual is dressed in a casual sports outfit, consisting of a black T-shirt with a colorful graphic, black shorts with red and orange accents, white leggings, and white sneakers. They are holding a pair of shoes in one hand and a phone in the other. A white backpack is worn on their back. The room features a bed with a gray blanket, a small shelf, and a wall poster. The atmosphere is casual and sporty. Visible text on the T-shirt includes colorful designs.",
+    "token_stats": {
+      "original_tokens": 112,
+      "final_tokens": 112,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426674-4Mhrq92wNcfIhU319zhL",
+    "created": 1788426674,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 111,
+      "total_tokens": 966,
+      "cost": 0.0032475
+    }
+  }
+}

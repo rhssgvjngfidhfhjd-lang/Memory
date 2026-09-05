@@ -1,0 +1,36 @@
+{
+  "id": "cd7cffb1-5ec4-4977-97d6-25ff055628dc",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:40.440623",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session1/image/2.png",
+    "filename": "2.png",
+    "size": 3015427,
+    "modified_time": "2026-08-23T21:36:16.588998"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a cat equipped with a high-tech collar, displaying a futuristic interface. The cat's eye is enhanced with digital graphics, suggesting augmented vision. The background presents graphs and data metrics, including percentages and waveforms. Visible text in Chinese includes warnings and system information about signal decay and activity zones. The atmosphere is advanced and technological, highlighting a blend of natural and digital elements.",
+    "final_text": "The image features a cat equipped with a high-tech collar, displaying a futuristic interface. The cat's eye is enhanced with digital graphics, suggesting augmented vision. The background presents graphs and data metrics, including percentages and waveforms. Visible text in Chinese includes warnings and system information about signal decay and activity zones. The atmosphere is advanced and technological, highlighting a blend of natural and digital elements.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427057-PmCcjXl4TVp9qzGggvZC",
+    "created": 1788427057,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 77,
+      "total_tokens": 1272,
+      "cost": 0.0037575
+    }
+  }
+}

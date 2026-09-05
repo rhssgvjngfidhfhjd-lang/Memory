@@ -1,0 +1,36 @@
+{
+  "id": "3a45991d-fbc7-4895-8c65-9ca7283fa655",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:07.122631",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session5/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 76252,
+    "modified_time": "2026-08-23T21:34:35.521343"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a woman wearing a posture corrector device on her back. The device includes adjustable straps and a central digital display showing \"88.\" Blue LED-like lights are illustrated near her shoulders, suggesting functionality or activation. The background is plain, emphasizing the device. The atmosphere is focused on health and wellness.",
+    "final_text": "The image features a woman wearing a posture corrector device on her back. The device includes adjustable straps and a central digital display showing \"88.\" Blue LED-like lights are illustrated near her shoulders, suggesting functionality or activation. The background is plain, emphasizing the device. The atmosphere is focused on health and wellness.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426966-xyww26JHkCZjMtg8JN0C",
+    "created": 1788426966,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 62,
+      "total_tokens": 917,
+      "cost": 0.0027575
+    }
+  }
+}

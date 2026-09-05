@@ -1,0 +1,36 @@
+{
+  "id": "90e6688b-6bd1-4e94-b371-d577f8da95bd",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:17.915720",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session8/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 123569,
+    "modified_time": "2026-08-23T21:34:43.612864"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a glucose monitoring device with a graph displayed on its screen, indicating blood sugar levels over a 24-hour period. The graph is titled \"Daily Graph (mmol/L)\" with time markings from 00:00 to 24:00. The date shown is \"12 May, Wednesday.\" A sensor is attached to the device. The background is bright yellow, creating a vibrant and clinical atmosphere.",
+    "final_text": "The image shows a glucose monitoring device with a graph displayed on its screen, indicating blood sugar levels over a 24-hour period. The graph is titled \"Daily Graph (mmol/L)\" with time markings from 00:00 to 24:00. The date shown is \"12 May, Wednesday.\" A sensor is attached to the device. The background is bright yellow, creating a vibrant and clinical atmosphere.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426977-QRZYzrN3a9bUloAuFl0i",
+    "created": 1788426977,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 83,
+      "total_tokens": 938,
+      "cost": 0.0029675
+    }
+  }
+}

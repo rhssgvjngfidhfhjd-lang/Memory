@@ -1,0 +1,36 @@
+{
+  "id": "4a994619-bd8d-4f50-ae80-9b0cec83236d",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:34.110358",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session3/image/4.png",
+    "filename": "4.png",
+    "size": 129853,
+    "modified_time": "2026-08-23T21:57:53.874500"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a ranked list of six individuals, likely actors, with accompanying photos. Each entry includes the person's ranking number, name, and a numeric value representing earnings or box office figures, listed in billions. The names are followed by text indicating their works or roles. The rankings are numbered 1 through 6. The overall atmosphere is informative, focusing on professional achievements. The visible text is in Chinese, and the layout is structured with columns and rows.",
+    "final_text": "The image is a ranked list of six individuals, likely actors, with accompanying photos. Each entry includes the person's ranking number, name, and a numeric value representing earnings or box office figures, listed in billions. The names are followed by text indicating their works or roles. The rankings are numbered 1 through 6. The overall atmosphere is informative, focusing on professional achievements. The visible text is in Chinese, and the layout is structured with columns and rows.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427653-pYfeyxiyQragaBCURDNo",
+    "created": 1788427653,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 92,
+      "total_tokens": 607,
+      "cost": 0.0022075
+    }
+  }
+}

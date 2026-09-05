@@ -1,0 +1,36 @@
+{
+  "id": "1dc50c8f-ae04-4b66-b056-207d5d9b023a",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:03.467971",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 94568,
+    "modified_time": "2026-08-23T21:34:38.150684"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a data input and analysis interface with several sections. On the left, there is a data entry area with fields for \"宠物类型\" (pet type), age, and sex, along with sliders for focus, emotionality, and activity. The right section features a radar chart illustrating behavioral traits such as activity and focus, along with scores for adaptability and cognition. Below, there are options for environment settings and buttons for actions like saving, sharing, and generating a PDF. The interface has a clean, professional appearance.",
+    "final_text": "The image displays a data input and analysis interface with several sections. On the left, there is a data entry area with fields for \"宠物类型\" (pet type), age, and sex, along with sliders for focus, emotionality, and activity. The right section features a radar chart illustrating behavioral traits such as activity and focus, along with scores for adaptability and cognition. Below, there are options for environment settings and buttons for actions like saving, sharing, and generating a PDF. The interface has a clean, professional appearance.",
+    "token_stats": {
+      "original_tokens": 109,
+      "final_tokens": 109,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426962-6VNIMyTfSUiGl5BKvUTg",
+    "created": 1788426962,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 107,
+      "total_tokens": 452,
+      "cost": 0.0019325
+    }
+  }
+}

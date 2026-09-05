@@ -1,0 +1,36 @@
+{
+  "id": "0a589ac3-379d-4ac0-b9fa-274cb9a44aae",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:49.024583",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 1452684,
+    "modified_time": "2026-08-23T22:07:38.573698"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a selection of seven items from a video game, lined up horizontally. The items include a ring, three books, two swords, and a staff. Each item is enclosed within a decorative frame featuring stars, suggesting rarity or quality. Visible text indicates star ratings, ranging from three to four stars, with a play symbol overlaying one book. The atmosphere is mystical and game-like, emphasizing fantasy and adventure themes.",
+    "final_text": "The image displays a selection of seven items from a video game, lined up horizontally. The items include a ring, three books, two swords, and a staff. Each item is enclosed within a decorative frame featuring stars, suggesting rarity or quality. Visible text indicates star ratings, ranging from three to four stars, with a play symbol overlaying one book. The atmosphere is mystical and game-like, emphasizing fantasy and adventure themes.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426705-CIiFJtLahCCrxWz0Vlrq",
+    "created": 1788426705,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 86,
+      "total_tokens": 1084,
+      "cost": 0.003355
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "c72659a4-6550-4baa-b9a6-14d35525547e",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:05.105297",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session10/image/4.png",
+    "filename": "4.png",
+    "size": 527177,
+    "modified_time": "2026-08-23T21:57:32.137712"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an ornately decorated teapot with a dark base color. It has a large handle wrapped in material for grip. The teapot is embellished with intricate, colorful patterns featuring floral and paisley designs in red, green, orange, and yellow hues. The background is a soft, light texture, adding a cozy and artistic atmosphere to the scene. There is no visible text in the image. The overall mood is warm and inviting, highlighting craftsmanship and cultural artistry.",
+    "final_text": "The image features an ornately decorated teapot with a dark base color. It has a large handle wrapped in material for grip. The teapot is embellished with intricate, colorful patterns featuring floral and paisley designs in red, green, orange, and yellow hues. The background is a soft, light texture, adding a cozy and artistic atmosphere to the scene. There is no visible text in the image. The overall mood is warm and inviting, highlighting craftsmanship and cultural artistry.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427684-uwt6UfLyF90pmTkRz6AH",
+    "created": 1788427684,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 95,
+      "total_tokens": 950,
+      "cost": 0.0030875
+    }
+  }
+}

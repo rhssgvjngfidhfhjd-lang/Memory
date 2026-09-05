@@ -1,0 +1,36 @@
+{
+  "id": "d6f3476b-5d9f-45d0-985d-09e7dadccbf8",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:29.836579",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session14/image/4.png",
+    "filename": "4.png",
+    "size": 670988,
+    "modified_time": "2026-08-23T21:58:15.339095"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy cafe scene with a wooden table. On the table, there's a book standing upright with geometric shapes on the cover and Chinese text \"为自己而写,\" meaning \"Write for Yourself.\" A glass cup filled with tea is next to the book. An open notebook shows handwritten Chinese text: \"写作不是为了传播，是为了理解自己,\" translating to \"Writing is not for spreading, but for understanding oneself.\" A black pen lies beside the notebook. The atmosphere is calm and introspective, suggesting a focus on personal reflection and creativity.",
+    "final_text": "The image depicts a cozy cafe scene with a wooden table. On the table, there's a book standing upright with geometric shapes on the cover and Chinese text \"为自己而写,\" meaning \"Write for Yourself.\" A glass cup filled with tea is next to the book. An open notebook shows handwritten Chinese text: \"写作不是为了传播，是为了理解自己,\" translating to \"Writing is not for spreading, but for understanding oneself.\" A black pen lies beside the notebook. The atmosphere is calm and introspective, suggesting a focus on personal reflection and creativity.",
+    "token_stats": {
+      "original_tokens": 123,
+      "final_tokens": 123,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427706-vqmCCZBdzMxlYwQL6vg4",
+    "created": 1788427706,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 113,
+      "total_tokens": 830,
+      "cost": 0.0029225
+    }
+  }
+}

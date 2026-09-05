@@ -1,0 +1,36 @@
+{
+  "id": "7f15797b-9284-4882-8307-b6ae1a455b96",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:35.536253",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 678622,
+    "modified_time": "2026-08-23T22:09:13.212072"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays an assortment of makeup products arranged neatly on a textured surface. Key elements include a variety of brushes, eyeshadow palettes, a jar labeled \"KIMTUE,\" and a tube from \"GIORGIO ARMANI.\" There are also packaged sponges and a container labeled \"PRAMY.\" The overall atmosphere is organized and focused on beauty and cosmetics.",
+    "final_text": "The image displays an assortment of makeup products arranged neatly on a textured surface. Key elements include a variety of brushes, eyeshadow palettes, a jar labeled \"KIMTUE,\" and a tube from \"GIORGIO ARMANI.\" There are also packaged sponges and a container labeled \"PRAMY.\" The overall atmosphere is organized and focused on beauty and cosmetics.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426813-mxIG2NepOWFgKCS1PIiH",
+    "created": 1788426813,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 75,
+      "total_tokens": 930,
+      "cost": 0.0028875
+    }
+  }
+}

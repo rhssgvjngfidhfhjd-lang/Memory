@@ -1,0 +1,7 @@
+The image consists of three panels (a, b, c) depicting social network diagrams. Each panel includes silhouettes representing individuals labeled as Joanne, Patient, Diane, Tracy, Vicky, Hannah, Matthew, and Pam. 
+
+- **Panel a:** Red lines indicate strong ties among Joanne, Patient, Diane, and Vicky.
+- **Panel b:** Red lines show strong ties between Joanne, Patient, and Diane.
+- **Panel c:** A mix of red (strong ties) and blue lines (weak ties) connects Joanne, Patient, Hannah, Vicky, and others, forming a complex network.
+
+The image illustrates varying social connections, emphasizing strong and weak ties, with an analytical, informative atmosphere.

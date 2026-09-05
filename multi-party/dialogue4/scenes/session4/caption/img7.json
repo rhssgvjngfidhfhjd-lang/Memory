@@ -1,0 +1,36 @@
+{
+  "id": "bebaf487-d381-4983-925c-3072f79552ba",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:29.727900",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 271410,
+    "modified_time": "2026-08-23T22:09:24.680890"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a damaged cardboard box with a torn and crumpled top. The box is upright on a plain, light-colored surface. The overall mood suggests carelessness or mishandling, as the box appears to have been roughly opened or damaged in transit. There is no visible text or other objects present.",
+    "final_text": "The image depicts a damaged cardboard box with a torn and crumpled top. The box is upright on a plain, light-colored surface. The overall mood suggests carelessness or mishandling, as the box appears to have been roughly opened or damaged in transit. There is no visible text or other objects present.",
+    "token_stats": {
+      "original_tokens": 63,
+      "final_tokens": 63,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426811-s9e875eBtUnoFtBu5xRW",
+    "created": 1788426811,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 63,
+      "total_tokens": 918,
+      "cost": 0.0027675
+    }
+  }
+}

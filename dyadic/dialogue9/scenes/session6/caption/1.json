@@ -1,0 +1,36 @@
+{
+  "id": "35c28317-7263-4764-a4a6-92331d7cbd5b",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:59.734849",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 496917,
+    "modified_time": "2026-08-23T22:01:17.686386"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a pile of colorful stuffed animals on a carpeted floor. Various plush toys, including bears, cows, and other animals, are scattered in a casual heap. Nearby, there are black and white plastic bags, a green crate, and a blue container partially visible. The scene suggests a playful, slightly chaotic atmosphere, possibly in a child's room or play area. No visible text is present, and there are no people or animals interacting within the scene.",
+    "final_text": "The image shows a pile of colorful stuffed animals on a carpeted floor. Various plush toys, including bears, cows, and other animals, are scattered in a casual heap. Nearby, there are black and white plastic bags, a green crate, and a blue container partially visible. The scene suggests a playful, slightly chaotic atmosphere, possibly in a child's room or play area. No visible text is present, and there are no people or animals interacting within the scene.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427737-5wbEu6HP0aPfixDCrLj7",
+    "created": 1788427737,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 94,
+      "total_tokens": 533,
+      "cost": 0.0020375
+    }
+  }
+}

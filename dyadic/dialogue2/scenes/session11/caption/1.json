@@ -1,0 +1,36 @@
+{
+  "id": "49ec610e-867d-451d-b2fe-7586d75b69ac",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:20.628896",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session11/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 97059,
+    "modified_time": "2026-08-23T21:39:47.774722"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a modern, illuminated circular lamp with a silhouette of a branch adorned with pink flowers in the center. The lamp sits on a wooden surface, accompanied by a small succulent plant in a pot and decorative wicker balls. The atmosphere is calm and elegant, with warm lighting creating a cozy ambiance. No visible text is present.",
+    "final_text": "The image features a modern, illuminated circular lamp with a silhouette of a branch adorned with pink flowers in the center. The lamp sits on a wooden surface, accompanied by a small succulent plant in a pot and decorative wicker balls. The atmosphere is calm and elegant, with warm lighting creating a cozy ambiance. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427282-aS5DRBbIKHJu6RZua5Az",
+    "created": 1788427282,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 66,
+      "total_tokens": 921,
+      "cost": 0.0027975
+    }
+  }
+}

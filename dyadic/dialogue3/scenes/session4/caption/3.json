@@ -1,0 +1,36 @@
+{
+  "id": "7535cb43-d4eb-43c0-a6d5-17cc7aa102be",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:22.720083",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 534388,
+    "modified_time": "2026-08-23T21:46:27.385688"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a happy Shiba Inu dog in the foreground, with its mouth open in a friendly expression. In the background, a group of people stand casually, with only their lower bodies visible. The scene is set outdoors in a sunny park, creating a cheerful and lively atmosphere. No visible text is present.",
+    "final_text": "The image features a happy Shiba Inu dog in the foreground, with its mouth open in a friendly expression. In the background, a group of people stand casually, with only their lower bodies visible. The scene is set outdoors in a sunny park, creating a cheerful and lively atmosphere. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 64,
+      "final_tokens": 64,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427343-w91DYKH4xiBe2EXUe57Z",
+    "created": 1788427343,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 63,
+      "total_tokens": 578,
+      "cost": 0.0019175
+    }
+  }
+}

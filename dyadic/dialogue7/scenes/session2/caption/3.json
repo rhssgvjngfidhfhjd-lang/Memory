@@ -1,0 +1,36 @@
+{
+  "id": "feb34f60-e88e-408f-ba98-fdc0afccfe27",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:33.900163",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 398790,
+    "modified_time": "2026-08-23T21:56:52.093797"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains a checklist divided into two columns with headers \"每日检查\" (Daily Check) and \"每周检查\" (Weekly Check). The daily tasks include recording PEF values, medication adherence, nighttime cough symptoms, and indoor PM2.5 monitoring. Weekly tasks involve checking the inhaler's expiry, clearing medicine inventory, checking air purifier filter status, recording allergy test results, and calibrating peak flow meters. Below is a section for emergency contact numbers with labels for pediatrician, 24-hour hotline, and asthma specialist appointment line. The mood is organized and informative.",
+    "final_text": "The image contains a checklist divided into two columns with headers \"每日检查\" (Daily Check) and \"每周检查\" (Weekly Check). The daily tasks include recording PEF values, medication adherence, nighttime cough symptoms, and indoor PM2.5 monitoring. Weekly tasks involve checking the inhaler's expiry, clearing medicine inventory, checking air purifier filter status, recording allergy test results, and calibrating peak flow meters. Below is a section for emergency contact numbers with labels for pediatrician, 24-hour hotline, and asthma specialist appointment line. The mood is organized and informative.",
+    "token_stats": {
+      "original_tokens": 122,
+      "final_tokens": 122,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427593-0RrH1Fopx8n6pXKd4T3A",
+    "created": 1788427593,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 117,
+      "total_tokens": 556,
+      "cost": 0.0022675
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "4b54d9bf-6055-4571-b2f2-fbacd369096e",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:54.189436",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session4/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 383664,
+    "modified_time": "2026-08-23T22:09:47.235895"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cluttered office desk with several empty plastic cups featuring cartoon designs, some with straws. A small desk fan is attached to the side of a partition, blowing air across the desk. A colorful balloon with cartoon characters is tied to a plant, and a straw hat rests against the partition. A black laptop and a bottle labeled \"ENERGY\" are also present. The atmosphere is casual and somewhat messy, suggesting a busy or relaxed work environment.",
+    "final_text": "The image depicts a cluttered office desk with several empty plastic cups featuring cartoon designs, some with straws. A small desk fan is attached to the side of a partition, blowing air across the desk. A colorful balloon with cartoon characters is tied to a plant, and a straw hat rests against the partition. A black laptop and a bottle labeled \"ENERGY\" are also present. The atmosphere is casual and somewhat messy, suggesting a busy or relaxed work environment.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426892-drZE3684o1k6JvAcyzSj",
+    "created": 1788426892,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 93,
+      "total_tokens": 948,
+      "cost": 0.0030675
+    }
+  }
+}

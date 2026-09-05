@@ -1,0 +1,36 @@
+{
+  "id": "36532329-3a74-4bc8-8f72-7f46ed596955",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:46.581611",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session15/image/3.png",
+    "filename": "3.png",
+    "size": 2441194,
+    "modified_time": "2026-08-23T21:34:31.290339"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a performance enhancement dashboard with charts and text in Chinese. It highlights an overall performance improvement of +67%, with specific increases in compilation efficiency (+42%), feedback efficiency (+68%), and training efficiency (+155%). Bar charts illustrate these improvements. Additionally, there's a comparison of task durations showing reductions, such as Linux compilation from 185s to 107s (-42%). The ROI analysis suggests a 14-month return on investment. The atmosphere is analytical and data-driven.",
+    "final_text": "The image displays a performance enhancement dashboard with charts and text in Chinese. It highlights an overall performance improvement of +67%, with specific increases in compilation efficiency (+42%), feedback efficiency (+68%), and training efficiency (+155%). Bar charts illustrate these improvements. Additionally, there's a comparison of task durations showing reductions, such as Linux compilation from 185s to 107s (-42%). The ROI analysis suggests a 14-month return on investment. The atmosphere is analytical and data-driven.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427004-UCCOYPck3S59yZYGANkT",
+    "created": 1788427004,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 96,
+      "total_tokens": 1291,
+      "cost": 0.0039475
+    }
+  }
+}

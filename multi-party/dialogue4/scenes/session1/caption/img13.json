@@ -1,0 +1,36 @@
+{
+  "id": "62560c8e-e8ba-436d-8954-a8b63c33ee40",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:52.426714",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session1/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 73948,
+    "modified_time": "2026-08-23T22:09:00.663063"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a payment confirmation screen from a website, indicated by the URL \"cwpt.gzucm.edu.cn.\" The text \"支付结果\" translates to \"Payment Result,\" and \"支付成功\" means \"Payment Successful,\" accompanied by a green checkmark. Below, it states that the current page will close in 5 seconds. A green button labeled \"返回首页\" suggests returning to the homepage. The bottom text mentions \"广州中医药大学\" (Guangzhou University of Chinese Medicine). The atmosphere is straightforward and informative, indicating a successful transaction.",
+    "final_text": "The image displays a payment confirmation screen from a website, indicated by the URL \"cwpt.gzucm.edu.cn.\" The text \"支付结果\" translates to \"Payment Result,\" and \"支付成功\" means \"Payment Successful,\" accompanied by a green checkmark. Below, it states that the current page will close in 5 seconds. A green button labeled \"返回首页\" suggests returning to the homepage. The bottom text mentions \"广州中医药大学\" (Guangzhou University of Chinese Medicine). The atmosphere is straightforward and informative, indicating a successful transaction.",
+    "token_stats": {
+      "original_tokens": 118,
+      "final_tokens": 118,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426772-TPcMc1PaMi8CteJZRqUU",
+    "created": 1788426772,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 115,
+      "total_tokens": 1395,
+      "cost": 0.00435
+    }
+  }
+}

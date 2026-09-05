@@ -1,0 +1,36 @@
+{
+  "id": "070b2eee-332a-4fdb-bcc2-57e4f074b7c7",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:49.680781",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session2/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 45633,
+    "modified_time": "2026-08-23T21:31:52.608658"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image consists of three panels (a, b, c) depicting social network diagrams. Each panel includes silhouettes representing individuals labeled as Joanne, Patient, Diane, Tracy, Vicky, Hannah, Matthew, and Pam. \n\n- **Panel a:** Red lines indicate strong ties among Joanne, Patient, Diane, and Vicky.\n- **Panel b:** Red lines show strong ties between Joanne, Patient, and Diane.\n- **Panel c:** A mix of red (strong ties) and blue lines (weak ties) connects Joanne, Patient, Hannah, Vicky, and others, forming a complex network.\n\nThe image illustrates varying social connections, emphasizing strong and weak ties, with an analytical, informative atmosphere.",
+    "final_text": "The image consists of three panels (a, b, c) depicting social network diagrams. Each panel includes silhouettes representing individuals labeled as Joanne, Patient, Diane, Tracy, Vicky, Hannah, Matthew, and Pam. \n\n- **Panel a:** Red lines indicate strong ties among Joanne, Patient, Diane, and Vicky.\n- **Panel b:** Red lines show strong ties between Joanne, Patient, and Diane.\n- **Panel c:** A mix of red (strong ties) and blue lines (weak ties) connects Joanne, Patient, Hannah, Vicky, and others, forming a complex network.\n\nThe image illustrates varying social connections, emphasizing strong and weak ties, with an analytical, informative atmosphere.",
+    "token_stats": {
+      "original_tokens": 148,
+      "final_tokens": 148,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426706-ostFZfXe1NeVv69LIBPe",
+    "created": 1788426706,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 142,
+      "total_tokens": 657,
+      "cost": 0.0027075
+    }
+  }
+}

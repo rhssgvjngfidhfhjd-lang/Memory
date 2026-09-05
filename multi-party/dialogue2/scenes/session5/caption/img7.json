@@ -1,0 +1,36 @@
+{
+  "id": "3f0c7e3f-2bdd-48e5-81c6-a58386d4537f",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:17.903952",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session5/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 374076,
+    "modified_time": "2026-08-23T22:07:04.175164"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts five people standing together, likely after a running event, as suggested by their athletic attire and visible sweat. They are smiling and making thumbs-up gestures, creating a positive and energetic atmosphere. Some hold cups, possibly for hydration. Visible text on a glass window includes \"Refined\" and \"Expected.\" The background suggests an indoor setting with modern lighting. The mood is celebratory and lively.",
+    "final_text": "The image depicts five people standing together, likely after a running event, as suggested by their athletic attire and visible sweat. They are smiling and making thumbs-up gestures, creating a positive and energetic atmosphere. Some hold cups, possibly for hydration. Visible text on a glass window includes \"Refined\" and \"Expected.\" The background suggests an indoor setting with modern lighting. The mood is celebratory and lively.",
+    "token_stats": {
+      "original_tokens": 81,
+      "final_tokens": 81,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426676-ojaUS24UUsOVmgS3khr7",
+    "created": 1788426676,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 82,
+      "total_tokens": 1080,
+      "cost": 0.003315
+    }
+  }
+}

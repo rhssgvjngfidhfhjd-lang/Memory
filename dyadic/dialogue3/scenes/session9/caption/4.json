@@ -1,0 +1,36 @@
+{
+  "id": "91dbcbab-06cb-4420-a975-123a96f205c4",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:50.301701",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session9/image/4.png",
+    "filename": "4.png",
+    "size": 767933,
+    "modified_time": "2026-08-23T21:50:02.414762"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image presents a step-by-step game process involving four cartoon characters. \n\n1. A host secretly thinks of a number (or a dish's price).\n2. Participants take turns guessing aloud, e.g., \"50!\" and \"30!\"\n3. The host responds with \"Higher!\" or \"Lower!\" to narrow down the range, shown with a bar graph.\n4. The correct guesser wins, celebrated with fireworks, and can choose someone to drink or receive a fun penalty. \n\nThe atmosphere is playful and interactive, with bright colors and cheerful expressions. Text in Mandarin explains each step.",
+    "final_text": "The image presents a step-by-step game process involving four cartoon characters. \n\n1. A host secretly thinks of a number (or a dish's price).\n2. Participants take turns guessing aloud, e.g., \"50!\" and \"30!\"\n3. The host responds with \"Higher!\" or \"Lower!\" to narrow down the range, shown with a bar graph.\n4. The correct guesser wins, celebrated with fireworks, and can choose someone to drink or receive a fun penalty. \n\nThe atmosphere is playful and interactive, with bright colors and cheerful expressions. Text in Mandarin explains each step.",
+    "token_stats": {
+      "original_tokens": 120,
+      "final_tokens": 120,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427368-JvaNmojSiMCAlFCV0NSq",
+    "created": 1788427368,
+    "usage": {
+      "prompt_tokens": 685,
+      "completion_tokens": 120,
+      "total_tokens": 805,
+      "cost": 0.0029125
+    }
+  }
+}

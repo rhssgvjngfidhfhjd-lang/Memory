@@ -1,0 +1,36 @@
+{
+  "id": "1a332efd-55a0-47c7-a988-240a3fc1e752",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:05.640760",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session13/image/1.png",
+    "filename": "1.png",
+    "size": 560321,
+    "modified_time": "2026-08-23T21:45:16.607927"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a happy Shiba Inu dog outdoors, wearing a white bandana adorned with cartoon faces of dogs and cats. The background features a grassy area with scattered trees, suggesting a park setting. The dog's expression is cheerful, creating a joyful and lively atmosphere.",
+    "final_text": "The image depicts a happy Shiba Inu dog outdoors, wearing a white bandana adorned with cartoon faces of dogs and cats. The background features a grassy area with scattered trees, suggesting a park setting. The dog's expression is cheerful, creating a joyful and lively atmosphere.",
+    "token_stats": {
+      "original_tokens": 56,
+      "final_tokens": 56,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427385-qD8b3EVn6fAY8mueXEYu",
+    "created": 1788427385,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 53,
+      "total_tokens": 908,
+      "cost": 0.0026675
+    }
+  }
+}

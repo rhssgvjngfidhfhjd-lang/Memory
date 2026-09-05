@@ -1,0 +1,36 @@
+{
+  "id": "c47aee15-da1b-45be-acb1-320c4b9d947f",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:24.555270",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 1386524,
+    "modified_time": "2026-08-23T21:32:56.196216"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a collage depicting an immersive digital art exhibit. The core scene features vibrant, swirling light projections in a spacious gallery. Main elements include a woman and a man interacting with the display, with the man capturing photos. The woman is often silhouetted against colorful light patterns. Text is not visible. The atmosphere is futuristic and contemplative, emphasizing the interplay between humans and digital art. The mood is serene and reflective, highlighting the immersive experience of the installation.",
+    "final_text": "The image is a collage depicting an immersive digital art exhibit. The core scene features vibrant, swirling light projections in a spacious gallery. Main elements include a woman and a man interacting with the display, with the man capturing photos. The woman is often silhouetted against colorful light patterns. Text is not visible. The atmosphere is futuristic and contemplative, emphasizing the interplay between humans and digital art. The mood is serene and reflective, highlighting the immersive experience of the installation.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426921-XF9CiZzjXH4kJ0tcjLpq",
+    "created": 1788426921,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 94,
+      "total_tokens": 811,
+      "cost": 0.0027325
+    }
+  }
+}

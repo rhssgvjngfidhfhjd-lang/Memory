@@ -1,0 +1,36 @@
+{
+  "id": "a12b519c-bb20-4737-ba28-223f78e0ecb7",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:59.645247",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 4950565,
+    "modified_time": "2026-08-23T21:36:20.620078"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an open book with aged, yellowed pages. The book contains handwritten text in Chinese characters, with a prominent phrase in bold: \"心神安宁，百病不生,\" which translates to \"With peace of mind, a hundred illnesses do not arise.\" The surrounding text is less bold and appears to be notes or commentary. The atmosphere is serene and contemplative, evoking a sense of wisdom and tranquility.",
+    "final_text": "The image depicts an open book with aged, yellowed pages. The book contains handwritten text in Chinese characters, with a prominent phrase in bold: \"心神安宁，百病不生,\" which translates to \"With peace of mind, a hundred illnesses do not arise.\" The surrounding text is less bold and appears to be notes or commentary. The atmosphere is serene and contemplative, evoking a sense of wisdom and tranquility.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427018-HwWT3WXSDW8pn6IeC4rq",
+    "created": 1788427018,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 87,
+      "total_tokens": 1282,
+      "cost": 0.0038575
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "dfa2d906-0933-4014-a35a-3ab9e4ba7277",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:15.112635",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 282162,
+    "modified_time": "2026-08-23T21:30:07.400843"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays an online shopping interface featuring two animals: a cat and a dog, both wearing protective cones. The cat is positioned on the left, looking directly at the camera, while the dog is on the right, sitting on a couch. There are several buttons and options for purchasing or viewing more images, highlighted in a red and white color scheme. Visible text includes pricing information: \"¥10.9,\" along with promotional offers. The overall mood is commercial and informative, aiming to advertise pet care products.",
+    "final_text": "The image displays an online shopping interface featuring two animals: a cat and a dog, both wearing protective cones. The cat is positioned on the left, looking directly at the camera, while the dog is on the right, sitting on a couch. There are several buttons and options for purchasing or viewing more images, highlighted in a red and white color scheme. Visible text includes pricing information: \"¥10.9,\" along with promotional offers. The overall mood is commercial and informative, aiming to advertise pet care products.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426493-AUbKY0GaapEdGZcdibPc",
+    "created": 1788426493,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 104,
+      "total_tokens": 543,
+      "cost": 0.0021375
+    }
+  }
+}

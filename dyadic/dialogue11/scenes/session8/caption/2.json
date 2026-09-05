@@ -1,0 +1,36 @@
+{
+  "id": "ac65015f-df88-40df-a2b7-2b4db50ad5c5",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:11.146145",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 5011884,
+    "modified_time": "2026-08-23T21:31:44.524211"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a scene in what appears to be a medical or hospital setting. The main elements are a large bag of rice and a bottle of cooking oil placed on the floor. The bag of rice shows visible text, including nutritional information and branding. Behind them, hospital curtains and a bed with medical supplies are visible, suggesting a storage or preparation area. The atmosphere is utilitarian and clinical, with no people present, focusing on the juxtaposition of food items within a healthcare environment.",
+    "final_text": "The image depicts a scene in what appears to be a medical or hospital setting. The main elements are a large bag of rice and a bottle of cooking oil placed on the floor. The bag of rice shows visible text, including nutritional information and branding. Behind them, hospital curtains and a bed with medical supplies are visible, suggesting a storage or preparation area. The atmosphere is utilitarian and clinical, with no people present, focusing on the juxtaposition of food items within a healthcare environment.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426667-yQckFs1lhQtHBH1nKzU9",
+    "created": 1788426667,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 98,
+      "total_tokens": 818,
+      "cost": 0.00278
+    }
+  }
+}

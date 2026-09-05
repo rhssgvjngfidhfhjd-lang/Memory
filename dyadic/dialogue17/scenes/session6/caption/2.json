@@ -1,0 +1,36 @@
+{
+  "id": "3f2f6185-6d84-44ec-9cd1-44fc8b5953d9",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:54.275072",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session6/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 62343,
+    "modified_time": "2026-08-23T21:36:56.168916"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an immersive art installation in a spacious gallery. Large digital screens display a serene, fantastical landscape of mountains surrounded by clouds and a vibrant sunset. The scene is reflected on the glossy floor, enhancing the ethereal atmosphere. The room is devoid of people, creating a peaceful and contemplative mood. No visible text is present.",
+    "final_text": "The image depicts an immersive art installation in a spacious gallery. Large digital screens display a serene, fantastical landscape of mountains surrounded by clouds and a vibrant sunset. The scene is reflected on the glossy floor, enhancing the ethereal atmosphere. The room is devoid of people, creating a peaceful and contemplative mood. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427073-XT7345WUl4ZaLVLYRsSI",
+    "created": 1788427073,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 68,
+      "total_tokens": 583,
+      "cost": 0.0019675
+    }
+  }
+}

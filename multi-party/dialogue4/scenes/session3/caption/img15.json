@@ -1,0 +1,36 @@
+{
+  "id": "ed9d7d96-97d0-47c2-a2ed-58e004a18c94",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:24.232879",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session3/image/img15.jpg",
+    "filename": "img15.jpg",
+    "size": 243191,
+    "modified_time": "2026-08-23T22:08:58.874537"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy corner of a room with a relaxed and warm atmosphere. A small couch is covered with patterned blankets and a white pillow, accompanied by a plush toy resembling a duck. A floor lamp with a pleated shade casts a soft light over the area. Nearby, a stack of books is placed on a table covered with a beige cloth. The wall displays two small photographs. Curtains partially cover a window, adding to the snug ambiance of the space.",
+    "final_text": "The image depicts a cozy corner of a room with a relaxed and warm atmosphere. A small couch is covered with patterned blankets and a white pillow, accompanied by a plush toy resembling a duck. A floor lamp with a pleated shade casts a soft light over the area. Nearby, a stack of books is placed on a table covered with a beige cloth. The wall displays two small photographs. Curtains partially cover a window, adding to the snug ambiance of the space.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426803-Nq7p0FOsYUWZnfvmGTN3",
+    "created": 1788426803,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 94,
+      "total_tokens": 814,
+      "cost": 0.00274
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "05740c6d-2209-407a-927f-a4e0023e90b5",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:35.437670",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 2466758,
+    "modified_time": "2026-08-23T21:33:11.285296"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image promotes a community pet companionship program featuring three scenes. \n\n1. A girl with a school uniform joyfully runs towards a golden retriever, accompanied by an adult male, against a backdrop of a building and garden.\n2. The same girl walks a corgi alongside an elderly man with a cane in a park setting.\n3. The girl feeds a cat in a playground area with swings. \n\nText at the top reads \"社区宠物伙伴计划\" (Community Pet Companion Program) and \"孩子与宠物的温暖联结\" (The Warm Connection Between Children and Pets). \n\nThe atmosphere is friendly and nurturing.",
+    "final_text": "The image promotes a community pet companionship program featuring three scenes. \n\n1. A girl with a school uniform joyfully runs towards a golden retriever, accompanied by an adult male, against a backdrop of a building and garden.\n2. The same girl walks a corgi alongside an elderly man with a cane in a park setting.\n3. The girl feeds a cat in a playground area with swings. \n\nText at the top reads \"社区宠物伙伴计划\" (Community Pet Companion Program) and \"孩子与宠物的温暖联结\" (The Warm Connection Between Children and Pets). \n\nThe atmosphere is friendly and nurturing.",
+    "token_stats": {
+      "original_tokens": 142,
+      "final_tokens": 142,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426812-I3GJGGiqKTyOJYGOWFyD",
+    "created": 1788426812,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 128,
+      "total_tokens": 1323,
+      "cost": 0.0042675
+    }
+  }
+}

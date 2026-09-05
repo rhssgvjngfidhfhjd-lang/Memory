@@ -1,0 +1,36 @@
+{
+  "id": "27faa93c-968c-4f78-b58c-63151ba2481f",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:29.774203",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 145134,
+    "modified_time": "2026-08-23T22:09:44.061708"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a map view showing a small area with several notable locations labeled in Chinese. Key elements include \"安图县松江中学\" (Antu County Songjiang Middle School), \"吉祥居\" (Jixiang Residence), \"学生公寓\" (Student Apartments), \"轮胎大全\" (Tire Center), \"安图县第三人民医院\" (Antu County Third People's Hospital), and \"华姐香肉馆\" (Hua Sister Fragrant Meat Restaurant). The map also shows some roads and a river at the top. The time displayed is 23:39, with a weather indicator showing -25°C. The overall atmosphere is calm and informative, typical of digital map interfaces.",
+    "final_text": "The image is a map view showing a small area with several notable locations labeled in Chinese. Key elements include \"安图县松江中学\" (Antu County Songjiang Middle School), \"吉祥居\" (Jixiang Residence), \"学生公寓\" (Student Apartments), \"轮胎大全\" (Tire Center), \"安图县第三人民医院\" (Antu County Third People's Hospital), and \"华姐香肉馆\" (Hua Sister Fragrant Meat Restaurant). The map also shows some roads and a river at the top. The time displayed is 23:39, with a weather indicator showing -25°C. The overall atmosphere is calm and informative, typical of digital map interfaces.",
+    "token_stats": {
+      "original_tokens": 165,
+      "final_tokens": 165,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426869-jsG4IpEHkbZ1dwogyc2d",
+    "created": 1788426869,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 147,
+      "total_tokens": 1682,
+      "cost": 0.0053075
+    }
+  }
+}

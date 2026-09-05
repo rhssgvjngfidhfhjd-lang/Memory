@@ -1,0 +1,36 @@
+{
+  "id": "226388a0-62e3-41d5-bcd7-e88092372e4b",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:07.770781",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 283004,
+    "modified_time": "2026-08-23T22:07:33.779080"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an online auction listing for a Yu-Gi-Oh! card titled \"游戏王拍卖\" with a current bid of ¥15201. The card is described as a rare 1998 edition, graded PSA 10, featuring a \"真红眼黑龙\" (Red-Eyes Black Dragon). The auction includes details about the bidding process, ending on May 24th at 11 PM, with delivery via 顺丰 (SF Express). Keywords include PSA, BGS, and card types such as \"青眼白龙\" (Blue-Eyes White Dragon). The mood is commercial, targeting collectors. Visible hashtags include #Konami.",
+    "final_text": "The image shows an online auction listing for a Yu-Gi-Oh! card titled \"游戏王拍卖\" with a current bid of ¥15201. The card is described as a rare 1998 edition, graded PSA 10, featuring a \"真红眼黑龙\" (Red-Eyes Black Dragon). The auction includes details about the bidding process, ending on May 24th at 11 PM, with delivery via 顺丰 (SF Express). Keywords include PSA, BGS, and card types such as \"青眼白龙\" (Blue-Eyes White Dragon). The mood is commercial, targeting collectors. Visible hashtags include #Konami.",
+    "token_stats": {
+      "original_tokens": 149,
+      "final_tokens": 149,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426726-uGNXF9GiQJhB0noBm02R",
+    "created": 1788426726,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 135,
+      "total_tokens": 1415,
+      "cost": 0.00455
+    }
+  }
+}

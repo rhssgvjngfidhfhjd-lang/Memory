@@ -1,0 +1,36 @@
+{
+  "id": "475bd700-13e0-406a-8f4b-d7fa225d2f8b",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:33.859193",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session2/image/4.png",
+    "filename": "4.png",
+    "size": 252701,
+    "modified_time": "2026-08-23T21:41:58.297149"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a collection of colorful succulent plants arranged in metal containers labeled \"BLUE MOUNTAINS COFFEE.\" One container is placed inside a white bag with handles. In the background, there is an artistic illustration of a deer with flowers around its antlers. Chinese text is visible, with phrases like \"带盆.栽好发货\" on the left and \"开发票 标签可定制\" at the bottom. The scene exudes a vibrant and artistic atmosphere.",
+    "final_text": "The image features a collection of colorful succulent plants arranged in metal containers labeled \"BLUE MOUNTAINS COFFEE.\" One container is placed inside a white bag with handles. In the background, there is an artistic illustration of a deer with flowers around its antlers. Chinese text is visible, with phrases like \"带盆.栽好发货\" on the left and \"开发票 标签可定制\" at the bottom. The scene exudes a vibrant and artistic atmosphere.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427292-LblQjQH10jFAz6xjkYwp",
+    "created": 1788427292,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 98,
+      "total_tokens": 443,
+      "cost": 0.0018425
+    }
+  }
+}

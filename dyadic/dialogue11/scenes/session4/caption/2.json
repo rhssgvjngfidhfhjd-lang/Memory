@@ -1,0 +1,36 @@
+{
+  "id": "f921aabe-241d-4f5a-b2ff-330fd71560dd",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:51.473999",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 511855,
+    "modified_time": "2026-08-23T21:31:05.010278"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an informational poster about TNR (Trap-Neuter-Return) for stray cats. It features a photo of a cat on the right and three icons on the left illustrating the TNR process: Trap, Neuter, and Return, each with accompanying text. The top heading reads \"TNR绝育放归：科学救助流浪猫\" (TNR: Scientifically Helping Stray Cats). Below, there are two sections titled \"对猫的好处\" (Benefits for Cats) and \"对社区的好处\" (Benefits for the Community), highlighting health improvements and reduced disturbances. The overall mood is educational and supportive.",
+    "final_text": "The image is an informational poster about TNR (Trap-Neuter-Return) for stray cats. It features a photo of a cat on the right and three icons on the left illustrating the TNR process: Trap, Neuter, and Return, each with accompanying text. The top heading reads \"TNR绝育放归：科学救助流浪猫\" (TNR: Scientifically Helping Stray Cats). Below, there are two sections titled \"对猫的好处\" (Benefits for Cats) and \"对社区的好处\" (Benefits for the Community), highlighting health improvements and reduced disturbances. The overall mood is educational and supportive.",
+    "token_stats": {
+      "original_tokens": 146,
+      "final_tokens": 146,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426651-01I2XcenhhKpWTxkW69I",
+    "created": 1788426651,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 133,
+      "total_tokens": 648,
+      "cost": 0.0026175
+    }
+  }
+}

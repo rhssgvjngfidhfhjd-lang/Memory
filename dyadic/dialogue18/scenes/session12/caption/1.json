@@ -1,0 +1,36 @@
+{
+  "id": "97e2a9d3-c80e-46bb-a731-f316080faa8a",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:25.855410",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session12/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 32023,
+    "modified_time": "2026-08-23T21:37:06.811135"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a packaged food product and a bowl of mixed ingredients. The package contains a mix of dried vegetables and tofu, with visible pieces like red peppers and greens. Next to it, a white bowl displays the same mixture, now hydrated, with vibrant colors of green, orange, and black. The packaging features the logo \"Fitaky.\" The overall atmosphere is fresh and healthy, suggesting a nutritious meal option.",
+    "final_text": "The image shows a packaged food product and a bowl of mixed ingredients. The package contains a mix of dried vegetables and tofu, with visible pieces like red peppers and greens. Next to it, a white bowl displays the same mixture, now hydrated, with vibrant colors of green, orange, and black. The packaging features the logo \"Fitaky.\" The overall atmosphere is fresh and healthy, suggesting a nutritious meal option.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427164-vfnxM4BcGyQ659bMKfbC",
+    "created": 1788427164,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 83,
+      "total_tokens": 598,
+      "cost": 0.0021175
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "0566fe43-061a-4160-bd57-a30b0d978b12",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:25.629339",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session4/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 355280,
+    "modified_time": "2026-08-23T22:07:41.868660"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a map focusing on Chongqing, a major city in China. The map highlights various districts and transit lines with Chinese text labeling locations like \"重庆市\" (Chongqing City), \"红土地\" (Red Soil), and \"大坪\" (Big Slope). A river runs through the area, and the map includes navigation icons like a train symbol. The top shows a smartphone's status bar indicating time, signal, and battery. The bottom displays weather information: 14°C and AQI 84. The atmosphere is informative and practical, likely for navigation or planning purposes.",
+    "final_text": "The image displays a map focusing on Chongqing, a major city in China. The map highlights various districts and transit lines with Chinese text labeling locations like \"重庆市\" (Chongqing City), \"红土地\" (Red Soil), and \"大坪\" (Big Slope). A river runs through the area, and the map includes navigation icons like a train symbol. The top shows a smartphone's status bar indicating time, signal, and battery. The bottom displays weather information: 14°C and AQI 84. The atmosphere is informative and practical, likely for navigation or planning purposes.",
+    "token_stats": {
+      "original_tokens": 127,
+      "final_tokens": 127,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426742-JcgIo0YuZfXBXun1O1aO",
+    "created": 1788426742,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 121,
+      "total_tokens": 1656,
+      "cost": 0.0050475
+    }
+  }
+}

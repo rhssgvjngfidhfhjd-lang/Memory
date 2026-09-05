@@ -1,0 +1,36 @@
+{
+  "id": "2e2add08-c982-4698-af12-92a59a0bf721",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:25.636443",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session1/image/4.png",
+    "filename": "4.png",
+    "size": 174176,
+    "modified_time": "2026-08-23T21:57:36.125998"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a movie schedule with showtimes, formats, and ticket prices in Chinese. It lists showtimes from 10:40 AM to 7:40 PM for films in 2D and IMAX 2D formats, with prices ranging from ¥54.9 to ¥74.9. Each entry includes a \"购票\" button for purchasing tickets. Some entries have additional notes, such as \"已售完\" (sold out) in orange. The overall mood is informative, providing clear details for planning a cinema visit.",
+    "final_text": "The image displays a movie schedule with showtimes, formats, and ticket prices in Chinese. It lists showtimes from 10:40 AM to 7:40 PM for films in 2D and IMAX 2D formats, with prices ranging from ¥54.9 to ¥74.9. Each entry includes a \"购票\" button for purchasing tickets. Some entries have additional notes, such as \"已售完\" (sold out) in orange. The overall mood is informative, providing clear details for planning a cinema visit.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427644-2NoJMNsFwP3ZaHBYxQ5C",
+    "created": 1788427644,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 111,
+      "total_tokens": 550,
+      "cost": 0.0022075
+    }
+  }
+}

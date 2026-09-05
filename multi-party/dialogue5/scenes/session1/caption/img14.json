@@ -1,0 +1,36 @@
+{
+  "id": "18abf339-1ab1-4ed1-bb32-15382eff6773",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:11.526151",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session1/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 263649,
+    "modified_time": "2026-08-23T22:09:27.878497"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a digital confirmation of a flight booking on a turquoise background. It shows payment success and order confirmation with the order number 334247502143. The total amount is ¥587. Flight details include two itineraries: the first from Zhuhai to Shanghai, departing at 10:15 and arriving at 12:45, and the second from Shanghai to Osaka, departing at 14:30 and arriving at 18:00. The airlines listed are 吉祥航空 (HO1158 and HO1629). There are options for refund and cancellation at the bottom. The overall atmosphere is informative and transactional.",
+    "final_text": "The image is a digital confirmation of a flight booking on a turquoise background. It shows payment success and order confirmation with the order number 334247502143. The total amount is ¥587. Flight details include two itineraries: the first from Zhuhai to Shanghai, departing at 10:15 and arriving at 12:45, and the second from Shanghai to Osaka, departing at 14:30 and arriving at 18:00. The airlines listed are 吉祥航空 (HO1158 and HO1629). There are options for refund and cancellation at the bottom. The overall atmosphere is informative and transactional.",
+    "token_stats": {
+      "original_tokens": 132,
+      "final_tokens": 132,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426849-1bxqS2kcYWL7cFcJmNzc",
+    "created": 1788426849,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 125,
+      "total_tokens": 1660,
+      "cost": 0.0050875
+    }
+  }
+}

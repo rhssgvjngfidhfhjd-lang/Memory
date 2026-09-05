@@ -1,0 +1,36 @@
+{
+  "id": "996f0179-5b5b-43dd-acfb-d3896d91329d",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:18.883269",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session3/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 180761,
+    "modified_time": "2026-08-23T22:08:47.868014"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a hand covered in white paint or powder, with a focus on the fingers. The background includes a soft, white fluffy texture and wooden objects. The hand appears to be resting on a beige surface, possibly clothing. The scene has a casual, informal atmosphere, suggesting a recent painting or craft activity. There is no visible text.",
+    "final_text": "The image shows a hand covered in white paint or powder, with a focus on the fingers. The background includes a soft, white fluffy texture and wooden objects. The hand appears to be resting on a beige surface, possibly clothing. The scene has a casual, informal atmosphere, suggesting a recent painting or craft activity. There is no visible text.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426797-oQKeQSxkTGZ2oBiOr3VB",
+    "created": 1788426797,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 70,
+      "total_tokens": 1068,
+      "cost": 0.003195
+    }
+  }
+}

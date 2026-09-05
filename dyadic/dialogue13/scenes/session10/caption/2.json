@@ -1,0 +1,36 @@
+{
+  "id": "56af4f7e-34b1-4eae-aefd-e5c6f4c99cd0",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:09.768717",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session10/image/2.png",
+    "filename": "2.png",
+    "size": 220348,
+    "modified_time": "2026-08-23T21:32:13.840691"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table with several rows and columns containing text in Chinese. Each row appears to describe different community activities or projects, including a parent-child sports competition, an old item renovation workshop, a community history photo exhibition, a local non-material cultural experience, a community folk art night, and a coordination and protection work project. The text includes details such as responsibilities, objectives, timing, and participation guidelines. The overall mood suggests organization and community involvement, with an emphasis on collaboration and cultural preservation.",
+    "final_text": "The image is a table with several rows and columns containing text in Chinese. Each row appears to describe different community activities or projects, including a parent-child sports competition, an old item renovation workshop, a community history photo exhibition, a local non-material cultural experience, a community folk art night, and a coordination and protection work project. The text includes details such as responsibilities, objectives, timing, and participation guidelines. The overall mood suggests organization and community involvement, with an emphasis on collaboration and cultural preservation.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426847-SnUlzr2BdHeLsod1OrOJ",
+    "created": 1788426847,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 101,
+      "total_tokens": 1099,
+      "cost": 0.003505
+    }
+  }
+}

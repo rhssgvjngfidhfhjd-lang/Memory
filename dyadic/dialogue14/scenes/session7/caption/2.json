@@ -1,0 +1,36 @@
+{
+  "id": "3e72e0e9-da94-405c-bea9-d6d0c4180fe7",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:07.652071",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session7/image/2.webp",
+    "filename": "2.webp",
+    "size": 7120,
+    "modified_time": "2026-08-23T21:33:22.776033"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cartoon-style illustration of a person with a worried expression, surrounded by multiple red smartphone screens. Each screen displays various icons, such as exclamation marks and notification symbols. Green speech bubbles with ellipses are present, suggesting incoming messages. The background is blue, creating a digital and slightly overwhelming atmosphere. The central figure seems to be experiencing stress due to constant notifications and digital communication.",
+    "final_text": "The image depicts a cartoon-style illustration of a person with a worried expression, surrounded by multiple red smartphone screens. Each screen displays various icons, such as exclamation marks and notification symbols. Green speech bubbles with ellipses are present, suggesting incoming messages. The background is blue, creating a digital and slightly overwhelming atmosphere. The central figure seems to be experiencing stress due to constant notifications and digital communication.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426907-5zVmR6tqDe2Rbhlz9iGU",
+    "created": 1788426907,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 81,
+      "total_tokens": 381,
+      "cost": 0.00156
+    }
+  }
+}

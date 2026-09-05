@@ -1,0 +1,36 @@
+{
+  "id": "9a69072d-0649-4eec-a36b-67cb245a4ff3",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:20.783364",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 1365887,
+    "modified_time": "2026-08-23T21:33:56.895222"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic exhibition space with a focus on technology and innovation. Several people are observing large digital screens displaying various data and graphics. A glowing map labeled \"PARK MAP\" is prominently displayed on the wall. The text \"INNOVATION PARK\" is visible on the floor. The atmosphere is modern and high-tech, with blue lighting and digital interfaces creating an immersive experience.",
+    "final_text": "The image depicts a futuristic exhibition space with a focus on technology and innovation. Several people are observing large digital screens displaying various data and graphics. A glowing map labeled \"PARK MAP\" is prominently displayed on the wall. The text \"INNOVATION PARK\" is visible on the floor. The atmosphere is modern and high-tech, with blue lighting and digital interfaces creating an immersive experience.",
+    "token_stats": {
+      "original_tokens": 78,
+      "final_tokens": 78,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426918-mhYBfRzm4CZHgTS0Jkqc",
+    "created": 1788426918,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 77,
+      "total_tokens": 1272,
+      "cost": 0.0037575
+    }
+  }
+}

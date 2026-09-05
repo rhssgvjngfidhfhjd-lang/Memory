@@ -1,0 +1,36 @@
+{
+  "id": "bbc5c46f-e2c7-439c-b4bf-a0457f7742c2",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:22.765873",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session3/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 1539649,
+    "modified_time": "2026-08-23T21:30:25.567556"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a breakfast scene on a wooden table near a window. A plate contains a sunny-side-up egg, crispy bacon, slices of whole-grain toast, and a colorful assortment of fruits including grapes, melon, and berries. A hand is holding the plate, while a fork is visible near the egg. A cup of black coffee sits nearby, bathed in warm sunlight streaming through the window, creating a cozy and inviting atmosphere.",
+    "final_text": "The image depicts a breakfast scene on a wooden table near a window. A plate contains a sunny-side-up egg, crispy bacon, slices of whole-grain toast, and a colorful assortment of fruits including grapes, melon, and berries. A hand is holding the plate, while a fork is visible near the egg. A cup of black coffee sits nearby, bathed in warm sunlight streaming through the window, creating a cozy and inviting atmosphere.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426559-34CQaw0j8QZjw6pzAWlw",
+    "created": 1788426559,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 89,
+      "total_tokens": 806,
+      "cost": 0.0026825
+    }
+  }
+}

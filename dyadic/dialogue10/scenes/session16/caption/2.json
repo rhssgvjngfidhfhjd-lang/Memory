@@ -1,0 +1,36 @@
+{
+  "id": "e5e8c40a-bbfd-42bc-a368-d66ed07e078e",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:34.917223",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session16/image/2.png",
+    "filename": "2.png",
+    "size": 6370316,
+    "modified_time": "2026-08-23T21:32:00.532285"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image captures a peaceful outdoor scene. A person wearing jeans is seated, with a golden retriever resting its head on their lap. A wooden table holds a steaming cup of coffee. The setting is a stone patio, and the overall atmosphere is calm and relaxed.",
+    "final_text": "The image captures a peaceful outdoor scene. A person wearing jeans is seated, with a golden retriever resting its head on their lap. A wooden table holds a steaming cup of coffee. The setting is a stone patio, and the overall atmosphere is calm and relaxed.",
+    "token_stats": {
+      "original_tokens": 54,
+      "final_tokens": 54,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426631-ouVeQURQuYNKcjgZ8Pgx",
+    "created": 1788426631,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 54,
+      "total_tokens": 771,
+      "cost": 0.0023325
+    }
+  }
+}

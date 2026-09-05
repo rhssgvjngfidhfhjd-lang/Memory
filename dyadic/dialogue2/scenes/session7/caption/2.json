@@ -1,0 +1,36 @@
+{
+  "id": "a79956de-1f44-46e2-b3af-f8005d1669ef",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:06.932124",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 341096,
+    "modified_time": "2026-08-23T21:40:56.184613"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a sepia-toned close-up of a woman with a calm and contemplative expression, set against a plain background. She is wearing a floral-patterned blouse. Japanese text is prominently displayed at the top, with additional smaller text beneath it. The overall mood is reflective and serene.",
+    "final_text": "The image features a sepia-toned close-up of a woman with a calm and contemplative expression, set against a plain background. She is wearing a floral-patterned blouse. Japanese text is prominently displayed at the top, with additional smaller text beneath it. The overall mood is reflective and serene.",
+    "token_stats": {
+      "original_tokens": 60,
+      "final_tokens": 60,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427268-s4T7aUYZDstmAi5XjnAv",
+    "created": 1788427268,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 60,
+      "total_tokens": 575,
+      "cost": 0.0018875
+    }
+  }
+}

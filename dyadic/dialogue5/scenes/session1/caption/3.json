@@ -1,0 +1,36 @@
+{
+  "id": "90e2e31a-c2a7-4694-80cd-9911b69afaae",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:32.446834",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session1/image/3.png",
+    "filename": "3.png",
+    "size": 469598,
+    "modified_time": "2026-08-23T21:55:01.350442"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an illustrated step-by-step guide for making green herbal dumplings. It starts with fresh herbs being washed and blended into juice. The juice is mixed with glutinous rice flour to form a dough, which is then rolled and divided into small pieces. The dough pieces are shaped into dumplings with fillings added inside. The dumplings are brushed with oil before being steamed. The overall mood is instructional and informative, with a focus on the cooking process. Text in Chinese accompanies each step, describing the actions involved.",
+    "final_text": "The image is an illustrated step-by-step guide for making green herbal dumplings. It starts with fresh herbs being washed and blended into juice. The juice is mixed with glutinous rice flour to form a dough, which is then rolled and divided into small pieces. The dough pieces are shaped into dumplings with fillings added inside. The dumplings are brushed with oil before being steamed. The overall mood is instructional and informative, with a focus on the cooking process. Text in Chinese accompanies each step, describing the actions involved.",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427471-TDSxWgRANwhOFIgPm51F",
+    "created": 1788427471,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 106,
+      "total_tokens": 545,
+      "cost": 0.0021575
+    }
+  }
+}

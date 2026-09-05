@@ -1,0 +1,36 @@
+{
+  "id": "757ff99c-d45d-4f1c-a6ce-439918713e71",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:47.640758",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session5/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 380375,
+    "modified_time": "2026-08-23T22:09:23.246673"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person standing on a red carpet at an event celebrating Vogue's 10th anniversary. The individual is wearing a colorful, textured dress with a flared skirt and thin straps, paired with black lace-up sandals. The background features logos of Vogue, Huawei, and Lincoln. The person is smiling, creating a joyful and elegant atmosphere.",
+    "final_text": "The image depicts a person standing on a red carpet at an event celebrating Vogue's 10th anniversary. The individual is wearing a colorful, textured dress with a flared skirt and thin straps, paired with black lace-up sandals. The background features logos of Vogue, Huawei, and Lincoln. The person is smiling, creating a joyful and elegant atmosphere.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426827-ZVjPryM7lrsequ4pZEXE",
+    "created": 1788426827,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 70,
+      "total_tokens": 1265,
+      "cost": 0.0036875
+    }
+  }
+}

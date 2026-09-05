@@ -1,0 +1,36 @@
+{
+  "id": "7d956807-5330-4fcf-8679-9bd130e47d7d",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:07.002368",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session2/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 191714,
+    "modified_time": "2026-08-23T22:08:46.215019"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a quiet library or study room setting. Wooden chairs and white tables are arranged in rows, with one person sitting alone at a table, facing away from the camera. The room is well-lit, with large windows allowing natural light to filter in, and ceiling lights are visible. Bookshelves are in the background, suggesting an academic atmosphere. The overall mood is calm and focused, ideal for studying or reading.",
+    "final_text": "The image depicts a quiet library or study room setting. Wooden chairs and white tables are arranged in rows, with one person sitting alone at a table, facing away from the camera. The room is well-lit, with large windows allowing natural light to filter in, and ceiling lights are visible. Bookshelves are in the background, suggesting an academic atmosphere. The overall mood is calm and focused, ideal for studying or reading.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426784-AQhUc2JbwsGX3H4pCsfR",
+    "created": 1788426784,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 85,
+      "total_tokens": 805,
+      "cost": 0.00265
+    }
+  }
+}

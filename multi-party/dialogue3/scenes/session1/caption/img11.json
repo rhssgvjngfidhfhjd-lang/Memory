@@ -1,0 +1,36 @@
+{
+  "id": "05055615-7838-438b-93f0-6ffd06581804",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:34.362885",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 185757,
+    "modified_time": "2026-08-23T22:07:09.763048"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a nighttime scene with several people gathered outdoors, illuminated by bright lights. The atmosphere is misty, creating a dramatic effect. Some individuals are dressed in what appears to be traditional or historical clothing, while others wear modern attire, including hooded jackets. A person holds a boom microphone, suggesting a film or theatrical setting. The mood is mysterious and cinematic, enhanced by the contrast of light and shadow. No visible text is present.",
+    "final_text": "The image depicts a nighttime scene with several people gathered outdoors, illuminated by bright lights. The atmosphere is misty, creating a dramatic effect. Some individuals are dressed in what appears to be traditional or historical clothing, while others wear modern attire, including hooded jackets. A person holds a boom microphone, suggesting a film or theatrical setting. The mood is mysterious and cinematic, enhanced by the contrast of light and shadow. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426694-v3q08CBbwk2XHaR0971I",
+    "created": 1788426694,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 90,
+      "total_tokens": 1088,
+      "cost": 0.003395
+    }
+  }
+}

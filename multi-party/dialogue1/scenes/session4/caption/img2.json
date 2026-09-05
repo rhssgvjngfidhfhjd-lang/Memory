@@ -1,0 +1,36 @@
+{
+  "id": "171f16d0-431a-4758-b139-5df16e78e7d6",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:38.678071",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 392947,
+    "modified_time": "2026-08-23T22:03:42.457910"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant, modern restaurant interior with a warm, colorful atmosphere. Several tables are set with black bowls and utensils on a checkered floor. A person stands at a counter, possibly interacting with a computer or register. Above, multiple illuminated signs display text in both Chinese and English, such as \"Encounter with you\" and \"Check out,\" creating a lively ambiance. Neon lights and hanging decorations add to the dynamic setting, suggesting a casual dining experience.",
+    "final_text": "The image depicts a vibrant, modern restaurant interior with a warm, colorful atmosphere. Several tables are set with black bowls and utensils on a checkered floor. A person stands at a counter, possibly interacting with a computer or register. Above, multiple illuminated signs display text in both Chinese and English, such as \"Encounter with you\" and \"Check out,\" creating a lively ambiance. Neon lights and hanging decorations add to the dynamic setting, suggesting a casual dining experience.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426577-633rxppUmtnRhk4EPonX",
+    "created": 1788426577,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 94,
+      "total_tokens": 814,
+      "cost": 0.00274
+    }
+  }
+}

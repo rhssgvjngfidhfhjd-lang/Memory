@@ -1,0 +1,36 @@
+{
+  "id": "78f4ba7b-c485-45eb-98cf-17c63a9c2c6f",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:03.563246",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session9/image/1.png",
+    "filename": "1.png",
+    "size": 1259790,
+    "modified_time": "2026-08-23T21:32:47.060281"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a woman and a young girl in a museum setting, surrounded by classical statues. The woman, wearing a denim jacket, gestures with her hand, possibly explaining or pointing out details to the girl, who is attentively looking at the statues. The background features a warmly lit display with sculptures, creating an educational and engaging atmosphere. The mood is curious and informative, as the pair interacts with the art pieces.",
+    "final_text": "The image depicts a woman and a young girl in a museum setting, surrounded by classical statues. The woman, wearing a denim jacket, gestures with her hand, possibly explaining or pointing out details to the girl, who is attentively looking at the statues. The background features a warmly lit display with sculptures, creating an educational and engaging atmosphere. The mood is curious and informative, as the pair interacts with the art pieces.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426842-bTDXihjkfzLzh04q2nyi",
+    "created": 1788426842,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 85,
+      "total_tokens": 1083,
+      "cost": 0.003345
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "3180e2b8-db42-41cc-acc4-efbac388e6e0",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:38.971298",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session3/image/2.png",
+    "filename": "2.png",
+    "size": 674809,
+    "modified_time": "2026-08-23T21:42:10.340116"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A young child and an older woman are sitting at a table, making dumplings. The child is focused on shaping a dumpling, while the woman smiles warmly, possibly guiding the child. Several completed dumplings and dough discs are on the table. The atmosphere is warm and nurturing, suggesting a moment of shared learning and bonding.",
+    "final_text": "A young child and an older woman are sitting at a table, making dumplings. The child is focused on shaping a dumpling, while the woman smiles warmly, possibly guiding the child. Several completed dumplings and dough discs are on the table. The atmosphere is warm and nurturing, suggesting a moment of shared learning and bonding.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427297-vIAbS7jw08gUlpPTG4Ig",
+    "created": 1788427297,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 66,
+      "total_tokens": 921,
+      "cost": 0.0027975
+    }
+  }
+}

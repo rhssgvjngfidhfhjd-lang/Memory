@@ -1,0 +1,36 @@
+{
+  "id": "716748e8-4196-42a4-8a4c-184da1ca4786",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:49.628841",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session3/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 208721,
+    "modified_time": "2026-08-23T22:05:57.195952"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person practicing yoga outdoors on a grassy field. They are performing a split with arms extended upward, creating a graceful and balanced pose. The person is wearing a white outfit, and the scene is set against a backdrop of a serene blue ocean and distant mountains. Trees frame the top of the image, adding a sense of tranquility and natural beauty. The overall mood is peaceful and meditative.",
+    "final_text": "The image depicts a person practicing yoga outdoors on a grassy field. They are performing a split with arms extended upward, creating a graceful and balanced pose. The person is wearing a white outfit, and the scene is set against a backdrop of a serene blue ocean and distant mountains. Trees frame the top of the image, adding a sense of tranquility and natural beauty. The overall mood is peaceful and meditative.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426649-UiQgrXSQTbgH5Z5YmlqG",
+    "created": 1788426649,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 81,
+      "total_tokens": 936,
+      "cost": 0.0029475
+    }
+  }
+}

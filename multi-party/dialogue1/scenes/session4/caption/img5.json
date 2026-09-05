@@ -1,0 +1,36 @@
+{
+  "id": "bb2a8cf8-25a7-4b63-8af5-91469b93cdbd",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:40.303444",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 169613,
+    "modified_time": "2026-08-23T22:03:45.507946"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an elegant restaurant menu open to a page displaying a dish titled \"Molecular Gastronomy Steak\" priced at ¥888. The right side of the menu shows a photograph of the steak, artistically presented with green garnishes and a foam element on a white plate. The setting includes a dark wooden table with a plate, cutlery, and a wine glass, creating a sophisticated and luxurious dining atmosphere.",
+    "final_text": "The image features an elegant restaurant menu open to a page displaying a dish titled \"Molecular Gastronomy Steak\" priced at ¥888. The right side of the menu shows a photograph of the steak, artistically presented with green garnishes and a foam element on a white plate. The setting includes a dark wooden table with a plate, cutlery, and a wine glass, creating a sophisticated and luxurious dining atmosphere.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426580-NwC0rUocXOwGsvLCgLl7",
+    "created": 1788426580,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 83,
+      "total_tokens": 938,
+      "cost": 0.0029675
+    }
+  }
+}

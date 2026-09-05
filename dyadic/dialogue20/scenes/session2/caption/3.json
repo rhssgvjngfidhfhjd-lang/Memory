@@ -1,0 +1,36 @@
+{
+  "id": "908a243a-6210-49c7-9261-00f20fa1bb59",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:36.370363",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 891411,
+    "modified_time": "2026-08-23T21:42:04.901493"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a collection of traditional Chinese New Year decorations against a yellow background. Main elements include red banners with gold and black Chinese characters, red envelopes, and decorative cards. The text includes auspicious phrases like \"万福祥瑞\" and \"福.\" The items are adorned with vibrant illustrations of mythical figures and ornate designs. The overall atmosphere is festive and celebratory, emphasizing prosperity and good fortune.",
+    "final_text": "The image displays a collection of traditional Chinese New Year decorations against a yellow background. Main elements include red banners with gold and black Chinese characters, red envelopes, and decorative cards. The text includes auspicious phrases like \"万福祥瑞\" and \"福.\" The items are adorned with vibrant illustrations of mythical figures and ornate designs. The overall atmosphere is festive and celebratory, emphasizing prosperity and good fortune.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427290-Y2ivVguvs8nVPg7pGeVA",
+    "created": 1788427290,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 81,
+      "total_tokens": 936,
+      "cost": 0.0029475
+    }
+  }
+}

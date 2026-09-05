@@ -1,0 +1,36 @@
+{
+  "id": "c6c2ed8d-d5f5-4495-9378-3b79c0eb0c25",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:06.231608",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 4542706,
+    "modified_time": "2026-08-23T21:37:21.038507"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person wearing a head-mounted device with several wires connected, possibly for brainwave monitoring. They are sitting in front of a computer monitor displaying a 3D cube graphic. The person appears focused, suggesting they might be interacting with the computer through thought or concentration. The scene conveys a high-tech, experimental atmosphere, indicative of research or development in neural interfaces or virtual reality.",
+    "final_text": "The image depicts a person wearing a head-mounted device with several wires connected, possibly for brainwave monitoring. They are sitting in front of a computer monitor displaying a 3D cube graphic. The person appears focused, suggesting they might be interacting with the computer through thought or concentration. The scene conveys a high-tech, experimental atmosphere, indicative of research or development in neural interfaces or virtual reality.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427084-nMfdYUqNLe9U8tCc0j1F",
+    "created": 1788427084,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 78,
+      "total_tokens": 1273,
+      "cost": 0.0037675
+    }
+  }
+}

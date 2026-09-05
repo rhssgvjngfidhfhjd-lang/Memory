@@ -1,0 +1,36 @@
+{
+  "id": "675991a5-01ab-4779-bca4-a8b8c8306c89",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:55.869237",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 2567834,
+    "modified_time": "2026-08-23T21:33:22.602278"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cartoon character jumping over a trap-filled platform with spikes and floating bricks. Stars encircle the character's head, suggesting surprise or dizziness. A health bar at the top shows a mix of red and green, indicating damage. The number \"30\" is displayed at the bottom. The sky is bright with scattered clouds, creating a tense yet lively atmosphere.",
+    "final_text": "The image depicts a cartoon character jumping over a trap-filled platform with spikes and floating bricks. Stars encircle the character's head, suggesting surprise or dizziness. A health bar at the top shows a mix of red and green, indicating damage. The number \"30\" is displayed at the bottom. The sky is bright with scattered clouds, creating a tense yet lively atmosphere.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426892-sF0vKdDDhiRJvItMM1lF",
+    "created": 1788426892,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 75,
+      "total_tokens": 1073,
+      "cost": 0.003245
+    }
+  }
+}

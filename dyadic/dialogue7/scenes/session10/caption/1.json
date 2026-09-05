@@ -1,0 +1,36 @@
+{
+  "id": "c8277e92-6c11-4e29-a86c-8c3220acdbc5",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:08.367154",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 484044,
+    "modified_time": "2026-08-23T21:56:40.007706"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a tranquil lakeside scene with clear blue skies and fluffy clouds. In the foreground, people are leisurely walking on a line of stepping stones across the water. To the right, there is a rustic house surrounded by lush greenery. The backdrop features rolling hills and dense forests. The mood is peaceful and serene, capturing a harmonious blend of nature and human activity.",
+    "final_text": "The image depicts a tranquil lakeside scene with clear blue skies and fluffy clouds. In the foreground, people are leisurely walking on a line of stepping stones across the water. To the right, there is a rustic house surrounded by lush greenery. The backdrop features rolling hills and dense forests. The mood is peaceful and serene, capturing a harmonious blend of nature and human activity.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427629-g4LkVbJSRY0Gd7Cmzx5V",
+    "created": 1788427629,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 74,
+      "total_tokens": 589,
+      "cost": 0.0020275
+    }
+  }
+}

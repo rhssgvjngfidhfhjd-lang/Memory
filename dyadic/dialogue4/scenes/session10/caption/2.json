@@ -1,0 +1,36 @@
+{
+  "id": "30cc6a47-2628-4f7c-a359-0baa4841f1aa",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:03.908736",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session10/image/2.png",
+    "filename": "2.png",
+    "size": 79844,
+    "modified_time": "2026-08-23T21:50:05.524807"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains a set of instructions in Chinese for ensuring experimental consistency in baking. Key points include:\n\n1. **Environmental Temperature and Humidity**: Maintain at 26°C ± 0.5°C and 75% ± 5% humidity.\n2. **Flour**: Use the same batch with specified protein content.\n3. **Dough Handling**: Use a uniform method and time for kneading, matching target dough temperature.\n4. **Baking**: Use an oven at a preheat temperature of 250°C, with specified steaming and baking times.\n5. **Basic Ingredients (Percentages)**:\n   - Flour: 100%\n   - Water: 75%\n   - Salt: 2%\n   - Yeast: 20% (based on different yeast solutions).\n\nThe mood is technical and precise, focusing on standardization.",
+    "final_text": "The image contains a set of instructions in Chinese for ensuring experimental consistency in baking. Key points include:\n\n1. **Environmental Temperature and Humidity**: Maintain at 26°C ± 0.5°C and 75% ± 5% humidity.\n2. **Flour**: Use the same batch with specified protein content.\n3. **Dough Handling**: Use a uniform method and time for kneading, matching target dough temperature.\n4. **Baking**: Use an oven at a preheat temperature of 250°C, with specified steaming and baking times.\n5. **Basic Ingredients (Percentages)**:\n   - Flour: 100%\n   - Water: 75%\n   - Salt: 2%\n   - Yeast: 20% (based on different yeast solutions).\n\nThe mood is technical and precise, focusing on standardization.",
+    "token_stats": {
+      "original_tokens": 172,
+      "final_tokens": 172,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427443-AD58aLUvLuzVO2O4Lprz",
+    "created": 1788427443,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 175,
+      "total_tokens": 1030,
+      "cost": 0.0038875
+    }
+  }
+}

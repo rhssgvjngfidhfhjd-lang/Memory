@@ -1,0 +1,13 @@
+The image is a diagram explaining collaborative filtering and content recommendation principles. It is divided into two sections: "协同过滤原理" (Collaborative Filtering Principles) and "内容推荐原理" (Content Recommendation Principles). 
+
+**Collaborative Filtering**:
+1. **用户行为分析** (User Behavior Analysis): Collects users' historical ratings/click data. A matrix of user-item ratings is shown.
+2. **相似用户匹配** (Similar User Matching): Calculates interest similarity using methods like Pearson correlation.
+3. **推荐生成** (Recommendation Generation): Recommends items based on similar users' preferences.
+
+**Content Recommendation**:
+1. **物品特征提取** (Item Feature Extraction): Analyzes attributes/tags like movie genres/book themes. A network diagram represents connections.
+2. **用户兴趣建模** (User Interest Modeling): Builds a user interest tag library using methods like TF-IDF/Word2Vec with examples "科幻/悬疑" (Sci-Fi/Suspense).
+3. **推荐生成** (Recommendation Generation): Matches user interests with item features for recommendations.
+
+Overall, the mood is... [truncated]

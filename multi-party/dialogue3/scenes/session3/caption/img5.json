@@ -1,0 +1,36 @@
+{
+  "id": "2b8a3ddb-0b27-4d4c-8057-5a8dc696d7f4",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:59.831358",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 206187,
+    "modified_time": "2026-08-23T22:07:40.935286"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a highly detailed statue of a warrior in ornate armor, standing on a rocky base. The warrior is depicted in a dynamic pose, holding a sword with both hands. The armor is richly decorated with gold and red elements, including a flowing cape. The warrior has a distinctive hairstyle and facial markings. The background is dark, highlighting the figure's elaborate design. The overall mood is dramatic and intense, emphasizing the warrior's strength and authority.",
+    "final_text": "The image features a highly detailed statue of a warrior in ornate armor, standing on a rocky base. The warrior is depicted in a dynamic pose, holding a sword with both hands. The armor is richly decorated with gold and red elements, including a flowing cape. The warrior has a distinctive hairstyle and facial markings. The background is dark, highlighting the figure's elaborate design. The overall mood is dramatic and intense, emphasizing the warrior's strength and authority.",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426718-v4agbiRtdCsDiNv5GBrB",
+    "created": 1788426718,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 90,
+      "total_tokens": 1285,
+      "cost": 0.0038875
+    }
+  }
+}

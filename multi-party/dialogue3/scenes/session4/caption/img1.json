@@ -1,0 +1,36 @@
+{
+  "id": "bae432d3-653d-4ffb-a360-70080487d47b",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:13.310428",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session4/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 455672,
+    "modified_time": "2026-08-23T22:07:43.348708"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant cityscape at dusk with a glowing orange sky. A prominent bridge, illuminated in red, crosses a river, connecting two parts of the city. The skyline is filled with tall buildings, some displaying bright lights and visible text such as \"ABIDIC.\" The atmosphere is lively and bustling, with reflections shimmering on the water. The scene conveys a sense of urban energy and modernity.",
+    "final_text": "The image depicts a vibrant cityscape at dusk with a glowing orange sky. A prominent bridge, illuminated in red, crosses a river, connecting two parts of the city. The skyline is filled with tall buildings, some displaying bright lights and visible text such as \"ABIDIC.\" The atmosphere is lively and bustling, with reflections shimmering on the water. The scene conveys a sense of urban energy and modernity.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426732-ujZViYLpIwClLyLuTZG1",
+    "created": 1788426732,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 83,
+      "total_tokens": 803,
+      "cost": 0.00263
+    }
+  }
+}

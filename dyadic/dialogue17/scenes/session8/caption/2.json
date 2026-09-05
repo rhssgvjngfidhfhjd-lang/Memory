@@ -1,0 +1,36 @@
+{
+  "id": "56402ca2-1c81-4e8a-92e5-018c3d7b5c62",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:03.993874",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 124897,
+    "modified_time": "2026-08-23T21:36:42.450896"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic, holographic cityscape model floating above a modern living room setting. The city model features illuminated skyscrapers and buildings, emitting a soft glow, which contrasts with the room's muted tones. The living room includes a window, a sofa, and a floor lamp, creating a calm and sophisticated atmosphere. There is no visible text, and no people or animals are present. The scene conveys a blend of advanced technology and contemporary interior design, suggesting innovation and tranquility.",
+    "final_text": "The image depicts a futuristic, holographic cityscape model floating above a modern living room setting. The city model features illuminated skyscrapers and buildings, emitting a soft glow, which contrasts with the room's muted tones. The living room includes a window, a sofa, and a floor lamp, creating a calm and sophisticated atmosphere. There is no visible text, and no people or animals are present. The scene conveys a blend of advanced technology and contemporary interior design, suggesting innovation and tranquility.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427084-O7TFvr3oxMdeBCLqYOlU",
+    "created": 1788427084,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 97,
+      "total_tokens": 442,
+      "cost": 0.0018325
+    }
+  }
+}

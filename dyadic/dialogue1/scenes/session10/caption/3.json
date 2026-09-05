@@ -1,0 +1,36 @@
+{
+  "id": "7071bcfb-a55a-4370-ba36-175d3f37b5c6",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:56.670954",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 150381,
+    "modified_time": "2026-08-23T21:30:04.566719"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two line graphs comparing trends in global quantum computing research papers and patents from 2015 to 2025. The left graph shows the number of research papers, with a noticeable increase, peaking in 2024. The right graph illustrates patent applications and grants, both rising steadily, with projections for 2025. Blue and orange lines represent different data sets. The text is in Chinese, with the source credited to the China Information and Communications Institute. The overall mood is analytical, focusing on growth trends in quantum computing.",
+    "final_text": "The image features two line graphs comparing trends in global quantum computing research papers and patents from 2015 to 2025. The left graph shows the number of research papers, with a noticeable increase, peaking in 2024. The right graph illustrates patent applications and grants, both rising steadily, with projections for 2025. Blue and orange lines represent different data sets. The text is in Chinese, with the source credited to the China Information and Communications Institute. The overall mood is analytical, focusing on growth trends in quantum computing.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426536-Aolgz5Erp4CDx2W2SRrS",
+    "created": 1788426536,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 108,
+      "total_tokens": 623,
+      "cost": 0.0023675
+    }
+  }
+}

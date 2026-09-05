@@ -1,0 +1,36 @@
+{
+  "id": "36bd12c9-ad50-4b1e-b556-e79b67f3cdd3",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:22.357957",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session5/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 148433,
+    "modified_time": "2026-08-23T22:06:58.819903"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a celebratory scene with several hands raising champagne glasses for a toast. Confetti is falling around, adding to the festive atmosphere. The background is blurred with warm lighting, enhancing the joyful mood. There is no visible text. The overall atmosphere is lively and jubilant, suggesting a party or celebration.",
+    "final_text": "The image depicts a celebratory scene with several hands raising champagne glasses for a toast. Confetti is falling around, adding to the festive atmosphere. The background is blurred with warm lighting, enhancing the joyful mood. There is no visible text. The overall atmosphere is lively and jubilant, suggesting a party or celebration.",
+    "token_stats": {
+      "original_tokens": 64,
+      "final_tokens": 64,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426681-g7JBwUYoVQYojaG7UYEl",
+    "created": 1788426681,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 64,
+      "total_tokens": 1062,
+      "cost": 0.003135
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "cc1b96c7-bdd0-4b38-a584-6f846593fc2a",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:08.008642",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 34778,
+    "modified_time": "2026-08-23T21:30:04.231280"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a table with columns labeled in Chinese. The columns include \"日期\" (Date), \"搔痒程度\" (Itchiness Level), \"皮肤状况\" (Skin Condition), \"用药记录\" (Medication Record), \"周护理项目\" (Weekly Care Items), and \"备注/特别事件\" (Remarks/Special Events). The table includes entries like \"示例\" (Example), with details such as \"3\" under itchiness, \"下巴微红\" (Slight Redness on Chin) under skin condition, and \"波尼松龙 5mg\" (Prednisolone 5mg) under medication, with a checkmark. Annotations include \"精神好\" (Good Spirit). The mood is clinical and organized.",
+    "final_text": "The image features a table with columns labeled in Chinese. The columns include \"日期\" (Date), \"搔痒程度\" (Itchiness Level), \"皮肤状况\" (Skin Condition), \"用药记录\" (Medication Record), \"周护理项目\" (Weekly Care Items), and \"备注/特别事件\" (Remarks/Special Events). The table includes entries like \"示例\" (Example), with details such as \"3\" under itchiness, \"下巴微红\" (Slight Redness on Chin) under skin condition, and \"波尼松龙 5mg\" (Prednisolone 5mg) under medication, with a checkmark. Annotations include \"精神好\" (Good Spirit). The mood is clinical and organized.",
+    "token_stats": {
+      "original_tokens": 181,
+      "final_tokens": 181,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426485-zwzNFeXqjKWp7IAmPrbx",
+    "created": 1788426485,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 160,
+      "total_tokens": 1355,
+      "cost": 0.0045875
+    }
+  }
+}

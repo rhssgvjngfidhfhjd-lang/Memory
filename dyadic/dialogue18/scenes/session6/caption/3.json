@@ -1,0 +1,36 @@
+{
+  "id": "1c0f725b-5792-4665-bff0-b0c5ee829193",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:58.393775",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session6/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 241590,
+    "modified_time": "2026-08-23T21:37:38.348592"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a product advertisement highlighting the advantages of a green ointment. The top section shows an open jar labeled \"warm paste,\" promoting relief from itching and discomfort from mosquito bites, and supporting skin absorption. The bottom section emphasizes the \"bottle mouth design,\" noting the smooth, easy-to-unscrew bottle, which is small and portable. The overall mood is informative and promotional, focusing on quality and usability.",
+    "final_text": "The image is a product advertisement highlighting the advantages of a green ointment. The top section shows an open jar labeled \"warm paste,\" promoting relief from itching and discomfort from mosquito bites, and supporting skin absorption. The bottom section emphasizes the \"bottle mouth design,\" noting the smooth, easy-to-unscrew bottle, which is small and portable. The overall mood is informative and promotional, focusing on quality and usability.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427137-EbmVikq700dnxVYmqGXp",
+    "created": 1788427137,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 83,
+      "total_tokens": 938,
+      "cost": 0.0029675
+    }
+  }
+}

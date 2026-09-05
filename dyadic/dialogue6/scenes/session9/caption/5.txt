@@ -1,0 +1,11 @@
+The image is a table with four columns displaying various categories of demands and their descriptions. The columns are labeled: "需求类型" (Demand Type), "占比" (Proportion), "具体需求描述" (Specific Demand Description), and "典型应用场景" (Typical Application Scenarios). 
+
+The rows detail different types of demands:
+
+1. 健康监测 (Health Monitoring) - 32%: Real-time tracking of heart rate, respiratory rate, and excretion components, including blood and urine tests, and abnormal behavior detection. Applications include smart collars, AI litter boxes, and pet cameras.
+
+2. 远程互动 (Remote Interaction) - 22%: Voice dialogue, automatic pet interaction, and real-time video observation. Applications include smart feeders, interactive robots, and smart cameras.
+
+3. 安全性 (Safety) - 18%: Device design preventing pets from harm, material safety certification, and electrical safety mechanisms. Applications include smart locks, automatic water dispensers, and smart drying boxes.
+
+4. 其他需求 (Other Demands) - 28%: Multi-device connectivity, data synchronization, energy conservation, and personalization.... [truncated]

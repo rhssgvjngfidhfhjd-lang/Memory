@@ -1,0 +1,36 @@
+{
+  "id": "0cf1efae-f7e6-4314-bb51-80d557084ba5",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:34.746878",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session15/image/1.png",
+    "filename": "1.png",
+    "size": 253546,
+    "modified_time": "2026-08-23T21:37:17.643560"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a comparison chart of backpack types for photographers, detailing their core advantages, suitable scenarios, and recommended models. Categories include side opening, top opening, modular attachment, and mixed (side + back). Each type outlines specific benefits like quick access, strong protection, and adaptability. Recommended models include Shimoda Explore V2, Lowepro Pro Trekker, and ThinkTank Photo MindShift. Additional core suggestions emphasize choosing based on dynamic shooting, long journeys, extreme conditions, and the importance of the carrying system’s comfort over camera function. The mood is informative and professional.",
+    "final_text": "The image is a comparison chart of backpack types for photographers, detailing their core advantages, suitable scenarios, and recommended models. Categories include side opening, top opening, modular attachment, and mixed (side + back). Each type outlines specific benefits like quick access, strong protection, and adaptability. Recommended models include Shimoda Explore V2, Lowepro Pro Trekker, and ThinkTank Photo MindShift. Additional core suggestions emphasize choosing based on dynamic shooting, long journeys, extreme conditions, and the importance of the carrying system’s comfort over camera function. The mood is informative and professional.",
+    "token_stats": {
+      "original_tokens": 117,
+      "final_tokens": 117,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427173-CAVmFgYDiTS9usegQUH1",
+    "created": 1788427173,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 115,
+      "total_tokens": 1650,
+      "cost": 0.0049875
+    }
+  }
+}

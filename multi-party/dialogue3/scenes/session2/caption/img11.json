@@ -1,0 +1,36 @@
+{
+  "id": "1212ec36-21bd-4bfd-9ff7-ede59f1a73dc",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:50.942369",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 362729,
+    "modified_time": "2026-08-23T22:07:18.854671"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person with short, blue-gray hair wearing a long brown coat, white shirt, and black tie, standing in an outdoor setting with rocky terrain and patches of green grass and flowers. The background features large rocks and a stone path, suggesting a natural, serene environment. The person's expression is neutral, and there is no visible text. The overall mood is calm and contemplative.",
+    "final_text": "The image depicts a person with short, blue-gray hair wearing a long brown coat, white shirt, and black tie, standing in an outdoor setting with rocky terrain and patches of green grass and flowers. The background features large rocks and a stone path, suggesting a natural, serene environment. The person's expression is neutral, and there is no visible text. The overall mood is calm and contemplative.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426708-Y3VZaia65w8MkzyGyrta",
+    "created": 1788426708,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 79,
+      "total_tokens": 934,
+      "cost": 0.0029275
+    }
+  }
+}

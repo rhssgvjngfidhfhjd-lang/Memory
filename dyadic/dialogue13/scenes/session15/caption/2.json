@@ -1,0 +1,36 @@
+{
+  "id": "0393be70-5ccb-49eb-87c0-93c4c5088178",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:33.920300",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session15/image/2.png",
+    "filename": "2.png",
+    "size": 2158574,
+    "modified_time": "2026-08-23T21:32:29.726872"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a warm and cheerful scene of four children sitting at a round table in a cafeteria, enjoying a meal together. Two children in the foreground, a girl in a blue hoodie and a boy in a yellow sweater, are using chopsticks to eat from bowls filled with colorful food, while a girl in a white sweater joyfully interacts with them. In the background, another child in an orange sweater is eating. The setting is bright and friendly, conveying a sense of companionship and joy. There is no visible text in the image.",
+    "final_text": "The image depicts a warm and cheerful scene of four children sitting at a round table in a cafeteria, enjoying a meal together. Two children in the foreground, a girl in a blue hoodie and a boy in a yellow sweater, are using chopsticks to eat from bowls filled with colorful food, while a girl in a white sweater joyfully interacts with them. In the background, another child in an orange sweater is eating. The setting is bright and friendly, conveying a sense of companionship and joy. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 109,
+      "final_tokens": 109,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426871-MZjXIHeiBrb99mU2Edza",
+    "created": 1788426871,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 109,
+      "total_tokens": 829,
+      "cost": 0.00289
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "03b94472-a268-434b-87d6-e594d9d88c93",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:10.372058",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 111123,
+    "modified_time": "2026-08-23T22:04:18.424416"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a heart rate graph over time, measured in beats per minute (bpm). The graph shows data points with a maximum heart rate of 158 bpm and an average of 143 bpm. Below the graph, there are categories indicating different heart rate zones, such as recovery and aerobic endurance, along with percentages and time spent in each zone. The majority of time, 79% or 01:15:36, is spent in the aerobic endurance zone (140-158 bpm). The mood is analytical, focusing on fitness tracking and performance analysis.",
+    "final_text": "The image displays a heart rate graph over time, measured in beats per minute (bpm). The graph shows data points with a maximum heart rate of 158 bpm and an average of 143 bpm. Below the graph, there are categories indicating different heart rate zones, such as recovery and aerobic endurance, along with percentages and time spent in each zone. The majority of time, 79% or 01:15:36, is spent in the aerobic endurance zone (140-158 bpm). The mood is analytical, focusing on fitness tracking and performance analysis.",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426610-hNP3ET2ohVjEOoj3N10w",
+    "created": 1788426610,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 113,
+      "total_tokens": 968,
+      "cost": 0.0032675
+    }
+  }
+}

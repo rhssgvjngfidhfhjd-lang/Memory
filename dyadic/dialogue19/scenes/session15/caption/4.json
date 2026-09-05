@@ -1,0 +1,36 @@
+{
+  "id": "474cc90c-03ee-4747-8271-2a984e4272ec",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:45.693751",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session15/image/4.png",
+    "filename": "4.png",
+    "size": 1220525,
+    "modified_time": "2026-08-23T21:38:34.000335"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a flowchart and a cycle diagram. The top section, titled \"休息+愉悦仪式流程链,\" outlines a sequence: 起身 (getting up), 冲泡饮品 (making a drink), 观赏窗外绿植 (viewing greenery outside the window), 远眺放松 (looking far to relax), and 回归工位 (returning to the workstation). The bottom section, labeled \"工作流交替循环图,\" features a cycle between two activities: 高强度精细屏幕工作 (intense detailed screen work) and 无屏幕思考手绘草图 (screen-free thinking and sketching). The overall atmosphere suggests a balanced work and relaxation routine.",
+    "final_text": "The image displays a flowchart and a cycle diagram. The top section, titled \"休息+愉悦仪式流程链,\" outlines a sequence: 起身 (getting up), 冲泡饮品 (making a drink), 观赏窗外绿植 (viewing greenery outside the window), 远眺放松 (looking far to relax), and 回归工位 (returning to the workstation). The bottom section, labeled \"工作流交替循环图,\" features a cycle between two activities: 高强度精细屏幕工作 (intense detailed screen work) and 无屏幕思考手绘草图 (screen-free thinking and sketching). The overall atmosphere suggests a balanced work and relaxation routine.",
+    "token_stats": {
+      "original_tokens": 186,
+      "final_tokens": 186,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427243-ab0UK70Trbq6SfLUAq8X",
+    "created": 1788427243,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 151,
+      "total_tokens": 1346,
+      "cost": 0.0044975
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "7dc0edfa-b7c7-4245-a597-bf53de2251dd",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:45.594996",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 549137,
+    "modified_time": "2026-08-23T21:49:48.148098"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a light blue background with large, stylized Chinese text in blue on the left, which reads \"告别诗\" (Farewell Poem). To the right, there is a paragraph in smaller Chinese text talking about feelings of nostalgia and change over time. A small illustration of flowers is present above the text. At the bottom, additional text in Chinese reads \"3男3女 | 4小时 | 新手 | 情感 | 校园\" indicating a theme involving three males, three females, four hours, beginners, emotions, and a school setting. The mood is reflective and nostalgic.",
+    "final_text": "The image features a light blue background with large, stylized Chinese text in blue on the left, which reads \"告别诗\" (Farewell Poem). To the right, there is a paragraph in smaller Chinese text talking about feelings of nostalgia and change over time. A small illustration of flowers is present above the text. At the bottom, additional text in Chinese reads \"3男3女 | 4小时 | 新手 | 情感 | 校园\" indicating a theme involving three males, three females, four hours, beginners, emotions, and a school setting. The mood is reflective and nostalgic.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427360-eM8Pgf8v0XIrxwwKwxvp",
+    "created": 1788427360,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 123,
+      "total_tokens": 1318,
+      "cost": 0.0042175
+    }
+  }
+}

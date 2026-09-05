@@ -1,0 +1,36 @@
+{
+  "id": "82c6da11-22d6-4d8a-b2e4-95bbfb25f967",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:46.172629",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 306054,
+    "modified_time": "2026-08-23T21:36:26.270585"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a comparison table with two main solutions: \"方案一: 保守信号重映射校准\" and \"方案二: AR视觉反馈系统（含伺服模块）\". Each solution has sections for core solutions, principles, main goals, potential advantages, and risks/challenges. Text discusses restoring chip signal functions, AR visual feedback, and enhancing user experience. The table is structured with bullet points and subheadings, conveying a technical and analytical atmosphere.",
+    "final_text": "The image is a comparison table with two main solutions: \"方案一: 保守信号重映射校准\" and \"方案二: AR视觉反馈系统（含伺服模块）\". Each solution has sections for core solutions, principles, main goals, potential advantages, and risks/challenges. Text discusses restoring chip signal functions, AR visual feedback, and enhancing user experience. The table is structured with bullet points and subheadings, conveying a technical and analytical atmosphere.",
+    "token_stats": {
+      "original_tokens": 112,
+      "final_tokens": 112,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427064-4liy66aQnCGE3mgyOa57",
+    "created": 1788427064,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 98,
+      "total_tokens": 953,
+      "cost": 0.0031175
+    }
+  }
+}

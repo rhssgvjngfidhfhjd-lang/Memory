@@ -1,0 +1,36 @@
+{
+  "id": "f9d0086c-556f-4652-97cd-33f0b9be6f50",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:27.716109",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session4/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 1524121,
+    "modified_time": "2026-08-23T21:30:40.237262"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a white cat with striking blue eyes sitting beside an open laptop on a wooden table. The laptop screen displays a blurred document, suggesting some work or browsing activity. Stacks of papers are visible around the laptop, indicating a work or study environment. The cat is calmly lying down, creating a relaxed and cozy atmosphere.",
+    "final_text": "The image shows a white cat with striking blue eyes sitting beside an open laptop on a wooden table. The laptop screen displays a blurred document, suggesting some work or browsing activity. Stacks of papers are visible around the laptop, indicating a work or study environment. The cat is calmly lying down, creating a relaxed and cozy atmosphere.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426567-Vw7o1aa5fKFUzEiMVqC2",
+    "created": 1788426567,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 66,
+      "total_tokens": 1261,
+      "cost": 0.0036475
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "643dedf8-fa25-4849-93fb-effbb025a61f",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:34.192334",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session4/image/6.png",
+    "filename": "6.png",
+    "size": 107842,
+    "modified_time": "2026-08-23T21:54:34.637637"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a tabby cat peering out from a circular opening in a wooden cat house. The house has a rustic design and is supported by sturdy legs. To the right, a sisal-wrapped post is adorned with climbing vines, adding an organic touch. The cat's expression is curious and attentive, creating a cozy and inviting atmosphere. There is no visible text in the image.",
+    "final_text": "The image depicts a tabby cat peering out from a circular opening in a wooden cat house. The house has a rustic design and is supported by sturdy legs. To the right, a sisal-wrapped post is adorned with climbing vines, adding an organic touch. The cat's expression is curious and attentive, creating a cozy and inviting atmosphere. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427414-bLzfLoQnqZQnbp5eYWqJ",
+    "created": 1788427414,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 80,
+      "total_tokens": 380,
+      "cost": 0.00155
+    }
+  }
+}

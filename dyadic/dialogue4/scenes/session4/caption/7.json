@@ -1,0 +1,36 @@
+{
+  "id": "d3b6fe47-fea3-4f6a-9c19-feab2bbec593",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:35.753485",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session4/image/7.png",
+    "filename": "7.png",
+    "size": 84571,
+    "modified_time": "2026-08-23T21:55:02.800380"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a fluffy, white and gray cat with blue eyes investigating a wooden cat house. The house has a circular entrance and is situated indoors near a window. The cat seems curious, sniffing the edge of the entrance. The atmosphere is calm and domestic, suggesting a cozy setting. There is no visible text in the image.",
+    "final_text": "The image depicts a fluffy, white and gray cat with blue eyes investigating a wooden cat house. The house has a circular entrance and is situated indoors near a window. The cat seems curious, sniffing the edge of the entrance. The atmosphere is calm and domestic, suggesting a cozy setting. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427415-K9KmeLtC2nWM4IB3u4EX",
+    "created": 1788427415,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 68,
+      "total_tokens": 368,
+      "cost": 0.00143
+    }
+  }
+}

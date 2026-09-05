@@ -1,0 +1,36 @@
+{
+  "id": "a1d124b8-a546-40ca-be4d-ce38bd7f96ad",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:36.431897",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session12/image/1.png",
+    "filename": "1.png",
+    "size": 3552760,
+    "modified_time": "2026-08-23T21:34:39.810318"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains two line graphs analyzing training data over the past 8 weeks. The top graph shows completion rates, perceived exertion (RPE), and ACWR with regions labeled as ideal, borderline, and high risk. The bottom graph suggests training intensity with annotations for recovery periods. Text highlights modeling recommendations, personalized advantages, and risk prevention. The overall mood is analytical and data-driven, focusing on optimizing training strategies.",
+    "final_text": "The image contains two line graphs analyzing training data over the past 8 weeks. The top graph shows completion rates, perceived exertion (RPE), and ACWR with regions labeled as ideal, borderline, and high risk. The bottom graph suggests training intensity with annotations for recovery periods. Text highlights modeling recommendations, personalized advantages, and risk prevention. The overall mood is analytical and data-driven, focusing on optimizing training strategies.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426993-qpLhhxHnaCdTLFBSXpCZ",
+    "created": 1788426993,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 84,
+      "total_tokens": 1279,
+      "cost": 0.0038275
+    }
+  }
+}

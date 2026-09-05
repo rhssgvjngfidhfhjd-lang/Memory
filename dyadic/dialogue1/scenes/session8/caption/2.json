@@ -1,0 +1,36 @@
+{
+  "id": "800933e8-7ea5-4ba0-a34c-16956b864abd",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:41.956257",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 307055,
+    "modified_time": "2026-08-23T21:30:09.154612"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image showcases a promotional display for an Adidas running shoe, specifically the DURAMO SL2 M model. The shoe, primarily white with blue stripes, is prominently featured against an urban backdrop. The scene includes a price promotion with text indicating a discounted price of 279, down from 352, with additional savings details. Various text elements describe the product's features, such as breathability and comfort. The overall atmosphere is commercial and informative, aimed at enticing potential buyers with visual and textual details about the shoe.",
+    "final_text": "The image showcases a promotional display for an Adidas running shoe, specifically the DURAMO SL2 M model. The shoe, primarily white with blue stripes, is prominently featured against an urban backdrop. The scene includes a price promotion with text indicating a discounted price of 279, down from 352, with additional savings details. Various text elements describe the product's features, such as breathability and comfort. The overall atmosphere is commercial and informative, aimed at enticing potential buyers with visual and textual details about the shoe.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426520-8bwWkSJD0z9vEpfGzPbY",
+    "created": 1788426520,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 103,
+      "total_tokens": 618,
+      "cost": 0.0023175
+    }
+  }
+}

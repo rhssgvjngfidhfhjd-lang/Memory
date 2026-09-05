@@ -1,0 +1,36 @@
+{
+  "id": "d8cef94e-e990-465c-b3f4-4e34d37815d5",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:49.894607",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session1/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 54304,
+    "modified_time": "2026-08-23T21:34:49.954509"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant art studio, with a focus on a table cluttered with paint-covered jars, brushes, and a palette. Various colors are splattered across the surface, suggesting recent use. In the background, blurred canvases and more art supplies are visible, bathed in warm, natural light from large windows. The scene conveys a creative and lively atmosphere, indicative of an active artist's workspace.",
+    "final_text": "The image depicts a vibrant art studio, with a focus on a table cluttered with paint-covered jars, brushes, and a palette. Various colors are splattered across the surface, suggesting recent use. In the background, blurred canvases and more art supplies are visible, bathed in warm, natural light from large windows. The scene conveys a creative and lively atmosphere, indicative of an active artist's workspace.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427008-zyOpr6PH2YQ2mMN69D6c",
+    "created": 1788427008,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 82,
+      "total_tokens": 597,
+      "cost": 0.0021075
+    }
+  }
+}

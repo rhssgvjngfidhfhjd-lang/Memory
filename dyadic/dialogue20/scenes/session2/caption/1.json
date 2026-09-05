@@ -1,0 +1,36 @@
+{
+  "id": "837c1174-9cbf-4864-8f79-68cb8e5f803c",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:34.731015",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 78920,
+    "modified_time": "2026-08-23T21:49:26.367049"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a detailed itinerary for a community event titled \"Neighborhood Shared New Year’s Eve Dinner\" or \"贺岁活动流程清单.\" It outlines the schedule from 18:00 to 20:00, divided into sections for opening, group dining, activities, and closing. Key elements include:\n\n1. **Opening (18:00-18:15):** Introduction by the host, highlighting the theme of sharing and starting the dinner.\n2. **Group Dining and Activities (18:15-19:30):** Features free dining, community interactions, and activities like \"Home Cooking Voting,\" \"New Year Wishes,\" and \"Lucky Draw.\"\n3. **Group Entertainment (19:30-20:00):** Includes performances such as singing, dancing, and poetry recitation by children.\n4. **Closing (20:00):** Emphasizes community sharing and concludes with thanks and goodbyes.\n\nThe atmosphere is festive and communal, focusing on sharing, interaction, and entertainment.",
+    "final_text": "The image is a detailed itinerary for a community event titled \"Neighborhood Shared New Year’s Eve Dinner\" or \"贺岁活动流程清单.\" It outlines the schedule from 18:00 to 20:00, divided into sections for opening, group dining, activities, and closing. Key elements include:\n\n1. **Opening (18:00-18:15):** Introduction by the host, highlighting the theme of sharing and starting the dinner.\n2. **Group Dining and Activities (18:15-19:30):** Features free dining, community interactions, and activities like \"Home Cooking Voting,\" \"New Year Wishes,\" and \"Lucky Draw.\"\n3. **Group Entertainment (19:30-20:00):** Includes performances such as singing, dancing, and poetry recitation by children.\n4. **Closing (20:00):** Emphasizes community sharing and concludes with thanks and goodbyes.\n\nThe atmosphere is festive and communal, focusing on sharing, interaction, and entertainment.",
+    "token_stats": {
+      "original_tokens": 209,
+      "final_tokens": 209,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427290-RYb8CtNV7tClLvIAeE8v",
+    "created": 1788427290,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 204,
+      "total_tokens": 1059,
+      "cost": 0.0041775
+    }
+  }
+}

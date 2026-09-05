@@ -1,0 +1,36 @@
+{
+  "id": "5a17c400-4c6f-4222-b1db-3c724b443139",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:54.077810",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 1215833,
+    "modified_time": "2026-08-23T21:34:24.738774"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two video game controllers placed on a white surface. The foreground shows a blue controller with a soccer field graphic on its touchpad, alongside visible buttons labeled \"OPTIONS\" and \"SHARE.\" In the background, there is a red controller. The scene is bright and minimalistic, suggesting a relaxed and casual gaming atmosphere. No interactions are visible, and the focus is on the controllers themselves.",
+    "final_text": "The image features two video game controllers placed on a white surface. The foreground shows a blue controller with a soccer field graphic on its touchpad, alongside visible buttons labeled \"OPTIONS\" and \"SHARE.\" In the background, there is a red controller. The scene is bright and minimalistic, suggesting a relaxed and casual gaming atmosphere. No interactions are visible, and the focus is on the controllers themselves.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426891-V50Lj13xRp0WrNjZKWDq",
+    "created": 1788426891,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 82,
+      "total_tokens": 1080,
+      "cost": 0.003315
+    }
+  }
+}

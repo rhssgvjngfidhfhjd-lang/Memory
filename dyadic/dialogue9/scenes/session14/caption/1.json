@@ -1,0 +1,36 @@
+{
+  "id": "5ae8df4f-5360-470b-be0f-622e7ac23027",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:42.575920",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session14/image/1.png",
+    "filename": "1.png",
+    "size": 1330173,
+    "modified_time": "2026-08-23T21:59:44.454811"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a scene with a bicycle pump, a first aid cabinet, and a toolbox against a yellow wall. The first aid cabinet contains various medical supplies, such as bandages and medicine, with a red cross symbol on the front. The open toolbox reveals tools including wrenches, pliers, and screwdrivers. The overall atmosphere is organized and practical, suggesting readiness for emergencies or repairs.",
+    "final_text": "The image depicts a scene with a bicycle pump, a first aid cabinet, and a toolbox against a yellow wall. The first aid cabinet contains various medical supplies, such as bandages and medicine, with a red cross symbol on the front. The open toolbox reveals tools including wrenches, pliers, and screwdrivers. The overall atmosphere is organized and practical, suggesting readiness for emergencies or repairs.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427780-a2EugLtikE9OjU3pvfDO",
+    "created": 1788427780,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 80,
+      "total_tokens": 935,
+      "cost": 0.0029375
+    }
+  }
+}

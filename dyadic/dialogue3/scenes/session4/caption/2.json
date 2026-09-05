@@ -1,0 +1,36 @@
+{
+  "id": "0afb89a4-0830-42e0-9e18-1f3be0f3d539",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:23.093786",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 621407,
+    "modified_time": "2026-08-23T21:46:32.256948"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a serene outdoor scene with a Shiba Inu dog lying playfully on its back in the grass. A person is nearby, smiling warmly at the dog. The sunlit atmosphere creates a warm and joyful mood, highlighting the playful interaction between the person and the dog. There is no visible text in the image.",
+    "final_text": "The image depicts a serene outdoor scene with a Shiba Inu dog lying playfully on its back in the grass. A person is nearby, smiling warmly at the dog. The sunlit atmosphere creates a warm and joyful mood, highlighting the playful interaction between the person and the dog. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427343-TnXA93eHumqiVNptxtRo",
+    "created": 1788427343,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 65,
+      "total_tokens": 920,
+      "cost": 0.0027875
+    }
+  }
+}

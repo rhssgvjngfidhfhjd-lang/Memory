@@ -1,0 +1,36 @@
+{
+  "id": "46e18ec7-7c6f-452c-892d-519d756d5fee",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:35.273174",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session13/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 230296,
+    "modified_time": "2026-08-23T21:32:59.367815"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a comparison chart between two laptops: Lenovo L13 Generation 4 and Dell Latitude 3440. Each section lists specifications such as price, processor, RAM, storage, wireless capabilities, screen size, video card, battery, weight, and operating system. The Lenovo is priced at $949 with a 13.3\" screen, while the Dell is $1,069 with a 14\" screen. Both have a 13th Gen Intel Core i5-1335U processor and 8GB RAM. The mood is informative, designed to help users compare features and specifications.",
+    "final_text": "The image is a comparison chart between two laptops: Lenovo L13 Generation 4 and Dell Latitude 3440. Each section lists specifications such as price, processor, RAM, storage, wireless capabilities, screen size, video card, battery, weight, and operating system. The Lenovo is priced at $949 with a 13.3\" screen, while the Dell is $1,069 with a 14\" screen. Both have a 13th Gen Intel Core i5-1335U processor and 8GB RAM. The mood is informative, designed to help users compare features and specifications.",
+    "token_stats": {
+      "original_tokens": 121,
+      "final_tokens": 121,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426935-0K561WPNeViabuqzhtVi",
+    "created": 1788426935,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 121,
+      "total_tokens": 976,
+      "cost": 0.0033475
+    }
+  }
+}

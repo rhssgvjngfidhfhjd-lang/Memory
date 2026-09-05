@@ -1,0 +1,36 @@
+{
+  "id": "177917ad-1113-45f9-8800-51252bc972c6",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:37.608805",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 511786,
+    "modified_time": "2026-08-23T22:03:18.176718"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts the exterior of a warmly lit restaurant with traditional architectural elements. Red lanterns hang from the eaves, casting a cozy glow. Visible text in Chinese characters adorns the sign above the entrance. Inside, patrons are seated at wooden tables, suggesting a lively yet intimate dining atmosphere. Outside, a few pedestrians walk along the wet pavement, indicating recent rain. The overall mood is inviting and vibrant, blending traditional aesthetics with modern urban life.",
+    "final_text": "The image depicts the exterior of a warmly lit restaurant with traditional architectural elements. Red lanterns hang from the eaves, casting a cozy glow. Visible text in Chinese characters adorns the sign above the entrance. Inside, patrons are seated at wooden tables, suggesting a lively yet intimate dining atmosphere. Outside, a few pedestrians walk along the wet pavement, indicating recent rain. The overall mood is inviting and vibrant, blending traditional aesthetics with modern urban life.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426577-5sN2Lrg1pD9aLBn2DrKX",
+    "created": 1788426577,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 90,
+      "total_tokens": 1285,
+      "cost": 0.0038875
+    }
+  }
+}

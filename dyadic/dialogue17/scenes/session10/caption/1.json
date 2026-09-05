@@ -1,0 +1,36 @@
+{
+  "id": "78ac7909-02f6-4660-bbbe-3fb7a6012e8a",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:16.269910",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 2833387,
+    "modified_time": "2026-08-23T21:36:10.378896"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a digital art scene with a luminous, ethereal jellyfish floating in a dark room, its tentacles radiating colorful light. Visible text in Chinese characters reads \"数字生灵\" at the top and more text at the bottom. The atmosphere is mystical and futuristic, with shadows cast on the walls adding depth and intrigue.",
+    "final_text": "The image features a digital art scene with a luminous, ethereal jellyfish floating in a dark room, its tentacles radiating colorful light. Visible text in Chinese characters reads \"数字生灵\" at the top and more text at the bottom. The atmosphere is mystical and futuristic, with shadows cast on the walls adding depth and intrigue.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427093-unryKMlFSr2b7fBYZb9F",
+    "created": 1788427093,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 68,
+      "total_tokens": 1263,
+      "cost": 0.0036675
+    }
+  }
+}

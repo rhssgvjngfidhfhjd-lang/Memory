@@ -1,0 +1,36 @@
+{
+  "id": "4ecb6b28-741e-41f0-9701-355f28a4a75a",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:01.235569",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session12/image/3.png",
+    "filename": "3.png",
+    "size": 232876,
+    "modified_time": "2026-08-23T21:44:56.978035"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a cute, cartoon-style Shiba Inu with a round face, large black eyes, and a small pink tongue sticking out. The dog is wearing a white bandana adorned with repeated images of its own face. The overall mood is cheerful and playful.",
+    "final_text": "The image features a cute, cartoon-style Shiba Inu with a round face, large black eyes, and a small pink tongue sticking out. The dog is wearing a white bandana adorned with repeated images of its own face. The overall mood is cheerful and playful.",
+    "token_stats": {
+      "original_tokens": 54,
+      "final_tokens": 54,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427381-zLtjZB7nKdEA5tYplipf",
+    "created": 1788427381,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 53,
+      "total_tokens": 398,
+      "cost": 0.0013925
+    }
+  }
+}

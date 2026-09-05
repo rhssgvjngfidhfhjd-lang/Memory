@@ -1,0 +1,36 @@
+{
+  "id": "e0b3ab0e-e8cb-4f84-9f7e-128dbae6e85f",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:49.862890",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session4/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 294649,
+    "modified_time": "2026-08-23T22:09:51.539895"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a nighttime cityscape viewed through a window, showcasing tall, illuminated skyscrapers and a busy street lined with cars. The buildings are adorned with bright lights, contributing to a vibrant urban atmosphere. Reflections on the glass suggest an indoor setting. The overall mood is lively and bustling, typical of a modern city at night.",
+    "final_text": "The image depicts a nighttime cityscape viewed through a window, showcasing tall, illuminated skyscrapers and a busy street lined with cars. The buildings are adorned with bright lights, contributing to a vibrant urban atmosphere. Reflections on the glass suggest an indoor setting. The overall mood is lively and bustling, typical of a modern city at night.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426888-gsOvaTitHG6XaLGnSGRV",
+    "created": 1788426888,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 67,
+      "total_tokens": 922,
+      "cost": 0.0028075
+    }
+  }
+}

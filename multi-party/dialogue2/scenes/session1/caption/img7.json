@@ -1,0 +1,36 @@
+{
+  "id": "d9b98b33-7815-4bb8-b5f0-c2021b8a35ae",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:14.159480",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 144959,
+    "modified_time": "2026-08-23T22:04:25.366315"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a sunny day at a sports complex featuring a green soccer field and a red running track. A goalpost is visible on the field. The sky is clear with a bright sun overhead. In the background, there are several buildings, including a tall structure with glass windows. The atmosphere is bright and peaceful, indicative of a clear day.",
+    "final_text": "The image depicts a sunny day at a sports complex featuring a green soccer field and a red running track. A goalpost is visible on the field. The sky is clear with a bright sun overhead. In the background, there are several buildings, including a tall structure with glass windows. The atmosphere is bright and peaceful, indicative of a clear day.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426614-QYslARjJHrEWU2Dt7bEo",
+    "created": 1788426614,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 70,
+      "total_tokens": 925,
+      "cost": 0.0028375
+    }
+  }
+}

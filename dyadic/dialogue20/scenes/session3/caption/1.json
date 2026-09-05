@@ -1,0 +1,36 @@
+{
+  "id": "aeffdf1d-4fef-4b45-9948-b85484bc68a8",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:40.014669",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 950833,
+    "modified_time": "2026-08-23T21:42:12.469766"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a group of people sitting around a long table laden with various Chinese dishes, including dumplings, fish, and meat dishes. The setting appears to be a community center, as indicated by the visible text in the background, \"社区活动中心\" (Community Activity Center). The individuals are engaged in conversation, creating a warm and communal atmosphere. The mood is friendly and inviting, suggesting a gathering or celebration.",
+    "final_text": "The image depicts a group of people sitting around a long table laden with various Chinese dishes, including dumplings, fish, and meat dishes. The setting appears to be a community center, as indicated by the visible text in the background, \"社区活动中心\" (Community Activity Center). The individuals are engaged in conversation, creating a warm and communal atmosphere. The mood is friendly and inviting, suggesting a gathering or celebration.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427297-q4bwMARdJyKPm9RM2g41",
+    "created": 1788427297,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 84,
+      "total_tokens": 939,
+      "cost": 0.0029775
+    }
+  }
+}

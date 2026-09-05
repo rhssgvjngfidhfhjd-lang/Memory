@@ -1,0 +1,36 @@
+{
+  "id": "b15323fb-7861-4691-a941-7035e4fcd540",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:52.748099",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 165367,
+    "modified_time": "2026-08-23T21:58:12.015398"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an informative poster titled \"家的情感地理学理论\" (The Emotional Geography Theory of Home). It features three main points, each with an icon: a calendar for daily routines, a nose for familiar scents, and a person with a dog representing social connections. At the bottom, there's a house with a rainbow inside, symbolizing the emotional space of a home. The text discusses the importance of habitual practices, scent memories, and stable social relationships in creating a home. The overall mood is educational and reflective.",
+    "final_text": "The image is an informative poster titled \"家的情感地理学理论\" (The Emotional Geography Theory of Home). It features three main points, each with an icon: a calendar for daily routines, a nose for familiar scents, and a person with a dog representing social connections. At the bottom, there's a house with a rainbow inside, symbolizing the emotional space of a home. The text discusses the importance of habitual practices, scent memories, and stable social relationships in creating a home. The overall mood is educational and reflective.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427670-BTb9FyTqblc7xKoPDlQD",
+    "created": 1788427670,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 108,
+      "total_tokens": 408,
+      "cost": 0.00183
+    }
+  }
+}

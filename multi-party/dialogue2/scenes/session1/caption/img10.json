@@ -1,0 +1,36 @@
+{
+  "id": "c8b8a714-0266-4932-9f67-ccfd363b31bb",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:17.164613",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 341386,
+    "modified_time": "2026-08-23T22:04:15.370151"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image showcases a vibrant red running shoe prominently displayed against a dramatic, foggy background with bright lights in the distance. The shoe features sleek design elements with visible text on the sole reading \"HYPERLOCK.\" The atmosphere is energetic and dynamic, suggesting speed and performance. At the bottom of the image is the text \"COPYRIGHT©CARTERLIAN.ALL RIGHT RESERVED.\"",
+    "final_text": "The image showcases a vibrant red running shoe prominently displayed against a dramatic, foggy background with bright lights in the distance. The shoe features sleek design elements with visible text on the sole reading \"HYPERLOCK.\" The atmosphere is energetic and dynamic, suggesting speed and performance. At the bottom of the image is the text \"COPYRIGHT©CARTERLIAN.ALL RIGHT RESERVED.\"",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426617-MB1wiWafU79v7OO6WYoh",
+    "created": 1788426617,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 77,
+      "total_tokens": 1272,
+      "cost": 0.0037575
+    }
+  }
+}

@@ -1,0 +1,21 @@
+The image is a recommendation chart divided into three sections. 
+
+1. **Recommended Purchases** (green section) includes:
+   - Sugar-free yogurt: 12 yuan
+   - Whole wheat bread: 8 yuan
+   - Fresh fruits: 6 yuan
+   - Mixed nuts: 25 yuan
+   - Low-sodium cookies: 15 yuan
+
+2. **Economic Optimization Suggestions** (yellow section) includes:
+   - Bulk purchase discount: 15%
+   - Store brand selection savings: 20%
+   - Seasonal fruit price fluctuations
+
+3. **Cautious Purchases** (red section) includes:
+   - Sugary yogurt: 10 yuan
+   - Sweet cookies: 12 yuan
+   - Processed foods: 18 yuan
+   - Sugary drinks: 5 yuan
+
+The overall mood is informative, aimed at guiding purchasing decisions with a focus on health and economy.

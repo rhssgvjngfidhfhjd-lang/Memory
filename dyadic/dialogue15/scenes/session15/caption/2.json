@@ -1,0 +1,36 @@
+{
+  "id": "d2a2c5d9-817e-44ef-a993-f290267754f1",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:44.932672",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session15/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 141083,
+    "modified_time": "2026-08-23T21:34:22.393491"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a checkout page for purchasing a \"Santa Cruz Chameleon XT XC\" bicycle priced at $2,600.99. It includes a shipping address form with fields for first name, last name, email, phone, and address details. The summary section shows a subtotal of $2,600.99, shipping cost of $0.00, tax of $260.10, and a total of $2,861.09. There is an option to enter a coupon code and a \"Next\" button for proceeding. The overall mood is transactional and organized.",
+    "final_text": "The image displays a checkout page for purchasing a \"Santa Cruz Chameleon XT XC\" bicycle priced at $2,600.99. It includes a shipping address form with fields for first name, last name, email, phone, and address details. The summary section shows a subtotal of $2,600.99, shipping cost of $0.00, tax of $260.10, and a total of $2,861.09. There is an option to enter a coupon code and a \"Next\" button for proceeding. The overall mood is transactional and organized.",
+    "token_stats": {
+      "original_tokens": 117,
+      "final_tokens": 117,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427004-ZcGPVYskNrof3eDDnlMq",
+    "created": 1788427004,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 116,
+      "total_tokens": 1311,
+      "cost": 0.0041475
+    }
+  }
+}

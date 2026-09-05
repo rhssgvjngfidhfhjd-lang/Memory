@@ -1,0 +1,36 @@
+{
+  "id": "c689c475-2ae9-4a32-8ca3-1b2ff7384379",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:10.889049",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 5649635,
+    "modified_time": "2026-08-23T21:37:00.190608"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic cityscape at night, illuminated by vibrant blue and purple neon lights. Skyscrapers dominate the scene, with a flying vehicle hovering above, emitting a beam of light onto a building. Holographic elements, including an \"AR\" display, are visible. The atmosphere is advanced and technological. The text \"参赛者: 柯博文\" is prominently displayed in the foreground.",
+    "final_text": "The image depicts a futuristic cityscape at night, illuminated by vibrant blue and purple neon lights. Skyscrapers dominate the scene, with a flying vehicle hovering above, emitting a beam of light onto a building. Holographic elements, including an \"AR\" display, are visible. The atmosphere is advanced and technological. The text \"参赛者: 柯博文\" is prominently displayed in the foreground.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427089-tjskGkwbbYXR1bdGcpGb",
+    "created": 1788427089,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 83,
+      "total_tokens": 1618,
+      "cost": 0.0046675
+    }
+  }
+}

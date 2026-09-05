@@ -1,0 +1,36 @@
+{
+  "id": "f5b2786a-4ebc-48ee-80a9-8647c1feffe6",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:20.883927",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 563713,
+    "modified_time": "2026-08-23T21:55:09.275317"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a colorful, hand-drawn illustration of a family portrait displayed in a wooden frame. It features a smiling man, woman, and a young girl standing together. The man wears a blue shirt and dark pants, the woman wears a yellow dress, and the girl is in a pink dress with pigtails. Beside them sits a gray and white cat. The background is decorated with multicolored crayon-like strokes. The mood is cheerful and warm, emphasizing family togetherness. No visible text is present.",
+    "final_text": "The image is a colorful, hand-drawn illustration of a family portrait displayed in a wooden frame. It features a smiling man, woman, and a young girl standing together. The man wears a blue shirt and dark pants, the woman wears a yellow dress, and the girl is in a pink dress with pigtails. Beside them sits a gray and white cat. The background is decorated with multicolored crayon-like strokes. The mood is cheerful and warm, emphasizing family togetherness. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427518-Aw6AaI4ZRbY9idKLDQYw",
+    "created": 1788427518,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 107,
+      "total_tokens": 824,
+      "cost": 0.0028625
+    }
+  }
+}

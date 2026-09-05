@@ -1,0 +1,36 @@
+{
+  "id": "ed40fbea-1b16-4633-9209-085ae4c7ddc0",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:08.541451",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session11/image/5.png",
+    "filename": "5.png",
+    "size": 125486,
+    "modified_time": "2026-08-23T21:54:02.763214"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two glass bowls filled with rising dough, marked with measurement lines. The top bowl displays dough being pulled with a spoon, illustrating its texture. The visible text provides information about dough fermentation and factors like temperature and volume increase. Inset images highlight the dough’s texture and a close-up of its surface. The overall mood is instructional and informative, focusing on baking techniques.",
+    "final_text": "The image shows two glass bowls filled with rising dough, marked with measurement lines. The top bowl displays dough being pulled with a spoon, illustrating its texture. The visible text provides information about dough fermentation and factors like temperature and volume increase. Inset images highlight the dough’s texture and a close-up of its surface. The overall mood is instructional and informative, focusing on baking techniques.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427448-r0CB3RODHjUA0Th9q8AC",
+    "created": 1788427448,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 76,
+      "total_tokens": 421,
+      "cost": 0.0016225
+    }
+  }
+}

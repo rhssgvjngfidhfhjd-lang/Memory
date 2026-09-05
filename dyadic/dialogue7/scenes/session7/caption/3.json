@@ -1,0 +1,36 @@
+{
+  "id": "a9fc3879-c3d3-43bc-99c8-a50c192368c2",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:57.486523",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 542349,
+    "modified_time": "2026-08-23T21:57:13.330083"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic comparing the monthly costs of traditional and healthy diets. It lists traditional diet expenses as 395 yuan, including sugary snacks (120 yuan), sugary drinks (45 yuan), refined grains (80 yuan), and processed meats (150 yuan). The healthy diet costs 750 yuan, including fresh fruits (200 yuan), sugar-free drinks (180 yuan), and quality protein (250 yuan). Optimization strategies are highlighted with savings from bulk purchasing (25%), choosing seasonal fruits (30%), using store brands (20%), and homemade snacks (40%). The final optimized healthy diet cost is 520 yuan, only 125 yuan more than the traditional diet. The mood is informative and encouraging.",
+    "final_text": "The image is an infographic comparing the monthly costs of traditional and healthy diets. It lists traditional diet expenses as 395 yuan, including sugary snacks (120 yuan), sugary drinks (45 yuan), refined grains (80 yuan), and processed meats (150 yuan). The healthy diet costs 750 yuan, including fresh fruits (200 yuan), sugar-free drinks (180 yuan), and quality protein (250 yuan). Optimization strategies are highlighted with savings from bulk purchasing (25%), choosing seasonal fruits (30%), using store brands (20%), and homemade snacks (40%). The final optimized healthy diet cost is 520 yuan, only 125 yuan more than the traditional diet. The mood is informative and encouraging.",
+    "token_stats": {
+      "original_tokens": 140,
+      "final_tokens": 140,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427615-NjIumGrfSyQFQ0aLtp84",
+    "created": 1788427615,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 139,
+      "total_tokens": 578,
+      "cost": 0.0024875
+    }
+  }
+}

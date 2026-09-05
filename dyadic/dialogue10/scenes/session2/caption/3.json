@@ -1,0 +1,36 @@
+{
+  "id": "6fcbf984-71b5-40f2-b5bb-47129673fcc9",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:14.688391",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session2/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 390451,
+    "modified_time": "2026-08-23T21:30:21.548410"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vintage turntable with a wooden finish. The turntable's platter is prominently shown, with the tonearm resting to the side. The atmosphere is nostalgic and tranquil, with soft lighting highlighting the details of the device. No visible text is present.",
+    "final_text": "The image depicts a vintage turntable with a wooden finish. The turntable's platter is prominently shown, with the tonearm resting to the side. The atmosphere is nostalgic and tranquil, with soft lighting highlighting the details of the device. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 54,
+      "final_tokens": 54,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426552-tI5Scnm3OWYZwaQ59c7n",
+    "created": 1788426552,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 53,
+      "total_tokens": 1248,
+      "cost": 0.0035175
+    }
+  }
+}

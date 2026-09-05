@@ -1,0 +1,36 @@
+{
+  "id": "87be1f94-5e87-40b8-aa93-07dad0952f7a",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:50.208223",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session16/image/3.png",
+    "filename": "3.png",
+    "size": 1360841,
+    "modified_time": "2026-08-23T22:00:42.485955"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic with a network diagram set against a red gradient background. It features interconnected blue circles with Chinese text: \"居民服务\" (Community Services), \"物资共享\" (Resource Sharing), \"志愿活动\" (Volunteer Activities), and \"应急支援\" (Emergency Support). The top text reads \"2025年社区互助网络蓝图\" (2025 Community Mutual Aid Network Blueprint) and \"新年第一天·共建美好家园\" (First Day of the New Year · Building a Better Home Together). Fireworks and lanterns add a festive atmosphere.",
+    "final_text": "The image is an infographic with a network diagram set against a red gradient background. It features interconnected blue circles with Chinese text: \"居民服务\" (Community Services), \"物资共享\" (Resource Sharing), \"志愿活动\" (Volunteer Activities), and \"应急支援\" (Emergency Support). The top text reads \"2025年社区互助网络蓝图\" (2025 Community Mutual Aid Network Blueprint) and \"新年第一天·共建美好家园\" (First Day of the New Year · Building a Better Home Together). Fireworks and lanterns add a festive atmosphere.",
+    "token_stats": {
+      "original_tokens": 139,
+      "final_tokens": 139,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427788-Ml6Z6KPAYsv8MEjlHOG1",
+    "created": 1788427788,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 124,
+      "total_tokens": 1319,
+      "cost": 0.0042275
+    }
+  }
+}

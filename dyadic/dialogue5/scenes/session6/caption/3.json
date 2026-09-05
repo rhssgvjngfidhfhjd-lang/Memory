@@ -1,0 +1,36 @@
+{
+  "id": "6e36c9a6-a46d-45fa-a66f-25120e777215",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:54.412154",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 674258,
+    "modified_time": "2026-08-23T21:55:23.108882"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a comparison between cat foods for adult and senior cats. There are three packages of pet food displayed: one orange package featuring a cat, another pink package with a different cat, and a turquoise package with a dog. The visible text in Chinese compares nutritional aspects such as protein levels, digestion difficulty, and kidney load between adult and senior cat food. The mood is informative, aiming to guide pet owners in choosing the right food for their pets based on their age and dietary needs.",
+    "final_text": "The image depicts a comparison between cat foods for adult and senior cats. There are three packages of pet food displayed: one orange package featuring a cat, another pink package with a different cat, and a turquoise package with a dog. The visible text in Chinese compares nutritional aspects such as protein levels, digestion difficulty, and kidney load between adult and senior cat food. The mood is informative, aiming to guide pet owners in choosing the right food for their pets based on their age and dietary needs.",
+    "token_stats": {
+      "original_tokens": 98,
+      "final_tokens": 98,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427491-DQ5SyE4secRGZQXCbLuQ",
+    "created": 1788427491,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 99,
+      "total_tokens": 816,
+      "cost": 0.0027825
+    }
+  }
+}

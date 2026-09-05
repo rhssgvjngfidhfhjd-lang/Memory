@@ -1,0 +1,36 @@
+{
+  "id": "b7112dd6-ffe4-462d-91e9-232429b6f82a",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:50.701654",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 423360,
+    "modified_time": "2026-08-23T21:32:42.383664"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows five colorful crayons arranged side by side on a white surface. Each crayon features a gradient of colors, transitioning from one hue to another, and has the word \"Crayon\" written on it in white text. The scene is bright and vibrant, evoking a playful and creative atmosphere.",
+    "final_text": "The image shows five colorful crayons arranged side by side on a white surface. Each crayon features a gradient of colors, transitioning from one hue to another, and has the word \"Crayon\" written on it in white text. The scene is bright and vibrant, evoking a playful and creative atmosphere.",
+    "token_stats": {
+      "original_tokens": 63,
+      "final_tokens": 63,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426830-LiGbCfiEq7hkZuZe5j40",
+    "created": 1788426830,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 61,
+      "total_tokens": 916,
+      "cost": 0.0027475
+    }
+  }
+}

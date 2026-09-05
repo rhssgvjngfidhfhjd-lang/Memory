@@ -1,0 +1,36 @@
+{
+  "id": "a1ffbe25-99d7-4a62-9f71-121560cbc5cf",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:58.964151",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session1/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 283808,
+    "modified_time": "2026-08-23T22:09:27.874619"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a stunning winter landscape featuring a vast snow-covered terrain surrounded by rugged mountains. The sky is a vibrant blue with scattered clouds, creating a serene and expansive atmosphere. The scene is devoid of any visible text, people, animals, or actions, focusing purely on the natural beauty. The mood is tranquil and awe-inspiring, capturing the majesty and solitude of the snowy mountainscape.",
+    "final_text": "The image depicts a stunning winter landscape featuring a vast snow-covered terrain surrounded by rugged mountains. The sky is a vibrant blue with scattered clouds, creating a serene and expansive atmosphere. The scene is devoid of any visible text, people, animals, or actions, focusing purely on the natural beauty. The mood is tranquil and awe-inspiring, capturing the majesty and solitude of the snowy mountainscape.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426838-BpoCp6fblBq52Vk6LO5d",
+    "created": 1788426838,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 80,
+      "total_tokens": 800,
+      "cost": 0.0026
+    }
+  }
+}

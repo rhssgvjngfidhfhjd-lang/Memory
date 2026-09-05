@@ -1,0 +1,36 @@
+{
+  "id": "006796ef-b198-48d9-9c0f-9c4b3bafd930",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:34.107116",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 1063489,
+    "modified_time": "2026-08-23T21:47:32.155638"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a cozy indoor café setting with a playful atmosphere. A Shiba Inu dog is standing with its tongue out, looking at a relaxed Ragdoll cat lying on the floor. In the background, there are wooden chairs and tables, with a cup of coffee placed on a table. Warm lighting adds to the inviting ambiance, creating a friendly and peaceful scene.",
+    "final_text": "The image shows a cozy indoor café setting with a playful atmosphere. A Shiba Inu dog is standing with its tongue out, looking at a relaxed Ragdoll cat lying on the floor. In the background, there are wooden chairs and tables, with a cup of coffee placed on a table. Warm lighting adds to the inviting ambiance, creating a friendly and peaceful scene.",
+    "token_stats": {
+      "original_tokens": 74,
+      "final_tokens": 74,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427352-8xXjFbZwREUcII0ndtwH",
+    "created": 1788427352,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 74,
+      "total_tokens": 929,
+      "cost": 0.0028775
+    }
+  }
+}

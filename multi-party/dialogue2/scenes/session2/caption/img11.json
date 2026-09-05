@@ -1,0 +1,36 @@
+{
+  "id": "b9115c3e-1fa2-4493-92c5-45ed9d8a6af0",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:37.021287",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 267605,
+    "modified_time": "2026-08-23T22:04:34.749162"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a white Nike sneaker displayed in a clear acrylic case on a wooden surface. The sneaker has a black Nike swoosh and additional design elements on the side. The base of the case displays the text \"Carlos Alcaraz.\" The setting suggests a clean, modern environment with light-colored walls and curtains. The overall atmosphere is polished and professional, highlighting the shoe as a special or commemorative item.",
+    "final_text": "The image features a white Nike sneaker displayed in a clear acrylic case on a wooden surface. The sneaker has a black Nike swoosh and additional design elements on the side. The base of the case displays the text \"Carlos Alcaraz.\" The setting suggests a clean, modern environment with light-colored walls and curtains. The overall atmosphere is polished and professional, highlighting the shoe as a special or commemorative item.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426636-iEYLpZZ7rdUgy1MqlGtH",
+    "created": 1788426636,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 82,
+      "total_tokens": 937,
+      "cost": 0.0029575
+    }
+  }
+}

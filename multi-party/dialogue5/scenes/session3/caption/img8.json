@@ -1,0 +1,36 @@
+{
+  "id": "4167aa73-f7ec-40af-8d97-9815b9da1a1b",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:32.402868",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 121188,
+    "modified_time": "2026-08-23T22:09:43.533062"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a snowy landscape with a line of vehicles, including cars, vans, and buses, traveling along a narrow road surrounded by snow-covered hills. The vehicles are moving slowly, suggesting a traffic jam or cautious driving due to the winter conditions. The sky is overcast, creating a cold and serene atmosphere. No visible text is present in the image, and there are no visible people or animals. The overall mood is calm yet tense due to the challenging driving conditions.",
+    "final_text": "The image depicts a snowy landscape with a line of vehicles, including cars, vans, and buses, traveling along a narrow road surrounded by snow-covered hills. The vehicles are moving slowly, suggesting a traffic jam or cautious driving due to the winter conditions. The sky is overcast, creating a cold and serene atmosphere. No visible text is present in the image, and there are no visible people or animals. The overall mood is calm yet tense due to the challenging driving conditions.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426871-xNOdYaeC05A9EcNldWrL",
+    "created": 1788426871,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 96,
+      "total_tokens": 816,
+      "cost": 0.00276
+    }
+  }
+}

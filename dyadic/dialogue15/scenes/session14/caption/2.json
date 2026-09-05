@@ -1,0 +1,36 @@
+{
+  "id": "5f97a05c-b9b8-4b62-9ce9-9b892ebcac1f",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:42.191595",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session14/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 368494,
+    "modified_time": "2026-08-23T21:34:18.963927"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a table titled \"PassMark - CPU Mark\" focusing on single-thread performance, updated on April 9th, 2023. It lists various CPUs, including Intel Core and AMD Ryzen models, with their respective performance scores and prices in USD. The CPUs are ranked by performance, with color-coded bars indicating their CPU Mark scores. Prices vary, with some marked as NA. The overall mood is informative, providing a clear comparison of CPU performance and cost.",
+    "final_text": "The image displays a table titled \"PassMark - CPU Mark\" focusing on single-thread performance, updated on April 9th, 2023. It lists various CPUs, including Intel Core and AMD Ryzen models, with their respective performance scores and prices in USD. The CPUs are ranked by performance, with color-coded bars indicating their CPU Mark scores. Prices vary, with some marked as NA. The overall mood is informative, providing a clear comparison of CPU performance and cost.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427001-AONh5iwgKdm5tDRvVYC1",
+    "created": 1788427001,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 95,
+      "total_tokens": 1290,
+      "cost": 0.0039375
+    }
+  }
+}

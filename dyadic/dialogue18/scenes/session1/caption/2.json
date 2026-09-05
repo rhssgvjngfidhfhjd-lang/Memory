@@ -1,0 +1,36 @@
+{
+  "id": "a10ffc0f-4750-444e-8e60-85a08f65f5b6",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:36.858900",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session1/image/2.webp",
+    "filename": "2.webp",
+    "size": 36322,
+    "modified_time": "2026-08-23T21:37:08.511407"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a topographic map featuring contour lines indicating elevation levels. A river or stream runs horizontally through the center, with elevations marked at various points (e.g., 1425.2, 1382.0). The terrain shows variations in elevation, suggesting hills or valleys. The map's atmosphere is technical and informative, designed for geographical or navigational purposes. There is minimal text besides the elevation markers.",
+    "final_text": "The image depicts a topographic map featuring contour lines indicating elevation levels. A river or stream runs horizontally through the center, with elevations marked at various points (e.g., 1425.2, 1382.0). The terrain shows variations in elevation, suggesting hills or valleys. The map's atmosphere is technical and informative, designed for geographical or navigational purposes. There is minimal text besides the elevation markers.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427116-9uTveyMNW6Ll7WdhOUWY",
+    "created": 1788427116,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 84,
+      "total_tokens": 429,
+      "cost": 0.0017025
+    }
+  }
+}

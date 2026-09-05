@@ -1,0 +1,36 @@
+{
+  "id": "5a1290f4-7340-434b-b07c-a93db34cc697",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:59.870787",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 129253,
+    "modified_time": "2026-08-23T21:38:53.392342"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a ceramic bowl with a light green glaze, featuring visible golden repairs along cracks. This technique is known as kintsugi, a Japanese art form that emphasizes the beauty in imperfection by using gold to mend broken pottery. The bowl is set against a plain white background, highlighting its elegant design and the intricate gold patterns. The overall mood is serene and reflective, celebrating resilience and the art of embracing flaws.",
+    "final_text": "The image shows a ceramic bowl with a light green glaze, featuring visible golden repairs along cracks. This technique is known as kintsugi, a Japanese art form that emphasizes the beauty in imperfection by using gold to mend broken pottery. The bowl is set against a plain white background, highlighting its elegant design and the intricate gold patterns. The overall mood is serene and reflective, celebrating resilience and the art of embracing flaws.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427198-XZjMCKsTJxoyPUBeUxNn",
+    "created": 1788427198,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 84,
+      "total_tokens": 599,
+      "cost": 0.0021275
+    }
+  }
+}

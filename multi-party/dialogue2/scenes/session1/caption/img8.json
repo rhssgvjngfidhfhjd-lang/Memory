@@ -1,0 +1,36 @@
+{
+  "id": "e02b82fc-efa5-4ed0-a335-443433779c5d",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:15.390417",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 58893,
+    "modified_time": "2026-08-23T22:04:55.647955"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a mobile app interface displaying running statistics. At the top, the time is 07:15, with battery and signal indicators visible. Below, it shows \"户外跑步\" (Outdoor Running) and \"金牛区 1公里\" (Jinniu District 1 km). The core scene features a map with a green running path, indicating a completed loop of 1.00 km. Text displays various metrics: duration (00:12:26), average pace (06'10\"), calories burned (129 kcal), and steps per minute (156). The mood is informative and motivational, focusing on fitness tracking. A green button invites the user to share their activity.",
+    "final_text": "The image shows a mobile app interface displaying running statistics. At the top, the time is 07:15, with battery and signal indicators visible. Below, it shows \"户外跑步\" (Outdoor Running) and \"金牛区 1公里\" (Jinniu District 1 km). The core scene features a map with a green running path, indicating a completed loop of 1.00 km. Text displays various metrics: duration (00:12:26), average pace (06'10\"), calories burned (129 kcal), and steps per minute (156). The mood is informative and motivational, focusing on fitness tracking. A green button invites the user to share their activity.",
+    "token_stats": {
+      "original_tokens": 144,
+      "final_tokens": 144,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426615-2hE6YyDh7AAEiLk4IhKS",
+    "created": 1788426615,
+    "usage": {
+      "prompt_tokens": 441,
+      "completion_tokens": 142,
+      "total_tokens": 583,
+      "cost": 0.0025225
+    }
+  }
+}

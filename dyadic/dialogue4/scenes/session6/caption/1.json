@@ -1,0 +1,36 @@
+{
+  "id": "ecdc19dd-ca9d-441c-8441-a6219080e23b",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:50.834435",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 538441,
+    "modified_time": "2026-08-23T21:54:51.537575"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two M-Audio studio monitor speakers, BX5 D3 and BX8 D3, with detailed specifications. The BX5 D3 speaker measures 25.4cm x 17.6cm x 19.7cm, and the BX8 D3 measures 38.4cm x 25cm x 30.2cm. Both speakers have a modern, sleek design with a prominent woofer. Below the speakers is a table listing specifications such as frequency range, crossover frequency, input type, power output, and dimensions. The mood is informative and technical, focusing on product details for comparison.",
+    "final_text": "The image shows two M-Audio studio monitor speakers, BX5 D3 and BX8 D3, with detailed specifications. The BX5 D3 speaker measures 25.4cm x 17.6cm x 19.7cm, and the BX8 D3 measures 38.4cm x 25cm x 30.2cm. Both speakers have a modern, sleek design with a prominent woofer. Below the speakers is a table listing specifications such as frequency range, crossover frequency, input type, power output, and dimensions. The mood is informative and technical, focusing on product details for comparison.",
+    "token_stats": {
+      "original_tokens": 126,
+      "final_tokens": 126,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427427-xzoToujZydBMcs4PCrIT",
+    "created": 1788427427,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 127,
+      "total_tokens": 1125,
+      "cost": 0.003765
+    }
+  }
+}

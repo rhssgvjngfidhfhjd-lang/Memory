@@ -1,0 +1,36 @@
+{
+  "id": "322cb193-ba2a-493d-a98c-85b5d3e23aa9",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:46.630524",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session1/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 173948,
+    "modified_time": "2026-08-23T22:09:08.199037"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a hand holding a garment tag with a plastic attachment. The tag features Chinese text detailing product information, including brand name, model number, safety standard, and materials, as well as care instructions with symbols. The atmosphere is informational, typical of a retail setting.",
+    "final_text": "The image shows a hand holding a garment tag with a plastic attachment. The tag features Chinese text detailing product information, including brand name, model number, safety standard, and materials, as well as care instructions with symbols. The atmosphere is informational, typical of a retail setting.",
+    "token_stats": {
+      "original_tokens": 55,
+      "final_tokens": 55,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426766-Slt8U57cx4bSZ5xXqAna",
+    "created": 1788426766,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 55,
+      "total_tokens": 910,
+      "cost": 0.0026875
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "4a7d39e7-e189-4ccc-9d66-f703d92093e8",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:45.633970",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 982438,
+    "modified_time": "2026-08-23T21:30:12.217100"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vibrant marathon scene with a large group of runners starting a race under an archway displaying \"Daxing Development 2024 Beijing Daxing Half Marathon\" in both English and Chinese. The runners, wearing numbered bibs, are actively moving forward on a multi-colored track. Above them, a digital timer shows \"00:00:04,\" indicating the race has just begun. Blue balloons are held by some participants, adding a festive atmosphere. The mood is energetic and competitive, with trees lining the background and banners flanking the path.",
+    "final_text": "The image depicts a vibrant marathon scene with a large group of runners starting a race under an archway displaying \"Daxing Development 2024 Beijing Daxing Half Marathon\" in both English and Chinese. The runners, wearing numbered bibs, are actively moving forward on a multi-colored track. Above them, a digital timer shows \"00:00:04,\" indicating the race has just begun. Blue balloons are held by some participants, adding a festive atmosphere. The mood is energetic and competitive, with trees lining the background and banners flanking the path.",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426522-k2TesrCsJdnm0WPZX77K",
+    "created": 1788426522,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 114,
+      "total_tokens": 831,
+      "cost": 0.0029325
+    }
+  }
+}

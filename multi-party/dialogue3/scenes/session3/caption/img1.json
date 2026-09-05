@@ -1,0 +1,36 @@
+{
+  "id": "082ebd55-2504-4520-9900-87ba6ee24f70",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:57.913002",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 256706,
+    "modified_time": "2026-08-23T22:07:30.013224"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a large, sealed cardboard box placed on a shiny, marbled floor. The box is secured with tape, suggesting it is ready for shipping or storage. In the background, there are reflections of windows, indicating a well-lit room. No visible text is present on the box, and there are no people or animals in the scene. The overall mood is neutral, with a focus on the box as the central object.",
+    "final_text": "The image depicts a large, sealed cardboard box placed on a shiny, marbled floor. The box is secured with tape, suggesting it is ready for shipping or storage. In the background, there are reflections of windows, indicating a well-lit room. No visible text is present on the box, and there are no people or animals in the scene. The overall mood is neutral, with a focus on the box as the central object.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426715-dEBC4DM7aNeqzQhazgzr",
+    "created": 1788426715,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 88,
+      "total_tokens": 808,
+      "cost": 0.00268
+    }
+  }
+}

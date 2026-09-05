@@ -1,0 +1,36 @@
+{
+  "id": "ca1cfc14-dc93-4b82-99a1-ac2c591f6afa",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:34.529953",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 213940,
+    "modified_time": "2026-08-23T22:09:41.244860"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a chat conversation in Chinese between two people discussing transportation arrangements. The user on the left is asking about the cost of a car for four and seven passengers. They mention a normal rate of 150 per person and request a deposit of 200. They inquire about dropping off at a hotel, to which the other person agrees. The atmosphere is transactional and business-like. The visible time is 23:41.",
+    "final_text": "The image displays a chat conversation in Chinese between two people discussing transportation arrangements. The user on the left is asking about the cost of a car for four and seven passengers. They mention a normal rate of 150 per person and request a deposit of 200. They inquire about dropping off at a hotel, to which the other person agrees. The atmosphere is transactional and business-like. The visible time is 23:41.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426874-aOBg8NGwHeUE1VykIDqp",
+    "created": 1788426874,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 85,
+      "total_tokens": 1620,
+      "cost": 0.0046875
+    }
+  }
+}

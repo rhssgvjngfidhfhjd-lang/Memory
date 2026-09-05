@@ -1,0 +1,36 @@
+{
+  "id": "f40f5d28-ad8b-48c0-bb0f-0e73717ee0d9",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:34.774731",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img16.jpg",
+    "filename": "img16.jpg",
+    "size": 126002,
+    "modified_time": "2026-08-23T22:02:58.976217"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two elegant glasses filled with a pink beverage, garnished with lemon slices, rosemary sprigs, and ice cubes. One glass is being held by a hand, suggesting a moment of serving or toasting. The scene is set on a white tabletop against a minimalist background, creating a refreshing and sophisticated atmosphere.",
+    "final_text": "The image shows two elegant glasses filled with a pink beverage, garnished with lemon slices, rosemary sprigs, and ice cubes. One glass is being held by a hand, suggesting a moment of serving or toasting. The scene is set on a white tabletop against a minimalist background, creating a refreshing and sophisticated atmosphere.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426575-SO7KYEU82mIFeYKCmCsg",
+    "created": 1788426575,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 64,
+      "total_tokens": 919,
+      "cost": 0.0027775
+    }
+  }
+}

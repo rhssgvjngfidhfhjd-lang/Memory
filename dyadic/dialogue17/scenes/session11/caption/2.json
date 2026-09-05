@@ -1,0 +1,36 @@
+{
+  "id": "1ab4e9be-c48e-4f32-bdb4-94ca952be9f2",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:18.533858",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 125167,
+    "modified_time": "2026-08-23T21:35:50.568640"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A group of people, including both men and women, are gathered in front of a large, vibrant digital display showcasing dynamic, colorful streaks of light in purple, blue, and gold. The individuals appear captivated, gazing intently at the display. Some are taking photos or videos with their smartphones. The atmosphere is one of awe and fascination, highlighting the immersive and engaging nature of the visual experience. The scene is set in a dimly lit environment, enhancing the vividness of the screen.",
+    "final_text": "A group of people, including both men and women, are gathered in front of a large, vibrant digital display showcasing dynamic, colorful streaks of light in purple, blue, and gold. The individuals appear captivated, gazing intently at the display. Some are taking photos or videos with their smartphones. The atmosphere is one of awe and fascination, highlighting the immersive and engaging nature of the visual experience. The scene is set in a dimly lit environment, enhancing the vividness of the screen.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427096-Z1H4UgzGbP38sHSlWcR7",
+    "created": 1788427096,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 100,
+      "total_tokens": 445,
+      "cost": 0.0018625
+    }
+  }
+}

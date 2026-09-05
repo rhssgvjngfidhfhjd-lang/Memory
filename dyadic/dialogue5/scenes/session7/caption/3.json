@@ -1,0 +1,36 @@
+{
+  "id": "4acad3ee-375a-43ca-a49f-4ec1805a952f",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:01.082431",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 6282049,
+    "modified_time": "2026-08-23T21:55:41.188032"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a close-up view of a soft, textured fabric with a blue and white leaf pattern. Sunlight gently illuminates the material, creating a warm and cozy atmosphere. The fabric appears plush, with visible fibers enhancing the texture. There is text in the top left corner indicating \"AI 生成,\" suggesting the image was AI-generated. In the bottom right corner, there is a logo. The overall mood is serene and inviting, emphasizing comfort and warmth.",
+    "final_text": "The image depicts a close-up view of a soft, textured fabric with a blue and white leaf pattern. Sunlight gently illuminates the material, creating a warm and cozy atmosphere. The fabric appears plush, with visible fibers enhancing the texture. There is text in the top left corner indicating \"AI 生成,\" suggesting the image was AI-generated. In the bottom right corner, there is a logo. The overall mood is serene and inviting, emphasizing comfort and warmth.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427497-J5pONHzqA0bAVKw4B9eu",
+    "created": 1788427497,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 94,
+      "total_tokens": 814,
+      "cost": 0.00274
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "4a848b71-3d38-47d3-919c-301079fd110f",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:18.407568",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session3/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 107284,
+    "modified_time": "2026-08-23T22:09:04.096917"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a room undergoing renovation. A large wooden wardrobe with some sections partially painted white dominates the scene. An open cabinet reveals a backpack inside. A scaffold holds painting supplies, including a bowl, a spray can, and tape. A wooden slatted structure leans against the wall. The atmosphere suggests ongoing DIY work, with a focus on painting and updating the room.",
+    "final_text": "The image depicts a room undergoing renovation. A large wooden wardrobe with some sections partially painted white dominates the scene. An open cabinet reveals a backpack inside. A scaffold holds painting supplies, including a bowl, a spray can, and tape. A wooden slatted structure leans against the wall. The atmosphere suggests ongoing DIY work, with a focus on painting and updating the room.",
+    "token_stats": {
+      "original_tokens": 74,
+      "final_tokens": 74,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426797-OcQ7T0YdvLv8rD1QPrvN",
+    "created": 1788426797,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 76,
+      "total_tokens": 796,
+      "cost": 0.00256
+    }
+  }
+}

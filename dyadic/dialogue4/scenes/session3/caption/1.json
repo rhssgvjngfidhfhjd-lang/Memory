@@ -1,0 +1,36 @@
+{
+  "id": "507b0433-3d0e-4bed-a54b-a469a9c4af95",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:30.317755",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session3/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 50811,
+    "modified_time": "2026-08-23T21:54:10.102966"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a modern office setup with a light wood desk and a black ergonomic chair featuring a red patterned seat. Attached to the desk is an adjustable arm holding a keyboard and a document stand displaying printed text. A black portfolio with a calculator and pen is placed on the desk. Nearby, a footrest is positioned under the desk. The atmosphere is organized and professional, suggesting a workspace designed for productivity and comfort.",
+    "final_text": "The image depicts a modern office setup with a light wood desk and a black ergonomic chair featuring a red patterned seat. Attached to the desk is an adjustable arm holding a keyboard and a document stand displaying printed text. A black portfolio with a calculator and pen is placed on the desk. Nearby, a footrest is positioned under the desk. The atmosphere is organized and professional, suggesting a workspace designed for productivity and comfort.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427409-ozDC7tBy2UhNuOKVakoi",
+    "created": 1788427409,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 84,
+      "total_tokens": 523,
+      "cost": 0.0019375
+    }
+  }
+}

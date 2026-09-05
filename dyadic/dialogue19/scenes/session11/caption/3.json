@@ -1,0 +1,36 @@
+{
+  "id": "9b2f1875-5148-4c6b-bd05-84d3d25cfccf",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:26.559595",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session11/image/3.png",
+    "filename": "3.png",
+    "size": 874802,
+    "modified_time": "2026-08-23T21:38:12.126042"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image collage contains five scenes:\n\n1. A man in a suit walks confidently between cars on a busy city street, carrying a coat and surrounded by steam.\n2. Two men in a dimly lit bathroom stand near a sink, both looking into a mirror, creating a tense atmosphere.\n3. A silhouetted figure stands on a rain-soaked bridge against a backdrop of city lights and neon signs, evoking a somber mood.\n4. Two men are in an action-packed scene in an alley, with one aiming a gun and the other crouching behind boxes, suggesting danger.\n5. In a bustling food market, two men share a meal, with one smoking a cigarette, creating a casual, gritty urban vibe.",
+    "final_text": "The image collage contains five scenes:\n\n1. A man in a suit walks confidently between cars on a busy city street, carrying a coat and surrounded by steam.\n2. Two men in a dimly lit bathroom stand near a sink, both looking into a mirror, creating a tense atmosphere.\n3. A silhouetted figure stands on a rain-soaked bridge against a backdrop of city lights and neon signs, evoking a somber mood.\n4. Two men are in an action-packed scene in an alley, with one aiming a gun and the other crouching behind boxes, suggesting danger.\n5. In a bustling food market, two men share a meal, with one smoking a cigarette, creating a casual, gritty urban vibe.",
+    "token_stats": {
+      "original_tokens": 149,
+      "final_tokens": 149,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427225-LZKZn31LNKTBgT32eKNt",
+    "created": 1788427225,
+    "usage": {
+      "prompt_tokens": 685,
+      "completion_tokens": 146,
+      "total_tokens": 831,
+      "cost": 0.0031725
+    }
+  }
+}

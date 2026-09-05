@@ -1,0 +1,36 @@
+{
+  "id": "b9f07757-2dee-4aae-bd1a-d5e4fd6c3637",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:51.588010",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session5/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 223639,
+    "modified_time": "2026-08-23T22:09:17.914306"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a close-up of a hand with long, decorated fingernails featuring various intricate designs, including polka dots and snowflakes. The person is wearing a gold ring with a geometric design. The background is blurred, creating a focus on the hand. The overall atmosphere is elegant and stylish.",
+    "final_text": "The image shows a close-up of a hand with long, decorated fingernails featuring various intricate designs, including polka dots and snowflakes. The person is wearing a gold ring with a geometric design. The background is blurred, creating a focus on the hand. The overall atmosphere is elegant and stylish.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426831-pGF3MlOgewkMZxS4vz1z",
+    "created": 1788426831,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 61,
+      "total_tokens": 916,
+      "cost": 0.0027475
+    }
+  }
+}

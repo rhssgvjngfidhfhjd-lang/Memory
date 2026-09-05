@@ -1,0 +1,36 @@
+{
+  "id": "fa72fef5-36b1-4047-a45d-377429146959",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:46.723478",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 1365820,
+    "modified_time": "2026-08-23T21:36:22.179421"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic laboratory scene with two men interacting with a holographic display of a cat. The display shows the cat's anatomy with highlighted areas and labels like \"齿轮\" (gear) and \"光影波纹\" (light ripple pattern). The background features scientific equipment and a digital graph. Visible text includes \"AR情绪反馈系统 - 增强体验\" (AR emotional feedback system - enhanced experience) and \"舒适度实时监测: 85%\" (real-time comfort monitoring: 85%). A real cat is seen sitting on a cushion, adding a calm atmosphere to the high-tech environment.",
+    "final_text": "The image depicts a futuristic laboratory scene with two men interacting with a holographic display of a cat. The display shows the cat's anatomy with highlighted areas and labels like \"齿轮\" (gear) and \"光影波纹\" (light ripple pattern). The background features scientific equipment and a digital graph. Visible text includes \"AR情绪反馈系统 - 增强体验\" (AR emotional feedback system - enhanced experience) and \"舒适度实时监测: 85%\" (real-time comfort monitoring: 85%). A real cat is seen sitting on a cushion, adding a calm atmosphere to the high-tech environment.",
+    "token_stats": {
+      "original_tokens": 143,
+      "final_tokens": 143,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427064-AMTY5KBxXYB46Bs81sQ8",
+    "created": 1788427064,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 128,
+      "total_tokens": 1323,
+      "cost": 0.0042675
+    }
+  }
+}

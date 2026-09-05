@@ -1,0 +1,36 @@
+{
+  "id": "5da12483-f7f6-45ec-9b0c-a5a13f7e04dd",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:33.059786",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 221354,
+    "modified_time": "2026-08-23T22:03:37.435944"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a breaded, fried dish sliced open to reveal a runny, melted cheese filling, garnished with herbs. It's presented in a white paper tray, held by a person with long painted nails. Behind the dish, a card displays images of stacked fried slices, with text in Chinese and Korean. The background features a grill with other food items. The atmosphere is casual and appetizing, suggesting a food stall or market setting.",
+    "final_text": "The image shows a breaded, fried dish sliced open to reveal a runny, melted cheese filling, garnished with herbs. It's presented in a white paper tray, held by a person with long painted nails. Behind the dish, a card displays images of stacked fried slices, with text in Chinese and Korean. The background features a grill with other food items. The atmosphere is casual and appetizing, suggesting a food stall or market setting.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426571-9nRtrmDS5c6X2VB1acMx",
+    "created": 1788426571,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 90,
+      "total_tokens": 807,
+      "cost": 0.0026925
+    }
+  }
+}

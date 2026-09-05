@@ -1,0 +1,36 @@
+{
+  "id": "a8525e5d-3bc9-4600-86a5-ef6d616c23b8",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:10.065829",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 899218,
+    "modified_time": "2026-08-23T22:01:38.464535"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a digital blood pressure monitor displaying a reading of 121/76 placed on a light-colored table. Beside the monitor is a cuff and a notepad with handwritten entries, likely for recording blood pressure measurements. A small packet, possibly an alcohol wipe, is also present. The setting is well-lit with natural light, creating a calm and clinical atmosphere. The visible text includes \"OMRON\" on the monitor and some text in another language on the notepad and packet, indicating a healthcare context.",
+    "final_text": "The image features a digital blood pressure monitor displaying a reading of 121/76 placed on a light-colored table. Beside the monitor is a cuff and a notepad with handwritten entries, likely for recording blood pressure measurements. A small packet, possibly an alcohol wipe, is also present. The setting is well-lit with natural light, creating a calm and clinical atmosphere. The visible text includes \"OMRON\" on the monitor and some text in another language on the notepad and packet, indicating a healthcare context.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427748-LlXJxBkyevSJIBF20M8J",
+    "created": 1788427748,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 103,
+      "total_tokens": 958,
+      "cost": 0.0031675
+    }
+  }
+}

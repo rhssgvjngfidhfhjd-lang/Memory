@@ -1,0 +1,36 @@
+{
+  "id": "e7fe0a3d-ce18-436b-b3bf-3ecbd83a113c",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:45.968479",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session16/image/1.png",
+    "filename": "1.png",
+    "size": 534030,
+    "modified_time": "2026-08-23T21:33:14.160417"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a humanoid robot in a thoughtful pose, with digital pixels dispersing from the left side, symbolizing transformation or integration with technology. The background is light, enhancing the futuristic theme. Visible text states \"IMPACT OF AI ON FUTURE JOB ROLES\" in bold red and black, suggesting a focus on how artificial intelligence will influence employment. The mood is contemplative and futuristic.",
+    "final_text": "The image features a humanoid robot in a thoughtful pose, with digital pixels dispersing from the left side, symbolizing transformation or integration with technology. The background is light, enhancing the futuristic theme. Visible text states \"IMPACT OF AI ON FUTURE JOB ROLES\" in bold red and black, suggesting a focus on how artificial intelligence will influence employment. The mood is contemplative and futuristic.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426946-4OHKDLBRUGhEGt8erkLm",
+    "created": 1788426946,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 80,
+      "total_tokens": 935,
+      "cost": 0.0029375
+    }
+  }
+}

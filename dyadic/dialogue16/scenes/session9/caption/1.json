@@ -1,0 +1,36 @@
+{
+  "id": "1e20f7d2-6ca0-433e-bcb0-65a060b8b618",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:17.768378",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session9/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 143620,
+    "modified_time": "2026-08-23T21:35:39.161018"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an aged, open book with yellowed, fragile pages. The book is placed on a flat surface, and its cover appears worn. To the left, there are several rusted metal clasps, likely once part of the book's binding. The visible text on the pages is dense, suggesting it might be a historical document or manuscript. The atmosphere is one of antiquity and preservation, evoking a sense of historical significance.",
+    "final_text": "The image features an aged, open book with yellowed, fragile pages. The book is placed on a flat surface, and its cover appears worn. To the left, there are several rusted metal clasps, likely once part of the book's binding. The visible text on the pages is dense, suggesting it might be a historical document or manuscript. The atmosphere is one of antiquity and preservation, evoking a sense of historical significance.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427036-D7OGIHH3kv123DLhGdT4",
+    "created": 1788427036,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 89,
+      "total_tokens": 1284,
+      "cost": 0.0038775
+    }
+  }
+}

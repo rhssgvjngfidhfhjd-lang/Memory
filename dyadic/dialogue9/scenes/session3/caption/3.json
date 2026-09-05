@@ -1,0 +1,36 @@
+{
+  "id": "c88133db-65a8-4757-9efa-75a0b929f902",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:43.367215",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 1211494,
+    "modified_time": "2026-08-23T22:00:58.960948"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a public notice with a green, blurred background. The main text outlines guidelines for managing stray animals in a community. Key points include designated feeding areas open from 17:00 to 19:00, support for sterilization services, and a prohibition against animal abuse. A contact number is provided for reporting mistreatment. The atmosphere is informative and community-focused.",
+    "final_text": "The image displays a public notice with a green, blurred background. The main text outlines guidelines for managing stray animals in a community. Key points include designated feeding areas open from 17:00 to 19:00, support for sterilization services, and a prohibition against animal abuse. A contact number is provided for reporting mistreatment. The atmosphere is informative and community-focused.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427721-A0N7GIudHXqGvmKJTds2",
+    "created": 1788427721,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 76,
+      "total_tokens": 1074,
+      "cost": 0.003255
+    }
+  }
+}

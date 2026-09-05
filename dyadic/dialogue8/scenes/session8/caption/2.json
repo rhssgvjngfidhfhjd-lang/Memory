@@ -1,0 +1,36 @@
+{
+  "id": "a6f78e44-483b-48d5-b4d8-d024e63810dd",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:55.647928",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 553455,
+    "modified_time": "2026-08-23T21:58:20.404586"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an ornate geometric pattern on a beige background. It includes text in Chinese:\n\n1. 《中亚文明史》\n   作者: 勒内格鲁塞\n   理解丝路文明的根基\n\n2. 《丝绸之路: 一部全新的世界史》\n   作者: 彼得弗兰科潘\n   全球化视角下的历史叙事\n\n3. 《乌兹别克斯坦: 建筑与文化》\n   作者: 鲁斯塔姆尤努索夫\n   实地观察的视觉指南\n\nHighlighted in red: \n重点关注: 第1-3章 - 文明的交汇机制\n\nThe atmosphere is informative and scholarly, focusing on historical and cultural insights.",
+    "final_text": "The image features an ornate geometric pattern on a beige background. It includes text in Chinese:\n\n1. 《中亚文明史》\n   作者: 勒内格鲁塞\n   理解丝路文明的根基\n\n2. 《丝绸之路: 一部全新的世界史》\n   作者: 彼得弗兰科潘\n   全球化视角下的历史叙事\n\n3. 《乌兹别克斯坦: 建筑与文化》\n   作者: 鲁斯塔姆尤努索夫\n   实地观察的视觉指南\n\nHighlighted in red: \n重点关注: 第1-3章 - 文明的交汇机制\n\nThe atmosphere is informative and scholarly, focusing on historical and cultural insights.",
+    "token_stats": {
+      "original_tokens": 218,
+      "final_tokens": 218,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427673-hBXypNNXILmoQ2oVpe6A",
+    "created": 1788427673,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 158,
+      "total_tokens": 597,
+      "cost": 0.0026775
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "54b63b74-0636-49ce-89b8-96700f363101",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:42.878553",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 177629,
+    "modified_time": "2026-08-23T22:05:25.389935"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a neatly arranged tea set on a blue table runner featuring white floral patterns. The setup includes a white teapot, a small bowl, and four tea cups placed on individual coasters. A small fabric pouch is also present. The overall atmosphere is calm and organized, suggesting a serene tea ceremony setting. No visible text is present.",
+    "final_text": "The image depicts a neatly arranged tea set on a blue table runner featuring white floral patterns. The setup includes a white teapot, a small bowl, and four tea cups placed on individual coasters. A small fabric pouch is also present. The overall atmosphere is calm and organized, suggesting a serene tea ceremony setting. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427483-SW87fWBTS35O7VpInmap",
+    "created": 1788427483,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 69,
+      "total_tokens": 414,
+      "cost": 0.0015525
+    }
+  }
+}

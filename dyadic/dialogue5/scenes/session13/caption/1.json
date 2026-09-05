@@ -1,0 +1,36 @@
+{
+  "id": "122fde7c-ac83-4f19-b742-9fdbbfd8a679",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:30.339731",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session13/image/1.png",
+    "filename": "1.png",
+    "size": 476563,
+    "modified_time": "2026-08-23T21:55:13.270417"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy indoor scene with a steaming hot pot filled with meat and broth on a wooden table. A cat is visible at the edge of the table, seemingly curious about the meal. Nearby are plates and a bowl, suggesting a meal setting. The warm lighting creates a homely and inviting atmosphere. No visible text is present.",
+    "final_text": "The image depicts a cozy indoor scene with a steaming hot pot filled with meat and broth on a wooden table. A cat is visible at the edge of the table, seemingly curious about the meal. Nearby are plates and a bowl, suggesting a meal setting. The warm lighting creates a homely and inviting atmosphere. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427528-JUgwkmywnqnHLMS9oeGi",
+    "created": 1788427528,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 68,
+      "total_tokens": 923,
+      "cost": 0.0028175
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "658796a8-69c3-4869-b4fa-a34b3cb30b76",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:57.021535",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 1214518,
+    "modified_time": "2026-08-23T21:54:58.977091"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a space scene with a massive, luminous celestial object on the left, resembling a black hole with swirling light and energy surrounding it. In the foreground, a futuristic spacecraft with a circular structure is illuminated by blue thrusters, hovering near a small, dark planet. The atmosphere is mysterious and awe-inspiring, evoking a sense of exploration and the vastness of space. There is no visible text.",
+    "final_text": "The image depicts a space scene with a massive, luminous celestial object on the left, resembling a black hole with swirling light and energy surrounding it. In the foreground, a futuristic spacecraft with a circular structure is illuminated by blue thrusters, hovering near a small, dark planet. The atmosphere is mysterious and awe-inspiring, evoking a sense of exploration and the vastness of space. There is no visible text.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427435-iSKTUaQ9kMJ6yCjF6Uyq",
+    "created": 1788427435,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 83,
+      "total_tokens": 1278,
+      "cost": 0.0038175
+    }
+  }
+}

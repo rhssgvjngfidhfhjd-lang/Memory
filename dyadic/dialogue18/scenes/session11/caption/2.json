@@ -1,0 +1,36 @@
+{
+  "id": "37c58a3c-4f7e-4546-91cb-b9815eb68dbb",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:18.015971",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session11/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 156603,
+    "modified_time": "2026-08-23T21:37:05.011697"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a close-up of assorted granola bars and nut clusters on crumpled parchment paper. The granola bars are rectangular with a light, textured appearance, while the nut clusters are glossy and golden. The background features a blue textured surface, adding a rustic feel. The atmosphere is casual and inviting, evoking a sense of homemade, healthy snacking. There is visible text from a watermark, \"dreamstime.com,\" adding a commercial aspect.",
+    "final_text": "The image depicts a close-up of assorted granola bars and nut clusters on crumpled parchment paper. The granola bars are rectangular with a light, textured appearance, while the nut clusters are glossy and golden. The background features a blue textured surface, adding a rustic feel. The atmosphere is casual and inviting, evoking a sense of homemade, healthy snacking. There is visible text from a watermark, \"dreamstime.com,\" adding a commercial aspect.",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427157-DCQMNigJfAdyRGT3MThe",
+    "created": 1788427157,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 92,
+      "total_tokens": 1287,
+      "cost": 0.0039075
+    }
+  }
+}

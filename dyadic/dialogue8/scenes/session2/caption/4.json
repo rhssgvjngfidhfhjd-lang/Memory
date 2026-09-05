@@ -1,0 +1,36 @@
+{
+  "id": "f22337b3-d8ec-486f-970e-1919e1310528",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:29.382750",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session2/image/4.png",
+    "filename": "4.png",
+    "size": 336452,
+    "modified_time": "2026-08-23T21:57:47.687320"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a promotional scene for the movie \"飞驰人生 2\" with a group of people casually posing in front of a driving school. The visible text includes hashtags and commentary in Chinese, expressing excitement and praise for the film. The overall mood is upbeat and motivational, focusing on themes of inspiration and healing. The setting exudes a sense of camaraderie and anticipation.",
+    "final_text": "The image features a promotional scene for the movie \"飞驰人生 2\" with a group of people casually posing in front of a driving school. The visible text includes hashtags and commentary in Chinese, expressing excitement and praise for the film. The overall mood is upbeat and motivational, focusing on themes of inspiration and healing. The setting exudes a sense of camaraderie and anticipation.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427649-lUhwAA2JbSS27tQj1IWC",
+    "created": 1788427649,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 76,
+      "total_tokens": 591,
+      "cost": 0.0020475
+    }
+  }
+}

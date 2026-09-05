@@ -1,0 +1,5 @@
+The image is divided into two sections, each highlighting different achievements. 
+
+On the left, there is a graph showing coding submissions over time, peaking at 12,000 lines in March 2024. Text mentions GitHub project results and an intelligent library management system with over 500 stars.
+
+On the right, a bar graph represents article readership, with a high-read article about campus events. A photo shows a group of people in front of a stall at a creative market event in spring 2024, attended by over 200 people. The overall mood is informative and celebratory, showcasing success in coding and campus activities.

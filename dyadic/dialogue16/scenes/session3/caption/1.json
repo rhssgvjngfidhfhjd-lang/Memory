@@ -1,0 +1,36 @@
+{
+  "id": "b3b7c54d-9fc6-48c8-84d8-c18a33e24ad1",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:54.878338",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session3/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 169979,
+    "modified_time": "2026-08-23T21:35:21.125347"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a watercolor painting depicting a serene park scene. In the foreground, there is a reflective body of water, mirroring the landscape above. Two people are walking on a path surrounded by grass and trees, adding a sense of companionship and tranquility. In the background, a building with a green dome and cross is partially visible among the trees, creating a peaceful, contemplative atmosphere. The overall mood is calm and reflective.",
+    "final_text": "The image is a watercolor painting depicting a serene park scene. In the foreground, there is a reflective body of water, mirroring the landscape above. Two people are walking on a path surrounded by grass and trees, adding a sense of companionship and tranquility. In the background, a building with a green dome and cross is partially visible among the trees, creating a peaceful, contemplative atmosphere. The overall mood is calm and reflective.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427015-XpFrBvT7xUXpZkBLdUNu",
+    "created": 1788427015,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 86,
+      "total_tokens": 1281,
+      "cost": 0.0038475
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "8613ea85-c259-4fe5-b37e-7e79351e647b",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:37.425941",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session4/image/4.png",
+    "filename": "4.png",
+    "size": 249534,
+    "modified_time": "2026-08-23T21:32:42.786878"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table outlining the rules for a community \"Pet Partner\" program. It includes columns labeled \"规则类别\" (Rule Category), \"具体规则\" (Specific Rules), and \"备注说明\" (Notes). The categories cover topics like management, activity conduct, safety assurance, responsibility, and extension rules. Each category provides detailed guidelines, such as the duration of activities, participant requirements, and safety measures. The overall mood is informative and structured, aimed at ensuring clear communication and organization for community pet activities.",
+    "final_text": "The image is a table outlining the rules for a community \"Pet Partner\" program. It includes columns labeled \"规则类别\" (Rule Category), \"具体规则\" (Specific Rules), and \"备注说明\" (Notes). The categories cover topics like management, activity conduct, safety assurance, responsibility, and extension rules. Each category provides detailed guidelines, such as the duration of activities, participant requirements, and safety measures. The overall mood is informative and structured, aimed at ensuring clear communication and organization for community pet activities.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426815-MIKGKuhHD8uN1P93TGSM",
+    "created": 1788426815,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 104,
+      "total_tokens": 959,
+      "cost": 0.0031775
+    }
+  }
+}

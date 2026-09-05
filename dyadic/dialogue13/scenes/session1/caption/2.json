@@ -1,0 +1,36 @@
+{
+  "id": "f60ee246-109e-4e05-9d63-034b29de9e38",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:19.227948",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session1/image/2.png",
+    "filename": "2.png",
+    "size": 1896327,
+    "modified_time": "2026-08-23T21:32:18.119626"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy, cluttered children's room with a yellow bed. A child's hand rests on the bed, covered with a blanket featuring cartoon animals. The floor is scattered with a colorful rug, children's books, a baby bottle, tissues, and a digital thermometer. The atmosphere suggests a warm, caring environment, possibly indicating a child recovering from illness. Toys and books are visible in the background, adding to the playful yet tender scene.",
+    "final_text": "The image depicts a cozy, cluttered children's room with a yellow bed. A child's hand rests on the bed, covered with a blanket featuring cartoon animals. The floor is scattered with a colorful rug, children's books, a baby bottle, tissues, and a digital thermometer. The atmosphere suggests a warm, caring environment, possibly indicating a child recovering from illness. Toys and books are visible in the background, adding to the playful yet tender scene.",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426797-lOekAHFz7O6WFUgBYn8Q",
+    "created": 1788426797,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 89,
+      "total_tokens": 1087,
+      "cost": 0.003385
+    }
+  }
+}

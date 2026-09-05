@@ -1,0 +1,36 @@
+{
+  "id": "3f8fc448-a8b1-42a0-befa-054a933abd24",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:02.183437",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 123059,
+    "modified_time": "2026-08-23T22:09:58.669792"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a mobile phone screen showing an electronic boarding pass. The top section includes a green banner with flight details: Shandong Airlines SC2289, dated 2023-06-29, departing from Zhuhai Jinwan to Hangzhou Xiaoshan T3. Below, it lists boarding time, gate, and seat number, with some details obscured. A blurred QR code is marked with text indicating it should not be saved locally. The screen also features a blue stamp labeled \"Airport security check\" and a button to add the boarding pass to a wallet. The atmosphere is functional and informative, focused on travel logistics.",
+    "final_text": "The image displays a mobile phone screen showing an electronic boarding pass. The top section includes a green banner with flight details: Shandong Airlines SC2289, dated 2023-06-29, departing from Zhuhai Jinwan to Hangzhou Xiaoshan T3. Below, it lists boarding time, gate, and seat number, with some details obscured. A blurred QR code is marked with text indicating it should not be saved locally. The screen also features a blue stamp labeled \"Airport security check\" and a button to add the boarding pass to a wallet. The atmosphere is functional and informative, focused on travel logistics.",
+    "token_stats": {
+      "original_tokens": 128,
+      "final_tokens": 128,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426901-e34Qqxm0ptHQQlaGPLMR",
+    "created": 1788426901,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 129,
+      "total_tokens": 849,
+      "cost": 0.00309
+    }
+  }
+}

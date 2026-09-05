@@ -1,0 +1,8 @@
+The image contains text in Chinese, structured into sections with headings. It appears to be an abstract or summary of a research paper focused on decentralized identity verification systems. The sections include:
+
+1. **Abstract:** Introduces a digital framework for decentralized identity verification, addressing privacy and data isolation.
+2. **Core Innovations:** Lists key innovations like lightweight signature schemes and cross-domain interoperability.
+3. **Experimental Evaluation:** Discusses testing with Hyperledger Fabric, showing improved performance over traditional PKI systems.
+4. **Conclusion and Outlook:** Highlights the potential to enhance digital identity management and future exploration of the framework.
+
+The overall atmosphere is academic and technical, aimed at discussing advancements in identity verification technology.

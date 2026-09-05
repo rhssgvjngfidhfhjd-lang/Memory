@@ -1,0 +1,36 @@
+{
+  "id": "1136666b-0ccc-4781-b546-ee2c6011888f",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:48.246068",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 662403,
+    "modified_time": "2026-08-23T21:55:23.425852"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy scene with a ginger cat sleeping peacefully on a stack of old books by a window with diamond-patterned glass. Sunlight streams through the window, casting a warm glow on the cat and books. Beside the stack is a clear glass cup filled with steaming tea on a saucer, adding to the relaxed atmosphere. The setting suggests a tranquil, comfortable mood, ideal for unwinding and enjoying quiet moments.",
+    "final_text": "The image depicts a cozy scene with a ginger cat sleeping peacefully on a stack of old books by a window with diamond-patterned glass. Sunlight streams through the window, casting a warm glow on the cat and books. Beside the stack is a clear glass cup filled with steaming tea on a saucer, adding to the relaxed atmosphere. The setting suggests a tranquil, comfortable mood, ideal for unwinding and enjoying quiet moments.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427487-7h7WHRYxiN9pxvlzRRHV",
+    "created": 1788427487,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 87,
+      "total_tokens": 804,
+      "cost": 0.0026625
+    }
+  }
+}

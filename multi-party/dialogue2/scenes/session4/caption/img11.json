@@ -1,0 +1,36 @@
+{
+  "id": "d00bc954-bad4-4346-92e8-7b66afd889e5",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:05.456158",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 309072,
+    "modified_time": "2026-08-23T22:06:43.635539"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a hand using wooden tongs to hold a thin slice of cured ham, freshly cut from a mounted leg. The ham is being sliced with a long knife, and several slices are arranged on a round plate placed on a wooden board. The scene is set in a kitchen with a metallic surface, creating a professional and elegant atmosphere, emphasizing culinary precision and craftsmanship.",
+    "final_text": "The image depicts a hand using wooden tongs to hold a thin slice of cured ham, freshly cut from a mounted leg. The ham is being sliced with a long knife, and several slices are arranged on a round plate placed on a wooden board. The scene is set in a kitchen with a metallic surface, creating a professional and elegant atmosphere, emphasizing culinary precision and craftsmanship.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426663-jZDeVan3WyfRA2GLBk3V",
+    "created": 1788426663,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 76,
+      "total_tokens": 1074,
+      "cost": 0.003255
+    }
+  }
+}

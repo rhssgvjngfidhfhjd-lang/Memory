@@ -1,0 +1,36 @@
+{
+  "id": "2a23363d-068c-4211-ad7d-ea9c4553fd39",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:22.567092",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session3/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 307515,
+    "modified_time": "2026-08-23T22:09:04.931709"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a wooden cabinet with a warm, natural finish. The cabinet features a drawer at the top with a horizontal handle made of wood and metal. Below the drawer are two doors, each with a vertical handle that combines wood and metal elements. The design appears classic and understated, with no visible text. The atmosphere is calm and simple, emphasizing the cabinet's craftsmanship and material.",
+    "final_text": "The image depicts a wooden cabinet with a warm, natural finish. The cabinet features a drawer at the top with a horizontal handle made of wood and metal. Below the drawer are two doors, each with a vertical handle that combines wood and metal elements. The design appears classic and understated, with no visible text. The atmosphere is calm and simple, emphasizing the cabinet's craftsmanship and material.",
+    "token_stats": {
+      "original_tokens": 78,
+      "final_tokens": 78,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426800-fle2LLiv3YXobgf3hBgy",
+    "created": 1788426800,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 78,
+      "total_tokens": 798,
+      "cost": 0.00258
+    }
+  }
+}

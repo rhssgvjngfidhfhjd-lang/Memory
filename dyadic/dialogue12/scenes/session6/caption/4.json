@@ -1,0 +1,36 @@
+{
+  "id": "c1aeeaad-15d8-4df4-8e14-5131ed6794f1",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:09.169219",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session6/image/4.png",
+    "filename": "4.png",
+    "size": 4283650,
+    "modified_time": "2026-08-23T21:32:23.256413"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a collection of Chinese words arranged in various sizes and orientations against a soft beige background. Some of the prominent words include \"逻辑漏洞,\" \"美感,\" \"幽默度,\" and \"分镜细腻.\" Decorative clouds frame the corners, adding an artistic touch. The text seems to highlight concepts related to aesthetics, humor, and narrative structure. The overall mood is serene and contemplative, with an emphasis on design and language.",
+    "final_text": "The image features a collection of Chinese words arranged in various sizes and orientations against a soft beige background. Some of the prominent words include \"逻辑漏洞,\" \"美感,\" \"幽默度,\" and \"分镜细腻.\" Decorative clouds frame the corners, adding an artistic touch. The text seems to highlight concepts related to aesthetics, humor, and narrative structure. The overall mood is serene and contemplative, with an emphasis on design and language.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426726-8IGDrZxvzuqkYTHfbwH2",
+    "created": 1788426726,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 94,
+      "total_tokens": 1092,
+      "cost": 0.003435
+    }
+  }
+}

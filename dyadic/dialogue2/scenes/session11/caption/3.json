@@ -1,0 +1,36 @@
+{
+  "id": "26a9f003-1604-45f5-a5dc-d0e455e16752",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:21.000056",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session11/image/3.png",
+    "filename": "3.png",
+    "size": 381672,
+    "modified_time": "2026-08-23T21:44:51.642336"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a kitchen counter with a smart plug connected to an outlet. A smartphone is held in the foreground, displaying an app interface titled \"My Range Extender,\" indicating usage of 2.8 hours. The wall has illustrations of appliances like a kettle and toaster with the text \"Smart Plug.\" The atmosphere is modern and tech-savvy, emphasizing smart home automation.",
+    "final_text": "The image shows a kitchen counter with a smart plug connected to an outlet. A smartphone is held in the foreground, displaying an app interface titled \"My Range Extender,\" indicating usage of 2.8 hours. The wall has illustrations of appliances like a kettle and toaster with the text \"Smart Plug.\" The atmosphere is modern and tech-savvy, emphasizing smart home automation.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427282-AKAy66HTyO3Hy0eHhvGy",
+    "created": 1788427282,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 75,
+      "total_tokens": 930,
+      "cost": 0.0028875
+    }
+  }
+}

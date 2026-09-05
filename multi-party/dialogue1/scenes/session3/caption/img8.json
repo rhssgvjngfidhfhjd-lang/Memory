@@ -1,0 +1,36 @@
+{
+  "id": "018ce14e-fd5c-4e22-8b44-d34e0278a11a",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:27.956586",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 262934,
+    "modified_time": "2026-08-23T22:03:20.665733"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two pieces of food, likely cheese sticks or similar items, coated in a thick layer of bright orange breadcrumbs on a white plate. The crumbs are spread across the plate, creating a textured surface. The overall mood is appetizing and inviting, suggesting preparation for cooking or serving a crunchy dish.",
+    "final_text": "The image shows two pieces of food, likely cheese sticks or similar items, coated in a thick layer of bright orange breadcrumbs on a white plate. The crumbs are spread across the plate, creating a textured surface. The overall mood is appetizing and inviting, suggesting preparation for cooking or serving a crunchy dish.",
+    "token_stats": {
+      "original_tokens": 61,
+      "final_tokens": 61,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426567-rVATBn1hc5x8eWQYzXqb",
+    "created": 1788426567,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 61,
+      "total_tokens": 406,
+      "cost": 0.0014725
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "4da63783-2bed-42c5-a6f6-aebf6bed5b22",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:31.956224",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session1/image/2.png",
+    "filename": "2.png",
+    "size": 63656,
+    "modified_time": "2026-08-23T21:54:57.777418"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a text document in Chinese, divided into two main sections. The first section discusses differences in production techniques and appearance across regions like Suzhou, Wuxi, Zhejiang, and Shanghai. It mentions ingredients like rice flour and mung bean starch, and characteristics such as texture and size. The second section focuses on local flavors, highlighting ingredients like soy sauce and various spices in regions like Suzhou and Zhejiang. There is also mention of regional specialties and culinary influences. The document has a formal and informative tone.",
+    "final_text": "The image is a text document in Chinese, divided into two main sections. The first section discusses differences in production techniques and appearance across regions like Suzhou, Wuxi, Zhejiang, and Shanghai. It mentions ingredients like rice flour and mung bean starch, and characteristics such as texture and size. The second section focuses on local flavors, highlighting ingredients like soy sauce and various spices in regions like Suzhou and Zhejiang. There is also mention of regional specialties and culinary influences. The document has a formal and informative tone.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427471-kxz6gSJShGP2XCJAtRTM",
+    "created": 1788427471,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 103,
+      "total_tokens": 958,
+      "cost": 0.0031675
+    }
+  }
+}

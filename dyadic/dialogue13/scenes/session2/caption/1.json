@@ -1,0 +1,36 @@
+{
+  "id": "f218e8f4-a043-4cd2-bfad-7d434a6bdf97",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:23.857458",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 1081534,
+    "modified_time": "2026-08-23T21:32:33.801922"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an informational poster titled \"社区健康信息角\" (Community Health Information Corner) with sections on children's common illnesses, pharmacy box management, and nearby hospital information. It includes tips for managing fever and cough in children, indicating the use of physical methods for fever and drinking warm water for cough. A section shows a medicine box with items like fever patches and syrup. Hospital info lists pediatric clinic hours (Monday to Sunday, 8:00-18:00) and emergency services (24-hour). The mood is informative and helpful, aimed at community health awareness.",
+    "final_text": "The image is an informational poster titled \"社区健康信息角\" (Community Health Information Corner) with sections on children's common illnesses, pharmacy box management, and nearby hospital information. It includes tips for managing fever and cough in children, indicating the use of physical methods for fever and drinking warm water for cough. A section shows a medicine box with items like fever patches and syrup. Hospital info lists pediatric clinic hours (Monday to Sunday, 8:00-18:00) and emergency services (24-hour). The mood is informative and helpful, aimed at community health awareness.",
+    "token_stats": {
+      "original_tokens": 120,
+      "final_tokens": 120,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426801-KpwO9skQSEPaYyPFm91w",
+    "created": 1788426801,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 116,
+      "total_tokens": 1114,
+      "cost": 0.003655
+    }
+  }
+}

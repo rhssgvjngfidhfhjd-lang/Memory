@@ -1,0 +1,36 @@
+{
+  "id": "f429677e-2f46-474c-ac3d-5eaffcd0bd8f",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:15.481925",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session8/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 278094,
+    "modified_time": "2026-08-23T21:35:34.032682"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a close-up of hands engaged in a delicate restoration process. A person is using a brush to work on an old document with visible text, likely in an Asian script. A small tool, possibly tweezers, rests on the paper. The atmosphere is focused and meticulous, emphasizing the careful preservation of historical or valuable materials.",
+    "final_text": "The image depicts a close-up of hands engaged in a delicate restoration process. A person is using a brush to work on an old document with visible text, likely in an Asian script. A small tool, possibly tweezers, rests on the paper. The atmosphere is focused and meticulous, emphasizing the careful preservation of historical or valuable materials.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427034-ccXYiFVgXpsxFO7sUCFw",
+    "created": 1788427034,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 68,
+      "total_tokens": 1263,
+      "cost": 0.0036675
+    }
+  }
+}

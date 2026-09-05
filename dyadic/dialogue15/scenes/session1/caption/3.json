@@ -1,0 +1,36 @@
+{
+  "id": "2a7d3141-8360-4c92-a037-dad151d530c4",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:50.060181",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session1/image/3.png",
+    "filename": "3.png",
+    "size": 2599704,
+    "modified_time": "2026-08-23T21:34:24.843958"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a line graph depicting four categories over 12 months. The categories, represented by different colored lines, are \"环境噪音\" (Environmental Noise) in red, \"健康问题\" (Health Issues) in green, \"饮食变化\" (Dietary Changes) in blue, and \"季节性因素\" (Seasonal Factors) in purple. The vertical axis measures the degree of concern from 0.25 to 1.75. Each line shows varying trends over the months, with notable peaks and troughs. The mood is analytical, focusing on data trends and patterns.",
+    "final_text": "The image is a line graph depicting four categories over 12 months. The categories, represented by different colored lines, are \"环境噪音\" (Environmental Noise) in red, \"健康问题\" (Health Issues) in green, \"饮食变化\" (Dietary Changes) in blue, and \"季节性因素\" (Seasonal Factors) in purple. The vertical axis measures the degree of concern from 0.25 to 1.75. Each line shows varying trends over the months, with notable peaks and troughs. The mood is analytical, focusing on data trends and patterns.",
+    "token_stats": {
+      "original_tokens": 136,
+      "final_tokens": 136,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426949-gyMBs1GFfVkPG26OUDoH",
+    "created": 1788426949,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 123,
+      "total_tokens": 1318,
+      "cost": 0.0042175
+    }
+  }
+}

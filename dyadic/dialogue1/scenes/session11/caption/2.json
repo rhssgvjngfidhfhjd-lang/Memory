@@ -1,0 +1,36 @@
+{
+  "id": "b21afa0f-c88b-445b-b413-4872d2aff20f",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:02.389322",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 429428,
+    "modified_time": "2026-08-23T21:30:11.386104"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a digital health data summary with graphs and metrics. Central to the scene is a colorful line graph, displaying data trends over a year, with months labeled at the bottom. On the right, there are three small screens depicting ECG, blood pressure, and body temperature monitoring. Text around the graph includes metrics like average heart rate, sleep quality score, daily steps, blood oxygen level, heart rate variability, and user satisfaction. The overall atmosphere is informative and analytical, emphasizing advanced health tracking capabilities.",
+    "final_text": "The image features a digital health data summary with graphs and metrics. Central to the scene is a colorful line graph, displaying data trends over a year, with months labeled at the bottom. On the right, there are three small screens depicting ECG, blood pressure, and body temperature monitoring. Text around the graph includes metrics like average heart rate, sleep quality score, daily steps, blood oxygen level, heart rate variability, and user satisfaction. The overall atmosphere is informative and analytical, emphasizing advanced health tracking capabilities.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426541-baIZSbpLrHLXNj72AGU2",
+    "created": 1788426541,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 102,
+      "total_tokens": 402,
+      "cost": 0.00177
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "5e5c69a5-3b3c-4737-859e-7f8275dfc89b",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:13.145479",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session5/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 664450,
+    "modified_time": "2026-08-23T22:06:58.506515"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an illustrated map of a large park, featuring winding paths, numerous bodies of water, and lush greenery. Various labeled areas and icons are scattered throughout, indicating points of interest such as bridges, ponds, and buildings. The map is surrounded by stylized clouds and adjacent urban areas. The mood is whimsical and inviting, encouraging exploration and adventure within a detailed landscape.",
+    "final_text": "The image is an illustrated map of a large park, featuring winding paths, numerous bodies of water, and lush greenery. Various labeled areas and icons are scattered throughout, indicating points of interest such as bridges, ponds, and buildings. The map is surrounded by stylized clouds and adjacent urban areas. The mood is whimsical and inviting, encouraging exploration and adventure within a detailed landscape.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426672-AtndTqdjcpajYEi7zDxz",
+    "created": 1788426672,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 75,
+      "total_tokens": 930,
+      "cost": 0.0028875
+    }
+  }
+}

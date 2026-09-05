@@ -1,0 +1,36 @@
+{
+  "id": "53548da7-04df-4c8b-89cb-06d73496a4f8",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:32.220315",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session15/image/1.png",
+    "filename": "1.png",
+    "size": 1350411,
+    "modified_time": "2026-08-23T21:32:36.547410"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a warm, festive scene with several children sitting around a table laden with various dishes, including a whole fish, vegetables, and meat. The children, dressed in red, are cheerfully sharing food. The background is decorated with balloons and colorful bunting. The visible text reads \"2026年元旦邻里暖餐试吃会\" and \"生肖马年·邻里共暖,\" indicating a New Year neighborhood feast in the Year of the Horse. The atmosphere is joyful and communal, with a sense of celebration and togetherness.",
+    "final_text": "The image depicts a warm, festive scene with several children sitting around a table laden with various dishes, including a whole fish, vegetables, and meat. The children, dressed in red, are cheerfully sharing food. The background is decorated with balloons and colorful bunting. The visible text reads \"2026年元旦邻里暖餐试吃会\" and \"生肖马年·邻里共暖,\" indicating a New Year neighborhood feast in the Year of the Horse. The atmosphere is joyful and communal, with a sense of celebration and togetherness.",
+    "token_stats": {
+      "original_tokens": 125,
+      "final_tokens": 125,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426871-dxjwml4TvteSpIMhS9nC",
+    "created": 1788426871,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 112,
+      "total_tokens": 1307,
+      "cost": 0.0041075
+    }
+  }
+}

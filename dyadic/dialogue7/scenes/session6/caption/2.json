@@ -1,0 +1,36 @@
+{
+  "id": "4672b4ef-5fe5-4397-975f-f30cfdf351d2",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:54.039515",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session6/image/2.png",
+    "filename": "2.png",
+    "size": 455022,
+    "modified_time": "2026-08-23T21:57:41.287699"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a pie chart with sections labeled as \"全谷物\" (whole grains), \"水果\" (fruits), \"蔬菜\" (vegetables), \"坚果类\" (nuts), \"深海鱼\" (deep sea fish), \"乳制品\" (dairy products), and \"橄榄油\" (olive oil). Each section has corresponding illustrations like fish, bread, oil, fruits, and vegetables. To the right, there are green bars indicating frequency of consumption, such as \"每周3次\" (3 times a week) and \"每天至少3份\" (at least 3 servings a day). Below is an illustration of a steaming pot with text about cooking methods, suggesting reduced oil use and balanced nutrient intake. The atmosphere is informational and educational.",
+    "final_text": "The image features a pie chart with sections labeled as \"全谷物\" (whole grains), \"水果\" (fruits), \"蔬菜\" (vegetables), \"坚果类\" (nuts), \"深海鱼\" (deep sea fish), \"乳制品\" (dairy products), and \"橄榄油\" (olive oil). Each section has corresponding illustrations like fish, bread, oil, fruits, and vegetables. To the right, there are green bars indicating frequency of consumption, such as \"每周3次\" (3 times a week) and \"每天至少3份\" (at least 3 servings a day). Below is an illustration of a steaming pot with text about cooking methods, suggesting reduced oil use and balanced nutrient intake. The atmosphere is informational and educational.",
+    "token_stats": {
+      "original_tokens": 181,
+      "final_tokens": 181,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427611-BS0p3bRbG1LikAlDehNG",
+    "created": 1788427611,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 166,
+      "total_tokens": 605,
+      "cost": 0.0027575
+    }
+  }
+}

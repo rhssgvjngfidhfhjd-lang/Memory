@@ -1,0 +1,36 @@
+{
+  "id": "e4ca2b15-1f81-4686-a09a-15e57cc5b257",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:02.355355",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session9/image/3.png",
+    "filename": "3.png",
+    "size": 637618,
+    "modified_time": "2026-08-23T21:32:50.450137"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a collage promoting \"Family Night Games,\" featuring various board and dice games. Visible items include blue dice, dominoes, and cards. There's a book titled \"77 Ways to Play Tenzi\" and two plastic pigs possibly for a game. Green text reads \"Family Night Games\" and there's a small logo for \"Kids Activities Blog.\" The atmosphere is playful and inviting, suggesting a fun and engaging family game night.",
+    "final_text": "The image is a collage promoting \"Family Night Games,\" featuring various board and dice games. Visible items include blue dice, dominoes, and cards. There's a book titled \"77 Ways to Play Tenzi\" and two plastic pigs possibly for a game. Green text reads \"Family Night Games\" and there's a small logo for \"Kids Activities Blog.\" The atmosphere is playful and inviting, suggesting a fun and engaging family game night.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426842-umEfd90hMah9RtpywHU5",
+    "created": 1788426842,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 87,
+      "total_tokens": 804,
+      "cost": 0.0026625
+    }
+  }
+}

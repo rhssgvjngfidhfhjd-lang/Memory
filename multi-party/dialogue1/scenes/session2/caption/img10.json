@@ -1,0 +1,36 @@
+{
+  "id": "df9e8b0c-d35c-42f8-a1d5-aba7dc347686",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:17.663821",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session2/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 124382,
+    "modified_time": "2026-08-23T22:11:04.226829"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image humorously depicts a white cat wearing a brown hat, seemingly eating spaghetti directly from a steaming pot. The cat's cheeks are blushed, adding a whimsical touch. The pot is filled with noodles, and the background shows a kitchen setting with wooden cabinets and a stove. The overall mood is playful and amusing, combining elements of surrealism with everyday kitchen life. No visible text is present.",
+    "final_text": "The image humorously depicts a white cat wearing a brown hat, seemingly eating spaghetti directly from a steaming pot. The cat's cheeks are blushed, adding a whimsical touch. The pot is filled with noodles, and the background shows a kitchen setting with wooden cabinets and a stove. The overall mood is playful and amusing, combining elements of surrealism with everyday kitchen life. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426555-DvYQZB3UNfQDADfHJAl4",
+    "created": 1788426555,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 81,
+      "total_tokens": 798,
+      "cost": 0.0026025
+    }
+  }
+}

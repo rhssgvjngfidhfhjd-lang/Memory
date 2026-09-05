@@ -1,0 +1,36 @@
+{
+  "id": "55c90a96-711a-4f7a-8a40-b2bcad7797ea",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:43.991397",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session3/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 250181,
+    "modified_time": "2026-08-23T21:37:29.416149"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a scenic mountain landscape with a hand holding a walkie-talkie in the foreground. The landscape features a flowing river cascading down from snow-capped peaks into a serene lake surrounded by lush greenery. The walkie-talkie displays visible text, including numbers and symbols on its screen. The atmosphere is tranquil and adventurous, suggesting exploration or communication in a remote area.",
+    "final_text": "The image depicts a scenic mountain landscape with a hand holding a walkie-talkie in the foreground. The landscape features a flowing river cascading down from snow-capped peaks into a serene lake surrounded by lush greenery. The walkie-talkie displays visible text, including numbers and symbols on its screen. The atmosphere is tranquil and adventurous, suggesting exploration or communication in a remote area.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427124-u4gQU0f0WfRGOHfUsYyo",
+    "created": 1788427124,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 75,
+      "total_tokens": 930,
+      "cost": 0.0028875
+    }
+  }
+}

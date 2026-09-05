@@ -1,0 +1,36 @@
+{
+  "id": "479f32c8-4cd5-488c-852c-9cde49d9be9e",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:50.095389",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 852312,
+    "modified_time": "2026-08-23T21:38:41.490039"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a structured text in Chinese, resembling an outline or table of contents. The title reads \"形式的僭越：论餐饮空间中视觉暴力的边界,\" which translates to \"Transgression of Form: On the Boundaries of Visual Violence in Dining Spaces.\" It includes five sections: Introduction, Literature Review, Case Analysis, Boundary Definition, and Conclusion. Each section addresses aspects of visual violence in dining environments, discussing concepts, expressions, aesthetic boundaries, ethical considerations, and the balance between aesthetics and ethics in design. The overall mood is academic and analytical.",
+    "final_text": "The image displays a structured text in Chinese, resembling an outline or table of contents. The title reads \"形式的僭越：论餐饮空间中视觉暴力的边界,\" which translates to \"Transgression of Form: On the Boundaries of Visual Violence in Dining Spaces.\" It includes five sections: Introduction, Literature Review, Case Analysis, Boundary Definition, and Conclusion. Each section addresses aspects of visual violence in dining environments, discussing concepts, expressions, aesthetic boundaries, ethical considerations, and the balance between aesthetics and ethics in design. The overall mood is academic and analytical.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427190-TIrbrli99J3qXRO0RrZ7",
+    "created": 1788427190,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 118,
+      "total_tokens": 1313,
+      "cost": 0.0041675
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "9b785980-5284-46f2-b887-d87c1cfa7a3a",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:43.468213",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session15/image/2.png",
+    "filename": "2.png",
+    "size": 773236,
+    "modified_time": "2026-08-23T21:33:09.731824"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a promotional poster for \"Game for Peace,\" a video game. It shows five characters in combat attire, holding weapons, standing confidently against a dynamic sky backdrop with parachutes and aircraft. The text \"和平精英\" and \"GAME FOR PEACE\" are prominently displayed in bold yellow and white. The atmosphere is action-packed and adventurous, suggesting a battle royale theme.",
+    "final_text": "The image features a promotional poster for \"Game for Peace,\" a video game. It shows five characters in combat attire, holding weapons, standing confidently against a dynamic sky backdrop with parachutes and aircraft. The text \"和平精英\" and \"GAME FOR PEACE\" are prominently displayed in bold yellow and white. The atmosphere is action-packed and adventurous, suggesting a battle royale theme.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426943-aqr5O8eIox7wO8qXMwpG",
+    "created": 1788426943,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 77,
+      "total_tokens": 932,
+      "cost": 0.0029075
+    }
+  }
+}

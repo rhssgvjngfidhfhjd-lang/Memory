@@ -1,0 +1,36 @@
+{
+  "id": "b6fa9eea-e176-4e08-bb33-387ce85f9d57",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:13.574915",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session9/image/3.png",
+    "filename": "3.png",
+    "size": 567787,
+    "modified_time": "2026-08-23T21:41:20.229739"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a table tracking daily physical activity over a week. It includes the following columns: date, steps, calories burned, standing hours, and minutes of moderate-to-intense activity. Dates range from 06-10 to 06-16, with an average row at the bottom. The data shows variation in steps, calories, and activity levels daily. The overall atmosphere is informative, focusing on health and fitness tracking.",
+    "final_text": "The image displays a table tracking daily physical activity over a week. It includes the following columns: date, steps, calories burned, standing hours, and minutes of moderate-to-intense activity. Dates range from 06-10 to 06-16, with an average row at the bottom. The data shows variation in steps, calories, and activity levels daily. The overall atmosphere is informative, focusing on health and fitness tracking.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427275-EAZrqcIpJdGDmxkBEZ0b",
+    "created": 1788427275,
+    "usage": {
+      "prompt_tokens": 685,
+      "completion_tokens": 86,
+      "total_tokens": 771,
+      "cost": 0.0025725
+    }
+  }
+}

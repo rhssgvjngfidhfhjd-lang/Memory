@@ -1,0 +1,36 @@
+{
+  "id": "01992435-459c-4d65-bf09-54892324bbca",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:42.548604",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session1/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 430410,
+    "modified_time": "2026-08-23T22:08:06.804909"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a stylishly dressed person standing outdoors in front of a café named \"Corner Dinner,\" with visible text reading \"PIZZA PASTA ORZO COFFEE.\" The person is wearing a brown beret, a long brown coat, a skirt, knee-high boots, and is holding a small brown handbag and a phone. The person has a confident pose with arms slightly raised, suggesting a casual, fashionable vibe. The background includes wooden doors and a small plant, contributing to a cozy, inviting atmosphere.",
+    "final_text": "The image depicts a stylishly dressed person standing outdoors in front of a café named \"Corner Dinner,\" with visible text reading \"PIZZA PASTA ORZO COFFEE.\" The person is wearing a brown beret, a long brown coat, a skirt, knee-high boots, and is holding a small brown handbag and a phone. The person has a confident pose with arms slightly raised, suggesting a casual, fashionable vibe. The background includes wooden doors and a small plant, contributing to a cozy, inviting atmosphere.",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426761-Ak9Cibbi9UeYbr98KYuV",
+    "created": 1788426761,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 105,
+      "total_tokens": 1300,
+      "cost": 0.0040375
+    }
+  }
+}

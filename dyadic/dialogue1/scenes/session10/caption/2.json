@@ -1,0 +1,36 @@
+{
+  "id": "2779b692-9c6d-4762-aa20-5c2da35860f6",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:57.586441",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session10/image/2.png",
+    "filename": "2.png",
+    "size": 75684,
+    "modified_time": "2026-08-23T21:30:00.928435"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a bar chart depicting the growth of China's artificial intelligence industry from 2019 to 2024. It includes four vertical bars representing different years: 2019, 2022, 2023, and 2024. The bars increase in height, indicating growth over time. The chart is titled \"2019-2024年中国人工智能产业规模及增速\" with units labeled as \"亿元\" (billion yuan) and \"%\" (percent). The overall mood is analytical, focusing on economic data trends.",
+    "final_text": "The image is a bar chart depicting the growth of China's artificial intelligence industry from 2019 to 2024. It includes four vertical bars representing different years: 2019, 2022, 2023, and 2024. The bars increase in height, indicating growth over time. The chart is titled \"2019-2024年中国人工智能产业规模及增速\" with units labeled as \"亿元\" (billion yuan) and \"%\" (percent). The overall mood is analytical, focusing on economic data trends.",
+    "token_stats": {
+      "original_tokens": 115,
+      "final_tokens": 115,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426537-Np6gQbuaE0uvixU5MJMn",
+    "created": 1788426537,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 110,
+      "total_tokens": 549,
+      "cost": 0.0021975
+    }
+  }
+}

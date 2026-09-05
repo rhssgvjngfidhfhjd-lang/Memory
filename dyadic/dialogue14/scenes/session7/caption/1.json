@@ -1,0 +1,36 @@
+{
+  "id": "8ef6c994-2970-430f-98b7-ef7752c65929",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:07.562906",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 412844,
+    "modified_time": "2026-08-23T21:33:43.974442"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a screenshot of the University of Oregon's website. The core scene features a promotional banner at the top with a green background. Two women, presumably a mother and daughter, are laughing and holding hands. There is visible text: \"Mother and daughter fall in love with the University of Oregon\" and mentions a feature in the Los Angeles Times. Below the banner is the navigation menu and sections like \"Faculty Spotlight\" and \"Latest News.\" The atmosphere is welcoming and cheerful.",
+    "final_text": "The image is a screenshot of the University of Oregon's website. The core scene features a promotional banner at the top with a green background. Two women, presumably a mother and daughter, are laughing and holding hands. There is visible text: \"Mother and daughter fall in love with the University of Oregon\" and mentions a feature in the Los Angeles Times. Below the banner is the navigation menu and sections like \"Faculty Spotlight\" and \"Latest News.\" The atmosphere is welcoming and cheerful.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426907-X87cWZPlA3fWgKUO78Nk",
+    "created": 1788426907,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 97,
+      "total_tokens": 612,
+      "cost": 0.0022575
+    }
+  }
+}

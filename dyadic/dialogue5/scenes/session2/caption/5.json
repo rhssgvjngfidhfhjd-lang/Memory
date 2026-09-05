@@ -1,0 +1,36 @@
+{
+  "id": "d545ffcb-11e8-45cb-a9a5-15ef023cd061",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:38.448392",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session2/image/5.png",
+    "filename": "5.png",
+    "size": 643930,
+    "modified_time": "2026-08-23T21:55:23.531477"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a bowl of crumbly food mixture, mainly consisting of shredded meat and egg yolks, with visible sesame seeds. A utensil is partially submerged in the contents, suggesting preparation or serving. Text overlays the image, listing ingredients: \"蛋黄肉松馅料\" (egg yolk meat floss filling), \"肉松\" (meat floss), \"咸蛋黄\" (salted egg yolk), and \"沙拉酱\" (mayonnaise). The atmosphere is homely and inviting, with a focus on traditional culinary elements.",
+    "final_text": "The image depicts a bowl of crumbly food mixture, mainly consisting of shredded meat and egg yolks, with visible sesame seeds. A utensil is partially submerged in the contents, suggesting preparation or serving. Text overlays the image, listing ingredients: \"蛋黄肉松馅料\" (egg yolk meat floss filling), \"肉松\" (meat floss), \"咸蛋黄\" (salted egg yolk), and \"沙拉酱\" (mayonnaise). The atmosphere is homely and inviting, with a focus on traditional culinary elements.",
+    "token_stats": {
+      "original_tokens": 132,
+      "final_tokens": 132,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427477-oaeFx9qkXKyCpDMd8W7u",
+    "created": 1788427477,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 116,
+      "total_tokens": 833,
+      "cost": 0.0029525
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "3f138970-4c17-4c73-bf58-525f586688e3",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:12.666172",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session7/image/2.png",
+    "filename": "2.png",
+    "size": 183417,
+    "modified_time": "2026-08-23T21:35:33.060720"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an aged, textured piece of parchment. On it, there's a large paw print and an illustration of a fluffy white cat, positioned alongside a few soft feathers. Chinese characters are visible, likely denoting a date or message. The overall mood is nostalgic and warm, suggesting a sentimental or commemorative theme.",
+    "final_text": "The image features an aged, textured piece of parchment. On it, there's a large paw print and an illustration of a fluffy white cat, positioned alongside a few soft feathers. Chinese characters are visible, likely denoting a date or message. The overall mood is nostalgic and warm, suggesting a sentimental or commemorative theme.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427031-IlyrXmRahPRv3SBSYWxe",
+    "created": 1788427031,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 64,
+      "total_tokens": 409,
+      "cost": 0.0015025
+    }
+  }
+}

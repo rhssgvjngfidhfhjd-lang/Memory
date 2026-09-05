@@ -1,0 +1,36 @@
+{
+  "id": "1812cb81-8832-401c-99b4-7caa0de2fd8d",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:49.182755",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session4/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 65603,
+    "modified_time": "2026-08-23T22:09:47.902857"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a screenshot of a text conversation in a messaging app. The conversation is between two individuals, one possibly named \"王总.\" The messages are in Chinese and include emojis. \n\nCore Scene: Text conversation planning a meeting.\nMain Elements: Text bubbles, emojis, profile pictures.\nVisible Text:\n- 09:30: \"王总，暗连十点开会，您的时间OK嘛？\" (Asking if 10 AM is okay for a meeting)\n- \"👌\"\n- \"收到，王总\" (Acknowledged)\n- 22:00: \"王总，10点啦。大家在2号会议室。\" (Notifying that it's 10 o'clock, meeting in room 2)\n- \"我这个意思是三点😊\" (Clarifying that they meant 3 o'clock)\n- \"王∞总: 👌\"\n- 22:10: \"收到\" (Acknowledged)\n\nActions/Interactions: Scheduling a meeting and confirming times.\nOverall Mood: Professional and straightforward.",
+    "final_text": "The image displays a screenshot of a text conversation in a messaging app. The conversation is between two individuals, one possibly named \"王总.\" The messages are in Chinese and include emojis. \n\nCore Scene: Text conversation planning a meeting.\nMain Elements: Text bubbles, emojis, profile pictures.\nVisible Text:\n- 09:30: \"王总，暗连十点开会，您的时间OK嘛？\" (Asking if 10 AM is okay for a meeting)\n- \"👌\"\n- \"收到，王总\" (Acknowledged)\n- 22:00: \"王总，10点啦。大家在2号会议室。\" (Notifying that it's 10 o'clock, meeting in room 2)\n- \"我这个意思是三点😊\" (Clarifying that they meant 3 o'clock)\n- \"王∞总: 👌\"\n- 22:10: \"收到\" (Acknowledged)\n\nActions/Interactions: Scheduling a meeting and confirming times.\nOverall Mood: Professional and straightforward.",
+    "token_stats": {
+      "original_tokens": 235,
+      "final_tokens": 235,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426885-LAhvlQymkIKCXAXDBtsp",
+    "created": 1788426885,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 211,
+      "total_tokens": 931,
+      "cost": 0.00391
+    }
+  }
+}

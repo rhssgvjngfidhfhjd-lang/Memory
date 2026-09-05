@@ -1,0 +1,36 @@
+{
+  "id": "ef2c344c-3037-4630-a081-2beb45ea671d",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:24.452738",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session12/image/3.png",
+    "filename": "3.png",
+    "size": 4542478,
+    "modified_time": "2026-08-23T21:36:08.240094"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a game development studio with three individuals working at a desk. Two are using dual monitors displaying character designs and a game scene. One person is drawing on a tablet, and another sketches on paper. The background features a whiteboard with sketches, diagrams, and sticky notes. The atmosphere is focused and collaborative, typical of a creative workspace.",
+    "final_text": "The image depicts a game development studio with three individuals working at a desk. Two are using dual monitors displaying character designs and a game scene. One person is drawing on a tablet, and another sketches on paper. The background features a whiteboard with sketches, diagrams, and sticky notes. The atmosphere is focused and collaborative, typical of a creative workspace.",
+    "token_stats": {
+      "original_tokens": 70,
+      "final_tokens": 70,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427101-H6MPI14u02SJpQkg7Bi1",
+    "created": 1788427101,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 70,
+      "total_tokens": 1605,
+      "cost": 0.0045375
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "59c2c450-a199-4369-bb4e-b8860b1ea61f",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:51.515574",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session4/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 28578,
+    "modified_time": "2026-08-23T21:31:01.776484"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cat lying on its side on a paved surface, possibly a walkway. The cat appears relaxed and calm, with its eyes closed and paws stretched out. The pavement consists of rectangular stones with visible grass growing between some gaps. The lighting suggests it might be evening or nighttime, creating a serene and peaceful atmosphere. There's some obscured text or object at the top of the image, but details are not clear. Overall, the mood is tranquil and restful.",
+    "final_text": "The image depicts a cat lying on its side on a paved surface, possibly a walkway. The cat appears relaxed and calm, with its eyes closed and paws stretched out. The pavement consists of rectangular stones with visible grass growing between some gaps. The lighting suggests it might be evening or nighttime, creating a serene and peaceful atmosphere. There's some obscured text or object at the top of the image, but details are not clear. Overall, the mood is tranquil and restful.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426651-DPSyyjM0hWedH16PXB0N",
+    "created": 1788426651,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 95,
+      "total_tokens": 534,
+      "cost": 0.0020475
+    }
+  }
+}

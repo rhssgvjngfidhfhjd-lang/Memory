@@ -1,0 +1,36 @@
+{
+  "id": "44ca73e3-e84e-4f31-a619-386dcf0f3e9f",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:14.046729",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 455005,
+    "modified_time": "2026-08-23T21:41:13.514149"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a sleep analysis report with a purple-themed design. It displays various metrics related to sleep, including:\n\n- Total sleep time: 5.8 hours per night\n- Deep sleep percentage: 12%\n- Light sleep percentage: 58%\n- REM sleep percentage: 15%\n- Wake times: 4.3 times\n\nA line graph shows sleep patterns over time. Additional metrics include:\n\n- Time to fall asleep: 32 minutes\n- Sleep efficiency: 76%\n- Snoring frequency: 3 nights per 7\n- Oxygen drop events: 8 times per hour\n\nThere's a circular chart indicating a sleep type labeled \"3 nights + color.\" The overall mood is analytical and informative, focusing on sleep quality and efficiency.",
+    "final_text": "The image is a sleep analysis report with a purple-themed design. It displays various metrics related to sleep, including:\n\n- Total sleep time: 5.8 hours per night\n- Deep sleep percentage: 12%\n- Light sleep percentage: 58%\n- REM sleep percentage: 15%\n- Wake times: 4.3 times\n\nA line graph shows sleep patterns over time. Additional metrics include:\n\n- Time to fall asleep: 32 minutes\n- Sleep efficiency: 76%\n- Snoring frequency: 3 nights per 7\n- Oxygen drop events: 8 times per hour\n\nThere's a circular chart indicating a sleep type labeled \"3 nights + color.\" The overall mood is analytical and informative, focusing on sleep quality and efficiency.",
+    "token_stats": {
+      "original_tokens": 154,
+      "final_tokens": 154,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427275-8PkxsTcBPC8HpETJFDA2",
+    "created": 1788427275,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 153,
+      "total_tokens": 668,
+      "cost": 0.0028175
+    }
+  }
+}

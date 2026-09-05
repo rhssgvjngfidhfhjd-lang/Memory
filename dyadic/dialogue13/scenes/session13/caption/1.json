@@ -1,0 +1,36 @@
+{
+  "id": "171b17db-b663-44b6-a4f9-70d80f94bc75",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:24.175102",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session13/image/1.png",
+    "filename": "1.png",
+    "size": 1118671,
+    "modified_time": "2026-08-23T21:32:25.247209"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a lively outdoor scene at a pet partner experience day event organized by Lin Shu. There is a stall with a yellow and white striped canopy, selling pet-related items like bowls and toys. A woman stands behind the stall. In front, two dogs are interacting playfully while a man and a woman stand nearby, each holding a leash. The setting appears to be a community square with benches and greenery. The overall atmosphere is cheerful and inviting. Visible text includes details about the event location and time, stating it is at the community square this Saturday from 9:00 to 16:00.",
+    "final_text": "The image depicts a lively outdoor scene at a pet partner experience day event organized by Lin Shu. There is a stall with a yellow and white striped canopy, selling pet-related items like bowls and toys. A woman stands behind the stall. In front, two dogs are interacting playfully while a man and a woman stand nearby, each holding a leash. The setting appears to be a community square with benches and greenery. The overall atmosphere is cheerful and inviting. Visible text includes details about the event location and time, stating it is at the community square this Saturday from 9:00 to 16:00.",
+    "token_stats": {
+      "original_tokens": 124,
+      "final_tokens": 124,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426862-sokNVTrgOYQghDpw1LyN",
+    "created": 1788426862,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 122,
+      "total_tokens": 977,
+      "cost": 0.0033575
+    }
+  }
+}

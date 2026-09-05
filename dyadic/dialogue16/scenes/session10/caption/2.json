@@ -1,0 +1,36 @@
+{
+  "id": "93e39e04-f4f6-4d71-af8b-75179334e3ab",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:22.790003",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session10/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 246247,
+    "modified_time": "2026-08-23T21:35:07.733905"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an abstract painting featuring dynamic brush strokes in vibrant reds, oranges, and yellows. The composition is sweeping, with a prominent diagonal streak of bright yellow and white creating a sense of movement. The texture is rich, with visible brushwork adding depth. The overall mood is energetic and warm, evoking a feeling of intensity and passion. No text or recognizable objects are present.",
+    "final_text": "The image is an abstract painting featuring dynamic brush strokes in vibrant reds, oranges, and yellows. The composition is sweeping, with a prominent diagonal streak of bright yellow and white creating a sense of movement. The texture is rich, with visible brushwork adding depth. The overall mood is energetic and warm, evoking a feeling of intensity and passion. No text or recognizable objects are present.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427042-l1cyGT3MGYXdOu8kW4zT",
+    "created": 1788427042,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 78,
+      "total_tokens": 933,
+      "cost": 0.0029175
+    }
+  }
+}

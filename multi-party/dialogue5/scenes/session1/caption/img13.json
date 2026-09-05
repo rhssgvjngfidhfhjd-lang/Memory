@@ -1,0 +1,36 @@
+{
+  "id": "a4e1cca2-fe77-4304-9570-338622c77fa1",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:10.856763",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session1/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 313401,
+    "modified_time": "2026-08-23T22:09:26.923279"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is divided into three panels, each capturing a woman in a snowy landscape. In the first panel, she stands alone, wrapped in a dark coat and scarf, gazing thoughtfully into the distance amid falling snow, with bare trees in the background. The second panel is a close-up of her face, showing a serene, introspective expression as snowflakes land gently on her hair and scarf. The third panel depicts her adjusting her scarf, eyes closed, creating a peaceful and contemplative mood. The overall atmosphere is tranquil and reflective, emphasizing the beauty of winter. No visible text is present.",
+    "final_text": "The image is divided into three panels, each capturing a woman in a snowy landscape. In the first panel, she stands alone, wrapped in a dark coat and scarf, gazing thoughtfully into the distance amid falling snow, with bare trees in the background. The second panel is a close-up of her face, showing a serene, introspective expression as snowflakes land gently on her hair and scarf. The third panel depicts her adjusting her scarf, eyes closed, creating a peaceful and contemplative mood. The overall atmosphere is tranquil and reflective, emphasizing the beauty of winter. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 122,
+      "final_tokens": 122,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426847-3dVPk8xFidxoKXe7k2hB",
+    "created": 1788426847,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 121,
+      "total_tokens": 841,
+      "cost": 0.00301
+    }
+  }
+}

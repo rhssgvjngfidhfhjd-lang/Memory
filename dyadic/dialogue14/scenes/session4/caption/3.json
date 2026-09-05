@@ -1,0 +1,36 @@
+{
+  "id": "e77e42be-e4af-4944-a364-88210c4b5025",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:56.031281",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 2907890,
+    "modified_time": "2026-08-23T21:35:03.235486"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The illustration depicts a cozy indoor scene with two young individuals engaged in activities at a desk. A laptop displays a video game, while a game controller lies nearby. The person on the left is focused on their smartphone, possibly browsing or texting. The person on the right is writing in a notebook, which has visible text in Chinese. A bookshelf filled with books is in the background, and a plant adds a touch of greenery to the setting. The atmosphere is warm and relaxed, suggesting a shared moment of leisure or study.",
+    "final_text": "The illustration depicts a cozy indoor scene with two young individuals engaged in activities at a desk. A laptop displays a video game, while a game controller lies nearby. The person on the left is focused on their smartphone, possibly browsing or texting. The person on the right is writing in a notebook, which has visible text in Chinese. A bookshelf filled with books is in the background, and a plant adds a touch of greenery to the setting. The atmosphere is warm and relaxed, suggesting a shared moment of leisure or study.",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426892-RraJ2mOm19Ey9yiarJCq",
+    "created": 1788426892,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 105,
+      "total_tokens": 1103,
+      "cost": 0.003545
+    }
+  }
+}

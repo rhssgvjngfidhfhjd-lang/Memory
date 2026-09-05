@@ -1,0 +1,36 @@
+{
+  "id": "f5e5c412-9496-4e93-b9cd-4d593550f6cb",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:40.421708",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session2/image/2.png",
+    "filename": "2.png",
+    "size": 184670,
+    "modified_time": "2026-08-23T21:33:08.809214"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a schedule chart spanning from December 10 to January 6. It features horizontal bars indicating three activities: sleep (green), travel (blue), and work (purple). Each day is marked with these activities, showing varying lengths of time dedicated to each. The chart is organized vertically by date and horizontally by hour, with labels at the top for hours (0-23) and side labels for dates. The mood is structured and organized, illustrating a balanced allocation of time for different activities.",
+    "final_text": "The image depicts a schedule chart spanning from December 10 to January 6. It features horizontal bars indicating three activities: sleep (green), travel (blue), and work (purple). Each day is marked with these activities, showing varying lengths of time dedicated to each. The chart is organized vertically by date and horizontally by hour, with labels at the top for hours (0-23) and side labels for dates. The mood is structured and organized, illustrating a balanced allocation of time for different activities.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426880-AEXifAa7kLT9JS2wSneB",
+    "created": 1788426880,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 102,
+      "total_tokens": 819,
+      "cost": 0.0028125
+    }
+  }
+}

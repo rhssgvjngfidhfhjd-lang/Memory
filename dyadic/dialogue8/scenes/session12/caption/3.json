@@ -1,0 +1,36 @@
+{
+  "id": "40089f64-60b7-4163-b44a-d92346522bc2",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:15.147557",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session12/image/3.png",
+    "filename": "3.png",
+    "size": 1216112,
+    "modified_time": "2026-08-23T21:57:42.561374"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a traditional Chinese landscape painting featuring towering, mist-covered mountains with lush vegetation. Nestled among the cliffs are small, traditional houses with dark roofs. A river runs through the scene, with a wooden boat floating on it. Birds fly in the sky, adding a sense of movement. Chinese calligraphy is visible on the left side, contributing to the cultural mood. The atmosphere is serene and contemplative, evoking a sense of tranquility and natural beauty.",
+    "final_text": "The image depicts a traditional Chinese landscape painting featuring towering, mist-covered mountains with lush vegetation. Nestled among the cliffs are small, traditional houses with dark roofs. A river runs through the scene, with a wooden boat floating on it. Birds fly in the sky, adding a sense of movement. Chinese calligraphy is visible on the left side, contributing to the cultural mood. The atmosphere is serene and contemplative, evoking a sense of tranquility and natural beauty.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427695-ukjqyPGGW499OnpmS5Qd",
+    "created": 1788427695,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 93,
+      "total_tokens": 948,
+      "cost": 0.0030675
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "7c849e43-43e0-4aa2-9e29-74ab00c4ed99",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:59.814247",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 312895,
+    "modified_time": "2026-08-23T22:01:29.461057"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a bowl filled with steamed broccoli and slices of cooked chicken, placed on a wooden surface. To the side, there is a small dish containing soy sauce with pieces of ginger. The overall mood is fresh and healthy, suggesting a simple, nutritious meal.",
+    "final_text": "The image shows a bowl filled with steamed broccoli and slices of cooked chicken, placed on a wooden surface. To the side, there is a small dish containing soy sauce with pieces of ginger. The overall mood is fresh and healthy, suggesting a simple, nutritious meal.",
+    "token_stats": {
+      "original_tokens": 54,
+      "final_tokens": 54,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426540-4qcIkqDQM8Hnq7TnvRJl",
+    "created": 1788426540,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 53,
+      "total_tokens": 908,
+      "cost": 0.0026675
+    }
+  }
+}

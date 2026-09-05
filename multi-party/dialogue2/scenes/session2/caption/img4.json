@@ -1,0 +1,36 @@
+{
+  "id": "bfb92cd7-71ba-4990-bf51-4b85beb4648f",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:31.175275",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 387694,
+    "modified_time": "2026-08-23T22:05:32.555926"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a display wall filled with various sneakers organized in transparent boxes. On top of the display are basketball-themed items, including a large basketball, miniature figures of basketball players, and a framed photo. The sneakers are diverse in color and style, suggesting a collection. The room features a wooden floor and an industrial ceiling with fluorescent lights, creating a modern and organized atmosphere.",
+    "final_text": "The image depicts a display wall filled with various sneakers organized in transparent boxes. On top of the display are basketball-themed items, including a large basketball, miniature figures of basketball players, and a framed photo. The sneakers are diverse in color and style, suggesting a collection. The room features a wooden floor and an industrial ceiling with fluorescent lights, creating a modern and organized atmosphere.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426629-x6aJ56HGI9FuWhV9KC0m",
+    "created": 1788426629,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 75,
+      "total_tokens": 930,
+      "cost": 0.0028875
+    }
+  }
+}

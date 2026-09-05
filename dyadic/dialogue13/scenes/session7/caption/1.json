@@ -1,0 +1,36 @@
+{
+  "id": "1f56afb6-8b3c-4b22-8d76-be5b5a9415d3",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:51.262515",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session7/image/1.png",
+    "filename": "1.png",
+    "size": 1223669,
+    "modified_time": "2026-08-23T21:32:49.328238"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a collection of colorful educational books arranged on a shelf. The spines feature various Chinese characters and some English text, such as \"2024秋\" and \"New\". The books cover subjects like mathematics, English, and language for different grade levels. The scene is vibrant and organized, suggesting a focused and academic atmosphere.",
+    "final_text": "The image depicts a collection of colorful educational books arranged on a shelf. The spines feature various Chinese characters and some English text, such as \"2024秋\" and \"New\". The books cover subjects like mathematics, English, and language for different grade levels. The scene is vibrant and organized, suggesting a focused and academic atmosphere.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426830-nYyROyrJv3tFFR1qI7wd",
+    "created": 1788426830,
+    "usage": {
+      "prompt_tokens": 685,
+      "completion_tokens": 67,
+      "total_tokens": 752,
+      "cost": 0.0023825
+    }
+  }
+}

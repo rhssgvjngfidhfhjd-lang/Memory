@@ -1,0 +1,36 @@
+{
+  "id": "f877b41f-d6eb-4b74-8605-41a4a8c37886",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:32.973464",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 413963,
+    "modified_time": "2026-08-23T22:02:29.234478"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows several green, translucent sheets scattered on a dark surface. The sheets appear to be blotting papers, commonly used to remove excess oil from the skin. Some sheets show signs of use, with visible dark patches indicating oil absorption. The atmosphere is casual and mundane, with a focus on personal care items. There's no visible text or significant interactions.",
+    "final_text": "The image shows several green, translucent sheets scattered on a dark surface. The sheets appear to be blotting papers, commonly used to remove excess oil from the skin. Some sheets show signs of use, with visible dark patches indicating oil absorption. The atmosphere is casual and mundane, with a focus on personal care items. There's no visible text or significant interactions.",
+    "token_stats": {
+      "original_tokens": 72,
+      "final_tokens": 72,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426573-6AyMKsE5h3JjqfTT8o1a",
+    "created": 1788426573,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 71,
+      "total_tokens": 926,
+      "cost": 0.0028475
+    }
+  }
+}

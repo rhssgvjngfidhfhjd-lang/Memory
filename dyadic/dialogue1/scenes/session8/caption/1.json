@@ -1,0 +1,36 @@
+{
+  "id": "01d05036-375a-463d-8085-fe16114a9a1c",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:39.804584",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 134834,
+    "modified_time": "2026-08-23T21:30:07.572503"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an illustration of a person running, set against a background of text in Chinese. The text is organized into several sections, each highlighted with a yellow background, discussing health benefits of running. The sections cover topics such as improving cardiovascular function, enhancing blood vessel elasticity, boosting immunity, alleviating negative emotions, and aiding digestion. The overall mood is informative and motivational, promoting physical activity for health benefits.",
+    "final_text": "The image features an illustration of a person running, set against a background of text in Chinese. The text is organized into several sections, each highlighted with a yellow background, discussing health benefits of running. The sections cover topics such as improving cardiovascular function, enhancing blood vessel elasticity, boosting immunity, alleviating negative emotions, and aiding digestion. The overall mood is informative and motivational, promoting physical activity for health benefits.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426518-O8334MVbf2pvhZK6TeN1",
+    "created": 1788426518,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 82,
+      "total_tokens": 597,
+      "cost": 0.0021075
+    }
+  }
+}

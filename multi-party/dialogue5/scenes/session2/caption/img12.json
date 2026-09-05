@@ -1,0 +1,36 @@
+{
+  "id": "76b03846-91e1-406e-8b1c-f34e34893d2e",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:23.617511",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 122774,
+    "modified_time": "2026-08-23T22:09:31.678682"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a close-up of a shoe equipped with orange traction spikes, designed for icy or slippery surfaces. The shoe is primarily gray with accents of purple and black, and it's being worn by someone dressed in dark pants. The spikes are attached with metal chains and rubber-like material. The background is a light wooden floor, creating a neutral atmosphere. The focus is on the functionality and design of the traction gear, suggesting a preparedness for outdoor or challenging conditions. No visible text is present.",
+    "final_text": "The image shows a close-up of a shoe equipped with orange traction spikes, designed for icy or slippery surfaces. The shoe is primarily gray with accents of purple and black, and it's being worn by someone dressed in dark pants. The spikes are attached with metal chains and rubber-like material. The background is a light wooden floor, creating a neutral atmosphere. The focus is on the functionality and design of the traction gear, suggesting a preparedness for outdoor or challenging conditions. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426862-xV9AA1BgBkXgPmT15yaU",
+    "created": 1788426862,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 99,
+      "total_tokens": 819,
+      "cost": 0.00279
+    }
+  }
+}

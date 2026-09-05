@@ -1,0 +1,36 @@
+{
+  "id": "898b4926-e4ec-4cbb-b350-da33c5f7d89c",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:28.120740",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session12/image/1.png",
+    "filename": "1.png",
+    "size": 566448,
+    "modified_time": "2026-08-23T21:55:09.884927"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional poster for an exhibition titled \"文脉承续·古籍善本特展,\" which translates to \"Cultural Continuation: Ancient Books and Rare Editions Exhibition.\" It features an open ancient book with visible text: \"道可道，非常道；名可名，非常名,\" meaning \"The way that can be spoken of is not the eternal way; the name that can be named is not the eternal name.\" The exhibition is scheduled from December 30, 2024, to January 3, at Jingyuan Old Bookstore, organized by the city's library and private collectors. The overall mood is scholarly and historical, with ornate red decorative borders enhancing the traditional aesthetic.",
+    "final_text": "The image is a promotional poster for an exhibition titled \"文脉承续·古籍善本特展,\" which translates to \"Cultural Continuation: Ancient Books and Rare Editions Exhibition.\" It features an open ancient book with visible text: \"道可道，非常道；名可名，非常名,\" meaning \"The way that can be spoken of is not the eternal way; the name that can be named is not the eternal name.\" The exhibition is scheduled from December 30, 2024, to January 3, at Jingyuan Old Bookstore, organized by the city's library and private collectors. The overall mood is scholarly and historical, with ornate red decorative borders enhancing the traditional aesthetic.",
+    "token_stats": {
+      "original_tokens": 156,
+      "final_tokens": 156,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427523-AZ9LEVsAVmIiutGKp0NM",
+    "created": 1788427523,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 147,
+      "total_tokens": 586,
+      "cost": 0.0025675
+    }
+  }
+}

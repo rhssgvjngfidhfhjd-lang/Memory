@@ -1,0 +1,36 @@
+{
+  "id": "38d7fc2a-4a89-45ef-a335-d7d98db7b10f",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:58.530223",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session3/image/2.png",
+    "filename": "2.png",
+    "size": 626576,
+    "modified_time": "2026-08-23T21:34:36.773779"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A black and white dog is chewing on a large bone while lying on green grass in a park. Nearby, there's a colorful rubber ball. The scene is calm and relaxed, with trees visible in the background, suggesting a pleasant outdoor setting. No visible text is present.",
+    "final_text": "A black and white dog is chewing on a large bone while lying on green grass in a park. Nearby, there's a colorful rubber ball. The scene is calm and relaxed, with trees visible in the background, suggesting a pleasant outdoor setting. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 55,
+      "final_tokens": 55,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426957-ftATneV4JPrZ8g436vYE",
+    "created": 1788426957,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 54,
+      "total_tokens": 909,
+      "cost": 0.0026775
+    }
+  }
+}

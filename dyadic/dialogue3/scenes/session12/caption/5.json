@@ -1,0 +1,36 @@
+{
+  "id": "688e5318-95f4-4ae0-954d-b3ce3a2433b8",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:03.677241",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session12/image/5.png",
+    "filename": "5.png",
+    "size": 380159,
+    "modified_time": "2026-08-23T21:45:09.603364"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a white tote bag featuring illustrations of a cute brown dog and a fluffy white cat with blue eyes. The dog has a cheerful expression, while the cat looks calm. There is a measurement line next to the bag, indicating a height of 470 mm. The overall atmosphere is playful and charming.",
+    "final_text": "The image shows a white tote bag featuring illustrations of a cute brown dog and a fluffy white cat with blue eyes. The dog has a cheerful expression, while the cat looks calm. There is a measurement line next to the bag, indicating a height of 470 mm. The overall atmosphere is playful and charming.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427383-Nez3yxYnEt9jMkLifcdY",
+    "created": 1788427383,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 62,
+      "total_tokens": 577,
+      "cost": 0.0019075
+    }
+  }
+}

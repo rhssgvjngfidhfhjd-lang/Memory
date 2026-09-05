@@ -1,0 +1,36 @@
+{
+  "id": "b49d4eea-bb72-4a9d-80ec-2b85d84d39c2",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:33.425845",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 561316,
+    "modified_time": "2026-08-23T22:09:16.817291"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an open white drawer containing several transparent plastic boxes, each holding a pair of high-heeled shoes. The boxes are neatly arranged and labeled, with visible text such as \"DO NOT OPEN\" and other labels in different languages. A hand is partially visible at the bottom, suggesting someone is interacting with the drawer. The overall mood is orderly and organized.",
+    "final_text": "The image shows an open white drawer containing several transparent plastic boxes, each holding a pair of high-heeled shoes. The boxes are neatly arranged and labeled, with visible text such as \"DO NOT OPEN\" and other labels in different languages. A hand is partially visible at the bottom, suggesting someone is interacting with the drawer. The overall mood is orderly and organized.",
+    "token_stats": {
+      "original_tokens": 73,
+      "final_tokens": 73,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426808-fUmhISr2YO1Us9HlB1OU",
+    "created": 1788426808,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 75,
+      "total_tokens": 1073,
+      "cost": 0.003245
+    }
+  }
+}

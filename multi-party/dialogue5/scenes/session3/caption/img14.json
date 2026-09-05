@@ -1,0 +1,36 @@
+{
+  "id": "1f12f456-66fd-4112-ba0d-a289faab6fe4",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:37.098045",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 187267,
+    "modified_time": "2026-08-23T22:09:39.274183"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a close-up of a hand holding a printed receipt. The receipt is from a restaurant named \"NEED创意韩式料理,\" indicating a reservation for four people at table B19. It includes a QR code, a timestamp (2024-09-19 16:34:22), and a list of ordered items, such as \"马苏里拉芝士辣炒鸡\" and \"蜂蜜无花果香冰.\" The background is a neutral, possibly indoor setting. The atmosphere is casual and straightforward, typical of a dining experience.",
+    "final_text": "The image shows a close-up of a hand holding a printed receipt. The receipt is from a restaurant named \"NEED创意韩式料理,\" indicating a reservation for four people at table B19. It includes a QR code, a timestamp (2024-09-19 16:34:22), and a list of ordered items, such as \"马苏里拉芝士辣炒鸡\" and \"蜂蜜无花果香冰.\" The background is a neutral, possibly indoor setting. The atmosphere is casual and straightforward, typical of a dining experience.",
+    "token_stats": {
+      "original_tokens": 136,
+      "final_tokens": 136,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426877-K3bd0ipK7aojjdN3aM56",
+    "created": 1788426877,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 116,
+      "total_tokens": 971,
+      "cost": 0.0032975
+    }
+  }
+}

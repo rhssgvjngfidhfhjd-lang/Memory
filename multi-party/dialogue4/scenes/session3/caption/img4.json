@@ -1,0 +1,36 @@
+{
+  "id": "2ce5962a-58ab-4602-9799-bca9e73b8eeb",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:14.035831",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session3/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 188034,
+    "modified_time": "2026-08-23T22:08:57.114159"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a narrow hallway with peeling paint on the walls, leading to a room in the background. The floor is wooden, and a measuring tape is stretched across the hallway, showing measurements in centimeters. In the room, there is a stack of books on a piece of furniture and a laundry basket filled with clothes. The lighting is dim, creating an old and slightly neglected atmosphere.",
+    "final_text": "The image depicts a narrow hallway with peeling paint on the walls, leading to a room in the background. The floor is wooden, and a measuring tape is stretched across the hallway, showing measurements in centimeters. In the room, there is a stack of books on a piece of furniture and a laundry basket filled with clothes. The lighting is dim, creating an old and slightly neglected atmosphere.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426793-x9H8j34dAM4SNiZpOW6V",
+    "created": 1788426793,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 77,
+      "total_tokens": 932,
+      "cost": 0.0029075
+    }
+  }
+}

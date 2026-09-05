@@ -1,0 +1,36 @@
+{
+  "id": "457366bf-07b6-4eb9-be4a-e43368bf7d76",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:35.186872",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session4/image/8.png",
+    "filename": "8.png",
+    "size": 85237,
+    "modified_time": "2026-08-23T21:54:37.468436"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A fluffy cat is exploring a wooden cat house with a large arched entrance. The cat's back is facing outward as it seems to be peering or walking inside. The setting is indoors, next to a window, allowing natural light to brighten the scene. The atmosphere is calm and cozy, suggesting a comfortable environment for the cat. No visible text is present.",
+    "final_text": "A fluffy cat is exploring a wooden cat house with a large arched entrance. The cat's back is facing outward as it seems to be peering or walking inside. The setting is indoors, next to a window, allowing natural light to brighten the scene. The atmosphere is calm and cozy, suggesting a comfortable environment for the cat. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 74,
+      "final_tokens": 74,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427416-srvb4rUCAaBPAnIlbRHq",
+    "created": 1788427416,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 73,
+      "total_tokens": 418,
+      "cost": 0.0015925
+    }
+  }
+}

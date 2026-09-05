@@ -1,0 +1,36 @@
+{
+  "id": "b0547d8d-d896-40aa-aada-b897c38e5b22",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:55.586252",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session3/image/4.jpg",
+    "filename": "4.jpg",
+    "size": 70725,
+    "modified_time": "2026-08-23T21:35:22.607991"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a sheet of paper with Chinese calligraphy neatly written in black ink. A traditional calligraphy brush with a brown handle is placed diagonally across the paper. The paper is divided into a grid, with each square containing a Chinese character. The overall atmosphere is calm and scholarly, highlighting the art of calligraphy.",
+    "final_text": "The image features a sheet of paper with Chinese calligraphy neatly written in black ink. A traditional calligraphy brush with a brown handle is placed diagonally across the paper. The paper is divided into a grid, with each square containing a Chinese character. The overall atmosphere is calm and scholarly, highlighting the art of calligraphy.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427016-r2B4FcIzKAicoUuetOTv",
+    "created": 1788427016,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 65,
+      "total_tokens": 920,
+      "cost": 0.0027875
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "446af74f-2c5c-4fd2-b5bb-4a4a22a5ca13",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:07.945944",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 608678,
+    "modified_time": "2026-08-23T21:57:30.176015"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts two storefronts side by side. On the left is a luxury brand store showcasing handbags, with a sign that reads \"艺术家联名限定款\" (Artist Limited Edition). On the right is a DIY custom workshop with clothing on display, labeled \"DIY定制工坊\" (DIY Custom Workshop). Between them is an arrow pointing up and down with the text \"同一品牌, 不同叙事\" (Same Brand, Different Narrative). Below are strategies for Asian and European markets, emphasizing themes like value, sustainability, and lifestyle. The atmosphere is commercial and informative.",
+    "final_text": "The image depicts two storefronts side by side. On the left is a luxury brand store showcasing handbags, with a sign that reads \"艺术家联名限定款\" (Artist Limited Edition). On the right is a DIY custom workshop with clothing on display, labeled \"DIY定制工坊\" (DIY Custom Workshop). Between them is an arrow pointing up and down with the text \"同一品牌, 不同叙事\" (Same Brand, Different Narrative). Below are strategies for Asian and European markets, emphasizing themes like value, sustainability, and lifestyle. The atmosphere is commercial and informative.",
+    "token_stats": {
+      "original_tokens": 131,
+      "final_tokens": 131,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427687-SbIUUk3TzAQoop1ablHK",
+    "created": 1788427687,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 122,
+      "total_tokens": 561,
+      "cost": 0.0023175
+    }
+  }
+}

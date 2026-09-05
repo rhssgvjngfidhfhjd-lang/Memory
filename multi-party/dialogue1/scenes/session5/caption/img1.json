@@ -1,0 +1,36 @@
+{
+  "id": "eadc5d7f-5b34-4616-a55d-fa9597d8e4b6",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:57.372638",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session5/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 721486,
+    "modified_time": "2026-08-23T22:03:51.278132"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a grocery store aisle with shelves fully stocked with a wide variety of jars and containers, primarily of condiments and sauces. The products are neatly arranged in rows, showcasing a vibrant array of colors and labels. Visible text includes product names and prices, mostly in Chinese, with some English. The atmosphere is orderly and colorful, suggesting a well-organized retail environment.",
+    "final_text": "The image depicts a grocery store aisle with shelves fully stocked with a wide variety of jars and containers, primarily of condiments and sauces. The products are neatly arranged in rows, showcasing a vibrant array of colors and labels. Visible text includes product names and prices, mostly in Chinese, with some English. The atmosphere is orderly and colorful, suggesting a well-organized retail environment.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426595-18TcGG2wslGqUQLw17c5",
+    "created": 1788426595,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 75,
+      "total_tokens": 930,
+      "cost": 0.0028875
+    }
+  }
+}

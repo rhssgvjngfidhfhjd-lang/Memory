@@ -1,0 +1,36 @@
+{
+  "id": "b633cd80-5850-4cdd-bc02-35624a72992e",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:40.863851",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 283905,
+    "modified_time": "2026-08-23T21:57:13.237350"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a peak flow meter on a wooden surface displaying \"380 L/min\" in bright blue numbers. Next to it is a handwritten note with text in Chinese, detailing a medical observation dated April 20, 2024, at 3:15 PM. The text includes symptoms of mild breathing difficulty, treatment using an inhaler, environmental adjustment with an air purifier, and monitoring frequency every 15 minutes. A pen is placed on the note, suggesting recent use. The overall mood is clinical and informative, focusing on health monitoring.",
+    "final_text": "The image features a peak flow meter on a wooden surface displaying \"380 L/min\" in bright blue numbers. Next to it is a handwritten note with text in Chinese, detailing a medical observation dated April 20, 2024, at 3:15 PM. The text includes symptoms of mild breathing difficulty, treatment using an inhaler, environmental adjustment with an air purifier, and monitoring frequency every 15 minutes. A pen is placed on the note, suggesting recent use. The overall mood is clinical and informative, focusing on health monitoring.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427599-TNcdYACZc77DnxpDjFlU",
+    "created": 1788427599,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 109,
+      "total_tokens": 454,
+      "cost": 0.0019525
+    }
+  }
+}

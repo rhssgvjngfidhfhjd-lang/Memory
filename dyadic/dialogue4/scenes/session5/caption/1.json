@@ -1,0 +1,36 @@
+{
+  "id": "d1398d56-07ea-47c0-89b0-ea081b40bdab",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:38.644630",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 737845,
+    "modified_time": "2026-08-23T21:54:50.814997"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a colorful book cover titled \"可爱的猫狗图鉴,\" featuring an illustrated cat-dog hybrid with a playful expression. The cover includes humorous text bubbles in Chinese, such as \"狗屁股，狗不知\" and \"猫屁股，猫知道.\" The book is on a wooden surface near a window. The atmosphere is lighthearted and whimsical, suggesting a fun exploration of cat and dog traits. There are additional books partially visible to the left, indicating a cozy reading environment.",
+    "final_text": "The image shows a colorful book cover titled \"可爱的猫狗图鉴,\" featuring an illustrated cat-dog hybrid with a playful expression. The cover includes humorous text bubbles in Chinese, such as \"狗屁股，狗不知\" and \"猫屁股，猫知道.\" The book is on a wooden surface near a window. The atmosphere is lighthearted and whimsical, suggesting a fun exploration of cat and dog traits. There are additional books partially visible to the left, indicating a cozy reading environment.",
+    "token_stats": {
+      "original_tokens": 127,
+      "final_tokens": 127,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427418-OqiBz2IFC9Q4IiRh64Ou",
+    "created": 1788427418,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 101,
+      "total_tokens": 818,
+      "cost": 0.0028025
+    }
+  }
+}

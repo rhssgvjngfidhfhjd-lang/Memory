@@ -1,0 +1,36 @@
+{
+  "id": "b48e13ec-5577-4886-bd3a-96ea5e3fa21e",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:13.827548",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 364045,
+    "modified_time": "2026-08-23T22:09:36.846471"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a metallic suitcase with a ribbed texture placed on a tiled floor. It has four wheels and a top handle. The suitcase is positioned in front of a grey upholstered sofa. The visible text on the suitcase's lock reads \"RIMOWA.\" The scene is indoors and has a calm, neutral atmosphere.",
+    "final_text": "The image shows a metallic suitcase with a ribbed texture placed on a tiled floor. It has four wheels and a top handle. The suitcase is positioned in front of a grey upholstered sofa. The visible text on the suitcase's lock reads \"RIMOWA.\" The scene is indoors and has a calm, neutral atmosphere.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426852-A2QsZyAndjYCVnlfhWTu",
+    "created": 1788426852,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 65,
+      "total_tokens": 920,
+      "cost": 0.0027875
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "43dc4793-960d-4820-846c-79758c4b4647",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:49.670890",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session7/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 114103,
+    "modified_time": "2026-08-23T21:30:30.888140"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a glass cup filled with red hibiscus tea, garnished with delicate white flowers floating on top. The cup sits on a glass saucer surrounded by scattered dried hibiscus petals. The background is a textured turquoise surface, creating a vibrant contrast. The overall mood is refreshing and inviting, with a focus on natural and floral elements. There is no visible text in the image.",
+    "final_text": "The image features a glass cup filled with red hibiscus tea, garnished with delicate white flowers floating on top. The cup sits on a glass saucer surrounded by scattered dried hibiscus petals. The background is a textured turquoise surface, creating a vibrant contrast. The overall mood is refreshing and inviting, with a focus on natural and floral elements. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426587-frSurnBjTUhVY2AkahCB",
+    "created": 1788426587,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 79,
+      "total_tokens": 518,
+      "cost": 0.0018875
+    }
+  }
+}

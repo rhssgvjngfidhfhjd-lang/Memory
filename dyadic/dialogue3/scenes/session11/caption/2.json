@@ -1,0 +1,36 @@
+{
+  "id": "f8db44c3-3c85-4e9d-9a13-807340f25761",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:56.731394",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 580224,
+    "modified_time": "2026-08-23T21:45:18.835406"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a collection of items themed with illustrations of cute cartoon dogs. There are two smartphone cases, each with a dog holding a cup, and a circular sticker with a similar design. A blue and white notebook and a paper bag display the same dog illustrations, accompanied by the text \"Xiu Gou Love Story\" and Chinese characters. A disposable coffee cup with the \"luckin coffee\" logo is also present. The atmosphere is playful and lighthearted, characterized by the charming dog graphics.",
+    "final_text": "The image features a collection of items themed with illustrations of cute cartoon dogs. There are two smartphone cases, each with a dog holding a cup, and a circular sticker with a similar design. A blue and white notebook and a paper bag display the same dog illustrations, accompanied by the text \"Xiu Gou Love Story\" and Chinese characters. A disposable coffee cup with the \"luckin coffee\" logo is also present. The atmosphere is playful and lighthearted, characterized by the charming dog graphics.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427374-ZvyKUqkBMWK5XHAsmizq",
+    "created": 1788427374,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 99,
+      "total_tokens": 614,
+      "cost": 0.0022775
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "dbead54c-50b2-4184-978d-fdfff30c6509",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:57.133455",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 137234,
+    "modified_time": "2026-08-23T22:07:34.832795"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cute, cartoon-like yellow creature with a small orange tuft on its head, standing in a fruit market. It holds a slice of watermelon, surrounded by baskets of colorful fruits like pineapples and melons. The scene is vibrant and cheerful, with no visible text. The atmosphere is lighthearted and playful, conveying a sense of whimsy and delight.",
+    "final_text": "The image depicts a cute, cartoon-like yellow creature with a small orange tuft on its head, standing in a fruit market. It holds a slice of watermelon, surrounded by baskets of colorful fruits like pineapples and melons. The scene is vibrant and cheerful, with no visible text. The atmosphere is lighthearted and playful, conveying a sense of whimsy and delight.",
+    "token_stats": {
+      "original_tokens": 80,
+      "final_tokens": 80,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426715-swRVrM1x0wwXpN6Xbfcp",
+    "created": 1788426715,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 75,
+      "total_tokens": 930,
+      "cost": 0.0028875
+    }
+  }
+}

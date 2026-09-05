@@ -1,0 +1,36 @@
+{
+  "id": "46a89d89-5c0c-4de7-9a5b-837cdafaada6",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:15.332060",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 382987,
+    "modified_time": "2026-08-23T21:39:26.069579"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A cat is lying on its back on a soft, white surface, wearing a pink hoodie with a heart design. The cat looks relaxed and comfortable, with its paws slightly raised. The atmosphere is cozy and playful, with a sense of warmth and cuteness. No visible text is present.",
+    "final_text": "A cat is lying on its back on a soft, white surface, wearing a pink hoodie with a heart design. The cat looks relaxed and comfortable, with its paws slightly raised. The atmosphere is cozy and playful, with a sense of warmth and cuteness. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 59,
+      "final_tokens": 59,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427215-fn9dd5Wormikmk2xRAxF",
+    "created": 1788427215,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 58,
+      "total_tokens": 913,
+      "cost": 0.0027175
+    }
+  }
+}

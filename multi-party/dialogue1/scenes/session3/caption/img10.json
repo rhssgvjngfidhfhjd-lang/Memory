@@ -1,0 +1,36 @@
+{
+  "id": "456f4c7c-1ff1-42c5-887e-c6a3c5c25bb7",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:30.595778",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 510664,
+    "modified_time": "2026-08-23T22:03:50.455398"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a piece of food, possibly a breaded cutlet or patty, that appears overcooked with a dark, crispy exterior. It is placed in a decorative bowl with a red scalloped edge and a floral pattern. The scene suggests a kitchen setting, and the mood could be described as casual and homey. There is no visible text in the image.",
+    "final_text": "The image depicts a piece of food, possibly a breaded cutlet or patty, that appears overcooked with a dark, crispy exterior. It is placed in a decorative bowl with a red scalloped edge and a floral pattern. The scene suggests a kitchen setting, and the mood could be described as casual and homey. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426569-v0unrMpPem8GjKcZEhCd",
+    "created": 1788426569,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 76,
+      "total_tokens": 931,
+      "cost": 0.0028975
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "7cfff283-836f-490f-bdc8-8d91de65776f",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:56.591913",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session9/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 147035,
+    "modified_time": "2026-08-23T21:30:40.877443"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a group of people gathered around a table outdoors at night, illuminated by string lights. They are holding sparklers, creating a celebratory atmosphere. The scene appears joyful and lively, with people smiling and interacting closely. A table is set with wine glasses and plates, suggesting a festive gathering. The mood is warm and convivial.",
+    "final_text": "The image depicts a group of people gathered around a table outdoors at night, illuminated by string lights. They are holding sparklers, creating a celebratory atmosphere. The scene appears joyful and lively, with people smiling and interacting closely. A table is set with wine glasses and plates, suggesting a festive gathering. The mood is warm and convivial.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426595-Khit3pJR9nGps27MOCo5",
+    "created": 1788426595,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 69,
+      "total_tokens": 1264,
+      "cost": 0.0036775
+    }
+  }
+}

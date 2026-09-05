@@ -1,0 +1,36 @@
+{
+  "id": "b1337ff7-123a-41cc-9a42-d4dd3e1bda59",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:44.958070",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session2/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 402309,
+    "modified_time": "2026-08-23T21:38:38.234595"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts two servers in a restaurant setting. A woman in the foreground is smiling, holding a notepad and pen, suggesting she's ready to take orders. She wears a white shirt and dark vest. In the background, a man, also in a white shirt and dark vest, is turned away, appearing to speak or gesture with his hands. The restaurant has a warm atmosphere with wooden furniture and large windows letting in natural light. The mood is professional and welcoming.",
+    "final_text": "The image depicts two servers in a restaurant setting. A woman in the foreground is smiling, holding a notepad and pen, suggesting she's ready to take orders. She wears a white shirt and dark vest. In the background, a man, also in a white shirt and dark vest, is turned away, appearing to speak or gesture with his hands. The restaurant has a warm atmosphere with wooden furniture and large windows letting in natural light. The mood is professional and welcoming.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427184-z6aEJb2LfqvlodO6A9DF",
+    "created": 1788427184,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 94,
+      "total_tokens": 949,
+      "cost": 0.0030775
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "312371a6-7c38-4369-963a-25004e50bad4",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:19.673091",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session3/image/2.png",
+    "filename": "2.png",
+    "size": 1083295,
+    "modified_time": "2026-08-23T21:45:36.108937"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a collage featuring a futuristic character in a video game setting. The central figure is a white-haired individual in a gold and white armored outfit with a high-tech design. Surrounding images show the character in various action poses, wielding a glowing weapon and executing powerful attacks. The scenes are vibrant with dynamic energy effects and a sci-fi atmosphere. No visible text is present.",
+    "final_text": "The image is a collage featuring a futuristic character in a video game setting. The central figure is a white-haired individual in a gold and white armored outfit with a high-tech design. Surrounding images show the character in various action poses, wielding a glowing weapon and executing powerful attacks. The scenes are vibrant with dynamic energy effects and a sci-fi atmosphere. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427339-wouQs3MJJ8cuWLU8fU7W",
+    "created": 1788427339,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 77,
+      "total_tokens": 1272,
+      "cost": 0.0037575
+    }
+  }
+}

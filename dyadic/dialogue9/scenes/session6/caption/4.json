@@ -1,0 +1,36 @@
+{
+  "id": "6ee3ca6a-dbbd-4072-9cf7-f7cf094af396",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:02.480867",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session6/image/4.png",
+    "filename": "4.png",
+    "size": 113163,
+    "modified_time": "2026-08-23T22:01:21.606627"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a planning table titled \"社区二手物品交换集市策划分工表,\" which translates to \"Community Second-hand Goods Exchange Market Planning Division Table.\" It features columns labeled \"角色\" (Role), \"核心职责\" (Core Responsibilities), \"具体任务\" (Specific Tasks), and \"场景价值\" (Scene Value). Two roles, 赵小紫 and 李一凡, are listed with their respective responsibilities and tasks. The text outlines activities such as organizing events, technical support, and promoting community engagement. The overall mood is organized and focused on community collaboration and resource management.",
+    "final_text": "The image displays a planning table titled \"社区二手物品交换集市策划分工表,\" which translates to \"Community Second-hand Goods Exchange Market Planning Division Table.\" It features columns labeled \"角色\" (Role), \"核心职责\" (Core Responsibilities), \"具体任务\" (Specific Tasks), and \"场景价值\" (Scene Value). Two roles, 赵小紫 and 李一凡, are listed with their respective responsibilities and tasks. The text outlines activities such as organizing events, technical support, and promoting community engagement. The overall mood is organized and focused on community collaboration and resource management.",
+    "token_stats": {
+      "original_tokens": 138,
+      "final_tokens": 138,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427739-Iu2nGcvLEDpzCT0XoZ7h",
+    "created": 1788427739,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 125,
+      "total_tokens": 1123,
+      "cost": 0.003745
+    }
+  }
+}

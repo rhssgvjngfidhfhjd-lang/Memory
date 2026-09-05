@@ -1,0 +1,36 @@
+{
+  "id": "e5740299-b7ec-428a-b945-3a99f1ee3490",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:13.441274",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session8/image/4.png",
+    "filename": "4.png",
+    "size": 5501830,
+    "modified_time": "2026-08-23T21:31:51.748514"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a neatly arranged set of personal care items on a wooden surface. There is a clear bottle with a white cap labeled with blue text, featuring a logo and Chinese characters. Next to it, a blue folded towel displays the same logo and text. A white bar of soap is placed beside the towel. The overall atmosphere is clean and organized, suggesting a focus on hygiene or amenities provided by a company, possibly in a restroom or service area. The text includes \"公交公司\" and \"内部福利.\"",
+    "final_text": "The image depicts a neatly arranged set of personal care items on a wooden surface. There is a clear bottle with a white cap labeled with blue text, featuring a logo and Chinese characters. Next to it, a blue folded towel displays the same logo and text. A white bar of soap is placed beside the towel. The overall atmosphere is clean and organized, suggesting a focus on hygiene or amenities provided by a company, possibly in a restroom or service area. The text includes \"公交公司\" and \"内部福利.\"",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426670-VbGxudo6Mtz67daH36f8",
+    "created": 1788426670,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 103,
+      "total_tokens": 958,
+      "cost": 0.0031675
+    }
+  }
+}

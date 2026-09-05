@@ -1,0 +1,36 @@
+{
+  "id": "bc557dcf-e25a-4bf6-888c-2de63cb61119",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:49.725266",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session13/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 600686,
+    "modified_time": "2026-08-23T21:31:34.883498"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two flowcharts. On the left, a white background displays a professional interaction process for an event website with steps: user registration, event sign-up, information submission, approval, and participation. Text is in Chinese with corresponding actions like \"fill in information\" and \"submit application.\" On the right, a black background outlines a thematic flow with elements labeled as Topic, Condition, Reward, and Channel, connected by arrows. The mood is informative and structured, focusing on process visualization.",
+    "final_text": "The image features two flowcharts. On the left, a white background displays a professional interaction process for an event website with steps: user registration, event sign-up, information submission, approval, and participation. Text is in Chinese with corresponding actions like \"fill in information\" and \"submit application.\" On the right, a black background outlines a thematic flow with elements labeled as Topic, Condition, Reward, and Channel, connected by arrows. The mood is informative and structured, focusing on process visualization.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426769-DdClg7H7KGyMUakVXo6b",
+    "created": 1788426769,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 99,
+      "total_tokens": 1634,
+      "cost": 0.0048275
+    }
+  }
+}

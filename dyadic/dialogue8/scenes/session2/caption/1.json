@@ -1,0 +1,36 @@
+{
+  "id": "afd0666b-feb1-4fb3-8882-0fd0ec690c79",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:29.160717",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 659337,
+    "modified_time": "2026-08-23T21:58:23.409343"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a dramatic scene of a car driving along a dusty, winding road in a vast, rugged landscape. The car is creating a trail of dust as it moves, capturing a sense of speed and adventure. The sky is filled with dramatic clouds, and the sun is setting, casting a warm, golden hue over the scene. The atmosphere is dynamic and adventurous, with an emphasis on the thrilling motion of the car against the backdrop of nature. No visible text is present in the image.",
+    "final_text": "The image depicts a dramatic scene of a car driving along a dusty, winding road in a vast, rugged landscape. The car is creating a trail of dust as it moves, capturing a sense of speed and adventure. The sky is filled with dramatic clouds, and the sun is setting, casting a warm, golden hue over the scene. The atmosphere is dynamic and adventurous, with an emphasis on the thrilling motion of the car against the backdrop of nature. No visible text is present in the image.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427647-Nt11TsrFveKsKNwBUyOS",
+    "created": 1788427647,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 100,
+      "total_tokens": 820,
+      "cost": 0.0028
+    }
+  }
+}

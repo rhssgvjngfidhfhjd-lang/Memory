@@ -1,0 +1,36 @@
+{
+  "id": "61aabd49-bb98-4274-b032-848520262e55",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:57.446966",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 298267,
+    "modified_time": "2026-08-23T21:56:11.577628"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a digital dashboard displaying health metrics. It features a line graph titled \"心率变性周趋势\" (Heart Rate Variability Weekly Trend) with a monthly date axis and data points. Below, latency times are listed in milliseconds from 06/01 to 06/07, with an average of 78ms. Circular progress indicators show percentages for \"恢复率\" (Recovery Rate) at 86%, \"睡眠质量评分\" (Sleep Quality Score) at 92%, \"压力水平分析\" (Stress Level Analysis) at 62%, \"日间精力分布\" (Daytime Energy Distribution) at 75%, and \"情绪稳定性指数\" (Emotional Stability Index) at 81%. The overall mood is analytical and informative, emphasizing personal health monitoring.",
+    "final_text": "The image is a digital dashboard displaying health metrics. It features a line graph titled \"心率变性周趋势\" (Heart Rate Variability Weekly Trend) with a monthly date axis and data points. Below, latency times are listed in milliseconds from 06/01 to 06/07, with an average of 78ms. Circular progress indicators show percentages for \"恢复率\" (Recovery Rate) at 86%, \"睡眠质量评分\" (Sleep Quality Score) at 92%, \"压力水平分析\" (Stress Level Analysis) at 62%, \"日间精力分布\" (Daytime Energy Distribution) at 75%, and \"情绪稳定性指数\" (Emotional Stability Index) at 81%. The overall mood is analytical and informative, emphasizing personal health monitoring.",
+    "token_stats": {
+      "original_tokens": 185,
+      "final_tokens": 185,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427554-49N77kpLtw402VTxRo2q",
+    "created": 1788427554,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 165,
+      "total_tokens": 604,
+      "cost": 0.0027475
+    }
+  }
+}

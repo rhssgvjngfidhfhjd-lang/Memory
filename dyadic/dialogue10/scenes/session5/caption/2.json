@@ -1,0 +1,36 @@
+{
+  "id": "06f93048-b29c-45b5-b08f-6c9c7b25803d",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:36.531213",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 7214151,
+    "modified_time": "2026-08-23T21:30:42.046723"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a golden retriever lying on a grassy field, with its back turned towards the camera. The dog appears relaxed and is gazing off into the distance. The scene conveys a peaceful and serene atmosphere with no visible text or interactions present. The focus is on the dog's soft fur and the natural surroundings.",
+    "final_text": "The image depicts a golden retriever lying on a grassy field, with its back turned towards the camera. The dog appears relaxed and is gazing off into the distance. The scene conveys a peaceful and serene atmosphere with no visible text or interactions present. The focus is on the dog's soft fur and the natural surroundings.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426574-GsndkSrNqbSNlEJzUKu6",
+    "created": 1788426574,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 64,
+      "total_tokens": 781,
+      "cost": 0.0024325
+    }
+  }
+}

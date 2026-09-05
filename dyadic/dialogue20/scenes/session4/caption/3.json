@@ -1,0 +1,36 @@
+{
+  "id": "90332dd7-2335-4b2b-a1b2-0db4b21e7ed5",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:43.569241",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 237903,
+    "modified_time": "2026-08-23T21:42:22.557545"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a transparent plastic storage box with a black handle on a wooden floor. The box features a label with text and images showing storage usage. In the foreground, there is an orange arrow and circle indicating the box's corner. Natural light filters in from the background, suggesting a bright, organized atmosphere.",
+    "final_text": "The image depicts a transparent plastic storage box with a black handle on a wooden floor. The box features a label with text and images showing storage usage. In the foreground, there is an orange arrow and circle indicating the box's corner. Natural light filters in from the background, suggesting a bright, organized atmosphere.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427302-kJGI4h5Kf25kusvrTnwX",
+    "created": 1788427302,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 62,
+      "total_tokens": 577,
+      "cost": 0.0019075
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "00c0df5e-b60c-40ce-a981-d5c71994cdb4",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:34.252396",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 298411,
+    "modified_time": "2026-08-23T22:07:11.378684"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts two hands holding large themed cups with detailed lids featuring decorative figurines of creatures. The cups have imagery and text related to \"Avatar\" and \"The Seed Bearer.\" The background features fiery visuals, enhancing a dramatic and adventurous atmosphere. The setting suggests a promotional or themed event.",
+    "final_text": "The image depicts two hands holding large themed cups with detailed lids featuring decorative figurines of creatures. The cups have imagery and text related to \"Avatar\" and \"The Seed Bearer.\" The background features fiery visuals, enhancing a dramatic and adventurous atmosphere. The setting suggests a promotional or themed event.",
+    "token_stats": {
+      "original_tokens": 59,
+      "final_tokens": 59,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426695-HKwGJRH45B7g16XOLGNV",
+    "created": 1788426695,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 60,
+      "total_tokens": 780,
+      "cost": 0.0024
+    }
+  }
+}

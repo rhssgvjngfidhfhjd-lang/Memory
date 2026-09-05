@@ -1,0 +1,36 @@
+{
+  "id": "6eac83aa-7a6b-464b-bead-174f7e2ad95e",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:39.961750",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session1/image/3.png",
+    "filename": "3.png",
+    "size": 1375719,
+    "modified_time": "2026-08-23T21:37:59.764102"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a collage of nine plates featuring artfully presented dishes. Top left shows sushi rolls with decorative sauce lines. Next is a slice of cheesecake with chocolate drizzle and fruit garnish. Beside it, a gourmet dessert with vibrant sauces. Below, a chocolate cake with \"SMILE\" written in sauce. A colorful fruit salad drizzled with white sauce is next. The centerpiece is a plate with artistic sauce patterns and a small salad. Bottom right displays a grilled steak with vegetables. The overall mood is elegant and appetizing, showcasing culinary art.",
+    "final_text": "The image is a collage of nine plates featuring artfully presented dishes. Top left shows sushi rolls with decorative sauce lines. Next is a slice of cheesecake with chocolate drizzle and fruit garnish. Beside it, a gourmet dessert with vibrant sauces. Below, a chocolate cake with \"SMILE\" written in sauce. A colorful fruit salad drizzled with white sauce is next. The centerpiece is a plate with artistic sauce patterns and a small salad. Bottom right displays a grilled steak with vegetables. The overall mood is elegant and appetizing, showcasing culinary art.",
+    "token_stats": {
+      "original_tokens": 114,
+      "final_tokens": 114,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427178-xbosMSMqiYmeSZBSE7Ek",
+    "created": 1788427178,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 111,
+      "total_tokens": 966,
+      "cost": 0.0032475
+    }
+  }
+}

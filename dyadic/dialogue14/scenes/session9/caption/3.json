@@ -1,0 +1,36 @@
+{
+  "id": "cfc9fe7b-6c9e-44fa-b2c5-9baa31246823",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:20.651288",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session9/image/3.webp",
+    "filename": "3.webp",
+    "size": 14968,
+    "modified_time": "2026-08-23T21:33:33.579035"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic installation featuring a series of illuminated geometric frames, creating a tunnel-like effect with bright, linear lights. A person stands to the right, observing the structure, adding a sense of scale and interaction. The atmosphere is modern and immersive, with a focus on light and space. Visible text includes \"gettyimages\" and \"Credit: Pacific Press,\" conveying the source and credit information. The overall mood is intriguing and contemplative.",
+    "final_text": "The image depicts a futuristic installation featuring a series of illuminated geometric frames, creating a tunnel-like effect with bright, linear lights. A person stands to the right, observing the structure, adding a sense of scale and interaction. The atmosphere is modern and immersive, with a focus on light and space. Visible text includes \"gettyimages\" and \"Credit: Pacific Press,\" conveying the source and credit information. The overall mood is intriguing and contemplative.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426918-qwvElfQFPXNULRAIoXwk",
+    "created": 1788426918,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 91,
+      "total_tokens": 391,
+      "cost": 0.00166
+    }
+  }
+}

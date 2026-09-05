@@ -1,0 +1,36 @@
+{
+  "id": "06fc6297-524c-4aa0-aa4d-4c379356aa98",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:19.595492",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session4/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 505716,
+    "modified_time": "2026-08-23T22:07:59.066963"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a bowl of spicy noodle soup, featuring thin noodles immersed in a vibrant red broth. The dish is garnished with green onions, leafy greens, and a fried egg. The noodles are neatly arranged, and the broth is seasoned with visible chili oil and sesame seeds, giving it a rich, appetizing appearance. The plate has a decorative blue and white pattern, contributing to a cozy and inviting atmosphere. The overall mood is warm and comforting, evoking a sense of indulgence and satisfaction.",
+    "final_text": "The image depicts a bowl of spicy noodle soup, featuring thin noodles immersed in a vibrant red broth. The dish is garnished with green onions, leafy greens, and a fried egg. The noodles are neatly arranged, and the broth is seasoned with visible chili oil and sesame seeds, giving it a rich, appetizing appearance. The plate has a decorative blue and white pattern, contributing to a cozy and inviting atmosphere. The overall mood is warm and comforting, evoking a sense of indulgence and satisfaction.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426740-xm2a7fPiLCQ5dj0i8ltJ",
+    "created": 1788426740,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 101,
+      "total_tokens": 956,
+      "cost": 0.0031475
+    }
+  }
+}

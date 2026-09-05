@@ -1,0 +1,36 @@
+{
+  "id": "706d2918-0654-437b-955e-007e3f1d5c86",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:57.269340",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session5/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 21782,
+    "modified_time": "2026-08-23T21:31:07.448723"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a bustling kitchen scene. Two chefs in white uniforms are actively working. One chef is facing the stove, and the other is possibly preparing ingredients. The kitchen features stainless steel equipment, including pots and pans on a large stove with an overhead exhaust hood. A variety of food items, including chopped vegetables, are visible on the counter. The atmosphere is busy and focused, typical of a professional kitchen setting.",
+    "final_text": "The image depicts a bustling kitchen scene. Two chefs in white uniforms are actively working. One chef is facing the stove, and the other is possibly preparing ingredients. The kitchen features stainless steel equipment, including pots and pans on a large stove with an overhead exhaust hood. A variety of food items, including chopped vegetables, are visible on the counter. The atmosphere is busy and focused, typical of a professional kitchen setting.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426655-0J7AnPoOvaj0O16X0OSB",
+    "created": 1788426655,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 83,
+      "total_tokens": 428,
+      "cost": 0.0016925
+    }
+  }
+}

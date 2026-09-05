@@ -1,0 +1,36 @@
+{
+  "id": "3af0e3e9-803d-48ec-b99c-992912608977",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:44.862266",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session15/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 511033,
+    "modified_time": "2026-08-23T21:34:24.217976"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a custom-built PC with a transparent side panel showcasing intricate liquid cooling tubes and components. The case is labeled \"Lian Li\" and \"Bäuer.\" The setup is placed outdoors on a driveway, with a house and a vehicle in the background. The atmosphere is calm and technical, highlighting the craftsmanship of the PC build. Lush green plants add a touch of nature to the scene.",
+    "final_text": "The image depicts a custom-built PC with a transparent side panel showcasing intricate liquid cooling tubes and components. The case is labeled \"Lian Li\" and \"Bäuer.\" The setup is placed outdoors on a driveway, with a house and a vehicle in the background. The atmosphere is calm and technical, highlighting the craftsmanship of the PC build. Lush green plants add a touch of nature to the scene.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427004-RKdNA78YYG9rPP0G0xxN",
+    "created": 1788427004,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 82,
+      "total_tokens": 937,
+      "cost": 0.0029575
+    }
+  }
+}

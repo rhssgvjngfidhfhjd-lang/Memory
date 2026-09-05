@@ -1,0 +1,36 @@
+{
+  "id": "d34a9654-9509-422b-90b0-4ee8df2ea5bf",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:24.096032",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session13/image/2.png",
+    "filename": "2.png",
+    "size": 1534025,
+    "modified_time": "2026-08-23T21:32:31.692241"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a serene outdoor scene with four young people sitting on a grassy field during sunset. A golden retriever is lying contentedly in the foreground. One person is playing a guitar while others are casually gathered around, suggesting a relaxed, joyful atmosphere. The visible watermark text reads \"699pic.com\" in the center. The setting sun casts a warm glow, enhancing the peaceful mood.",
+    "final_text": "The image depicts a serene outdoor scene with four young people sitting on a grassy field during sunset. A golden retriever is lying contentedly in the foreground. One person is playing a guitar while others are casually gathered around, suggesting a relaxed, joyful atmosphere. The visible watermark text reads \"699pic.com\" in the center. The setting sun casts a warm glow, enhancing the peaceful mood.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426862-cJIkim6K95uGwEQJBPoY",
+    "created": 1788426862,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 78,
+      "total_tokens": 1273,
+      "cost": 0.0037675
+    }
+  }
+}

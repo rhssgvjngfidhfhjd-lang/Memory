@@ -1,0 +1,36 @@
+{
+  "id": "595eaac4-6729-4084-9c51-71d5bfd6ec70",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:35.265241",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session2/image/2.png",
+    "filename": "2.png",
+    "size": 165115,
+    "modified_time": "2026-08-23T21:55:13.871749"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a package of \"Rice Flour\" by the brand Guanmaimeng. The packaging is green and white with an image of green rice balls filled with red bean paste on a plate. Visible text includes product details and usage suggestions, stating \"净含量: 1千克\" (net weight: 1 kg) and \"精制细度\" (refined fineness). A red label reads \"京喜自营 包邮\" (Jingxi self-operated, free shipping). Below, there are options for purchasing 1000g or 2000g, with a price of ¥5.99. The atmosphere is promotional and informative.",
+    "final_text": "The image displays a package of \"Rice Flour\" by the brand Guanmaimeng. The packaging is green and white with an image of green rice balls filled with red bean paste on a plate. Visible text includes product details and usage suggestions, stating \"净含量: 1千克\" (net weight: 1 kg) and \"精制细度\" (refined fineness). A red label reads \"京喜自营 包邮\" (Jingxi self-operated, free shipping). Below, there are options for purchasing 1000g or 2000g, with a price of ¥5.99. The atmosphere is promotional and informative.",
+    "token_stats": {
+      "original_tokens": 147,
+      "final_tokens": 147,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427474-sfB3mkxCbP2JuMTrGNqs",
+    "created": 1788427474,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 136,
+      "total_tokens": 651,
+      "cost": 0.0026475
+    }
+  }
+}

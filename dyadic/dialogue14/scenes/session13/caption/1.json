@@ -1,0 +1,36 @@
+{
+  "id": "425d63df-dddc-4de5-8126-343b5a01c1ac",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:35.177686",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session13/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 45364,
+    "modified_time": "2026-08-23T21:32:57.446486"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features three laptops of different sizes placed side by side on a white surface. From left to right, their screen sizes are labeled as 13\", 15\", and 17\". A small plant is situated behind the laptops. The text \"BEST LAPTOP SCREEN SIZE?\" is prominently displayed at the top and bottom. The scene has a neutral, informative atmosphere, focusing on comparing laptop screen sizes.",
+    "final_text": "The image features three laptops of different sizes placed side by side on a white surface. From left to right, their screen sizes are labeled as 13\", 15\", and 17\". A small plant is situated behind the laptops. The text \"BEST LAPTOP SCREEN SIZE?\" is prominently displayed at the top and bottom. The scene has a neutral, informative atmosphere, focusing on comparing laptop screen sizes.",
+    "token_stats": {
+      "original_tokens": 81,
+      "final_tokens": 81,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426935-6pBMWXOnXYjs4jY5zewS",
+    "created": 1788426935,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 81,
+      "total_tokens": 596,
+      "cost": 0.0020975
+    }
+  }
+}

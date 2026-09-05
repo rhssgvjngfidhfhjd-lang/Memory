@@ -1,0 +1,36 @@
+{
+  "id": "c620c15c-6ca3-4c37-a747-b9753fdc0f7c",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:04.532006",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 143240,
+    "modified_time": "2026-08-23T21:55:28.118851"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a screenshot of a webpage with textual content in Chinese, detailing the biography and career of a Chinese actress. The text mentions her birthdate and birthplace, along with her involvement in various films, TV dramas, and theater productions from 2003 to 2025. Specific works are listed, such as \"战争II\" and \"因法之名.\" Additional sections include \"人物关系\" (Relationships) and \"相关星图\" (Related Star Map). The mood is informational and documentary, with a structured layout and links to more content, indicated by small icons and numerical annotations.",
+    "final_text": "The image is a screenshot of a webpage with textual content in Chinese, detailing the biography and career of a Chinese actress. The text mentions her birthdate and birthplace, along with her involvement in various films, TV dramas, and theater productions from 2003 to 2025. Specific works are listed, such as \"战争II\" and \"因法之名.\" Additional sections include \"人物关系\" (Relationships) and \"相关星图\" (Related Star Map). The mood is informational and documentary, with a structured layout and links to more content, indicated by small icons and numerical annotations.",
+    "token_stats": {
+      "original_tokens": 127,
+      "final_tokens": 127,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427501-OfrLC4VYcxtTZL9i6Unx",
+    "created": 1788427501,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 121,
+      "total_tokens": 1119,
+      "cost": 0.003705
+    }
+  }
+}

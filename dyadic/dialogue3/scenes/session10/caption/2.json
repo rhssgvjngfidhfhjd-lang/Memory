@@ -1,0 +1,36 @@
+{
+  "id": "0f9ae9c2-d4d9-4daf-a914-c22576fb56cd",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:53.135008",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session10/image/2.png",
+    "filename": "2.png",
+    "size": 949213,
+    "modified_time": "2026-08-23T21:42:55.228427"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a dining room with a large round table at its center, surrounded by several chairs. The table is cluttered with empty plates, bowls, and chopsticks, indicating a recently finished meal. Large windows offer a view of a lush garden with trees and a patio area featuring a table and umbrella. The interior lighting is warm, creating a cozy atmosphere. There are no people present in the scene, and the room appears to be part of a modern, elegant home or restaurant.",
+    "final_text": "The image depicts a dining room with a large round table at its center, surrounded by several chairs. The table is cluttered with empty plates, bowls, and chopsticks, indicating a recently finished meal. Large windows offer a view of a lush garden with trees and a patio area featuring a table and umbrella. The interior lighting is warm, creating a cozy atmosphere. There are no people present in the scene, and the room appears to be part of a modern, elegant home or restaurant.",
+    "token_stats": {
+      "original_tokens": 98,
+      "final_tokens": 98,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427371-eLCp8sJ55Hx1NkKWupyK",
+    "created": 1788427371,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 98,
+      "total_tokens": 613,
+      "cost": 0.0022675
+    }
+  }
+}

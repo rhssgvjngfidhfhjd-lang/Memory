@@ -1,0 +1,36 @@
+{
+  "id": "f8281e37-99a9-4ab6-bb5d-7a95a8103eec",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:04.900202",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session6/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 22649,
+    "modified_time": "2026-08-23T21:32:02.220107"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a social media post with a green background. The post includes a profile picture and the username \"小民.\" It has a five-star rating and a date stamp of \"2023-01-01 13:40 上海.\" The post content is in Chinese, expressing admiration for a production that discusses cultural confidence. It mentions the storytelling of \"Journey to the West\" from a lesser-known perspective, highlighting imaginative and visually unique elements. There are 916 likes indicated at the bottom. The overall mood is positive and appreciative.",
+    "final_text": "The image displays a social media post with a green background. The post includes a profile picture and the username \"小民.\" It has a five-star rating and a date stamp of \"2023-01-01 13:40 上海.\" The post content is in Chinese, expressing admiration for a production that discusses cultural confidence. It mentions the storytelling of \"Journey to the West\" from a lesser-known perspective, highlighting imaginative and visually unique elements. There are 916 likes indicated at the bottom. The overall mood is positive and appreciative.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426722-kkS0gMSBGmsLVKyNV5VG",
+    "created": 1788426722,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 108,
+      "total_tokens": 453,
+      "cost": 0.0019425
+    }
+  }
+}

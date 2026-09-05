@@ -1,0 +1,36 @@
+{
+  "id": "ad215840-2588-466d-93ad-f0444c46351f",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:28.527193",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session13/image/2.png",
+    "filename": "2.png",
+    "size": 1202039,
+    "modified_time": "2026-08-23T21:36:12.731857"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a flowchart diagram with a structured hierarchy. It has multiple branching sections with boxes containing Chinese text. The chart is divided into categories such as \"三大技术支柱\" (Three Major Technology Pillars), \"防伪的标识\" (Anti-counterfeiting Identifiers), \"反Deepfake数字水印系统\" (Anti-Deepfake Digital Watermark System), \"应变方案\" (Response Plan), and \"社会价值\" (Social Value). Each category further branches into subcategories, detailing specific processes or strategies. The overall atmosphere is informative and organized, suggesting a systematic approach to addressing technological challenges.",
+    "final_text": "The image is a flowchart diagram with a structured hierarchy. It has multiple branching sections with boxes containing Chinese text. The chart is divided into categories such as \"三大技术支柱\" (Three Major Technology Pillars), \"防伪的标识\" (Anti-counterfeiting Identifiers), \"反Deepfake数字水印系统\" (Anti-Deepfake Digital Watermark System), \"应变方案\" (Response Plan), and \"社会价值\" (Social Value). Each category further branches into subcategories, detailing specific processes or strategies. The overall atmosphere is informative and organized, suggesting a systematic approach to addressing technological challenges.",
+    "token_stats": {
+      "original_tokens": 138,
+      "final_tokens": 138,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427105-lmfQ7n8EBonXBOi8E8g1",
+    "created": 1788427105,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 129,
+      "total_tokens": 1664,
+      "cost": 0.0051275
+    }
+  }
+}

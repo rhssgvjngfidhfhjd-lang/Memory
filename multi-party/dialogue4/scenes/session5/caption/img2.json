@@ -1,0 +1,36 @@
+{
+  "id": "dcc6e645-aac7-4f24-9a35-7eb64ce09587",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:44.818756",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session5/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 87635,
+    "modified_time": "2026-08-23T22:09:18.115363"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a fashion runway scene with a model walking down the catwalk. She is wearing an elegant, flowing gown in shades of lavender and white, with a sheer scarf tied around her neck. The gown has a shiny, satin-like texture and drapes gracefully. The model's hair is styled in a neat updo. The background shows an audience seated on both sides, some capturing the moment with cameras. The runway is illuminated, creating a glamorous and sophisticated atmosphere. There is no visible text in the image.",
+    "final_text": "The image depicts a fashion runway scene with a model walking down the catwalk. She is wearing an elegant, flowing gown in shades of lavender and white, with a sheer scarf tied around her neck. The gown has a shiny, satin-like texture and drapes gracefully. The model's hair is styled in a neat updo. The background shows an audience seated on both sides, some capturing the moment with cameras. The runway is illuminated, creating a glamorous and sophisticated atmosphere. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426823-3IhTqARPyAaVmgBAt6tV",
+    "created": 1788426823,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 105,
+      "total_tokens": 825,
+      "cost": 0.00285
+    }
+  }
+}

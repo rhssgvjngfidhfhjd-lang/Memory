@@ -1,0 +1,36 @@
+{
+  "id": "62003194-2ceb-4890-8bff-f49d63ce7caa",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:56.637585",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 679885,
+    "modified_time": "2026-08-23T21:58:20.737351"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a stunning architectural scene featuring a large Islamic building with intricate tile patterns. The main elements include a tall minaret and a striking blue dome adorned with detailed mosaic designs. The building's walls showcase geometric patterns and calligraphy. In the foreground, there is a well-maintained garden with neatly trimmed trees and a patch of flowers. The sky is clear and blue, contributing to a serene and majestic atmosphere. Visible text appears in Arabic script on the building.",
+    "final_text": "The image depicts a stunning architectural scene featuring a large Islamic building with intricate tile patterns. The main elements include a tall minaret and a striking blue dome adorned with detailed mosaic designs. The building's walls showcase geometric patterns and calligraphy. In the foreground, there is a well-maintained garden with neatly trimmed trees and a patch of flowers. The sky is clear and blue, contributing to a serene and majestic atmosphere. Visible text appears in Arabic script on the building.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427673-m7AcuL9PX4ZMzNRZ3DkC",
+    "created": 1788427673,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 94,
+      "total_tokens": 533,
+      "cost": 0.0020375
+    }
+  }
+}

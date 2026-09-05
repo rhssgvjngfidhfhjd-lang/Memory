@@ -1,0 +1,36 @@
+{
+  "id": "eae8df56-5d2f-4d40-82bb-d3472dc42fc8",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:13.253463",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 615088,
+    "modified_time": "2026-08-23T21:33:42.967638"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a webpage titled \"校园网论坛\" (Campus Network Forum). The top banner includes a pair of people, a man and a woman, interacting while holding books, set against a backdrop with green leaves and butterflies. Visible text includes \"教育\" (education) and various forum sections like \"学习交流\" (study exchange) and \"论坛公告\" (forum announcements). The atmosphere is educational and community-focused, suggesting a platform for academic discussion and interaction.",
+    "final_text": "The image depicts a webpage titled \"校园网论坛\" (Campus Network Forum). The top banner includes a pair of people, a man and a woman, interacting while holding books, set against a backdrop with green leaves and butterflies. Visible text includes \"教育\" (education) and various forum sections like \"学习交流\" (study exchange) and \"论坛公告\" (forum announcements). The atmosphere is educational and community-focused, suggesting a platform for academic discussion and interaction.",
+    "token_stats": {
+      "original_tokens": 109,
+      "final_tokens": 109,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426913-ifxhLCObPGQl4g3FMjY5",
+    "created": 1788426913,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 94,
+      "total_tokens": 1289,
+      "cost": 0.0039275
+    }
+  }
+}

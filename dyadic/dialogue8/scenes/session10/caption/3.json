@@ -1,0 +1,36 @@
+{
+  "id": "af2c8854-a03c-4763-beaf-6efdf91e8f1f",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:03.055032",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 803880,
+    "modified_time": "2026-08-23T21:57:33.103907"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a decorative pillow with intricate embroidery on a blue velvet fabric. The central design includes swirling patterns in brown and blue, with a symmetrical floral motif in the center. The edges of the pillow are adorned with white lace trim. The atmosphere is elegant and ornate, suggesting a luxurious or traditional style. No visible text is present. The focus is solely on the design and craftsmanship of the pillow.",
+    "final_text": "The image features a decorative pillow with intricate embroidery on a blue velvet fabric. The central design includes swirling patterns in brown and blue, with a symmetrical floral motif in the center. The edges of the pillow are adorned with white lace trim. The atmosphere is elegant and ornate, suggesting a luxurious or traditional style. No visible text is present. The focus is solely on the design and craftsmanship of the pillow.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427681-58LjaFrdFyuGuiPXIWCn",
+    "created": 1788427681,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 81,
+      "total_tokens": 798,
+      "cost": 0.0026025
+    }
+  }
+}

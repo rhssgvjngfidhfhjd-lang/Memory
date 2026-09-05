@@ -1,0 +1,36 @@
+{
+  "id": "9b897aac-26f8-47d1-bb88-9e5dc8c66a01",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:39.844808",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session5/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 51945,
+    "modified_time": "2026-08-23T21:32:36.377638"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a vibrant arrangement of fresh fruits on a plate, including green and purple grapes, orange slices, kiwi halves, strawberries, and a mango slice. The fruits are meticulously placed, showcasing their bright colors and textures. The setting appears to be indoors, with soft, natural lighting contributing to a fresh and inviting atmosphere. The scene evokes a sense of abundance and health, appealing to the viewer's senses and suggesting a moment of enjoyment or preparation for a meal. No visible text is present.",
+    "final_text": "The image features a vibrant arrangement of fresh fruits on a plate, including green and purple grapes, orange slices, kiwi halves, strawberries, and a mango slice. The fruits are meticulously placed, showcasing their bright colors and textures. The setting appears to be indoors, with soft, natural lighting contributing to a fresh and inviting atmosphere. The scene evokes a sense of abundance and health, appealing to the viewer's senses and suggesting a moment of enjoyment or preparation for a meal. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426817-3V1tcSxp3jc3JHVXOXBX",
+    "created": 1788426817,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 100,
+      "total_tokens": 539,
+      "cost": 0.0020975
+    }
+  }
+}

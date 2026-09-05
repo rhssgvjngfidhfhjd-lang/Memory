@@ -1,0 +1,36 @@
+{
+  "id": "f4f62700-861a-4ed4-bacb-b6e6d3685538",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:59.906632",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 255280,
+    "modified_time": "2026-08-23T22:07:37.922266"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a detailed figurine of a warrior dressed in ornate armor with intricate golden designs and red accents. The figure has a fierce expression, with a bold red lightning-like design on its forehead and a topknot hairstyle. The warrior is holding a sword with a blue blade, poised for action, suggesting readiness and determination. The atmosphere is intense and dramatic, with the focus on the warrior's powerful presence.",
+    "final_text": "The image depicts a detailed figurine of a warrior dressed in ornate armor with intricate golden designs and red accents. The figure has a fierce expression, with a bold red lightning-like design on its forehead and a topknot hairstyle. The warrior is holding a sword with a blue blade, poised for action, suggesting readiness and determination. The atmosphere is intense and dramatic, with the focus on the warrior's powerful presence.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426718-QmVRKcF6xBBzV5uy9Ee1",
+    "created": 1788426718,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 84,
+      "total_tokens": 1082,
+      "cost": 0.003335
+    }
+  }
+}

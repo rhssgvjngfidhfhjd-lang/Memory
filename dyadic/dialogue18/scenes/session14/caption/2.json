@@ -1,0 +1,36 @@
+{
+  "id": "6bff83bc-8587-4e03-905d-dd022a0eb0a6",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:32.288636",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session14/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 128242,
+    "modified_time": "2026-08-23T21:37:17.663661"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a neatly organized collection of photography equipment on a wooden surface. Main elements include several camera lenses, tripods, DSLR cameras, flash units, a large telephoto lens, a camera bag, and various camera accessories like memory cards and batteries. Visible text includes brand names and labels, such as \"Quadra.\" The mood is organized and professional, suggesting preparedness for a photography session.",
+    "final_text": "The image displays a neatly organized collection of photography equipment on a wooden surface. Main elements include several camera lenses, tripods, DSLR cameras, flash units, a large telephoto lens, a camera bag, and various camera accessories like memory cards and batteries. Visible text includes brand names and labels, such as \"Quadra.\" The mood is organized and professional, suggesting preparedness for a photography session.",
+    "token_stats": {
+      "original_tokens": 81,
+      "final_tokens": 81,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427171-UQPDvFrWd3urrn5jd63e",
+    "created": 1788427171,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 79,
+      "total_tokens": 934,
+      "cost": 0.0029275
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "cc02f903-b848-4fc5-945d-6a7b54481689",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:09.545478",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session6/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 152086,
+    "modified_time": "2026-08-23T21:35:27.259352"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a close-up of a cat's paws on a speckled surface. The left paw displays sharp claws, while the right paw reveals soft, pink pads. The fur is predominantly white with some darker patches. The scene conveys a calm and detailed focus on the texture and features of the cat's paws. Visible text includes a watermark with \"dreamstime\" and an ID number at the bottom. The overall mood is serene and focused on the natural detail.",
+    "final_text": "The image shows a close-up of a cat's paws on a speckled surface. The left paw displays sharp claws, while the right paw reveals soft, pink pads. The fur is predominantly white with some darker patches. The scene conveys a calm and detailed focus on the texture and features of the cat's paws. Visible text includes a watermark with \"dreamstime\" and an ID number at the bottom. The overall mood is serene and focused on the natural detail.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427027-Fh3fr6E4hNnONmZqM8cx",
+    "created": 1788427027,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 94,
+      "total_tokens": 1289,
+      "cost": 0.0039275
+    }
+  }
+}

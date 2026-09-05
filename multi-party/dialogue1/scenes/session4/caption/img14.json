@@ -1,0 +1,36 @@
+{
+  "id": "640d5ebf-cef4-4eef-8c51-b31f0c8281a4",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:52.293033",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 144965,
+    "modified_time": "2026-08-23T22:03:29.916608"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a dining scene with a focus on a restaurant bill placed on a wooden tray. The bill lists items and prices, with a total amount of ¥15,850. A person is seen placing a card into a black holder. The setting includes a neatly arranged table with a wine glass, white plates, cutlery, and a dark placemat, suggesting a formal dining atmosphere. The mood is calm and transactional, typical of a restaurant payment scenario.",
+    "final_text": "The image shows a dining scene with a focus on a restaurant bill placed on a wooden tray. The bill lists items and prices, with a total amount of ¥15,850. A person is seen placing a card into a black holder. The setting includes a neatly arranged table with a wine glass, white plates, cutlery, and a dark placemat, suggesting a formal dining atmosphere. The mood is calm and transactional, typical of a restaurant payment scenario.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426590-MoSyiKbBGBRNr69fkCPr",
+    "created": 1788426590,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 92,
+      "total_tokens": 947,
+      "cost": 0.0030575
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "76a39245-9e62-45b7-9475-85c75aac6202",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:34.080646",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session15/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 85604,
+    "modified_time": "2026-08-23T21:37:20.585258"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A person in a gray hoodie is shopping in an outdoor gear store, holding a large orange backpack while wearing another gray backpack. The scene features various colorful backpacks displayed on shelves. The atmosphere is focused and practical, with the person seemingly comparing the products. There is no visible text in the image.",
+    "final_text": "A person in a gray hoodie is shopping in an outdoor gear store, holding a large orange backpack while wearing another gray backpack. The scene features various colorful backpacks displayed on shelves. The atmosphere is focused and practical, with the person seemingly comparing the products. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 60,
+      "final_tokens": 60,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427173-TQeBuUT7js2eNDpa5u7d",
+    "created": 1788427173,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 59,
+      "total_tokens": 574,
+      "cost": 0.0018775
+    }
+  }
+}

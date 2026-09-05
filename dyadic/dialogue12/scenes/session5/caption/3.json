@@ -1,0 +1,36 @@
+{
+  "id": "c7eb0fdc-69b0-4af0-a001-fd9e56175c36",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:01.590800",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session5/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 16802,
+    "modified_time": "2026-08-23T21:32:03.786349"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a health data interface with a focus on heart rate. A horizontal bar shows different heart rate zones: low, normal, and high. The current heart rate is 111 bpm, indicated in red for \"over\" the normal range. Below, there's a text section providing analysis and advice on maintaining heart health. The overall atmosphere is informative and slightly cautionary, aimed at monitoring and managing heart rate effectively.",
+    "final_text": "The image displays a health data interface with a focus on heart rate. A horizontal bar shows different heart rate zones: low, normal, and high. The current heart rate is 111 bpm, indicated in red for \"over\" the normal range. Below, there's a text section providing analysis and advice on maintaining heart health. The overall atmosphere is informative and slightly cautionary, aimed at monitoring and managing heart rate effectively.",
+    "token_stats": {
+      "original_tokens": 85,
+      "final_tokens": 85,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426718-top78CE82GvjKtAX2odv",
+    "created": 1788426718,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 84,
+      "total_tokens": 429,
+      "cost": 0.0017025
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "abf65842-31d4-4c35-bf09-d269d4e2fef4",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:14.873572",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session13/image/2.png",
+    "filename": "2.png",
+    "size": 807482,
+    "modified_time": "2026-08-23T21:45:18.456711"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a cute, light-colored scarf adorned with cartoon animal faces, including cats and dogs, neatly arranged. Beside the scarf is an open box with similar animal prints on its exterior and interior. Inside the box, there's a white drawstring pouch. A card displaying two cartoon dogs and text in Chinese (\"萌宠联名 & 专属好礼\") is visible, suggesting a playful, gift-like theme. The overall mood is cheerful and whimsical, with a focus on adorable pet-themed designs.",
+    "final_text": "The image features a cute, light-colored scarf adorned with cartoon animal faces, including cats and dogs, neatly arranged. Beside the scarf is an open box with similar animal prints on its exterior and interior. Inside the box, there's a white drawstring pouch. A card displaying two cartoon dogs and text in Chinese (\"萌宠联名 & 专属好礼\") is visible, suggesting a playful, gift-like theme. The overall mood is cheerful and whimsical, with a focus on adorable pet-themed designs.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427385-ytm7uWJnUQkyLxNmzbXJ",
+    "created": 1788427385,
+    "usage": {
+      "prompt_tokens": 580,
+      "completion_tokens": 102,
+      "total_tokens": 682,
+      "cost": 0.00247
+    }
+  }
+}

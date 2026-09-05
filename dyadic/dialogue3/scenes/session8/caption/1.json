@@ -1,0 +1,36 @@
+{
+  "id": "8e9bc241-513d-4407-84a5-6705186911d4",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:42.425042",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 329933,
+    "modified_time": "2026-08-23T21:49:48.671069"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a colorful board game box with an illustration of a circus tent under a sky with clouds and stars. The title in Chinese characters reads \"鲸鱼马戏团\" (Whale Circus Troupe). Additional visible text includes \"人生旅途系列\" (Life Journey Series) and details about the game: for up to 6 players, with a difficulty level of 3 stars, and themes of modernity, joy, emotion, and restoration. The overall mood is whimsical and inviting.",
+    "final_text": "The image features a colorful board game box with an illustration of a circus tent under a sky with clouds and stars. The title in Chinese characters reads \"鲸鱼马戏团\" (Whale Circus Troupe). Additional visible text includes \"人生旅途系列\" (Life Journey Series) and details about the game: for up to 6 players, with a difficulty level of 3 stars, and themes of modernity, joy, emotion, and restoration. The overall mood is whimsical and inviting.",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427360-tz4QfzuvhPWAUqlpGhFb",
+    "created": 1788427360,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 101,
+      "total_tokens": 616,
+      "cost": 0.0022975
+    }
+  }
+}

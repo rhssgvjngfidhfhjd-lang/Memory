@@ -1,0 +1,36 @@
+{
+  "id": "de98d93f-7649-46e5-a836-b497fc1da77b",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:09.018717",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 613004,
+    "modified_time": "2026-08-23T21:32:16.520212"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is of an \"Event Volunteer Sign-Up Sheet\" with a simple table layout. The table includes columns for Name, Phone Number, Email, Available Dates, Preferred Role, and Special Skills. The sheet has a clear and organized appearance, conveying a straightforward and functional mood designed for collecting information efficiently.",
+    "final_text": "The image is of an \"Event Volunteer Sign-Up Sheet\" with a simple table layout. The table includes columns for Name, Phone Number, Email, Available Dates, Preferred Role, and Special Skills. The sheet has a clear and organized appearance, conveying a straightforward and functional mood designed for collecting information efficiently.",
+    "token_stats": {
+      "original_tokens": 61,
+      "final_tokens": 61,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426847-9eTGrJT59DOrupPhCuEG",
+    "created": 1788426847,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 61,
+      "total_tokens": 916,
+      "cost": 0.0027475
+    }
+  }
+}

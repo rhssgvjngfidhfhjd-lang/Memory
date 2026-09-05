@@ -1,0 +1,36 @@
+{
+  "id": "3f6d8dfc-1985-413a-8c9b-899f69840432",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:04.561951",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 297814,
+    "modified_time": "2026-08-23T22:07:32.178070"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a close-up of a badge on a smooth surface. The badge displays the text \"ONE OF '41\" in bold, stylized letters. The background of the badge has a topographic map design, adding a textured look. The overall mood is exclusive and unique, suggesting limited edition or rarity.",
+    "final_text": "The image features a close-up of a badge on a smooth surface. The badge displays the text \"ONE OF '41\" in bold, stylized letters. The background of the badge has a topographic map design, adding a textured look. The overall mood is exclusive and unique, suggesting limited edition or rarity.",
+    "token_stats": {
+      "original_tokens": 63,
+      "final_tokens": 63,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426723-nxVYIIZq5ze2iUptzhKw",
+    "created": 1788426723,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 63,
+      "total_tokens": 918,
+      "cost": 0.0027675
+    }
+  }
+}

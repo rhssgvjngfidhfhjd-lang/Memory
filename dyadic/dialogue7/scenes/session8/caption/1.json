@@ -1,0 +1,36 @@
+{
+  "id": "bb32f59f-0889-46e7-926b-dfe383600a1c",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:01.476604",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 26546,
+    "modified_time": "2026-08-23T21:57:34.628675"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a structured table with Chinese text detailing specifications and standards related to air purifiers. The table is divided into categories: purification performance, user experience, energy efficiency, and maintenance costs. Key elements include PM2.5 removal, formaldehyde elimination, HEPA filters, noise levels (dB), CADR values, and filter replacement costs. The atmosphere is technical and informative, focusing on specific requirements for effective air purification.",
+    "final_text": "The image displays a structured table with Chinese text detailing specifications and standards related to air purifiers. The table is divided into categories: purification performance, user experience, energy efficiency, and maintenance costs. Key elements include PM2.5 removal, formaldehyde elimination, HEPA filters, noise levels (dB), CADR values, and filter replacement costs. The atmosphere is technical and informative, focusing on specific requirements for effective air purification.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427621-PCmJStqoDMBPWw9ROcvl",
+    "created": 1788427621,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 89,
+      "total_tokens": 806,
+      "cost": 0.0026825
+    }
+  }
+}

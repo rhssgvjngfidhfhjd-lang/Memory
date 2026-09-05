@@ -1,0 +1,36 @@
+{
+  "id": "03569c43-dd63-4644-92d2-df29a69baf22",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:30.597981",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 116197,
+    "modified_time": "2026-08-23T21:34:02.748239"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a comparison of two 5-kilometer run statistics. On the left, a blue section shows a time of 26 minutes 30 seconds with an average pace of 5 minutes 18 seconds per kilometer. On the right, a red section shows a time of 30 minutes 25 seconds with an average pace of 6 minutes 2 seconds per kilometer. Each section includes additional details such as cadence, stride length, and heart rate, with the data sourced from a Garmin device. The background is black, and the overall mood is analytical. Visible text is in Chinese, focusing on performance metrics.",
+    "final_text": "The image displays a comparison of two 5-kilometer run statistics. On the left, a blue section shows a time of 26 minutes 30 seconds with an average pace of 5 minutes 18 seconds per kilometer. On the right, a red section shows a time of 30 minutes 25 seconds with an average pace of 6 minutes 2 seconds per kilometer. Each section includes additional details such as cadence, stride length, and heart rate, with the data sourced from a Garmin device. The background is black, and the overall mood is analytical. Visible text is in Chinese, focusing on performance metrics.",
+    "token_stats": {
+      "original_tokens": 128,
+      "final_tokens": 128,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426988-6QstdbwMGiTBoaHUdoNW",
+    "created": 1788426988,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 125,
+      "total_tokens": 470,
+      "cost": 0.0021125
+    }
+  }
+}

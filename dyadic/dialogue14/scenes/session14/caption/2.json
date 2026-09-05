@@ -1,0 +1,36 @@
+{
+  "id": "2351d6e0-9a5d-462a-ab29-7eb5ca56199d",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:41.560821",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session14/image/2.png",
+    "filename": "2.png",
+    "size": 1999623,
+    "modified_time": "2026-08-23T21:33:07.652441"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two computer monitors displaying a server management dashboard. The left screen features a dark-themed interface with a list of server logs, including timestamps and status messages like \"Server running normally.\" The right screen has a light-themed interface with data summaries, such as \"32 pending,\" \"15 today,\" and \"8 successful.\" There are tables with columns labeled with dates and other numerical data. The overall atmosphere is professional and technical, suitable for IT management or server monitoring tasks.",
+    "final_text": "The image shows two computer monitors displaying a server management dashboard. The left screen features a dark-themed interface with a list of server logs, including timestamps and status messages like \"Server running normally.\" The right screen has a light-themed interface with data summaries, such as \"32 pending,\" \"15 today,\" and \"8 successful.\" There are tables with columns labeled with dates and other numerical data. The overall atmosphere is professional and technical, suitable for IT management or server monitoring tasks.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426940-DjIRVXurlQaKi45pCfLE",
+    "created": 1788426940,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 95,
+      "total_tokens": 1290,
+      "cost": 0.0039375
+    }
+  }
+}

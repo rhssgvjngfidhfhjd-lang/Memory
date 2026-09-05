@@ -1,0 +1,36 @@
+{
+  "id": "9a19f6c5-ad79-4635-af36-0138ee9324bb",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:01.999969",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session6/image/3.png",
+    "filename": "3.png",
+    "size": 2690258,
+    "modified_time": "2026-08-23T21:31:14.398429"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a smartphone screen displaying a recipe for a quick dish called \"Green Pepper Shredded Meat\" in Chinese. The background is yellow with black text and colorful illustrations. The steps are:\n\n1. Heat the pan and add oil (illustrated with a frying pan).\n2. Add shredded meat and stir-fry (illustrated with meat in a bowl).\n3. Add shredded green peppers and stir-fry (illustrated with green peppers on a plate).\n4. Season and serve (illustrated with a seasoning bottle).\n\nThe overall mood is instructional and straightforward.",
+    "final_text": "The image is a smartphone screen displaying a recipe for a quick dish called \"Green Pepper Shredded Meat\" in Chinese. The background is yellow with black text and colorful illustrations. The steps are:\n\n1. Heat the pan and add oil (illustrated with a frying pan).\n2. Add shredded meat and stir-fry (illustrated with meat in a bowl).\n3. Add shredded green peppers and stir-fry (illustrated with green peppers on a plate).\n4. Season and serve (illustrated with a seasoning bottle).\n\nThe overall mood is instructional and straightforward.",
+    "token_stats": {
+      "original_tokens": 115,
+      "final_tokens": 115,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426658-OfpzdVvHVPwCnsSaT44y",
+    "created": 1788426658,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 115,
+      "total_tokens": 970,
+      "cost": 0.0032875
+    }
+  }
+}

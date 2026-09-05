@@ -1,0 +1,36 @@
+{
+  "id": "7b97119e-ea93-4cd9-abc3-ac1ecea64d84",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:49.535736",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 731017,
+    "modified_time": "2026-08-23T22:07:20.915969"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image appears to be a selection screen from a game featuring three panels. The left panel shows an anime-style character with wings and a bright background, marked with a \"new\" icon and five stars. The middle panel displays another anime character with a confident expression, accompanied by icons indicating \"2\" and \"1\" with star symbols. The right panel depicts a sword with three stars. The background is vibrant with glowing effects, creating an exciting and magical atmosphere. Visible text includes \"转化\" at the bottom.",
+    "final_text": "The image appears to be a selection screen from a game featuring three panels. The left panel shows an anime-style character with wings and a bright background, marked with a \"new\" icon and five stars. The middle panel displays another anime character with a confident expression, accompanied by icons indicating \"2\" and \"1\" with star symbols. The right panel depicts a sword with three stars. The background is vibrant with glowing effects, creating an exciting and magical atmosphere. Visible text includes \"转化\" at the bottom.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426705-GgrqEnYu8jZmixnSUz7q",
+    "created": 1788426705,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 104,
+      "total_tokens": 959,
+      "cost": 0.0031775
+    }
+  }
+}

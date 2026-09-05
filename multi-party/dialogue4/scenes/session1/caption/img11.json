@@ -1,0 +1,36 @@
+{
+  "id": "8eddae48-084f-4b6a-9fe1-5966d2119eaa",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:51.811428",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session1/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 462047,
+    "modified_time": "2026-08-23T22:08:11.085174"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a mobile shopping app interface with a shopping cart containing 40 items. It features product listings, including skincare and bedding items, with images and detailed pricing. Promotions and discounts are highlighted, such as vouchers and price reductions. The time displayed is 9:39, and the atmosphere is commercial and promotional, aiming to attract purchases. The interface includes navigation icons at the bottom for home, videos, messages, shopping cart, and personal account. The overall mood is busy and consumer-focused, emphasizing deals and savings.",
+    "final_text": "The image depicts a mobile shopping app interface with a shopping cart containing 40 items. It features product listings, including skincare and bedding items, with images and detailed pricing. Promotions and discounts are highlighted, such as vouchers and price reductions. The time displayed is 9:39, and the atmosphere is commercial and promotional, aiming to attract purchases. The interface includes navigation icons at the bottom for home, videos, messages, shopping cart, and personal account. The overall mood is busy and consumer-focused, emphasizing deals and savings.",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426770-TKOhLPuBx8bwjV1YQ49T",
+    "created": 1788426770,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 106,
+      "total_tokens": 1386,
+      "cost": 0.00426
+    }
+  }
+}

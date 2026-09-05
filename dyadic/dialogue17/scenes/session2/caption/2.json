@@ -1,0 +1,36 @@
+{
+  "id": "ef39b559-4fcc-4966-ba7e-b01d41f6d557",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:42.366721",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session2/image/2.png",
+    "filename": "2.png",
+    "size": 146797,
+    "modified_time": "2026-08-23T21:36:16.127291"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a cat with a focused gaze amidst a digital, futuristic setting. The scene is bathed in vibrant blue and purple neon lights, creating a cyberpunk atmosphere. Horizontal light trails and digital glitches surround the cat, enhancing the tech-inspired motif. The overall mood is mysterious and high-tech, with no visible text present.",
+    "final_text": "The image features a cat with a focused gaze amidst a digital, futuristic setting. The scene is bathed in vibrant blue and purple neon lights, creating a cyberpunk atmosphere. Horizontal light trails and digital glitches surround the cat, enhancing the tech-inspired motif. The overall mood is mysterious and high-tech, with no visible text present.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427060-3ZoRbzmGykIQhp3Pg636",
+    "created": 1788427060,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 66,
+      "total_tokens": 411,
+      "cost": 0.0015225
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "fa118bd6-7fca-415e-accc-13ba91e2eeed",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:38.268117",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session13/image/4.png",
+    "filename": "4.png",
+    "size": 2231733,
+    "modified_time": "2026-08-23T21:33:21.143540"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is titled \"productivity tool wish list\" and features five main elements, each separated by lines. From left to right: a high-end laptop with specifications listed as RTX 4080 and 32GB LPDDR5 RAM; a business suit; a recording pen; a stabilizer with a microphone attached; and a section with comparison bar graphs. The text is in both English and Chinese. The overall mood is professional and focused on productivity tools.",
+    "final_text": "The image is titled \"productivity tool wish list\" and features five main elements, each separated by lines. From left to right: a high-end laptop with specifications listed as RTX 4080 and 32GB LPDDR5 RAM; a business suit; a recording pen; a stabilizer with a microphone attached; and a section with comparison bar graphs. The text is in both English and Chinese. The overall mood is professional and focused on productivity tools.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426937-cKEKKXdzrc1L4t3w6fqx",
+    "created": 1788426937,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 92,
+      "total_tokens": 1287,
+      "cost": 0.0039075
+    }
+  }
+}

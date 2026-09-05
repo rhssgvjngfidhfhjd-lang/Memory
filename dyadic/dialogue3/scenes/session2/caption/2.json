@@ -1,0 +1,36 @@
+{
+  "id": "a1b28be8-6b13-418a-8397-a80dc25d686a",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:17.249191",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session2/image/2.png",
+    "filename": "2.png",
+    "size": 854987,
+    "modified_time": "2026-08-23T21:45:34.248535"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a fantasy-themed game interface featuring an elaborately dressed character with ethereal, flowing garments, suggesting a mystical or celestial theme. To the right, there are various game statistics and achievements, such as \"14.4\" and \"MVP,\" indicating performance metrics. Icons and percentages provide details on gameplay contributions like \"24%,\" \"81%,\" and \"19 kills.\" The overall atmosphere is vibrant and immersive, with a sense of accomplishment and fantasy adventure.",
+    "final_text": "The image displays a fantasy-themed game interface featuring an elaborately dressed character with ethereal, flowing garments, suggesting a mystical or celestial theme. To the right, there are various game statistics and achievements, such as \"14.4\" and \"MVP,\" indicating performance metrics. Icons and percentages provide details on gameplay contributions like \"24%,\" \"81%,\" and \"19 kills.\" The overall atmosphere is vibrant and immersive, with a sense of accomplishment and fantasy adventure.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427336-cO0inym710IfRj5OxXjV",
+    "created": 1788427336,
+    "usage": {
+      "prompt_tokens": 685,
+      "completion_tokens": 95,
+      "total_tokens": 780,
+      "cost": 0.0026625
+    }
+  }
+}

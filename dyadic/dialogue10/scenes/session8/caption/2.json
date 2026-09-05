@@ -1,0 +1,36 @@
+{
+  "id": "6ca8cc9f-b23f-4941-b7aa-7b97f29426a9",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:54.282701",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session8/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 192545,
+    "modified_time": "2026-08-23T21:30:37.859495"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a conceptual diagram with colorful lines radiating from a central point labeled \"遗憾\" (Regret). Surrounding text includes \"个人回忆\" (Personal Memories) and \"未完成事件\" (Unfinished Events). The right side displays a photo of people inside a crowded train, with one person looking upward, creating a contemplative mood. Text in the photo reads \"生活是自己的 怎么舒服怎么来\" (Life is your own, how comfortable, how come) and \"Life is your own How comfortable How come,\" suggesting introspection. The overall atmosphere is reflective, focusing on personal experiences and desires.",
+    "final_text": "The image features a conceptual diagram with colorful lines radiating from a central point labeled \"遗憾\" (Regret). Surrounding text includes \"个人回忆\" (Personal Memories) and \"未完成事件\" (Unfinished Events). The right side displays a photo of people inside a crowded train, with one person looking upward, creating a contemplative mood. Text in the photo reads \"生活是自己的 怎么舒服怎么来\" (Life is your own, how comfortable, how come) and \"Life is your own How comfortable How come,\" suggesting introspection. The overall atmosphere is reflective, focusing on personal experiences and desires.",
+    "token_stats": {
+      "original_tokens": 142,
+      "final_tokens": 142,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426590-aPvC2DtYqONHAnQ17DCG",
+    "created": 1788426590,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 129,
+      "total_tokens": 1127,
+      "cost": 0.003785
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "8a474e9f-8480-4aa1-841c-5bc98f8d93b5",
+  "success": true,
+  "timestamp": "2026-09-03T17:07:54.985843",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 809925,
+    "modified_time": "2026-08-23T21:30:04.767136"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy, late-night workspace scene. A steaming mug sits on a wooden desk beside a computer monitor displaying text, possibly a document or article. A lamp provides a warm glow, enhancing the calm and focused atmosphere. The computer screen shows the time as 2:00 AM, suggesting a late working or studying session.",
+    "final_text": "The image depicts a cozy, late-night workspace scene. A steaming mug sits on a wooden desk beside a computer monitor displaying text, possibly a document or article. A lamp provides a warm glow, enhancing the calm and focused atmosphere. The computer screen shows the time as 2:00 AM, suggesting a late working or studying session.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426475-RVI1Nf1Z5jAT5zYz2Tg9",
+    "created": 1788426475,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 67,
+      "total_tokens": 1262,
+      "cost": 0.0036575
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "1daf39e2-7630-4d54-a09b-5041ada5bbcf",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:38.516205",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 344488,
+    "modified_time": "2026-08-23T21:42:09.220040"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a plate of flower-shaped steamed buns with a red date in the center of each, arranged neatly on a red plate. The background includes red decorative elements with Chinese characters, suggesting a festive or traditional setting. The mood is warm and inviting, evoking a sense of celebration.",
+    "final_text": "The image features a plate of flower-shaped steamed buns with a red date in the center of each, arranged neatly on a red plate. The background includes red decorative elements with Chinese characters, suggesting a festive or traditional setting. The mood is warm and inviting, evoking a sense of celebration.",
+    "token_stats": {
+      "original_tokens": 60,
+      "final_tokens": 60,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427297-JbcKIzWH1j9O4KZ4klKk",
+    "created": 1788427297,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 58,
+      "total_tokens": 403,
+      "cost": 0.0014425
+    }
+  }
+}

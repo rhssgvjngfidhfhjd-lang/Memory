@@ -1,0 +1,36 @@
+{
+  "id": "adeb27f2-7e52-4d83-ac63-627c05598f9f",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:03.789631",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session1/image/img9.jpg",
+    "filename": "img9.jpg",
+    "size": 332404,
+    "modified_time": "2026-08-23T22:09:31.855850"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a modern bathroom with a serene atmosphere. Central to the scene is a freestanding oval bathtub, accompanied by a cylindrical wicker basket. The floor features a brown rug, adding warmth to the space. A large window with blinds reveals a snowy landscape outside, enhancing the tranquil mood. On the left, a vanity area is illuminated by two soft wall lights, casting a cozy glow. The overall design is minimalist and elegant, inviting relaxation.",
+    "final_text": "The image depicts a modern bathroom with a serene atmosphere. Central to the scene is a freestanding oval bathtub, accompanied by a cylindrical wicker basket. The floor features a brown rug, adding warmth to the space. A large window with blinds reveals a snowy landscape outside, enhancing the tranquil mood. On the left, a vanity area is illuminated by two soft wall lights, casting a cozy glow. The overall design is minimalist and elegant, inviting relaxation.",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426843-8ykU9xqiSU2YPy5LPSRt",
+    "created": 1788426843,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 90,
+      "total_tokens": 1088,
+      "cost": 0.003395
+    }
+  }
+}

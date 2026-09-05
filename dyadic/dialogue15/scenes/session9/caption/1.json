@@ -1,0 +1,36 @@
+{
+  "id": "e365354e-bf9e-4f90-804e-650a4e45f771",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:19.694182",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session9/image/1.png",
+    "filename": "1.png",
+    "size": 735951,
+    "modified_time": "2026-08-23T21:34:45.780951"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays three smartphone screens showing a fitness tracking app in Chinese. The left screen features a circular activity chart with calories, exercise minutes, and standing hours. The middle screen lists various health metrics like protein and swimming posture. The right screen shows a bar graph of calorie consumption throughout the day, including total and average calorie data. The overall mood is informative and focused on health tracking.",
+    "final_text": "The image displays three smartphone screens showing a fitness tracking app in Chinese. The left screen features a circular activity chart with calories, exercise minutes, and standing hours. The middle screen lists various health metrics like protein and swimming posture. The right screen shows a bar graph of calorie consumption throughout the day, including total and average calorie data. The overall mood is informative and focused on health tracking.",
+    "token_stats": {
+      "original_tokens": 77,
+      "final_tokens": 77,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426980-WgH8WRFCsRloUxtnbid3",
+    "created": 1788426980,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 77,
+      "total_tokens": 1272,
+      "cost": 0.0037575
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "87c80a54-c8aa-475b-be9c-70d26f0f52c2",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:42.363094",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session11/image/3.png",
+    "filename": "3.png",
+    "size": 4020208,
+    "modified_time": "2026-08-23T21:31:47.955558"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two bar charts on a dark background with the title \"产品评论关键词统计\" (Product Review Keyword Statistics). The left chart, labeled \"产品属性关键词\" (Product Attribute Keywords), displays bars for \"设计\" (Design) at 157%, \"材质\" (Material) at 55%, and \"价格\" (Price) at 15%. The right chart, labeled \"叙事性关键词\" (Narrative Keywords), shows bars for \"情怀\" (Emotion) at 81%, \"故事\" (Story) at 55%, and \"价值观\" (Values) at 96%. The scene is analytical, focusing on data visualization.",
+    "final_text": "The image features two bar charts on a dark background with the title \"产品评论关键词统计\" (Product Review Keyword Statistics). The left chart, labeled \"产品属性关键词\" (Product Attribute Keywords), displays bars for \"设计\" (Design) at 157%, \"材质\" (Material) at 55%, and \"价格\" (Price) at 15%. The right chart, labeled \"叙事性关键词\" (Narrative Keywords), shows bars for \"情怀\" (Emotion) at 81%, \"故事\" (Story) at 55%, and \"价值观\" (Values) at 96%. The scene is analytical, focusing on data visualization.",
+    "token_stats": {
+      "original_tokens": 156,
+      "final_tokens": 156,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426758-zq3l69M8X9i3O3ysjYpa",
+    "created": 1788426758,
+    "usage": {
+      "prompt_tokens": 1000,
+      "completion_tokens": 139,
+      "total_tokens": 1139,
+      "cost": 0.00389
+    }
+  }
+}

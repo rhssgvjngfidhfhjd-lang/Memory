@@ -1,0 +1,36 @@
+{
+  "id": "8de0978d-5209-4de8-b4de-aadc3fa1f06a",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:24.307602",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session11/image/3.png",
+    "filename": "3.png",
+    "size": 249208,
+    "modified_time": "2026-08-23T22:00:07.145747"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a diagram of an electronic door access system. Central to the scene is a double glass door equipped with an electric bolt lock. Visible text labels include \"电子门禁系统\" (Electronic Access Control System), \"玻璃门夹\" (Glass Door Clamp), \"开门按钮\" (Open Door Button), \"专用电源\" (Dedicated Power Supply), \"指纹机\" (Fingerprint Machine), and \"门铃\" (Doorbell). The elements are interconnected, illustrating the installation and function of each component. The mood is technical and informative, focusing on security and convenience.",
+    "final_text": "The image depicts a diagram of an electronic door access system. Central to the scene is a double glass door equipped with an electric bolt lock. Visible text labels include \"电子门禁系统\" (Electronic Access Control System), \"玻璃门夹\" (Glass Door Clamp), \"开门按钮\" (Open Door Button), \"专用电源\" (Dedicated Power Supply), \"指纹机\" (Fingerprint Machine), and \"门铃\" (Doorbell). The elements are interconnected, illustrating the installation and function of each component. The mood is technical and informative, focusing on security and convenience.",
+    "token_stats": {
+      "original_tokens": 132,
+      "final_tokens": 132,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427763-1OxNtoQNqp1YETGDCVTf",
+    "created": 1788427763,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 122,
+      "total_tokens": 839,
+      "cost": 0.0030125
+    }
+  }
+}

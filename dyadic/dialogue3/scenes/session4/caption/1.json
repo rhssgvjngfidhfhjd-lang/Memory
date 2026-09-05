@@ -1,0 +1,36 @@
+{
+  "id": "0aff768b-7cc6-4767-aec5-a45ad1e8742e",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:23.048084",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 670003,
+    "modified_time": "2026-08-23T21:52:37.818424"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a lively park scene where a man is playfully handing a frisbee to a Shiba Inu dog. The dog eagerly jumps to grab the frisbee. Surrounding them, a few people, including a child, watch the interaction with smiles, creating a joyful and friendly atmosphere. The park is lush with green trees and a bench is visible in the background. The overall mood is cheerful and relaxed, highlighting a moment of fun and connection.",
+    "final_text": "The image depicts a lively park scene where a man is playfully handing a frisbee to a Shiba Inu dog. The dog eagerly jumps to grab the frisbee. Surrounding them, a few people, including a child, watch the interaction with smiles, creating a joyful and friendly atmosphere. The park is lush with green trees and a bench is visible in the background. The overall mood is cheerful and relaxed, highlighting a moment of fun and connection.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427343-8faJMszPuBck7x2cjKld",
+    "created": 1788427343,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 91,
+      "total_tokens": 946,
+      "cost": 0.0030475
+    }
+  }
+}

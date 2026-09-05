@@ -1,0 +1,36 @@
+{
+  "id": "5d6550ac-cafe-4a77-80e8-b8a8061e8c47",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:01.337729",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session5/image/4.jpg",
+    "filename": "4.jpg",
+    "size": 39975,
+    "modified_time": "2026-08-23T21:33:18.410335"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an outdoor scene with two dogs. A small white dog with a wheeled harness is energetically moving across a sandy area, while a larger brown dog stands nearby on the pavement, watching. Cars are parked in the background. The atmosphere is lively and uplifting. Visible text in the top right corner reads \"THE PET COLLECTIVE.\"",
+    "final_text": "The image shows an outdoor scene with two dogs. A small white dog with a wheeled harness is energetically moving across a sandy area, while a larger brown dog stands nearby on the pavement, watching. Cars are parked in the background. The atmosphere is lively and uplifting. Visible text in the top right corner reads \"THE PET COLLECTIVE.\"",
+    "token_stats": {
+      "original_tokens": 71,
+      "final_tokens": 71,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426899-BKUmxqGNJNDM9upwshYq",
+    "created": 1788426899,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 71,
+      "total_tokens": 1069,
+      "cost": 0.003205
+    }
+  }
+}

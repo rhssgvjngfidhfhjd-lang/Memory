@@ -1,0 +1,36 @@
+{
+  "id": "2a192e5b-8754-41ba-bd0a-5c069123ba74",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:15.472499",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session10/image/3.png",
+    "filename": "3.png",
+    "size": 839667,
+    "modified_time": "2026-08-23T21:55:09.966705"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a narrow, cobblestone street in a traditional village setting. It is flanked by old-style stone buildings adorned with red lanterns. A few people are visible in the distance, possibly engaging in casual activities. Wooden benches and potted plants are placed along the walkway. A sign with text is visible on the left side. The atmosphere is calm and quaint, with clear blue skies overhead, suggesting a quiet, sunny day.",
+    "final_text": "The image depicts a narrow, cobblestone street in a traditional village setting. It is flanked by old-style stone buildings adorned with red lanterns. A few people are visible in the distance, possibly engaging in casual activities. Wooden benches and potted plants are placed along the walkway. A sign with text is visible on the left side. The atmosphere is calm and quaint, with clear blue skies overhead, suggesting a quiet, sunny day.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427515-WowuO8DU5CXaQQGqDGLv",
+    "created": 1788427515,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 89,
+      "total_tokens": 944,
+      "cost": 0.0030275
+    }
+  }
+}

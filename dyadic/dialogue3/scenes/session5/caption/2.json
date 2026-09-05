@@ -1,0 +1,36 @@
+{
+  "id": "6913dbcf-2ffb-4646-a1e9-4e8450defb54",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:26.341126",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 546116,
+    "modified_time": "2026-08-23T21:46:48.867848"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a colorful schedule for an event featuring cute pets, illustrated with cartoon animals such as a dog and a cat. The schedule is divided into time slots with activities:\n\n- **14:00-14:30**: Entry of cute pets.\n- **14:30-15:15**: Obstacle course for Shiba Inu and Persian cat.\n- **15:15-16:00**: Return to original positions.\n- **16:00-16:40**: Interaction session with fans.\n- **16:40-17:00**: Award ceremony.\n\nThe background features a grassy field and a pathway, creating a cheerful and playful atmosphere.",
+    "final_text": "The image is a colorful schedule for an event featuring cute pets, illustrated with cartoon animals such as a dog and a cat. The schedule is divided into time slots with activities:\n\n- **14:00-14:30**: Entry of cute pets.\n- **14:30-15:15**: Obstacle course for Shiba Inu and Persian cat.\n- **15:15-16:00**: Return to original positions.\n- **16:00-16:40**: Interaction session with fans.\n- **16:40-17:00**: Award ceremony.\n\nThe background features a grassy field and a pathway, creating a cheerful and playful atmosphere.",
+    "token_stats": {
+      "original_tokens": 133,
+      "final_tokens": 133,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427346-3cbQJxOrnIij4kS8ViGm",
+    "created": 1788427346,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 136,
+      "total_tokens": 651,
+      "cost": 0.0026475
+    }
+  }
+}

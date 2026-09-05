@@ -1,0 +1,36 @@
+{
+  "id": "852179df-8822-4d5d-aad8-b3b37b5ce3f1",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:39.945954",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 355940,
+    "modified_time": "2026-08-23T21:55:24.961401"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an open book with text in Chinese characters on one page, discussing the design and characteristics of an old-style brass lock. The text describes the lock's rectangular shape, engraved decorations, and curved structure, highlighting its traditional aesthetic and aged quality. The atmosphere is informative and focused on design details. The page number \"17\" is visible at the bottom.",
+    "final_text": "The image depicts an open book with text in Chinese characters on one page, discussing the design and characteristics of an old-style brass lock. The text describes the lock's rectangular shape, engraved decorations, and curved structure, highlighting its traditional aesthetic and aged quality. The atmosphere is informative and focused on design details. The page number \"17\" is visible at the bottom.",
+    "token_stats": {
+      "original_tokens": 73,
+      "final_tokens": 73,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427480-jK8fbk4XA4FH35xLD5gc",
+    "created": 1788427480,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 73,
+      "total_tokens": 418,
+      "cost": 0.0015925
+    }
+  }
+}

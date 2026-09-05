@@ -1,0 +1,36 @@
+{
+  "id": "00459a7f-778c-4d9a-843c-86fcd998e29f",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:00.142535",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session6/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 98992,
+    "modified_time": "2026-08-23T21:31:10.319820"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a culinary scene featuring a plate of raw diced meat placed on a checkered red and white cloth. Surrounding the meat are fresh herbs, possibly parsley, and a transparent glass jug containing olive oil. The background includes a dark surface, enhancing the vibrant colors of the ingredients. The atmosphere is fresh and inviting, suggesting preparation for cooking or a recipe setup. There is no visible text in the image.",
+    "final_text": "The image depicts a culinary scene featuring a plate of raw diced meat placed on a checkered red and white cloth. Surrounding the meat are fresh herbs, possibly parsley, and a transparent glass jug containing olive oil. The background includes a dark surface, enhancing the vibrant colors of the ingredients. The atmosphere is fresh and inviting, suggesting preparation for cooking or a recipe setup. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426658-I1W6mewJatyhIeict9Vv",
+    "created": 1788426658,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 84,
+      "total_tokens": 801,
+      "cost": 0.0026325
+    }
+  }
+}

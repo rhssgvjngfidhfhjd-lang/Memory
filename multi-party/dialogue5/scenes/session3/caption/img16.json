@@ -1,0 +1,36 @@
+{
+  "id": "d9463402-3f90-4dab-a8f3-190fd7c5832b",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:38.757805",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img16.jpg",
+    "filename": "img16.jpg",
+    "size": 186217,
+    "modified_time": "2026-08-23T22:09:42.484498"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a screenshot of a chat group with 101 members. Multiple profile pictures are partially visible, each accompanied by text. The text consists of repeated messages: \"好的，收到\" and \"收到，无异议,\" which translate to \"Okay, received\" and \"Received, no objections,\" respectively. The overall mood is communicative and confirming, suggesting agreement or acknowledgment among participants.",
+    "final_text": "The image is a screenshot of a chat group with 101 members. Multiple profile pictures are partially visible, each accompanied by text. The text consists of repeated messages: \"好的，收到\" and \"收到，无异议,\" which translate to \"Okay, received\" and \"Received, no objections,\" respectively. The overall mood is communicative and confirming, suggesting agreement or acknowledgment among participants.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426879-LcCNJ8O0tKoyo2l2v7ki",
+    "created": 1788426879,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 79,
+      "total_tokens": 1077,
+      "cost": 0.003285
+    }
+  }
+}

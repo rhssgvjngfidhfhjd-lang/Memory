@@ -1,0 +1,36 @@
+{
+  "id": "80491374-64c8-4fe1-9a92-5023955214b3",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:12.639396",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 642740,
+    "modified_time": "2026-08-23T21:56:22.011199"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a shiny gold trophy with colorful ribbons on a green surface, accompanied by a red certificate labeled \"HONORARY CREDENTIAL\" and Chinese text. A badminton racket and shuttlecock are nearby, and a person's fingers are making a peace sign. The atmosphere is celebratory, suggesting a sports achievement.",
+    "final_text": "The image depicts a shiny gold trophy with colorful ribbons on a green surface, accompanied by a red certificate labeled \"HONORARY CREDENTIAL\" and Chinese text. A badminton racket and shuttlecock are nearby, and a person's fingers are making a peace sign. The atmosphere is celebratory, suggesting a sports achievement.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427571-n7Enn3N2tL7ZVwl48njl",
+    "created": 1788427571,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 62,
+      "total_tokens": 917,
+      "cost": 0.0027575
+    }
+  }
+}

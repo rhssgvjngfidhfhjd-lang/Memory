@@ -1,0 +1,36 @@
+{
+  "id": "28d787d2-765d-47cc-8558-5353c6e55e5f",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:53.355253",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 626457,
+    "modified_time": "2026-08-23T21:30:15.162004"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a website homepage for \"Spare Leash,\" a pet sitting service in China. It features the logo and tagline \"your new best friend,\" with navigation options like Blog, Services, Find a Pet Sitter, Support, Login, Sign Up, and language switch to 中文. The central text reads, \"The Safe Choice for Pets in China,\" and \"Connecting pet owners to verified pet sitters,\" with a button labeled \"Find a Pet Sitter.\" Circular images show interactions between people and pets, including dogs and cats, creating a warm, friendly atmosphere focused on pet care.",
+    "final_text": "The image is a website homepage for \"Spare Leash,\" a pet sitting service in China. It features the logo and tagline \"your new best friend,\" with navigation options like Blog, Services, Find a Pet Sitter, Support, Login, Sign Up, and language switch to 中文. The central text reads, \"The Safe Choice for Pets in China,\" and \"Connecting pet owners to verified pet sitters,\" with a button labeled \"Find a Pet Sitter.\" Circular images show interactions between people and pets, including dogs and cats, creating a warm, friendly atmosphere focused on pet care.",
+    "token_stats": {
+      "original_tokens": 122,
+      "final_tokens": 122,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426532-gFngxS1SvOTasVN91IId",
+    "created": 1788426532,
+    "usage": {
+      "prompt_tokens": 1280,
+      "completion_tokens": 121,
+      "total_tokens": 1401,
+      "cost": 0.00441
+    }
+  }
+}

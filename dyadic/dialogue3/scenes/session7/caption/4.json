@@ -1,0 +1,36 @@
+{
+  "id": "f5d0fdd4-b41b-4474-a9d5-fa85235b1ee7",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:40.335424",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session7/image/4.png",
+    "filename": "4.png",
+    "size": 271794,
+    "modified_time": "2026-08-23T21:51:37.701717"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table with multiple rows and columns containing Chinese text. The headings are \"分类方式,\" \"类型,\" and \"简介.\" The table categorizes and describes different types of story formats, gameplay mechanics, and IPs. Categories include \"基于现实逻辑,\" \"故事类型,\" and \"玩法机制,\" with descriptions related to narrative style, immersion, emotional connection, and originality. The overall mood is informative, providing a structured overview of various storytelling and gameplay elements.",
+    "final_text": "The image is a table with multiple rows and columns containing Chinese text. The headings are \"分类方式,\" \"类型,\" and \"简介.\" The table categorizes and describes different types of story formats, gameplay mechanics, and IPs. Categories include \"基于现实逻辑,\" \"故事类型,\" and \"玩法机制,\" with descriptions related to narrative style, immersion, emotional connection, and originality. The overall mood is informative, providing a structured overview of various storytelling and gameplay elements.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427358-CJirovjztyJyime3P6cj",
+    "created": 1788427358,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 97,
+      "total_tokens": 612,
+      "cost": 0.0022575
+    }
+  }
+}

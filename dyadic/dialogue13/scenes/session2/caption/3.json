@@ -1,0 +1,36 @@
+{
+  "id": "efa790bb-56dc-418e-9fd9-07298eccba6a",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:22.909282",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 1061874,
+    "modified_time": "2026-08-23T21:32:55.768273"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a blue chart titled \"Healthy Hands\" at the top. It contains rows of pockets, each holding cards with names such as Max, Sarah, Joe, Helen, Jeff, and Sam. The cards display colorful handprints and illustrations of a soap bar or a table. The chart appears organized and educational, likely intended for tracking hand hygiene practices. The atmosphere is bright and engaging, suitable for a classroom or educational setting. At the bottom, there are two larger pockets with icons of a soap bar and a clean table.",
+    "final_text": "The image features a blue chart titled \"Healthy Hands\" at the top. It contains rows of pockets, each holding cards with names such as Max, Sarah, Joe, Helen, Jeff, and Sam. The cards display colorful handprints and illustrations of a soap bar or a table. The chart appears organized and educational, likely intended for tracking hand hygiene practices. The atmosphere is bright and engaging, suitable for a classroom or educational setting. At the bottom, there are two larger pockets with icons of a soap bar and a clean table.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426801-njATZdDwbq9HSeE6D0EF",
+    "created": 1788426801,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 108,
+      "total_tokens": 825,
+      "cost": 0.0028725
+    }
+  }
+}

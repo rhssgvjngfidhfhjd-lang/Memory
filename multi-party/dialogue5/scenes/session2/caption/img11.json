@@ -1,0 +1,36 @@
+{
+  "id": "6466b4da-9315-4a98-ba59-f52c4e0b9004",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:22.758893",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session2/image/img11.jpg",
+    "filename": "img11.jpg",
+    "size": 278221,
+    "modified_time": "2026-08-23T22:09:32.394027"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two transparent plastic ice cleats with metal spikes designed for traction on icy surfaces. They are laid out on a soft, light-colored fabric, possibly resting on someone's lap. The cleats have a textured pattern and multiple metal studs for grip. The background includes a tiled floor. The overall mood is neutral, focusing on practicality and functionality.",
+    "final_text": "The image shows two transparent plastic ice cleats with metal spikes designed for traction on icy surfaces. They are laid out on a soft, light-colored fabric, possibly resting on someone's lap. The cleats have a textured pattern and multiple metal studs for grip. The background includes a tiled floor. The overall mood is neutral, focusing on practicality and functionality.",
+    "token_stats": {
+      "original_tokens": 72,
+      "final_tokens": 72,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426860-9gOp2SLg8JSjqnNZKS8p",
+    "created": 1788426860,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 71,
+      "total_tokens": 1069,
+      "cost": 0.003205
+    }
+  }
+}

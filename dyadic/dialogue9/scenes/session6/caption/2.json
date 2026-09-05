@@ -1,0 +1,36 @@
+{
+  "id": "43d27849-3bf8-47b7-bc86-e814bec8893b",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:01.138339",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session6/image/2.png",
+    "filename": "2.png",
+    "size": 638230,
+    "modified_time": "2026-08-23T22:01:19.879719"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a colorful and inviting scene with a wooden table featuring a stack of toy blocks, an open book, and a vintage-style fan. In the background, there are balloons and greenery, creating a playful and relaxed atmosphere. Text in Chinese reads \"二手物品交换集市\" (Second-hand goods exchange market) and \"免费小维修\" (Free small repairs). The overall mood is cheerful and welcoming, suggesting an event or market focused on exchanging and repairing items.",
+    "final_text": "The image depicts a colorful and inviting scene with a wooden table featuring a stack of toy blocks, an open book, and a vintage-style fan. In the background, there are balloons and greenery, creating a playful and relaxed atmosphere. Text in Chinese reads \"二手物品交换集市\" (Second-hand goods exchange market) and \"免费小维修\" (Free small repairs). The overall mood is cheerful and welcoming, suggesting an event or market focused on exchanging and repairing items.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427737-PPyrVlN3jXi5sYUhp1Gx",
+    "created": 1788427737,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 98,
+      "total_tokens": 815,
+      "cost": 0.0027725
+    }
+  }
+}

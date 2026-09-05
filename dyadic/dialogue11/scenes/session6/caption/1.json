@@ -1,0 +1,36 @@
+{
+  "id": "53e52278-7603-4654-9ed7-5c1abf494736",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:00.875615",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session6/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 428395,
+    "modified_time": "2026-08-23T21:31:08.898222"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows the interior of a refrigerator filled with neatly stacked food containers. Each container is transparent, allowing visibility of various food items like pasta, vegetables, and fruits. The containers are arranged on shelves, with some items stored in a drawer labeled \"Fresh Zone Fruit & Vegetables.\" The overall atmosphere is organized and tidy, suggesting meal prep or food storage. The fridge's contents appear well-maintained, indicating an emphasis on freshness and planning.",
+    "final_text": "The image shows the interior of a refrigerator filled with neatly stacked food containers. Each container is transparent, allowing visibility of various food items like pasta, vegetables, and fruits. The containers are arranged on shelves, with some items stored in a drawer labeled \"Fresh Zone Fruit & Vegetables.\" The overall atmosphere is organized and tidy, suggesting meal prep or food storage. The fridge's contents appear well-maintained, indicating an emphasis on freshness and planning.",
+    "token_stats": {
+      "original_tokens": 90,
+      "final_tokens": 90,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426658-BJvILrKjsRBwRYHUgN38",
+    "created": 1788426658,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 90,
+      "total_tokens": 1088,
+      "cost": 0.003395
+    }
+  }
+}

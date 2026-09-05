@@ -1,0 +1,36 @@
+{
+  "id": "18ad25fc-cf16-41ca-90f0-b8505943912e",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:39.269191",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 271937,
+    "modified_time": "2026-08-23T22:12:38.463243"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a character creation screen from a video game. The main element is a male character with exaggerated facial expressions, wide eyes, and a small mustache, wearing ornate robes with dark and light patterns. The background is a simple gradient. Visible text includes character customization options on the right and top, with various hairstyles and facial features displayed. Icons and buttons are present for saving and other actions. The overall mood is humorous and slightly chaotic, emphasizing customization and personalization in the game.",
+    "final_text": "The image features a character creation screen from a video game. The main element is a male character with exaggerated facial expressions, wide eyes, and a small mustache, wearing ornate robes with dark and light patterns. The background is a simple gradient. Visible text includes character customization options on the right and top, with various hairstyles and facial features displayed. Icons and buttons are present for saving and other actions. The overall mood is humorous and slightly chaotic, emphasizing customization and personalization in the game.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426700-3jREFDt7Ot2wERDQD75q",
+    "created": 1788426700,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 98,
+      "total_tokens": 1096,
+      "cost": 0.003475
+    }
+  }
+}

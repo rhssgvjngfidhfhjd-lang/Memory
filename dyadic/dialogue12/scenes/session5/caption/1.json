@@ -1,0 +1,36 @@
+{
+  "id": "759cc6f1-806e-481d-8e2f-7810edabd83c",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:59.488563",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session5/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 210699,
+    "modified_time": "2026-08-23T21:31:58.117540"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a cozy workspace with a laptop displaying a text document. The scene includes a desk lamp, a cup of coffee on a saucer, a small potted plant, and figurines. There are also stacked books on the right side. The atmosphere is warm and inviting, suggesting a productive or relaxed working environment.",
+    "final_text": "The image shows a cozy workspace with a laptop displaying a text document. The scene includes a desk lamp, a cup of coffee on a saucer, a small potted plant, and figurines. There are also stacked books on the right side. The atmosphere is warm and inviting, suggesting a productive or relaxed working environment.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426718-sePewVnXue2DLR3cJIAi",
+    "created": 1788426718,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 65,
+      "total_tokens": 920,
+      "cost": 0.0027875
+    }
+  }
+}

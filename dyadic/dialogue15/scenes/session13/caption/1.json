@@ -1,0 +1,36 @@
+{
+  "id": "6b4bd791-b70d-4675-b7ce-1f997dc9152e",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:38.368986",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session13/image/1.png",
+    "filename": "1.png",
+    "size": 88027,
+    "modified_time": "2026-08-23T21:34:11.574861"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a graph illustrating recommended driving speeds across different road conditions, segmented into three phases: downhill (red), flat (green), and uphill (blue). The x-axis represents a distance of 0-42 kilometers, while the y-axis displays speed. Text in the image includes \"推荐车速\" (recommended speed) and \"赛道导览高度变化\" (track elevation change). Below the graph, icons indicate services like refueling, rest areas, and safety features. The overall mood is informative, providing guidance for safe driving.",
+    "final_text": "The image is a graph illustrating recommended driving speeds across different road conditions, segmented into three phases: downhill (red), flat (green), and uphill (blue). The x-axis represents a distance of 0-42 kilometers, while the y-axis displays speed. Text in the image includes \"推荐车速\" (recommended speed) and \"赛道导览高度变化\" (track elevation change). Below the graph, icons indicate services like refueling, rest areas, and safety features. The overall mood is informative, providing guidance for safe driving.",
+    "token_stats": {
+      "original_tokens": 116,
+      "final_tokens": 116,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426997-v5eaWwhYfp5VrZbJK7KM",
+    "created": 1788426997,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 110,
+      "total_tokens": 455,
+      "cost": 0.0019625
+    }
+  }
+}

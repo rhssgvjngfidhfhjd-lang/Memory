@@ -1,0 +1,36 @@
+{
+  "id": "d6fa9a20-7ffb-4d74-b2c7-35e5a4a70b21",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:02.519807",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 290302,
+    "modified_time": "2026-08-23T22:06:05.076144"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person brewing coffee using a pour-over method. A black kettle labeled \"TIMEMORE\" is pouring hot water into a filter cone containing coffee grounds, which is placed on a stand above a glass carafe. The carafe is on a digital scale displaying measurements. The person is wearing a gray apron and a smartwatch. On the table, there's a magazine titled \"STANDART.\" The atmosphere is calm and focused, suggesting a precise and mindful coffee-making process.",
+    "final_text": "The image depicts a person brewing coffee using a pour-over method. A black kettle labeled \"TIMEMORE\" is pouring hot water into a filter cone containing coffee grounds, which is placed on a stand above a glass carafe. The carafe is on a digital scale displaying measurements. The person is wearing a gray apron and a smartwatch. On the table, there's a magazine titled \"STANDART.\" The atmosphere is calm and focused, suggesting a precise and mindful coffee-making process.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426541-7LWdeO3xGqif4zsvSGNq",
+    "created": 1788426541,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 98,
+      "total_tokens": 1096,
+      "cost": 0.003475
+    }
+  }
+}

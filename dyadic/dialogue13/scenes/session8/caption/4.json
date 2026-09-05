@@ -1,0 +1,36 @@
+{
+  "id": "9dfd1e8c-20c0-473c-afc3-43c06e42d91e",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:59.454279",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session8/image/4.png",
+    "filename": "4.png",
+    "size": 1514312,
+    "modified_time": "2026-08-23T21:33:12.333250"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a group of children seated on the floor in a brightly lit indoor space, participating in a market-like activity. Toys, books, and other items are displayed on mats in front of them. A prominent sign with colorful text in Chinese is visible, possibly indicating the theme or name of the event. The atmosphere is lively and engaging, with children focused on the items around them.",
+    "final_text": "The image depicts a group of children seated on the floor in a brightly lit indoor space, participating in a market-like activity. Toys, books, and other items are displayed on mats in front of them. A prominent sign with colorful text in Chinese is visible, possibly indicating the theme or name of the event. The atmosphere is lively and engaging, with children focused on the items around them.",
+    "token_stats": {
+      "original_tokens": 78,
+      "final_tokens": 78,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426839-IX7bFKepHswiekWOhaBh",
+    "created": 1788426839,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 78,
+      "total_tokens": 1273,
+      "cost": 0.0037675
+    }
+  }
+}

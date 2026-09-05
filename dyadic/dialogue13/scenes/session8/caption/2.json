@@ -1,0 +1,36 @@
+{
+  "id": "79fbab3d-6c36-4da2-a5b0-001cf65fbdbd",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:58.288082",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 1087216,
+    "modified_time": "2026-08-23T21:32:45.855567"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional poster for a community flea market event titled \"社区跳蚤市场 · 旧物新生计划\" (Community Flea Market · Old Item Renewal Project). It features illustrations of books, a teddy bear, toy cars, a sofa, cabinet, a potted plant, and decorative items. The text mentions exchanging items and experiencing item renewal, with details of the event taking place on Saturday from 9:00 to 16:00 at the community center plaza. The overall mood is inviting and community-oriented.",
+    "final_text": "The image is a promotional poster for a community flea market event titled \"社区跳蚤市场 · 旧物新生计划\" (Community Flea Market · Old Item Renewal Project). It features illustrations of books, a teddy bear, toy cars, a sofa, cabinet, a potted plant, and decorative items. The text mentions exchanging items and experiencing item renewal, with details of the event taking place on Saturday from 9:00 to 16:00 at the community center plaza. The overall mood is inviting and community-oriented.",
+    "token_stats": {
+      "original_tokens": 118,
+      "final_tokens": 118,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426836-zfi3645y3MobgkPDQW5s",
+    "created": 1788426836,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 110,
+      "total_tokens": 1108,
+      "cost": 0.003595
+    }
+  }
+}

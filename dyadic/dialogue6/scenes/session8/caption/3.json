@@ -1,0 +1,36 @@
+{
+  "id": "13bfde00-92c9-4baa-a86a-fb73f605a666",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:12.662537",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 243924,
+    "modified_time": "2026-08-23T21:56:27.884609"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a badminton racket with a purple frame and detailed specifications in Chinese text. It describes the racket's material, string tension, handle length, weight (approximately 88 grams), and retail price (880 yuan). The racket is made of medium-elastic carbon fiber, suitable for intermediate to advanced players. Additional items shown include grip tapes, strings, and a racket cover. The overall mood is informative, aimed at showcasing the product's features and appealing to potential buyers.",
+    "final_text": "The image features a badminton racket with a purple frame and detailed specifications in Chinese text. It describes the racket's material, string tension, handle length, weight (approximately 88 grams), and retail price (880 yuan). The racket is made of medium-elastic carbon fiber, suitable for intermediate to advanced players. Additional items shown include grip tapes, strings, and a racket cover. The overall mood is informative, aimed at showcasing the product's features and appealing to potential buyers.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427571-Bk4TRfIpCVbYaXSRFPQ3",
+    "created": 1788427571,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 95,
+      "total_tokens": 610,
+      "cost": 0.0022375
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "b97cf409-c18b-4904-9c1b-6019ec4d48d6",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:34.602032",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session15/image/3.png",
+    "filename": "3.png",
+    "size": 3554321,
+    "modified_time": "2026-08-23T21:36:18.138936"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is divided into three sections with a futuristic design. On the left, there's a neon outline of a cat with headphones labeled \"Stable Diffusion XL,\" along with a QR code and text about transparency and a model description: \"cyberpunk feline, neural interface glow.\" The middle section features large text stating \"责任, 是技术的另一行代码,\" which means \"Responsibility is another line of code in technology.\" On the right, there are icons such as a bar graph and an eye with the text \"识别Deepface.\" Additional text discusses technical defense, education, social norms, and legal supervision. The overall mood is tech-focused, emphasizing responsibility and ethical considerations in technology.",
+    "final_text": "The image is divided into three sections with a futuristic design. On the left, there's a neon outline of a cat with headphones labeled \"Stable Diffusion XL,\" along with a QR code and text about transparency and a model description: \"cyberpunk feline, neural interface glow.\" The middle section features large text stating \"责任, 是技术的另一行代码,\" which means \"Responsibility is another line of code in technology.\" On the right, there are icons such as a bar graph and an eye with the text \"识别Deepface.\" Additional text discusses technical defense, education, social norms, and legal supervision. The overall mood is tech-focused, emphasizing responsibility and ethical considerations in technology.",
+    "token_stats": {
+      "original_tokens": 149,
+      "final_tokens": 149,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427113-Jow8Tu009ckRFKTfua4I",
+    "created": 1788427113,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 140,
+      "total_tokens": 1335,
+      "cost": 0.0043875
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "755484bf-939a-4911-b3ea-b9b412b517d5",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:26.194223",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session12/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 36566,
+    "modified_time": "2026-08-23T21:37:09.103652"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a collection of various containers and a black insulated bag. There are clear plastic bottles with silver and gold caps, some containing liquid and others empty. Transparent jars with silver lids hold dried items like spices and seeds. Small plastic funnels are also present. The scene conveys a sense of organization and preparation, possibly for travel or storage. The overall mood is practical and orderly. No visible text is present.",
+    "final_text": "The image depicts a collection of various containers and a black insulated bag. There are clear plastic bottles with silver and gold caps, some containing liquid and others empty. Transparent jars with silver lids hold dried items like spices and seeds. Small plastic funnels are also present. The scene conveys a sense of organization and preparation, possibly for travel or storage. The overall mood is practical and orderly. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427164-4hAGMb3nEx7xpbdOrGNK",
+    "created": 1788427164,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 82,
+      "total_tokens": 937,
+      "cost": 0.0029575
+    }
+  }
+}

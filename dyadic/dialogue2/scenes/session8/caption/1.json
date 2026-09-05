@@ -1,0 +1,36 @@
+{
+  "id": "d6735a91-4343-49f9-8968-f3ea299a11f8",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:09.958006",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session8/image/1.png",
+    "filename": "1.png",
+    "size": 97177,
+    "modified_time": "2026-08-23T21:41:07.787877"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a health app dashboard displaying fitness and health metrics. The top section shows step count (11,061 steps) and active minutes (28 minutes) with additional data on distance (8.14 km), calories burned (315 kcal), and elevation (80.6 meters). Below, there are four main health metrics: heart rate (97 bpm), blood pressure (110/73 mmHg), sleep quality, and blood oxygen levels, each with respective graphs or indicators. The overall mood is informative, with a focus on personal health tracking. The interface uses a clean design with an orange and white color scheme.",
+    "final_text": "The image is a health app dashboard displaying fitness and health metrics. The top section shows step count (11,061 steps) and active minutes (28 minutes) with additional data on distance (8.14 km), calories burned (315 kcal), and elevation (80.6 meters). Below, there are four main health metrics: heart rate (97 bpm), blood pressure (110/73 mmHg), sleep quality, and blood oxygen levels, each with respective graphs or indicators. The overall mood is informative, with a focus on personal health tracking. The interface uses a clean design with an orange and white color scheme.",
+    "token_stats": {
+      "original_tokens": 125,
+      "final_tokens": 125,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427271-Y1BJpfPGcCxSq1c9EmCW",
+    "created": 1788427271,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 124,
+      "total_tokens": 639,
+      "cost": 0.0025275
+    }
+  }
+}

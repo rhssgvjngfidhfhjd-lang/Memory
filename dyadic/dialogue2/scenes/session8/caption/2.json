@@ -1,0 +1,36 @@
+{
+  "id": "86bd8034-bed0-4fd9-baed-0110b38c9edb",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:10.361840",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session8/image/2.png",
+    "filename": "2.png",
+    "size": 399341,
+    "modified_time": "2026-08-23T21:41:12.999709"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a comparison chart for two smartwatch models, 华为手环7NFC版 (Huawei Band 7 NFC Edition) and 华为手环6NFC版 (Huawei Band 6 NFC Edition). It includes specifications like release dates (2022 for Band 7 and 2021 for Band 6), dimensions, weight, screen type, and features like heart rate monitoring, NFC, and water resistance. The chart also compares battery life, operating modes, charging methods, and prices. The mood is informative, focusing on product features and differences. Various colors of the smartwatches are shown at the top.",
+    "final_text": "The image is a comparison chart for two smartwatch models, 华为手环7NFC版 (Huawei Band 7 NFC Edition) and 华为手环6NFC版 (Huawei Band 6 NFC Edition). It includes specifications like release dates (2022 for Band 7 and 2021 for Band 6), dimensions, weight, screen type, and features like heart rate monitoring, NFC, and water resistance. The chart also compares battery life, operating modes, charging methods, and prices. The mood is informative, focusing on product features and differences. Various colors of the smartwatches are shown at the top.",
+    "token_stats": {
+      "original_tokens": 132,
+      "final_tokens": 132,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427271-N8CayG9vJg2sL6SbFd3P",
+    "created": 1788427271,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 127,
+      "total_tokens": 642,
+      "cost": 0.0025575
+    }
+  }
+}

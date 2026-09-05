@@ -1,0 +1,36 @@
+{
+  "id": "6a9e32a4-f3e5-4895-8dc7-f066a798b926",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:18.009580",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session12/image/6.png",
+    "filename": "6.png",
+    "size": 205473,
+    "modified_time": "2026-08-23T21:54:48.719791"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a kitchen scene with three loaves of bread placed on a baking tray inside an oven. The oven's digital display shows \"00,\" indicating it is not currently active. The bread appears to be in the final stages of preparation before baking, as suggested by the visible text in Chinese: \"第四阶段: 最终发酵与烘烤准备,\" which translates to \"Stage Four: Final Fermentation and Baking Preparation.\" The atmosphere is calm and focused, suggesting a routine baking process.",
+    "final_text": "The image depicts a kitchen scene with three loaves of bread placed on a baking tray inside an oven. The oven's digital display shows \"00,\" indicating it is not currently active. The bread appears to be in the final stages of preparation before baking, as suggested by the visible text in Chinese: \"第四阶段: 最终发酵与烘烤准备,\" which translates to \"Stage Four: Final Fermentation and Baking Preparation.\" The atmosphere is calm and focused, suggesting a routine baking process.",
+    "token_stats": {
+      "original_tokens": 113,
+      "final_tokens": 113,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427455-STESU5oscU8pmeMi7FF5",
+    "created": 1788427455,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 104,
+      "total_tokens": 404,
+      "cost": 0.00179
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "b813eb15-4ac2-4bcd-bf16-54c6d10c5615",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:12.456779",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session12/image/4.png",
+    "filename": "4.png",
+    "size": 188377,
+    "modified_time": "2026-08-23T21:41:58.077931"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an informational card for a game. It includes a small image of a character or scene, with text that reads \"黑神话悟空\" (Black Myth: Wukong). It lists sales figures as \"2800万\" (28 million units) and \"90亿\" (9 billion in revenue). The release date is \"2024年08月20日\" (August 20, 2024). There are review numbers \"106.9万\" (1,069,000 reviews) with a 96.6% positive rating. The price is \"¥268.\" Additional text mentions the game's ranking in sales history. The overall mood is informative and promotional.",
+    "final_text": "The image is an informational card for a game. It includes a small image of a character or scene, with text that reads \"黑神话悟空\" (Black Myth: Wukong). It lists sales figures as \"2800万\" (28 million units) and \"90亿\" (9 billion in revenue). The release date is \"2024年08月20日\" (August 20, 2024). There are review numbers \"106.9万\" (1,069,000 reviews) with a 96.6% positive rating. The price is \"¥268.\" Additional text mentions the game's ranking in sales history. The overall mood is informative and promotional.",
+    "token_stats": {
+      "original_tokens": 145,
+      "final_tokens": 145,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427330-7zpuf66K1rUVoEwxyGpp",
+    "created": 1788427330,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 141,
+      "total_tokens": 656,
+      "cost": 0.0026975
+    }
+  }
+}

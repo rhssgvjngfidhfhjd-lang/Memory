@@ -1,0 +1,36 @@
+{
+  "id": "6b7b6072-c0f2-4632-9cde-7fc02a2024fd",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:13.315607",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session4/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 366200,
+    "modified_time": "2026-08-23T22:07:45.575840"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a busy urban street scene with a mix of pedestrians and vehicles, including yellow taxis and cars. The street is lined with multi-story buildings, featuring various storefronts with visible signs such as \"Dean & Deluca\" and \"El Cantinero.\" A prominent building with a spire is visible in the background, indicating a cityscape. The atmosphere is lively, with people going about their day and traffic moving through a typical city environment. The sky appears overcast, adding a neutral tone to the scene.",
+    "final_text": "The image depicts a busy urban street scene with a mix of pedestrians and vehicles, including yellow taxis and cars. The street is lined with multi-story buildings, featuring various storefronts with visible signs such as \"Dean & Deluca\" and \"El Cantinero.\" A prominent building with a spire is visible in the background, indicating a cityscape. The atmosphere is lively, with people going about their day and traffic moving through a typical city environment. The sky appears overcast, adding a neutral tone to the scene.",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426732-VFfKClhGJ9RdDbFNr5SV",
+    "created": 1788426732,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 105,
+      "total_tokens": 1300,
+      "cost": 0.0040375
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "d01fd454-1789-4139-9880-d31233a02fb8",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:54.183006",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session6/image/2.png",
+    "filename": "2.png",
+    "size": 664460,
+    "modified_time": "2026-08-23T21:55:25.964647"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a black and white cat licking a treat held by a person's hands. A small pill is placed on the treat, suggesting a method for giving medicine to the cat. The scene is set in a warm, softly lit environment, contributing to a calm and caring mood. The text in the image, in Chinese, offers tips for administering medicine to cats, suggesting hiding the pill in a treat and choosing flavors the cat enjoys.",
+    "final_text": "The image shows a black and white cat licking a treat held by a person's hands. A small pill is placed on the treat, suggesting a method for giving medicine to the cat. The scene is set in a warm, softly lit environment, contributing to a calm and caring mood. The text in the image, in Chinese, offers tips for administering medicine to cats, suggesting hiding the pill in a treat and choosing flavors the cat enjoys.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427491-1kYgTCgXEjC39VKUk8N9",
+    "created": 1788427491,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 88,
+      "total_tokens": 805,
+      "cost": 0.0026725
+    }
+  }
+}

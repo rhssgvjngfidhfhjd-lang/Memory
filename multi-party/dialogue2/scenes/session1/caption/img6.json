@@ -1,0 +1,36 @@
+{
+  "id": "611c552e-0b53-4d81-bc88-f13dea836ce0",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:12.282584",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 100712,
+    "modified_time": "2026-08-23T22:04:30.764892"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a smartwatch on a person's wrist, displaying a detailed satellite map of a coastal area. The map features roads, buildings, and a beach with a turquoise sea. The watch has a rugged design with visible buttons and text such as \"UP-MENU\" and \"GARMIN.\" The atmosphere is tech-savvy and adventurous, suggesting exploration or travel.",
+    "final_text": "The image shows a smartwatch on a person's wrist, displaying a detailed satellite map of a coastal area. The map features roads, buildings, and a beach with a turquoise sea. The watch has a rugged design with visible buttons and text such as \"UP-MENU\" and \"GARMIN.\" The atmosphere is tech-savvy and adventurous, suggesting exploration or travel.",
+    "token_stats": {
+      "original_tokens": 76,
+      "final_tokens": 76,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426612-cQHGb4DYsj6freX5FfbT",
+    "created": 1788426612,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 72,
+      "total_tokens": 927,
+      "cost": 0.0028575
+    }
+  }
+}

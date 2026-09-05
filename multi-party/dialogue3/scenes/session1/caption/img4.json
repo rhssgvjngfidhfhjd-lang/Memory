@@ -1,0 +1,36 @@
+{
+  "id": "6f977e9c-18e4-4c32-a99e-6f7e75be11a4",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:28.814600",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session1/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 151593,
+    "modified_time": "2026-08-23T22:07:11.987116"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a lone figure standing on the edge of a rocky cliff, gazing into a swirling cosmic vortex in the sky. The person is dressed in medieval-style armor with a tattered cloak, suggesting a warrior or knight. The scene is illuminated by ethereal light, creating a mystical, adventurous atmosphere. There is a symbol resembling a cross and circle visible on the cliff's surface. The mood is contemplative and epic, evoking a sense of exploration and the unknown.",
+    "final_text": "The image depicts a lone figure standing on the edge of a rocky cliff, gazing into a swirling cosmic vortex in the sky. The person is dressed in medieval-style armor with a tattered cloak, suggesting a warrior or knight. The scene is illuminated by ethereal light, creating a mystical, adventurous atmosphere. There is a symbol resembling a cross and circle visible on the cliff's surface. The mood is contemplative and epic, evoking a sense of exploration and the unknown.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426687-AXHmpQUS2L2uOhwvDbYw",
+    "created": 1788426687,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 97,
+      "total_tokens": 814,
+      "cost": 0.0027625
+    }
+  }
+}

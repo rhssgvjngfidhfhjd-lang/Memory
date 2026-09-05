@@ -1,0 +1,36 @@
+{
+  "id": "fbd07826-470a-4b86-94eb-b226e8d429dc",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:57.017307",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session4/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 290120,
+    "modified_time": "2026-08-23T21:32:45.358681"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a dog interacting with a colorful, checkered blanket, which covers a small plush toy. The dog's paw is placed on the blanket as it sniffs or nuzzles the fabric. Nearby, there is a package labeled \"Training\" with visible treats. The atmosphere is playful and curious, suggesting the dog is engaged in a fun activity or training session. The setting appears cozy and inviting, with additional floral-patterned fabric adding to the warm ambiance.",
+    "final_text": "The image depicts a dog interacting with a colorful, checkered blanket, which covers a small plush toy. The dog's paw is placed on the blanket as it sniffs or nuzzles the fabric. Nearby, there is a package labeled \"Training\" with visible treats. The atmosphere is playful and curious, suggesting the dog is engaged in a fun activity or training session. The setting appears cozy and inviting, with additional floral-patterned fabric adding to the warm ambiance.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426714-xyehaUdQHrjqHGGXOrbJ",
+    "created": 1788426714,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 93,
+      "total_tokens": 810,
+      "cost": 0.0027225
+    }
+  }
+}

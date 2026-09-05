@@ -1,0 +1,36 @@
+{
+  "id": "9d512cb9-8424-4b95-9378-47f7ec4af134",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:52.147862",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue17/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 1947479,
+    "modified_time": "2026-08-23T21:36:49.136214"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a man sitting and wearing a brainwave monitoring cap connected to a machine. The setup includes multiple cables leading to a nearby piece of equipment with numerous ports and a laptop displaying graphs and data. The man appears relaxed, suggesting a research or medical setting. The overall atmosphere is focused and scientific.",
+    "final_text": "The image depicts a man sitting and wearing a brainwave monitoring cap connected to a machine. The setup includes multiple cables leading to a nearby piece of equipment with numerous ports and a laptop displaying graphs and data. The man appears relaxed, suggesting a research or medical setting. The overall atmosphere is focused and scientific.",
+    "token_stats": {
+      "original_tokens": 61,
+      "final_tokens": 61,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427070-O5o5QkonEpIYG56QDSGy",
+    "created": 1788427070,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 61,
+      "total_tokens": 916,
+      "cost": 0.0027475
+    }
+  }
+}

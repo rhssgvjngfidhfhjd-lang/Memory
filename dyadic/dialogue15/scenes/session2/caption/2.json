@@ -1,0 +1,36 @@
+{
+  "id": "2b73bf6e-b02e-4874-aa61-270a634abcb1",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:56.761973",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session2/image/2.png",
+    "filename": "2.png",
+    "size": 2791411,
+    "modified_time": "2026-08-23T21:34:45.151331"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a frequency spectrum analysis from 0 to 70 kHz over a 10-second duration. The vertical axis shows decibel levels from 0 to 80 dB, while the horizontal axis represents time in seconds. The spectrum is divided into four sections: 0-1 kHz (background noise), 1-20 kHz (audible range for cats), 20-45 kHz (ultrasonic communication), and 45-70 kHz (abnormal high frequency). Annotations in Chinese describe these sections. An abnormal signal at ~55 kHz appears between 3-8 seconds with a strength of ~65 dB, potentially from ultrasonic devices or household appliances. The atmosphere is analytical.",
+    "final_text": "The image displays a frequency spectrum analysis from 0 to 70 kHz over a 10-second duration. The vertical axis shows decibel levels from 0 to 80 dB, while the horizontal axis represents time in seconds. The spectrum is divided into four sections: 0-1 kHz (background noise), 1-20 kHz (audible range for cats), 20-45 kHz (ultrasonic communication), and 45-70 kHz (abnormal high frequency). Annotations in Chinese describe these sections. An abnormal signal at ~55 kHz appears between 3-8 seconds with a strength of ~65 dB, potentially from ultrasonic devices or household appliances. The atmosphere is analytical.",
+    "token_stats": {
+      "original_tokens": 140,
+      "final_tokens": 140,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426954-U5Jqv0ujxxuIsariN8fD",
+    "created": 1788426954,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 148,
+      "total_tokens": 1343,
+      "cost": 0.0044675
+    }
+  }
+}

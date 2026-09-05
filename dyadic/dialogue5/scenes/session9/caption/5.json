@@ -1,0 +1,36 @@
+{
+  "id": "69c620a2-0b08-4545-bb2a-743c487a6f81",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:12.738628",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session9/image/5.png",
+    "filename": "5.png",
+    "size": 897173,
+    "modified_time": "2026-08-23T21:55:36.797176"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features an illustration of a woman cooking in a traditional kitchen. She is wearing traditional clothing and is adding green onions to a pot over a fire. On the left, there is an illustration of green onions next to a jar of honey with a dipper. A large red \"X\" indicates that these items should not be combined. The text, in Chinese, warns against eating honey and onions together, suggesting it may cause digestive issues. The atmosphere is educational and cautionary.",
+    "final_text": "The image features an illustration of a woman cooking in a traditional kitchen. She is wearing traditional clothing and is adding green onions to a pot over a fire. On the left, there is an illustration of green onions next to a jar of honey with a dipper. A large red \"X\" indicates that these items should not be combined. The text, in Chinese, warns against eating honey and onions together, suggesting it may cause digestive issues. The atmosphere is educational and cautionary.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427511-qJflf9TG25BECl5oeHYK",
+    "created": 1788427511,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 97,
+      "total_tokens": 952,
+      "cost": 0.0031075
+    }
+  }
+}

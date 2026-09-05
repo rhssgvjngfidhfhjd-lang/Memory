@@ -1,0 +1,36 @@
+{
+  "id": "f6a02ed9-7ea5-4992-9660-a25329cd8f5a",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:51.821620",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session5/image/3.png",
+    "filename": "3.png",
+    "size": 2089667,
+    "modified_time": "2026-08-23T22:01:12.521825"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two people interacting at a parcel locker area. A woman is sitting and writing on a document placed on a small table, while a man in a red vest stands beside her. A green locker system is visible in the background. A sign with the visible text \"Bezam\" and other details in Chinese is prominently displayed. The atmosphere appears to be focused and businesslike, possibly related to logistics or package collection.",
+    "final_text": "The image shows two people interacting at a parcel locker area. A woman is sitting and writing on a document placed on a small table, while a man in a red vest stands beside her. A green locker system is visible in the background. A sign with the visible text \"Bezam\" and other details in Chinese is prominently displayed. The atmosphere appears to be focused and businesslike, possibly related to logistics or package collection.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427731-tTFQmbFuyVzHhd8ODRhX",
+    "created": 1788427731,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 85,
+      "total_tokens": 1280,
+      "cost": 0.0038375
+    }
+  }
+}

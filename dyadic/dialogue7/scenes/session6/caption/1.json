@@ -1,0 +1,36 @@
+{
+  "id": "2cfb0327-8c8f-4708-9a31-c1f427477223",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:51.896243",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session6/image/1.png",
+    "filename": "1.png",
+    "size": 179417,
+    "modified_time": "2026-08-23T21:56:59.246425"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a bar chart with three vertical bars representing statistical data. The bars are labeled with percentages: 30%, 25%, and 28%. Below each percentage, there is text in Chinese. The text under the 30% bar mentions reducing the risk of type 2 diabetes. The text under the 25% bar refers to improving insulin sensitivity, and the text under the 28% bar mentions lowering the risk of cardiovascular disease. The overall mood is informative and data-driven, suggesting health benefits associated with a Mediterranean diet.",
+    "final_text": "The image features a bar chart with three vertical bars representing statistical data. The bars are labeled with percentages: 30%, 25%, and 28%. Below each percentage, there is text in Chinese. The text under the 30% bar mentions reducing the risk of type 2 diabetes. The text under the 25% bar refers to improving insulin sensitivity, and the text under the 28% bar mentions lowering the risk of cardiovascular disease. The overall mood is informative and data-driven, suggesting health benefits associated with a Mediterranean diet.",
+    "token_stats": {
+      "original_tokens": 108,
+      "final_tokens": 108,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427611-gSt803eWt44RL3zV8m5A",
+    "created": 1788427611,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 109,
+      "total_tokens": 409,
+      "cost": 0.00184
+    }
+  }
+}

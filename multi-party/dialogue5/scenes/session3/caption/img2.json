@@ -1,0 +1,36 @@
+{
+  "id": "eab2b642-f657-4bd1-9887-118bcf99bdf5",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:26.680366",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 272206,
+    "modified_time": "2026-08-23T22:09:43.414698"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a map of Venice with a highlighted route marked in purple, showcasing a day tour itinerary. Key landmarks are numbered and listed on the left in Chinese, including places like 圣马可广场 (St. Mark's Square) and 图书馆 (Library). The map includes areas such as Santa Croce, San Polo, and San Marco, with notable sites like Ponte delle Guglie and Libreria Acqua Alta. The overall atmosphere is informative, guiding a visitor through a planned tour of Venice's attractions.",
+    "final_text": "The image is a map of Venice with a highlighted route marked in purple, showcasing a day tour itinerary. Key landmarks are numbered and listed on the left in Chinese, including places like 圣马可广场 (St. Mark's Square) and 图书馆 (Library). The map includes areas such as Santa Croce, San Polo, and San Marco, with notable sites like Ponte delle Guglie and Libreria Acqua Alta. The overall atmosphere is informative, guiding a visitor through a planned tour of Venice's attractions.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426865-eEXC6Dx8W68H9sx0hElo",
+    "created": 1788426865,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 105,
+      "total_tokens": 1300,
+      "cost": 0.0040375
+    }
+  }
+}

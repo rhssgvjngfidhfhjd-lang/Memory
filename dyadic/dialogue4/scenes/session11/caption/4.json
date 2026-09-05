@@ -1,0 +1,36 @@
+{
+  "id": "64671135-7d4c-491d-93cc-81a4d398777c",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:09.049287",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session11/image/4.png",
+    "filename": "4.png",
+    "size": 123595,
+    "modified_time": "2026-08-23T21:50:20.958289"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a clear glass bowl containing risen dough, with a hand pressing a finger into its surface. The dough is marked with measurements indicating its rise to 80%-100%, suggesting optimal fermentation. Below the bowl, there are diagrams of measuring cups with dough at different rise levels, with percentages marked. The visible text includes instructions for dough fermentation and optimal rise levels. The atmosphere is instructional and practical, focusing on baking techniques.",
+    "final_text": "The image shows a clear glass bowl containing risen dough, with a hand pressing a finger into its surface. The dough is marked with measurements indicating its rise to 80%-100%, suggesting optimal fermentation. Below the bowl, there are diagrams of measuring cups with dough at different rise levels, with percentages marked. The visible text includes instructions for dough fermentation and optimal rise levels. The atmosphere is instructional and practical, focusing on baking techniques.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427448-FlCvqM9tQAQeFUMyCp8v",
+    "created": 1788427448,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 87,
+      "total_tokens": 387,
+      "cost": 0.00162
+    }
+  }
+}

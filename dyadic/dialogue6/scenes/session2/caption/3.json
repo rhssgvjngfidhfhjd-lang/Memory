@@ -1,0 +1,36 @@
+{
+  "id": "cf989ae6-4f7c-4108-b8f8-5ad9e33e3b95",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:44.973971",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 81223,
+    "modified_time": "2026-08-23T21:56:25.457861"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains text in Chinese discussing traffic rules and guidelines related to pedestrian and vehicle priority. It is structured into three sections: \n\n1. Core Concepts: Emphasizes the absolute priority of pedestrians, stating that vehicles must yield to pedestrians in all situations.\n\n2. Rules for Pedestrians: Covers guidelines for pedestrian behavior at intersections and crosswalks, including waiting for green lights and avoiding crossing at red lights.\n\n3. Rules for Drivers/Cyclists: Outlines responsibilities for drivers and cyclists, highlighting the need for caution near pedestrians and adherence to traffic signals.\n\nThe text is informative, aiming to promote safety and orderly conduct in traffic scenarios.",
+    "final_text": "The image contains text in Chinese discussing traffic rules and guidelines related to pedestrian and vehicle priority. It is structured into three sections: \n\n1. Core Concepts: Emphasizes the absolute priority of pedestrians, stating that vehicles must yield to pedestrians in all situations.\n\n2. Rules for Pedestrians: Covers guidelines for pedestrian behavior at intersections and crosswalks, including waiting for green lights and avoiding crossing at red lights.\n\n3. Rules for Drivers/Cyclists: Outlines responsibilities for drivers and cyclists, highlighting the need for caution near pedestrians and adherence to traffic signals.\n\nThe text is informative, aiming to promote safety and orderly conduct in traffic scenarios.",
+    "token_stats": {
+      "original_tokens": 129,
+      "final_tokens": 129,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427543-2ludBKC2bQ2cGZsY5Tfo",
+    "created": 1788427543,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 129,
+      "total_tokens": 846,
+      "cost": 0.0030825
+    }
+  }
+}

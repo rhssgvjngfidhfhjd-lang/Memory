@@ -1,0 +1,36 @@
+{
+  "id": "7b571623-f1eb-4af3-8e3d-0410158aff96",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:35.925562",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session1/image/2.png",
+    "filename": "2.png",
+    "size": 8938,
+    "modified_time": "2026-08-23T21:32:48.434138"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains text on a light yellow background. The text is in Chinese and includes three lines:\n\n1. \"Git提交时间监测自动锁屏工具\"\n2. \"智能颈椎提醒小工具\"\n3. \"键盘敲击频率检测休息提醒脚本\"\n\nThe overall atmosphere is informational, suggesting tools related to productivity and health monitoring. There are no people, animals, or objects depicted.",
+    "final_text": "The image contains text on a light yellow background. The text is in Chinese and includes three lines:\n\n1. \"Git提交时间监测自动锁屏工具\"\n2. \"智能颈椎提醒小工具\"\n3. \"键盘敲击频率检测休息提醒脚本\"\n\nThe overall atmosphere is informational, suggesting tools related to productivity and health monitoring. There are no people, animals, or objects depicted.",
+    "token_stats": {
+      "original_tokens": 109,
+      "final_tokens": 109,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426876-FXA5dqoQz5rlSn5YRhIV",
+    "created": 1788426876,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 88,
+      "total_tokens": 433,
+      "cost": 0.0017425
+    }
+  }
+}

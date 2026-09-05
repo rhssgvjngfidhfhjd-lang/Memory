@@ -1,0 +1,36 @@
+{
+  "id": "b5db356b-e746-47ee-b5e1-e9557cdc2b59",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:02.817366",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session5/image/3.png",
+    "filename": "3.png",
+    "size": 257532,
+    "modified_time": "2026-08-23T21:56:12.940651"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a lineup of gym equipment, including a leg press machine, treadmill, seated row machine, stationary bicycle, and chest press machine, arranged horizontally. Above them, a digital device is illustrated, indicating connectivity with lines extending outward. The visible text reads \"智能健身系统\" (Smart Fitness System) and describes features such as detailed recording of fitness actions, personalized fitness plans, visualized fitness effects, and quick member engagement. The overall atmosphere is modern and technological, emphasizing an advanced, interconnected fitness approach.",
+    "final_text": "The image depicts a lineup of gym equipment, including a leg press machine, treadmill, seated row machine, stationary bicycle, and chest press machine, arranged horizontally. Above them, a digital device is illustrated, indicating connectivity with lines extending outward. The visible text reads \"智能健身系统\" (Smart Fitness System) and describes features such as detailed recording of fitness actions, personalized fitness plans, visualized fitness effects, and quick member engagement. The overall atmosphere is modern and technological, emphasizing an advanced, interconnected fitness approach.",
+    "token_stats": {
+      "original_tokens": 107,
+      "final_tokens": 107,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427560-XL1ZflP0ojjfdPJvGWvL",
+    "created": 1788427560,
+    "usage": {
+      "prompt_tokens": 580,
+      "completion_tokens": 105,
+      "total_tokens": 685,
+      "cost": 0.0025
+    }
+  }
+}

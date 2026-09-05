@@ -1,0 +1,36 @@
+{
+  "id": "1fe168d0-e365-4577-adc4-f89c0d4978a5",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:48.592202",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session4/image/4.png",
+    "filename": "4.png",
+    "size": 131203,
+    "modified_time": "2026-08-23T22:01:10.626373"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table divided into five columns: \"模块\" (Module), \"具体内容\" (Specific Content), \"负责人\" (Person in Charge), \"核心目标\" (Core Objective), and four rows. Each row details different aspects of a project related to community food sharing. \n\n- **模块**: Includes \"硬件搭建\" (Hardware Construction), \"规则制定\" (Rule Making), \"工具辅助\" (Tool Assistance), \"推广与维护\" (Promotion and Maintenance).\n- **具体内容**: Describes tasks like using recycled materials, rule enforcement, and tool usage for maintaining the project's efficiency.\n- **负责人**: Lists names of individuals responsible for each task.\n- **核心目标**: States goals such as building durable structures, ensuring order, increasing participation, and optimizing processes.\n\nThe mood is organized and methodical, reflecting a structured approach to community collaboration.",
+    "final_text": "The image is a table divided into five columns: \"模块\" (Module), \"具体内容\" (Specific Content), \"负责人\" (Person in Charge), \"核心目标\" (Core Objective), and four rows. Each row details different aspects of a project related to community food sharing. \n\n- **模块**: Includes \"硬件搭建\" (Hardware Construction), \"规则制定\" (Rule Making), \"工具辅助\" (Tool Assistance), \"推广与维护\" (Promotion and Maintenance).\n- **具体内容**: Describes tasks like using recycled materials, rule enforcement, and tool usage for maintaining the project's efficiency.\n- **负责人**: Lists names of individuals responsible for each task.\n- **核心目标**: States goals such as building durable structures, ensuring order, increasing participation, and optimizing processes.\n\nThe mood is organized and methodical, reflecting a structured approach to community collaboration.",
+    "token_stats": {
+      "original_tokens": 208,
+      "final_tokens": 208,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427727-OxFIWeDOBGAQSLjiDUL4",
+    "created": 1788427727,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 181,
+      "total_tokens": 1036,
+      "cost": 0.0039475
+    }
+  }
+}

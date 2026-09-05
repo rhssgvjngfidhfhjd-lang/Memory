@@ -1,0 +1,36 @@
+{
+  "id": "f2ac90c4-8327-4098-8c1f-0f5464df30fa",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:56.690022",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session5/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 189110,
+    "modified_time": "2026-08-23T21:37:34.551438"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A man sits on a log in a forested area, clutching his knee with a pained expression, suggesting an injury. He wears a gray t-shirt, shorts, and hiking boots, with a backpack and a walking stick nearby. The surrounding environment is lush and green, creating a natural and serene atmosphere, contrasting with the man's discomfort. The scene conveys a mix of adventure and challenge. Visible text includes \"alamy\" watermarks.",
+    "final_text": "A man sits on a log in a forested area, clutching his knee with a pained expression, suggesting an injury. He wears a gray t-shirt, shorts, and hiking boots, with a backpack and a walking stick nearby. The surrounding environment is lush and green, creating a natural and serene atmosphere, contrasting with the man's discomfort. The scene conveys a mix of adventure and challenge. Visible text includes \"alamy\" watermarks.",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427134-xMDPeaZ1AucaSWJewedv",
+    "created": 1788427134,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 89,
+      "total_tokens": 1284,
+      "cost": 0.0038775
+    }
+  }
+}

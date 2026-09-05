@@ -1,0 +1,36 @@
+{
+  "id": "17b617ea-7423-49d2-b7c8-e0dd3e18f83a",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:22.140105",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session3/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 270494,
+    "modified_time": "2026-08-23T22:08:53.333267"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a modern, minimalist living room with a cozy atmosphere. The main elements include a wooden dining table with chairs, a laptop, and a mug. A small lamp and decorative items are on the table. A wall clock and abstract art are visible above a cabinet. A TV displays a nature scene with partial visible text \"essentia.\" A small dog is sitting on a rug near a woven chair. The room features neutral tones, a light wood floor, and potted plants, creating a calm and inviting space.",
+    "final_text": "The image depicts a modern, minimalist living room with a cozy atmosphere. The main elements include a wooden dining table with chairs, a laptop, and a mug. A small lamp and decorative items are on the table. A wall clock and abstract art are visible above a cabinet. A TV displays a nature scene with partial visible text \"essentia.\" A small dog is sitting on a rug near a woven chair. The room features neutral tones, a light wood floor, and potted plants, creating a calm and inviting space.",
+    "token_stats": {
+      "original_tokens": 106,
+      "final_tokens": 106,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426802-AU6kNyo7zv2ODE3IM3Lr",
+    "created": 1788426802,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 106,
+      "total_tokens": 961,
+      "cost": 0.0031975
+    }
+  }
+}

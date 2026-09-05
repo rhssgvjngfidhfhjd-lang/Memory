@@ -1,0 +1,36 @@
+{
+  "id": "b37263e3-e1bd-44ed-8207-06983807ba86",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:02.836023",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session1/image/img14.jpg",
+    "filename": "img14.jpg",
+    "size": 421150,
+    "modified_time": "2026-08-23T22:01:44.704987"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a kitchen sink filled with various unwashed dishes, including white bowls, plates, a red pan, and glassware. A faucet is running water over the items, with soap suds visible in some of the glasses. Utensils are scattered among the dishes, and a wooden cutting board is also present. The scene conveys a cluttered and busy atmosphere, suggesting a recent meal preparation or cleanup in progress.",
+    "final_text": "The image depicts a kitchen sink filled with various unwashed dishes, including white bowls, plates, a red pan, and glassware. A faucet is running water over the items, with soap suds visible in some of the glasses. Utensils are scattered among the dishes, and a wooden cutting board is also present. The scene conveys a cluttered and busy atmosphere, suggesting a recent meal preparation or cleanup in progress.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426542-YsuiKcGN4lGJoKtPOlcZ",
+    "created": 1788426542,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 85,
+      "total_tokens": 940,
+      "cost": 0.0029875
+    }
+  }
+}

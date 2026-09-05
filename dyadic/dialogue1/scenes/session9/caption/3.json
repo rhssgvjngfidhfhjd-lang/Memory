@@ -1,0 +1,36 @@
+{
+  "id": "18dc4f79-2d7f-44a5-aa59-9e1a31d6efc5",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:52.462318",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session9/image/3.png",
+    "filename": "3.png",
+    "size": 528926,
+    "modified_time": "2026-08-23T21:30:11.874530"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional flyer for pet care services in Chinese. It is divided into sections:\n\n1. **遛狗**: Dog walking services for 15-60 minutes to energize dogs, reminding to hold the leash.\n2. **上门照料**: In-home pet sitting for 30-60 minutes, ensuring pets are well-cared for with feeding and cleaning services.\n3. **送诊**: Veterinary transport services to ensure pets receive medical care.\n4. **上门住家服务**: Extended in-home pet care, ensuring pets feel at home even when owners are away.\n5. **狗狗寄养**: Dog boarding services in a comfortable environment, with an option for cat care.\n\nImages include a sleeping cat and a relaxed dog, creating a calm and reassuring atmosphere.",
+    "final_text": "The image is a promotional flyer for pet care services in Chinese. It is divided into sections:\n\n1. **遛狗**: Dog walking services for 15-60 minutes to energize dogs, reminding to hold the leash.\n2. **上门照料**: In-home pet sitting for 30-60 minutes, ensuring pets are well-cared for with feeding and cleaning services.\n3. **送诊**: Veterinary transport services to ensure pets receive medical care.\n4. **上门住家服务**: Extended in-home pet care, ensuring pets feel at home even when owners are away.\n5. **狗狗寄养**: Dog boarding services in a comfortable environment, with an option for cat care.\n\nImages include a sleeping cat and a relaxed dog, creating a calm and reassuring atmosphere.",
+    "token_stats": {
+      "original_tokens": 171,
+      "final_tokens": 171,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426531-8AcCX4SKD47bHIXqmntK",
+    "created": 1788426531,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 165,
+      "total_tokens": 680,
+      "cost": 0.0029375
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "11b0deaf-6ec3-46c7-b936-bd858a6fd2c7",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:20.909455",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session9/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 1353228,
+    "modified_time": "2026-08-23T21:34:01.760533"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a digital exhibition poster titled \"The Way in Patterns,\" showcasing an ornate ceramic vase decorated with colorful fish and floral patterns. The background is a deep blue with star-like accents and digital fish motifs swimming around. Text includes exhibition details: \"An Immersive Digital Exhibition by The Palace Museum,\" dates \"01/07/2025 - 08/17,\" and location in Suzhou Bay Digital Art Museum. The mood is elegant and immersive, combining traditional art with digital elements.",
+    "final_text": "The image features a digital exhibition poster titled \"The Way in Patterns,\" showcasing an ornate ceramic vase decorated with colorful fish and floral patterns. The background is a deep blue with star-like accents and digital fish motifs swimming around. Text includes exhibition details: \"An Immersive Digital Exhibition by The Palace Museum,\" dates \"01/07/2025 - 08/17,\" and location in Suzhou Bay Digital Art Museum. The mood is elegant and immersive, combining traditional art with digital elements.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426918-35l2HvOvgWzjkx02Romh",
+    "created": 1788426918,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 99,
+      "total_tokens": 1634,
+      "cost": 0.0048275
+    }
+  }
+}

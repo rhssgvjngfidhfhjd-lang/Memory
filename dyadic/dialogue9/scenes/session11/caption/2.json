@@ -1,0 +1,36 @@
+{
+  "id": "62fe4101-2d82-4e47-b127-6273fd285d65",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:22.181053",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 632053,
+    "modified_time": "2026-08-23T21:59:19.176097"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an informational poster outlining a verification process for service personnel visiting homes. It has a blue and white color scheme and is divided into sections with icons. The main text reads \"上门服务人员核查流程\" (Verification Process for Home Service Personnel). The sections include:\n\n1. An icon of an ID card with text about checking entry permits.\n2. A phone icon with text about verifying identity by calling the property management.\n3. An icon of a family with text advising not to open the door alone if no young adults are present.\n\nThe mood is informative and cautionary.",
+    "final_text": "The image is an informational poster outlining a verification process for service personnel visiting homes. It has a blue and white color scheme and is divided into sections with icons. The main text reads \"上门服务人员核查流程\" (Verification Process for Home Service Personnel). The sections include:\n\n1. An icon of an ID card with text about checking entry permits.\n2. A phone icon with text about verifying identity by calling the property management.\n3. An icon of a family with text advising not to open the door alone if no young adults are present.\n\nThe mood is informative and cautionary.",
+    "token_stats": {
+      "original_tokens": 121,
+      "final_tokens": 121,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427762-BJ2hXYwAnSRI3boSiyCn",
+    "created": 1788427762,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 119,
+      "total_tokens": 974,
+      "cost": 0.0033275
+    }
+  }
+}

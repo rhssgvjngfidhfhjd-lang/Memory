@@ -1,0 +1,36 @@
+{
+  "id": "4855ec99-d305-4f93-ac72-a9ca40b84b14",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:26.047252",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session11/image/4.png",
+    "filename": "4.png",
+    "size": 531187,
+    "modified_time": "2026-08-23T21:55:00.299389"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a pair of black Sony neckband headphones resting on a wooden surface. The focus is on the sleek design of the headphones, with the \"SONY\" logo prominently displayed in metallic lettering on one side. The atmosphere is calm and modern, highlighting the product's stylish appearance.",
+    "final_text": "The image features a pair of black Sony neckband headphones resting on a wooden surface. The focus is on the sleek design of the headphones, with the \"SONY\" logo prominently displayed in metallic lettering on one side. The atmosphere is calm and modern, highlighting the product's stylish appearance.",
+    "token_stats": {
+      "original_tokens": 59,
+      "final_tokens": 59,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427284-yMSj620OqW6iN8StnLsf",
+    "created": 1788427284,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 58,
+      "total_tokens": 913,
+      "cost": 0.0027175
+    }
+  }
+}

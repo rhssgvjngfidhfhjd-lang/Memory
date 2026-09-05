@@ -1,0 +1,9 @@
+The image displays a table titled "应急方案具体内容表格" (Emergency Plan Specific Content Table) with two columns: "应急类别" (Emergency Type) and "具体内容" (Specific Content). It outlines responses to different emergency scenarios:
+
+1. Discovery of Suspected Personnel: Residents are advised to report suspicious individuals to property security and community network members, describing their location and features to avoid confrontation.
+
+2. Elderly Encountering Sudden Situations: Instructions for elderly individuals to contact community volunteers and property personnel for assistance within 15 minutes. If harmed, report to the police and coordinate with property security.
+
+3. Community Emergency Mobilization: Establish a four-level network among residents, volunteers, property, and police. Set response times and organize emergency drills while ensuring understanding without causing panic.
+
+The mood is informative and procedural, focusing on safety and coordination.

@@ -1,0 +1,36 @@
+{
+  "id": "1c2a2584-6cc2-43f8-87ac-f8a7c35708af",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:31.504665",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session3/image/img7.jpg",
+    "filename": "img7.jpg",
+    "size": 363597,
+    "modified_time": "2026-08-23T22:09:45.459057"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A snowman stands in a snowy landscape, adorned with a red hat, blue scarf, and stick arms. One arm holds a lantern. The snowman has red eyes and a small nose. In the background, there's a wooden cabin and snow-covered trees, creating a serene winter atmosphere. The overall mood is calm and festive.",
+    "final_text": "A snowman stands in a snowy landscape, adorned with a red hat, blue scarf, and stick arms. One arm holds a lantern. The snowman has red eyes and a small nose. In the background, there's a wooden cabin and snow-covered trees, creating a serene winter atmosphere. The overall mood is calm and festive.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426871-IPGqEax3QeMfxQXeUeLl",
+    "created": 1788426871,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 66,
+      "total_tokens": 1261,
+      "cost": 0.0036475
+    }
+  }
+}

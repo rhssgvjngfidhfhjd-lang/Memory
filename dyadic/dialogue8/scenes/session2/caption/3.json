@@ -1,0 +1,36 @@
+{
+  "id": "84c5021f-4794-49a2-9c7d-a1d3c8f5f827",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:27.688549",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 405768,
+    "modified_time": "2026-08-23T21:58:35.731297"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a person in a yellow jacket, lying on their side with a distressed expression. The scene appears tense, possibly indicating a moment of struggle or emotional turmoil. The lighting is dim, creating a dramatic and intense atmosphere. Visible text at the top right corner reads \"19:00\" and some additional text in another language.",
+    "final_text": "The image depicts a person in a yellow jacket, lying on their side with a distressed expression. The scene appears tense, possibly indicating a moment of struggle or emotional turmoil. The lighting is dim, creating a dramatic and intense atmosphere. Visible text at the top right corner reads \"19:00\" and some additional text in another language.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427647-8WW5pfzpIR7wW4ZeL6MV",
+    "created": 1788427647,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 67,
+      "total_tokens": 1262,
+      "cost": 0.0036575
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "108f0ebd-a932-47f6-a753-44f18937273d",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:39.785976",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session11/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 1402963,
+    "modified_time": "2026-08-23T21:31:28.821197"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains two separate reviews featuring jewelry. The first review shows a person wearing a necklace and bracelets. The visible text expresses admiration for the jewelry's appearance and mentions continued enjoyment. The second review includes images of a necklace held in a hand, with text stating satisfaction and recommending the store to friends. The overall mood is positive and appreciative.",
+    "final_text": "The image contains two separate reviews featuring jewelry. The first review shows a person wearing a necklace and bracelets. The visible text expresses admiration for the jewelry's appearance and mentions continued enjoyment. The second review includes images of a necklace held in a hand, with text stating satisfaction and recommending the store to friends. The overall mood is positive and appreciative.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426757-NjCZsgh38HL9YOIRvoIZ",
+    "created": 1788426757,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 69,
+      "total_tokens": 1067,
+      "cost": 0.003185
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "ec7626fe-3d0f-4c6d-920e-48a3699eb0f7",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:48.287972",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 176168,
+    "modified_time": "2026-08-23T22:07:30.112241"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic scene where a man in armored gear appears to be glitching into a wall, suggesting a video game error. His suit features glowing blue lights, and he is holding a weapon. The visible text reads, \"ERROR: COLLISION MISTACH REPORT BUG?\" indicating a technical glitch. A map and health bar are present in the top corners, enhancing the gaming atmosphere. The overall mood is humorous and surreal, highlighting the unexpected nature of in-game glitches.",
+    "final_text": "The image depicts a futuristic scene where a man in armored gear appears to be glitching into a wall, suggesting a video game error. His suit features glowing blue lights, and he is holding a weapon. The visible text reads, \"ERROR: COLLISION MISTACH REPORT BUG?\" indicating a technical glitch. A map and health bar are present in the top corners, enhancing the gaming atmosphere. The overall mood is humorous and surreal, highlighting the unexpected nature of in-game glitches.",
+    "token_stats": {
+      "original_tokens": 96,
+      "final_tokens": 96,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426704-NwldhFDBmw3NL0OMwH3F",
+    "created": 1788426704,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 97,
+      "total_tokens": 814,
+      "cost": 0.0027625
+    }
+  }
+}

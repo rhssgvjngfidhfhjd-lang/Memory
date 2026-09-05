@@ -1,0 +1,36 @@
+{
+  "id": "8909d376-8209-4788-9565-150f5872047c",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:26.429057",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue4/scenes/session4/image/img1.jpg",
+    "filename": "img1.jpg",
+    "size": 384337,
+    "modified_time": "2026-08-23T22:09:06.546711"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a hallway cluttered with numerous packages of various sizes, stacked and scattered along the floor. Visible text on the boxes includes shipping labels and some writing in a non-English script. In the background, a door is adorned with decorative items featuring more text in the same script, adding a festive or celebratory feel. The overall atmosphere is busy and somewhat chaotic, suggesting a scene of high activity, possibly a delivery or moving day.",
+    "final_text": "The image depicts a hallway cluttered with numerous packages of various sizes, stacked and scattered along the floor. Visible text on the boxes includes shipping labels and some writing in a non-English script. In the background, a door is adorned with decorative items featuring more text in the same script, adding a festive or celebratory feel. The overall atmosphere is busy and somewhat chaotic, suggesting a scene of high activity, possibly a delivery or moving day.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426806-cKAzXPwJvAE5vmMMiP8f",
+    "created": 1788426806,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 88,
+      "total_tokens": 943,
+      "cost": 0.0030175
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "cb680c9b-d2cb-4e8b-bc96-a5698f3ade5b",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:20.695547",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session15/image/1.png",
+    "filename": "1.png",
+    "size": 189435,
+    "modified_time": "2026-08-23T21:45:25.152666"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic about the growth of social media users and usage time in China. It features three main circles with statistics: \n1. An orange circle showing \"11.08亿\" for total internet users.\n2. A red-orange circle with \"10.71亿\" for social media users.\n3. A red circle indicating \"5小时37分钟\" for daily internet usage time.\n\nAdditional text indicates a 96.7% penetration rate and 4% annual growth. The infographic suggests a doubling in usage time compared to 2018. The bottom includes references and branding from KAWO, with the title indicating a 2025 social media platform guide. The mood is informative and analytical.",
+    "final_text": "The image is an infographic about the growth of social media users and usage time in China. It features three main circles with statistics: \n1. An orange circle showing \"11.08亿\" for total internet users.\n2. A red-orange circle with \"10.71亿\" for social media users.\n3. A red circle indicating \"5小时37分钟\" for daily internet usage time.\n\nAdditional text indicates a 96.7% penetration rate and 4% annual growth. The infographic suggests a doubling in usage time compared to 2018. The bottom includes references and branding from KAWO, with the title indicating a 2025 social media platform guide. The mood is informative and analytical.",
+    "token_stats": {
+      "original_tokens": 143,
+      "final_tokens": 143,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427399-q62ejZ3oX8kc1xDObpGL",
+    "created": 1788427399,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 143,
+      "total_tokens": 1338,
+      "cost": 0.0044175
+    }
+  }
+}

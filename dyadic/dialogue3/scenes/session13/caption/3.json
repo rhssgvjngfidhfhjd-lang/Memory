@@ -1,0 +1,36 @@
+{
+  "id": "52dbe0bd-19bb-4e06-820b-38cd20573eac",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:05.772279",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session13/image/3.png",
+    "filename": "3.png",
+    "size": 62715,
+    "modified_time": "2026-08-23T21:45:19.678021"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table in Chinese, divided into two main sections: \"好评与亮点\" (Pros and Highlights) and \"改良建议与问题\" (Improvement Suggestions and Issues). It lists feedback categories, specific content, user types/feedback sources, and improvement priority levels. Key topics include material comfort, design style, craftsmanship, packaging, size issues, color differences, and fabric concerns. The table is organized and structured, conveying a professional and analytical atmosphere.",
+    "final_text": "The image is a table in Chinese, divided into two main sections: \"好评与亮点\" (Pros and Highlights) and \"改良建议与问题\" (Improvement Suggestions and Issues). It lists feedback categories, specific content, user types/feedback sources, and improvement priority levels. Key topics include material comfort, design style, craftsmanship, packaging, size issues, color differences, and fabric concerns. The table is organized and structured, conveying a professional and analytical atmosphere.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427385-7CD2pWQdQJWCAs2dv5eg",
+    "created": 1788427385,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 97,
+      "total_tokens": 952,
+      "cost": 0.0031075
+    }
+  }
+}

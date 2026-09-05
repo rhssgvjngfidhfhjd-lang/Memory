@@ -1,0 +1,36 @@
+{
+  "id": "2aa22e6b-9381-44dc-98ec-7b82255f4f4c",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:55.156146",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 1465249,
+    "modified_time": "2026-08-23T21:38:54.056022"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a modern, stylish interior space with a minimalist aesthetic. It includes a dining area with a round table and chairs, and a lounge area with a sofa and a bar counter. Pendant lights hang from the ceiling, and decorative plants add a natural touch. The right side displays a text overlay in Chinese, discussing case analysis of contemporary consumer space aesthetics. The atmosphere is calm and sophisticated, emphasizing design and functionality. The text includes headings and paragraphs, with visible sections such as \"体验叙事,\" \"抨击餐厅,\" and \"设计分析与理论提升.\"",
+    "final_text": "The image features a modern, stylish interior space with a minimalist aesthetic. It includes a dining area with a round table and chairs, and a lounge area with a sofa and a bar counter. Pendant lights hang from the ceiling, and decorative plants add a natural touch. The right side displays a text overlay in Chinese, discussing case analysis of contemporary consumer space aesthetics. The atmosphere is calm and sophisticated, emphasizing design and functionality. The text includes headings and paragraphs, with visible sections such as \"体验叙事,\" \"抨击餐厅,\" and \"设计分析与理论提升.\"",
+    "token_stats": {
+      "original_tokens": 125,
+      "final_tokens": 125,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427195-haxS4t3jxAsggOGrZI5a",
+    "created": 1788427195,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 117,
+      "total_tokens": 1312,
+      "cost": 0.0041575
+    }
+  }
+}

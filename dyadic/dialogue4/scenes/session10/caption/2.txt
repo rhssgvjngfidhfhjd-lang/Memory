@@ -1,0 +1,13 @@
+The image contains a set of instructions in Chinese for ensuring experimental consistency in baking. Key points include:
+
+1. **Environmental Temperature and Humidity**: Maintain at 26°C ± 0.5°C and 75% ± 5% humidity.
+2. **Flour**: Use the same batch with specified protein content.
+3. **Dough Handling**: Use a uniform method and time for kneading, matching target dough temperature.
+4. **Baking**: Use an oven at a preheat temperature of 250°C, with specified steaming and baking times.
+5. **Basic Ingredients (Percentages)**:
+   - Flour: 100%
+   - Water: 75%
+   - Salt: 2%
+   - Yeast: 20% (based on different yeast solutions).
+
+The mood is technical and precise, focusing on standardization.

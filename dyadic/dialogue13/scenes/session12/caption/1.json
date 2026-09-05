@@ -1,0 +1,36 @@
+{
+  "id": "99042e67-4382-4e3f-bb56-94d854b22799",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:21.064490",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session12/image/1.png",
+    "filename": "1.png",
+    "size": 2525603,
+    "modified_time": "2026-08-23T21:32:41.769525"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a classroom scene with several children standing and sitting. The focus is on a child in a checkered shirt, wearing badges, standing near a wooden podium. A paper with Chinese text is attached to the podium, listing tasks: 1. 提醒洗手 (Remind to wash hands), 2. 检查水杯 (Check cups), 3. 报告同学生病 (Report classmates' illness). The atmosphere appears educational and organized, with other children blurred in the background, suggesting a cooperative learning environment. Bright natural light comes through the windows, enhancing the mood.",
+    "final_text": "The image depicts a classroom scene with several children standing and sitting. The focus is on a child in a checkered shirt, wearing badges, standing near a wooden podium. A paper with Chinese text is attached to the podium, listing tasks: 1. 提醒洗手 (Remind to wash hands), 2. 检查水杯 (Check cups), 3. 报告同学生病 (Report classmates' illness). The atmosphere appears educational and organized, with other children blurred in the background, suggesting a cooperative learning environment. Bright natural light comes through the windows, enhancing the mood.",
+    "token_stats": {
+      "original_tokens": 130,
+      "final_tokens": 130,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426857-ZD0S5MLOOR6ZWnk1bawO",
+    "created": 1788426857,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 124,
+      "total_tokens": 1122,
+      "cost": 0.003735
+    }
+  }
+}

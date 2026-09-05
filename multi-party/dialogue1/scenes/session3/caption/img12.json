@@ -1,0 +1,36 @@
+{
+  "id": "e038cbce-564f-4ba0-ab7a-3f8ba83a9f72",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:32.733878",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img12.jpg",
+    "filename": "img12.jpg",
+    "size": 456172,
+    "modified_time": "2026-08-23T21:56:08.159765"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a bowl of crispy fried chicken katsu drizzled with a savory curry sauce, accompanied by assorted vegetables like broccoli and potatoes. In the background, there's an additional container with more katsu and a separate bowl of curry sauce. The overall mood is appetizing and comforting, suggesting a hearty meal.",
+    "final_text": "The image depicts a bowl of crispy fried chicken katsu drizzled with a savory curry sauce, accompanied by assorted vegetables like broccoli and potatoes. In the background, there's an additional container with more katsu and a separate bowl of curry sauce. The overall mood is appetizing and comforting, suggesting a hearty meal.",
+    "token_stats": {
+      "original_tokens": 64,
+      "final_tokens": 64,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426572-Bhbu3XkQ7GMSPsdUW9hP",
+    "created": 1788426572,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 63,
+      "total_tokens": 918,
+      "cost": 0.0027675
+    }
+  }
+}

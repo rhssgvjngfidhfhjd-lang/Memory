@@ -1,0 +1,36 @@
+{
+  "id": "fcd4d3cc-ac17-4d42-bc71-b2d2046a5d22",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:12.493369",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session11/image/4.png",
+    "filename": "4.png",
+    "size": 519057,
+    "modified_time": "2026-08-23T21:57:32.045919"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is divided into three sections. The top section shows a tablet displaying a woman smiling, with bold text \"淡淡的喜悦\" which translates to \"Subtle joy,\" and \"一种可购买的情绪状态\" meaning \"A purchasable emotional state.\" The middle section contrasts two scenarios: on the left, a man appears stressed, resting his head on a desk cluttered with monitors and papers, labeled \"购买前:焦虑状态\" meaning \"Before purchasing: anxious state.\" On the right, a woman sits peacefully in a traditional setting, enjoying a drink, labeled \"购买后:想象状态\" meaning \"After purchasing: imagined state.\" The bottom section features text \"通过消费来标榜脱离消费主义的悖论,\" translating to \"Using consumption to escape the paradox of consumerism.\" The overall mood contrasts anxiety with tranquility, illustrating the emotional impact of consumer behavior.",
+    "final_text": "The image is divided into three sections. The top section shows a tablet displaying a woman smiling, with bold text \"淡淡的喜悦\" which translates to \"Subtle joy,\" and \"一种可购买的情绪状态\" meaning \"A purchasable emotional state.\" The middle section contrasts two scenarios: on the left, a man appears stressed, resting his head on a desk cluttered with monitors and papers, labeled \"购买前:焦虑状态\" meaning \"Before purchasing: anxious state.\" On the right, a woman sits peacefully in a traditional setting, enjoying a drink, labeled \"购买后:想象状态\" meaning \"After purchasing: imagined state.\" The bottom section features text \"通过消费来标榜脱离消费主义的悖论,\" translating to \"Using consumption to escape the paradox of consumerism.\" The overall mood contrasts anxiety with tranquility, illustrating the emotional impact of consumer behavior.",
+    "token_stats": {
+      "original_tokens": 211,
+      "final_tokens": 211,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427689-dQjOV92SmtBV5lmYIVxt",
+    "created": 1788427689,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 186,
+      "total_tokens": 625,
+      "cost": 0.0029575
+    }
+  }
+}

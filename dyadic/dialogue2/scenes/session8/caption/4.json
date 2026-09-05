@@ -1,0 +1,36 @@
+{
+  "id": "807500d9-91ef-4197-b35b-96181061a2aa",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:11.971181",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session8/image/4.png",
+    "filename": "4.png",
+    "size": 194400,
+    "modified_time": "2026-08-23T21:41:07.123517"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a digital design mockup for a health management app called \"Young-Young生.\" The core scene is a smartphone displaying the app interface, set against a purple background. Visible text includes the app's name and descriptions in both Chinese and English, such as \"PRODUCT OVERVIEW\" and \"USER COMMUNITY.\" The design includes graphical elements like charts and diagrams representing user data and statistics. The overall mood is professional and modern, focusing on technology and user engagement.",
+    "final_text": "The image features a digital design mockup for a health management app called \"Young-Young生.\" The core scene is a smartphone displaying the app interface, set against a purple background. Visible text includes the app's name and descriptions in both Chinese and English, such as \"PRODUCT OVERVIEW\" and \"USER COMMUNITY.\" The design includes graphical elements like charts and diagrams representing user data and statistics. The overall mood is professional and modern, focusing on technology and user engagement.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427273-WKb5le9TLD5vZz8LU1sa",
+    "created": 1788427273,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 94,
+      "total_tokens": 609,
+      "cost": 0.0022275
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "33321cd9-b486-4062-ab38-97b6fce030ed",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:31.885087",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session13/image/2.png",
+    "filename": "2.png",
+    "size": 615860,
+    "modified_time": "2026-08-23T21:55:21.570689"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a warm, cozy scene featuring a glass mug filled with steaming mulled wine, garnished with cinnamon sticks, star anise, and a slice of orange. Next to the mug, a plate holds various festive cookies, including one decorated with white icing resembling a snowflake. The background shows blurred bookshelves, suggesting a library or study setting. The atmosphere is inviting and warm, evoking a sense of holiday comfort and relaxation.",
+    "final_text": "The image depicts a warm, cozy scene featuring a glass mug filled with steaming mulled wine, garnished with cinnamon sticks, star anise, and a slice of orange. Next to the mug, a plate holds various festive cookies, including one decorated with white icing resembling a snowflake. The background shows blurred bookshelves, suggesting a library or study setting. The atmosphere is inviting and warm, evoking a sense of holiday comfort and relaxation.",
+    "token_stats": {
+      "original_tokens": 91,
+      "final_tokens": 91,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427528-Q7AvQXFW9Zk3wozNJA45",
+    "created": 1788427528,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 90,
+      "total_tokens": 807,
+      "cost": 0.0026925
+    }
+  }
+}

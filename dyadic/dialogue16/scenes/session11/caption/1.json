@@ -1,0 +1,36 @@
+{
+  "id": "c49215c6-81ed-4406-ab18-6e1264946e51",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:24.802730",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 187028,
+    "modified_time": "2026-08-23T21:34:52.749284"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a rustic tea scene with a ceramic teapot and a matching green cup on a wooden surface. In the foreground, there are three small red fruits with speckled skins, placed on top of two colorful autumn leaves. The warm lighting and natural textures create a cozy and inviting atmosphere. There is no visible text in the image.",
+    "final_text": "The image features a rustic tea scene with a ceramic teapot and a matching green cup on a wooden surface. In the foreground, there are three small red fruits with speckled skins, placed on top of two colorful autumn leaves. The warm lighting and natural textures create a cozy and inviting atmosphere. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427044-vOZMQjXiMeWSTPrbkC5p",
+    "created": 1788427044,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 69,
+      "total_tokens": 414,
+      "cost": 0.0015525
+    }
+  }
+}

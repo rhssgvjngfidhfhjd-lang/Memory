@@ -1,0 +1,36 @@
+{
+  "id": "6b927177-b51b-4859-8a8c-3ec29605dc7c",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:34.851647",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session12/image/2.png",
+    "filename": "2.png",
+    "size": 237283,
+    "modified_time": "2026-08-23T21:34:13.367053"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a 4-week training schedule comparison chart, with columns representing days and rows representing weeks. Each cell is color-coded to indicate different types of running activities: light running, speed/interval running, rest days, and long-distance running. The left section is labeled \"标准计划\" (Standard Plan) and the right \"AI个性化计划\" (AI Personalized Plan). There is a key at the bottom explaining the color codes and indicating differences such as the addition of recovery days and dynamic adjustments based on individual performance. The mood is organized and analytical.",
+    "final_text": "The image displays a 4-week training schedule comparison chart, with columns representing days and rows representing weeks. Each cell is color-coded to indicate different types of running activities: light running, speed/interval running, rest days, and long-distance running. The left section is labeled \"标准计划\" (Standard Plan) and the right \"AI个性化计划\" (AI Personalized Plan). There is a key at the bottom explaining the color codes and indicating differences such as the addition of recovery days and dynamic adjustments based on individual performance. The mood is organized and analytical.",
+    "token_stats": {
+      "original_tokens": 121,
+      "final_tokens": 121,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426993-Xa0v8nlUPneRAIMz2uiF",
+    "created": 1788426993,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 114,
+      "total_tokens": 1309,
+      "cost": 0.0041275
+    }
+  }
+}

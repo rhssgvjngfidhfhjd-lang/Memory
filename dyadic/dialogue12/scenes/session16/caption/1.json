@@ -1,0 +1,36 @@
+{
+  "id": "975940d6-fe44-4c4b-91bb-bf66696d309d",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:13.073469",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session16/image/1.png",
+    "filename": "1.png",
+    "size": 4724907,
+    "modified_time": "2026-08-23T21:32:29.356128"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a dog resting on a colorful, patterned blanket under a wooden table. Nearby, a computer monitor displays a chart with a line graph, and a keyboard is placed on the table. Sunlight streams through a window, casting warm, bright light across the room. The atmosphere is calm and cozy.",
+    "final_text": "The image shows a dog resting on a colorful, patterned blanket under a wooden table. Nearby, a computer monitor displays a chart with a line graph, and a keyboard is placed on the table. Sunlight streams through a window, casting warm, bright light across the room. The atmosphere is calm and cozy.",
+    "token_stats": {
+      "original_tokens": 63,
+      "final_tokens": 63,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426791-cvnHbFKxczBmXdZBOkLs",
+    "created": 1788426791,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 62,
+      "total_tokens": 917,
+      "cost": 0.0027575
+    }
+  }
+}

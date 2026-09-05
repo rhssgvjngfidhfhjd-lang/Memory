@@ -1,0 +1,36 @@
+{
+  "id": "90f465a4-cb43-4903-814a-d70eb63660ec",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:40.680077",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 4212017,
+    "modified_time": "2026-08-23T21:31:38.274639"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts the interior of a vehicle, possibly a bus or emergency transport. In the foreground, there is a tray containing several wrapped candies and tablets. A red and green first aid kit is partially visible. To the left, a clipboard holds a document with text, and a two-way radio is mounted nearby. The scene is practical and organized, suggesting readiness for travel or emergency situations. The atmosphere is functional and slightly clinical, with an emphasis on preparedness.",
+    "final_text": "The image depicts the interior of a vehicle, possibly a bus or emergency transport. In the foreground, there is a tray containing several wrapped candies and tablets. A red and green first aid kit is partially visible. To the left, a clipboard holds a document with text, and a two-way radio is mounted nearby. The scene is practical and organized, suggesting readiness for travel or emergency situations. The atmosphere is functional and slightly clinical, with an emphasis on preparedness.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426638-AUJhHj93xc3sbjNJ3H9k",
+    "created": 1788426638,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 93,
+      "total_tokens": 813,
+      "cost": 0.00273
+    }
+  }
+}

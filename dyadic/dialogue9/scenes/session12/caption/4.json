@@ -1,0 +1,36 @@
+{
+  "id": "1dbff9fe-23eb-44e2-855a-0e58e9a98e9d",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:33.991991",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session12/image/4.png",
+    "filename": "4.png",
+    "size": 938045,
+    "modified_time": "2026-08-23T21:59:23.006875"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a greeting card placed on a brown envelope, set against a brown background. The card displays a cheerful design with pink, hand-drawn flowers and the text \"THANK YOU SO MUCH!\" in bold pink letters at the top. The flowers vary in size and are simplistic in style, contributing to a warm and appreciative atmosphere. The overall mood is friendly and grateful, suitable for expressing thanks.",
+    "final_text": "The image features a greeting card placed on a brown envelope, set against a brown background. The card displays a cheerful design with pink, hand-drawn flowers and the text \"THANK YOU SO MUCH!\" in bold pink letters at the top. The flowers vary in size and are simplistic in style, contributing to a warm and appreciative atmosphere. The overall mood is friendly and grateful, suitable for expressing thanks.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427770-Wur07fgXY1UvGiMyptho",
+    "created": 1788427770,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 81,
+      "total_tokens": 798,
+      "cost": 0.0026025
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "ec6407e2-2634-4b4d-8e7f-0d3c62300a99",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:09.424858",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session4/image/img16.jpg",
+    "filename": "img16.jpg",
+    "size": 112568,
+    "modified_time": "2026-08-23T22:07:00.504946"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image captures a vibrant sunset over a cityscape. The sun is partially obscured by a tall building, creating a silhouette against a vivid orange and red sky. High-rise buildings are visible in the foreground and background, contributing to an urban atmosphere. The mood is serene and dramatic, with no visible text or human activity.",
+    "final_text": "The image captures a vibrant sunset over a cityscape. The sun is partially obscured by a tall building, creating a silhouette against a vivid orange and red sky. High-rise buildings are visible in the foreground and background, contributing to an urban atmosphere. The mood is serene and dramatic, with no visible text or human activity.",
+    "token_stats": {
+      "original_tokens": 64,
+      "final_tokens": 64,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426668-korEjO5pMnGLGlelXrQP",
+    "created": 1788426668,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 65,
+      "total_tokens": 920,
+      "cost": 0.0027875
+    }
+  }
+}

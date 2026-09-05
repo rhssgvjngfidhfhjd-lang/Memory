@@ -1,0 +1,36 @@
+{
+  "id": "054889e1-e469-49b9-b1c1-00ef11b89c09",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:50.211798",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session3/image/3.png",
+    "filename": "3.png",
+    "size": 1532395,
+    "modified_time": "2026-08-23T21:39:21.167131"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an open book or magazine with Chinese text. The main heading reads, \"一次关于当代消费空间美学的案例分析,\" which translates to \"A Case Analysis on the Aesthetics of Contemporary Consumer Spaces.\" Subheadings and sections include topics like \"体验叙事: 白茂\" (\"Experience Narrative: Bai Mao\") and \"设计分析与理论提升: 顾砚辞\" (\"Design Analysis and Theoretical Improvement: Gu Yanci\"). The content appears to discuss design and analysis in consumer aesthetics. The overall atmosphere is professional and academic.",
+    "final_text": "The image shows an open book or magazine with Chinese text. The main heading reads, \"一次关于当代消费空间美学的案例分析,\" which translates to \"A Case Analysis on the Aesthetics of Contemporary Consumer Spaces.\" Subheadings and sections include topics like \"体验叙事: 白茂\" (\"Experience Narrative: Bai Mao\") and \"设计分析与理论提升: 顾砚辞\" (\"Design Analysis and Theoretical Improvement: Gu Yanci\"). The content appears to discuss design and analysis in consumer aesthetics. The overall atmosphere is professional and academic.",
+    "token_stats": {
+      "original_tokens": 134,
+      "final_tokens": 134,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427190-XC0NjGeTidhB17ZyP4Vf",
+    "created": 1788427190,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 118,
+      "total_tokens": 1313,
+      "cost": 0.0041675
+    }
+  }
+}

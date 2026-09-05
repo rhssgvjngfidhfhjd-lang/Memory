@@ -1,0 +1,36 @@
+{
+  "id": "97211c31-01ad-4b5e-989f-7b9d6e26475f",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:41.055209",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session5/image/3.png",
+    "filename": "3.png",
+    "size": 1033867,
+    "modified_time": "2026-08-23T21:32:38.779723"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a child wearing a red jacket with a patterned design and a pink hat, smiling while preparing food. They are holding a dumpling in their hands, with several other dumplings on the table. A bowl filled with dumpling filling is also visible. The atmosphere is warm and cozy, suggesting a cheerful and engaging cooking activity. There is text overlaid on the image, but its content is not discernible.",
+    "final_text": "The image shows a child wearing a red jacket with a patterned design and a pink hat, smiling while preparing food. They are holding a dumpling in their hands, with several other dumplings on the table. A bowl filled with dumpling filling is also visible. The atmosphere is warm and cozy, suggesting a cheerful and engaging cooking activity. There is text overlaid on the image, but its content is not discernible.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426818-YFS9fYGvLFGrpe894HpR",
+    "created": 1788426818,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 86,
+      "total_tokens": 803,
+      "cost": 0.0026525
+    }
+  }
+}

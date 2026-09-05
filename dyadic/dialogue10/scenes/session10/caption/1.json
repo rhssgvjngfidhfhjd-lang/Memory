@@ -1,0 +1,36 @@
+{
+  "id": "687aa478-e040-44d0-894c-3948e8cfdc4c",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:01.515033",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session10/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 100795,
+    "modified_time": "2026-08-23T21:30:12.589104"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy bedroom scene featuring a bedside table with a marble top. On the table, there is a modern lamp with a beige shade, a lit candle, and a couple of stacked books. The bed, partially visible, has white bedding and a headboard with nailhead trim. The atmosphere is warm and inviting, suggesting a calm and relaxing setting.",
+    "final_text": "The image depicts a cozy bedroom scene featuring a bedside table with a marble top. On the table, there is a modern lamp with a beige shade, a lit candle, and a couple of stacked books. The bed, partially visible, has white bedding and a headboard with nailhead trim. The atmosphere is warm and inviting, suggesting a calm and relaxing setting.",
+    "token_stats": {
+      "original_tokens": 73,
+      "final_tokens": 73,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426600-KLFi8g3cXbV7l3YeWJIu",
+    "created": 1788426600,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 73,
+      "total_tokens": 928,
+      "cost": 0.0028675
+    }
+  }
+}

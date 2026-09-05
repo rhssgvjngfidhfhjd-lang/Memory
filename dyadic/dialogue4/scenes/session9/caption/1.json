@@ -1,0 +1,36 @@
+{
+  "id": "1b2b76ae-dcf0-40cd-8048-eb1b654cf7bb",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:00.354524",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session9/image/1.png",
+    "filename": "1.png",
+    "size": 478913,
+    "modified_time": "2026-08-23T21:55:09.891957"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a futuristic, cyberpunk cityscape at night, dominated by a large, intricate skyscraper adorned with numerous lights. Surrounding the main building are other tall structures, their windows illuminated, contributing to the vibrant urban atmosphere. Billboard advertisements are visible, displaying text in bright colors, enhancing the technological theme. The scene is enveloped in a misty, neon-lit ambiance, suggesting a bustling, high-tech metropolis. The mood is dynamic and slightly mysterious, evoking a sense of advanced urban life.",
+    "final_text": "The image depicts a futuristic, cyberpunk cityscape at night, dominated by a large, intricate skyscraper adorned with numerous lights. Surrounding the main building are other tall structures, their windows illuminated, contributing to the vibrant urban atmosphere. Billboard advertisements are visible, displaying text in bright colors, enhancing the technological theme. The scene is enveloped in a misty, neon-lit ambiance, suggesting a bustling, high-tech metropolis. The mood is dynamic and slightly mysterious, evoking a sense of advanced urban life.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427438-siWSprE21C4NLwJ83xqL",
+    "created": 1788427438,
+    "usage": {
+      "prompt_tokens": 441,
+      "completion_tokens": 103,
+      "total_tokens": 544,
+      "cost": 0.0021325
+    }
+  }
+}

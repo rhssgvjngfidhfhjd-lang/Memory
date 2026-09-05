@@ -1,0 +1,36 @@
+{
+  "id": "529adb89-538e-4639-9d8d-4083623e9ad4",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:25.014533",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session3/image/4.jpg",
+    "filename": "4.jpg",
+    "size": 1942608,
+    "modified_time": "2026-08-23T21:30:49.613853"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an open scrapbook held by two hands on a wooden table. The pages contain a collage of photographs and handwritten text. The photos include a breakfast scene, a lit candle, and interior shots of a room with shelves and a table. Visible text in Chinese and Japanese includes dates and descriptions like \"早餐\" (breakfast) and \"蠟燭\" (candle). The overall mood is nostalgic and cozy, with personal touches evident in the handwritten notes and taped photos.",
+    "final_text": "The image depicts an open scrapbook held by two hands on a wooden table. The pages contain a collage of photographs and handwritten text. The photos include a breakfast scene, a lit candle, and interior shots of a room with shelves and a table. Visible text in Chinese and Japanese includes dates and descriptions like \"早餐\" (breakfast) and \"蠟燭\" (candle). The overall mood is nostalgic and cozy, with personal touches evident in the handwritten notes and taped photos.",
+    "token_stats": {
+      "original_tokens": 105,
+      "final_tokens": 105,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426563-5nuQVxEwm9WhptjoH98g",
+    "created": 1788426563,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 99,
+      "total_tokens": 954,
+      "cost": 0.0031275
+    }
+  }
+}

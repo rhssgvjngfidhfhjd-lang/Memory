@@ -1,0 +1,36 @@
+{
+  "id": "0b598652-488a-40b2-a74d-a7507ce7fe82",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:03.993056",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session7/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 666379,
+    "modified_time": "2026-08-23T21:31:14.341990"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a detailed illustration of a backpack with labeled features in Chinese. Key elements include:\n\n1. A rigid back support.\n2. Adjustable, padded shoulder straps.\n3. Chest and waist buckles for weight distribution.\n4. Lightweight design.\n\nAdditional text suggests keeping the total weight under 15% of body weight. The overall mood is informative, focusing on ergonomic design and user comfort.",
+    "final_text": "The image is a detailed illustration of a backpack with labeled features in Chinese. Key elements include:\n\n1. A rigid back support.\n2. Adjustable, padded shoulder straps.\n3. Chest and waist buckles for weight distribution.\n4. Lightweight design.\n\nAdditional text suggests keeping the total weight under 15% of body weight. The overall mood is informative, focusing on ergonomic design and user comfort.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426662-PCtrKctiZG91AVvA9Nwq",
+    "created": 1788426662,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 79,
+      "total_tokens": 934,
+      "cost": 0.0029275
+    }
+  }
+}

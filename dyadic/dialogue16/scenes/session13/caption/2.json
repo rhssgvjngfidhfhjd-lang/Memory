@@ -1,0 +1,36 @@
+{
+  "id": "63c9b6b5-fbec-471c-9e63-628f6e30458a",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:28.912604",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session13/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 272109,
+    "modified_time": "2026-08-23T21:35:28.121958"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a group of four people sitting around a wooden table in a cozy room. They appear to be engaging in a creative activity, with colored pencils and drawings spread out on the table. One person is smiling, creating a warm and friendly atmosphere. In the background, there are bookshelves with colorful decorations, including a rainbow ornament and a clock. The mood is collaborative and cheerful.",
+    "final_text": "The image shows a group of four people sitting around a wooden table in a cozy room. They appear to be engaging in a creative activity, with colored pencils and drawings spread out on the table. One person is smiling, creating a warm and friendly atmosphere. In the background, there are bookshelves with colorful decorations, including a rainbow ornament and a clock. The mood is collaborative and cheerful.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427049-txRrAW6Z6huDxEfSBStj",
+    "created": 1788427049,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 78,
+      "total_tokens": 1613,
+      "cost": 0.0046175
+    }
+  }
+}

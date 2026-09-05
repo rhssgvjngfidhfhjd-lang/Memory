@@ -1,0 +1,36 @@
+{
+  "id": "4398d47b-31cc-444f-be25-53df230c1076",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:35.143620",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session13/image/2.png",
+    "filename": "2.png",
+    "size": 1461170,
+    "modified_time": "2026-08-23T21:38:11.100202"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a poster advertising a summer event titled \"SUMMER\" with the date 15 | 06 | 2019. It features two vibrant flamingos and lush green leaves. The text includes \"ENJOY YOUR PARTY,\" \"THE BEST ACTIVITY,\" and mentions DJs Allen and Mary performing at 8:00 PM. The atmosphere is lively and tropical, suggesting a festive outdoor party theme. The poster is displayed on a wall beside a modern interior with large windows.",
+    "final_text": "The image is a poster advertising a summer event titled \"SUMMER\" with the date 15 | 06 | 2019. It features two vibrant flamingos and lush green leaves. The text includes \"ENJOY YOUR PARTY,\" \"THE BEST ACTIVITY,\" and mentions DJs Allen and Mary performing at 8:00 PM. The atmosphere is lively and tropical, suggesting a festive outdoor party theme. The poster is displayed on a wall beside a modern interior with large windows.",
+    "token_stats": {
+      "original_tokens": 97,
+      "final_tokens": 97,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427232-K7Z8qomxRINFj3fadUqq",
+    "created": 1788427232,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 96,
+      "total_tokens": 1291,
+      "cost": 0.0039475
+    }
+  }
+}

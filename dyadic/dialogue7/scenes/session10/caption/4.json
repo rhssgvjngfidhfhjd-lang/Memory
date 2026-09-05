@@ -1,0 +1,36 @@
+{
+  "id": "4b7e56cf-3ffc-401c-89ce-0d0e70175d9c",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:13.441016",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session10/image/4.png",
+    "filename": "4.png",
+    "size": 201804,
+    "modified_time": "2026-08-23T21:56:40.927972"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a product display for \"DEMUM Daily Smooth,\" a 100ml mosquito repellent mist suitable for pregnant women and children. The bottle has a green spray top and is set against a soft green background. Text in Chinese highlights its use for pregnancy, emphasizing it as a plant-based solution. Decorative elements include a small house-like shape and leaves, creating a natural and soothing atmosphere. The overall mood is calm and reassuring, promoting safety and comfort.",
+    "final_text": "The image features a product display for \"DEMUM Daily Smooth,\" a 100ml mosquito repellent mist suitable for pregnant women and children. The bottle has a green spray top and is set against a soft green background. Text in Chinese highlights its use for pregnancy, emphasizing it as a plant-based solution. Decorative elements include a small house-like shape and leaves, creating a natural and soothing atmosphere. The overall mood is calm and reassuring, promoting safety and comfort.",
+    "token_stats": {
+      "original_tokens": 93,
+      "final_tokens": 93,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427631-mnodF8X5ygmG3kM9Sbrq",
+    "created": 1788427631,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 93,
+      "total_tokens": 810,
+      "cost": 0.0027225
+    }
+  }
+}

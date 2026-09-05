@@ -1,0 +1,36 @@
+{
+  "id": "d65253b0-de19-47ca-99ba-98f046613b47",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:59.630718",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session4/image/1.png",
+    "filename": "1.png",
+    "size": 273971,
+    "modified_time": "2026-08-23T21:40:11.820030"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a red pot filled with a colorful grain porridge, including visible beans and nuts. A white spoon rests inside the pot. The pot is placed on a white and black checkered cloth, surrounded by scattered beans. Visible text in Chinese includes “玉米须大米粥” and additional phrases suggesting health benefits. The overall mood is warm and inviting, suggesting a nutritious and comforting meal.",
+    "final_text": "The image features a red pot filled with a colorful grain porridge, including visible beans and nuts. A white spoon rests inside the pot. The pot is placed on a white and black checkered cloth, surrounded by scattered beans. Visible text in Chinese includes “玉米须大米粥” and additional phrases suggesting health benefits. The overall mood is warm and inviting, suggesting a nutritious and comforting meal.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427259-EB0vZaizZtkmr2f96NtT",
+    "created": 1788427259,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 82,
+      "total_tokens": 427,
+      "cost": 0.0016825
+    }
+  }
+}

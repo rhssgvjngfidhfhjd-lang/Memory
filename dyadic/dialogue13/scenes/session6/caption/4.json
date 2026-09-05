@@ -1,0 +1,36 @@
+{
+  "id": "e153ee47-7c45-46c8-8363-324e0510b40d",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:48.992116",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session6/image/4.png",
+    "filename": "4.png",
+    "size": 151224,
+    "modified_time": "2026-08-23T21:32:39.337239"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table detailing a community event plan titled \"社区‘邻里家宴’及‘共享厨房’推进计划表\" (\"Community 'Neighborhood Feast' and 'Shared Kitchen' Promotion Plan\"). It includes multiple columns: \n\n1. **推进阶段** (Promotion Phase): Lists phases like \"中秋邻里家宴\" (Mid-Autumn Neighborhood Feast).\n2. **时间节点** (Time Node): Dates from September 21 to September 29, 2024.\n3. **核心内容与目标** (Core Content and Goals): Describes tasks like notifying participants and collecting dish types.\n4. **责任分工** (Responsibility Division): Assigns tasks to individuals like Lin Ke and Zhou Mingyuan.\n5. **安全与执行要点** (Safety and Execution Points): Highlights safety and execution essentials like public supplies and activity maintenance.\n\nThe table outlines steps and responsibilities for organizing the event, with a focus on community participation, food preparation, and safety measures. The atmosphere is organized and collaborative.",
+    "final_text": "The image is a table detailing a community event plan titled \"社区‘邻里家宴’及‘共享厨房’推进计划表\" (\"Community 'Neighborhood Feast' and 'Shared Kitchen' Promotion Plan\"). It includes multiple columns: \n\n1. **推进阶段** (Promotion Phase): Lists phases like \"中秋邻里家宴\" (Mid-Autumn Neighborhood Feast).\n2. **时间节点** (Time Node): Dates from September 21 to September 29, 2024.\n3. **核心内容与目标** (Core Content and Goals): Describes tasks like notifying participants and collecting dish types.\n4. **责任分工** (Responsibility Division): Assigns tasks to individuals like Lin Ke and Zhou Mingyuan.\n5. **安全与执行要点** (Safety and Execution Points): Highlights safety and execution essentials like public supplies and activity maintenance.\n\nThe table outlines steps and responsibilities for organizing the event, with a focus on community participation, food preparation, and safety measures. The atmosphere is organized and collaborative.",
+    "token_stats": {
+      "original_tokens": 233,
+      "final_tokens": 233,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426826-GP5vNxCFstDoZoBU4cTm",
+    "created": 1788426826,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 210,
+      "total_tokens": 1405,
+      "cost": 0.0050875
+    }
+  }
+}

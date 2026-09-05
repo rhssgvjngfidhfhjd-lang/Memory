@@ -1,0 +1,36 @@
+{
+  "id": "9ccebdef-a8ce-48f6-9c1b-02acf4f30da1",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:18.340249",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session12/image/2.png",
+    "filename": "2.png",
+    "size": 1250479,
+    "modified_time": "2026-08-23T21:32:28.306870"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a schedule titled \"健康小管家值班表及任务清单\" (Health Steward Duty Schedule and Task List). It is organized in a table format with two columns: \"值班时间\" (Duty Time) and \"任务内容\" (Task Content). The tasks include reminding classmates to wash hands with sanitizer, checking water cups to ensure sufficient drinking water, and reporting sick classmates to teachers. The schedule covers tasks from Monday to Wednesday, both morning and afternoon. The overall atmosphere is organized and focused on health and hygiene.",
+    "final_text": "The image is a schedule titled \"健康小管家值班表及任务清单\" (Health Steward Duty Schedule and Task List). It is organized in a table format with two columns: \"值班时间\" (Duty Time) and \"任务内容\" (Task Content). The tasks include reminding classmates to wash hands with sanitizer, checking water cups to ensure sufficient drinking water, and reporting sick classmates to teachers. The schedule covers tasks from Monday to Wednesday, both morning and afternoon. The overall atmosphere is organized and focused on health and hygiene.",
+    "token_stats": {
+      "original_tokens": 117,
+      "final_tokens": 117,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426857-4D6xW0mBPPXbp2qzWI8y",
+    "created": 1788426857,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 110,
+      "total_tokens": 1305,
+      "cost": 0.0040875
+    }
+  }
+}

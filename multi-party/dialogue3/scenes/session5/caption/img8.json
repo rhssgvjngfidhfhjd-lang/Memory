@@ -1,0 +1,36 @@
+{
+  "id": "1fd1d8ea-f972-47c5-9a21-52f1593ff19c",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:32.925764",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session5/image/img8.jpg",
+    "filename": "img8.jpg",
+    "size": 115570,
+    "modified_time": "2026-08-23T22:13:09.071151"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a layout of six different screen sizes, each labeled with dimensions and recommended viewing distances. The brand \"Grandview 美视\" is prominently featured at the top of each section. The screens are categorized by size: 120-inch, 92-inch, 110-inch, 100-inch, 80-inch, and 118-inch, all with a 16:9 aspect ratio. Measurements in millimeters are given for width and height. Recommended viewing distances range from 2-4.5 meters, specified below each screen size. The overall mood is informative and technical, focusing on providing clear specifications for various screen options.",
+    "final_text": "The image displays a layout of six different screen sizes, each labeled with dimensions and recommended viewing distances. The brand \"Grandview 美视\" is prominently featured at the top of each section. The screens are categorized by size: 120-inch, 92-inch, 110-inch, 100-inch, 80-inch, and 118-inch, all with a 16:9 aspect ratio. Measurements in millimeters are given for width and height. Recommended viewing distances range from 2-4.5 meters, specified below each screen size. The overall mood is informative and technical, focusing on providing clear specifications for various screen options.",
+    "token_stats": {
+      "original_tokens": 130,
+      "final_tokens": 130,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426750-trIzUTqAqGaa4hmUPRPO",
+    "created": 1788426750,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 129,
+      "total_tokens": 849,
+      "cost": 0.00309
+    }
+  }
+}

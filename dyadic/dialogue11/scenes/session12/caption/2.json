@@ -1,0 +1,36 @@
+{
+  "id": "a6366124-8a2b-4592-b69c-618702cac2ab",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:32.871342",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue11/scenes/session12/image/2.png",
+    "filename": "2.png",
+    "size": 4282611,
+    "modified_time": "2026-08-23T21:31:26.877276"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A cozy living room scene features a woman and a child seated on a couch, watching a black-and-white movie on a television. The screen shows a man in a suit sitting at a table. A warm lamp illuminates the room, creating a relaxed atmosphere. On the coffee table are snacks, including chips and nuts, along with a glass of water. The mood is serene and intimate, suggesting a quiet evening at home. No visible text is present in the image.",
+    "final_text": "A cozy living room scene features a woman and a child seated on a couch, watching a black-and-white movie on a television. The screen shows a man in a suit sitting at a table. A warm lamp illuminates the room, creating a relaxed atmosphere. On the coffee table are snacks, including chips and nuts, along with a glass of water. The mood is serene and intimate, suggesting a quiet evening at home. No visible text is present in the image.",
+    "token_stats": {
+      "original_tokens": 94,
+      "final_tokens": 94,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426691-GVHpnkEdPVDI6bZLOHhy",
+    "created": 1788426691,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 95,
+      "total_tokens": 812,
+      "cost": 0.0027425
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "f3444e7d-fb41-47de-b7ca-9a44d67a2a1f",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:31.780010",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session4/image/3.png",
+    "filename": "3.png",
+    "size": 209185,
+    "modified_time": "2026-08-23T22:04:09.348917"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A black and white dog is energetically running through a colorful hoop on a grassy field, holding an orange frisbee in its mouth. The scene captures a sense of action and agility. There is Chinese text at the bottom, which translates to \"Task executed: Hoop completed,\" emphasizing the completion of a task. The overall mood is dynamic and playful.",
+    "final_text": "A black and white dog is energetically running through a colorful hoop on a grassy field, holding an orange frisbee in its mouth. The scene captures a sense of action and agility. There is Chinese text at the bottom, which translates to \"Task executed: Hoop completed,\" emphasizing the completion of a task. The overall mood is dynamic and playful.",
+    "token_stats": {
+      "original_tokens": 74,
+      "final_tokens": 74,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427412-PAjBmiqHUwiOnhGnvVMR",
+    "created": 1788427412,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 70,
+      "total_tokens": 415,
+      "cost": 0.0015625
+    }
+  }
+}

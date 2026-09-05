@@ -1,0 +1,36 @@
+{
+  "id": "e0f488b1-f349-46e0-a804-7c0ff33f8952",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:08.305024",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 287327,
+    "modified_time": "2026-08-23T22:07:36.122091"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a woman sitting cross-legged on a rug, holding a cup and smiling. She is dressed in a cozy white sweater, creating a calm and relaxed atmosphere. Surrounding her are various text elements in Chinese, including phrases like \"都市中产阶级的忙碌感\" (urban middle-class busyness), \"物欲过载\" (material desire overload), and \"反消费主义\" (anti-consumerism). Two smiling face icons convey emotions of mild joy and inner peace. Keywords such as \"慢生活\" (slow life) and \"精神性\" (spirituality) emphasize themes of simplicity and mindfulness. The overall mood is serene and introspective.",
+    "final_text": "The image features a woman sitting cross-legged on a rug, holding a cup and smiling. She is dressed in a cozy white sweater, creating a calm and relaxed atmosphere. Surrounding her are various text elements in Chinese, including phrases like \"都市中产阶级的忙碌感\" (urban middle-class busyness), \"物欲过载\" (material desire overload), and \"反消费主义\" (anti-consumerism). Two smiling face icons convey emotions of mild joy and inner peace. Keywords such as \"慢生活\" (slow life) and \"精神性\" (spirituality) emphasize themes of simplicity and mindfulness. The overall mood is serene and introspective.",
+    "token_stats": {
+      "original_tokens": 150,
+      "final_tokens": 150,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427686-oim6kalUGmgKlwIy3YtI",
+    "created": 1788427686,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 140,
+      "total_tokens": 579,
+      "cost": 0.0024975
+    }
+  }
+}

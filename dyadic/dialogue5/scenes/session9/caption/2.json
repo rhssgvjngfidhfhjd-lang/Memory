@@ -1,0 +1,36 @@
+{
+  "id": "ef24c10d-c987-4ac9-815f-9a33710207f6",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:09.611835",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 533039,
+    "modified_time": "2026-08-23T21:55:30.512781"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a bowl of dessert soup, likely a Chinese sweet soup. The dish contains white fungus, red dates, and goji berries in a clear, light-colored broth. The ingredients are arranged attractively, highlighting their vibrant colors. The mood is fresh and appetizing, suggesting a healthy and nourishing meal. The bowl is set against a simple, clean background, emphasizing the dish's presentation.",
+    "final_text": "The image shows a bowl of dessert soup, likely a Chinese sweet soup. The dish contains white fungus, red dates, and goji berries in a clear, light-colored broth. The ingredients are arranged attractively, highlighting their vibrant colors. The mood is fresh and appetizing, suggesting a healthy and nourishing meal. The bowl is set against a simple, clean background, emphasizing the dish's presentation.",
+    "token_stats": {
+      "original_tokens": 81,
+      "final_tokens": 81,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427509-HxB8po2CsCyUh8jqrYhP",
+    "created": 1788427509,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 80,
+      "total_tokens": 935,
+      "cost": 0.0029375
+    }
+  }
+}

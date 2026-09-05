@@ -1,0 +1,36 @@
+{
+  "id": "421437cd-5750-4cfb-9db5-e87a26061b04",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:10.733252",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session7/image/4.png",
+    "filename": "4.png",
+    "size": 843650,
+    "modified_time": "2026-08-23T21:33:38.839420"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table containing text in Chinese, outlining details about a project related to the development of a campus information aggregator demo. It includes columns for \"规制维度\" (Regulation Dimension), \"具体项\" (Specific Item), \"核心详情/要求\" (Core Details/Requirements), and \"合作方核心职责\" (Core Responsibilities of Partners). Key elements are project name, cooperation background, collaborators, overall objective, and core responsibilities of partners Lin Xingwan and Lu Chen Guang. The mood is professional and focused on collaboration and development goals.",
+    "final_text": "The image is a table containing text in Chinese, outlining details about a project related to the development of a campus information aggregator demo. It includes columns for \"规制维度\" (Regulation Dimension), \"具体项\" (Specific Item), \"核心详情/要求\" (Core Details/Requirements), and \"合作方核心职责\" (Core Responsibilities of Partners). Key elements are project name, cooperation background, collaborators, overall objective, and core responsibilities of partners Lin Xingwan and Lu Chen Guang. The mood is professional and focused on collaboration and development goals.",
+    "token_stats": {
+      "original_tokens": 122,
+      "final_tokens": 122,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426909-wxVrWVLU27oB1zqTvBt1",
+    "created": 1788426909,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 114,
+      "total_tokens": 834,
+      "cost": 0.00294
+    }
+  }
+}

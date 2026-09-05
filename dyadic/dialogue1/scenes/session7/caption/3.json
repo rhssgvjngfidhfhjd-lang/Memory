@@ -1,0 +1,36 @@
+{
+  "id": "573d2fb1-a439-4bd2-9c41-6edc57255cda",
+  "success": true,
+  "timestamp": "2026-09-03T17:08:30.187502",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 1270116,
+    "modified_time": "2026-08-23T21:30:26.598210"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a screenshot of a video platform interface, likely Bilibili, displaying a grid of exercise-related video thumbnails. The videos include dance workouts, aerobics, and fitness routines. Visible text on thumbnails includes phrases like \"快乐燃脂舞合集\" (Happy Fat-Burning Dance Collection), \"健美操\" (Aerobics), and \"15 MIN HAPPY DANCE WORKOUT.\" Each thumbnail features people performing exercises or dance routines, with views and duration indicated. The atmosphere is energetic and lively, emphasizing health and fitness.",
+    "final_text": "The image is a screenshot of a video platform interface, likely Bilibili, displaying a grid of exercise-related video thumbnails. The videos include dance workouts, aerobics, and fitness routines. Visible text on thumbnails includes phrases like \"快乐燃脂舞合集\" (Happy Fat-Burning Dance Collection), \"健美操\" (Aerobics), and \"15 MIN HAPPY DANCE WORKOUT.\" Each thumbnail features people performing exercises or dance routines, with views and duration indicated. The atmosphere is energetic and lively, emphasizing health and fitness.",
+    "token_stats": {
+      "original_tokens": 122,
+      "final_tokens": 122,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426509-sWg9SAzJLx1Qjanak3c2",
+    "created": 1788426509,
+    "usage": {
+      "prompt_tokens": 1535,
+      "completion_tokens": 109,
+      "total_tokens": 1644,
+      "cost": 0.0049275
+    }
+  }
+}

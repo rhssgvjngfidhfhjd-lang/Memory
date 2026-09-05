@@ -1,0 +1,36 @@
+{
+  "id": "9c73dbd5-0512-4918-8068-d105b990d904",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:02.292889",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session7/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 104236,
+    "modified_time": "2026-08-23T21:37:37.989313"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A silhouette of a hiker with a backpack and walking stick stands on a snowy mountain slope during a vibrant sunset. The sky is painted with warm hues of orange and pink, contrasting against the dark outlines of distant hills. The overall atmosphere is serene and adventurous. Visible text includes a watermark with \"dreamstime\" and image ID information.",
+    "final_text": "A silhouette of a hiker with a backpack and walking stick stands on a snowy mountain slope during a vibrant sunset. The sky is painted with warm hues of orange and pink, contrasting against the dark outlines of distant hills. The overall atmosphere is serene and adventurous. Visible text includes a watermark with \"dreamstime\" and image ID information.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427141-ZS5afh2PR4kMCQD8duP0",
+    "created": 1788427141,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 67,
+      "total_tokens": 1262,
+      "cost": 0.0036575
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "6220bbd0-b7de-48c2-a3f6-7966d2a9867e",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:20.820767",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session9/image/2.png",
+    "filename": "2.png",
+    "size": 2272793,
+    "modified_time": "2026-08-23T21:35:01.124804"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a graph analyzing the impact of fasting on multidimensional health data, focusing on blood glucose stability and HRV (heart rate variability). The x-axis represents time in hours, while the y-axis shows glucose measurement values. The graph includes two shaded areas labeled \"断食日\" (fasting day) and \"断食1\" (fast 1), highlighting periods of fasting. Different colored lines and markers indicate glucose trends and events over time, with annotations explaining the trends. The overall mood is analytical and informative, aimed at health data analysis.",
+    "final_text": "The image is a graph analyzing the impact of fasting on multidimensional health data, focusing on blood glucose stability and HRV (heart rate variability). The x-axis represents time in hours, while the y-axis shows glucose measurement values. The graph includes two shaded areas labeled \"断食日\" (fasting day) and \"断食1\" (fast 1), highlighting periods of fasting. Different colored lines and markers indicate glucose trends and events over time, with annotations explaining the trends. The overall mood is analytical and informative, aimed at health data analysis.",
+    "token_stats": {
+      "original_tokens": 114,
+      "final_tokens": 114,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426980-piTnIn2N5r6Y762kZIEi",
+    "created": 1788426980,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 112,
+      "total_tokens": 1307,
+      "cost": 0.0041075
+    }
+  }
+}

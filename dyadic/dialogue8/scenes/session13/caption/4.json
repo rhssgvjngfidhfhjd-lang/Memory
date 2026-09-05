@@ -1,0 +1,36 @@
+{
+  "id": "460241a0-d309-4ba3-b125-11e2bbfc23da",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:24.454771",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue8/scenes/session13/image/4.png",
+    "filename": "4.png",
+    "size": 441479,
+    "modified_time": "2026-08-23T21:57:44.686249"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a computer monitor displaying a graphic with a central triangle labeled \"国潮2.0\" surrounded by circles containing text and images. The text includes \"传统纹样,\" \"商业逻辑,\" \"现代设计,\" and others. The images depict traditional motifs and objects. In front of the monitor is a desk with a glass of coffee and an open notebook filled with handwritten notes. The atmosphere is calm and studious, suggesting a focus on modern design and traditional elements.",
+    "final_text": "The image features a computer monitor displaying a graphic with a central triangle labeled \"国潮2.0\" surrounded by circles containing text and images. The text includes \"传统纹样,\" \"商业逻辑,\" \"现代设计,\" and others. The images depict traditional motifs and objects. In front of the monitor is a desk with a glass of coffee and an open notebook filled with handwritten notes. The atmosphere is calm and studious, suggesting a focus on modern design and traditional elements.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427702-WwcQf4mw6mIyBxFm7ygE",
+    "created": 1788427702,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 97,
+      "total_tokens": 612,
+      "cost": 0.0022575
+    }
+  }
+}

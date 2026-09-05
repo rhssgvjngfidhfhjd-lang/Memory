@@ -1,0 +1,36 @@
+{
+  "id": "bd238839-ffc3-45b9-9b53-4f4ddef70aac",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:18.412920",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue19/scenes/session9/image/1.png",
+    "filename": "1.png",
+    "size": 428306,
+    "modified_time": "2026-08-23T21:39:35.300677"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a close-up of a relaxed cat with a white and tabby coat, wearing a collar with two bells. The cat is resting on a colorful, patterned surface, and the background includes a partial view of a door and interior space. The cat's expression appears calm and content, contributing to a tranquil atmosphere. No visible text is present.",
+    "final_text": "The image features a close-up of a relaxed cat with a white and tabby coat, wearing a collar with two bells. The cat is resting on a colorful, patterned surface, and the background includes a partial view of a door and interior space. The cat's expression appears calm and content, contributing to a tranquil atmosphere. No visible text is present.",
+    "token_stats": {
+      "original_tokens": 72,
+      "final_tokens": 72,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427218-zUp1K5Z5T40aqHDVX3HA",
+    "created": 1788427218,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 71,
+      "total_tokens": 586,
+      "cost": 0.0019975
+    }
+  }
+}

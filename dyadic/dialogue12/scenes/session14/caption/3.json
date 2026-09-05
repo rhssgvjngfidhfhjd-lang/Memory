@@ -1,0 +1,36 @@
+{
+  "id": "9fb697a3-6757-4b16-bb84-02fcc217440b",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:58.228621",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session14/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 224393,
+    "modified_time": "2026-08-23T21:31:41.731785"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a black book titled \"叙述医学\" with a yellow sticky note attached on top. The note reads, \"赫尔墨斯计划:一次数据与叙事的’可行性对话’\" in blue handwriting. A silver and black pen rests on the book. The scene is well-lit, creating a focused and studious atmosphere. Shadows are visible, adding depth to the composition.",
+    "final_text": "The image depicts a black book titled \"叙述医学\" with a yellow sticky note attached on top. The note reads, \"赫尔墨斯计划:一次数据与叙事的’可行性对话’\" in blue handwriting. A silver and black pen rests on the book. The scene is well-lit, creating a focused and studious atmosphere. Shadows are visible, adding depth to the composition.",
+    "token_stats": {
+      "original_tokens": 95,
+      "final_tokens": 95,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426776-SMSYdWlMBz6Nda5BBSN1",
+    "created": 1788426776,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 86,
+      "total_tokens": 941,
+      "cost": 0.0029975
+    }
+  }
+}

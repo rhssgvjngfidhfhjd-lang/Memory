@@ -1,0 +1,36 @@
+{
+  "id": "6e48b590-eb2c-4ea8-8c0f-b3e643173fa0",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:04.830049",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session10/image/4.png",
+    "filename": "4.png",
+    "size": 802450,
+    "modified_time": "2026-08-23T21:42:17.363796"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a promotional advertisement for Pioneer hiking poles. On the left, there are two hiking poles with ergonomic grips and adjustable straps, with text highlighting features such as \"23 years specialized,\" \"short ≈ 33 cm,\" and \"convenient to carry.\" Below, there's a display of accessories, including a carrying pouch. The price is prominently shown as \"129,\" with a discount offer. On the right, a close-up of the pole's locking mechanism is displayed, with text emphasizing the \"new upgraded aluminum lock\" and ease of use. The overall mood is informative and promotional.",
+    "final_text": "The image is a promotional advertisement for Pioneer hiking poles. On the left, there are two hiking poles with ergonomic grips and adjustable straps, with text highlighting features such as \"23 years specialized,\" \"short ≈ 33 cm,\" and \"convenient to carry.\" Below, there's a display of accessories, including a carrying pouch. The price is prominently shown as \"129,\" with a discount offer. On the right, a close-up of the pole's locking mechanism is displayed, with text emphasizing the \"new upgraded aluminum lock\" and ease of use. The overall mood is informative and promotional.",
+    "token_stats": {
+      "original_tokens": 120,
+      "final_tokens": 120,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427323-V4AsGr1wPfPAhrVLCBfy",
+    "created": 1788427323,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 120,
+      "total_tokens": 1315,
+      "cost": 0.0041875
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "23517d74-b980-4db7-9fae-e30742cc85ab",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:11.998336",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session1/image/1.png",
+    "filename": "1.png",
+    "size": 5670273,
+    "modified_time": "2026-08-23T21:30:50.624103"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a cozy, dimly lit creative workspace at night. The room features a large window, a desk cluttered with papers, art supplies, and a glowing desk lamp. On the floor, there are fabric swatches and color palettes. A wall is adorned with various photographs and notes. In the foreground, a clear mug containing coffee sits on a table. The atmosphere is warm and focused, suggesting a setting conducive to design or artistic work.",
+    "final_text": "The image depicts a cozy, dimly lit creative workspace at night. The room features a large window, a desk cluttered with papers, art supplies, and a glowing desk lamp. On the floor, there are fabric swatches and color palettes. A wall is adorned with various photographs and notes. In the foreground, a clear mug containing coffee sits on a table. The atmosphere is warm and focused, suggesting a setting conducive to design or artistic work.",
+    "token_stats": {
+      "original_tokens": 92,
+      "final_tokens": 92,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426546-K3N5SFU6W0jcGQN0DTDc",
+    "created": 1788426546,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 91,
+      "total_tokens": 1286,
+      "cost": 0.0038975
+    }
+  }
+}

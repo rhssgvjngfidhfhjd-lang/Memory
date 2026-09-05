@@ -1,0 +1,36 @@
+{
+  "id": "30c0261e-33b7-4138-b612-0d44f873b042",
+  "success": true,
+  "timestamp": "2026-09-03T17:15:27.812958",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue14/scenes/session11/image/2.png",
+    "filename": "2.png",
+    "size": 1806203,
+    "modified_time": "2026-08-23T21:33:00.785495"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a table titled \"公众号年度阅读量前十文章列表,\" listing the top ten articles by annual readership. It includes three columns: ranking (\"排名\"), article title (\"文章标题\"), and readership (\"阅读量\"). The titles cover various topics such as industry trends, communication skills, travel photography, and health management. The readership ranges from 6.1W to 12.8W. The table uses a blue and white color scheme, creating a professional and informative atmosphere.",
+    "final_text": "The image displays a table titled \"公众号年度阅读量前十文章列表,\" listing the top ten articles by annual readership. It includes three columns: ranking (\"排名\"), article title (\"文章标题\"), and readership (\"阅读量\"). The titles cover various topics such as industry trends, communication skills, travel photography, and health management. The readership ranges from 6.1W to 12.8W. The table uses a blue and white color scheme, creating a professional and informative atmosphere.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426926-iXFzfPZEg2e9NwomREMj",
+    "created": 1788426926,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 99,
+      "total_tokens": 1294,
+      "cost": 0.0039775
+    }
+  }
+}

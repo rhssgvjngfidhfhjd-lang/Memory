@@ -1,0 +1,36 @@
+{
+  "id": "4880633a-7f78-499f-b68a-cdceaa14e573",
+  "success": true,
+  "timestamp": "2026-09-03T17:23:46.815388",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session5/image/5.png",
+    "filename": "5.png",
+    "size": 1776108,
+    "modified_time": "2026-08-23T21:54:48.446217"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a colorful illustration spread featuring comparisons between cats and dogs. On the left page, a dog holds a ball, while a cat relaxes nearby. Text bubbles near the animals include phrases like \"快捡！好香呢?\" (\"Fetch! Smells good?\") and \"我能做到，就会变得很棒.\" (\"I can do it, and it will be great.\") The right page shows a cat climbing a tree and a playful dog. Text highlights features of their limbs, noting that cats have four and dogs five. Additional text explores the intelligence and foot structure of animals, including a donkey with \"1根脚趾\" (\"1 toe\"). The atmosphere is educational and playful, emphasizing differences in animal behavior and anatomy.",
+    "final_text": "The image is a colorful illustration spread featuring comparisons between cats and dogs. On the left page, a dog holds a ball, while a cat relaxes nearby. Text bubbles near the animals include phrases like \"快捡！好香呢?\" (\"Fetch! Smells good?\") and \"我能做到，就会变得很棒.\" (\"I can do it, and it will be great.\") The right page shows a cat climbing a tree and a playful dog. Text highlights features of their limbs, noting that cats have four and dogs five. Additional text explores the intelligence and foot structure of animals, including a donkey with \"1根脚趾\" (\"1 toe\"). The atmosphere is educational and playful, emphasizing differences in animal behavior and anatomy.",
+    "token_stats": {
+      "original_tokens": 164,
+      "final_tokens": 164,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427422-YnqwIXNbq1P5rLHlVjFg",
+    "created": 1788427422,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 153,
+      "total_tokens": 1151,
+      "cost": 0.004025
+    }
+  }
+}

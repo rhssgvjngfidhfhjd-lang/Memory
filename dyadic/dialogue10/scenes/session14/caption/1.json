@@ -1,0 +1,36 @@
+{
+  "id": "044ecbe9-d83d-4240-b4c8-a13591aade8c",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:21.544273",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session14/image/1.jpg",
+    "filename": "1.jpg",
+    "size": 300812,
+    "modified_time": "2026-08-23T21:30:18.926668"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an infographic featuring two main sections: \"Alerting Activity Ideas\" and \"Vagal Tone for Nervous System Regulation Activity Ideas.\" Each section includes a list of suggested activities such as cold showers, singing, dancing, meditation, and yoga. There are spaces for planning and reflecting on these activities. The design includes playful illustrations of people in different poses. The mood is informative and supportive, aimed at promoting well-being. A watermark indicates it's a preview of a 24-page PDF download.",
+    "final_text": "The image is an infographic featuring two main sections: \"Alerting Activity Ideas\" and \"Vagal Tone for Nervous System Regulation Activity Ideas.\" Each section includes a list of suggested activities such as cold showers, singing, dancing, meditation, and yoga. There are spaces for planning and reflecting on these activities. The design includes playful illustrations of people in different poses. The mood is informative and supportive, aimed at promoting well-being. A watermark indicates it's a preview of a 24-page PDF download.",
+    "token_stats": {
+      "original_tokens": 102,
+      "final_tokens": 102,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426618-CtapuT8J0Oh0a87w8QnC",
+    "created": 1788426618,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 101,
+      "total_tokens": 818,
+      "cost": 0.0028025
+    }
+  }
+}

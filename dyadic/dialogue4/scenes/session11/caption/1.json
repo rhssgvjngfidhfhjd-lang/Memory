@@ -1,0 +1,36 @@
+{
+  "id": "9ca10782-065e-4d9e-afc3-9955d31bdc23",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:07.599417",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session11/image/1.png",
+    "filename": "1.png",
+    "size": 149058,
+    "modified_time": "2026-08-23T21:54:28.012757"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a close-up view of soap bubbles clustered together, creating a frothy texture. The bubbles vary in size, displaying a range of iridescent hues and reflections. There is no visible text or discernible action taking place. The overall mood is clean and refreshing, typical of a soapy or bubbly scene.",
+    "final_text": "The image shows a close-up view of soap bubbles clustered together, creating a frothy texture. The bubbles vary in size, displaying a range of iridescent hues and reflections. There is no visible text or discernible action taking place. The overall mood is clean and refreshing, typical of a soapy or bubbly scene.",
+    "token_stats": {
+      "original_tokens": 66,
+      "final_tokens": 66,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427446-ont6iu77LwewMQYfOKne",
+    "created": 1788427446,
+    "usage": {
+      "prompt_tokens": 300,
+      "completion_tokens": 66,
+      "total_tokens": 366,
+      "cost": 0.00141
+    }
+  }
+}

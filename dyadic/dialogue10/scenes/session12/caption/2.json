@@ -1,0 +1,36 @@
+{
+  "id": "6526d642-efb1-48e2-a8a6-aa47c092ab0a",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:09.549167",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session12/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 68662,
+    "modified_time": "2026-08-23T21:30:11.976394"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a stack of polaroid photographs on top of a brown leather-bound book resting on a wooden surface. The top photograph shows a serene landscape with a sky filled with clouds at sunset. No visible text is present. The atmosphere is nostalgic and tranquil, evoking a sense of reflection or memory.",
+    "final_text": "The image depicts a stack of polaroid photographs on top of a brown leather-bound book resting on a wooden surface. The top photograph shows a serene landscape with a sky filled with clouds at sunset. No visible text is present. The atmosphere is nostalgic and tranquil, evoking a sense of reflection or memory.",
+    "token_stats": {
+      "original_tokens": 61,
+      "final_tokens": 61,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426609-x2Fh7JYi3Emmer2qUzZy",
+    "created": 1788426609,
+    "usage": {
+      "prompt_tokens": 439,
+      "completion_tokens": 63,
+      "total_tokens": 502,
+      "cost": 0.0017275
+    }
+  }
+}

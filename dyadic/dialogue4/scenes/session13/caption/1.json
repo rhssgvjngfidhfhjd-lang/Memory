@@ -1,0 +1,36 @@
+{
+  "id": "a316758a-fa92-488e-93d6-92b1af030098",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:20.947419",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue4/scenes/session13/image/1.png",
+    "filename": "1.png",
+    "size": 965025,
+    "modified_time": "2026-08-23T21:54:24.679110"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is divided into four sections, each depicting different activities. \n\n1. **Top Left**: A man is crafting a musical instrument at a wooden workbench, surrounded by tools and materials. Text: \"木工制作乐器\" (Woodworking to make musical instruments).\n\n2. **Top Right**: A woman is drawing architectural designs at a drafting table, concentrating on her work. Text: \"绘制建筑设计草图\" (Drawing architectural design sketches).\n\n3. **Bottom Left**: A cat sits beside architectural blueprints. Text: \"录制制作过程短视频\" (Recording the production process short video).\n\n4. **Bottom Right**: A couple relaxes on a sofa, with the man taking a selfie and the woman resting her head on his shoulder. Text: \"休息放松\" (Rest and relax).\n\nThe atmosphere is creative and relaxed, highlighting hobbies and leisure activities.",
+    "final_text": "The image is divided into four sections, each depicting different activities. \n\n1. **Top Left**: A man is crafting a musical instrument at a wooden workbench, surrounded by tools and materials. Text: \"木工制作乐器\" (Woodworking to make musical instruments).\n\n2. **Top Right**: A woman is drawing architectural designs at a drafting table, concentrating on her work. Text: \"绘制建筑设计草图\" (Drawing architectural design sketches).\n\n3. **Bottom Left**: A cat sits beside architectural blueprints. Text: \"录制制作过程短视频\" (Recording the production process short video).\n\n4. **Bottom Right**: A couple relaxes on a sofa, with the man taking a selfie and the woman resting her head on his shoulder. Text: \"休息放松\" (Rest and relax).\n\nThe atmosphere is creative and relaxed, highlighting hobbies and leisure activities.",
+    "token_stats": {
+      "original_tokens": 194,
+      "final_tokens": 194,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427459-F3TJtLTQIwcVMRpq6TxU",
+    "created": 1788427459,
+    "usage": {
+      "prompt_tokens": 685,
+      "completion_tokens": 186,
+      "total_tokens": 871,
+      "cost": 0.0035725
+    }
+  }
+}

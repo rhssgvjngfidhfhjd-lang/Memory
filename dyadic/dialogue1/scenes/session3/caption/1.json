@@ -1,0 +1,36 @@
+{
+  "id": "419113db-2bbe-4bc4-93b9-52bb5f9cba8a",
+  "success": true,
+  "timestamp": "2026-09-03T17:07:48.024354",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue1/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 506573,
+    "modified_time": "2026-08-23T21:30:09.228453"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "A fluffy, light-colored cat sits on a carpet in a warmly lit room. Surrounding the cat are tufts of fur, suggesting it has recently been groomed or shed. The cat gazes directly at the camera with a calm and serene expression. The overall atmosphere is peaceful and cozy, enhanced by the soft sunlight filtering through the scene.",
+    "final_text": "A fluffy, light-colored cat sits on a carpet in a warmly lit room. Surrounding the cat are tufts of fur, suggesting it has recently been groomed or shed. The cat gazes directly at the camera with a calm and serene expression. The overall atmosphere is peaceful and cozy, enhanced by the soft sunlight filtering through the scene.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426467-zBzCuBPd5LliLyyoBDxX",
+    "created": 1788426467,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 69,
+      "total_tokens": 584,
+      "cost": 0.0019775
+    }
+  }
+}

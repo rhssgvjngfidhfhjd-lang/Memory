@@ -1,0 +1,36 @@
+{
+  "id": "eb9786e5-de5c-4f8e-b5bd-ea5b50d8990d",
+  "success": true,
+  "timestamp": "2026-09-03T17:16:20.181464",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue15/scenes/session9/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 63410,
+    "modified_time": "2026-08-23T21:34:46.779084"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is an educational illustration explaining Bayes' Theorem. It features a formula: \\( P(A|B) = \\frac{P(B|A) \\cdot P(A)}{P(B)} \\). Key elements include the terms \"Likelihood,\" \"Prior,\" \"Posterior,\" and their definitions. Text annotations describe each component: \"Likelihood\" is the probability of \"B\" given \"A\" is true, \"Prior\" is the probability of \"A\" being true, and \"Posterior\" is the probability of \"A\" given \"B\" is true. The overall mood is informative and colorful, designed for clarity and learning.",
+    "final_text": "The image is an educational illustration explaining Bayes' Theorem. It features a formula: \\( P(A|B) = \\frac{P(B|A) \\cdot P(A)}{P(B)} \\). Key elements include the terms \"Likelihood,\" \"Prior,\" \"Posterior,\" and their definitions. Text annotations describe each component: \"Likelihood\" is the probability of \"B\" given \"A\" is true, \"Prior\" is the probability of \"A\" being true, and \"Posterior\" is the probability of \"A\" given \"B\" is true. The overall mood is informative and colorful, designed for clarity and learning.",
+    "token_stats": {
+      "original_tokens": 134,
+      "final_tokens": 134,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426980-y52GPCxqhLmlQUVnop25",
+    "created": 1788426980,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 133,
+      "total_tokens": 1328,
+      "cost": 0.0043175
+    }
+  }
+}

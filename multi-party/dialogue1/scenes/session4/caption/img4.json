@@ -1,0 +1,36 @@
+{
+  "id": "7a9245d3-263c-4957-8396-3cb438b6721b",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:40.217265",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session4/image/img4.jpg",
+    "filename": "img4.jpg",
+    "size": 107316,
+    "modified_time": "2026-08-23T22:03:40.684295"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a menu on a wooden table, featuring a dessert item called \"Tiramisu Pot.\" The main elements include a photograph of the dessert, which resembles a potted plant with chocolate biscuit \"soil\" and decorative elements resembling cacti and flowers. The text describes it as a mascarpone mousse with a cocoa base and chocolate biscuit topping. The atmosphere is elegant and inviting, with warm lighting. A fork and a glass are partially visible on the table, suggesting a dining setting.",
+    "final_text": "The image depicts a menu on a wooden table, featuring a dessert item called \"Tiramisu Pot.\" The main elements include a photograph of the dessert, which resembles a potted plant with chocolate biscuit \"soil\" and decorative elements resembling cacti and flowers. The text describes it as a mascarpone mousse with a cocoa base and chocolate biscuit topping. The atmosphere is elegant and inviting, with warm lighting. A fork and a glass are partially visible on the table, suggesting a dining setting.",
+    "token_stats": {
+      "original_tokens": 104,
+      "final_tokens": 104,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426580-T59FbWe6ytwKkeUn2BY8",
+    "created": 1788426580,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 98,
+      "total_tokens": 953,
+      "cost": 0.0031175
+    }
+  }
+}

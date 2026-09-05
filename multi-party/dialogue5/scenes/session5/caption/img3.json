@@ -1,0 +1,36 @@
+{
+  "id": "4affaf5e-94f8-42ff-a253-a17bd63a8575",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:57.766282",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue5/scenes/session5/image/img3.jpg",
+    "filename": "img3.jpg",
+    "size": 313020,
+    "modified_time": "2026-08-23T22:10:05.473843"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an open suitcase packed with various items, suggesting preparation for travel. Inside, there are neatly organized objects, including a striped fabric, a light green folder, and several transparent pouches containing toiletries and cosmetics. A white cloth bag with visible text reads \"Shinpo Life & Maizen.\" The suitcase has compartments and straps for organization. The atmosphere is orderly and purposeful, conveying a sense of readiness for a trip.",
+    "final_text": "The image depicts an open suitcase packed with various items, suggesting preparation for travel. Inside, there are neatly organized objects, including a striped fabric, a light green folder, and several transparent pouches containing toiletries and cosmetics. A white cloth bag with visible text reads \"Shinpo Life & Maizen.\" The suitcase has compartments and straps for organization. The atmosphere is orderly and purposeful, conveying a sense of readiness for a trip.",
+    "token_stats": {
+      "original_tokens": 88,
+      "final_tokens": 88,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426895-ZmtCPB0M5f1A4XSvTMI3",
+    "created": 1788426895,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 87,
+      "total_tokens": 807,
+      "cost": 0.00267
+    }
+  }
+}

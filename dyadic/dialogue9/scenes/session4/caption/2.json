@@ -1,0 +1,36 @@
+{
+  "id": "7d8e0ab5-37c5-42f8-87bf-51c688dffdba",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:45.775339",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session4/image/2.png",
+    "filename": "2.png",
+    "size": 746050,
+    "modified_time": "2026-08-23T22:01:05.711203"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts ripe red tomatoes on a vine resting on a gray, plastic-covered garden bed. Some tomatoes appear fresh and plump, while others are shriveled with dry leaves. The scene suggests a garden or farm setting, with a focus on the natural growth of tomatoes. The atmosphere is earthy and agricultural. There is no visible text in the image.",
+    "final_text": "The image depicts ripe red tomatoes on a vine resting on a gray, plastic-covered garden bed. Some tomatoes appear fresh and plump, while others are shriveled with dry leaves. The scene suggests a garden or farm setting, with a focus on the natural growth of tomatoes. The atmosphere is earthy and agricultural. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 73,
+      "final_tokens": 73,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427726-stTKAGRWFB4L553jK6ki",
+    "created": 1788427726,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 72,
+      "total_tokens": 587,
+      "cost": 0.0020075
+    }
+  }
+}

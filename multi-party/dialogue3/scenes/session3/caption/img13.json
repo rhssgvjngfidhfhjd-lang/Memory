@@ -1,0 +1,36 @@
+{
+  "id": "99f13ad9-fb44-477f-a160-ed15653ae233",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:07.731369",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session3/image/img13.jpg",
+    "filename": "img13.jpg",
+    "size": 224131,
+    "modified_time": "2026-08-23T22:07:34.084971"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a colorful artwork displayed on a small wooden easel. The artwork features silhouettes of people ascending stairs, with the word \"PEARLASSIATED\" arranged along the steps. The background includes abstract elements and a mix of blue and red hues. The scene is indoors with warm lighting, creating a cozy and artistic atmosphere. The focus is on the creative design and text, with no visible interactions among the figures.",
+    "final_text": "The image depicts a colorful artwork displayed on a small wooden easel. The artwork features silhouettes of people ascending stairs, with the word \"PEARLASSIATED\" arranged along the steps. The background includes abstract elements and a mix of blue and red hues. The scene is indoors with warm lighting, creating a cozy and artistic atmosphere. The focus is on the creative design and text, with no visible interactions among the figures.",
+    "token_stats": {
+      "original_tokens": 87,
+      "final_tokens": 87,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426726-U7WPiPl92vX1xmBi9Sgf",
+    "created": 1788426726,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 87,
+      "total_tokens": 1085,
+      "cost": 0.003365
+    }
+  }
+}

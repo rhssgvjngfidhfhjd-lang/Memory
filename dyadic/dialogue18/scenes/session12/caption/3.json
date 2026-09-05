@@ -1,0 +1,36 @@
+{
+  "id": "908eba8f-8f4b-4c97-b0b3-65596d71db31",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:25.902465",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session12/image/3.png",
+    "filename": "3.png",
+    "size": 234955,
+    "modified_time": "2026-08-23T21:37:12.608906"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a bowl of rice with mixed vegetables and dried ingredients, placed on a large rock surrounded by grass and wildflowers. The dish includes visible pieces of carrots, peas, and greens, creating a colorful and appetizing presentation. The scene is set outdoors, conveying a fresh and natural atmosphere with sunlight illuminating the meal. There is no visible text, and the overall mood is peaceful and inviting, suggesting a picnic or outdoor dining experience.",
+    "final_text": "The image features a bowl of rice with mixed vegetables and dried ingredients, placed on a large rock surrounded by grass and wildflowers. The dish includes visible pieces of carrots, peas, and greens, creating a colorful and appetizing presentation. The scene is set outdoors, conveying a fresh and natural atmosphere with sunlight illuminating the meal. There is no visible text, and the overall mood is peaceful and inviting, suggesting a picnic or outdoor dining experience.",
+    "token_stats": {
+      "original_tokens": 89,
+      "final_tokens": 89,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427164-nv3eI2sglgF6G8JCBa14",
+    "created": 1788427164,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 88,
+      "total_tokens": 433,
+      "cost": 0.0017425
+    }
+  }
+}

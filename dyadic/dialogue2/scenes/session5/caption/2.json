@@ -1,0 +1,36 @@
+{
+  "id": "1beb0c45-8a50-4820-b1df-a5065b864447",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:02.862079",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session5/image/2.png",
+    "filename": "2.png",
+    "size": 1051790,
+    "modified_time": "2026-08-23T21:40:48.899678"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a bowl of spaghetti topped with a tomato-based sauce and scrambled eggs, garnished with green onions. The bowl is placed on a wooden tray, and there are pink flowers on the side, adding a touch of color. The overall mood is warm and inviting, suggesting a homemade, comforting meal.",
+    "final_text": "The image features a bowl of spaghetti topped with a tomato-based sauce and scrambled eggs, garnished with green onions. The bowl is placed on a wooden tray, and there are pink flowers on the side, adding a touch of color. The overall mood is warm and inviting, suggesting a homemade, comforting meal.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427263-QXblcxnciKB6xNTvThTa",
+    "created": 1788427263,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 62,
+      "total_tokens": 917,
+      "cost": 0.0027575
+    }
+  }
+}

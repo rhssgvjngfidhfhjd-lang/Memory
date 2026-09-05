@@ -1,0 +1,15 @@
+The image displays a screenshot of a text conversation in a messaging app. The conversation is between two individuals, one possibly named "王总." The messages are in Chinese and include emojis. 
+
+Core Scene: Text conversation planning a meeting.
+Main Elements: Text bubbles, emojis, profile pictures.
+Visible Text:
+- 09:30: "王总，暗连十点开会，您的时间OK嘛？" (Asking if 10 AM is okay for a meeting)
+- "👌"
+- "收到，王总" (Acknowledged)
+- 22:00: "王总，10点啦。大家在2号会议室。" (Notifying that it's 10 o'clock, meeting in room 2)
+- "我这个意思是三点😊" (Clarifying that they meant 3 o'clock)
+- "王∞总: 👌"
+- 22:10: "收到" (Acknowledged)
+
+Actions/Interactions: Scheduling a meeting and confirming times.
+Overall Mood: Professional and straightforward.

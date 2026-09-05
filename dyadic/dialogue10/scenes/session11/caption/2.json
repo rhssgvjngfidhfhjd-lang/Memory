@@ -1,0 +1,36 @@
+{
+  "id": "f1c4a817-f335-4690-83ef-edefea32238e",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:07.611255",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue10/scenes/session11/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 79595,
+    "modified_time": "2026-08-23T21:30:11.342540"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a \"Self-Care Plan\" document. It includes sections for personal information, goals, instructions, and physical care. The personal information lists a name, date, and emergency contact. The goal is to reduce stress and improve emotional well-being within three months. Instructions advise on using the plan for well-being across life aspects, customizing activities, and committing to consistency. The physical care section outlines an exercise routine, balanced diet, adequate sleep, and regular medical check-ups. The mood is structured and focused on self-improvement.",
+    "final_text": "The image displays a \"Self-Care Plan\" document. It includes sections for personal information, goals, instructions, and physical care. The personal information lists a name, date, and emergency contact. The goal is to reduce stress and improve emotional well-being within three months. Instructions advise on using the plan for well-being across life aspects, customizing activities, and committing to consistency. The physical care section outlines an exercise routine, balanced diet, adequate sleep, and regular medical check-ups. The mood is structured and focused on self-improvement.",
+    "token_stats": {
+      "original_tokens": 110,
+      "final_tokens": 110,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426606-YreA8Bu4xMBrgC4k5UGL",
+    "created": 1788426606,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 109,
+      "total_tokens": 1107,
+      "cost": 0.003585
+    }
+  }
+}

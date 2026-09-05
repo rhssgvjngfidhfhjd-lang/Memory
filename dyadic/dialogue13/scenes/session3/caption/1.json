@@ -1,0 +1,36 @@
+{
+  "id": "4d2ae86f-0d35-4eab-a619-8e0594f1e1e9",
+  "success": true,
+  "timestamp": "2026-09-03T17:13:29.336909",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 1494975,
+    "modified_time": "2026-08-23T21:32:37.189690"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts two children lying on grass in a sunny outdoor setting, with a wooden fence visible in the background. One child is holding a small puppy, while the other is smiling and lying back, arms raised. The atmosphere is playful and warm. The word \"alamy\" appears multiple times over the image, likely as a watermark.",
+    "final_text": "The image depicts two children lying on grass in a sunny outdoor setting, with a wooden fence visible in the background. One child is holding a small puppy, while the other is smiling and lying back, arms raised. The atmosphere is playful and warm. The word \"alamy\" appears multiple times over the image, likely as a watermark.",
+    "token_stats": {
+      "original_tokens": 68,
+      "final_tokens": 68,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426806-WbbpTNb94EtVntaZSvPY",
+    "created": 1788426806,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 69,
+      "total_tokens": 786,
+      "cost": 0.0024825
+    }
+  }
+}

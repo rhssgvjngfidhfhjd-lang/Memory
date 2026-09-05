@@ -1,0 +1,36 @@
+{
+  "id": "51fe3c6d-f654-4178-bbf9-3c8fcd7d8fee",
+  "success": true,
+  "timestamp": "2026-09-03T17:19:04.890008",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session8/image/2.jpg",
+    "filename": "2.jpg",
+    "size": 389316,
+    "modified_time": "2026-08-23T21:37:58.455006"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a vast open field with tall, green grass under a partly cloudy sky. A wooden fence runs diagonally across the scene, leading toward the horizon, where trees and bushes are visible. The sky is a vibrant blue with large, fluffy white clouds. The atmosphere is peaceful and expansive, evoking a sense of calm and openness. There is no visible text or human presence, emphasizing the natural landscape.",
+    "final_text": "The image depicts a vast open field with tall, green grass under a partly cloudy sky. A wooden fence runs diagonally across the scene, leading toward the horizon, where trees and bushes are visible. The sky is a vibrant blue with large, fluffy white clouds. The atmosphere is peaceful and expansive, evoking a sense of calm and openness. There is no visible text or human presence, emphasizing the natural landscape.",
+    "token_stats": {
+      "original_tokens": 83,
+      "final_tokens": 83,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427143-cZh5KIYsyJYwJKYExfd8",
+    "created": 1788427143,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 83,
+      "total_tokens": 938,
+      "cost": 0.0029675
+    }
+  }
+}

@@ -1,0 +1,14 @@
+The image is a document displaying health records, formatted in a tabular and list layout. 
+
+**Core Scene:** Health monitoring and examination records.
+
+**Main Elements:**
+- Tables with columns and rows.
+- Sections labeled with numbers and Chinese text.
+
+**Visible Text (translated):**
+- Sections: "Annual Physical Examination Records," "Disease and Treatment Records," "Daily Health Monitoring Log."
+- Dates and health metrics like weight, temperature, heart rate, and respiratory rate.
+- Diagnosis and treatment details, dietary habits, daily records, and behavior status.
+
+**Overall Mood:** Clinical and informative, conveying a structured health monitoring overview.

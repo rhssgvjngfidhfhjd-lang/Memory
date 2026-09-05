@@ -1,0 +1,36 @@
+{
+  "id": "a56aabe9-638f-4520-aef9-890d888596db",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:10.551250",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session1/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 247826,
+    "modified_time": "2026-08-23T22:04:24.966221"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a quiet, empty road at night, illuminated by streetlights. Yellow directional arrows are painted on the asphalt, indicating lanes. A central divider with red and white posts separates the lanes. Tall trees line the sides, their leaves partially lit by the streetlights, creating a serene and peaceful atmosphere.",
+    "final_text": "The image shows a quiet, empty road at night, illuminated by streetlights. Yellow directional arrows are painted on the asphalt, indicating lanes. A central divider with red and white posts separates the lanes. Tall trees line the sides, their leaves partially lit by the streetlights, creating a serene and peaceful atmosphere.",
+    "token_stats": {
+      "original_tokens": 62,
+      "final_tokens": 62,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426610-zdiEJMK1GVuEdZ3jGFGi",
+    "created": 1788426610,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 63,
+      "total_tokens": 783,
+      "cost": 0.00243
+    }
+  }
+}

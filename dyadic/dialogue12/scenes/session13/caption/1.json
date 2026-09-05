@@ -1,0 +1,36 @@
+{
+  "id": "0ab34262-67b1-467c-a773-03f12a1b167e",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:53.433274",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue12/scenes/session13/image/1.png",
+    "filename": "1.png",
+    "size": 5290340,
+    "modified_time": "2026-08-23T21:31:44.356698"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a modern art installation in a gallery space, featuring a large, twisted, translucent blue sculpture emitting beams of light. The floor beneath displays illuminated, intricate map-like patterns. On the wall, there is Chinese text reading \"城市脉搏: 实时交通数据艺术展,\" translating to \"City Pulse: Real-time Traffic Data Art Exhibition.\" The atmosphere is futuristic and dynamic, with blurred figures suggesting movement and interaction with the exhibit.",
+    "final_text": "The image depicts a modern art installation in a gallery space, featuring a large, twisted, translucent blue sculpture emitting beams of light. The floor beneath displays illuminated, intricate map-like patterns. On the wall, there is Chinese text reading \"城市脉搏: 实时交通数据艺术展,\" translating to \"City Pulse: Real-time Traffic Data Art Exhibition.\" The atmosphere is futuristic and dynamic, with blurred figures suggesting movement and interaction with the exhibit.",
+    "token_stats": {
+      "original_tokens": 98,
+      "final_tokens": 98,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426770-lKQMUFKgAwbz58xMPTrP",
+    "created": 1788426770,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 91,
+      "total_tokens": 1089,
+      "cost": 0.003405
+    }
+  }
+}

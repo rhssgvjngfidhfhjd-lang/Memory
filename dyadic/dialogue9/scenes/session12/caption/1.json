@@ -1,0 +1,36 @@
+{
+  "id": "4487a076-ca39-4508-a828-a34fec13f673",
+  "success": true,
+  "timestamp": "2026-09-03T17:29:27.562021",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session12/image/1.png",
+    "filename": "1.png",
+    "size": 1055539,
+    "modified_time": "2026-08-23T21:58:56.425966"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a community report for 2024 with a turquoise header. It features four main sections:\n\n1. \"流浪猫TNR\": An orange cat wearing a collar, related to the completion of neutering and returning 23 stray cats.\n2. \"共享菜篮\": A wicker basket with vegetables, indicating a shared vegetable basket program covering 48 families, sharing 500 kg of vegetables monthly.\n3. \"二手集市\": A second-hand market with a vendor and stalls, mentioning 6 events with 320 items traded.\n4. \"健康监测\": A person writing on a clipboard, related to health monitoring services for elderly people over 60, with improved blood pressure control rates to 85%.\n\nThe mood is informative and community-focused.",
+    "final_text": "The image is a community report for 2024 with a turquoise header. It features four main sections:\n\n1. \"流浪猫TNR\": An orange cat wearing a collar, related to the completion of neutering and returning 23 stray cats.\n2. \"共享菜篮\": A wicker basket with vegetables, indicating a shared vegetable basket program covering 48 families, sharing 500 kg of vegetables monthly.\n3. \"二手集市\": A second-hand market with a vendor and stalls, mentioning 6 events with 320 items traded.\n4. \"健康监测\": A person writing on a clipboard, related to health monitoring services for elderly people over 60, with improved blood pressure control rates to 85%.\n\nThe mood is informative and community-focused.",
+    "token_stats": {
+      "original_tokens": 166,
+      "final_tokens": 166,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427767-KQPMuKkpcmKiQoWeQMWZ",
+    "created": 1788427767,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 155,
+      "total_tokens": 1010,
+      "cost": 0.0036875
+    }
+  }
+}

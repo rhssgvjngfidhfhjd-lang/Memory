@@ -1,0 +1,9 @@
+The image consists of two scatter plots comparing activity levels. 
+
+- **Left Plot**: Titled "Historical Baseline Activity (Widespread)," it displays a widespread distribution of colored dots (yellow to red) indicating varying activity densities across room coordinates.
+
+- **Right Plot**: Titled "This Week Activity (Restricted, -20% Volume)," it shows a more concentrated cluster of dots with an arrow labeled "Activity Drop" pointing to the center, indicating reduced activity density.
+
+- **Color Bar**: On the right side, a gradient from yellow to black represents activity density, with corresponding values.
+
+The mood is analytical, focusing on changes in spatial activity over time.

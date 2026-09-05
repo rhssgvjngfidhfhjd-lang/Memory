@@ -1,0 +1,36 @@
+{
+  "id": "0458bf51-2244-4e07-bd79-24cb1c701d22",
+  "success": true,
+  "timestamp": "2026-09-03T17:10:31.261259",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue2/scenes/session2/image/img5.jpg",
+    "filename": "img5.jpg",
+    "size": 206978,
+    "modified_time": "2026-08-23T22:05:34.685436"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows four uniquely designed shoe insoles on a white surface. Two are light-colored, and one is a metallic brown. The insoles have distinct shapes with grooves and notches. Visible text on one insole reads \"FUTURE INNOVATION PROJECT.\" The overall atmosphere is minimalistic and modern, focusing on innovative design.",
+    "final_text": "The image shows four uniquely designed shoe insoles on a white surface. Two are light-colored, and one is a metallic brown. The insoles have distinct shapes with grooves and notches. Visible text on one insole reads \"FUTURE INNOVATION PROJECT.\" The overall atmosphere is minimalistic and modern, focusing on innovative design.",
+    "token_stats": {
+      "original_tokens": 69,
+      "final_tokens": 69,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426629-klVjvNYttwL26cmIbd0q",
+    "created": 1788426629,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 68,
+      "total_tokens": 923,
+      "cost": 0.0028175
+    }
+  }
+}

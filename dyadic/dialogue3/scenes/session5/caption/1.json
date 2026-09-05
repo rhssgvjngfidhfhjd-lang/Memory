@@ -1,0 +1,36 @@
+{
+  "id": "35b5fb93-25cd-49e7-b177-bbc10346c209",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:28.259902",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session5/image/1.png",
+    "filename": "1.png",
+    "size": 4718044,
+    "modified_time": "2026-08-23T21:47:31.000545"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts an interior of a pet-friendly café. In the center, there's an illustration of a Shiba Inu and a fluffy cat sitting back-to-back with the text \"VS\" between them. The atmosphere is cozy with tables and chairs visible. Text at the top reads \"社牛柴犬VS高冷布偶线下见面会\" and below \"宠物友好咖啡馆\" and \"互动游戏、拍照环节,\" suggesting a social event involving pets. The mood is inviting and playful.",
+    "final_text": "The image depicts an interior of a pet-friendly café. In the center, there's an illustration of a Shiba Inu and a fluffy cat sitting back-to-back with the text \"VS\" between them. The atmosphere is cozy with tables and chairs visible. Text at the top reads \"社牛柴犬VS高冷布偶线下见面会\" and below \"宠物友好咖啡馆\" and \"互动游戏、拍照环节,\" suggesting a social event involving pets. The mood is inviting and playful.",
+    "token_stats": {
+      "original_tokens": 125,
+      "final_tokens": 125,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427347-Rfu8cZJa7bbNNLLFowhp",
+    "created": 1788427347,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 107,
+      "total_tokens": 1302,
+      "cost": 0.0040575
+    }
+  }
+}

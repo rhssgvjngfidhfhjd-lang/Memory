@@ -1,0 +1,36 @@
+{
+  "id": "fc625eb8-3be8-4b40-ae36-30f34b343d12",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:35.674270",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session14/image/2.png",
+    "filename": "2.png",
+    "size": 781887,
+    "modified_time": "2026-08-23T21:55:14.164487"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a meeting in a room where five people are gathered around a table. Four elderly individuals are seated, while a younger man stands, showing them historical photographs. Another person is seated, speaking into a microphone, suggesting an interview or discussion is taking place. The room is adorned with large photo murals and a map on the walls. A notebook with handwritten notes and a recording device are visible on the table. The atmosphere appears to be educational and reflective, focusing on history and storytelling.",
+    "final_text": "The image depicts a meeting in a room where five people are gathered around a table. Four elderly individuals are seated, while a younger man stands, showing them historical photographs. Another person is seated, speaking into a microphone, suggesting an interview or discussion is taking place. The room is adorned with large photo murals and a map on the walls. A notebook with handwritten notes and a recording device are visible on the table. The atmosphere appears to be educational and reflective, focusing on history and storytelling.",
+    "token_stats": {
+      "original_tokens": 99,
+      "final_tokens": 99,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427532-I187IBWLGIWCpgWILlcL",
+    "created": 1788427532,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 99,
+      "total_tokens": 816,
+      "cost": 0.0027825
+    }
+  }
+}

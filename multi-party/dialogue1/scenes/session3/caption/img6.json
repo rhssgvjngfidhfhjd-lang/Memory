@@ -1,0 +1,36 @@
+{
+  "id": "4f5d3742-41f4-48b4-9fc1-8d2ce24c2512",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:27.917237",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img6.jpg",
+    "filename": "img6.jpg",
+    "size": 1364939,
+    "modified_time": "2026-08-23T22:03:19.104376"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a recipe for Japanese fried pork cutlet (tonkatsu), illustrated through a step-by-step guide. Main elements include raw pork (2 pieces), flour, breadcrumbs, an egg, pepper, a boiling pot, and a frying pan. The final dish is shown as a plated tonkatsu with shredded cabbage and a lemon wedge. The text explains the recipe procedure, emphasizing ingredients and cooking techniques in a lively and informative manner. The atmosphere is friendly and instructional, encouraging cooking at home.",
+    "final_text": "The image features a recipe for Japanese fried pork cutlet (tonkatsu), illustrated through a step-by-step guide. Main elements include raw pork (2 pieces), flour, breadcrumbs, an egg, pepper, a boiling pot, and a frying pan. The final dish is shown as a plated tonkatsu with shredded cabbage and a lemon wedge. The text explains the recipe procedure, emphasizing ingredients and cooking techniques in a lively and informative manner. The atmosphere is friendly and instructional, encouraging cooking at home.",
+    "token_stats": {
+      "original_tokens": 101,
+      "final_tokens": 101,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426566-wIP8zav233k9ZBgLotPE",
+    "created": 1788426566,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 102,
+      "total_tokens": 819,
+      "cost": 0.0028125
+    }
+  }
+}

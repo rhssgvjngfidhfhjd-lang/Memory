@@ -1,0 +1,36 @@
+{
+  "id": "12e1d98b-f3b1-4ab8-9dcf-2f378be276cf",
+  "success": true,
+  "timestamp": "2026-09-03T17:28:40.984643",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue9/scenes/session3/image/1.png",
+    "filename": "1.png",
+    "size": 451471,
+    "modified_time": "2026-08-23T22:01:08.047191"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a veterinarian or vet technician in blue scrubs holding a black and white cat. The person is gently examining the cat's paw, creating a caring and attentive atmosphere. The stethoscope around the person’s neck indicates a medical setting. The overall mood is calm and compassionate, suggesting a routine veterinary check-up.",
+    "final_text": "The image depicts a veterinarian or vet technician in blue scrubs holding a black and white cat. The person is gently examining the cat's paw, creating a caring and attentive atmosphere. The stethoscope around the person’s neck indicates a medical setting. The overall mood is calm and compassionate, suggesting a routine veterinary check-up.",
+    "token_stats": {
+      "original_tokens": 65,
+      "final_tokens": 65,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427721-5V8n1vJyxgtauauCsTaS",
+    "created": 1788427721,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 65,
+      "total_tokens": 580,
+      "cost": 0.0019375
+    }
+  }
+}

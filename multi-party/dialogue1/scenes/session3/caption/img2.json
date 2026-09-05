@@ -1,0 +1,36 @@
+{
+  "id": "b13149b5-29a5-488a-bfce-919b02ad42ca",
+  "success": true,
+  "timestamp": "2026-09-03T17:09:23.542693",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue1/scenes/session3/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 356487,
+    "modified_time": "2026-08-23T22:02:37.915451"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features two raw pork loins placed on a wooden cutting board. The meat is pink and fresh, with visible marbling and a thin layer of fat on one side. The cutting board has a natural wood grain pattern, adding a rustic feel to the scene. There are no visible text or additional objects in the image. The mood is neutral, focusing on the preparation of food in a simple, clean setting.",
+    "final_text": "The image features two raw pork loins placed on a wooden cutting board. The meat is pink and fresh, with visible marbling and a thin layer of fat on one side. The cutting board has a natural wood grain pattern, adding a rustic feel to the scene. There are no visible text or additional objects in the image. The mood is neutral, focusing on the preparation of food in a simple, clean setting.",
+    "token_stats": {
+      "original_tokens": 84,
+      "final_tokens": 84,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426561-y9NrtqgoX1MwQsy4fJf3",
+    "created": 1788426561,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 85,
+      "total_tokens": 805,
+      "cost": 0.00265
+    }
+  }
+}

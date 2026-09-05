@@ -1,0 +1,36 @@
+{
+  "id": "3f7efe00-b8f3-46ee-aa62-626af3be5d02",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:20.830205",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session12/image/2.png",
+    "filename": "2.png",
+    "size": 909274,
+    "modified_time": "2026-08-23T22:00:50.425961"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a serene rural landscape featuring karst mountains, lush green fields, and a clear pond reflecting the mountains. A dirt path winds through the fields, leading towards several small structures, including a house near the pond. Two people are seen outside the house, possibly engaged in conversation. The sky is bright and partly cloudy, creating a peaceful and tranquil atmosphere. There is no visible text in the image.",
+    "final_text": "The image depicts a serene rural landscape featuring karst mountains, lush green fields, and a clear pond reflecting the mountains. A dirt path winds through the fields, leading towards several small structures, including a house near the pond. Two people are seen outside the house, possibly engaged in conversation. The sky is bright and partly cloudy, creating a peaceful and tranquil atmosphere. There is no visible text in the image.",
+    "token_stats": {
+      "original_tokens": 82,
+      "final_tokens": 82,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427637-eBmGCPcXmsxM3HJnRosF",
+    "created": 1788427637,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 83,
+      "total_tokens": 803,
+      "cost": 0.00263
+    }
+  }
+}

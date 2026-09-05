@@ -1,0 +1,36 @@
+{
+  "id": "bfacff90-0661-48df-bb86-8021ec84dfe4",
+  "success": true,
+  "timestamp": "2026-09-03T17:12:24.443357",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session4/image/img10.jpg",
+    "filename": "img10.jpg",
+    "size": 251818,
+    "modified_time": "2026-08-23T22:07:41.650547"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a person standing in front of a large poster of a man with styled hair and jewelry on his hand. The person is holding a drink with a straw, wearing a black coat, and carrying a designer bag and scarf. The atmosphere is stylish and modern. Visible text includes \"BALENCIAGA\" on the bag. The interaction suggests admiration or interest in the poster.",
+    "final_text": "The image features a person standing in front of a large poster of a man with styled hair and jewelry on his hand. The person is holding a drink with a straw, wearing a black coat, and carrying a designer bag and scarf. The atmosphere is stylish and modern. Visible text includes \"BALENCIAGA\" on the bag. The interaction suggests admiration or interest in the poster.",
+    "token_stats": {
+      "original_tokens": 79,
+      "final_tokens": 79,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426741-vIVMFzKIBoOyr31qTgPB",
+    "created": 1788426741,
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 78,
+      "total_tokens": 798,
+      "cost": 0.00258
+    }
+  }
+}

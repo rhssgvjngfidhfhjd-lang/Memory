@@ -1,0 +1,36 @@
+{
+  "id": "7767a6dd-e27a-43f9-9d41-e8b9530db95f",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:06.861995",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue20/scenes/session11/image/3.png",
+    "filename": "3.png",
+    "size": 120015,
+    "modified_time": "2026-08-23T21:41:46.691002"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image features a collection of Xiaomi products arranged around the central orange Xiaomi logo. The products include a robot vacuum, electric scooter, go-kart, security camera, smart toothbrush, air purifier, wireless earbuds, router, smartwatch, and a smart display. The overall mood is tech-focused and modern, highlighting a diverse range of smart and connected devices.",
+    "final_text": "The image features a collection of Xiaomi products arranged around the central orange Xiaomi logo. The products include a robot vacuum, electric scooter, go-kart, security camera, smart toothbrush, air purifier, wireless earbuds, router, smartwatch, and a smart display. The overall mood is tech-focused and modern, highlighting a diverse range of smart and connected devices.",
+    "token_stats": {
+      "original_tokens": 75,
+      "final_tokens": 75,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427325-63zP35hkfUqv5deECoDY",
+    "created": 1788427325,
+    "usage": {
+      "prompt_tokens": 515,
+      "completion_tokens": 70,
+      "total_tokens": 585,
+      "cost": 0.0019875
+    }
+  }
+}

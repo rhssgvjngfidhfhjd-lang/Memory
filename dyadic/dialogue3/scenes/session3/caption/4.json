@@ -1,0 +1,36 @@
+{
+  "id": "ddeb1075-7fe8-4688-aaf8-f97fccb3970b",
+  "success": true,
+  "timestamp": "2026-09-03T17:22:21.123164",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue3/scenes/session3/image/4.png",
+    "filename": "4.png",
+    "size": 544669,
+    "modified_time": "2026-08-23T21:46:15.569050"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a character in a fantasy game setting, standing at the center of a glowing, translucent lotus-shaped aura. The character appears to be performing an action or spell. Surrounding the character is a pathway and a small body of water with vegetation. Visible text at the bottom reads \"三技能：绽·风华,\" suggesting a skill name. The atmosphere is mystical and vibrant, highlighting magical elements.",
+    "final_text": "The image depicts a character in a fantasy game setting, standing at the center of a glowing, translucent lotus-shaped aura. The character appears to be performing an action or spell. Surrounding the character is a pathway and a small body of water with vegetation. Visible text at the bottom reads \"三技能：绽·风华,\" suggesting a skill name. The atmosphere is mystical and vibrant, highlighting magical elements.",
+    "token_stats": {
+      "original_tokens": 86,
+      "final_tokens": 86,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427341-wT9uUWuz71P6zqle66JS",
+    "created": 1788427341,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 83,
+      "total_tokens": 938,
+      "cost": 0.0029675
+    }
+  }
+}

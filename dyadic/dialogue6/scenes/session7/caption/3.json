@@ -1,0 +1,36 @@
+{
+  "id": "46505a83-0c92-4b8b-9703-c98078c95418",
+  "success": true,
+  "timestamp": "2026-09-03T17:26:10.689538",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue6/scenes/session7/image/3.png",
+    "filename": "3.png",
+    "size": 296440,
+    "modified_time": "2026-08-23T21:56:17.484096"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table comparing four nutritional supplements: whey protein, creatine, BCAA (branched-chain amino acids), and L-glutamine. The table is divided into categories such as product name, chemical properties, main components, main effects, usage, and safety. Each supplement is described with its primary functions, such as muscle growth, energy enhancement, and recovery support. The text is in Chinese, with some English terms like \"whey protein\" and \"BCAA.\" The overall mood is informative, aiming to educate about the benefits and usage of each supplement.",
+    "final_text": "The image is a table comparing four nutritional supplements: whey protein, creatine, BCAA (branched-chain amino acids), and L-glutamine. The table is divided into categories such as product name, chemical properties, main components, main effects, usage, and safety. Each supplement is described with its primary functions, such as muscle growth, energy enhancement, and recovery support. The text is in Chinese, with some English terms like \"whey protein\" and \"BCAA.\" The overall mood is informative, aiming to educate about the benefits and usage of each supplement.",
+    "token_stats": {
+      "original_tokens": 118,
+      "final_tokens": 118,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427568-iOgbSPOhMAxZjTezvpG1",
+    "created": 1788427568,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 117,
+      "total_tokens": 834,
+      "cost": 0.0029625
+    }
+  }
+}

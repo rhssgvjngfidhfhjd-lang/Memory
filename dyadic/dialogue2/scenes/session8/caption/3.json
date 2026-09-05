@@ -1,0 +1,36 @@
+{
+  "id": "ae6f1566-7fd4-4439-8559-12478c61736d",
+  "success": true,
+  "timestamp": "2026-09-03T17:21:10.205038",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session8/image/3.png",
+    "filename": "3.png",
+    "size": 211413,
+    "modified_time": "2026-08-23T21:41:17.695803"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows two smartphone screens with health monitoring app interfaces. \n\nThe left screen features a hand holding a smartphone, with text in Chinese about quick health detection. It includes options for heart rate and blood oxygen measurement, indicated by symbols and “O2” text. \n\nThe right screen displays a health report with a human silhouette and various health metrics, like heart rate (68), blood pressure (180), BMI (21.2), and age (22). Colorful icons at the bottom provide navigation options. \n\nThe overall atmosphere is high-tech and informative, aimed at promoting personal health monitoring.",
+    "final_text": "The image shows two smartphone screens with health monitoring app interfaces. \n\nThe left screen features a hand holding a smartphone, with text in Chinese about quick health detection. It includes options for heart rate and blood oxygen measurement, indicated by symbols and “O2” text. \n\nThe right screen displays a health report with a human silhouette and various health metrics, like heart rate (68), blood pressure (180), BMI (21.2), and age (22). Colorful icons at the bottom provide navigation options. \n\nThe overall atmosphere is high-tech and informative, aimed at promoting personal health monitoring.",
+    "token_stats": {
+      "original_tokens": 119,
+      "final_tokens": 119,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427271-C9dfThmHKGYkj0mISqnA",
+    "created": 1788427271,
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 119,
+      "total_tokens": 464,
+      "cost": 0.0020525
+    }
+  }
+}

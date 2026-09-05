@@ -1,0 +1,36 @@
+{
+  "id": "a3ee7d74-8fb0-4b95-85cf-8101e73d0df3",
+  "success": true,
+  "timestamp": "2026-09-03T17:18:41.960432",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue18/scenes/session2/image/2.png",
+    "filename": "2.png",
+    "size": 4833809,
+    "modified_time": "2026-08-23T21:39:34.145300"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a map featuring a mountainous terrain with various routes marked. Red lines indicate main routes, while orange dashed lines represent alternate routes. Blue water droplet icons mark water sources, labeled as \"水源1\" and \"水源2.\" Distances are noted with black text: \"15km,\" \"12km,\" and \"18km.\" The map includes a legend explaining the symbols: red solid line for main routes, orange dashed line for alternate routes, and blue droplets for water sources. The overall atmosphere is informative and geographic.",
+    "final_text": "The image is a map featuring a mountainous terrain with various routes marked. Red lines indicate main routes, while orange dashed lines represent alternate routes. Blue water droplet icons mark water sources, labeled as \"水源1\" and \"水源2.\" Distances are noted with black text: \"15km,\" \"12km,\" and \"18km.\" The map includes a legend explaining the symbols: red solid line for main routes, orange dashed line for alternate routes, and blue droplets for water sources. The overall atmosphere is informative and geographic.",
+    "token_stats": {
+      "original_tokens": 111,
+      "final_tokens": 111,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427120-L6C9dWdCtwoHY3vohib3",
+    "created": 1788427120,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 109,
+      "total_tokens": 1304,
+      "cost": 0.0040775
+    }
+  }
+}

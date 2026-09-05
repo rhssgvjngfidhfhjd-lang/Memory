@@ -1,0 +1,36 @@
+{
+  "id": "cea24354-5310-4c99-ba3e-a93a140f533c",
+  "success": true,
+  "timestamp": "2026-09-03T17:27:08.335986",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue7/scenes/session10/image/2.png",
+    "filename": "2.png",
+    "size": 326652,
+    "modified_time": "2026-08-23T21:56:39.137426"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image contains a text document in Chinese, divided into two main sections: \"环境健康角度\" (Environmental Health Perspective) and \"儿童应急医疗角度\" (Children's Emergency Medical Perspective). Each section includes a series of questions and bullet points related to health and safety concerns. Topics cover allergies, environmental factors, emergency preparedness, medication lists, and medical history. The text is structured in a checklist format, suggesting a focus on proactive health management and emergency readiness. The overall atmosphere is informative and precautionary.",
+    "final_text": "The image contains a text document in Chinese, divided into two main sections: \"环境健康角度\" (Environmental Health Perspective) and \"儿童应急医疗角度\" (Children's Emergency Medical Perspective). Each section includes a series of questions and bullet points related to health and safety concerns. Topics cover allergies, environmental factors, emergency preparedness, medication lists, and medical history. The text is structured in a checklist format, suggesting a focus on proactive health management and emergency readiness. The overall atmosphere is informative and precautionary.",
+    "token_stats": {
+      "original_tokens": 120,
+      "final_tokens": 120,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427629-DdRDiSa6XTnjbVGOX9z8",
+    "created": 1788427629,
+    "usage": {
+      "prompt_tokens": 685,
+      "completion_tokens": 105,
+      "total_tokens": 790,
+      "cost": 0.0027625
+    }
+  }
+}

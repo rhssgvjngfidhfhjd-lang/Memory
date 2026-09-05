@@ -1,0 +1,36 @@
+{
+  "id": "a70afa14-60e3-492b-8c39-5c3eb9bc6e54",
+  "success": true,
+  "timestamp": "2026-09-03T17:17:15.601649",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue16/scenes/session8/image/3.jpg",
+    "filename": "3.jpg",
+    "size": 352830,
+    "modified_time": "2026-08-23T21:35:36.600763"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows an ancient script on a wooden tablet with a handle, displayed against a textured fabric background. The script consists of intricate, vertically arranged text in an unfamiliar language. The atmosphere is historical and scholarly, suggesting a focus on preserving and studying ancient writings. Watermarks with the text \"alamy\" are visible across the image.",
+    "final_text": "The image shows an ancient script on a wooden tablet with a handle, displayed against a textured fabric background. The script consists of intricate, vertically arranged text in an unfamiliar language. The atmosphere is historical and scholarly, suggesting a focus on preserving and studying ancient writings. Watermarks with the text \"alamy\" are visible across the image.",
+    "token_stats": {
+      "original_tokens": 67,
+      "final_tokens": 67,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427034-R6vI8Yd542hlISU7oEaz",
+    "created": 1788427034,
+    "usage": {
+      "prompt_tokens": 1195,
+      "completion_tokens": 67,
+      "total_tokens": 1262,
+      "cost": 0.0036575
+    }
+  }
+}

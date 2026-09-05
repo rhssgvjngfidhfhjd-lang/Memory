@@ -1,0 +1,36 @@
+{
+  "id": "aa0c12ae-f581-4b57-9762-f074bbed217f",
+  "success": true,
+  "timestamp": "2026-09-03T17:20:53.522704",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue2/scenes/session2/image/3.png",
+    "filename": "3.png",
+    "size": 21144,
+    "modified_time": "2026-08-23T21:40:57.887267"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image is a table listing treatment options and their estimated costs in Chinese Yuan. The sections include core supportive treatment, anti-inflammatory/immunosuppressive, anti-infective therapy, surgical treatment, and symptomatic/supportive care. Costs are categorized as low, medium, or high. Examples include daily infusion fees, hospital stays, medication costs, surgical fees, and dietary considerations. The text is in Chinese, with specific cost ranges for each treatment type. The overall atmosphere is informative and clinical.",
+    "final_text": "The image is a table listing treatment options and their estimated costs in Chinese Yuan. The sections include core supportive treatment, anti-inflammatory/immunosuppressive, anti-infective therapy, surgical treatment, and symptomatic/supportive care. Costs are categorized as low, medium, or high. Examples include daily infusion fees, hospital stays, medication costs, surgical fees, and dietary considerations. The text is in Chinese, with specific cost ranges for each treatment type. The overall atmosphere is informative and clinical.",
+    "token_stats": {
+      "original_tokens": 100,
+      "final_tokens": 100,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427253-IbCziRbDRQKtWxyRwg4k",
+    "created": 1788427253,
+    "usage": {
+      "prompt_tokens": 855,
+      "completion_tokens": 99,
+      "total_tokens": 954,
+      "cost": 0.0031275
+    }
+  }
+}

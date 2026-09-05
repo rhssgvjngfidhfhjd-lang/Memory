@@ -1,0 +1,36 @@
+{
+  "id": "ccbec2a5-21e5-428c-b188-6ca4f6c639eb",
+  "success": true,
+  "timestamp": "2026-09-03T17:11:38.183186",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/multi-party/dialogue3/scenes/session2/image/img2.jpg",
+    "filename": "img2.jpg",
+    "size": 206644,
+    "modified_time": "2026-08-23T22:07:27.385764"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image displays a software interface showing download progress. Key elements include network speed indicators: 226.3 Mbps current, 237.9 Mbps peak, and disk usage at 235.6 Mbps. A progress bar indicates 7.4 GB of 118.8 GB downloaded, with 1% completion. The estimated remaining time is 26 days, 5 hours, and 16 minutes. Visible text is in Chinese, with options to pause or adjust settings, creating a technical and focused atmosphere.",
+    "final_text": "The image displays a software interface showing download progress. Key elements include network speed indicators: 226.3 Mbps current, 237.9 Mbps peak, and disk usage at 235.6 Mbps. A progress bar indicates 7.4 GB of 118.8 GB downloaded, with 1% completion. The estimated remaining time is 26 days, 5 hours, and 16 minutes. Visible text is in Chinese, with options to pause or adjust settings, creating a technical and focused atmosphere.",
+    "token_stats": {
+      "original_tokens": 103,
+      "final_tokens": 103,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426698-G7WiOCORaxeQvpGG1Z4d",
+    "created": 1788426698,
+    "usage": {
+      "prompt_tokens": 1284,
+      "completion_tokens": 104,
+      "total_tokens": 1388,
+      "cost": 0.00425
+    }
+  }
+}

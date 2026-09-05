@@ -1,0 +1,36 @@
+{
+  "id": "31ba5788-12f1-4fca-9f40-bcb8142295eb",
+  "success": true,
+  "timestamp": "2026-09-03T17:24:36.729935",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session2/image/1.png",
+    "filename": "1.png",
+    "size": 56262,
+    "modified_time": "2026-08-23T21:55:13.378373"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image shows a recipe list for making a type of dough and filling. The text is divided into two sections. \n\n1. **Dough Ingredients**: \n   - Glutinous rice flour: 300 grams\n   - Sticky rice flour: 60 grams\n   - Mugwort juice: 150-200 grams\n   - Water: 100 ml\n   - Sugar: 30 grams\n   - Cooking oil: 15 grams\n\n2. **Filling Example (Red Bean Paste)**:\n   - Red bean paste: 300 grams\n   - Suggestions for other fillings: \n     - Salted egg yolk: combined with meat floss\n     - Hot dog: combined with mayonnaise\n     - Grilled pork: combined with lettuce and sauce\n\nThe mood is instructional, aiming to guide preparation.",
+    "final_text": "The image shows a recipe list for making a type of dough and filling. The text is divided into two sections. \n\n1. **Dough Ingredients**: \n   - Glutinous rice flour: 300 grams\n   - Sticky rice flour: 60 grams\n   - Mugwort juice: 150-200 grams\n   - Water: 100 ml\n   - Sugar: 30 grams\n   - Cooking oil: 15 grams\n\n2. **Filling Example (Red Bean Paste)**:\n   - Red bean paste: 300 grams\n   - Suggestions for other fillings: \n     - Salted egg yolk: combined with meat floss\n     - Hot dog: combined with mayonnaise\n     - Grilled pork: combined with lettuce and sauce\n\nThe mood is instructional, aiming to guide preparation.",
+    "token_stats": {
+      "original_tokens": 169,
+      "final_tokens": 169,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427474-BzEMhO8fuQ4nLiHtP6AP",
+    "created": 1788427474,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 167,
+      "total_tokens": 884,
+      "cost": 0.0034625
+    }
+  }
+}

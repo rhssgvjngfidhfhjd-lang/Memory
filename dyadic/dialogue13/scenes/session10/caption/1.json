@@ -1,0 +1,36 @@
+{
+  "id": "5e36e78a-35ca-43e2-affb-3ed1d256ed0b",
+  "success": true,
+  "timestamp": "2026-09-03T17:14:11.792561",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue13/scenes/session10/image/1.png",
+    "filename": "1.png",
+    "size": 1216722,
+    "modified_time": "2026-08-23T21:32:19.808531"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a lively community festival scene. At the center, a couple dances joyfully, surrounded by various people engaging in activities like grilling food and dining at a table. Lanterns, plants, and benches add to the festive atmosphere. The mood is cheerful and inviting. Text in Chinese reads \"社区文化节\" (Community Culture Festival) and \"邻里共融·欢乐共享\" (Neighborhood Integration·Joyful Sharing). The event dates \"2024.09.28-30\" and location \"社区中心广场\" (Community Center Square) are displayed at the bottom.",
+    "final_text": "The image depicts a lively community festival scene. At the center, a couple dances joyfully, surrounded by various people engaging in activities like grilling food and dining at a table. Lanterns, plants, and benches add to the festive atmosphere. The mood is cheerful and inviting. Text in Chinese reads \"社区文化节\" (Community Culture Festival) and \"邻里共融·欢乐共享\" (Neighborhood Integration·Joyful Sharing). The event dates \"2024.09.28-30\" and location \"社区中心广场\" (Community Center Square) are displayed at the bottom.",
+    "token_stats": {
+      "original_tokens": 132,
+      "final_tokens": 132,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788426847-tBNv4lutrXwbaVL6BK8k",
+    "created": 1788426847,
+    "usage": {
+      "prompt_tokens": 998,
+      "completion_tokens": 120,
+      "total_tokens": 1118,
+      "cost": 0.003695
+    }
+  }
+}

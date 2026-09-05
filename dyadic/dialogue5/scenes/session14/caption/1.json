@@ -1,0 +1,36 @@
+{
+  "id": "eb4489a3-5cc1-439d-8d36-292be713894d",
+  "success": true,
+  "timestamp": "2026-09-03T17:25:35.176496",
+  "image_info": {
+    "path": "/mnt/e/code/AAA-Memory/H2HMEM-main/dataset/dyadic/dialogue5/scenes/session14/image/1.png",
+    "filename": "1.png",
+    "size": 900443,
+    "modified_time": "2026-08-23T21:55:32.564212"
+  },
+  "model_info": {
+    "model": "openai/gpt-4o",
+    "detail_level": "auto",
+    "caption_max_tokens": 256
+  },
+  "description": {
+    "full_text": "The image depicts a serene street scene in a traditional village, with warm evening sunlight casting golden hues on the old brick buildings. Two children play joyfully with a star-shaped paper kite, adding a sense of liveliness. In the foreground, four elderly men sit casually on chairs, engaging in conversation. Visible signage includes text in Chinese characters, such as \"老布庄,\" \"陈记药铺,\" and \"便民杂货,\" indicating various shops. A red lantern hangs above, enhancing the traditional atmosphere. The mood is peaceful and nostalgic, capturing a moment of community life.",
+    "final_text": "The image depicts a serene street scene in a traditional village, with warm evening sunlight casting golden hues on the old brick buildings. Two children play joyfully with a star-shaped paper kite, adding a sense of liveliness. In the foreground, four elderly men sit casually on chairs, engaging in conversation. Visible signage includes text in Chinese characters, such as \"老布庄,\" \"陈记药铺,\" and \"便民杂货,\" indicating various shops. A red lantern hangs above, enhancing the traditional atmosphere. The mood is peaceful and nostalgic, capturing a moment of community life.",
+    "token_stats": {
+      "original_tokens": 123,
+      "final_tokens": 123,
+      "was_truncated": false,
+      "limit": 256
+    }
+  },
+  "raw_response": {
+    "completion_id": "gen-1788427532-lOrvGNiPmLqxQdzq9yGz",
+    "created": 1788427532,
+    "usage": {
+      "prompt_tokens": 717,
+      "completion_tokens": 118,
+      "total_tokens": 835,
+      "cost": 0.0029725
+    }
+  }
+}
