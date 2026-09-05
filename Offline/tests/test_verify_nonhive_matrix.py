@@ -161,7 +161,20 @@ def test_mb_call_deep_validation_checks_config_samples_and_trace(tmp_path):
     trace = tmp_path / "traces" / "sample.jsonl"
     trace.parent.mkdir()
     trace.write_text(
-        json.dumps({"sample_id": "sample", "failed": False}) + "\n",
+        json.dumps(
+            {
+                "sample_id": "sample",
+                "request_id": 1,
+                "method": "POST",
+                "path": "/v1/chat/completions",
+                "status": 200,
+                "failed": False,
+                "prompt_tokens": 10,
+                "completion_tokens": 2,
+                "total_tokens": 12,
+            }
+        )
+        + "\n",
         encoding="utf-8",
     )
     payload = {
@@ -175,6 +188,10 @@ def test_mb_call_deep_validation_checks_config_samples_and_trace(tmp_path):
         "failed_calls": 0,
         "successful_calls": 1,
         "mean_per_sample": 1.0,
+        "prompt_tokens": 10,
+        "completion_tokens": 2,
+        "total_tokens": 12,
+        "usage_missing_calls": 0,
         "samples": [
             {
                 "benchmark": "Mem-Gallery",
@@ -183,6 +200,12 @@ def test_mb_call_deep_validation_checks_config_samples_and_trace(tmp_path):
                 "status": "completed",
                 "total_calls": 1,
                 "failed_calls": 0,
+                "successful_calls": 1,
+                "prompt_tokens": 10,
+                "completion_tokens": 2,
+                "total_tokens": 12,
+                "usage_available_calls": 1,
+                "usage_missing_calls": 0,
                 "trace_path": "/moved/repository/sample.jsonl",
             }
         ],
@@ -220,6 +243,53 @@ def test_mb_call_deep_validation_checks_config_samples_and_trace(tmp_path):
             benchmark="Mem-Gallery",
             method="MIRIX",
         )
+
+    trace_rows = [
+        {
+            "sample_id": "sample",
+            "request_id": request_id,
+            "method": "POST",
+            "path": "/v1/chat/completions",
+            "status": 200,
+            "failed": False,
+            "prompt_tokens": 10,
+            "completion_tokens": 2,
+            "total_tokens": 12,
+        }
+        for request_id in (2, 1)
+    ]
+    trace.write_text(
+        "".join(json.dumps(row) + "\n" for row in trace_rows), encoding="utf-8"
+    )
+    payload.update(
+        {
+            "total_calls": 2,
+            "successful_calls": 2,
+            "mean_per_sample": 2.0,
+            "prompt_tokens": 20,
+            "completion_tokens": 4,
+            "total_tokens": 24,
+        }
+    )
+    payload["samples"][0].update(
+        {
+            "total_calls": 2,
+            "successful_calls": 2,
+            "prompt_tokens": 20,
+            "completion_tokens": 4,
+            "total_tokens": 24,
+            "usage_available_calls": 2,
+        }
+    )
+    _write(path, payload)
+    validate_mb_call_metrics(path, 1, benchmark="Mem-Gallery", method="MIRIX")
+
+    trace_rows[0]["request_id"] = 1
+    trace.write_text(
+        "".join(json.dumps(row) + "\n" for row in trace_rows), encoding="utf-8"
+    )
+    with pytest.raises(ValueError, match="duplicated or incomplete"):
+        validate_mb_call_metrics(path, 1, benchmark="Mem-Gallery", method="MIRIX")
 
 
 def test_integrated_call_metric_validation(tmp_path):

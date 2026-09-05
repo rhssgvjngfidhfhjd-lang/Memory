@@ -300,6 +300,10 @@ def validate_mb_call_metrics(
 
     sample_total = 0
     sample_failed = 0
+    sample_prompt_tokens = 0
+    sample_completion_tokens = 0
+    sample_tokens = 0
+    sample_usage_missing = 0
     for row in samples:
         if (
             row.get("status") != "completed"
@@ -325,6 +329,11 @@ def validate_mb_call_metrics(
             raise ValueError(f"missing raw MB-call trace: {trace_path}")
         trace_count = 0
         trace_failed = 0
+        trace_request_ids: set[int] = set()
+        trace_prompt_tokens = 0
+        trace_completion_tokens = 0
+        trace_tokens = 0
+        trace_usage_available = 0
         for line in trace_path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
@@ -333,15 +342,71 @@ def validate_mb_call_metrics(
             trace_failed += int(bool(trace.get("failed")))
             if str(trace.get("sample_id") or "") != str(row.get("sample_id")):
                 raise ValueError(f"raw trace sample identity mismatch: {trace_path}")
+            request_id = trace.get("request_id")
+            if not isinstance(request_id, int) or request_id < 1:
+                raise ValueError(f"invalid raw trace request ID: {trace_path}")
+            trace_request_ids.add(request_id)
+            status = trace.get("status")
+            if not isinstance(status, int):
+                raise ValueError(f"invalid raw trace HTTP status: {trace_path}")
+            if bool(trace.get("failed")) != (not 200 <= status < 300):
+                raise ValueError(f"raw trace failed/status mismatch: {trace_path}")
+            if trace.get("method") != "POST" or not str(trace.get("path") or "").endswith(
+                ("/chat/completions", "/completions", "/responses")
+            ):
+                raise ValueError(f"raw trace contains a non-executor request: {trace_path}")
+            if trace.get("total_tokens") is not None:
+                trace_usage_available += 1
+                trace_prompt_tokens += int(trace.get("prompt_tokens") or 0)
+                trace_completion_tokens += int(trace.get("completion_tokens") or 0)
+                trace_tokens += int(trace.get("total_tokens") or 0)
         if trace_count != row_total or trace_failed != row_failed:
             raise ValueError(
                 f"raw trace totals differ for {row.get('sample_id')}: "
                 f"trace={trace_count}/{trace_failed} metric={row_total}/{row_failed}"
             )
+        if trace_request_ids != set(range(1, trace_count + 1)):
+            raise ValueError(f"raw trace request IDs are duplicated or incomplete: {trace_path}")
+        expected_usage = {
+            "successful_calls": trace_count - trace_failed,
+            "prompt_tokens": trace_prompt_tokens,
+            "completion_tokens": trace_completion_tokens,
+            "total_tokens": trace_tokens,
+            "usage_available_calls": trace_usage_available,
+            "usage_missing_calls": trace_count - trace_usage_available,
+        }
+        mismatched_usage = {
+            key: {"expected": value, "actual": row.get(key)}
+            for key, value in expected_usage.items()
+            if row.get(key) != value
+        }
+        if mismatched_usage:
+            raise ValueError(
+                f"raw trace usage differs for {row.get('sample_id')}: {mismatched_usage}"
+            )
+        sample_prompt_tokens += trace_prompt_tokens
+        sample_completion_tokens += trace_completion_tokens
+        sample_tokens += trace_tokens
+        sample_usage_missing += trace_count - trace_usage_available
     if sample_total != total or sample_failed != failed:
         raise ValueError(
             f"per-sample MB-call sums differ: samples={sample_total}/{sample_failed} "
             f"aggregate={total}/{failed}"
+        )
+    expected_aggregate_usage = {
+        "prompt_tokens": sample_prompt_tokens,
+        "completion_tokens": sample_completion_tokens,
+        "total_tokens": sample_tokens,
+        "usage_missing_calls": sample_usage_missing,
+    }
+    mismatched_aggregate_usage = {
+        key: {"expected": value, "actual": metrics.get(key)}
+        for key, value in expected_aggregate_usage.items()
+        if metrics.get(key) != value
+    }
+    if mismatched_aggregate_usage:
+        raise ValueError(
+            f"aggregate raw trace usage differs: {mismatched_aggregate_usage}"
         )
 
 
