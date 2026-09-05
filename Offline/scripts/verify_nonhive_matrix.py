@@ -14,8 +14,12 @@ try:
     from scripts.run_full_baseline_matrix import (
         BASELINES,
         BENCHMARKS,
+        EMBEDDING_ENDPOINT,
+        EMBEDDING_MODEL,
         EXPECTED_RESULT_COUNTS,
+        INFERENCE_ENDPOINTS,
         Job,
+        MODEL,
         OUTPUT_ROOT,
         validate_job_outputs,
     )
@@ -23,8 +27,12 @@ except ModuleNotFoundError:  # Direct execution adds scripts/, not its parent.
     from run_full_baseline_matrix import (
         BASELINES,
         BENCHMARKS,
+        EMBEDDING_ENDPOINT,
+        EMBEDDING_MODEL,
         EXPECTED_RESULT_COUNTS,
+        INFERENCE_ENDPOINTS,
         Job,
+        MODEL,
         OUTPUT_ROOT,
         validate_job_outputs,
     )
@@ -95,7 +103,13 @@ def validate_judge_metrics(path: Path, expected: int) -> None:
     _score(metrics.get("accuracy"), "judge accuracy")
 
 
-def validate_mb_call_metrics(path: Path, expected: int) -> None:
+def validate_mb_call_metrics(
+    path: Path,
+    expected: int,
+    *,
+    benchmark: str = "",
+    method: str = "",
+) -> None:
     metrics = _load_dict(path)
     if not metrics.get("available"):
         raise ValueError("MB-call metrics are not marked available")
@@ -120,6 +134,95 @@ def validate_mb_call_metrics(path: Path, expected: int) -> None:
     if not math.isclose(mean, total / expected, rel_tol=1e-12, abs_tol=1e-12):
         raise ValueError(
             f"MB-call mean {mean!r} does not equal {total}/{expected}"
+        )
+    if not benchmark and not method:
+        return
+    if metrics.get("benchmark") != benchmark or metrics.get("baseline") != method:
+        raise ValueError("MB-call artifact benchmark/baseline identity mismatch")
+
+    config_path = path.parent / "run_config.json"
+    config = _load_dict(config_path)
+    expected_config = {
+        "benchmark": benchmark,
+        "baseline": method,
+        "executor_model": MODEL,
+        "embedding_model": EMBEDDING_MODEL,
+        "embedding_base_url": EMBEDDING_ENDPOINT,
+        "embedding_dim": 2048,
+        "request_timeout": 180,
+        "retries": 2,
+        "max_samples": 0,
+        "max_chunks": 0,
+    }
+    mismatched = {
+        key: {"expected": value, "actual": config.get(key)}
+        for key, value in expected_config.items()
+        if config.get(key) != value
+    }
+    if mismatched:
+        raise ValueError(f"MB-call run configuration mismatch: {mismatched}")
+    if str(config.get("executor_base_url") or "") not in INFERENCE_ENDPOINTS:
+        raise ValueError("MB-call run used an unexpected executor endpoint")
+    if benchmark == "WorldMemArena" and Path(str(config.get("data_dir") or "")).name != "lifelong":
+        raise ValueError("MB-call WMA input is not the lifelong split")
+
+    samples = metrics.get("samples")
+    if not isinstance(samples, list) or len(samples) != expected:
+        raise ValueError("MB-call metrics do not contain every sample record")
+    sample_ids = [str(row.get("sample_id") or "") for row in samples]
+    configured_ids = [str(value) for value in config.get("samples") or []]
+    if (
+        "" in sample_ids
+        or len(set(sample_ids)) != expected
+        or len(configured_ids) != expected
+        or set(configured_ids) != set(sample_ids)
+    ):
+        raise ValueError("MB-call sample identities are missing, duplicated, or mismatched")
+
+    sample_total = 0
+    sample_failed = 0
+    for row in samples:
+        if (
+            row.get("status") != "completed"
+            or row.get("benchmark") != benchmark
+            or row.get("baseline") != method
+        ):
+            raise ValueError(f"incomplete or misidentified MB-call sample: {row.get('sample_id')}")
+        row_total = int(row.get("total_calls"))
+        row_failed = int(row.get("failed_calls"))
+        if row_total < 0 or row_failed < 0 or row_failed > row_total:
+            raise ValueError(f"invalid per-sample call totals: {row.get('sample_id')}")
+        sample_total += row_total
+        sample_failed += row_failed
+        recorded_trace = Path(str(row.get("trace_path") or ""))
+        trace_path = (
+            recorded_trace
+            if recorded_trace.is_file()
+            else path.parent / "traces" / recorded_trace.name
+        )
+        if row_total == 0 and not trace_path.exists():
+            continue
+        if not trace_path.is_file():
+            raise ValueError(f"missing raw MB-call trace: {trace_path}")
+        trace_count = 0
+        trace_failed = 0
+        for line in trace_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            trace = json.loads(line)
+            trace_count += 1
+            trace_failed += int(bool(trace.get("failed")))
+            if str(trace.get("sample_id") or "") != str(row.get("sample_id")):
+                raise ValueError(f"raw trace sample identity mismatch: {trace_path}")
+        if trace_count != row_total or trace_failed != row_failed:
+            raise ValueError(
+                f"raw trace totals differ for {row.get('sample_id')}: "
+                f"trace={trace_count}/{trace_failed} metric={row_total}/{row_failed}"
+            )
+    if sample_total != total or sample_failed != failed:
+        raise ValueError(
+            f"per-sample MB-call sums differ: samples={sample_total}/{sample_failed} "
+            f"aggregate={total}/{failed}"
         )
 
 
@@ -261,6 +364,8 @@ def main() -> None:
         "mb_calls": lambda job: validate_mb_call_metrics(
             mb_call_root / job.benchmark / job.method / "metrics.json",
             EXPECTED_SAMPLE_COUNTS[job.benchmark],
+            benchmark=job.benchmark,
+            method=job.method,
         ),
         "integrated_calls": lambda job: validate_integrated_call_metrics(
             output_root / job.benchmark / job.method / "metrics.json",

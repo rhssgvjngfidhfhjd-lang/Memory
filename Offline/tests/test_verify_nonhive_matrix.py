@@ -61,6 +61,72 @@ def test_mb_call_metric_validation(tmp_path):
         validate_mb_call_metrics(path, 2)
 
 
+def test_mb_call_deep_validation_checks_config_samples_and_trace(tmp_path):
+    path = tmp_path / "metrics.json"
+    trace = tmp_path / "traces" / "sample.jsonl"
+    trace.parent.mkdir()
+    trace.write_text(
+        json.dumps({"sample_id": "sample", "failed": False}) + "\n",
+        encoding="utf-8",
+    )
+    payload = {
+        "available": True,
+        "benchmark": "Mem-Gallery",
+        "baseline": "MIRIX",
+        "num_samples": 1,
+        "completed_samples": 1,
+        "failed_samples": 0,
+        "total_calls": 1,
+        "failed_calls": 0,
+        "successful_calls": 1,
+        "mean_per_sample": 1.0,
+        "samples": [
+            {
+                "benchmark": "Mem-Gallery",
+                "baseline": "MIRIX",
+                "sample_id": "sample",
+                "status": "completed",
+                "total_calls": 1,
+                "failed_calls": 0,
+                "trace_path": "/moved/repository/sample.jsonl",
+            }
+        ],
+    }
+    _write(path, payload)
+    _write(
+        tmp_path / "run_config.json",
+        {
+            "benchmark": "Mem-Gallery",
+            "baseline": "MIRIX",
+            "executor_model": "Qwen/Qwen3-VL-4B-Instruct",
+            "executor_base_url": "http://127.0.0.1:8013/v1",
+            "embedding_model": "Qwen/Qwen3-VL-Embedding-2B",
+            "embedding_base_url": "http://127.0.0.1:8001/v1",
+            "embedding_dim": 2048,
+            "request_timeout": 180,
+            "retries": 2,
+            "max_samples": 0,
+            "max_chunks": 0,
+            "samples": ["sample"],
+        },
+    )
+    validate_mb_call_metrics(
+        path,
+        1,
+        benchmark="Mem-Gallery",
+        method="MIRIX",
+    )
+    payload["samples"][0]["total_calls"] = 2
+    _write(path, payload)
+    with pytest.raises(ValueError, match="raw trace totals differ"):
+        validate_mb_call_metrics(
+            path,
+            1,
+            benchmark="Mem-Gallery",
+            method="MIRIX",
+        )
+
+
 def test_integrated_call_metric_validation(tmp_path):
     measured = tmp_path / "measured.json"
     formal = tmp_path / "formal.json"
