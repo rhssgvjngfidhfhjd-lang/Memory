@@ -38,6 +38,11 @@ TASKS = (
     Task("Mem-Gallery", "http://127.0.0.1:8014/v1", "mb_calls_gpu4_mma_memverse"),
     Task("H2HMEM", "http://127.0.0.1:8014/v1", "mb_calls_gpu4_mma_memverse"),
 )
+GPU5_H2_HELPER = Task(
+    "H2HMEM", "http://127.0.0.1:8015/v1", "mb_calls_gpu5_memverse_h2"
+)
+FORMAL_WMA_RESULT = ROOT / "outputs" / "WorldMemArena" / "MemVerse" / "results.json"
+FORMAL_WMA_SESSION = "recover_memverse_wma"
 
 
 def now() -> str:
@@ -188,13 +193,34 @@ def main() -> None:
                 )
                 launches.append(gpu4_task.benchmark)
 
+        # Once the formal WMA job releases GPU5, share the remaining H2HMEM
+        # samples with GPU4. Per-sample file locks in the measurement runner
+        # prevent the two workers from rebuilding the same dialogue.
+        gpu5_released = FORMAL_WMA_RESULT.is_file() and not tmux_exists(
+            FORMAL_WMA_SESSION
+        )
+        if (
+            gpu5_released
+            and not complete[GPU5_H2_HELPER.benchmark]
+            and not tmux_exists(GPU5_H2_HELPER.session)
+            and endpoint_ready(GPU5_H2_HELPER.endpoint)
+        ):
+            start_task(
+                GPU5_H2_HELPER,
+                output_root=output_root,
+                embedding_base_url=args.embedding_base_url,
+                sample_concurrency=args.sample_concurrency,
+            )
+            launches.append(f"{GPU5_H2_HELPER.benchmark}@gpu5")
+
         write_status(
             {
                 "updated_at": now(),
                 "complete": complete,
                 "launches": launches,
                 "sessions": {
-                    task.session: tmux_exists(task.session) for task in TASKS
+                    task.session: tmux_exists(task.session)
+                    for task in (*TASKS, GPU5_H2_HELPER)
                 },
             }
         )

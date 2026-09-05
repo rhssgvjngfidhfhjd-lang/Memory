@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
+import fcntl
 import hashlib
 import http.client
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -260,6 +261,32 @@ def _artifact_name(sample_id: str) -> str:
     return f"{slug[:96]}-{digest}.json"
 
 
+def _artifact_payload(path: Path) -> dict[str, Any] | None:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    return payload if isinstance(payload, dict) else None
+
+
+def _completed_artifact(path: Path) -> dict[str, Any] | None:
+    payload = _artifact_payload(path)
+    return payload if payload is not None and payload.get("status") == "completed" else None
+
+
+def _try_sample_lock(path: Path):
+    """Claim one sample without blocking another worker or GPU."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    handle = path.open("a+", encoding="utf-8")
+    try:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        handle.close()
+        return None
+    return handle
+
+
 def _sample_specs(
     benchmark: str,
     data_dir: Path,
@@ -346,11 +373,62 @@ def _run_sample(
     resume: bool,
 ) -> dict[str, Any]:
     artifact_path = job_root / "samples" / _artifact_name(spec.sample_id)
-    if resume and artifact_path.is_file():
-        payload = json.loads(artifact_path.read_text(encoding="utf-8"))
-        if payload.get("status") == "completed":
+    if resume and (payload := _completed_artifact(artifact_path)) is not None:
+        print(f"[resume] {spec.sample_id}", flush=True)
+        return payload
+
+    lock_path = job_root / "locks" / f"{artifact_path.name}.lock"
+    lock_handle = _try_sample_lock(lock_path)
+    if lock_handle is None:
+        print(f"[busy] {spec.sample_id}", flush=True)
+        return {
+            "sample_id": spec.sample_id,
+            "status": "running_elsewhere",
+            "error": "sample is claimed by another MB-call worker",
+        }
+    try:
+        # Another worker may have completed the sample before this lock was acquired.
+        if resume and (payload := _completed_artifact(artifact_path)) is not None:
             print(f"[resume] {spec.sample_id}", flush=True)
             return payload
+        return _run_sample_claimed(
+            spec,
+            baseline=baseline,
+            job_root=job_root,
+            executor_base_url=executor_base_url,
+            executor_model=executor_model,
+            embedding_base_url=embedding_base_url,
+            embedding_model=embedding_model,
+            embedding_dim=embedding_dim,
+            request_timeout=request_timeout,
+            retries=retries,
+            max_chunks=max_chunks,
+            resume=resume,
+        )
+    finally:
+        fcntl.flock(lock_handle.fileno(), fcntl.LOCK_UN)
+        lock_handle.close()
+
+
+def _run_sample_claimed(
+    spec: SampleSpec,
+    *,
+    baseline: str,
+    job_root: Path,
+    executor_base_url: str,
+    executor_model: str,
+    embedding_base_url: str,
+    embedding_model: str,
+    embedding_dim: int,
+    request_timeout: int,
+    retries: int,
+    max_chunks: int,
+    resume: bool,
+) -> dict[str, Any]:
+    artifact_path = job_root / "samples" / _artifact_name(spec.sample_id)
+    if resume and (payload := _completed_artifact(artifact_path)) is not None:
+        print(f"[resume] {spec.sample_id}", flush=True)
+        return payload
 
     state_dir = job_root / "state" / Path(*spec.state_parts)
     trace_path = job_root / "traces" / _artifact_name(spec.sample_id).replace(".json", ".jsonl")
@@ -487,6 +565,22 @@ def _aggregate(
     }
 
 
+def _ordered_rows(
+    specs: list[SampleSpec],
+    job_root: Path,
+    fallback: dict[str, dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Prefer durable per-sample artifacts over process-local status rows."""
+
+    rows = []
+    for spec in specs:
+        artifact = job_root / "samples" / _artifact_name(spec.sample_id)
+        row = _artifact_payload(artifact) or fallback.get(spec.sample_id)
+        if row is not None:
+            rows.append(row)
+    return rows
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--baseline", required=True)
@@ -584,10 +678,10 @@ def main() -> None:
                     "status": "failed",
                     "error": f"runner {type(exc).__name__}: {exc}",
                 }
-            ordered = [results[spec.sample_id] for spec in specs if spec.sample_id in results]
+            ordered = _ordered_rows(specs, job_root, results)
             write_json_atomic(job_root / "progress.json", ordered)
 
-    ordered = [results[spec.sample_id] for spec in specs]
+    ordered = _ordered_rows(specs, job_root, results)
     metrics = _aggregate(args.benchmark, baseline, ordered)
     write_json_atomic(job_root / "metrics.json", metrics)
     print(json.dumps({key: value for key, value in metrics.items() if key != "samples"}, indent=2))
