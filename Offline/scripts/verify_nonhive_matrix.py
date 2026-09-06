@@ -109,8 +109,17 @@ def validate_answer_metrics(path: Path, expected: int, *, benchmark: str = "") -
     else:
         from benchmarks.memgallery_harness.runner.metrics import summarize_results
 
-    recalculated = summarize_results(results, k=5)
-    scalar_keys = {"count", "f1", "em", "retrieval_hitrate@5"}
+    hitrate_keys = sorted(
+        key for key in metrics if re.fullmatch(r"retrieval_hitrate@\d+", key)
+    )
+    if len(hitrate_keys) != 1:
+        raise ValueError(
+            f"expected exactly one retrieval_hitrate@K metric, got {hitrate_keys}"
+        )
+    hitrate_key = hitrate_keys[0]
+    top_k = int(hitrate_key.rsplit("@", 1)[1])
+    recalculated = summarize_results(results, k=top_k)
+    scalar_keys = {"count", "f1", "em", hitrate_key}
     if benchmark == "WorldMemArena":
         scalar_keys.update({"strict_em", "errors"})
     for key in scalar_keys:

@@ -53,6 +53,11 @@ INFERENCE_ENDPOINTS = {
     "http://127.0.0.1:8015/v1",
 }
 EMBEDDING_ENDPOINT = "http://127.0.0.1:8001/v1"
+TOP_K = int(
+    json.loads(
+        (ROOT / "configs" / "defaults.json").read_text(encoding="utf-8")
+    )["top_k"]
+)
 
 
 def now() -> str:
@@ -216,7 +221,7 @@ def common_eval_args(endpoint: str, embedding_base_url: str) -> list[str]:
         "--embedding-model", EMBEDDING_MODEL,
         "--embedding-base-url", embedding_base_url,
         "--embedding-dim", "2048",
-        "--top-k", "5",
+        "--top-k", str(TOP_K),
         "--request-timeout", "180",
         "--retries", "2",
     ]
@@ -419,7 +424,7 @@ def validate_job_outputs(job: Job, result_dir: Path) -> None:
             raise RuntimeError(f"{job.name} result/trace query id sets differ")
     oversized_traces = [
         row for row in traces
-        if not isinstance(row.get("top_k"), list) or len(row["top_k"]) > 5
+        if not isinstance(row.get("top_k"), list) or len(row["top_k"]) > TOP_K
     ]
     if oversized_traces:
         raise RuntimeError(
@@ -485,7 +490,7 @@ def validate_job_outputs(job: Job, result_dir: Path) -> None:
         "embedding_model": EMBEDDING_MODEL,
         "embedding_base_url": EMBEDDING_ENDPOINT,
         "embedding_dim": 2048,
-        "top_k": 5,
+        "top_k": TOP_K,
         "request_timeout": 180,
         "retries": 2,
     }

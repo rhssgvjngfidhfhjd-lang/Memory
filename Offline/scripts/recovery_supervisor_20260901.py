@@ -25,6 +25,11 @@ EMBED_URL = "http://127.0.0.1:8001/v1"
 LOG_DIR = ROOT / "logs" / "recovery_supervisor"
 STATUS_PATH = LOG_DIR / "status_20260901.json"
 CHECK_INTERVAL_SECONDS = 1800
+TOP_K = int(
+    json.loads(
+        (ROOT / "configs" / "defaults.json").read_text(encoding="utf-8")
+    )["top_k"]
+)
 
 
 @dataclass(frozen=True)
@@ -107,7 +112,7 @@ def common_args(endpoint: str) -> list[str]:
         "--embedding-dim",
         "2048",
         "--top-k",
-        "5",
+        str(TOP_K),
         "--request-timeout",
         "180",
         "--retries",

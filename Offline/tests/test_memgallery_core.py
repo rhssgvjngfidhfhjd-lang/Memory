@@ -29,6 +29,7 @@ from benchmarks.memgallery_harness.runner.metrics import (
     normalize_answer,
     provenance_hit,
     write_retrieval_memory_token,
+    write_efficiency_metrics,
 )
 from benchmarks.memgallery_harness.runner.answer_client import (
     VLMAnswerClient,
@@ -516,9 +517,12 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         self.assertEqual(cost["input_tokens"], 30)
         self.assertEqual(cost["output_tokens"], 10)
         self.assertEqual(cost["num_samples"], 2)
-        self.assertAlmostEqual(cost["cost_sum"], 9.0)
-        self.assertAlmostEqual(cost["mean_per_sample"], 4.5)
-        self.assertEqual(cost["formula"], "(30 * 0.1 + 10 * 0.6) / 2 = 4.5")
+        self.assertAlmostEqual(cost["cost_sum"], 0.000009)
+        self.assertAlmostEqual(cost["mean_per_sample"], 0.0000045)
+        self.assertEqual(
+            cost["formula"],
+            "((30 / 1000000) * 0.1 + (10 / 1000000) * 0.6) / 2 = 4.5e-06",
+        )
 
     def test_cost_mb_is_unavailable_without_prices_or_exact_usage(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -593,9 +597,71 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         self.assertEqual(cost["num_samples"], 2)
         self.assertEqual(cost["total_attempts"], 4)
         self.assertEqual(cost["retried_queries"], 1)
-        self.assertAlmostEqual(cost["cost_sum"], 12.0)
-        self.assertAlmostEqual(cost["mean_per_sample"], 6.0)
-        self.assertEqual(cost["formula"], "(60 * 0.1 + 10 * 0.6) / 2 = 6")
+        self.assertAlmostEqual(cost["cost_sum"], 0.000012)
+        self.assertAlmostEqual(cost["mean_per_sample"], 0.000006)
+        self.assertEqual(
+            cost["formula"],
+            "((60 / 1000000) * 0.1 + (10 / 1000000) * 0.6) / 2 = 6e-06",
+        )
+
+    def test_efficiency_metrics_use_pricing_latency_calls_and_images(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "call_trace.jsonl").write_text(
+                "\n".join(
+                    json.dumps(row)
+                    for row in (
+                        {
+                            "phase": "memory_build",
+                            "prompt_tokens": 100,
+                            "completion_tokens": 10,
+                            "total_tokens": 110,
+                            "image_count": 2,
+                        },
+                        {
+                            "phase": "retrieval",
+                            "prompt_tokens": 20,
+                            "completion_tokens": 5,
+                            "total_tokens": 25,
+                            "image_count": 1,
+                        },
+                    )
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            metrics = write_efficiency_metrics(
+                root,
+                [
+                    {
+                        "dataset": "sample",
+                        "answer_token_usage": {
+                            "prompt_tokens": 30,
+                            "completion_tokens": 4,
+                            "total_tokens": 34,
+                        },
+                        "answer_attempts": 2,
+                        "answer_image_count": 3,
+                    }
+                ],
+                sample_id_field="dataset",
+                sample_ids=["sample"],
+                model="Qwen/Qwen3-VL-4B-Instruct",
+                config_path=Path(__file__).parents[1]
+                / "configs"
+                / "model_efficiency.json",
+            )
+
+        self.assertAlmostEqual(metrics["cost_mb"]["cost_sum_usd"], 0.0000075)
+        self.assertAlmostEqual(metrics["cost_qa"]["cost_sum_usd"], 0.00000475)
+        self.assertAlmostEqual(
+            metrics["latency_mb"]["latency_sum_seconds"], 0.6987
+        )
+        self.assertAlmostEqual(
+            metrics["latency_qa"]["latency_sum_seconds"], 2.10591
+        )
+        self.assertEqual(metrics["latency_qa"]["calls"], 3)
+        self.assertEqual(metrics["latency_qa"]["image_count"], 7)
 
     def test_cost_qa_is_strict_about_prices_usage_and_answer_failures(self):
         valid = {

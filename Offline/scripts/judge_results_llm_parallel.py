@@ -23,11 +23,13 @@ from benchmarks.io_utils import (
 )
 
 from benchmarks.memgallery_harness.runner.metrics import (
+    CALL_METRICS_FILENAME,
     MEMORY_METRICS_FILENAME,
     RETRIEVAL_MEMORY_TOKEN_FILENAME,
     add_memory_metrics,
     add_retrieval_memory_tokens,
     merge_llm_judge_metrics,
+    write_judge_call_trace,
     write_memory_metrics,
     write_retrieval_memory_token,
 )
@@ -44,7 +46,7 @@ DEFAULT_JUDGE_MODEL = "openai/gpt-4o-mini"
 DEFAULT_JUDGE_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_JUDGE_TEMPERATURE = 0.0
 DEFAULT_JUDGE_MAX_NEW_TOKENS = 512
-JUDGE_CACHE_VERSION = "agentic_memrl.judge_cache.v2"
+JUDGE_CACHE_VERSION = "agentic_memrl.judge_cache.v3-calls"
 
 GRADED_SCORES = (0.0, 0.25, 0.5, 0.75, 1.0)
 BINARY_SCORES = (0.0, 1.0)
@@ -606,7 +608,16 @@ def judge_with_retries(
                 max_tokens,
             )
             return [
-                _result_record(benchmark, index, row, result)
+                _result_record(
+                    benchmark,
+                    index,
+                    row,
+                    {
+                        **result,
+                        "judge_attempts": attempt + 1,
+                        "judge_failed_attempts": attempt,
+                    },
+                )
                 for (index, row), result in zip(task.members, results)
             ]
         except Exception as exc:
@@ -628,6 +639,8 @@ def judge_with_retries(
         "reason": error_text,
         "raw_judge": "",
         "json_repaired": False,
+        "judge_attempts": attempts,
+        "judge_failed_attempts": attempts,
         "judge": {
             "protocol_id": normalized["protocol_id"],
             "status": "error",
@@ -658,6 +671,14 @@ def summarize(
     score_sum = sum(float(row["score"]) for row in valid)
     correct = sum(float(row["score"]) == 1.0 for row in valid)
     judge_errors = total - len(valid)
+    call_rows = [
+        row
+        for row in judged
+        if row.get("judge_attempts") is not None
+        and row.get("judge_failed_attempts") is not None
+    ]
+    total_calls = sum(int(row["judge_attempts"]) for row in call_rows)
+    failed_calls = sum(int(row["judge_failed_attempts"]) for row in call_rows)
     return {
         "benchmark": benchmark,
         "model": model,
@@ -673,6 +694,14 @@ def summarize(
         "coverage": len(valid) / total if total else 0.0,
         "completion": total / expected if expected else 1.0,
         "provisional": judge_errors > 0 or total != expected,
+        "calls": {
+            "total_calls": total_calls if len(call_rows) == total else None,
+            "failed_calls": failed_calls if len(call_rows) == total else None,
+            "successful_calls": (
+                total_calls - failed_calls if len(call_rows) == total else None
+            ),
+            "available": len(call_rows) == total,
+        },
     }
 
 
@@ -807,6 +836,7 @@ def main() -> None:
             "judge_model": "model",
             "judge_timeout": "timeout",
             "judge_max_tokens": "max_tokens",
+            "judge_workers": "workers",
         }
         parser.set_defaults(**{dest: config[key] for key, dest in mapping.items() if key in config})
     args = parser.parse_args()
@@ -932,6 +962,7 @@ def main() -> None:
         expected_count=len(selected),
     )
     save_checkpoint()
+    write_judge_call_trace(out_dir, ordered)
     benchmark_metrics_path = Path(args.results).parent / "metrics.json"
     if benchmark_metrics_path.exists():
         benchmark_metrics = json.loads(benchmark_metrics_path.read_text(encoding="utf-8"))
@@ -983,6 +1014,11 @@ def main() -> None:
             # equivalent so Judge and later MB-call merges cannot diverge.
             write_json_atomic(benchmark_metrics_path, combined)
             write_json_atomic(summary_path, combined)
+            if isinstance(combined.get("calls"), dict):
+                write_json_atomic(
+                    source_result_dir / CALL_METRICS_FILENAME,
+                    combined["calls"],
+                )
         else:
             summary_path.unlink(missing_ok=True)
     print(json.dumps(summary, ensure_ascii=False, indent=2))

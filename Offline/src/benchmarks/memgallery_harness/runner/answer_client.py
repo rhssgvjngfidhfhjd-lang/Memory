@@ -25,6 +25,7 @@ class AnswerResponse:
     usage: dict[str, int] | None
     attempts: int
     failed_attempts: int
+    image_count: int = 0
 
 
 class _AnswerAttemptError(RuntimeError):
@@ -70,6 +71,18 @@ def build_retrieved_memory_context(
             lines.append(f"Attached memory image {image_num}: {image.get('img_id', '')}")
             image_paths.append(str(image["path"]))
     return "\n\n".join(lines), image_paths
+
+
+def count_answer_images(
+    memory_items: list[dict[str, Any]],
+    query_image: dict[str, Any] | None = None,
+    category: str = "",
+) -> int:
+    """Count images attached to each answer-model attempt."""
+    _, memory_image_paths = build_retrieved_memory_context(memory_items, category)
+    return len(memory_image_paths) + int(
+        bool(query_image and query_image.get("path"))
+    )
 
 
 class VLMAnswerClient:
@@ -155,6 +168,9 @@ class VLMAnswerClient:
         last_error: Exception | None = None
         cumulative_usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
         usage_is_exact = True
+        image_count = self.count_answer_images(
+            memory_items, query_image=query_image, category=category
+        )
         for attempt in range(self.retries + 1):
             try:
                 if self.backend == "ollama":
@@ -182,6 +198,7 @@ class VLMAnswerClient:
                     usage=cumulative_usage if usage_is_exact else None,
                     attempts=attempt + 1,
                     failed_attempts=attempt,
+                    image_count=image_count,
                 )
             except Exception as exc:
                 attempt_usage = (
@@ -198,6 +215,19 @@ class VLMAnswerClient:
                     time.sleep(1 + attempt)
         assert last_error is not None
         raise last_error
+
+    def count_answer_images(
+        self,
+        memory_items: list[dict[str, Any]],
+        *,
+        query_image: dict[str, Any] | None = None,
+        category: str = "",
+    ) -> int:
+        """Count images attached by this client's benchmark-specific renderer."""
+        _, image_paths = self._build_text_and_image_paths(
+            memory_items, "", query_image, category
+        )
+        return len(image_paths)
 
     def _answer_openai_compatible(
         self,

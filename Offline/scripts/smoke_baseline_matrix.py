@@ -367,7 +367,7 @@ def main() -> None:
     parser.add_argument("--embedding-base-url", required=True)
     parser.add_argument("--embedding-model", default="Qwen/Qwen3-VL-Embedding-2B")
     parser.add_argument("--embedding-dim", type=int, default=2048)
-    parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--top-k", type=int, default=7)
     parser.add_argument("--timeout", type=int, default=180)
     parser.add_argument("--retries", type=int, default=2)
     parser.add_argument("--workers", type=int, default=3)

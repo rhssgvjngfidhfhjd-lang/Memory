@@ -19,7 +19,7 @@ OFFLINE_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_ROOT = OFFLINE_ROOT / "outputs" / "H2HMEM"
 
 
-def load_completed_metrics(result_dir: Path, *, top_k: int = 5) -> dict[str, Any]:
+def load_completed_metrics(result_dir: Path, *, top_k: int = 7) -> dict[str, Any]:
     results_path = result_dir / "results.json"
     results = json.loads(results_path.read_text(encoding="utf-8"))
     if not isinstance(results, list) or not results:
@@ -46,7 +46,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-root", default=str(DEFAULT_OUTPUT_ROOT))
     parser.add_argument("--method", action="append", default=[])
-    parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--top-k", type=int, default=7)
     args = parser.parse_args()
     if args.top_k < 1:
         parser.error("--top-k must be positive")

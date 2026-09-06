@@ -450,7 +450,7 @@ def _run_sample_claimed(
             upstream_timeout=max(request_timeout + 30, 210),
         ) as proxy:
             config = {
-                "top_k": 5,
+                "top_k": 7,
                 "embedding_dim": embedding_dim,
                 "embedding_model": embedding_model,
                 "embedding_base_url": embedding_base_url,
