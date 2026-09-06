@@ -29,11 +29,20 @@ from benchmarks.baseline_runtime.registry import (
     canonical_name,
 )
 from benchmarks.baseline_runtime.adapters.mirix_family import (
+    MirixFamilyAdapter,
     _normalize_openai_tool_request,
+    _normalize_openai_tool_response,
     _normalize_openai_tool_tags,
 )
 from benchmarks.baseline_runtime.adapters.omni_simplemem import OmniSimpleMemAdapter
-from benchmarks.baseline_runtime.adapters.memverse import MemVerseAdapter
+from benchmarks.baseline_runtime.adapters.memverse import (
+    MemVerseAdapter,
+    _CappedOpenAIClientProxy,
+    _apply_executor_max_tokens,
+    _bounded_history_messages,
+    _bounded_prompt,
+    _repair_corrupt_lightrag_caches,
+)
 from benchmarks.baseline_runtime.provenance import ProvenanceIndex
 from benchmarks.memgallery_harness.runner.answer_client import AnswerResponse
 from benchmarks.memgallery_harness.eval_memgallery import run_dataset
@@ -131,6 +140,125 @@ class BaselineProtocolTest(unittest.TestCase):
         normalized = _normalize_openai_tool_request(request)
         self.assertEqual(normalized["tool_choice"], choice)
 
+    def test_mirix_tool_compat_wraps_sync_and_async_requests(self):
+        textual = {
+            "choices": [
+                {
+                    "message": {
+                        "content": (
+                            '<tool_call>{"name":"insert_memory",'
+                            '"arguments":{"title":"Almond"}}</tool_call>'
+                        ),
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        }
+
+        class FakeOpenAIClient:
+            def build_request_data(self):
+                return {
+                    "tools": [{"function": {"name": "insert_memory"}}],
+                    "tool_choice": "required",
+                }
+
+            def request(self, _request_data):
+                return json.loads(json.dumps(textual))
+
+            async def request_async(self, _request_data):
+                return json.loads(json.dumps(textual))
+
+            def convert_response_to_chat_completion(self, response_data, marker):
+                return response_data, marker
+
+        class FakeCompletion:
+            def __init__(self, **payload):
+                self.payload = payload
+
+            def model_dump(self):
+                return self.payload
+
+        legacy_seen = {}
+
+        def fake_legacy_request(*_args, **kwargs):
+            legacy_seen["request"] = kwargs.get("chat_completion_request")
+            return FakeCompletion(**json.loads(json.dumps(textual)))
+
+        legacy_module = SimpleNamespace(
+            openai_chat_completions_request=fake_legacy_request
+        )
+
+        module = SimpleNamespace(OpenAIClient=FakeOpenAIClient)
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.package = "mirix"
+        adapter.config = {"num_predict": 512}
+
+        def fake_import(name):
+            if name.endswith(".openai_client"):
+                return module
+            if name.endswith(".llm_api_tools"):
+                return legacy_module
+            raise AssertionError(name)
+
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mirix_family.importlib.import_module",
+            side_effect=fake_import,
+        ):
+            adapter._patch_openai_tool_compat()
+
+        client = FakeOpenAIClient()
+        self.assertEqual(client.build_request_data()["tool_choice"], "none")
+        sync_message = client.request({})["choices"][0]["message"]
+        async_message = asyncio.run(client.request_async({}))["choices"][0]["message"]
+        converted, marker = client.convert_response_to_chat_completion(
+            json.loads(json.dumps(textual)), "converted"
+        )
+        converted_message = converted["choices"][0]["message"]
+        legacy_request = SimpleNamespace(max_tokens=None)
+        legacy_message = legacy_module.openai_chat_completions_request(
+            chat_completion_request=legacy_request
+        ).model_dump()["choices"][0]["message"]
+        self.assertEqual(
+            sync_message["tool_calls"][0]["function"]["name"], "insert_memory"
+        )
+        self.assertEqual(
+            async_message["tool_calls"][0]["function"]["name"], "insert_memory"
+        )
+        self.assertEqual(
+            converted_message["tool_calls"][0]["function"]["name"],
+            "insert_memory",
+        )
+        self.assertEqual(marker, "converted")
+        self.assertEqual(
+            legacy_message["tool_calls"][0]["function"]["name"], "insert_memory"
+        )
+        self.assertEqual(legacy_seen["request"].max_tokens, 512)
+
+    def test_mirix_normalizes_pydantic_style_tool_response(self):
+        class FakeCompletion:
+            def __init__(self, **payload):
+                self.payload = payload
+
+            def model_dump(self):
+                return self.payload
+
+        response = FakeCompletion(
+            choices=[
+                {
+                    "message": {
+                        "content": (
+                            '<tool_call>{"name":"finish",'
+                            '"arguments":{}}</tool_call>'
+                        ),
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        )
+        normalized = _normalize_openai_tool_response(response)
+        message = normalized.model_dump()["choices"][0]["message"]
+        self.assertEqual(message["tool_calls"][0]["function"]["name"], "finish")
+
     def test_mirix_converts_qwen_textual_tool_selection(self):
         response = {
             "choices": [
@@ -147,6 +275,45 @@ class BaselineProtocolTest(unittest.TestCase):
         }
         message = _normalize_openai_tool_tags(response)["choices"][0]["message"]
         self.assertIsNone(message["content"])
+        function = message["tool_calls"][0]["function"]
+        self.assertEqual(function["name"], "insert_memory")
+        self.assertEqual(json.loads(function["arguments"]), {"title": "Almond"})
+
+    def test_mirix_converts_tool_call_without_closing_tag(self):
+        response = {
+            "choices": [
+                {
+                    "message": {
+                        "content": (
+                            '<tool_call>\n{"name":"insert_memory",'
+                            '"arguments":{"title":"Almond"}}'
+                        ),
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        }
+        message = _normalize_openai_tool_tags(response)["choices"][0]["message"]
+        self.assertIsNone(message["content"])
+        function = message["tool_calls"][0]["function"]
+        self.assertEqual(function["name"], "insert_memory")
+        self.assertEqual(json.loads(function["arguments"]), {"title": "Almond"})
+
+    def test_mirix_repairs_truncated_textual_tool_json(self):
+        response = {
+            "choices": [
+                {
+                    "message": {
+                        "content": (
+                            '<tool_call>{"name":"insert_memory",'
+                            '"arguments":{"title":"Almond"}'
+                        ),
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        }
+        message = _normalize_openai_tool_tags(response)["choices"][0]["message"]
         function = message["tool_calls"][0]["function"]
         self.assertEqual(function["name"], "insert_memory")
         self.assertEqual(json.loads(function["arguments"]), {"title": "Almond"})
@@ -244,6 +411,32 @@ class BaselineProtocolTest(unittest.TestCase):
         arguments = json.loads(message["tool_calls"][0]["function"]["arguments"])
         self.assertEqual(arguments["search_field"], "summary")
         self.assertEqual(arguments["search_method"], "embedding")
+
+    def test_mirix_falls_back_when_native_queue_silently_writes_nothing(self):
+        existing = {
+            "memory_id": "semantic_memory_manager:sem_old",
+            "text": "old memory",
+        }
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.backend = SimpleNamespace(send_message=Mock(return_value=None))
+        adapter._memory_rows = Mock(return_value=[existing])
+        adapter._should_direct_insert = Mock(return_value=False)
+        adapter._has_new_or_changed_memory = Mock(return_value=False)
+        adapter._insert_fallback_memory = Mock()
+        adapter.provenance = Mock()
+        adapter._known_ids = {existing["memory_id"]}
+        adapter._last_chunk = None
+        adapter._ingested_chunks = 0
+        chunk = Chunk(
+            chunk_id="S1:R1",
+            text="new memory",
+            metadata={"session_id": "S1"},
+        )
+
+        adapter.ingest(chunk)
+
+        adapter._insert_fallback_memory.assert_called_once_with(chunk)
+        self.assertEqual(adapter._ingested_chunks, 1)
 
     def test_output_layout_keeps_memory_under_baseline_root(self):
         layout = BaselineOutputLayout(Path("outputs/Mem-Gallery/M2A"))
@@ -430,6 +623,128 @@ class BaselineProtocolTest(unittest.TestCase):
             adapter._loop.close()
         self.assertEqual(max_active, 3)
         self.assertEqual(len(result.items), 3)
+
+    def test_memverse_bounds_verbose_gleaning_history(self):
+        class CharacterTokenizer:
+            @staticmethod
+            def encode(text):
+                return list(text)
+
+            @staticmethod
+            def decode(tokens):
+                return "".join(tokens)
+
+        history = [
+            {"role": "user", "content": "old-prompt"},
+            {"role": "assistant", "content": "x" * 1000},
+        ]
+        bounded = _bounded_history_messages(
+            history,
+            prompt="continue",
+            system_prompt="system",
+            tokenizer=CharacterTokenizer(),
+            max_input_tokens=400,
+        )
+        self.assertEqual(len(bounded), 1)
+        self.assertEqual(bounded[0]["role"], "assistant")
+        self.assertGreater(len(bounded[0]["content"]), 0)
+        self.assertLess(len(bounded[0]["content"]), 1000)
+
+    def test_memverse_bounds_oversized_prompt_and_preserves_ends(self):
+        class CharacterTokenizer:
+            @staticmethod
+            def encode(text):
+                return list(text)
+
+            @staticmethod
+            def decode(tokens):
+                return "".join(tokens)
+
+        prompt = "INSTRUCTIONS:" + "x" * 1000 + ":CURRENT_SOURCE"
+        bounded = _bounded_prompt(
+            prompt,
+            system_prompt="system",
+            tokenizer=CharacterTokenizer(),
+            max_input_tokens=600,
+            history_message_count=2,
+        )
+        self.assertTrue(bounded.startswith("INSTRUCTIONS:"))
+        self.assertTrue(bounded.endswith(":CURRENT_SOURCE"))
+        self.assertIn("middle truncated", bounded)
+        self.assertLessEqual(
+            len(CharacterTokenizer.encode(bounded)),
+            600 - (256 + 16 * 4) - len("system"),
+        )
+
+        short = "short prompt"
+        self.assertEqual(
+            _bounded_prompt(
+                short,
+                system_prompt="system",
+                tokenizer=CharacterTokenizer(),
+                max_input_tokens=400,
+            ),
+            short,
+        )
+
+    def test_memverse_repairs_only_corrupt_lightrag_response_cache(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            state_dir = Path(temporary)
+            core = state_dir / "graph" / "core"
+            core.mkdir(parents=True)
+            cache = core / "kv_store_llm_response_cache.json"
+            cache.write_text('{"unfinished":', encoding="utf-8")
+            authoritative = core / "kv_store_full_docs.json"
+            authoritative.write_text('{"keep": true}', encoding="utf-8")
+
+            repaired = _repair_corrupt_lightrag_caches(state_dir)
+
+            self.assertEqual(len(repaired), 1)
+            self.assertEqual(repaired[0][0], cache)
+            self.assertEqual(json.loads(cache.read_text(encoding="utf-8")), {})
+            self.assertEqual(
+                repaired[0][1].read_text(encoding="utf-8"),
+                '{"unfinished":',
+            )
+            self.assertEqual(
+                json.loads(authoritative.read_text(encoding="utf-8")),
+                {"keep": True},
+            )
+
+    def test_memverse_replaces_explicit_none_max_tokens(self):
+        kwargs = {"max_tokens": None, "temperature": 0}
+        _apply_executor_max_tokens(kwargs, configured_max_tokens=512)
+        self.assertEqual(kwargs["max_tokens"], 512)
+        self.assertEqual(kwargs["temperature"], 0)
+
+        explicit = {"max_tokens": 128}
+        _apply_executor_max_tokens(explicit, configured_max_tokens=512)
+        self.assertEqual(explicit["max_tokens"], 128)
+
+        oversized = {"max_tokens": 1200}
+        _apply_executor_max_tokens(oversized, configured_max_tokens=512)
+        self.assertEqual(oversized["max_tokens"], 512)
+
+    def test_memverse_caps_native_summary_client(self):
+        seen: list[dict[str, object]] = []
+
+        class Completions:
+            def create(self, **kwargs):
+                seen.append(kwargs)
+                return "ok"
+
+        delegate = SimpleNamespace(
+            chat=SimpleNamespace(completions=Completions())
+        )
+        client = _CappedOpenAIClientProxy(delegate, 512)
+        self.assertEqual(
+            client.chat.completions.create(
+                model="executor", max_tokens=1200, temperature=0
+            ),
+            "ok",
+        )
+        self.assertEqual(seen[0]["max_tokens"], 512)
+        self.assertEqual(seen[0]["temperature"], 0)
 
     def test_parallel_map_waits_for_other_samples_before_reporting_failure(self):
         visited: list[int] = []

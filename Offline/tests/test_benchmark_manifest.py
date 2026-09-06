@@ -81,7 +81,7 @@ class BenchmarkManifestTest(unittest.TestCase):
             "embedding_model": full_matrix.EMBEDDING_MODEL,
             "embedding_base_url": full_matrix.EMBEDDING_ENDPOINT,
             "embedding_dim": 2048,
-            "top_k": 5,
+            "top_k": full_matrix.TOP_K,
             "request_timeout": 180,
             "retries": 2,
             "answer_base_url": next(iter(full_matrix.INFERENCE_ENDPOINTS)),

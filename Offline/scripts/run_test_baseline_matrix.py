@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the non-MemVerse baselines on the manifest-defined test split.
+"""Run all non-HiveMem baselines on the manifest-defined test split.
 
 The runner creates read-only staged dataset views containing only test
 conversations, runs a shortest-job-first queue over three answer endpoints,
@@ -34,23 +34,14 @@ from evidence_policy.split_manifest import SplitManifestIndex  # noqa: E402
 
 MODEL = "Qwen/Qwen3-VL-4B-Instruct"
 EMBEDDING_MODEL = "Qwen/Qwen3-VL-Embedding-2B"
+PROTOCOL_PATH = ROOT / "configs" / "test_baseline_matrix.json"
 BENCHMARK_ARGUMENT = {
     "Mem-Gallery": "memgallery",
     "H2HMEM": "h2hmem",
     "WorldMemArena": "worldmemarena",
 }
-EXPECTED_COUNTS = {
-    "Mem-Gallery": 275,
-    "H2HMEM": 360,
-    "WorldMemArena": 440,
-}
-SMOKE_EXPECTED_COUNTS = {
-    "Mem-Gallery": 1,
-    "H2HMEM": 2,
-    "WorldMemArena": 1,
-}
-
-# Confirmed shortest-job-first order from docs/plan_baseline.md.
+# Confirmed shortest-job-first order from docs/plan_baseline.md. MemVerse is
+# deliberately last because its memory construction is substantially slower.
 JOB_ORDER = (
     ("M3-Agent-caption", "H2HMEM"),
     ("M3-Agent-caption", "Mem-Gallery"),
@@ -70,6 +61,9 @@ JOB_ORDER = (
     ("MMA", "WorldMemArena"),
     ("MIRIX", "WorldMemArena"),
     ("OmniSimpleMem", "WorldMemArena"),
+    ("MemVerse", "Mem-Gallery"),
+    ("MemVerse", "H2HMEM"),
+    ("MemVerse", "WorldMemArena"),
 )
 SMOKE_JOB_ORDER = (
     ("M3-Agent-caption", "H2HMEM"),
@@ -91,6 +85,59 @@ def slug(value: str) -> str:
 
 def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_protocol(path: Path = PROTOCOL_PATH) -> dict[str, Any]:
+    protocol = load_json(path)
+    required = {
+        "split",
+        "split_manifest",
+        "top_k",
+        "efficiency_config",
+        "expected_qa_counts",
+        "smoke_expected_qa_counts",
+    }
+    missing = sorted(required - protocol.keys())
+    if missing:
+        raise ValueError(f"Missing test matrix protocol keys: {missing}")
+    if str(protocol["split"]).casefold() != "test":
+        raise ValueError("The baseline matrix protocol must select the test split")
+    expected_counts = protocol["expected_qa_counts"]
+    smoke_counts = protocol["smoke_expected_qa_counts"]
+    expected_benchmarks = set(BENCHMARK_ARGUMENT)
+    if set(expected_counts) != expected_benchmarks:
+        raise ValueError("Protocol expected_qa_counts has the wrong benchmarks")
+    if set(smoke_counts) != expected_benchmarks:
+        raise ValueError("Protocol smoke_expected_qa_counts has the wrong benchmarks")
+    if int(protocol["top_k"]) < 1:
+        raise ValueError("Protocol top_k must be positive")
+    return protocol
+
+
+PROTOCOL = load_protocol()
+SPLIT_NAME = str(PROTOCOL["split"])
+EXPECTED_COUNTS = {
+    benchmark: int(count)
+    for benchmark, count in PROTOCOL["expected_qa_counts"].items()
+}
+SMOKE_EXPECTED_COUNTS = {
+    benchmark: int(count)
+    for benchmark, count in PROTOCOL["smoke_expected_qa_counts"].items()
+}
+
+
+def configured_split_manifest() -> Path:
+    path = Path(str(PROTOCOL["split_manifest"])).expanduser()
+    if not path.is_absolute():
+        path = PROTOCOL_PATH.parent / path
+    return path.resolve()
+
+
+def configured_efficiency_config() -> Path:
+    path = Path(str(PROTOCOL["efficiency_config"])).expanduser()
+    if not path.is_absolute():
+        path = PROTOCOL_PATH.parent / path
+    return path.resolve()
 
 
 def write_json_atomic(path: Path, payload: Any) -> None:
@@ -201,13 +248,13 @@ def selection_from_manifest(path: Path) -> Selection:
     h2h_rows = tuple(
         row
         for source in h2h_sources
-        for row in index.conversations("test", data_source=source)
+        for row in index.conversations(SPLIT_NAME, data_source=source)
     )
     h2h = tuple((row.variant, row.source_id) for row in h2h_rows)
     ordered_questions = (
         (
             "Mem-Gallery",
-            index.ordered_question_ids("test", data_source="mem_gallery"),
+            index.ordered_question_ids(SPLIT_NAME, data_source="mem_gallery"),
         ),
         (
             "H2HMEM",
@@ -220,13 +267,13 @@ def selection_from_manifest(path: Path) -> Selection:
         (
             "WorldMemArena",
             index.ordered_question_ids(
-                "test", data_source="worldmemarena_lifelong"
+                SPLIT_NAME, data_source="worldmemarena_lifelong"
             ),
         ),
     )
     selection = Selection(
-        memgallery=index.source_ids("test", "mem_gallery"),
-        wma=index.source_ids("test", "worldmemarena_lifelong"),
+        memgallery=index.source_ids(SPLIT_NAME, "mem_gallery"),
+        wma=index.source_ids(SPLIT_NAME, "worldmemarena_lifelong"),
         h2h=h2h,
         ordered_questions=ordered_questions,
         manifest_path=index.path,
@@ -245,6 +292,15 @@ def load_selection(path: Path) -> Selection:
         raise ValueError(f"Unexpected test question counts: {actual}")
     if (len(selection.memgallery), len(selection.h2h), len(selection.wma)) != (4, 5, 8):
         raise ValueError("Unexpected test conversation counts")
+    all_question_ids = [
+        question_id
+        for _, question_ids in selection.ordered_questions
+        for question_id in question_ids
+    ]
+    if any(not question_id for question_id in all_question_ids):
+        raise ValueError("Test split contains an empty question ID")
+    if len(all_question_ids) != len(set(all_question_ids)):
+        raise ValueError("Test split contains duplicate question IDs")
     return selection
 
 
@@ -252,7 +308,7 @@ def write_smoke_manifest(source_path: Path, destination: Path) -> Selection:
     payload = load_json(source_path)
     for dataset in payload.get("datasets", []):
         for split_name, split_payload in (dataset.get("splits") or {}).items():
-            if split_name != "test":
+            if split_name != SPLIT_NAME:
                 split_payload["conversations"] = []
                 split_payload["conversation_count"] = 0
                 split_payload["question_count"] = 0
@@ -330,7 +386,7 @@ def stage_inputs(stage_root: Path, selection: Selection) -> dict[str, Path]:
     write_json_atomic(
         stage_root / "selection.json",
         {
-            "split": "test",
+            "split": SPLIT_NAME,
             "manifest": str(selection.manifest_path),
             "manifest_sha256": selection.manifest_sha256,
             "Mem-Gallery": list(selection.memgallery),
@@ -424,6 +480,7 @@ def common_args(
         "--top-k", str(config["top_k"]),
         "--request-timeout", str(config["request_timeout"]),
         "--retries", str(config["retries"]),
+        "--efficiency-config", str(config["efficiency_config"]),
         "--resume",
     ]
 
@@ -442,29 +499,33 @@ def command_for(
     common = common_args(
         job, result_dir, endpoint, embedding_url, config, smoke=smoke
     )
+    manifest_path = selection.manifest_path.resolve()
+    if not manifest_path.is_file():
+        raise FileNotFoundError(f"Split manifest does not exist: {manifest_path}")
+    strict_selection = [
+        "--split-manifest", str(manifest_path),
+        "--split", SPLIT_NAME,
+    ]
     if job.benchmark == "Mem-Gallery":
         return [
             "-m", "benchmarks.memgallery_harness.eval_memgallery",
             *common,
             "--data-dir", str(data_dirs[job.benchmark]),
             "--all-datasets",
-            "--split-manifest", str(selection.manifest_path),
-            "--split", "test",
+            *strict_selection,
         ]
     if job.benchmark == "WorldMemArena":
         return [
             "-m", "benchmarks.wma_harness.eval_wma",
             *common,
             "--data-dir", str(data_dirs[job.benchmark]),
-            "--split-manifest", str(selection.manifest_path),
-            "--split", "test",
+            *strict_selection,
         ]
     return [
         "-m", "benchmarks.h2hmem_harness.eval_h2hmem",
         *common,
         "--data-dir", str(data_dirs[job.benchmark]),
-        "--split-manifest", str(selection.manifest_path),
-        "--split", "test",
+        *strict_selection,
     ]
 
 
@@ -477,6 +538,39 @@ def sample_keys(results: list[dict[str, Any]], benchmark: str) -> set[str]:
         f"{row.get('variant')}:{row.get('conversation_id') or row.get('sample_id')}"
         for row in results
     }
+
+
+def validate_run_manifest_selection(
+    job: Job,
+    manifest: dict[str, Any],
+    selection: Selection,
+) -> None:
+    """Reject legacy conversation-only runs before accepting their metrics."""
+    expected_question_ids = selection.question_ids_for_benchmark(job.benchmark)
+    if manifest.get("selection_mode") != "strict_manifest":
+        raise RuntimeError(
+            f"{job.name}: run did not use strict question-level manifest selection"
+        )
+    if str(manifest.get("split") or "").casefold() != SPLIT_NAME.casefold():
+        raise RuntimeError(
+            f"{job.name}: run_manifest split is not {SPLIT_NAME}"
+        )
+    raw_manifest_path = str(manifest.get("split_manifest") or "")
+    if not raw_manifest_path:
+        raise RuntimeError(f"{job.name}: run_manifest has no split manifest")
+    if Path(raw_manifest_path).expanduser().resolve() != selection.manifest_path.resolve():
+        raise RuntimeError(f"{job.name}: run used a different split manifest")
+    if manifest.get("split_manifest_sha256") != selection.manifest_sha256:
+        raise RuntimeError(f"{job.name}: split manifest hash mismatch")
+    if int(manifest.get("questions", -1)) != len(expected_question_ids):
+        raise RuntimeError(f"{job.name}: run_manifest question count mismatch")
+    actual_question_ids = tuple(
+        str(value) for value in (manifest.get("ordered_question_ids") or ())
+    )
+    if actual_question_ids != expected_question_ids:
+        raise RuntimeError(
+            f"{job.name}: run_manifest question IDs do not exactly match manifest order"
+        )
 
 
 def validate_output(
@@ -492,11 +586,21 @@ def validate_output(
     pipeline_path = result_dir / "pipeline_qa.jsonl"
     snapshot_path = result_dir / "memory" / "memory_snapshot.jsonl"
     manifest_path = result_dir / "run_manifest.json"
+    metrics_path = result_dir / "metrics.json"
+    efficiency_path = result_dir / "efficiency_metrics.json"
     for path in (
-        results_path, trace_path, pipeline_path, snapshot_path, manifest_path
+        results_path,
+        trace_path,
+        pipeline_path,
+        snapshot_path,
+        manifest_path,
+        metrics_path,
+        efficiency_path,
     ):
         if not path.is_file():
             raise RuntimeError(f"Missing output: {path}")
+    manifest = load_json(manifest_path)
+    validate_run_manifest_selection(job, manifest, selection)
     results = json.loads(results_path.read_text(encoding="utf-8"))
     traces = [
         json.loads(line)
@@ -529,6 +633,26 @@ def validate_output(
     ]
     if oversized:
         raise RuntimeError(f"{job.name}: malformed Top-{config['top_k']} traces")
+    metrics = load_json(metrics_path)
+    efficiency = load_json(efficiency_path)
+    for metric_name in (
+        "cost_mb",
+        "cost_qa",
+        "cost_total",
+        "latency_mb",
+        "latency_qa",
+        "latency_total",
+    ):
+        metric = metrics.get(metric_name)
+        if not isinstance(metric, dict) or not metric.get("available"):
+            raise RuntimeError(
+                f"{job.name}: required efficiency metric unavailable: {metric_name}"
+            )
+        if metric != efficiency.get(metric_name):
+            raise RuntimeError(
+                f"{job.name}: metrics.json and efficiency_metrics.json differ "
+                f"for {metric_name}"
+            )
     expected_question_ids = selection.question_ids_for_benchmark(job.benchmark)
     for label, rows in (
         ("results", results),
@@ -550,10 +674,9 @@ def validate_output(
             raise RuntimeError(
                 f"{job.name}: sample set mismatch: {sorted(actual_samples)}"
             )
-    manifest = load_json(manifest_path)
     manifest.update(
         {
-            "split": "test",
+            "split": SPLIT_NAME,
             "split_manifest": str(selection.manifest_path),
             "split_manifest_sha256": selection.manifest_sha256,
             "selected_conversations": selection.for_benchmark(job.benchmark),
@@ -687,7 +810,7 @@ def judge_worker(
             "--out-dir", str(result_dir),
             "--key-file", str(key_file),
             "--model", str(config["judge_model"]),
-            "--workers", "32",
+            "--workers", str(config.get("judge_workers", 32)),
             "--timeout", str(config["judge_timeout"]),
             "--retries", str(config["retries"]),
             "--max-tokens", str(config["judge_max_tokens"]),
@@ -738,12 +861,16 @@ def run_formal(
             benchmark=job.benchmark,
         )
     judge_queue: queue.Queue[Job | None] = queue.Queue()
-    judge_thread = threading.Thread(
-        target=judge_worker,
-        args=(judge_queue, output_root, config, status),
-        name="test-only-judge",
-    )
-    judge_thread.start()
+    judge_threads = [
+        threading.Thread(
+            target=judge_worker,
+            args=(judge_queue, output_root, config, status),
+            name=f"test-only-judge-{index + 1}",
+        )
+        for index in range(max(1, int(config.get("judge_job_concurrency", 1))))
+    ]
+    for judge_thread in judge_threads:
+        judge_thread.start()
 
     def worker(endpoint: str) -> None:
         while True:
@@ -813,9 +940,11 @@ def run_formal(
         thread.start()
     for thread in workers:
         thread.join()
-    judge_queue.put(None)
+    for _ in judge_threads:
+        judge_queue.put(None)
     judge_queue.join()
-    judge_thread.join()
+    for judge_thread in judge_threads:
+        judge_thread.join()
 
     failed = [
         job.name
@@ -855,7 +984,7 @@ def main() -> None:
     parser.add_argument(
         "--split-manifest",
         type=Path,
-        default=ROOT / "configs" / "multimodal_split_manifest.json",
+        default=configured_split_manifest(),
     )
     parser.add_argument(
         "--output-root",
@@ -872,8 +1001,8 @@ def main() -> None:
     ]
     output_root = args.output_root.expanduser().resolve()
     config = load_json(args.defaults.expanduser().resolve())
-    if int(config.get("top_k", -1)) != 7:
-        raise ValueError(f"This planned run requires top_k=7, got {config.get('top_k')}")
+    config["top_k"] = int(PROTOCOL["top_k"])
+    config["efficiency_config"] = str(configured_efficiency_config())
     if str(config.get("judge_model")) != "openai/gpt-4o-mini":
         raise ValueError("This planned run requires judge_model=openai/gpt-4o-mini")
     selection = load_selection(args.split_manifest)
@@ -887,10 +1016,11 @@ def main() -> None:
         )
         status.update_root(
             phase="smoke" if not args.skip_smoke else "formal",
-            split="test",
+            split=SPLIT_NAME,
             split_manifest=str(selection.manifest_path),
             split_manifest_sha256=selection.manifest_sha256,
-            top_k=7,
+            top_k=config["top_k"],
+            efficiency_config=config["efficiency_config"],
             judge_model=config["judge_model"],
             smoke_split_manifest=str(smoke_selection.manifest_path),
             job_order=[Job(method, benchmark).name for method, benchmark in JOB_ORDER],

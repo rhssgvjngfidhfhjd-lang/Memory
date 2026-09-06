@@ -1,0 +1,17 @@
+{
+  "_comment": "Fixed protocol for the manifest-defined baseline test matrix. Paths are relative to this file.",
+  "split": "test",
+  "split_manifest": "multimodal_split_manifest.json",
+  "top_k": 7,
+  "efficiency_config": "model_efficiency.json",
+  "expected_qa_counts": {
+    "Mem-Gallery": 275,
+    "H2HMEM": 360,
+    "WorldMemArena": 440
+  },
+  "smoke_expected_qa_counts": {
+    "Mem-Gallery": 1,
+    "H2HMEM": 2,
+    "WorldMemArena": 1
+  }
+}

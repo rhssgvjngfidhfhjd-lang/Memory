@@ -24,6 +24,7 @@
   "sample_concurrency": 4,
   "answer_concurrency": 16,
   "checkpoint_every": 10,
+  "efficiency_config": "configs/model_efficiency.json",
   "cost_mb_input_price": null,
   "cost_mb_output_price": null,
   "cost_qa_input_price": null,
@@ -47,5 +48,7 @@
   "judge_timeout": 60,
   "judge_key_file": "../Nvida_api/gpt-4o-mini",
   "judge_key_count": 12,
-  "judge_max_tokens": 512
+  "judge_max_tokens": 512,
+  "judge_workers": 32,
+  "judge_job_concurrency": 1
 }

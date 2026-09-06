@@ -9,6 +9,8 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
+from benchmarks.baseline_runtime.call_trace import load_call_rows, summarize_call_rows
+
 from nltk.stem import PorterStemmer
 
 from benchmarks.memgallery_harness.runner.answer_client import (
@@ -17,6 +19,9 @@ from benchmarks.memgallery_harness.runner.answer_client import (
 
 
 MEMORY_METRICS_FILENAME = "memory_metrics.json"
+CALL_TRACE_FILENAME = "call_trace.jsonl"
+CALL_METRICS_FILENAME = "call_metrics.json"
+EFFICIENCY_METRICS_FILENAME = "efficiency_metrics.json"
 RETRIEVAL_MEMORY_TOKEN_FILENAME = "retrieval_memory_token.json"
 TOKEN_KEYS = ("prompt_tokens", "completion_tokens", "total_tokens")
 _PORTER_STEMMER = PorterStemmer()
@@ -117,12 +122,35 @@ def merge_llm_judge_metrics(metrics: dict, judge_metrics: dict) -> dict:
         {key: value for key, value in metrics.items() if key != "by_category"},
         judge_metrics,
     )
+    if isinstance(judge_metrics.get("calls"), dict):
+        calls = dict(merged.get("calls") or {})
+        calls["judge"] = dict(judge_metrics["calls"])
+        merged["calls"] = calls
     judge_categories = judge_metrics.get("by_category") or {}
     merged["by_category"] = {
         category: merge_row(values, judge_categories.get(category, {}))
         for category, values in (metrics.get("by_category") or {}).items()
     }
     return merged
+
+
+def merge_existing_llm_judge_metrics(
+    metrics: dict[str, Any],
+    result_dir: str | Path,
+) -> dict[str, Any]:
+    """Preserve a complete Judge artifact when a finished run is resumed."""
+    path = Path(result_dir) / "llm_judge_metrics.json"
+    if not path.is_file():
+        return metrics
+    judge = json.loads(path.read_text(encoding="utf-8"))
+    expected = int(metrics.get("count") or 0)
+    complete = (
+        int(judge.get("count", -1)) == expected
+        and int(judge.get("valid_count", -1)) == expected
+        and int(judge.get("judge_errors", -1)) == 0
+        and not bool(judge.get("provisional", True))
+    )
+    return merge_llm_judge_metrics(metrics, judge) if complete else metrics
 
 
 def calculate_memory_metrics(
@@ -175,8 +203,7 @@ def calculate_cost_mb(
 ) -> dict[str, Any]:
     """Compute exact Memory-Bank cost, summed then divided by conversations.
 
-    Price coefficients intentionally multiply raw token counts directly. They
-    are not divided by one million, matching the final-evaluation protocol.
+    Prices are denominated in USD per million tokens.
     """
 
     samples = _normalize_sample_ids(sample_ids) or ()
@@ -237,11 +264,14 @@ def calculate_cost_mb(
             details.append(f"missing exact provider usage at {preview}{suffix}")
         return {**base, "reason": "; ".join(details)}
 
-    cost_sum = input_tokens * input_coefficient + output_tokens * output_coefficient
+    cost_sum = (
+        input_tokens * input_coefficient
+        + output_tokens * output_coefficient
+    ) / 1_000_000
     mean_per_sample = cost_sum / sample_count
     formula = (
-        f"({input_tokens} * {input_coefficient:g} + "
-        f"{output_tokens} * {output_coefficient:g}) / "
+        f"(({input_tokens} / 1000000) * {input_coefficient:g} + "
+        f"({output_tokens} / 1000000) * {output_coefficient:g}) / "
         f"{sample_count} = {mean_per_sample:.12g}"
     )
     return {
@@ -268,7 +298,7 @@ def calculate_cost_qa(
 
     Each row represents one benchmark question. The denominator is the number
     of unique benchmark samples, never the number of questions. Price
-    coefficients multiply raw provider token counts directly (no /1M).
+    prices are denominated in USD per million tokens.
     """
     sample_ids = {
         str(row.get(sample_id_field) or "").strip()
@@ -354,11 +384,14 @@ def calculate_cost_qa(
             )
         return {**base, "reason": "; ".join(details)}
 
-    cost_sum = input_tokens * input_coefficient + output_tokens * output_coefficient
+    cost_sum = (
+        input_tokens * input_coefficient
+        + output_tokens * output_coefficient
+    ) / 1_000_000
     mean_per_sample = cost_sum / num_samples
     formula = (
-        f"({input_tokens} * {input_coefficient:g} + "
-        f"{output_tokens} * {output_coefficient:g}) / "
+        f"(({input_tokens} / 1000000) * {input_coefficient:g} + "
+        f"({output_tokens} / 1000000) * {output_coefficient:g}) / "
         f"{num_samples} = {mean_per_sample:.12g}"
     )
     return {
@@ -372,6 +405,484 @@ def calculate_cost_qa(
         "formula": formula,
         "available": True,
     }
+
+
+def load_model_efficiency_profile(
+    config_path: str | Path,
+    model: str,
+) -> dict[str, Any]:
+    """Load and validate one model's pricing and modeled-latency constants."""
+    path = Path(config_path).expanduser().resolve()
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    raw = (payload.get("models") or {}).get(model)
+    if not isinstance(raw, dict):
+        raise KeyError(f"No efficiency profile for model {model!r} in {path}")
+    pricing = raw.get("pricing") or {}
+    latency = raw.get("latency") or {}
+    profile = {
+        "model": model,
+        "config_path": str(path),
+        "pricing": {
+            "input_per_million_usd": float(
+                pricing["input_per_million_usd"]
+            ),
+            "output_per_million_usd": float(
+                pricing["output_per_million_usd"]
+            ),
+            "source": str(pricing.get("source") or ""),
+        },
+        "latency": {
+            "base_seconds": float(latency["base_seconds"]),
+            "input_seconds_per_token": float(
+                latency["input_seconds_per_token"]
+            ),
+            "output_seconds_per_token": float(
+                latency["output_seconds_per_token"]
+            ),
+            "image_seconds": float(latency["image_seconds"]),
+            "source": str(latency.get("source") or ""),
+        },
+    }
+    numeric_values = [
+        profile["pricing"]["input_per_million_usd"],
+        profile["pricing"]["output_per_million_usd"],
+        profile["latency"]["base_seconds"],
+        profile["latency"]["input_seconds_per_token"],
+        profile["latency"]["output_seconds_per_token"],
+        profile["latency"]["image_seconds"],
+    ]
+    if any(not math.isfinite(value) or value < 0 for value in numeric_values):
+        raise ValueError(f"Efficiency coefficients must be finite and nonnegative: {path}")
+    return profile
+
+
+def _inference_aggregate(
+    *,
+    num_samples: int,
+    source: str,
+    input_tokens: int | None,
+    output_tokens: int | None,
+    calls: int | None,
+    image_count: int | None,
+    reason: str = "",
+) -> dict[str, Any]:
+    return {
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "calls": calls,
+        "image_count": image_count,
+        "num_samples": num_samples,
+        "source": source,
+        "reason": reason,
+    }
+
+
+def _answer_inference_aggregate(
+    results: list[dict[str, Any]],
+    *,
+    sample_id_field: str,
+) -> dict[str, Any]:
+    sample_ids = {
+        str(row.get(sample_id_field) or "").strip()
+        for row in results
+        if str(row.get(sample_id_field) or "").strip()
+    }
+    input_tokens = 0
+    output_tokens = 0
+    calls = 0
+    image_count = 0
+    missing_usage: list[int] = []
+    missing_counts: list[int] = []
+    missing_images: list[int] = []
+    for index, row in enumerate(results, start=1):
+        usage = _token_usage(row.get("answer_token_usage"))
+        attempts = row.get("answer_attempts")
+        images_per_attempt = row.get("answer_image_count")
+        if usage is None:
+            missing_usage.append(index)
+        else:
+            input_tokens += usage["prompt_tokens"]
+            output_tokens += usage["completion_tokens"]
+        try:
+            normalized_attempts = int(attempts)
+            if normalized_attempts < 1:
+                raise ValueError
+        except (TypeError, ValueError):
+            missing_counts.append(index)
+            normalized_attempts = 0
+        else:
+            calls += normalized_attempts
+        try:
+            normalized_images = int(images_per_attempt)
+            if normalized_images < 0:
+                raise ValueError
+        except (TypeError, ValueError):
+            missing_images.append(index)
+        else:
+            image_count += normalized_images * normalized_attempts
+    reasons = []
+    if missing_usage:
+        reasons.append(f"missing QA usage at rows {missing_usage[:10]}")
+        input_tokens = output_tokens = None
+    if missing_counts:
+        reasons.append(f"missing QA attempts at rows {missing_counts[:10]}")
+        calls = None
+    if missing_images:
+        reasons.append(f"missing QA image counts at rows {missing_images[:10]}")
+        image_count = None
+    return _inference_aggregate(
+        num_samples=len(sample_ids),
+        source="answer_results",
+        input_tokens=input_tokens,
+        output_tokens=output_tokens,
+        calls=calls,
+        image_count=image_count,
+        reason="; ".join(reasons),
+    )
+
+
+def _call_trace_inference_aggregate(
+    trace_path: str | Path,
+    *,
+    phase: str,
+    num_samples: int,
+) -> dict[str, Any]:
+    path = Path(trace_path)
+    if not path.is_file():
+        return _inference_aggregate(
+            num_samples=num_samples,
+            source=f"call_trace:{phase}",
+            input_tokens=None,
+            output_tokens=None,
+            calls=None,
+            image_count=None,
+            reason=f"missing call trace: {path}",
+        )
+    rows = [row for row in _read_jsonl(path) if row.get("phase") == phase]
+    input_tokens = 0
+    output_tokens = 0
+    image_count = 0
+    missing_usage: list[int] = []
+    missing_images: list[int] = []
+    for index, row in enumerate(rows, start=1):
+        usage = _token_usage(row)
+        if usage is None:
+            missing_usage.append(index)
+        else:
+            input_tokens += usage["prompt_tokens"]
+            output_tokens += usage["completion_tokens"]
+        try:
+            images = int(row.get("image_count"))
+            if images < 0:
+                raise ValueError
+        except (TypeError, ValueError):
+            missing_images.append(index)
+        else:
+            image_count += images
+    reasons = []
+    if missing_usage:
+        reasons.append(f"missing {phase} usage at calls {missing_usage[:10]}")
+        input_tokens = output_tokens = None
+    if missing_images:
+        reasons.append(f"missing {phase} image counts at calls {missing_images[:10]}")
+        image_count = None
+    return _inference_aggregate(
+        num_samples=num_samples,
+        source=f"call_trace:{phase}",
+        input_tokens=input_tokens,
+        output_tokens=output_tokens,
+        calls=len(rows),
+        image_count=image_count,
+        reason="; ".join(reasons),
+    )
+
+
+def _hivemem_build_inference_aggregate(
+    index_root: str | Path,
+    sample_ids: Iterable[str],
+) -> dict[str, Any]:
+    samples = _normalize_sample_ids(sample_ids) or ()
+    input_tokens = 0
+    output_tokens = 0
+    calls = 0
+    image_count = 0
+    missing: list[str] = []
+    for sample_id in samples:
+        trace_path = _build_trace_path(Path(index_root) / "datasets" / sample_id)
+        rows = list(_read_jsonl(trace_path)) if trace_path is not None else []
+        if not rows:
+            missing.append(f"{sample_id}:trace")
+            continue
+        for trace_index, row in enumerate(rows, start=1):
+            usage = _token_usage(row.get("llm_usage"))
+            counts = _validated_call_counts(
+                row.get("llm_attempts"), row.get("llm_failed_attempts")
+            )
+            try:
+                images_per_attempt = int(row.get("executor_image_count"))
+                if images_per_attempt < 0:
+                    raise ValueError
+            except (TypeError, ValueError):
+                images_per_attempt = -1
+            if usage is None or counts is None or images_per_attempt < 0:
+                missing.append(f"{sample_id}:{trace_index}")
+                continue
+            attempts, _ = counts
+            input_tokens += usage["prompt_tokens"]
+            output_tokens += usage["completion_tokens"]
+            calls += attempts
+            image_count += images_per_attempt * attempts
+    if missing:
+        return _inference_aggregate(
+            num_samples=len(samples),
+            source="hivemem_build_trace",
+            input_tokens=None,
+            output_tokens=None,
+            calls=None,
+            image_count=None,
+            reason=f"incomplete HiveMem build efficiency trace at {missing[:10]}",
+        )
+    return _inference_aggregate(
+        num_samples=len(samples),
+        source="hivemem_build_trace",
+        input_tokens=input_tokens,
+        output_tokens=output_tokens,
+        calls=calls,
+        image_count=image_count,
+    )
+
+
+def _zero_inference_aggregate(num_samples: int, source: str) -> dict[str, Any]:
+    return _inference_aggregate(
+        num_samples=num_samples,
+        source=source,
+        input_tokens=0,
+        output_tokens=0,
+        calls=0,
+        image_count=0,
+    )
+
+
+def _combine_inference_aggregates(
+    *aggregates: dict[str, Any],
+    source: str,
+) -> dict[str, Any]:
+    sample_counts = {int(row.get("num_samples") or 0) for row in aggregates}
+    reasons = [str(row.get("reason")) for row in aggregates if row.get("reason")]
+    if len(sample_counts) != 1:
+        reasons.append(f"component sample counts differ: {sorted(sample_counts)}")
+
+    def total(field: str) -> int | None:
+        values = [row.get(field) for row in aggregates]
+        if any(value is None for value in values):
+            return None
+        return sum(int(value) for value in values)
+
+    return _inference_aggregate(
+        num_samples=next(iter(sample_counts)) if len(sample_counts) == 1 else 0,
+        source=source,
+        input_tokens=total("input_tokens"),
+        output_tokens=total("output_tokens"),
+        calls=total("calls"),
+        image_count=total("image_count"),
+        reason="; ".join(reasons),
+    )
+
+
+def _cost_from_inference_aggregate(
+    aggregate: dict[str, Any],
+    profile: dict[str, Any],
+    *,
+    aggregation: str,
+) -> dict[str, Any]:
+    pricing = profile["pricing"]
+    input_tokens = aggregate.get("input_tokens")
+    output_tokens = aggregate.get("output_tokens")
+    num_samples = int(aggregate.get("num_samples") or 0)
+    base = {
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "input_price_per_million_usd": pricing["input_per_million_usd"],
+        "output_price_per_million_usd": pricing["output_per_million_usd"],
+        "cost_sum_usd": None,
+        "cost_sum": None,
+        "num_samples": num_samples,
+        "mean_per_sample_usd": None,
+        "mean_per_sample": None,
+        "formula": None,
+        "aggregation": aggregation,
+        "source": aggregate.get("source"),
+        "available": False,
+    }
+    if input_tokens is None or output_tokens is None or not num_samples:
+        return {
+            **base,
+            "reason": aggregate.get("reason") or "incomplete token accounting",
+        }
+    cost_sum = (
+        int(input_tokens) * pricing["input_per_million_usd"]
+        + int(output_tokens) * pricing["output_per_million_usd"]
+    ) / 1_000_000
+    mean = cost_sum / num_samples
+    return {
+        **base,
+        "cost_sum_usd": cost_sum,
+        "cost_sum": cost_sum,
+        "mean_per_sample_usd": mean,
+        "mean_per_sample": mean,
+        "formula": (
+            f"(({input_tokens} / 1000000) * "
+            f"{pricing['input_per_million_usd']:g} + "
+            f"({output_tokens} / 1000000) * "
+            f"{pricing['output_per_million_usd']:g}) / "
+            f"{num_samples} = {mean:.12g} USD/sample"
+        ),
+        "available": True,
+    }
+
+
+def _latency_from_inference_aggregate(
+    aggregate: dict[str, Any],
+    profile: dict[str, Any],
+    *,
+    aggregation: str,
+) -> dict[str, Any]:
+    latency = profile["latency"]
+    input_tokens = aggregate.get("input_tokens")
+    output_tokens = aggregate.get("output_tokens")
+    calls = aggregate.get("calls")
+    image_count = aggregate.get("image_count")
+    num_samples = int(aggregate.get("num_samples") or 0)
+    base = {
+        "calls": calls,
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "image_count": image_count,
+        "base_seconds": latency["base_seconds"],
+        "input_seconds_per_token": latency["input_seconds_per_token"],
+        "output_seconds_per_token": latency["output_seconds_per_token"],
+        "image_seconds": latency["image_seconds"],
+        "latency_sum_seconds": None,
+        "num_samples": num_samples,
+        "mean_per_sample_seconds": None,
+        "formula": None,
+        "aggregation": aggregation,
+        "source": aggregate.get("source"),
+        "available": False,
+    }
+    if (
+        input_tokens is None
+        or output_tokens is None
+        or calls is None
+        or image_count is None
+        or not num_samples
+    ):
+        return {
+            **base,
+            "reason": aggregate.get("reason") or "incomplete latency inputs",
+        }
+    latency_sum = (
+        int(calls) * latency["base_seconds"]
+        + int(input_tokens) * latency["input_seconds_per_token"]
+        + int(output_tokens) * latency["output_seconds_per_token"]
+        + int(image_count) * latency["image_seconds"]
+    )
+    mean = latency_sum / num_samples
+    return {
+        **base,
+        "latency_sum_seconds": latency_sum,
+        "mean_per_sample_seconds": mean,
+        "formula": (
+            f"({calls} * {latency['base_seconds']:g} + "
+            f"{input_tokens} * {latency['input_seconds_per_token']:g} + "
+            f"{output_tokens} * {latency['output_seconds_per_token']:g} + "
+            f"{image_count} * {latency['image_seconds']:g}) / "
+            f"{num_samples} = {mean:.12g} seconds/sample"
+        ),
+        "available": True,
+    }
+
+
+def write_efficiency_metrics(
+    result_dir: str | Path,
+    results: list[dict[str, Any]],
+    *,
+    sample_id_field: str,
+    sample_ids: Iterable[str],
+    model: str,
+    config_path: str | Path,
+    hivemem_index_root: str | Path | None = None,
+) -> dict[str, Any]:
+    """Write modeled LLM cost and latency for MB, query-time QA, and total.
+
+    Query-time QA includes any LLM-backed retrieval calls plus the final answer
+    calls. Embedding, database, wall-clock, and Judge costs are intentionally
+    excluded because their coefficients are not part of this model profile.
+    """
+    samples = _normalize_sample_ids(sample_ids) or ()
+    profile = load_model_efficiency_profile(config_path, model)
+    if hivemem_index_root is not None:
+        memory_bank = _hivemem_build_inference_aggregate(
+            hivemem_index_root, samples
+        )
+        retrieval = _zero_inference_aggregate(
+            len(samples), "hivemem_non_llm_retrieval"
+        )
+    else:
+        trace_path = Path(result_dir) / CALL_TRACE_FILENAME
+        memory_bank = _call_trace_inference_aggregate(
+            trace_path, phase="memory_build", num_samples=len(samples)
+        )
+        retrieval = _call_trace_inference_aggregate(
+            trace_path, phase="retrieval", num_samples=len(samples)
+        )
+    answer = _answer_inference_aggregate(
+        results, sample_id_field=sample_id_field
+    )
+    qa = _combine_inference_aggregates(
+        retrieval, answer, source="retrieval_plus_answer"
+    )
+    total = _combine_inference_aggregates(
+        memory_bank, qa, source="memory_build_plus_retrieval_plus_answer"
+    )
+    output = {
+        "profile": profile,
+        "scope": {
+            "included": ["memory_build_llm", "retrieval_llm", "answer_llm"],
+            "excluded": ["embedding", "database", "judge", "wall_clock"],
+        },
+        "cost_mb": _cost_from_inference_aggregate(
+            memory_bank, profile, aggregation="sum_mb_cost_divided_by_samples"
+        ),
+        "cost_qa": _cost_from_inference_aggregate(
+            qa, profile, aggregation="sum_retrieval_answer_cost_divided_by_samples"
+        ),
+        "cost_total": _cost_from_inference_aggregate(
+            total, profile, aggregation="sum_total_cost_divided_by_samples"
+        ),
+        "latency_mb": _latency_from_inference_aggregate(
+            memory_bank, profile, aggregation="sum_mb_latency_divided_by_samples"
+        ),
+        "latency_qa": _latency_from_inference_aggregate(
+            qa,
+            profile,
+            aggregation="sum_retrieval_answer_latency_divided_by_samples",
+        ),
+        "latency_total": _latency_from_inference_aggregate(
+            total, profile, aggregation="sum_total_latency_divided_by_samples"
+        ),
+        "components": {
+            "memory_build": memory_bank,
+            "retrieval": retrieval,
+            "answer": answer,
+        },
+    }
+    path = Path(result_dir) / EFFICIENCY_METRICS_FILENAME
+    path.write_text(
+        json.dumps(output, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return output
 
 
 def calculate_calls_mb(
@@ -541,6 +1052,164 @@ def combine_call_metrics(
         }
     )
     return {"memory_bank": memory_bank, "qa": qa, "total": total}
+
+
+def write_runtime_call_metrics(
+    trace_paths: Iterable[str | Path],
+    result_dir: str | Path,
+    results: list[dict[str, Any]],
+    *,
+    sample_id_field: str,
+    sample_ids: Iterable[str],
+) -> dict[str, Any]:
+    """Merge sample-local executor traces and calculate exact run-time calls.
+
+    The primary ``total`` remains backward compatible: Memory-Bank LLM calls
+    plus answer-model calls.  Retrieval-time executor calls are retained as a
+    separate metric so they are visible without changing the historical
+    definition of ``#Calls``.
+    """
+    paths = [Path(value) for value in trace_paths]
+    rows = load_call_rows(paths)
+    rows.extend(_result_attempt_rows(results, sample_id_field=sample_id_field))
+    rows.sort(
+        key=lambda row: (
+            str(row.get("sample_id") or ""),
+            float(row.get("started_at") or 0.0),
+            str(row.get("call_id") or row.get("request_id") or ""),
+        )
+    )
+    root = Path(result_dir)
+    root.mkdir(parents=True, exist_ok=True)
+    trace_path = root / CALL_TRACE_FILENAME
+    temporary = trace_path.with_suffix(trace_path.suffix + ".tmp")
+    with temporary.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+    temporary.replace(trace_path)
+
+    normalized_samples = _normalize_sample_ids(sample_ids) or ()
+    memory_bank = summarize_call_rows(
+        rows,
+        phase="memory_build",
+        num_samples=len(normalized_samples),
+    )
+    retrieval = summarize_call_rows(
+        rows,
+        phase="retrieval",
+        num_samples=len(normalized_samples),
+    )
+    calls = combine_call_metrics(
+        memory_bank,
+        calculate_calls_qa(results, sample_id_field=sample_id_field),
+    )
+    calls["retrieval"] = retrieval
+    metrics_path = root / CALL_METRICS_FILENAME
+    metrics_path.write_text(
+        json.dumps(calls, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return calls
+
+
+def write_judge_call_trace(
+    result_dir: str | Path,
+    judged: list[dict[str, Any]],
+) -> None:
+    """Merge idempotent per-attempt Judge rows into the unified call trace."""
+    root = Path(result_dir)
+    path = root / CALL_TRACE_FILENAME
+    rows = []
+    if path.is_file():
+        rows = [row for row in _read_jsonl(path) if row.get("phase") != "judge"]
+    for row in judged:
+        rows.extend(
+            _attempt_rows(
+                phase="judge",
+                sample_id=str(row.get("sample_id") or row.get("dataset") or ""),
+                query_id=str(
+                    row.get("uid") or row.get("question_id") or row.get("index") or ""
+                ),
+                attempts=row.get("judge_attempts"),
+                failed_attempts=row.get("judge_failed_attempts"),
+                usage=(row.get("judge") or {}).get("usage"),
+                error=str((row.get("judge") or {}).get("error") or ""),
+            )
+        )
+    rows.sort(
+        key=lambda row: (
+            str(row.get("phase") or ""),
+            str(row.get("sample_id") or ""),
+            str(row.get("query_id") or ""),
+            int(row.get("attempt") or 0),
+        )
+    )
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    with temporary.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+    temporary.replace(path)
+
+
+def _result_attempt_rows(
+    results: list[dict[str, Any]],
+    *,
+    sample_id_field: str,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for index, result in enumerate(results, start=1):
+        rows.extend(
+            _attempt_rows(
+                phase="qa",
+                sample_id=str(result.get(sample_id_field) or ""),
+                query_id=str(result.get("query_id") or result.get("uid") or index),
+                attempts=result.get("answer_attempts"),
+                failed_attempts=result.get("answer_failed_attempts"),
+                usage=result.get("answer_token_usage"),
+                error=str(result.get("error") or ""),
+                image_count=result.get("answer_image_count"),
+            )
+        )
+    return rows
+
+
+def _attempt_rows(
+    *,
+    phase: str,
+    sample_id: str,
+    query_id: str,
+    attempts: Any,
+    failed_attempts: Any,
+    usage: Any,
+    error: str,
+    image_count: Any = 0,
+) -> list[dict[str, Any]]:
+    counts = _validated_call_counts(attempts, failed_attempts)
+    if counts is None:
+        return []
+    total, failed = counts
+    token_usage = _token_usage(usage)
+    rows = []
+    for attempt in range(1, total + 1):
+        is_failed = attempt <= failed
+        row = {
+            "trace_version": 1,
+            "phase": phase,
+            "service": "llm",
+            "sample_id": sample_id,
+            "query_id": query_id,
+            "call_id": f"{phase}:{query_id}:{attempt}",
+            "attempt": attempt,
+            "success": not is_failed,
+            "failed": is_failed,
+            "error": error if is_failed else "",
+            "image_count": image_count,
+        }
+        if token_usage is not None and attempt == total:
+            row.update(token_usage)
+            row["usage_scope"] = "cumulative_query_attempts"
+        rows.append(row)
+    return rows
 
 
 def write_memory_metrics(

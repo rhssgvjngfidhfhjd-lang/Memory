@@ -1,14 +1,26 @@
 import copy
 import json
+import re
+import uuid
 import warnings
 from collections import OrderedDict
 from typing import Any, List, Union
 
 import requests
 
+try:
+    from json_repair import repair_json
+except ImportError:  # pragma: no cover - optional upstream compatibility
+    repair_json = None
+
 from mma.constants import OPENAI_CONTEXT_WINDOW_ERROR_SUBSTRING
 from mma.schemas.message import Message
-from mma.schemas.openai.chat_completion_response import ChatCompletionResponse, Choice
+from mma.schemas.openai.chat_completion_response import (
+    ChatCompletionResponse,
+    Choice,
+    FunctionCall,
+    ToolCall,
+)
 from mma.settings import summarizer_settings
 from mma.utils import count_tokens, json_dumps, printd
 from mma.schemas.enums import MessageRole
@@ -262,7 +274,106 @@ def unpack_all_inner_thoughts_from_kwargs(
     return new_response
 
 
+def _drop_unmatched_json_closers(value: str) -> str:
+    """Remove unmatched JSON closers emitted around textual Qwen tool calls."""
+    stack: list[str] = []
+    output: list[str] = []
+    in_string = False
+    escaped = False
+    pairs = {"}": "{", "]": "["}
+    for char in value:
+        if in_string:
+            output.append(char)
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                in_string = False
+            continue
+        if char == '"':
+            in_string = True
+            output.append(char)
+        elif char in "[{":
+            stack.append(char)
+            output.append(char)
+        elif char in "]}":
+            if stack and stack[-1] == pairs[char]:
+                stack.pop()
+                output.append(char)
+        else:
+            output.append(char)
+    output.extend("}" if opener == "{" else "]" for opener in reversed(stack))
+    return "".join(output)
+
+
+def _repair_missing_steps_closer(value: str) -> str:
+    """Close a malformed ``steps`` array before its sibling ``tree_path``."""
+    return re.sub(
+        r'("steps"\s*:\s*\[.*?)(,\s*"tree_path"\s*:)',
+        r"\1]\2",
+        value,
+        flags=re.DOTALL,
+    )
+
+
+def _promote_textual_tool_call(choice: Choice) -> Choice:
+    """Convert a textual ``<tool_call>`` envelope into the native schema."""
+    message = choice.message
+    if (
+        message.role != "assistant"
+        or message.tool_calls
+        or not isinstance(message.content, str)
+    ):
+        return choice
+    match = re.search(
+        r"<tool_call>\s*(\{.*\})\s*</tool_call>",
+        message.content,
+        re.DOTALL,
+    )
+    if match is None:
+        return choice
+    raw_payload = match.group(1)
+    payload = None
+    repaired_steps = _repair_missing_steps_closer(raw_payload)
+    for candidate in (
+        raw_payload,
+        _drop_unmatched_json_closers(raw_payload),
+        repaired_steps,
+        _drop_unmatched_json_closers(repaired_steps),
+    ):
+        try:
+            parsed = json.loads(candidate)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(parsed, dict):
+            payload = parsed
+            break
+    if payload is None and repair_json is not None:
+        repaired = repair_json(raw_payload, return_objects=True)
+        if isinstance(repaired, dict):
+            payload = repaired
+    if payload is None or not payload.get("name"):
+        return choice
+    arguments = payload.get("arguments") or payload.get("args") or {}
+    if not isinstance(arguments, dict):
+        arguments = {}
+    rewritten = choice.model_copy(deep=True)
+    rewritten.message.content = None
+    rewritten.message.tool_calls = [
+        ToolCall(
+            id=f"call_{uuid.uuid4().hex}",
+            function=FunctionCall(
+                name=str(payload["name"]),
+                arguments=json_dumps(arguments),
+            ),
+        )
+    ]
+    return rewritten
+
+
 def unpack_inner_thoughts_from_kwargs(choice: Choice, inner_thoughts_key: str) -> Choice:
+    choice = _promote_textual_tool_call(choice)
     message = choice.message
     rewritten_choice = choice  # inner thoughts unpacked out of the function
 

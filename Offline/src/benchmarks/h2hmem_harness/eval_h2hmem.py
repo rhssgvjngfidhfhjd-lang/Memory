@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import nullcontext
 import json
 import os
 from pathlib import Path
@@ -17,6 +18,12 @@ from benchmarks.baseline_runtime.parallel_runner import (
     signature_digest,
 )
 from benchmarks.baseline_runtime.openai_compat import embed_texts
+from benchmarks.baseline_runtime.call_trace import (
+    CallRecorder,
+    CountingProxy,
+    TRACE_VERSION,
+    trace_filename,
+)
 from benchmarks.baseline_runtime.output_layout import BaselineOutputLayout
 from benchmarks.baseline_runtime.protocol import (
     RetrievalRequest,
@@ -25,6 +32,15 @@ from benchmarks.baseline_runtime.protocol import (
 )
 from benchmarks.io_utils import file_manifest, write_json_atomic, write_jsonl_atomic
 from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
+from benchmarks.memgallery_harness.runner.metrics import (
+    calculate_calls_mb,
+    calculate_calls_qa,
+    combine_call_metrics,
+    merge_existing_llm_judge_metrics,
+    summarize_results,
+    write_efficiency_metrics,
+    write_runtime_call_metrics,
+)
 from embedding.chunk_builder import (
     build_h2h_chunks_from_directory,
     iter_h2h_session_files,
@@ -116,6 +132,7 @@ def prepare_conversation_jobs(
     config: dict[str, Any],
     max_qa: int = 0,
     ordered_question_ids: tuple[str, ...] | None = None,
+    call_recorder: CallRecorder | None = None,
 ) -> dict[str, Any]:
     variant_dir = "multi-party" if variant == "multiparty" else variant
     conversation_dir = data_dir / variant_dir / conversation_id
@@ -123,21 +140,26 @@ def prepare_conversation_jobs(
     sample_id = f"{variant}_{conversation_id}"
     try:
         adapter.reset(sample_id, state_root / variant / conversation_id)
-        if baseline != "HiveMem":
-            chunks = build_h2h_chunks_from_directory(
-                data_dir,
-                variant=variant,
-                conversation_ids={conversation_id},
-            )
-            current_session = ""
-            for chunk in chunks:
-                session_id = str(chunk.metadata.get("session_id") or "")
-                if current_session and session_id != current_session:
+        with (
+            call_recorder.phase("memory_build")
+            if call_recorder is not None
+            else nullcontext()
+        ):
+            if baseline != "HiveMem":
+                chunks = build_h2h_chunks_from_directory(
+                    data_dir,
+                    variant=variant,
+                    conversation_ids={conversation_id},
+                )
+                current_session = ""
+                for chunk in chunks:
+                    session_id = str(chunk.metadata.get("session_id") or "")
+                    if current_session and session_id != current_session:
+                        adapter.end_session(current_session)
+                    adapter.ingest(chunk)
+                    current_session = session_id
+                if current_session:
                     adapter.end_session(current_session)
-                adapter.ingest(chunk)
-                current_session = session_id
-            if current_session:
-                adapter.end_session(current_session)
 
         jobs: list[dict[str, Any]] = []
         indexed_questions = []
@@ -184,20 +206,25 @@ def prepare_conversation_jobs(
             query_vector = (
                 embed_texts([question], config)[0] if baseline == "HiveMem" else None
             )
-            retrieval = adapter.retrieve(
-                RetrievalRequest(
-                    query_id=query_id,
-                    text=question,
-                    category=category,
-                    top_k=int(config["top_k"]),
-                    query_image=(
-                        str(_question_image(question_file, question_data.get("image"))["path"])
-                        if question_data.get("image")
-                        else None
-                    ),
-                    query_vector=query_vector,
+            with (
+                call_recorder.phase("retrieval")
+                if call_recorder is not None
+                else nullcontext()
+            ):
+                retrieval = adapter.retrieve(
+                    RetrievalRequest(
+                        query_id=query_id,
+                        text=question,
+                        category=category,
+                        top_k=int(config["top_k"]),
+                        query_image=(
+                            str(_question_image(question_file, question_data.get("image"))["path"])
+                            if question_data.get("image")
+                            else None
+                        ),
+                        query_vector=query_vector,
+                    )
                 )
-            )
             memory_items = result_context_items(retrieval)
             trace_rows = result_trace_rows(retrieval)
             query_image = _question_image(question_file, question_data.get("image"))
@@ -251,9 +278,17 @@ def answer_conversation_job(
         )
         answer, error = response.text, ""
         usage, attempts = response.usage, response.attempts
+        failed_attempts = response.failed_attempts
+        image_count = response.image_count
     except Exception as exc:
         answer, error, usage = "", str(exc), None
         attempts = client.retries + 1
+        failed_attempts = attempts
+        image_count = client.count_answer_images(
+            job["memory_items"],
+            query_image=job.get("query_image_payload"),
+            category="VR",
+        )
     result = {
         key: value
         for key, value in job.items()
@@ -272,6 +307,8 @@ def answer_conversation_job(
             "answer_seconds": time.time() - started,
             "answer_token_usage": usage,
             "answer_attempts": attempts,
+            "answer_failed_attempts": failed_attempts,
+            "answer_image_count": image_count,
         }
     )
     trace = {
@@ -329,7 +366,7 @@ def main() -> None:
     parser.add_argument("--checkpoint-every", type=int, default=10)
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--max-qa", type=int, default=0)
-    parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--top-k", type=int, default=7)
     parser.add_argument(
         "--graph-retrieval",
         action=argparse.BooleanOptionalAction,
@@ -354,6 +391,7 @@ def main() -> None:
     parser.add_argument("--executor-base-url", default="http://127.0.0.1:18000/v1")
     parser.add_argument("--executor-temperature", type=float, default=0.0)
     parser.add_argument("--executor-visual-input", choices=("image", "caption"), default="image")
+    parser.add_argument("--efficiency-config", default="configs/model_efficiency.json")
     parser.add_argument("--skip-model-check", action="store_true")
     apply_config_defaults(
         parser,
@@ -366,6 +404,7 @@ def main() -> None:
             "sample_concurrency", "answer_concurrency", "checkpoint_every",
             "graph_retrieval", "graph_mode", "append_k", "seed_k",
             "expansion_bonus",
+            "efficiency_config",
         },
     )
     args = parser.parse_args()
@@ -464,6 +503,7 @@ def main() -> None:
         "executor_visual_input": args.executor_visual_input,
         "request_timeout": args.request_timeout,
         "retries": args.retries,
+        "efficiency_config": args.efficiency_config,
     }
     sample_specs: list[tuple[str, str, int, tuple[str, ...] | None]] = []
     remaining_limit = args.max_qa
@@ -514,6 +554,7 @@ def main() -> None:
             if args.split_manifest else {}
         ),
         "system_prompt": SYSTEM_PROMPT,
+        "call_trace_version": TRACE_VERSION,
     }
     sample_signature = signature_digest(signature)
 
@@ -531,16 +572,39 @@ def main() -> None:
             if cached is not None:
                 print(f"[resume] skip prepared conversation: {sample_id}", flush=True)
                 return cached
-        artifact = prepare_conversation_jobs(
+        call_trace_path = layout.root / "call_traces" / trace_filename(sample_id)
+        recorder = None
+        proxy_context = nullcontext(None)
+        sample_config = dict(config)
+        if args.baseline != "HiveMem":
+            recorder = CallRecorder(
+                trace_path=call_trace_path,
+                baseline=args.baseline,
+                benchmark="H2HMEM",
+                sample_id=sample_id,
+                reset=True,
+            )
+            proxy_context = CountingProxy(
+                args.executor_base_url,
+                recorder,
+                args.request_timeout,
+            )
+        with proxy_context as proxy:
+            if proxy is not None:
+                sample_config["executor_base_url"] = proxy.endpoint
+            artifact = prepare_conversation_jobs(
                 data_dir=data_dir,
                 variant=variant,
                 conversation_id=conversation_id,
                 baseline=args.baseline,
                 state_root=state_root,
-                config=config,
+                config=sample_config,
                 max_qa=quota,
                 ordered_question_ids=ordered_question_ids,
+                call_recorder=recorder,
             )
+        if recorder is not None:
+            artifact["call_trace_path"] = str(call_trace_path)
         save_sample_artifact(
             layout.sample_checkpoint_dir,
             sample_id,
@@ -658,6 +722,64 @@ def main() -> None:
 
     result_dir.mkdir(parents=True, exist_ok=True)
     write_json_atomic(result_dir / "results.json", results)
+    summary = summarize_results(results, k=args.top_k)
+    metric_results = []
+    for row in results:
+        normalized = dict(row)
+        normalized["_metric_sample_id"] = (
+            f"{row.get('variant', '')}/{row.get('conversation_id', '')}"
+        )
+        metric_results.append(normalized)
+    evaluated_sample_ids = sorted(
+        {
+            str(row.get("_metric_sample_id") or "")
+            for row in metric_results
+            if row.get("_metric_sample_id")
+        }
+    )
+    if args.baseline == "HiveMem":
+        summary["calls"] = combine_call_metrics(
+            calculate_calls_mb(Path(args.index_root), evaluated_sample_ids),
+            calculate_calls_qa(metric_results, sample_id_field="_metric_sample_id"),
+        )
+    else:
+        summary["calls"] = write_runtime_call_metrics(
+            [
+                artifact["call_trace_path"]
+                for artifact in artifacts
+                if artifact.get("call_trace_path")
+            ],
+            result_dir,
+            metric_results,
+            sample_id_field="_metric_sample_id",
+            sample_ids=evaluated_sample_ids,
+        )
+    efficiency = write_efficiency_metrics(
+        result_dir,
+        metric_results,
+        sample_id_field="_metric_sample_id",
+        sample_ids=evaluated_sample_ids,
+        model=args.answer_model,
+        config_path=args.efficiency_config,
+        hivemem_index_root=(
+            Path(args.index_root) if args.baseline == "HiveMem" else None
+        ),
+    )
+    summary.update(
+        {
+            key: efficiency[key]
+            for key in (
+                "cost_mb",
+                "cost_qa",
+                "cost_total",
+                "latency_mb",
+                "latency_qa",
+                "latency_total",
+            )
+        }
+    )
+    summary = merge_existing_llm_judge_metrics(summary, result_dir)
+    write_json_atomic(result_dir / "metrics.json", summary)
     write_jsonl_atomic(result_dir / "retrieval_trace.jsonl", traces)
     write_jsonl_atomic(layout.snapshot, snapshots)
     for variant in variants:
