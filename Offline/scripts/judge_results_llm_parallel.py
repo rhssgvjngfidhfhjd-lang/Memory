@@ -462,9 +462,14 @@ def normalize_judge_row(
 ) -> dict[str, Any]:
     if benchmark not in SUPPORTED_BENCHMARKS:
         raise ValueError(f"Unsupported benchmark: {benchmark}")
-    prediction_key = "system_answer" if "system_answer" in row else "prediction"
-    if prediction_key not in row:
-        raise ValueError(f"{benchmark} row {index} is missing system_answer/prediction.")
+    prediction_key = next(
+        (key for key in ("system_answer", "prediction", "answer") if key in row),
+        "",
+    )
+    if not prediction_key:
+        raise ValueError(
+            f"{benchmark} row {index} is missing system_answer/prediction/answer."
+        )
     dataset_source = {
         "memgallery": "mem_gallery",
         "worldmemarena": "worldmemarena",
@@ -651,6 +656,36 @@ def summarize(
     *,
     benchmark: str = "memgallery",
     expected_count: int | None = None,
+) -> dict[str, Any]:
+    summary = _summarize_rows(judged, model, benchmark, expected_count)
+    categories = sorted(
+        {
+            str(row.get("category") or "").strip()
+            for row in judged
+            if str(row.get("category") or "").strip()
+        }
+    )
+    if categories:
+        summary["by_category"] = {
+            category: _summarize_rows(
+                [row for row in judged if str(row.get("category") or "").strip() == category],
+                model,
+                benchmark,
+                sum(
+                    str(row.get("category") or "").strip() == category
+                    for row in judged
+                ),
+            )
+            for category in categories
+        }
+    return summary
+
+
+def _summarize_rows(
+    judged: list[dict[str, Any]],
+    model: str,
+    benchmark: str,
+    expected_count: int | None,
 ) -> dict[str, Any]:
     total = len(judged)
     expected = total if expected_count is None else expected_count

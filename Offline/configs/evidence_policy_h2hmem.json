@@ -1,12 +1,13 @@
 {
-  "benchmark": "wma",
-  "data_source": "worldmemarena_lifelong",
+  "benchmark": "h2hmem",
+  "data_sources": ["h2hmem_dyadic", "h2hmem_multiparty"],
   "split_manifest": "multimodal_split_manifest.json",
+  "workspace_root": "..",
   "seed": 42,
-  "data_dir": "../WorldMemArena/WorldMemArena/lifelong",
-  "memory_bank": "outputs/WMA_PPO/memory",
-  "query_cache": "data/wma_qwen3_vl_embedding_2b/lifelong_query_embeddings",
-  "output_dir": "outputs/evidence_policy_wma_lifelong_ppo",
+  "data_dir": "../H2HMEM-main/dataset",
+  "memory_bank": "outputs/H2HMEM_PPO/HiveMem/memory",
+  "query_cache": "data/h2hmem_qwen3_vl_embedding_2b/query_embeddings",
+  "output_dir": "outputs/evidence_policy_h2hmem_ppo",
   "top_k": 5,
   "graph_options": {
     "seed_k": 0,
@@ -22,7 +23,17 @@
     "min_shared": 2,
     "degree_cap": 10
   },
-  "excluded_categories": ["MB"],
+  "visual_categories": [
+    "Unimodal Precise Recall",
+    "Cross-modal Related Retrieval",
+    "Multimodal Causal Inference",
+    "Reference & Evolution Tracking",
+    "Conflict Detection",
+    "Test-Time Learning",
+    "Temporal Reasoning",
+    "Knowledge Resolution",
+    "Answer Refusal"
+  ],
   "evidence": {
     "schema_version": 2,
     "order": ["summary", "dialogue", "caption", "image", "vp"],
@@ -30,18 +41,6 @@
     "strict_vp_coverage": true,
     "max_vps_per_image": 5
   },
-  "visual_categories": [
-    "VFR",
-    "VS",
-    "VU",
-    "CMR",
-    ""
-  ],
-  "split_sizes": [
-    23,
-    7,
-    8
-  ],
   "model": {
     "name": "Qwen/Qwen3-VL-4B-Instruct",
     "base_url": "http://127.0.0.1:18000/v1",
@@ -73,51 +72,5 @@
     "validation_at_start": true,
     "validation_interval_fraction": 0.5,
     "validation_limit": 0
-  },
-  "split": {
-    "train": [
-      "academic_01",
-      "academic_02",
-      "education_01",
-      "education_02",
-      "finance_01",
-      "finance_02",
-      "health_01",
-      "health_02",
-      "software_01",
-      "software_02",
-      "startup_01",
-      "startup_02",
-      "personal_01",
-      "personal_02",
-      "personal_03",
-      "personal_04",
-      "personal_05",
-      "personal_06",
-      "personal_07",
-      "personal_08",
-      "personal_09",
-      "personal_10",
-      "personal_11"
-    ],
-    "validation": [
-      "academic_03",
-      "finance_03",
-      "software_03",
-      "personal_12",
-      "personal_13",
-      "personal_14",
-      "personal_15"
-    ],
-    "test": [
-      "education_03",
-      "health_03",
-      "startup_03",
-      "personal_16",
-      "personal_17",
-      "personal_18",
-      "personal_19",
-      "personal_20"
-    ]
   }
 }

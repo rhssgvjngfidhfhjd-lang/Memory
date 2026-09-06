@@ -8,6 +8,20 @@
   "profiles_file": "configs/profiles.json",
   "output_dir": "outputs/evidence_policy_multibinary_vp",
   "top_k": 5,
+  "graph_options": {
+    "seed_k": 0,
+    "mode": "append",
+    "append_k": 2,
+    "expansion_bonus": 0.2,
+    "expand_temporal": true,
+    "expand_related": true,
+    "expand_entity": true,
+    "expand_attribute": true,
+    "df_max": 0.3,
+    "df_stop": 0.5,
+    "min_shared": 2,
+    "degree_cap": 10
+  },
   "excluded_categories": ["AR"],
   "visual_categories": ["VS", "VR", "TTL"],
   "evidence": {
@@ -47,7 +61,7 @@
     "epochs": 6,
     "validation_at_start": true,
     "validation_interval_fraction": 0.5,
-    "validation_limit": 20
+    "validation_limit": 0
   },
   "split": {
     "train": [

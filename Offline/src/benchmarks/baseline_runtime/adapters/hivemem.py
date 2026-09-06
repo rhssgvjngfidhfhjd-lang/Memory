@@ -12,14 +12,7 @@ from benchmarks.baseline_runtime.protocol import (
     RetrievedMemory,
 )
 from embedding.chunk_builder import Chunk
-
-
-DEFAULT_HIVEMEM_GRAPH_OPTIONS = {
-    "seed_k": 0,
-    "mode": "append",
-    "append_k": 2,
-    "expansion_bonus": 0.2,
-}
+from hive_mem.retriever import DEFAULT_HIVEMEM_GRAPH_OPTIONS
 
 
 class HiveMemAdapter(BaselineAdapter):

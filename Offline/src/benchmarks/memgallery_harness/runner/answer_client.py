@@ -332,7 +332,22 @@ class VLMAnswerClient:
             headers=self._headers(),
             timeout=self.timeout,
         )
-        resp.raise_for_status()
+        try:
+            resp.raise_for_status()
+        except requests.HTTPError as exc:
+            # OpenAI-compatible servers normally return the actionable cause
+            # (for example context length or image limits) in the response
+            # body. Preserve it so endpoint recovery can distinguish a bad
+            # payload from a transient tunnel failure.
+            body = (resp.text or "").strip()
+            if len(body) > 2000:
+                body = body[:2000] + "..."
+            detail = f"; response body: {body}" if body else ""
+            raise requests.HTTPError(
+                f"{exc}{detail}",
+                response=resp,
+                request=resp.request,
+            ) from exc
         return resp.json()
 
     def _headers(self) -> dict[str, str]:

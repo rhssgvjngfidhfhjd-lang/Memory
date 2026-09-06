@@ -9,6 +9,8 @@ import torch
 
 from scripts.upload_evidence_policy_wandb import (
     ALL_EVIDENCE_MASKS,
+    build_evidence_level_ratio_line_chart,
+    build_test_summary,
     evidence_level_distribution,
     load_run_data,
     mask_distribution,
@@ -23,6 +25,84 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 class WandbUploadTest(unittest.TestCase):
+    def test_builds_llm_judge_and_calls_summary(self) -> None:
+        summary = build_test_summary(
+            {
+                "count": 275,
+                "f1": 0.6,
+                "llm_judge": 0.67,
+                "calls": {
+                    "memory_bank": {
+                        "available": True,
+                        "total_calls": 670,
+                        "failed_calls": 2,
+                        "successful_calls": 668,
+                        "num_samples": 4,
+                        "mean_per_sample": 167.5,
+                    },
+                    "qa": {
+                        "available": True,
+                        "total_calls": 275,
+                        "failed_calls": 0,
+                        "successful_calls": 275,
+                        "num_samples": 4,
+                        "mean_per_sample": 68.75,
+                    },
+                    "total": {
+                        "available": True,
+                        "total_calls": 945,
+                        "failed_calls": 2,
+                        "successful_calls": 943,
+                        "num_samples": 4,
+                        "mean_per_sample": 236.25,
+                    },
+                },
+            }
+        )
+
+        self.assertEqual(summary["test/llm_judge"], 0.67)
+        self.assertEqual(summary["test/calls/memory_bank/total_calls"], 670)
+        self.assertEqual(summary["test/calls/qa/mean_per_sample"], 68.75)
+        self.assertEqual(summary["test/calls/total/mean_per_sample"], 236.25)
+
+    def test_builds_validation_evidence_level_ratio_lines_by_update_step(self) -> None:
+        class FakePlot:
+            @staticmethod
+            def line_series(**kwargs):
+                return kwargs
+
+        class FakeWandb:
+            plot = FakePlot()
+
+        chart = build_evidence_level_ratio_line_chart(
+            FakeWandb(),
+            [
+                {
+                    "update_step": 0,
+                    "evidence_actions": {
+                        "mask:00000": 1,
+                        "mask:11000": 1,
+                    },
+                },
+                {
+                    "update_step": 29,
+                    "evidence_actions": {"mask:00011": 2},
+                },
+            ],
+            title="Evidence levels",
+        )
+
+        self.assertIsNotNone(chart)
+        self.assertEqual(chart["xs"], [0, 29])
+        self.assertEqual(
+            chart["keys"], ["summary", "dialogue", "caption", "image", "vp"]
+        )
+        self.assertEqual(chart["ys"][0], [0.5, 0.0])
+        self.assertEqual(chart["ys"][1], [0.5, 0.0])
+        self.assertEqual(chart["ys"][2], [0.0, 0.0])
+        self.assertEqual(chart["ys"][3], [0.0, 1.0])
+        self.assertEqual(chart["ys"][4], [0.0, 1.0])
+
     def test_loads_step_zero_and_train_mask_ratios(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

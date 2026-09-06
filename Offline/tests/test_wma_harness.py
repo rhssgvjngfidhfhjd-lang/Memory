@@ -22,6 +22,7 @@ from benchmarks.wma_harness.runner.metrics import (
 from embedding.chunk_builder import build_wma_chunks_from_data
 from embedding.chunk_builder import iter_wma_sample_files
 from evidence_policy.evidence import WMADialogueStore, make_policy_observation
+from evidence_policy.retrieval import build_wma_prefix_graph_index
 from hive_mem.mau import MAU, MAUBank
 from hive_mem.prefix_graph import materialize_prefix_graph
 from hive_mem.retriever import GraphExpandedIndex, MemoryHit, SimpleMemoryIndex
@@ -285,6 +286,54 @@ class WMARetrievalTest(unittest.TestCase):
             )
             self.assertEqual(manifest["visible_session_ids"], ["S00", "S01"])
             self.assertEqual(manifest["memory_count"], 2)
+
+    def test_evidence_policy_prefix_index_never_returns_future_session(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source" / "datasets" / "sample_01"
+            bank = MAUBank()
+            for session_id, vector in (
+                ("S00", [1.0, 0.0]),
+                ("S01", [0.9, 0.1]),
+                ("S02", [0.8, 0.2]),
+            ):
+                bank.add_memory(
+                    f"memory {session_id}",
+                    np.asarray(vector, dtype=np.float32),
+                    metadata={"session_id": session_id},
+                )
+            bank.memories[0].links["related"] = [
+                {"target": bank.memories[2].id, "type": "SAME_EPISODE"}
+            ]
+            bank.save(source)
+            options = {
+                "seed_k": 0,
+                "mode": "append",
+                "append_k": 2,
+                "expansion_bonus": 0.2,
+                "expand_entity": False,
+                "expand_attribute": False,
+            }
+
+            index, signature = build_wma_prefix_graph_index(
+                source,
+                root / "prefix",
+                sample_id="sample_01",
+                checkpoint_id="QA01",
+                visible_session_ids=("S00", "S01"),
+                options=options,
+            )
+            hits = index.search(
+                [1.0, 0.0],
+                top_k=5,
+                allowed_session_ids={"S00", "S01"},
+            )
+
+        self.assertTrue(signature)
+        self.assertEqual(
+            {hit.item.metadata["session_id"] for hit in hits},
+            {"S00", "S01"},
+        )
 
     def test_wma_runner_uses_checkpoint_prefix_graph(self):
         class QueryCache:

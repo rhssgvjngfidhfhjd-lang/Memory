@@ -1,0 +1,53 @@
+{
+  "benchmark": "memgallery",
+  "data_source": "mem_gallery",
+  "split_manifest": "multimodal_split_manifest.json",
+  "seed": 42,
+  "data_dir": "../Mem-Gallery/benchmark/data",
+  "memory_bank": "outputs/Mem-Gallery/HiveMem/memory",
+  "query_cache": "data/qwen3_vl_embedding_2b/query_embeddings",
+  "profiles_file": "configs/profiles.json",
+  "output_dir": "outputs/evidence_policy_memgallery_independent_bernoulli_fullval312_18001_20260905",
+  "top_k": 5,
+  "excluded_categories": ["AR"],
+  "visual_categories": ["VS", "VR", "TTL"],
+  "evidence": {
+    "schema_version": 2,
+    "order": ["summary", "dialogue", "caption", "image", "vp"],
+    "vp_run_dir": "../vp_extractor/outputs/qwen3vl4b_all_v1",
+    "strict_vp_coverage": true,
+    "max_vps_per_image": 5
+  },
+  "model": {
+    "name": "Qwen/Qwen3-VL-4B-Instruct",
+    "base_url": "http://127.0.0.1:18001/v1",
+    "api_key": "EMPTY",
+    "max_tokens": 512,
+    "timeout": 180,
+    "retries": 2,
+    "think": false
+  },
+  "policy": {
+    "embedding_dim": 2048,
+    "hidden_dim": 256,
+    "hidden_layers": 3,
+    "deterministic_threshold": 0.5,
+    "initial_action_probability": 0.5
+  },
+  "ppo": {
+    "learning_rate": 0.0003,
+    "clip_ratio": 0.2,
+    "value_coefficient": 0.5,
+    "entropy_coefficient": 0.01,
+    "max_grad_norm": 1.0,
+    "update_epochs": 4,
+    "minibatch_size": 16,
+    "rollout_batch_size": 16,
+    "gamma": 1.0,
+    "gae_lambda": 1.0,
+    "epochs": 6,
+    "validation_at_start": true,
+    "validation_interval_fraction": 0.5,
+    "validation_limit": 0
+  }
+}

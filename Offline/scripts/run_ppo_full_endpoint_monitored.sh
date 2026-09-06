@@ -14,6 +14,7 @@ port="$3"
 wandb_run_name="$4"
 benchmark_tag="$5"
 control="$output/run_control"
+monitor_interval_seconds="${PPO_MONITOR_INTERVAL_SECONDS:-1800}"
 
 export NO_PROXY="127.0.0.1,localhost"
 export no_proxy="$NO_PROXY"
@@ -26,8 +27,12 @@ timestamp() {
 }
 
 endpoint_ok() {
-  curl --silent --fail --noproxy '*' --max-time 10 \
+  curl --silent --fail --noproxy '*' --max-time 20 \
     "http://127.0.0.1:${port}/v1/models" >/dev/null
+}
+
+endpoint_tcp_ok() {
+  timeout 5 bash -c ">/dev/tcp/127.0.0.1/${port}" 2>/dev/null
 }
 
 repair_endpoint() {
@@ -74,6 +79,10 @@ monitor() {
     fi
     if endpoint_ok; then
       endpoint="ok"
+    elif endpoint_tcp_ok; then
+      # A single-worker vLLM server can delay /v1/models while generating.
+      # An open tunnel plus ongoing rollout retries means it is busy, not down.
+      endpoint="busy"
     else
       endpoint="unresponsive"
       repair_endpoint || true
@@ -84,7 +93,7 @@ monitor() {
     printf '%s endpoint=%s checkpoints=%s cache_lines=%s metrics_lines=%s\n' \
       "$(timestamp)" "$endpoint" "$checkpoint_count" "$cache_lines" "$metrics_lines" \
       >> "$control/monitor.log"
-    sleep 600
+    sleep "$monitor_interval_seconds"
   done
 }
 
@@ -118,7 +127,10 @@ while true; do
   printf '%s status=training attempt=%s resume=%s\n' \
     "$(timestamp)" "$attempt" "${latest_checkpoint:-none}" >> "$control/status.log"
   .venv/bin/python scripts/evidence_policy.py \
-    --config "$config" train --device cpu "${resume_args[@]}"
+    --config "$config" \
+    --output-dir "$output" \
+    --model-base-url "http://127.0.0.1:${port}/v1" \
+    train --device cpu "${resume_args[@]}"
   train_status=$?
   if [[ $train_status -eq 0 ]]; then
     break
@@ -141,7 +153,10 @@ fi
 
 printf '%s status=evaluating checkpoint=%s\n' "$(timestamp)" "$checkpoint" >> "$control/status.log"
 .venv/bin/python scripts/evidence_policy.py \
-  --config "$config" eval --strategy ppo --split test \
+  --config "$config" \
+  --output-dir "$output" \
+  --model-base-url "http://127.0.0.1:${port}/v1" \
+  eval --strategy ppo --split test \
   --checkpoint "$checkpoint" --device cpu
 eval_status=$?
 if [[ $eval_status -ne 0 ]]; then
@@ -156,7 +171,7 @@ printf '%s status=uploading_wandb\n' "$(timestamp)" >> "$control/status.log"
   --project hivemem-evidence-policy \
   --name "$wandb_run_name" \
   --run-id "$wandb_run_name" \
-  --tag "$benchmark_tag" --tag ppo --tag multibinary-vp --tag step0
+  --tag "$benchmark_tag" --tag ppo --tag multibinary-vp --tag step0 --tag graph-5plus2
 wandb_status=$?
 if [[ $wandb_status -ne 0 ]]; then
   printf '%s status=failed stage=wandb exit_code=%s\n' \

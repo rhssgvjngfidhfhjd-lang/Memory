@@ -7,6 +7,7 @@ import wandb_workspaces.reports.v2 as wr
 import wandb_workspaces.workspaces as ws
 
 from scripts.configure_evidence_policy_wandb_workspace import (
+    VALIDATION_ACTION_MASKS,
     build_sections,
     configure_workspace,
 )
@@ -24,7 +25,7 @@ class WandbWorkspaceTest(unittest.TestCase):
         self.assertEqual(
             panel_counts,
             {
-                "Validation": 9,
+                "Validation": 42,
                 "Critic": 8,
                 "Actor": 7,
             },
@@ -75,10 +76,33 @@ class WandbWorkspaceTest(unittest.TestCase):
                 "Validation Retrieval Hit Rate@5",
                 "Validation Errors",
                 "Evidence Combination Ratio",
+                "Evidence Level Selection Ratio",
+                *[f"val/action_ratio/{mask}" for mask in VALIDATION_ACTION_MASKS],
                 "Final Combination Distribution",
                 "Final Evidence Level Ratio",
             ],
         )
+
+    def test_each_validation_action_mask_has_an_independent_ratio_panel(self) -> None:
+        sections = build_sections(ws, wr)
+        validation = next(
+            section for section in sections if section.name == "Validation"
+        )
+        panels = {
+            getattr(panel, "title", ""): panel
+            for panel in validation.panels
+            if getattr(panel, "title", "").startswith("val/action_ratio/")
+        }
+
+        self.assertEqual(
+            set(panels),
+            {f"val/action_ratio/{mask}" for mask in VALIDATION_ACTION_MASKS},
+        )
+        for mask in VALIDATION_ACTION_MASKS:
+            panel = panels[f"val/action_ratio/{mask}"]
+            self.assertEqual(panel.x, "val/update_step")
+            self.assertEqual(panel.y, [f"val/action_ratio/{mask}"])
+            self.assertEqual(panel.smoothing_type, "none")
 
     def test_validation_reward_uses_explicit_update_step(self) -> None:
         sections = build_sections(ws, wr)

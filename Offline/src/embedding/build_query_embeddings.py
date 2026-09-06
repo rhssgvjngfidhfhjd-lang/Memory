@@ -17,6 +17,8 @@ from .qwen3_text_embedding import (
 from benchmarks.memgallery_harness.retrieval.query_embedding_cache import make_query_id
 from benchmarks.memgallery_harness.runner.prompts import resolve_question_image
 from benchmarks.question_filter import is_excluded_category, parse_excluded_categories
+from evidence_policy.episode_sources import iter_source_questions
+from evidence_policy.split_manifest import SplitManifestIndex
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -66,6 +68,51 @@ def iter_qa_items(
                     "clue": qa.get("clue", []) if isinstance(qa.get("clue", []), list) else [],
                 }
             )
+    return items
+
+
+def iter_h2hmem_qa_items(
+    manifest_path: str | Path,
+    *,
+    variant: str = "all",
+) -> list[dict[str, Any]]:
+    """Return manifest-selected H2HMem questions with collision-free IDs."""
+    from benchmarks.h2hmem_harness.eval_h2hmem import _question_image
+
+    if variant not in {"all", "dyadic", "multiparty"}:
+        raise ValueError(f"Unknown H2HMem variant: {variant!r}")
+    sources = (
+        ("h2hmem_dyadic", "h2hmem_multiparty")
+        if variant == "all"
+        else (f"h2hmem_{variant}",)
+    )
+    manifest = SplitManifestIndex(manifest_path)
+    rows = iter_source_questions(
+        manifest,
+        PROJECT_ROOT.parent,
+        data_sources=sources,
+    )
+    items: list[dict[str, Any]] = []
+    for row in rows:
+        raw_image = str(row.metadata.get("question_image", ""))
+        query_image = (
+            _question_image(Path(row.source_path), raw_image) if raw_image else None
+        )
+        items.append(
+            {
+                "query_id": row.question_id,
+                "dataset": f"{row.metadata['variant']}_{row.source_id}",
+                "qa_index": row.question_index + 1,
+                "category": row.category,
+                "question": row.question,
+                "query_image": query_image,
+                "answer": row.answer,
+                "clue": list(row.metadata.get("answer_session", [])),
+                "manifest_question_id": row.question_id,
+                "split": row.split,
+                "variant": row.metadata["variant"],
+            }
+        )
     return items
 
 
@@ -149,10 +196,22 @@ def _worker(payload):
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Precompute benchmark QA query embeddings.")
-    parser.add_argument("--benchmark", choices=("memgallery", "wma"), default="memgallery")
+    parser.add_argument(
+        "--benchmark", choices=("memgallery", "wma", "h2hmem"), default="memgallery"
+    )
     parser.add_argument("--data-dir", default=str(DEFAULT_MEMGALLERY_DATA_DIR))
     parser.add_argument("--data-name", default="")
     parser.add_argument("--all-datasets", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument(
+        "--split-manifest",
+        default="",
+        help="Required for H2HMem so query IDs exactly match the PPO split manifest.",
+    )
+    parser.add_argument(
+        "--h2h-variant",
+        choices=("all", "dyadic", "multiparty"),
+        default="all",
+    )
     parser.add_argument("--out-dir", default="data/qwen3_vl_embedding_2b/query_embeddings")
     parser.add_argument("--model-name", default="Qwen/Qwen3-VL-Embedding-2B")
     parser.add_argument("--dim", type=int, default=2048)
@@ -173,7 +232,9 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    default_excluded = "MB" if args.benchmark == "wma" else "AR"
+    default_excluded = "MB" if args.benchmark == "wma" else (
+        "AR" if args.benchmark == "memgallery" else ""
+    )
     excluded_categories = parse_excluded_categories(
         default_excluded if args.exclude_categories is None else args.exclude_categories
     )
@@ -187,6 +248,13 @@ def main() -> None:
             data_dir,
             sample_ids=sample_ids,
             excluded_categories=excluded_categories,
+        )
+    elif args.benchmark == "h2hmem":
+        if not args.split_manifest:
+            parser.error("--split-manifest is required for --benchmark h2hmem")
+        items = iter_h2hmem_qa_items(
+            args.split_manifest,
+            variant=args.h2h_variant,
         )
     else:
         items = iter_qa_items(

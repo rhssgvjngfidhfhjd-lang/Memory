@@ -8,6 +8,7 @@ import random
 import sys
 import time
 from collections import Counter
+from itertools import islice
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence
 
@@ -25,7 +26,12 @@ from benchmarks.memgallery_harness.retrieval.query_embedding_cache import (  # n
     make_query_id,
 )
 from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient  # noqa: E402
-from benchmarks.memgallery_harness.runner.metrics import summarize_results  # noqa: E402
+from benchmarks.memgallery_harness.runner.metrics import (  # noqa: E402
+    calculate_calls_mb,
+    calculate_calls_qa,
+    combine_call_metrics,
+    summarize_results,
+)
 from benchmarks.memgallery_harness.runner.prompts import (  # noqa: E402
     SYSTEM_PROMPT,
     format_question_prompt,
@@ -40,10 +46,20 @@ from evidence_policy.evidence import (  # noqa: E402
     DialogueStore,
     EvidenceChainBuilder,
     EvidenceStrategy,
+    H2HMemDialogueStore,
     WMADialogueStore,
 )
+from evidence_policy.episode_sources import iter_source_questions  # noqa: E402
 from evidence_policy.policy import EvidenceSelectionPolicy  # noqa: E402
 from evidence_policy.ppo import PPOBuffer, PPOTrainer, load_policy_checkpoint, save_json  # noqa: E402
+from evidence_policy.retrieval import (  # noqa: E402
+    build_graph_index,
+    build_wma_prefix_graph_index,
+    resolve_graph_options,
+    retrieval_signature,
+    retrieval_trace,
+    validate_graph_config,
+)
 from evidence_policy.rollout import (  # noqa: E402
     EvidenceEpisode,
     EvidenceRollout,
@@ -82,6 +98,16 @@ def main() -> None:
         default="",
         help="Conversation-level train/val/test manifest; overrides config split lists",
     )
+    parser.add_argument(
+        "--output-dir",
+        default="",
+        help="Override the configured output directory for an isolated run",
+    )
+    parser.add_argument(
+        "--model-base-url",
+        default="",
+        help="Override the configured VLM endpoint for this run",
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     split_parser = subparsers.add_parser("prepare-split", help="Create balanced benchmark splits")
@@ -93,6 +119,7 @@ def main() -> None:
     train_parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     train_parser.add_argument("--epochs", type=int, default=0)
     train_parser.add_argument("--max-train-episodes", type=int, default=0)
+    train_parser.add_argument("--validation-limit", type=int, default=0)
     train_parser.add_argument("--resume", default="")
 
     eval_parser = subparsers.add_parser("eval", help="Evaluate one evidence strategy")
@@ -107,8 +134,17 @@ def main() -> None:
     args = parser.parse_args()
     config_path = Path(args.config).resolve()
     config = load_config(config_path)
+    if args.output_dir:
+        output_dir = Path(args.output_dir)
+        config["output_dir"] = str(
+            output_dir if output_dir.is_absolute() else (ROOT / output_dir).resolve()
+        )
+    if args.model_base_url:
+        config["model"]["base_url"] = str(args.model_base_url).rstrip("/")
     if args.split_manifest:
         config["split_manifest"] = str(Path(args.split_manifest).expanduser().resolve())
+    if args.command == "train" and args.validation_limit:
+        config["ppo"]["validation_limit"] = int(args.validation_limit)
     if config.get("split_manifest"):
         split_index = SplitManifestIndex(config["split_manifest"])
         config["split_manifest"] = str(split_index.path)
@@ -125,7 +161,15 @@ def main() -> None:
 
 def load_config(path: Path) -> dict[str, Any]:
     config = json.loads(path.read_text(encoding="utf-8"))
-    for key in ("data_dir", "memory_bank", "query_cache", "output_dir"):
+    for key in (
+        "data_dir",
+        "memory_bank",
+        "query_cache",
+        "output_dir",
+        "workspace_root",
+    ):
+        if not config.get(key):
+            continue
         value = Path(config[key])
         config[key] = str(value if value.is_absolute() else (ROOT / value).resolve())
     if config.get("profiles_file"):
@@ -316,6 +360,8 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
     device = torch.device(args.device)
     policy = build_policy(config, device)
     trainer = build_trainer(config, policy)
+    output_dir = Path(config["output_dir"])
+    ppo_metrics_path = output_dir / "ppo_metrics.jsonl"
     start_epoch = 0
     train_question_count = 0
     if args.resume:
@@ -332,6 +378,12 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                 state["extra"].get("train_question_step", 0),
             )
         )
+        reconciliation = reconcile_ppo_metrics_for_resume(
+            ppo_metrics_path,
+            checkpoint_update_step=trainer.update_steps,
+        )
+        if reconciliation["removed_rows"]:
+            print(json.dumps({"resume_metrics_reconciliation": reconciliation}))
     client, env = build_environment(config)
     client.assert_model_available()
     query_cache = QueryEmbeddingCache(
@@ -341,7 +393,6 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
     epochs = int(args.epochs or config["ppo"]["epochs"])
     if epochs <= 0:
         raise ValueError("epochs must be positive")
-    output_dir = Path(config["output_dir"])
     initial_validation = prepare_initial_validation(
         config,
         env,
@@ -356,15 +407,17 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
             and bool(config["ppo"].get("validation_at_start", False))
         ),
     )
-    ppo_metrics_path = output_dir / "ppo_metrics.jsonl"
     if start_epoch == 0 and ppo_metrics_path.exists():
         ppo_metrics_path.unlink()
     for epoch in range(start_epoch, epochs):
         buffer = PPOBuffer()
-        episodes = list(iter_episodes(config, "train", query_cache, profiles))
+        episode_iter = iter_episodes(config, "train", query_cache, profiles)
+        episodes = list(
+            islice(episode_iter, args.max_train_episodes)
+            if args.max_train_episodes
+            else episode_iter
+        )
         random.shuffle(episodes)
-        if args.max_train_episodes:
-            episodes = episodes[: args.max_train_episodes]
         validation_points = validation_checkpoints(
             len(episodes),
             interval_fraction=float(
@@ -746,13 +799,21 @@ def evaluate(
                     for hit in episode.memory_hits
                 ],
                 "difficulty": episode.metadata.get("difficulty", ""),
+                "error": rollout.error,
+                "answer_attempts": rollout.answer_attempts,
+                "answer_failed_attempts": rollout.answer_failed_attempts,
             }
         )
         rollouts.append(rollout_record(rollout, episode, source_groups=source_groups))
-    if str(config.get("benchmark", "memgallery")).lower() == "wma":
+    benchmark = str(config.get("benchmark", "memgallery")).lower()
+    if benchmark == "wma":
         from benchmarks.wma_harness.runner.metrics import summarize_results as summarize_wma_results
 
         metrics = summarize_wma_results(records, k=int(config["top_k"]))
+    elif benchmark == "h2hmem":
+        from benchmarks.wma_harness.runner.metrics import summarize_results as summarize_h2h_results
+
+        metrics = summarize_h2h_results(records, k=int(config["top_k"]))
     else:
         metrics = summarize_results(records, k=int(config["top_k"]))
     metrics["mean_reward"] = (
@@ -761,6 +822,13 @@ def evaluate(
     metrics["evidence_actions"] = summarize_evidence_actions(rollouts)
     metrics["cached_rollouts"] = sum(bool(row["cached"]) for row in rollouts)
     metrics["errors"] = sum(bool(row["error"]) for row in rollouts)
+    evaluated_sample_ids = sorted(
+        {str(row.get("dataset") or "").strip() for row in records} - {""}
+    )
+    metrics["calls"] = combine_call_metrics(
+        calculate_calls_mb(config.get("memory_bank"), evaluated_sample_ids),
+        calculate_calls_qa(records, sample_id_field="dataset"),
+    )
     return {"metrics": metrics, "rollouts": rollouts}
 
 
@@ -772,6 +840,80 @@ def resume_configs_match(stored: Any, current: dict[str, Any]) -> bool:
     stored_copy.pop("output_dir", None)
     current_copy.pop("output_dir", None)
     return stored_copy == current_copy
+
+
+def reconcile_ppo_metrics_for_resume(
+    path: Path,
+    *,
+    checkpoint_update_step: int,
+) -> dict[str, Any]:
+    """Discard metric rows produced after the checkpoint being resumed.
+
+    A process can be interrupted after writing PPO updates but before saving the
+    next epoch checkpoint.  Those updates are not represented by the checkpoint
+    and must not remain in the resumed run's W&B history.  Keeping the last row
+    for every committed step also repairs duplicates left by an earlier resume.
+    """
+    checkpoint_update_step = int(checkpoint_update_step)
+    result: dict[str, Any] = {
+        "checkpoint_update_step": checkpoint_update_step,
+        "original_rows": 0,
+        "kept_rows": 0,
+        "removed_rows": 0,
+        "backup": "",
+    }
+    if not path.exists():
+        return result
+
+    payload = path.read_bytes()
+    retained_by_step: dict[int, str] = {}
+    original_rows = 0
+    for line_number, line in enumerate(payload.decode("utf-8-sig").splitlines(), start=1):
+        if not line.strip():
+            continue
+        original_rows += 1
+        try:
+            row = json.loads(line)
+            update_step = int(row["update_step"])
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+            raise ValueError(
+                f"Invalid PPO metrics row at {path}:{line_number}"
+            ) from exc
+        if update_step <= checkpoint_update_step:
+            retained_by_step[update_step] = line
+
+    retained_steps = sorted(retained_by_step)
+    expected_steps = list(range(1, checkpoint_update_step + 1))
+    if retained_steps != expected_steps:
+        raise ValueError(
+            "PPO metrics do not cover the checkpoint update range: "
+            f"expected 1..{checkpoint_update_step}, got "
+            f"{retained_steps[0] if retained_steps else 'none'}.."
+            f"{retained_steps[-1] if retained_steps else 'none'}"
+        )
+
+    kept_lines = [retained_by_step[step] for step in retained_steps]
+    removed_rows = original_rows - len(kept_lines)
+    result.update(
+        {
+            "original_rows": original_rows,
+            "kept_rows": len(kept_lines),
+            "removed_rows": removed_rows,
+        }
+    )
+    if removed_rows <= 0:
+        return result
+
+    backup = path.with_name(f"{path.name}.pre_resume_{time.time_ns()}.bak")
+    backup.write_bytes(payload)
+    temporary = path.with_name(f"{path.name}.resume.tmp")
+    temporary.write_text(
+        "\n".join(kept_lines) + ("\n" if kept_lines else ""),
+        encoding="utf-8",
+    )
+    temporary.replace(path)
+    result["backup"] = str(backup)
+    return result
 
 
 def is_transient_endpoint_error(error: str) -> bool:
@@ -826,8 +968,12 @@ def iter_episodes(
     query_cache: QueryEmbeddingCache,
     profiles: dict[str, str],
 ) -> Iterator[EvidenceEpisode]:
-    if str(config.get("benchmark", "memgallery")).lower() == "wma":
+    benchmark = str(config.get("benchmark", "memgallery")).lower()
+    if benchmark == "wma":
         yield from iter_wma_episodes(config, split, query_cache)
+        return
+    if benchmark == "h2hmem":
+        yield from iter_h2hmem_episodes(config, split, query_cache)
         return
     data_dir = Path(config["data_dir"])
     excluded_categories = parse_excluded_categories(
@@ -840,6 +986,7 @@ def iter_episodes(
         if split_index is not None
         else tuple(config["split"][split])
     )
+    graph_options = resolve_graph_options(config)
     for dataset_name in dataset_names:
         path = data_dir / "dialog" / f"{dataset_name}.json"
         payload = json.loads(path.read_text(encoding="utf-8"))
@@ -851,7 +998,13 @@ def iter_episodes(
                 "\n\nUser profile (background about the person the memories are about):\n"
                 + profiles[dataset_name]
             )
-        index = SimpleMemoryIndex(Path(config["memory_bank"]) / "datasets" / dataset_name)
+        dataset_dir = Path(config["memory_bank"]) / "datasets" / dataset_name
+        index = (
+            build_graph_index(dataset_dir, graph_options)
+            if graph_options is not None
+            else SimpleMemoryIndex(dataset_dir)
+        )
+        index_signature = retrieval_signature(dataset_dir, graph_options)
         for qa_index, qa in enumerate(payload.get("human-annotated QAs", []), start=1):
             manifest_question_id = f"{dataset_name}_q{qa_index - 1:04d}"
             if split_index is not None and not split_index.contains_question(
@@ -887,8 +1040,105 @@ def iter_episodes(
                 memory_hits=tuple(hits),
                 query_image=query_image,
                 clue=tuple(str(item) for item in clue),
-                metadata={"manifest_question_id": manifest_question_id},
+                retrieval_signature=index_signature,
+                metadata={
+                    "manifest_question_id": manifest_question_id,
+                    "retrieval_mode": "graph_append" if graph_options else "vector",
+                    "vector_k": int(config["top_k"]),
+                    "graph_append_k": int(graph_options["append_k"]) if graph_options else 0,
+                },
             )
+
+
+def iter_h2hmem_episodes(
+    config: dict[str, Any],
+    split: str,
+    query_cache: QueryEmbeddingCache,
+) -> Iterator[EvidenceEpisode]:
+    from benchmarks.h2hmem_harness.eval_h2hmem import (
+        SYSTEM_PROMPT as H2HMEM_SYSTEM_PROMPT,
+        _question_image,
+        _question_prompt,
+    )
+
+    split_index = configured_split_manifest(config)
+    if split_index is None:
+        raise ValueError("H2HMem PPO requires split_manifest")
+    data_sources = evidence_data_sources(config)
+    workspace_root = Path(
+        config.get("workspace_root") or Path(config["data_dir"]).resolve().parents[1]
+    )
+    visual_categories = {
+        str(value).upper() for value in config.get("visual_categories", [])
+    }
+    graph_options = resolve_graph_options(config)
+    indexes: dict[str, Any] = {}
+    index_signatures: dict[str, str] = {}
+    for row in iter_source_questions(
+        split_index,
+        workspace_root,
+        split=split,
+        data_sources=data_sources,
+    ):
+        variant = str(row.metadata["variant"])
+        dataset_name = f"{variant}_{row.source_id}"
+        query_vector = query_cache.get_by_id(row.question_id)
+        if query_vector is None:
+            raise KeyError(f"Missing cached query embedding: {row.question_id}")
+        if dataset_name not in indexes:
+            dataset_dir = Path(config["memory_bank"]) / "datasets" / dataset_name
+            indexes[dataset_name] = (
+                build_graph_index(
+                    dataset_dir,
+                    graph_options,
+                    visual_categories=visual_categories,
+                )
+                if graph_options is not None
+                else SimpleMemoryIndex(
+                    dataset_dir,
+                    visual_categories=visual_categories,
+                )
+            )
+            index_signatures[dataset_name] = retrieval_signature(
+                dataset_dir, graph_options
+            )
+        index = indexes[dataset_name]
+        hits = index.search(
+            query_vector,
+            top_k=int(config["top_k"]),
+            category=row.category,
+        )
+        raw_image = str(row.metadata.get("question_image", ""))
+        query_image = (
+            _question_image(Path(row.source_path), raw_image) if raw_image else None
+        )
+        yield EvidenceEpisode(
+            query_id=row.question_id,
+            dataset=dataset_name,
+            category=row.category,
+            question_prompt=_question_prompt(row.question, row.category),
+            system_prompt=H2HMEM_SYSTEM_PROMPT,
+            ground_truth=row.answer,
+            query_embedding=query_vector,
+            memory_hits=tuple(hits),
+            query_image=query_image,
+            clue=tuple(str(value) for value in row.metadata.get("answer_session", [])),
+            retrieval_signature=index_signatures[dataset_name],
+            metadata={
+                "manifest_question_id": row.question_id,
+                "variant": variant,
+                "conversation_id": row.source_id,
+                "session_id": row.metadata.get("session_id", ""),
+                "difficulty": row.metadata.get("difficulty", ""),
+                "retrieval_mode": "graph_append" if graph_options else "vector",
+                "vector_k": int(config["top_k"]),
+                "graph_append_k": int(graph_options["append_k"]) if graph_options else 0,
+                # MemGallery's answer renderer uses compact visual category names.
+                # H2HMem category labels are descriptive, so force only the renderer
+                # into visual mode while retaining the original label for metrics.
+                "answer_category": "VR",
+            },
+        )
 
 
 def iter_wma_episodes(
@@ -922,6 +1172,8 @@ def iter_wma_episodes(
         if split_index is not None
         else tuple(config["split"][split])
     )
+    graph_options = resolve_graph_options(config)
+    prefix_cache_root = Path(config["output_dir"]) / "retrieval_indexes" / "wma_prefix"
     for sample_id in sample_ids:
         payload = json.loads(paths[sample_id].read_text(encoding="utf-8"))
         ordered_sessions = session_ids(payload)
@@ -930,9 +1182,11 @@ def iter_wma_episodes(
             evidence_id: row["session_id"]
             for evidence_id, row in gold_points.items()
         }
-        index = SimpleMemoryIndex(
-            Path(config["memory_bank"]) / "datasets" / sample_id,
-            visual_categories=visual_categories,
+        source_dataset_dir = Path(config["memory_bank"]) / "datasets" / sample_id
+        vector_index = (
+            SimpleMemoryIndex(source_dataset_dir, visual_categories=visual_categories)
+            if graph_options is None
+            else None
         )
         for checkpoint in payload.get("qa_checkpoints", []) or []:
             checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
@@ -943,6 +1197,26 @@ def iter_wma_episodes(
                 ordered_sessions, covered_sessions
             )
             visible_session_set = set(visible_sessions)
+            prefix_signature = ""
+            if graph_options is not None:
+                index, prefix_signature = build_wma_prefix_graph_index(
+                    source_dataset_dir,
+                    prefix_cache_root,
+                    sample_id=sample_id,
+                    checkpoint_id=checkpoint_id,
+                    visible_session_ids=visible_sessions,
+                    options=graph_options,
+                    visual_categories=visual_categories,
+                )
+            else:
+                index = vector_index
+            if index is None:
+                raise RuntimeError(f"Failed to initialize retrieval index for {sample_id}")
+            index_signature = retrieval_signature(
+                source_dataset_dir,
+                graph_options,
+                prefix_signature=prefix_signature,
+            )
             for qa_index, qa in enumerate(checkpoint.get("questions", []) or [], start=1):
                 manifest_question_id = f"{sample_id}:{checkpoint_id}:Q{qa_index:03d}"
                 if split_index is not None and not split_index.contains_question(
@@ -983,6 +1257,7 @@ def iter_wma_episodes(
                     ground_truth=str(qa.get("answer", "")),
                     query_embedding=query_vector,
                     memory_hits=tuple(hits),
+                    retrieval_signature=index_signature,
                     clue=tuple(
                         dict.fromkeys(
                             point_sessions[value]
@@ -1000,6 +1275,10 @@ def iter_wma_episodes(
                         "evidence": qa.get("evidence", []),
                         "covered_sessions": covered_sessions,
                         "visible_sessions": visible_sessions,
+                        "retrieval_mode": "graph_append" if graph_options else "vector",
+                        "vector_k": int(config["top_k"]),
+                        "graph_append_k": int(graph_options["append_k"]) if graph_options else 0,
+                        "prefix_graph_signature": prefix_signature,
                         "gold_future_evidence_ids": [
                             value
                             for value in evidence_ids
@@ -1014,14 +1293,33 @@ def iter_wma_episodes(
 
 
 def evidence_data_source(config: dict[str, Any]) -> str:
+    sources = evidence_data_sources(config)
+    if len(sources) != 1:
+        raise ValueError(
+            "This operation requires one data source, got " + ", ".join(sources)
+        )
+    return sources[0]
+
+
+def evidence_data_sources(config: dict[str, Any]) -> tuple[str, ...]:
+    configured = config.get("data_sources")
+    if configured is not None:
+        sources = tuple(str(value).strip() for value in configured if str(value).strip())
+        if not sources:
+            raise ValueError("data_sources cannot be empty")
+        if len(set(sources)) != len(sources):
+            raise ValueError("data_sources cannot contain duplicates")
+        return sources
     explicit = str(config.get("data_source", "")).strip()
     if explicit:
-        return explicit
+        return (explicit,)
     benchmark = str(config.get("benchmark", "memgallery")).strip().lower()
     if benchmark == "wma":
-        return "worldmemarena_lifelong"
+        return ("worldmemarena_lifelong",)
     if benchmark == "memgallery":
-        return "mem_gallery"
+        return ("mem_gallery",)
+    if benchmark == "h2hmem":
+        return ("h2hmem_dyadic", "h2hmem_multiparty")
     raise ValueError(
         f"Cannot infer manifest data_source for benchmark {benchmark!r}; "
         "set data_source in the evidence-policy config"
@@ -1079,11 +1377,12 @@ def build_environment(
     visual_categories = {
         str(value).upper() for value in config.get("visual_categories", ["VS", "VR"])
     }
-    store = (
-        WMADialogueStore(config["data_dir"])
-        if benchmark == "wma"
-        else DialogueStore(config["data_dir"])
-    )
+    if benchmark == "wma":
+        store = WMADialogueStore(config["data_dir"])
+    elif benchmark == "h2hmem":
+        store = H2HMemDialogueStore(config["data_dir"])
+    else:
+        store = DialogueStore(config["data_dir"])
     evidence = config.get("evidence") or {}
     vp_index = (
         VPArtifactIndex(
@@ -1106,6 +1405,7 @@ def build_environment(
 
 
 def validate_runtime(config: dict[str, Any], *, require_split: bool) -> None:
+    validate_graph_config(config)
     for key in ("data_dir", "memory_bank"):
         if not Path(config[key]).exists():
             raise FileNotFoundError(f"Missing {key}: {config[key]}")
@@ -1161,20 +1461,25 @@ def validate_runtime(config: dict[str, Any], *, require_split: bool) -> None:
     if require_split:
         split_index = configured_split_manifest(config)
         if split_index is not None:
-            source = evidence_data_source(config)
-            if source not in split_index.data_sources:
-                raise ValueError(
-                    f"Configured data_source {source!r} is absent from {split_index.path}"
-                )
-            empty = [
-                name
-                for name in ("train", "val", "test")
-                if not split_index.conversations(name, data_source=source)
+            sources = evidence_data_sources(config)
+            missing_sources = [
+                source for source in sources if source not in split_index.data_sources
             ]
-            if empty:
+            if missing_sources:
                 raise ValueError(
-                    f"Manifest has empty splits for {source}: {', '.join(empty)}"
+                    f"Configured data sources {missing_sources!r} are absent from "
+                    f"{split_index.path}"
                 )
+            for source in sources:
+                empty = [
+                    name
+                    for name in ("train", "val", "test")
+                    if not split_index.conversations(name, data_source=source)
+                ]
+                if empty:
+                    raise ValueError(
+                        f"Manifest has empty splits for {source}: {', '.join(empty)}"
+                    )
             return
         split = config.get("split", {})
         groups = [split.get(name, []) for name in ("train", "validation", "test")]
@@ -1245,6 +1550,8 @@ def rollout_record(
         {
             "original_answer": episode.ground_truth,
             "retrieved_source_groups": source_groups,
+            "retrieval_top_k": retrieval_trace(episode.memory_hits),
+            "retrieval_signature": episode.retrieval_signature,
             "clue": list(episode.clue),
             **episode.metadata,
         }

@@ -17,6 +17,7 @@ DEFAULT_WORKSPACE_URL = (
     "rhssgvjngfidhfhjd-nanyang-technological-university-singapore/"
     "hivemem-evidence-policy?nw=aw3roht3dqk"
 )
+VALIDATION_ACTION_MASKS = tuple(f"{value:05b}" for value in range(32))
 
 
 def custom_table_chart(
@@ -105,6 +106,29 @@ def build_sections(ws: Any, wr: Any) -> list[Any]:
                 title="Evidence Combination Ratio",
                 string_settings={"xname": "PPO update step"},
             ),
+            custom_table_chart(
+                wr,
+                table_key="val/evidence_level_ratio_table",
+                panel_def_id="wandb/lineseries/v0",
+                field_settings={
+                    "lineKey": "lineKey",
+                    "lineVal": "lineVal",
+                    "step": "step",
+                },
+                title="Evidence Level Selection Ratio",
+                string_settings={"xname": "PPO update step"},
+            ),
+            *[
+                wr.LinePlot(
+                    title=f"val/action_ratio/{mask}",
+                    x="val/update_step",
+                    y=[f"val/action_ratio/{mask}"],
+                    title_x="PPO update step",
+                    title_y="Selection ratio",
+                    smoothing_type="none",
+                )
+                for mask in VALIDATION_ACTION_MASKS
+            ],
             custom_table_chart(
                 wr,
                 table_key="test/action_mask_ratio_table",

@@ -1792,6 +1792,9 @@ class GraphExpandedRetrievalTest(unittest.TestCase):
                     metadata={"session_id": f"S{index:02d}"},
                 )
             bank.memories[0].links["related"] = [
+                # Already present in vector top-5: skip it and keep looking for
+                # the next highest-scoring unique graph neighbour.
+                {"target": bank.memories[1].id, "type": "SAME_EPISODE"},
                 {"target": bank.memories[5].id, "type": "CAUSES"},
                 {"target": bank.memories[6].id, "type": "SAME_EPISODE"},
             ]
