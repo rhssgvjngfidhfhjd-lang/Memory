@@ -19,6 +19,14 @@ from hive_mem.mau import MAUBank, MAU
 from hive_mem.output_layout import DatasetLayout
 
 
+DEFAULT_HIVEMEM_GRAPH_OPTIONS = {
+    "seed_k": 0,
+    "mode": "append",
+    "append_k": 2,
+    "expansion_bonus": 0.2,
+}
+
+
 @dataclass(frozen=True)
 class MemoryHit:
     item: MAU

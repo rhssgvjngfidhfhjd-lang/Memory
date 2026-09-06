@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import inspect
 import json
 import random
 from dataclasses import dataclass, field
@@ -24,7 +25,7 @@ from .evidence import (
 from .policy import EvidenceSelectionPolicy
 
 
-EVIDENCE_CACHE_VERSION = 4
+EVIDENCE_CACHE_VERSION = 5
 
 
 class RewardFunction(Protocol):
@@ -48,6 +49,7 @@ class EvidenceEpisode:
     memory_hits: tuple[MemoryHit, ...]
     query_image: dict[str, Any] | None = None
     clue: tuple[str, ...] = ()
+    retrieval_signature: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
 
 
@@ -62,6 +64,9 @@ class EvidenceRollout:
     reward: float
     error: str
     cached: bool
+    answer_attempts: int | None = None
+    answer_failed_attempts: int | None = None
+    answer_usage: dict[str, int] | None = None
     policy_step: PolicyStep | None = None
 
     def to_dict(self) -> dict[str, Any]:
@@ -74,6 +79,9 @@ class EvidenceRollout:
             "reward": self.reward,
             "error": self.error,
             "cached": self.cached,
+            "answer_attempts": self.answer_attempts,
+            "answer_failed_attempts": self.answer_failed_attempts,
+            "answer_usage": self.answer_usage,
         }
         if self.policy_step is not None:
             row["joint_log_prob"] = float(self.policy_step.joint_log_prob.detach().cpu())
@@ -189,20 +197,53 @@ class EvidenceSelectionEnv:
             answer = str(cached.get("answer", ""))
             reward = float(self.reward_function(answer, episode.ground_truth))
             error = str(cached.get("error", ""))
+            answer_attempts = _optional_int(cached.get("answer_attempts"))
+            answer_failed_attempts = _optional_int(
+                cached.get("answer_failed_attempts")
+            )
+            answer_usage = _optional_usage(cached.get("answer_usage"))
             was_cached = True
         else:
+            answer_attempts: int | None = None
+            answer_failed_attempts: int | None = None
+            answer_usage: dict[str, int] | None = None
             try:
-                answer = self.client.answer(
-                    system_prompt=episode.system_prompt,
-                    memory_items=items,
-                    question_prompt=episode.question_prompt,
-                    query_image=episode.query_image,
-                    category=episode.category,
+                answer_category = str(
+                    episode.metadata.get("answer_category", episode.category)
                 )
+                request = {
+                    "system_prompt": episode.system_prompt,
+                    "memory_items": items,
+                    "question_prompt": episode.question_prompt,
+                    "query_image": episode.query_image,
+                    "category": answer_category,
+                }
+                # ``hasattr`` is not reliable for dynamic proxy clients such as
+                # ``MagicMock`` because they synthesize arbitrary attributes.
+                # Inspect the object statically so minimal/third-party clients
+                # continue to use the plain ``answer`` compatibility path.
+                if (
+                    inspect.getattr_static(
+                        self.client, "answer_with_usage", None
+                    )
+                    is not None
+                ):
+                    response = self.client.answer_with_usage(**request)
+                    answer = response.text
+                    answer_attempts = int(response.attempts)
+                    answer_failed_attempts = int(response.failed_attempts)
+                    answer_usage = _optional_usage(response.usage)
+                else:
+                    # Compatibility for minimal test or third-party clients.
+                    answer = self.client.answer(**request)
+                    answer_attempts = 1
+                    answer_failed_attempts = 0
                 error = ""
             except Exception as exc:
                 answer = ""
                 error = str(exc)
+                answer_attempts = int(getattr(self.client, "retries", 0)) + 1
+                answer_failed_attempts = answer_attempts
             reward = float(self.reward_function(answer, episode.ground_truth))
             was_cached = False
             if self.cache is not None and not error:
@@ -214,6 +255,9 @@ class EvidenceSelectionEnv:
                         "answer": answer,
                         "reward": reward,
                         "error": error,
+                        "answer_attempts": answer_attempts,
+                        "answer_failed_attempts": answer_failed_attempts,
+                        "answer_usage": answer_usage,
                     },
                 )
         return EvidenceRollout(
@@ -226,6 +270,9 @@ class EvidenceSelectionEnv:
             reward=reward,
             error=error,
             cached=was_cached,
+            answer_attempts=answer_attempts,
+            answer_failed_attempts=answer_failed_attempts,
+            answer_usage=answer_usage,
             policy_step=policy_step,
         )
 
@@ -246,8 +293,12 @@ class EvidenceSelectionEnv:
             "system_prompt": episode.system_prompt,
             "question_prompt": episode.question_prompt,
             "category": episode.category,
+            "answer_category": episode.metadata.get(
+                "answer_category", episode.category
+            ),
             "query_image": episode.query_image,
             "rendered_memory_items": list(memory_items),
+            "retrieval_signature": episode.retrieval_signature,
             "vp_run_id": (
                 self.chain_builder.vp_index.run_id
                 if self.chain_builder.vp_index is not None
@@ -264,3 +315,13 @@ class EvidenceSelectionEnv:
         ).hexdigest()[:16]
         raw = f"{episode.query_id}\n{action_signature(actions)}\n{config_hash}"
         return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def _optional_int(value: Any) -> int | None:
+    return int(value) if value is not None else None
+
+
+def _optional_usage(value: Any) -> dict[str, int] | None:
+    if not isinstance(value, dict):
+        return None
+    return {str(key): int(count) for key, count in value.items()}
