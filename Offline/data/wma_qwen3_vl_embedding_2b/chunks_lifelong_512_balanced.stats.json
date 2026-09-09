@@ -1,0 +1,23 @@
+{
+  "chunks": 8370,
+  "benchmark": "wma",
+  "variant": null,
+  "with_images": 3318,
+  "data_dir": "/data/haozhen/Memory-clean/WorldMemArena/WorldMemArena/lifelong",
+  "output": "/data/haozhen/Memory-clean/Offline/data/wma_qwen3_vl_embedding_2b/chunks_lifelong_512_balanced.jsonl",
+  "max_tokens": 800,
+  "target_tokens": 512,
+  "wma_grouping": "balanced",
+  "include_captions": true,
+  "include_images": true,
+  "include_profile": null,
+  "token_estimate": {
+    "min": 201,
+    "mean": 506.3,
+    "p10": 396,
+    "p50": 515,
+    "p90": 612,
+    "max": 798
+  },
+  "source_rounds": 15437
+}

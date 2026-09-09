@@ -228,13 +228,11 @@ def main() -> None:
     parser.add_argument(
         "--exclude-categories",
         default=None,
-        help="Comma-separated QA categories to omit (defaults: AR for Mem-Gallery, MB for WMA).",
+        help="Comma-separated QA categories to omit (defaults: AR for Mem-Gallery; none otherwise).",
     )
     args = parser.parse_args()
 
-    default_excluded = "MB" if args.benchmark == "wma" else (
-        "AR" if args.benchmark == "memgallery" else ""
-    )
+    default_excluded = "AR" if args.benchmark == "memgallery" else ""
     excluded_categories = parse_excluded_categories(
         default_excluded if args.exclude_categories is None else args.exclude_categories
     )

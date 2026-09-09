@@ -44,6 +44,10 @@ CRITIC_FIELDS = (
 )
 EVIDENCE_ORDER = ("summary", "dialogue", "caption", "image", "vp")
 ALL_EVIDENCE_MASKS = tuple(f"{value:05b}" for value in range(32))
+EVIDENCE_LEVEL_CHART_SPEC = (
+    "rhssgvjngfidhfhjd-nanyang-technological-university-singapore/"
+    "hivemem-evidence-level-ratio-small-multiples-v2"
+)
 
 
 @dataclass(frozen=True)
@@ -151,10 +155,26 @@ def load_run_data(run_dir: Path) -> RunData:
     config_path = run_dir / "config.json"
     config = json.loads(config_path.read_text(encoding="utf-8")) if config_path.exists() else {}
     warnings: list[str] = []
+    checkpoint_config, checkpoint_rows = load_checkpoint_epoch_rows(run_dir)
     if train_log.exists():
-        epoch_rows = tuple(read_jsonl(train_log))
+        log_rows = read_jsonl(train_log, skip_non_json=True)
+        logged_epochs = {int(row["epoch"]) for row in log_rows if "epoch" in row}
+        recovered_rows = [
+            row for row in checkpoint_rows if int(row["epoch"]) not in logged_epochs
+        ]
+        epoch_rows = tuple(
+            sorted(
+                [*log_rows, *recovered_rows],
+                key=lambda row: int(row.get("epoch", 0)),
+            )
+        )
+        if recovered_rows:
+            warnings.append(
+                "Missing train.log epoch summaries were recovered from checkpoints: "
+                + ", ".join(str(row["epoch"]) for row in recovered_rows)
+            )
     else:
-        checkpoint_config, epoch_rows = load_checkpoint_epoch_rows(run_dir)
+        epoch_rows = checkpoint_rows
         if not config:
             config = checkpoint_config
         warnings.append(
@@ -252,7 +272,7 @@ def load_checkpoint_epoch_rows(
     return config, tuple(rows)
 
 
-def read_jsonl(path: Path) -> list[dict[str, Any]]:
+def read_jsonl(path: Path, *, skip_non_json: bool = False) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         if not line.strip():
@@ -260,6 +280,8 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
         try:
             row = json.loads(line)
         except json.JSONDecodeError as exc:
+            if skip_non_json:
+                continue
             raise ValueError(f"Invalid JSON in {path}:{line_number}") from exc
         if not isinstance(row, dict):
             raise ValueError(f"Expected a JSON object in {path}:{line_number}")
@@ -682,6 +704,37 @@ def build_test_summary(test_metrics: dict[str, Any]) -> dict[str, Any]:
             "retrieval_hitrate@5"
         ]
 
+    for section in ("cost_mb", "cost_qa", "cost_total"):
+        values = test_metrics.get(section)
+        if not isinstance(values, dict):
+            continue
+        for field in (
+            "available",
+            "input_tokens",
+            "output_tokens",
+            "cost_sum_usd",
+            "num_samples",
+            "mean_per_sample_usd",
+        ):
+            if values.get(field) is not None:
+                summary[f"test/{section}/{field}"] = values[field]
+    for section in ("latency_mb", "latency_qa", "latency_total"):
+        values = test_metrics.get(section)
+        if not isinstance(values, dict):
+            continue
+        for field in (
+            "available",
+            "calls",
+            "input_tokens",
+            "output_tokens",
+            "image_count",
+            "latency_sum_seconds",
+            "num_samples",
+            "mean_per_sample_seconds",
+        ):
+            if values.get(field) is not None:
+                summary[f"test/{section}/{field}"] = values[field]
+
     calls = test_metrics.get("calls")
     if not isinstance(calls, dict):
         return summary
@@ -776,15 +829,17 @@ def build_evidence_level_ratio_line_chart(
     ]
     if not any(total for _, _, total in distributions):
         return None
-    return wandb.plot.line_series(
-        xs=[int(row["update_step"]) for row in materialized],
-        ys=[
-            [ratios[evidence] for _, ratios, _ in distributions]
-            for evidence in EVIDENCE_ORDER
-        ],
-        keys=list(EVIDENCE_ORDER),
-        title=title,
-        xname="PPO update step",
+    table = wandb.Table(columns=["step", "lineKey", "lineVal"])
+    for row, (_, ratios, _) in zip(materialized, distributions):
+        for evidence in EVIDENCE_ORDER:
+            table.add_data(
+                int(row["update_step"]), evidence, ratios[evidence]
+            )
+    return wandb.plot_table(
+        vega_spec_name=EVIDENCE_LEVEL_CHART_SPEC,
+        data_table=table,
+        fields={"step": "step", "lineKey": "lineKey", "lineVal": "lineVal"},
+        string_fields={"title": title, "xname": "PPO update step"},
     )
 
 

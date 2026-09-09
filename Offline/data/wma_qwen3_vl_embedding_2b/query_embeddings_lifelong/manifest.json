@@ -1,0 +1,12 @@
+{
+  "count": 2090,
+  "dim": 2048,
+  "model_name": "Qwen/Qwen3-VL-Embedding-2B",
+  "dtype": "bfloat16",
+  "data_dir": "/data/haozhen/Memory/WorldMemArena/WorldMemArena/lifelong",
+  "benchmark": "wma",
+  "vectors": "/data/haozhen/Memory/Offline/data/wma_qwen3_vl_embedding_2b/query_embeddings_lifelong/vectors.npy",
+  "metadata": "/data/haozhen/Memory/Offline/data/wma_qwen3_vl_embedding_2b/query_embeddings_lifelong/metadata.jsonl",
+  "modality": "vision-language",
+  "query_image_policy": "encode raw image"
+}

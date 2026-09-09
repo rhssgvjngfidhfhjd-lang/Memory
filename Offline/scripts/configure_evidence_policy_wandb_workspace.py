@@ -18,6 +18,9 @@ DEFAULT_WORKSPACE_URL = (
     "hivemem-evidence-policy?nw=aw3roht3dqk"
 )
 VALIDATION_ACTION_MASKS = tuple(f"{value:05b}" for value in range(32))
+EVIDENCE_LEVEL_CHART_SPEC = (
+    f"{DEFAULT_ENTITY}/hivemem-evidence-level-ratio-small-multiples-v2"
+)
 
 
 def custom_table_chart(
@@ -109,7 +112,7 @@ def build_sections(ws: Any, wr: Any) -> list[Any]:
             custom_table_chart(
                 wr,
                 table_key="val/evidence_level_ratio_table",
-                panel_def_id="wandb/lineseries/v0",
+                panel_def_id=EVIDENCE_LEVEL_CHART_SPEC,
                 field_settings={
                     "lineKey": "lineKey",
                     "lineVal": "lineVal",

@@ -3,8 +3,6 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import nullcontext
-import hashlib
-import inspect
 import json
 import os
 from pathlib import Path
@@ -21,6 +19,7 @@ from benchmarks.wma_harness.retrieval.query_embedding_cache import (
 from benchmarks.wma_harness.runner.answer_client import (
     VLMAnswerClient,
     build_retrieved_memory_context,
+    build_retrieved_memory_evidence,
 )
 from benchmarks.memgallery_harness.runner.metrics import (
     add_memory_metrics,
@@ -42,7 +41,13 @@ from benchmarks.baseline_runtime.call_trace import (
     trace_filename,
 )
 from benchmarks.wma_harness.runner.metrics import summarize_results
-from benchmarks.wma_harness.runner.prompts import SYSTEM_PROMPT, format_question_prompt
+from benchmarks.wma_harness.runner.prompts import (
+    PROMPT_SOURCE,
+    PROMPT_VERSION,
+    build_answer_messages,
+    parse_answer_response,
+    prompt_sha256,
+)
 from benchmarks.baseline_runtime import baseline_metadata, canonical_name, create_adapter
 from benchmarks.baseline_runtime.parallel_runner import (
     load_sample_artifact,
@@ -447,14 +452,27 @@ def prepare_native_sample_jobs(
 def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
     job = _with_manifest_question_id(job)
     started = time.time()
+    memory_context, _ = build_retrieved_memory_context(
+        job["memory_items"], job["category"]
+    )
+    evidence, _ = build_retrieved_memory_evidence(
+        job["memory_items"], job["category"]
+    )
+    messages = build_answer_messages(
+        question=job["question"],
+        question_type=job["category"],
+        memory_evidence=evidence,
+    )
+    raw_answer = ""
+    answer_response = None
     try:
-        answer_response = client.answer_with_usage(
-            system_prompt=SYSTEM_PROMPT,
+        answer_response = client.answer_messages_with_usage(
+            messages=messages,
             memory_items=job["memory_items"],
-            question_prompt=format_question_prompt(job["question"], job["category"]),
             category=job["category"],
         )
-        answer = answer_response.text
+        raw_answer = answer_response.text
+        answer = parse_answer_response(raw_answer)
         answer_token_usage = answer_response.usage
         answer_attempts = answer_response.attempts
         answer_failed_attempts = answer_response.failed_attempts
@@ -462,18 +480,26 @@ def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, 
         error = ""
     except Exception as exc:
         answer, error = "", str(exc)
-        answer_token_usage = None
-        answer_attempts = client.retries + 1
-        answer_failed_attempts = client.retries + 1
-        answer_image_count = client.count_answer_images(
-            job["memory_items"], category=job["category"]
-        )
-    memory_context, _ = build_retrieved_memory_context(job["memory_items"], job["category"])
+        if answer_response is not None:
+            answer_token_usage = answer_response.usage
+            answer_attempts = answer_response.attempts
+            answer_failed_attempts = min(
+                answer_attempts, answer_response.failed_attempts + 1
+            )
+            answer_image_count = answer_response.image_count
+        else:
+            answer_token_usage = None
+            answer_attempts = client.retries + 1
+            answer_failed_attempts = answer_attempts
+            answer_image_count = client.count_answer_images(
+                job["memory_items"], category=job["category"]
+            )
     top_k = job["retrieval_top_k"]
     result = {key: value for key, value in job.items() if key not in {"memory_items", "retrieval_top_k"}}
     result.update(
         {
             "system_answer": answer,
+            "answer_raw_response": raw_answer,
             "retrieved_ids": [row["memory_id"] for row in top_k],
             "retrieved_source_groups": [row["source_dialogue_ids"] for row in top_k],
             "retrieved_sessions": [row["session_id"] for row in top_k],
@@ -497,6 +523,7 @@ def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, 
         "visible_sessions": job["visible_sessions"],
         "top_k": top_k,
         "memory_context": memory_context,
+        "answer_prompt_messages": messages,
     }
     return result, trace
 
@@ -584,14 +611,15 @@ def _run_signature(
                     layout.existing_vector_path("image_mask.npy", "image_mask.npy"),
                 ]
             )
-    prompt_source = SYSTEM_PROMPT + "\n" + inspect.getsource(format_question_prompt)
     return {
         "prefix_graph_schema_version": PREFIX_GRAPH_SCHEMA_VERSION,
         "arguments": {
             key: value for key, value in vars(args).items() if key not in ignored
         },
         "inputs": file_manifest(input_paths),
-        "prompt_sha256": hashlib.sha256(prompt_source.encode("utf-8")).hexdigest(),
+        "prompt_version": PROMPT_VERSION,
+        "prompt_source": PROMPT_SOURCE,
+        "prompt_sha256": prompt_sha256(),
         "call_trace_version": TRACE_VERSION,
     }
 
@@ -612,7 +640,7 @@ def main() -> None:
     parser.add_argument("--top-k", type=int, default=7)
     parser.add_argument(
         "--exclude-categories",
-        default="MB",
+        default="",
         help="Comma-separated QA categories to skip before embedding, retrieval, and answering.",
     )
     parser.add_argument("--embedding-dim", type=int, default=2048)
@@ -1037,6 +1065,9 @@ def main() -> None:
             manifest_index.file_sha256 if manifest_index is not None else ""
         ),
         "ordered_question_ids": list(expected_manifest_question_ids or ()),
+        "prompt_version": PROMPT_VERSION,
+        "prompt_source": PROMPT_SOURCE,
+        "prompt_sha256": prompt_sha256(),
     }
     write_json_atomic(result_dir / "run_manifest.json", manifest | {"run_signature": signature})
     pipeline_path = result_dir / "pipeline_qa.jsonl"

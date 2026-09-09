@@ -57,3 +57,7 @@ Offline/wandb/
 # Visual primitive extractor outputs
 /outputs/
 /vp_extractor/outputs/
+
+# Offline 中用于复现实验的小型预处理数据需要随仓库同步
+!/Offline/data/
+!/Offline/data/**

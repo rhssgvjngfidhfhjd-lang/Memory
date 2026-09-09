@@ -4,10 +4,13 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import random
+import secrets
 import sys
 import time
 from collections import Counter
+from functools import partial
 from itertools import islice
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence
@@ -25,16 +28,25 @@ from benchmarks.memgallery_harness.retrieval.query_embedding_cache import (  # n
     QueryEmbeddingCache,
     make_query_id,
 )
-from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient  # noqa: E402
+from benchmarks.memgallery_harness.runner.answer_client import (  # noqa: E402
+    VLMAnswerClient,
+    build_retrieved_memory_evidence,
+    query_image_prompt_metadata,
+)
 from benchmarks.memgallery_harness.runner.metrics import (  # noqa: E402
+    add_efficiency_metrics,
     calculate_calls_mb,
     calculate_calls_qa,
     combine_call_metrics,
     summarize_results,
+    write_efficiency_metrics,
 )
 from benchmarks.memgallery_harness.runner.prompts import (  # noqa: E402
-    SYSTEM_PROMPT,
-    format_question_prompt,
+    PROMPT_SOURCE as MEMGALLERY_PROMPT_SOURCE,
+    PROMPT_VERSION as MEMGALLERY_PROMPT_VERSION,
+    build_answer_messages as build_memgallery_answer_messages,
+    parse_answer_response as parse_memgallery_answer,
+    prompt_sha256 as memgallery_prompt_sha256,
     resolve_question_image,
 )
 from benchmarks.question_filter import (  # noqa: E402
@@ -88,6 +100,186 @@ TRANSIENT_ENDPOINT_ERROR_MARKERS = (
 )
 
 
+class RealtimeWandbLogger:
+    """Best-effort W&B logging with local state as the source of truth."""
+
+    ACTOR_FIELDS = (
+        "ppo_kl",
+        "pg_loss",
+        "pg_clipfrac",
+        "lr",
+        "grad_norm",
+        "entropy_loss",
+    )
+    CRITIC_FIELDS = (
+        "value_loss",
+        "absolute_value_error",
+        "explained_variance",
+        "predicted_value_mean",
+        "target_return_mean",
+        "reward_mean",
+        "reward_min",
+        "reward_max",
+    )
+
+    def __init__(
+        self,
+        *,
+        enabled: bool,
+        output_dir: Path,
+        config: dict[str, Any],
+        project: str,
+        entity: str,
+        name: str,
+    ) -> None:
+        self.output_dir = output_dir
+        self.errors_path = output_dir / "run_control" / "wandb_errors.jsonl"
+        self.control_path = output_dir / "run_control" / "wandb.json"
+        self.run: Any | None = None
+        self.error_count = 0
+        if not enabled:
+            return
+        try:
+            import wandb
+
+            control = (
+                json.loads(self.control_path.read_text(encoding="utf-8"))
+                if self.control_path.is_file()
+                else {}
+            )
+            if control.get("run_id"):
+                run_id = str(control["run_id"])
+            else:
+                run_id = secrets.token_hex(4)
+            save_json(
+                self.control_path,
+                {
+                    "project": project,
+                    "entity": entity,
+                    "name": name,
+                    "run_id": run_id,
+                    "status": "initializing",
+                },
+            )
+            self.run = wandb.init(
+                project=project,
+                entity=entity or None,
+                name=name,
+                id=run_id,
+                resume="allow",
+                job_type="ppo-training",
+                tags=["hivemem", "ppo", str(config.get("benchmark") or config.get("data_source") or "")],
+                config=config,
+                settings=wandb.Settings(init_timeout=15),
+            )
+            self.run.define_metric("actor/update_step")
+            self.run.define_metric("actor/*", step_metric="actor/update_step")
+            self.run.define_metric("critic/update_step")
+            self.run.define_metric("critic/*", step_metric="critic/update_step")
+            self.run.define_metric("val/update_step")
+            self.run.define_metric("val/*", step_metric="val/update_step")
+            save_json(
+                self.control_path,
+                {
+                    "project": project,
+                    "entity": entity,
+                    "name": name,
+                    "run_id": run_id,
+                    "status": "active",
+                    "url": str(getattr(self.run, "url", "") or ""),
+                },
+            )
+        except Exception as exc:
+            self.run = None
+            self._record_error("init", exc)
+
+    def log_update(self, row: dict[str, Any]) -> None:
+        if self.run is None:
+            return
+        step = int(row["update_step"])
+        payload: dict[str, Any] = {
+            "actor/update_step": step,
+            "critic/update_step": step,
+            "train/epoch": int(row["epoch"]),
+            "train/question_count": int(row["question_count"]),
+        }
+        for field in self.ACTOR_FIELDS:
+            self._add_finite(payload, f"actor/{field}", row.get(field))
+        for field in self.CRITIC_FIELDS:
+            name = {
+                "reward_mean": "rewards/mean",
+                "reward_min": "rewards/min",
+                "reward_max": "rewards/max",
+            }.get(field, field)
+            self._add_finite(payload, f"critic/{name}", row.get(field))
+        self._log("update", payload)
+
+    def log_validation(self, event: dict[str, Any], *, epoch: int) -> None:
+        if self.run is None:
+            return
+        metrics = event.get("metrics") or {}
+        payload: dict[str, Any] = {
+            "val/update_step": int(event.get("update_step", 0)),
+            "val/epoch": int(epoch),
+            "val/phase": str(event.get("phase", "")),
+            "val/train_question_count": int(event.get("train_question_count", 0)),
+        }
+        for source, target in (
+            ("count", "count"),
+            ("f1", "f1"),
+            ("exact_match", "exact_match"),
+            ("retrieval_hitrate@5", "retrieval_hitrate_at_5"),
+            ("mean_reward", "reward"),
+            ("errors", "errors"),
+            ("cached_rollouts", "cached_rollouts"),
+        ):
+            self._add_finite(payload, f"val/{target}", metrics.get(source))
+        for evidence, count in (metrics.get("evidence_actions") or {}).items():
+            self._add_finite(payload, f"val/evidence_actions/{evidence}", count)
+        self._log("validation", payload)
+
+    def finish(self) -> None:
+        if self.run is None:
+            return
+        try:
+            self.run.finish()
+            control = json.loads(self.control_path.read_text(encoding="utf-8"))
+            control["status"] = "finished"
+            save_json(self.control_path, control)
+        except Exception as exc:
+            self._record_error("finish", exc)
+
+    def _log(self, stage: str, payload: dict[str, Any]) -> None:
+        try:
+            self.run.log(payload)
+        except Exception as exc:
+            self._record_error(stage, exc)
+
+    def _record_error(self, stage: str, error: Exception) -> None:
+        self.error_count += 1
+        append_jsonl(
+            self.errors_path,
+            {
+                "timestamp_ns": time.time_ns(),
+                "stage": stage,
+                "error_type": type(error).__name__,
+                "message": str(error),
+            },
+        )
+        if self.error_count == 1 or self.error_count % 50 == 0:
+            print(
+                f"W&B {stage} failed ({type(error).__name__}): {error}; "
+                "training continues with local logs",
+                file=sys.stderr,
+                flush=True,
+            )
+
+    @staticmethod
+    def _add_finite(payload: dict[str, Any], key: str, value: Any) -> None:
+        if isinstance(value, (int, float)) and math.isfinite(float(value)):
+            payload[key] = value
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="PPO evidence selection for benchmark MAUs")
     parser.add_argument(
@@ -121,6 +313,10 @@ def main() -> None:
     train_parser.add_argument("--max-train-episodes", type=int, default=0)
     train_parser.add_argument("--validation-limit", type=int, default=0)
     train_parser.add_argument("--resume", default="")
+    train_parser.add_argument("--wandb", action=argparse.BooleanOptionalAction, default=False)
+    train_parser.add_argument("--wandb-project", default="hivemem-evidence-policy")
+    train_parser.add_argument("--wandb-entity", default="")
+    train_parser.add_argument("--wandb-name", default="")
 
     eval_parser = subparsers.add_parser("eval", help="Evaluate one evidence strategy")
     eval_parser.add_argument(
@@ -175,6 +371,11 @@ def load_config(path: Path) -> dict[str, Any]:
     if config.get("profiles_file"):
         value = Path(config["profiles_file"])
         config["profiles_file"] = str(
+            value if value.is_absolute() else (ROOT / value).resolve()
+        )
+    if config.get("efficiency_config"):
+        value = Path(config["efficiency_config"])
+        config["efficiency_config"] = str(
             value if value.is_absolute() else (ROOT / value).resolve()
         )
     if config.get("split_manifest"):
@@ -250,7 +451,7 @@ def prepare_split(config: dict[str, Any], config_path: Path, *, trials: int) -> 
         data_dir,
         benchmark=benchmark,
         excluded_categories=parse_excluded_categories(
-            config.get("excluded_categories", ["MB"] if benchmark == "wma" else ["AR"])
+            config.get("excluded_categories", ["AR"] if benchmark == "memgallery" else [])
         ),
     )
     names = sorted(stats)
@@ -361,6 +562,16 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
     policy = build_policy(config, device)
     trainer = build_trainer(config, policy)
     output_dir = Path(config["output_dir"])
+    output_dir.mkdir(parents=True, exist_ok=True)
+    save_json(output_dir / "config.json", config)
+    wandb_logger = RealtimeWandbLogger(
+        enabled=bool(args.wandb),
+        output_dir=output_dir,
+        config=config,
+        project=str(args.wandb_project),
+        entity=str(args.wandb_entity),
+        name=str(args.wandb_name or output_dir.name),
+    )
     ppo_metrics_path = output_dir / "ppo_metrics.jsonl"
     start_epoch = 0
     train_question_count = 0
@@ -407,6 +618,8 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
             and bool(config["ppo"].get("validation_at_start", False))
         ),
     )
+    if initial_validation is not None:
+        wandb_logger.log_validation(initial_validation, epoch=0)
     if start_epoch == 0 and ppo_metrics_path.exists():
         ppo_metrics_path.unlink()
     for epoch in range(start_epoch, epochs):
@@ -461,44 +674,48 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                 if len(buffer) >= int(config["ppo"]["rollout_batch_size"]):
                     metrics = trainer.update(buffer)
                     updates.append(metrics)
+                    update_row = {
+                        "epoch": epoch,
+                        "question_count": train_question_count,
+                        "update_step": trainer.update_steps,
+                        **metrics,
+                    }
                     append_jsonl(
                         ppo_metrics_path,
-                        {
-                            "epoch": epoch,
-                            "question_count": train_question_count,
-                            "update_step": trainer.update_steps,
-                            **metrics,
-                        },
+                        update_row,
                     )
+                    wandb_logger.log_update(update_row)
                     buffer.clear()
             validation_phase = validation_points.get(episode_index)
             if validation_phase is not None:
-                validations.append(
-                    run_training_validation(
-                        config,
-                        env,
-                        query_cache,
-                        profiles,
-                        policy,
-                        output_dir=output_dir,
-                        epoch=epoch,
-                        phase=validation_phase,
-                        update_step=trainer.update_steps,
-                        train_question_count=train_question_count,
-                    )
+                validation_event = run_training_validation(
+                    config,
+                    env,
+                    query_cache,
+                    profiles,
+                    policy,
+                    output_dir=output_dir,
+                    epoch=epoch,
+                    phase=validation_phase,
+                    update_step=trainer.update_steps,
+                    train_question_count=train_question_count,
                 )
+                validations.append(validation_event)
+                wandb_logger.log_validation(validation_event, epoch=epoch)
         if len(buffer):
             metrics = trainer.update(buffer)
             updates.append(metrics)
+            update_row = {
+                "epoch": epoch,
+                "question_count": train_question_count,
+                "update_step": trainer.update_steps,
+                **metrics,
+            }
             append_jsonl(
                 ppo_metrics_path,
-                {
-                    "epoch": epoch,
-                    "question_count": train_question_count,
-                    "update_step": trainer.update_steps,
-                    **metrics,
-                },
+                update_row,
             )
+            wandb_logger.log_update(update_row)
         end_validation = run_training_validation(
             config,
             env,
@@ -512,6 +729,7 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
             train_question_count=train_question_count,
         )
         validations.append(end_validation)
+        wandb_logger.log_validation(end_validation, epoch=epoch)
         checkpoint = output_dir / "checkpoints" / f"epoch_{epoch:03d}.pt"
         train_trace = output_dir / "train" / f"epoch_{epoch:03d}_rollouts.jsonl"
         write_jsonl(train_trace, train_rollouts)
@@ -541,6 +759,7 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
             "validation_rollouts": end_validation["rollouts"],
         }
         print(json.dumps(summary, ensure_ascii=False))
+    wandb_logger.finish()
 
 
 def validation_checkpoints(
@@ -607,13 +826,16 @@ def run_training_validation(
         filename = f"epoch_{epoch:03d}_{phase}_rollouts.jsonl"
     trace = output_dir / "validation" / filename
     write_jsonl(trace, validation["rollouts"])
-    return {
+    event = {
         "phase": phase,
         "update_step": int(update_step),
         "train_question_count": int(train_question_count),
         "metrics": validation["metrics"],
         "rollouts": str(trace),
     }
+    if phase != "initial":
+        save_json(trace.with_name(filename.replace("rollouts.jsonl", "metrics.json")), event)
+    return event
 
 
 def prepare_initial_validation(
@@ -749,7 +971,29 @@ def evaluate_command(config: dict[str, Any], args: argparse.Namespace) -> None:
     )
     output = Path(config["output_dir"]) / "eval" / f"{args.split}_{strategy.value}"
     output.mkdir(parents=True, exist_ok=True)
+    sample_ids = sorted(
+        {
+            str(row.get("dataset") or "").strip()
+            for row in result["rollouts"]
+            if str(row.get("dataset") or "").strip()
+        }
+    )
+    efficiency_config = Path(
+        config.get("efficiency_config")
+        or ROOT / "configs" / "model_efficiency.json"
+    )
+    efficiency = write_efficiency_metrics(
+        output,
+        result["rollouts"],
+        sample_id_field="dataset",
+        sample_ids=sample_ids,
+        model=str(config["model"]["name"]),
+        config_path=efficiency_config,
+        hivemem_index_root=config["memory_bank"],
+    )
+    result["metrics"] = add_efficiency_metrics(result["metrics"], efficiency)
     save_json(output / "metrics.json", result["metrics"])
+    save_json(output / "summary.json", result["metrics"])
     with (output / "rollouts.jsonl").open("w", encoding="utf-8") as handle:
         for row in result["rollouts"]:
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")
@@ -987,17 +1231,10 @@ def iter_episodes(
         else tuple(config["split"][split])
     )
     graph_options = resolve_graph_options(config)
+    prompt_digest = memgallery_prompt_sha256()
     for dataset_name in dataset_names:
         path = data_dir / "dialog" / f"{dataset_name}.json"
         payload = json.loads(path.read_text(encoding="utf-8"))
-        profile = payload.get("character_profile") or {}
-        speaker = f"user ({profile.get('name')})" if profile.get("name") else "user"
-        system_prompt = SYSTEM_PROMPT
-        if profiles.get(dataset_name):
-            system_prompt += (
-                "\n\nUser profile (background about the person the memories are about):\n"
-                + profiles[dataset_name]
-            )
         dataset_dir = Path(config["memory_bank"]) / "datasets" / dataset_name
         index = (
             build_graph_index(dataset_dir, graph_options)
@@ -1023,7 +1260,13 @@ def iter_episodes(
                 question=question,
                 query_image=query_image,
             )
-            query_vector = query_cache.get_by_id(query_id)
+            query_vector = query_cache.get(
+                dataset_name=dataset_name,
+                qa_index=qa_index,
+                category=category,
+                question=question,
+                query_image=query_image,
+            )
             if query_vector is None:
                 raise KeyError(f"Missing cached query embedding: {query_id}")
             hits = index.search(query_vector, top_k=int(config["top_k"]), category=category)
@@ -1033,16 +1276,28 @@ def iter_episodes(
                 query_id=query_id,
                 dataset=dataset_name,
                 category=category,
-                question_prompt=format_question_prompt(question, category, speaker, "assistant"),
-                system_prompt=system_prompt,
+                question_prompt=question,
+                system_prompt="",
                 ground_truth=str(qa.get("answer", "")),
                 query_embedding=query_vector,
                 memory_hits=tuple(hits),
                 query_image=query_image,
                 clue=tuple(str(item) for item in clue),
                 retrieval_signature=index_signature,
+                answer_messages_builder=partial(
+                    build_memgallery_policy_messages,
+                    question=question,
+                    category=category,
+                    query_image=query_image,
+                ),
+                answer_parser=parse_memgallery_answer,
+                prepend_memory_context=False,
+                prompt_signature=prompt_digest,
                 metadata={
                     "manifest_question_id": manifest_question_id,
+                    "prompt_version": MEMGALLERY_PROMPT_VERSION,
+                    "prompt_source": MEMGALLERY_PROMPT_SOURCE,
+                    "prompt_sha256": prompt_digest,
                     "retrieval_mode": "graph_append" if graph_options else "vector",
                     "vector_k": int(config["top_k"]),
                     "graph_append_k": int(graph_options["append_k"]) if graph_options else 0,
@@ -1050,15 +1305,80 @@ def iter_episodes(
             )
 
 
+def build_memgallery_policy_messages(
+    memory_items: Sequence[dict[str, Any]],
+    *,
+    question: str,
+    category: str,
+    query_image: dict[str, Any] | None,
+) -> list[dict[str, str]]:
+    evidence, _ = build_retrieved_memory_evidence(list(memory_items), category)
+    return build_memgallery_answer_messages(
+        question=question,
+        question_type=category,
+        memory_evidence=evidence,
+        query_images=query_image_prompt_metadata(query_image),
+    )
+
+
+def build_h2hmem_policy_messages(
+    memory_items: Sequence[dict[str, Any]],
+    *,
+    question: str,
+    category: str,
+    query_image: dict[str, Any] | None = None,
+) -> list[dict[str, str]]:
+    from benchmarks.h2hmem_harness.prompts import build_answer_messages
+
+    evidence, _ = build_retrieved_memory_evidence(
+        list(memory_items), category="VR"
+    )
+    return build_answer_messages(
+        question=question,
+        question_type=category,
+        memory_evidence=evidence,
+        query_images=query_image_prompt_metadata(query_image),
+    )
+
+
+def parse_h2hmem_policy_answer(raw: str) -> str:
+    from benchmarks.h2hmem_harness.prompts import parse_answer_response
+
+    return parse_answer_response(raw)
+
+
+def build_wma_policy_messages(
+    memory_items: Sequence[dict[str, Any]], *, question: str, category: str
+) -> list[dict[str, str]]:
+    from benchmarks.wma_harness.runner.answer_client import (
+        build_retrieved_memory_evidence as build_wma_evidence,
+    )
+    from benchmarks.wma_harness.runner.prompts import build_answer_messages
+
+    evidence, _ = build_wma_evidence(list(memory_items), category)
+    return build_answer_messages(
+        question=question,
+        question_type=category,
+        memory_evidence=evidence,
+    )
+
+
+def parse_wma_policy_answer(raw: str) -> str:
+    from benchmarks.wma_harness.runner.prompts import parse_answer_response
+
+    return parse_answer_response(raw)
+
+
 def iter_h2hmem_episodes(
     config: dict[str, Any],
     split: str,
     query_cache: QueryEmbeddingCache,
 ) -> Iterator[EvidenceEpisode]:
-    from benchmarks.h2hmem_harness.eval_h2hmem import (
-        SYSTEM_PROMPT as H2HMEM_SYSTEM_PROMPT,
-        _question_image,
-        _question_prompt,
+    from benchmarks.h2hmem_harness.eval_h2hmem import _question_image
+    from benchmarks.h2hmem_harness.prompts import (
+        PROMPT_SOURCE,
+        PROMPT_VERSION,
+        prompt_sha256,
     )
 
     split_index = configured_split_manifest(config)
@@ -1071,6 +1391,7 @@ def iter_h2hmem_episodes(
     visual_categories = {
         str(value).upper() for value in config.get("visual_categories", [])
     }
+    prompt_digest = prompt_sha256()
     graph_options = resolve_graph_options(config)
     indexes: dict[str, Any] = {}
     index_signatures: dict[str, str] = {}
@@ -1116,20 +1437,32 @@ def iter_h2hmem_episodes(
             query_id=row.question_id,
             dataset=dataset_name,
             category=row.category,
-            question_prompt=_question_prompt(row.question, row.category),
-            system_prompt=H2HMEM_SYSTEM_PROMPT,
+            question_prompt=row.question,
+            system_prompt="",
             ground_truth=row.answer,
             query_embedding=query_vector,
             memory_hits=tuple(hits),
             query_image=query_image,
             clue=tuple(str(value) for value in row.metadata.get("answer_session", [])),
             retrieval_signature=index_signatures[dataset_name],
+            answer_messages_builder=partial(
+                build_h2hmem_policy_messages,
+                question=row.question,
+                category=row.category,
+                query_image=query_image,
+            ),
+            answer_parser=parse_h2hmem_policy_answer,
+            prepend_memory_context=False,
+            prompt_signature=prompt_digest,
             metadata={
                 "manifest_question_id": row.question_id,
                 "variant": variant,
                 "conversation_id": row.source_id,
                 "session_id": row.metadata.get("session_id", ""),
                 "difficulty": row.metadata.get("difficulty", ""),
+                "prompt_version": PROMPT_VERSION,
+                "prompt_source": PROMPT_SOURCE,
+                "prompt_sha256": prompt_digest,
                 "retrieval_mode": "graph_append" if graph_options else "vector",
                 "vector_k": int(config["top_k"]),
                 "graph_append_k": int(graph_options["append_k"]) if graph_options else 0,
@@ -1152,8 +1485,11 @@ def iter_wma_episodes(
         session_ids,
         visible_sessions_for_checkpoint,
     )
-    from benchmarks.wma_harness.runner.prompts import SYSTEM_PROMPT as WMA_SYSTEM_PROMPT
-    from benchmarks.wma_harness.runner.prompts import format_question_prompt as format_wma_prompt
+    from benchmarks.wma_harness.runner.prompts import (
+        PROMPT_SOURCE,
+        PROMPT_VERSION,
+        prompt_sha256,
+    )
     from embedding.chunk_builder import iter_wma_sample_files
 
     data_dir = Path(config["data_dir"])
@@ -1163,8 +1499,9 @@ def iter_wma_episodes(
         for value in config.get("visual_categories", ["VFR", "VS", "VU", "CMR", ""])
     }
     excluded_categories = parse_excluded_categories(
-        config.get("excluded_categories", ["MB"])
+        config.get("excluded_categories", [])
     )
+    prompt_digest = prompt_sha256()
     split_index = configured_split_manifest(config)
     data_source = evidence_data_source(config)
     sample_ids = (
@@ -1252,12 +1589,20 @@ def iter_wma_episodes(
                     query_id=query_id,
                     dataset=sample_id,
                     category=category,
-                    question_prompt=format_wma_prompt(question, category),
-                    system_prompt=WMA_SYSTEM_PROMPT,
+                    question_prompt=question,
+                    system_prompt="",
                     ground_truth=str(qa.get("answer", "")),
                     query_embedding=query_vector,
                     memory_hits=tuple(hits),
                     retrieval_signature=index_signature,
+                    answer_messages_builder=partial(
+                        build_wma_policy_messages,
+                        question=question,
+                        category=category,
+                    ),
+                    answer_parser=parse_wma_policy_answer,
+                    prepend_memory_context=False,
+                    prompt_signature=prompt_digest,
                     clue=tuple(
                         dict.fromkeys(
                             point_sessions[value]
@@ -1272,6 +1617,9 @@ def iter_wma_episodes(
                         "question": question,
                         "question_type": qa.get("question_type", ""),
                         "difficulty": qa.get("difficulty", ""),
+                        "prompt_version": PROMPT_VERSION,
+                        "prompt_source": PROMPT_SOURCE,
+                        "prompt_sha256": prompt_digest,
                         "evidence": qa.get("evidence", []),
                         "covered_sessions": covered_sessions,
                         "visible_sessions": visible_sessions,

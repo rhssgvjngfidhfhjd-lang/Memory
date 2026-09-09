@@ -1,8 +1,17 @@
 from __future__ import annotations
 
+import importlib.util
+from pathlib import Path
 import unittest
 
-from scripts.judge_results_llm_parallel import normalize_judge_row, summarize
+from scripts.judge_results_llm_parallel import (
+    normalize_judge_row,
+    render_judge_prompt,
+    summarize,
+)
+
+
+WORKSPACE_ROOT = Path(__file__).resolve().parents[2]
 
 
 class JudgeEvidencePolicyRolloutTest(unittest.TestCase):
@@ -20,6 +29,46 @@ class JudgeEvidencePolicyRolloutTest(unittest.TestCase):
 
         self.assertEqual(normalized["prediction"], "predicted answer")
         self.assertEqual(normalized["references"], ["reference answer"])
+
+    def test_wma_prompt_matches_official_prompt_with_all_context(self) -> None:
+        prompt_path = (
+            WORKSPACE_ROOT
+            / "WorldMemArena"
+            / "eval_framework"
+            / "judges"
+            / "prompts.py"
+        )
+        spec = importlib.util.spec_from_file_location("wma_official_judge_prompts", prompt_path)
+        assert spec is not None and spec.loader is not None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        normalized = normalize_judge_row(
+            "worldmemarena",
+            {
+                "query_id": "sample::question-1",
+                "sample_id": "sample",
+                "question": "What happened?",
+                "system_answer": "A concise prediction.",
+                "original_answer": "The reference answer.",
+                "gold_evidence_contents": ["First memory point.", "Second memory point."],
+            },
+            1,
+        )
+        actual = render_judge_prompt(
+            normalized["protocol_id"],
+            prediction=normalized["prediction"],
+            references=normalized["references"],
+            question=normalized["question"],
+            key_memory_points=normalized["key_memory_points"],
+        )
+        expected = module.QA_EVALUATION_PROMPT.format(
+            question="What happened?",
+            reference_answer="The reference answer.",
+            key_memory_points="First memory point.\nSecond memory point.",
+            response="A concise prediction.",
+        )
+        self.assertEqual(actual, expected)
 
     def test_summarizes_judge_scores_by_category(self) -> None:
         rows = [

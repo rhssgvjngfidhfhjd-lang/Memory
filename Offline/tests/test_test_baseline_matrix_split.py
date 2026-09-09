@@ -14,6 +14,7 @@ from scripts.run_test_baseline_matrix import (
     load_selection,
     validate_run_manifest_selection,
 )
+from benchmarks.h2hmem_harness.prompts import prompt_sha256 as h2hmem_prompt_sha256
 
 
 class TestBaselineMatrixSplitRegressionTest(unittest.TestCase):
@@ -119,6 +120,7 @@ class TestBaselineMatrixSplitRegressionTest(unittest.TestCase):
                 "split_manifest_sha256": self.selection.manifest_sha256,
                 "questions": len(question_ids),
                 "ordered_question_ids": list(question_ids),
+                "prompt_sha256": h2hmem_prompt_sha256(),
             },
             self.selection,
         )

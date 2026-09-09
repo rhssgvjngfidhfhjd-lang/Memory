@@ -6,7 +6,7 @@ import json
 import random
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Protocol, Sequence
+from typing import Any, Callable, Protocol, Sequence
 
 from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
 from benchmarks.memgallery_harness.runner.metrics import f1_score
@@ -25,7 +25,14 @@ from .evidence import (
 from .policy import EvidenceSelectionPolicy
 
 
-EVIDENCE_CACHE_VERSION = 5
+EVIDENCE_CACHE_VERSION = 7
+
+
+AnswerPromptBuilder = Callable[[Sequence[dict[str, Any]]], str]
+AnswerMessagesBuilder = Callable[
+    [Sequence[dict[str, Any]]], list[dict[str, str]]
+]
+AnswerParser = Callable[[str], str]
 
 
 class RewardFunction(Protocol):
@@ -51,6 +58,15 @@ class EvidenceEpisode:
     clue: tuple[str, ...] = ()
     retrieval_signature: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
+    answer_prompt_builder: AnswerPromptBuilder | None = field(
+        default=None, repr=False, compare=False
+    )
+    answer_messages_builder: AnswerMessagesBuilder | None = field(
+        default=None, repr=False, compare=False
+    )
+    answer_parser: AnswerParser | None = field(default=None, repr=False, compare=False)
+    prepend_memory_context: bool = True
+    prompt_signature: str = ""
 
 
 @dataclass
@@ -61,12 +77,14 @@ class EvidenceRollout:
     observation: PolicyObservation
     actions: tuple[MAUEvidenceAction, ...]
     answer: str
+    raw_answer: str
     reward: float
     error: str
     cached: bool
     answer_attempts: int | None = None
     answer_failed_attempts: int | None = None
     answer_usage: dict[str, int] | None = None
+    answer_image_count: int | None = None
     policy_step: PolicyStep | None = None
 
     def to_dict(self) -> dict[str, Any]:
@@ -76,12 +94,20 @@ class EvidenceRollout:
             "category": self.category,
             "actions": [action.to_dict() for action in self.actions],
             "answer": self.answer,
+            "answer_raw_response": self.raw_answer,
             "reward": self.reward,
             "error": self.error,
             "cached": self.cached,
             "answer_attempts": self.answer_attempts,
             "answer_failed_attempts": self.answer_failed_attempts,
             "answer_usage": self.answer_usage,
+            "answer_image_count": self.answer_image_count,
+            "evidence_availability_mask": [
+                [bool(value) for value in values]
+                for values in self.observation.evidence_availability_mask.detach()
+                .cpu()
+                .tolist()
+            ],
         }
         if self.policy_step is not None:
             row["joint_log_prob"] = float(self.policy_step.joint_log_prob.detach().cpu())
@@ -191,10 +217,35 @@ class EvidenceSelectionEnv:
         items = self.chain_builder.build(
             episode.dataset, episode.category, episode.memory_hits, actions
         )
-        cache_key = self._cache_key(episode, actions, items)
+        answer_category = str(
+            episode.metadata.get("answer_category", episode.category)
+        )
+        if episode.answer_messages_builder is not None:
+            request = {
+                "messages": episode.answer_messages_builder(items),
+                "memory_items": items,
+                "query_image": episode.query_image,
+                "category": answer_category,
+            }
+        else:
+            question_prompt = (
+                episode.answer_prompt_builder(items)
+                if episode.answer_prompt_builder is not None
+                else episode.question_prompt
+            )
+            request = {
+                "system_prompt": episode.system_prompt,
+                "memory_items": items,
+                "question_prompt": question_prompt,
+                "query_image": episode.query_image,
+                "category": answer_category,
+                "prepend_memory_context": episode.prepend_memory_context,
+            }
+        cache_key = self._cache_key(episode, actions, items, request=request)
         cached = self.cache.get(cache_key) if self.cache is not None else None
         if cached is not None:
-            answer = str(cached.get("answer", ""))
+            raw_answer = str(cached.get("raw_answer", cached.get("answer", "")))
+            answer = self._parse_answer(episode, raw_answer)
             reward = float(self.reward_function(answer, episode.ground_truth))
             error = str(cached.get("error", ""))
             answer_attempts = _optional_int(cached.get("answer_attempts"))
@@ -202,48 +253,124 @@ class EvidenceSelectionEnv:
                 cached.get("answer_failed_attempts")
             )
             answer_usage = _optional_usage(cached.get("answer_usage"))
+            answer_image_count = _optional_int(cached.get("answer_image_count"))
+            if (
+                answer_image_count is None
+                and inspect.getattr_static(
+                    self.client, "count_answer_images", None
+                )
+                is not None
+            ):
+                answer_image_count = int(
+                    self.client.count_answer_images(
+                        items,
+                        query_image=episode.query_image,
+                        category=answer_category,
+                    )
+                )
             was_cached = True
         else:
+            raw_answer = ""
+            response = None
             answer_attempts: int | None = None
             answer_failed_attempts: int | None = None
             answer_usage: dict[str, int] | None = None
+            answer_image_count: int | None = None
             try:
-                answer_category = str(
-                    episode.metadata.get("answer_category", episode.category)
-                )
-                request = {
-                    "system_prompt": episode.system_prompt,
-                    "memory_items": items,
-                    "question_prompt": episode.question_prompt,
-                    "query_image": episode.query_image,
-                    "category": answer_category,
-                }
                 # ``hasattr`` is not reliable for dynamic proxy clients such as
                 # ``MagicMock`` because they synthesize arbitrary attributes.
                 # Inspect the object statically so minimal/third-party clients
                 # continue to use the plain ``answer`` compatibility path.
-                if (
+                if episode.answer_messages_builder is not None and (
+                    inspect.getattr_static(
+                        self.client, "answer_messages_with_usage", None
+                    )
+                    is not None
+                ):
+                    response = self.client.answer_messages_with_usage(**request)
+                    raw_answer = response.text
+                    answer = self._parse_answer(episode, raw_answer)
+                    answer_attempts = int(response.attempts)
+                    answer_failed_attempts = int(response.failed_attempts)
+                    answer_usage = _optional_usage(response.usage)
+                    answer_image_count = int(response.image_count)
+                elif (
                     inspect.getattr_static(
                         self.client, "answer_with_usage", None
                     )
                     is not None
                 ):
-                    response = self.client.answer_with_usage(**request)
-                    answer = response.text
+                    compatibility_request = request
+                    if episode.answer_messages_builder is not None:
+                        messages = request["messages"]
+                        compatibility_request = {
+                            "system_prompt": next(
+                                (
+                                    message["content"]
+                                    for message in messages
+                                    if message["role"] == "system"
+                                ),
+                                "",
+                            ),
+                            "memory_items": items,
+                            "question_prompt": next(
+                                message["content"]
+                                for message in reversed(messages)
+                                if message["role"] == "user"
+                            ),
+                            "query_image": episode.query_image,
+                            "category": answer_category,
+                            "prepend_memory_context": False,
+                        }
+                    response = self.client.answer_with_usage(**compatibility_request)
+                    raw_answer = response.text
+                    answer = self._parse_answer(episode, raw_answer)
                     answer_attempts = int(response.attempts)
                     answer_failed_attempts = int(response.failed_attempts)
                     answer_usage = _optional_usage(response.usage)
+                    answer_image_count = int(response.image_count)
                 else:
                     # Compatibility for minimal test or third-party clients.
-                    answer = self.client.answer(**request)
+                    plain_request = request
+                    if episode.answer_messages_builder is not None:
+                        messages = request["messages"]
+                        plain_request = {
+                            "system_prompt": next(
+                                (
+                                    message["content"]
+                                    for message in messages
+                                    if message["role"] == "system"
+                                ),
+                                "",
+                            ),
+                            "memory_items": items,
+                            "question_prompt": next(
+                                message["content"]
+                                for message in reversed(messages)
+                                if message["role"] == "user"
+                            ),
+                            "query_image": episode.query_image,
+                            "category": answer_category,
+                            "prepend_memory_context": False,
+                        }
+                    raw_answer = self.client.answer(**plain_request)
+                    answer = self._parse_answer(episode, raw_answer)
                     answer_attempts = 1
                     answer_failed_attempts = 0
                 error = ""
             except Exception as exc:
                 answer = ""
                 error = str(exc)
-                answer_attempts = int(getattr(self.client, "retries", 0)) + 1
-                answer_failed_attempts = answer_attempts
+                if response is not None:
+                    answer_attempts = int(response.attempts)
+                    answer_failed_attempts = min(
+                        answer_attempts, int(response.failed_attempts) + 1
+                    )
+                    answer_usage = _optional_usage(response.usage)
+                    answer_image_count = int(response.image_count)
+                else:
+                    answer_attempts = int(getattr(self.client, "retries", 0)) + 1
+                    answer_failed_attempts = answer_attempts
             reward = float(self.reward_function(answer, episode.ground_truth))
             was_cached = False
             if self.cache is not None and not error:
@@ -253,11 +380,13 @@ class EvidenceSelectionEnv:
                         "query_id": episode.query_id,
                         "actions": [action.to_dict() for action in actions],
                         "answer": answer,
+                        "raw_answer": raw_answer,
                         "reward": reward,
                         "error": error,
                         "answer_attempts": answer_attempts,
                         "answer_failed_attempts": answer_failed_attempts,
                         "answer_usage": answer_usage,
+                        "answer_image_count": answer_image_count,
                     },
                 )
         return EvidenceRollout(
@@ -267,12 +396,14 @@ class EvidenceSelectionEnv:
             observation=observation,
             actions=tuple(actions),
             answer=answer,
+            raw_answer=raw_answer,
             reward=reward,
             error=error,
             cached=was_cached,
             answer_attempts=answer_attempts,
             answer_failed_attempts=answer_failed_attempts,
             answer_usage=answer_usage,
+            answer_image_count=answer_image_count,
             policy_step=policy_step,
         )
 
@@ -281,6 +412,8 @@ class EvidenceSelectionEnv:
         episode: EvidenceEpisode,
         actions: Sequence[MAUEvidenceAction],
         memory_items: Sequence[dict[str, Any]],
+        *,
+        request: dict[str, Any],
     ) -> str:
         config = {
             "cache_version": EVIDENCE_CACHE_VERSION,
@@ -290,8 +423,11 @@ class EvidenceSelectionEnv:
             "temperature": getattr(self.client, "temperature", 0.0),
             "think": self.client.think,
             "backend": self.client.backend,
-            "system_prompt": episode.system_prompt,
-            "question_prompt": episode.question_prompt,
+            "messages": request.get("messages"),
+            "system_prompt": request.get("system_prompt", ""),
+            "question_prompt": request.get("question_prompt", ""),
+            "prepend_memory_context": request.get("prepend_memory_context", False),
+            "prompt_signature": episode.prompt_signature,
             "category": episode.category,
             "answer_category": episode.metadata.get(
                 "answer_category", episode.category
@@ -315,6 +451,12 @@ class EvidenceSelectionEnv:
         ).hexdigest()[:16]
         raw = f"{episode.query_id}\n{action_signature(actions)}\n{config_hash}"
         return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+    @staticmethod
+    def _parse_answer(episode: EvidenceEpisode, raw_answer: str) -> str:
+        if episode.answer_parser is None:
+            return str(raw_answer)
+        return str(episode.answer_parser(str(raw_answer)))
 
 
 def _optional_int(value: Any) -> int | None:

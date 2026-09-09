@@ -19,7 +19,11 @@ from benchmarks.wma_harness.runner.metrics import (
     answer_span_exact_match,
     summarize_results,
 )
-from embedding.chunk_builder import build_wma_chunks_from_data
+from embedding.chunk_builder import (
+    Chunk,
+    balance_wma_chunks,
+    build_wma_chunks_from_data,
+)
 from embedding.chunk_builder import iter_wma_sample_files
 from evidence_policy.evidence import WMADialogueStore, make_policy_observation
 from evidence_policy.retrieval import build_wma_prefix_graph_index
@@ -100,6 +104,39 @@ def sample_payload() -> dict:
 
 
 class WMAChunkTest(unittest.TestCase):
+    def test_balanced_chunks_keep_rounds_whole_and_sessions_separate(self):
+        rounds = []
+        for session_id, count in (("S00", 3), ("S01", 1)):
+            for number in range(1, count + 1):
+                dialogue_id = f"{session_id}:R{number:04d}"
+                rounds.append(
+                    Chunk(
+                        chunk_id=f"sample_01:{dialogue_id}",
+                        text=(
+                            f"profile_summary: \nsession: {session_id}\ndate: 2025-01-01\n"
+                            f"round: {dialogue_id}\nuser: {'x' * 360}\nassistant: y"
+                        ),
+                        metadata={
+                            "dataset": "sample_01",
+                            "session_id": session_id,
+                            "dialogue_id": dialogue_id,
+                            "round_id": number,
+                            "date": "2025-01-01",
+                            "image_ids": [],
+                            "image_captions": [],
+                        },
+                    )
+                )
+        chunks = balance_wma_chunks(rounds, target_tokens=210)
+        self.assertEqual(len(chunks), 3)
+        self.assertEqual(chunks[0].metadata["round_count"], 2)
+        self.assertEqual(
+            chunks[0].metadata["source_dialogue_ids"],
+            ["S00:R0001", "S00:R0002"],
+        )
+        self.assertEqual(chunks[1].metadata["source_dialogue_ids"], ["S00:R0003"])
+        self.assertEqual(chunks[2].metadata["session_id"], "S01")
+
     def test_chunk_schema_matches_builder_and_excludes_gold(self):
         payload = sample_payload()
         with tempfile.TemporaryDirectory() as directory:

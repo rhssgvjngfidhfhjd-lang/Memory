@@ -11,10 +11,12 @@ import time
 from benchmarks.memgallery_harness.runner.answer_client import (
     VLMAnswerClient,
     build_retrieved_memory_context,
+    build_retrieved_memory_evidence,
+    query_image_prompt_metadata,
 )
 from benchmarks.memgallery_harness.runner.prompts import (
-    SYSTEM_PROMPT,
-    format_question_prompt,
+    build_answer_messages,
+    parse_answer_response,
     prompt_manifest,
     resolve_question_image,
 )
@@ -84,7 +86,6 @@ def prepare_dataset_jobs(
     qa_start: int = 1,
     qa_end: int = 0,
     graph_options: dict | None = None,
-    system_prompt: str | None = None,
     baseline: str = "HiveMem",
     state_root: Path | None = None,
     config_overrides: dict[str, Any] | None = None,
@@ -200,7 +201,6 @@ def prepare_dataset_jobs(
             retrieved_ids = list(
                 dict.fromkeys(source for group in retrieved_groups for source in group)
             )
-            prompt = format_question_prompt(question, category, speaker_a, "assistant")
             clue = qa.get("clue", []) if isinstance(qa.get("clue", []), list) else []
             jobs.append(
                 {
@@ -212,8 +212,7 @@ def prepare_dataset_jobs(
                     "qa_index": qa_index,
                     "question": question,
                     "category": category,
-                    "question_prompt": prompt,
-                    "system_prompt": system_prompt or SYSTEM_PROMPT,
+                    "speaker_a": speaker_a,
                     "query_image": query_image,
                     "original_answer": qa.get("answer", ""),
                     "retrieved_ids": retrieved_ids,
@@ -245,15 +244,26 @@ def answer_dataset_job(
     *,
     allow_answer_errors: bool,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
+    evidence, _ = build_retrieved_memory_evidence(
+        job["memory_items"], job["category"]
+    )
+    messages = build_answer_messages(
+        question=str(job.get("question") or ""),
+        question_type=str(job.get("category") or ""),
+        memory_evidence=evidence,
+        query_images=query_image_prompt_metadata(job.get("query_image")),
+    )
+    raw_answer = ""
+    response = None
     try:
-        response = client.answer_with_usage(
-            system_prompt=job["system_prompt"],
+        response = client.answer_messages_with_usage(
+            messages=messages,
             memory_items=job["memory_items"],
-            question_prompt=job["question_prompt"],
             query_image=job.get("query_image"),
             category=job["category"],
         )
-        answer, error = response.text, ""
+        raw_answer = response.text
+        answer, error = parse_answer_response(raw_answer), ""
         usage = response.usage
         attempts = response.attempts
         failed_attempts = response.failed_attempts
@@ -263,14 +273,21 @@ def answer_dataset_job(
             raise RuntimeError(
                 f"Answer request failed for {job['dataset']} QA {job['qa_index']}: {exc}"
             ) from exc
-        answer, error, usage = "", str(exc), None
-        attempts = client.retries + 1
-        failed_attempts = client.retries + 1
-        image_count = client.count_answer_images(
-            job["memory_items"],
-            query_image=job.get("query_image"),
-            category=job["category"],
-        )
+        answer, error = "", str(exc)
+        if response is not None:
+            usage = response.usage
+            attempts = response.attempts
+            failed_attempts = min(attempts, response.failed_attempts + 1)
+            image_count = response.image_count
+        else:
+            usage = None
+            attempts = client.retries + 1
+            failed_attempts = attempts
+            image_count = client.count_answer_images(
+                job["memory_items"],
+                query_image=job.get("query_image"),
+                category=job["category"],
+            )
     memory_context, _ = build_retrieved_memory_context(
         job["memory_items"], job["category"]
     )
@@ -285,6 +302,7 @@ def answer_dataset_job(
     result.update(
         {
             "system_answer": answer,
+            "answer_raw_response": raw_answer,
             "error": error,
             "answer_token_usage": usage,
             "answer_attempts": attempts,
@@ -303,6 +321,7 @@ def answer_dataset_job(
         "clue": job["clue"],
         "top_k": job["retrieval_top_k"],
         "memory_context": memory_context,
+        "answer_prompt_messages": messages,
     }
     return result, trace
 
@@ -319,7 +338,6 @@ def run_dataset(
     qa_start: int = 1,
     qa_end: int = 0,
     graph_options: dict | None = None,
-    system_prompt: str | None = None,
     baseline: str = "HiveMem",
     state_root: Path | None = None,
     config_overrides: dict[str, Any] | None = None,
@@ -333,7 +351,7 @@ def run_dataset(
     artifact = prepare_dataset_jobs(
         dataset_path, data_dir, index_root, query_cache,
         top_k=top_k, max_qa=max_qa, qa_start=qa_start, qa_end=qa_end,
-        graph_options=graph_options, system_prompt=system_prompt, baseline=baseline,
+        graph_options=graph_options, baseline=baseline,
         state_root=state_root, config_overrides=config_overrides,
         excluded_categories=excluded_categories,
         ordered_question_ids=ordered_question_ids,
@@ -370,8 +388,6 @@ def _checkpoint_signature(
     input_paths: list[Path] = list(dataset_paths)
     if args.split_manifest:
         input_paths.append(Path(args.split_manifest))
-    if args.profiles_file:
-        input_paths.append(Path(args.profiles_file))
     if args.baseline == "HiveMem":
         query_root = Path(args.query_embedding_dir)
         input_paths.extend(
@@ -473,12 +489,6 @@ def main() -> None:
         action=argparse.BooleanOptionalAction,
         default=False,
         help="Resume from the dataset-level checkpoint under RESULT_DIR/.checkpoint.",
-    )
-    parser.add_argument(
-        "--profiles-file",
-        default="",
-        help="JSON file mapping dataset name -> profile_summary text; appended to the "
-        "answer system prompt per dataset (use with profile-free memory banks).",
     )
     parser.add_argument(
         "--graph-retrieval",
@@ -627,11 +637,6 @@ def main() -> None:
             is_excluded_category(qa.get("point", ""), excluded_categories)
             for qa in source_qas
         )
-    profiles: dict[str, str] = {}
-    if args.profiles_file:
-        profiles = json.loads(Path(args.profiles_file).read_text(encoding="utf-8"))
-        if not isinstance(profiles, dict):
-            raise ValueError("--profiles-file must contain a JSON object")
     result_dir = Path(args.result_dir)
     output_layout = BaselineOutputLayout(result_dir)
     baseline_state_root = output_layout.state_root(args.baseline_state_dir)
@@ -652,11 +657,6 @@ def main() -> None:
             if cached is not None:
                 print(f"[resume] skip prepared dataset: {path.stem}", flush=True)
                 return cached
-        dataset_profile = profiles.get(path.stem, "")
-        dataset_system_prompt = (
-            SYSTEM_PROMPT + "\n\nUser profile (background about the person the "
-            "memories are about):\n" + dataset_profile
-        ) if dataset_profile else None
         config_overrides = {
                 "index_root": args.index_root,
                 "graph_options": graph_options,
@@ -703,7 +703,6 @@ def main() -> None:
                 qa_start=args.qa_start,
                 qa_end=args.qa_end,
                 graph_options=graph_options,
-                system_prompt=dataset_system_prompt,
                 baseline=args.baseline,
                 state_root=baseline_state_root,
                 config_overrides=config_overrides,

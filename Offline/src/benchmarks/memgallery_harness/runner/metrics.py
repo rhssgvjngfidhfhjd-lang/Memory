@@ -106,8 +106,8 @@ def merge_llm_judge_metrics(metrics: dict, judge_metrics: dict) -> dict:
     def merge_row(row: dict, judge_row: dict) -> dict:
         merged = {
             "f1": row.get("f1"),
-            "em": row.get("em", row.get("exact_match")),
             "llm_judge": judge_row.get("accuracy"),
+            "em": row.get("em", row.get("exact_match")),
         }
         merged.update(
             {
@@ -495,7 +495,10 @@ def _answer_inference_aggregate(
     missing_counts: list[int] = []
     missing_images: list[int] = []
     for index, row in enumerate(results, start=1):
-        usage = _token_usage(row.get("answer_token_usage"))
+        usage_payload = row.get("answer_token_usage")
+        if usage_payload is None:
+            usage_payload = row.get("answer_usage")
+        usage = _token_usage(usage_payload)
         attempts = row.get("answer_attempts")
         images_per_attempt = row.get("answer_image_count")
         if usage is None:
@@ -883,6 +886,21 @@ def write_efficiency_metrics(
         encoding="utf-8",
     )
     return output
+
+
+def add_efficiency_metrics(summary: dict, efficiency: dict) -> dict:
+    """Attach the six canonical cost/latency metrics to a result summary."""
+    combined = dict(summary)
+    for key in (
+        "cost_mb",
+        "cost_qa",
+        "cost_total",
+        "latency_mb",
+        "latency_qa",
+        "latency_total",
+    ):
+        combined[key] = dict(efficiency[key])
+    return combined
 
 
 def calculate_calls_mb(
@@ -1280,11 +1298,11 @@ def write_snapshot_memory_metrics(
 
 
 def add_memory_metrics(summary: dict, memory_metrics: dict) -> dict:
-    """Order the result summary as F1, EM, Judge, memory metrics, then the rest."""
+    """Order the result summary as F1, Judge, EM, memory metrics, then the rest."""
     combined = {
         "f1": summary.get("f1"),
-        "em": summary.get("em", summary.get("exact_match")),
         "llm_judge": summary.get("llm_judge"),
+        "em": summary.get("em", summary.get("exact_match")),
         "memory_build_tokens": memory_metrics["memory_build_tokens"],
         "summary_characters": memory_metrics["summary_characters"],
     }
@@ -1310,8 +1328,8 @@ def add_memory_metrics(summary: dict, memory_metrics: dict) -> dict:
         combined["by_category"] = {
             category: {
                 "f1": values.get("f1"),
-                "em": values.get("em", values.get("exact_match")),
                 "llm_judge": values.get("llm_judge"),
+                "em": values.get("em", values.get("exact_match")),
                 **{
                     key: value
                     for key, value in values.items()
@@ -1408,8 +1426,8 @@ def add_retrieval_memory_tokens(summary: dict, retrieval_metrics: dict) -> dict:
     """Place retrieval-memory token totals with the other memory metrics."""
     leading_keys = (
         "f1",
-        "em",
         "llm_judge",
+        "em",
         "memory_build_tokens",
         "summary_characters",
     )

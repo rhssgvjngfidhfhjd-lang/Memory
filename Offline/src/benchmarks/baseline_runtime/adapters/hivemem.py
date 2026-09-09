@@ -12,7 +12,10 @@ from benchmarks.baseline_runtime.protocol import (
     RetrievedMemory,
 )
 from embedding.chunk_builder import Chunk
-from hive_mem.retriever import DEFAULT_HIVEMEM_GRAPH_OPTIONS
+from hive_mem.retriever import (
+    DEFAULT_HIVEMEM_GRAPH_OPTIONS,
+    DEFAULT_HIVEMEM_VECTOR_K,
+)
 
 
 class HiveMemAdapter(BaselineAdapter):
@@ -88,20 +91,23 @@ class HiveMemAdapter(BaselineAdapter):
             self.graph_categories is not None
             and request.category.upper() not in self.graph_categories
         )
+        # The shared benchmark budget is seven memories. HiveMem spends it as
+        # five vector hits plus up to two appended graph neighbours.
+        vector_k = min(int(request.top_k), DEFAULT_HIVEMEM_VECTOR_K)
         if graph_gated_off:
             from hive_mem.retriever import SimpleMemoryIndex
 
             hits = SimpleMemoryIndex.search(
                 self.index,
                 request.query_vector,
-                request.top_k,
+                vector_k,
                 category=request.category,
                 allowed_session_ids=allowed,
             )
         else:
             hits = self.index.search(
                 request.query_vector,
-                request.top_k,
+                vector_k,
                 category=request.category,
                 allowed_session_ids=allowed,
             )
@@ -130,7 +136,7 @@ class HiveMemAdapter(BaselineAdapter):
                 "baseline": self.baseline,
                 "via": "hivemem",
                 "mode": getattr(self.index, "mode", "vector"),
-                "vector_k": int(request.top_k),
+                "vector_k": vector_k,
                 "graph_append_k": int(getattr(self.index, "append_k", 0)),
                 "vector_count": sum(hit.via == "vector" for hit in hits),
                 "graph_count": sum(hit.via == "graph" for hit in hits),

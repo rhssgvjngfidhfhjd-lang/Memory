@@ -153,7 +153,7 @@ def _trim_chunk_text(text: str, max_tokens: int) -> str:
 
 def _make_chunk_text(
     *,
-    profile_summary: str,
+    profile_summary: str | None,
     session_id: str,
     date: str,
     round_id: str,
@@ -165,14 +165,16 @@ def _make_chunk_text(
     max_tokens: int,
     include_captions: bool = True,
 ) -> str:
-    lines = [
-        f"profile_summary: {profile_summary}",
+    lines = []
+    if profile_summary is not None:
+        lines.append(f"profile_summary: {profile_summary}")
+    lines.extend([
         f"session: {session_id}",
         f"date: {date}",
         f"round: {round_id}",
         f"user: {compact_text(user_text)}",
         f"assistant: {compact_text(assistant_text)}",
-    ]
+    ])
     for image_id, caption in zip(image_ids, captions):
         if image_id:
             lines.append(f"image_id: {image_id}")
@@ -191,6 +193,7 @@ def build_chunks_from_file(
     include_previous_summary: bool = True,
     include_captions: bool = True,
     include_images: bool = True,
+    include_profile: bool = True,
 ) -> list[Chunk]:
     path = Path(dialog_file)
     with path.open("r", encoding="utf-8") as f:
@@ -204,6 +207,7 @@ def build_chunks_from_file(
         include_previous_summary=include_previous_summary,
         include_captions=include_captions,
         include_images=include_images,
+        include_profile=include_profile,
     )
 
 
@@ -216,6 +220,7 @@ def build_chunks_from_data(
     include_previous_summary: bool = True,
     include_captions: bool = True,
     include_images: bool = True,
+    include_profile: bool = True,
 ) -> list[Chunk]:
     data_dir = Path(data_dir)
     profile = dataset.get("character_profile") or {}
@@ -243,7 +248,7 @@ def build_chunks_from_data(
             captions = captions + [""] * (max_images - len(captions))
 
             chunk_text = _make_chunk_text(
-                profile_summary=profile_summary,
+                profile_summary=profile_summary if include_profile else None,
                 session_id=session_id,
                 date=date,
                 round_id=round_id,
@@ -323,6 +328,7 @@ def build_chunks_from_directory(
     include_previous_summary: bool = True,
     include_captions: bool = True,
     include_images: bool = True,
+    include_profile: bool = True,
 ) -> list[Chunk]:
     chunks: list[Chunk] = []
     for dialog_file in iter_dialog_files(data_dir):
@@ -334,6 +340,7 @@ def build_chunks_from_directory(
                 include_previous_summary=include_previous_summary,
                 include_captions=include_captions,
                 include_images=include_images,
+                include_profile=include_profile,
             )
         )
     return chunks
@@ -488,6 +495,186 @@ def build_wma_chunks_from_directory(
     return chunks
 
 
+def _wma_balanced_text(chunks: list[Chunk]) -> str:
+    """Combine complete WMA rounds while emitting shared session fields once."""
+    if not chunks:
+        return ""
+    first = chunks[0]
+    lines = [
+        f"session: {first.metadata.get('session_id', '')}",
+        f"date: {first.metadata.get('date', '')}",
+    ]
+    previous = next(
+        (
+            line
+            for line in first.text.splitlines()
+            if line.startswith("previous_round_summary:")
+        ),
+        "",
+    )
+    for chunk in chunks:
+        lines.extend(
+            line
+            for line in chunk.text.splitlines()
+            if not line.startswith(
+                (
+                    "profile_summary:",
+                    "session:",
+                    "date:",
+                    "previous_round_summary:",
+                )
+            )
+        )
+    if previous:
+        lines.append(previous)
+    return "\n".join(line for line in lines if line.strip())
+
+
+def _merge_wma_chunk_group(chunks: list[Chunk], group_number: int) -> Chunk:
+    first, last = chunks[0], chunks[-1]
+    metadata = dict(first.metadata)
+    source_ids = [
+        str(chunk.metadata.get("dialogue_id") or chunk.chunk_id) for chunk in chunks
+    ]
+    image_ids = [
+        str(value)
+        for chunk in chunks
+        for value in chunk.metadata.get("image_ids", [])
+        if value
+    ]
+    captions = [
+        str(value)
+        for chunk in chunks
+        for value in chunk.metadata.get("image_captions", [])
+        if value
+    ]
+    images = [path for chunk in chunks for path in chunk.images]
+    text = _wma_balanced_text(chunks)
+    start_id, end_id = source_ids[0], source_ids[-1]
+    metadata.update(
+        {
+            "dialogue_id": start_id if len(chunks) == 1 else f"{start_id}..{end_id}",
+            "source_dialogue_ids": source_ids,
+            "round_start": first.metadata.get("round_id"),
+            "round_end": last.metadata.get("round_id"),
+            "round_count": len(chunks),
+            "image_id": image_ids[0] if image_ids else "",
+            "image_ids": image_ids,
+            "image_caption": captions[0] if captions else "",
+            "image_captions": captions,
+            "has_image": bool(images),
+            "token_estimate": estimate_tokens(text),
+            "chunking": "balanced_complete_rounds",
+        }
+    )
+    sample_id = str(metadata.get("dataset") or "wma")
+    session_id = str(metadata.get("session_id") or "session")
+    return Chunk(
+        chunk_id=f"{sample_id}:{session_id}:C{group_number:04d}",
+        text=text,
+        images=images,
+        metadata=metadata,
+    )
+
+
+def balance_wma_chunks(
+    chunks: Iterable[Chunk], *, target_tokens: int = 512
+) -> list[Chunk]:
+    """Pack complete WMA rounds near a soft token target within each session.
+
+    At every round boundary, the next round stays with the current group exactly
+    when doing so is at least as close to the target as closing the group now.
+    A round is never split and the target is deliberately allowed to be exceeded.
+    """
+    if target_tokens <= 0:
+        raise ValueError("target_tokens must be positive")
+    result: list[Chunk] = []
+    current: list[Chunk] = []
+    current_key: tuple[str, str] | None = None
+    group_number = 0
+
+    def flush() -> None:
+        nonlocal current, group_number
+        if current:
+            group_number += 1
+            result.append(_merge_wma_chunk_group(current, group_number))
+            current = []
+
+    for chunk in chunks:
+        key = (
+            str(chunk.metadata.get("dataset") or ""),
+            str(chunk.metadata.get("session_id") or ""),
+        )
+        if current_key is not None and key != current_key:
+            flush()
+            group_number = 0
+        current_key = key
+        if not current:
+            current = [chunk]
+            continue
+        current_tokens = estimate_tokens(_wma_balanced_text(current))
+        combined_tokens = estimate_tokens(_wma_balanced_text([*current, chunk]))
+        if abs(combined_tokens - target_tokens) <= abs(
+            current_tokens - target_tokens
+        ):
+            current.append(chunk)
+        else:
+            flush()
+            current = [chunk]
+    flush()
+    return result
+
+
+def build_wma_balanced_chunks_from_data(
+    sample: dict[str, Any],
+    data_dir: str | Path,
+    *,
+    sample_path: str | Path | None = None,
+    target_tokens: int = 512,
+    include_previous_summary: bool = True,
+    include_captions: bool = True,
+    include_images: bool = True,
+) -> list[Chunk]:
+    rounds = build_wma_chunks_from_data(
+        sample,
+        data_dir,
+        sample_path=sample_path,
+        include_previous_summary=include_previous_summary,
+        include_captions=include_captions,
+        include_images=include_images,
+    )
+    return balance_wma_chunks(rounds, target_tokens=target_tokens)
+
+
+def build_wma_balanced_chunks_from_directory(
+    data_dir: str | Path,
+    *,
+    sample_ids: set[str] | None = None,
+    target_tokens: int = 512,
+    include_previous_summary: bool = True,
+    include_captions: bool = True,
+    include_images: bool = True,
+) -> list[Chunk]:
+    chunks: list[Chunk] = []
+    for path in iter_wma_sample_files(data_dir):
+        sample = json.loads(path.read_text(encoding="utf-8"))
+        sample_id = str(sample["sample_id"])
+        if sample_ids is not None and sample_id not in sample_ids:
+            continue
+        chunks.extend(
+            build_wma_balanced_chunks_from_data(
+                sample,
+                data_dir,
+                sample_path=path,
+                target_tokens=target_tokens,
+                include_previous_summary=include_previous_summary,
+                include_captions=include_captions,
+                include_images=include_images,
+            )
+        )
+    return chunks
+
+
 _H2H_VARIANT_DIRS = {
     "dyadic": "dyadic",
     "multiparty": "multi-party",
@@ -528,6 +715,8 @@ def iter_h2h_session_files(
 def _h2h_speaker_blocks(
     dialogue: list[dict[str, Any]],
     session_dir: Path,
+    *,
+    include_captions: bool = True,
 ) -> list[dict[str, Any]]:
     blocks: list[dict[str, Any]] = []
     for row in dialogue:
@@ -547,11 +736,16 @@ def _h2h_speaker_blocks(
             )
             for raw in raw_images
         ]
+        captions = [
+            _h2h_caption_text(session_dir, image_name)
+            for image_name in raw_images
+        ] if include_captions else ["" for _ in raw_images]
         if blocks and blocks[-1]["speaker"] == speaker:
             if text:
                 blocks[-1]["texts"].append(text)
             blocks[-1]["image_names"].extend(raw_images)
             blocks[-1]["image_paths"].extend(image_paths)
+            blocks[-1]["captions"].extend(captions)
             continue
         blocks.append(
             {
@@ -559,9 +753,24 @@ def _h2h_speaker_blocks(
                 "texts": [text] if text else [],
                 "image_names": raw_images,
                 "image_paths": image_paths,
+                "captions": captions,
             }
         )
     return blocks
+
+
+def _h2h_caption_text(session_dir: Path, image_name: str) -> str:
+    caption_path = session_dir / "caption" / f"{Path(image_name).stem}.json"
+    if not caption_path.is_file():
+        return ""
+    try:
+        payload = json.loads(caption_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"Invalid H2HMem caption JSON: {caption_path}") from exc
+    description = payload.get("description") or {}
+    if not isinstance(description, dict):
+        raise ValueError(f"Invalid H2HMem caption description: {caption_path}")
+    return compact_text(description.get("final_text") or description.get("full_text"))
 
 
 def _make_h2h_chunk_text(
@@ -598,8 +807,10 @@ def _make_h2h_chunk_text(
         lines.append(f"{label}_name: {block['speaker']}")
         for text in block["texts"]:
             lines.append(f"{label}: {text}")
-        for image_name in block["image_names"]:
+        for image_name, caption in zip(block["image_names"], block["captions"]):
             lines.append(f"{label}_image: {image_name}")
+            if caption:
+                lines.append(f"image_caption: {caption}")
     if previous_round_summary:
         lines.append(f"previous_round_summary: {previous_round_summary}")
     return _trim_chunk_text("\n".join(lines), max_tokens)
@@ -631,6 +842,7 @@ def build_h2h_chunks_from_data(
     conversation_id: str,
     max_tokens: int = 800,
     include_previous_summary: bool = True,
+    include_captions: bool = True,
     include_images: bool = True,
 ) -> list[Chunk]:
     """Convert one H2HMem session into adjacent two-speaker exchange chunks."""
@@ -640,7 +852,11 @@ def build_h2h_chunks_from_data(
     scene_id = path.parent.name
     native_session_id = str(session.get("session_id") or "")
     date = str(session.get("timeline_date") or "")
-    blocks = _h2h_speaker_blocks(session.get("dialogue", []) or [], path.parent)
+    blocks = _h2h_speaker_blocks(
+        session.get("dialogue", []) or [],
+        path.parent,
+        include_captions=include_captions,
+    )
     chunks: list[Chunk] = []
     previous_summary = ""
     for offset in range(0, len(blocks), 2):
@@ -651,6 +867,7 @@ def build_h2h_chunks_from_data(
         all_blocks = [block for block in (first, second) if block is not None]
         image_names = [name for block in all_blocks for name in block["image_names"]]
         image_paths = [value for block in all_blocks for value in block["image_paths"]]
+        captions = [value for block in all_blocks for value in block["captions"] if value]
         image_ids = [
             f"h2hmem:{variant}:{conversation_id}:{scene_id}:{name}"
             for name in image_names
@@ -698,7 +915,7 @@ def build_h2h_chunks_from_data(
                     "group_id": session.get("group_id") or "",
                     "image_id": image_ids[0] if image_ids else "",
                     "image_ids": image_ids,
-                    "image_captions": [],
+                    "image_captions": captions,
                     "has_image": bool(image_paths),
                     "token_estimate": estimate_tokens(text),
                 },
@@ -715,6 +932,7 @@ def build_h2h_chunks_from_directory(
     conversation_ids: set[str] | None = None,
     max_tokens: int = 800,
     include_previous_summary: bool = True,
+    include_captions: bool = True,
     include_images: bool = True,
 ) -> list[Chunk]:
     chunks: list[Chunk] = []
@@ -731,6 +949,7 @@ def build_h2h_chunks_from_directory(
                 conversation_id=conversation_id,
                 max_tokens=max_tokens,
                 include_previous_summary=include_previous_summary,
+                include_captions=include_captions,
                 include_images=include_images,
             )
         )

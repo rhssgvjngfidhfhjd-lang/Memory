@@ -9,6 +9,7 @@ import torch
 
 from scripts.upload_evidence_policy_wandb import (
     ALL_EVIDENCE_MASKS,
+    EVIDENCE_LEVEL_CHART_SPEC,
     build_evidence_level_ratio_line_chart,
     build_test_summary,
     evidence_level_distribution,
@@ -31,6 +32,24 @@ class WandbUploadTest(unittest.TestCase):
                 "count": 275,
                 "f1": 0.6,
                 "llm_judge": 0.67,
+                "cost_mb": {
+                    "available": True,
+                    "input_tokens": 100,
+                    "output_tokens": 10,
+                    "cost_sum_usd": 0.01,
+                    "num_samples": 4,
+                    "mean_per_sample_usd": 0.0025,
+                },
+                "latency_mb": {
+                    "available": True,
+                    "calls": 10,
+                    "input_tokens": 100,
+                    "output_tokens": 10,
+                    "image_count": 2,
+                    "latency_sum_seconds": 8.0,
+                    "num_samples": 4,
+                    "mean_per_sample_seconds": 2.0,
+                },
                 "calls": {
                     "memory_bank": {
                         "available": True,
@@ -61,18 +80,27 @@ class WandbUploadTest(unittest.TestCase):
         )
 
         self.assertEqual(summary["test/llm_judge"], 0.67)
+        self.assertEqual(summary["test/cost_mb/mean_per_sample_usd"], 0.0025)
+        self.assertEqual(summary["test/latency_mb/mean_per_sample_seconds"], 2.0)
         self.assertEqual(summary["test/calls/memory_bank/total_calls"], 670)
         self.assertEqual(summary["test/calls/qa/mean_per_sample"], 68.75)
         self.assertEqual(summary["test/calls/total/mean_per_sample"], 236.25)
 
     def test_builds_validation_evidence_level_ratio_lines_by_update_step(self) -> None:
-        class FakePlot:
-            @staticmethod
-            def line_series(**kwargs):
-                return kwargs
+        class FakeTable:
+            def __init__(self, *, columns):
+                self.columns = columns
+                self.rows = []
+
+            def add_data(self, *values):
+                self.rows.append(list(values))
 
         class FakeWandb:
-            plot = FakePlot()
+            Table = FakeTable
+
+            @staticmethod
+            def plot_table(**kwargs):
+                return kwargs
 
         chart = build_evidence_level_ratio_line_chart(
             FakeWandb(),
@@ -93,15 +121,25 @@ class WandbUploadTest(unittest.TestCase):
         )
 
         self.assertIsNotNone(chart)
-        self.assertEqual(chart["xs"], [0, 29])
+        self.assertEqual(chart["vega_spec_name"], EVIDENCE_LEVEL_CHART_SPEC)
         self.assertEqual(
-            chart["keys"], ["summary", "dialogue", "caption", "image", "vp"]
+            chart["data_table"].columns, ["step", "lineKey", "lineVal"]
         )
-        self.assertEqual(chart["ys"][0], [0.5, 0.0])
-        self.assertEqual(chart["ys"][1], [0.5, 0.0])
-        self.assertEqual(chart["ys"][2], [0.0, 0.0])
-        self.assertEqual(chart["ys"][3], [0.0, 1.0])
-        self.assertEqual(chart["ys"][4], [0.0, 1.0])
+        self.assertEqual(
+            chart["data_table"].rows,
+            [
+                [0, "summary", 0.5],
+                [0, "dialogue", 0.5],
+                [0, "caption", 0.0],
+                [0, "image", 0.0],
+                [0, "vp", 0.0],
+                [29, "summary", 0.0],
+                [29, "dialogue", 0.0],
+                [29, "caption", 0.0],
+                [29, "image", 1.0],
+                [29, "vp", 1.0],
+            ],
+        )
 
     def test_loads_step_zero_and_train_mask_ratios(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

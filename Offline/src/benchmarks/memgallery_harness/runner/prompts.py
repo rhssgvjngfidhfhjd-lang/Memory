@@ -1,57 +1,97 @@
-"""Mem-Gallery answer-prompt helpers (SYSTEM_PROMPT, question formatting,
-question-image resolution), consumed by benchmarks.memgallery_harness.eval_memgallery.
-
-History: this file was ``run_memgallery.py``, the chunk-RAG era's full
-benchmark runner; the legacy runner was removed on 2026-08-06 and the module
-renamed to ``prompts.py``.
-"""
+"""Mem-Gallery QA prompt matching the repository-root answer_prompts.py."""
 
 from __future__ import annotations
 
-import os
+from collections.abc import Mapping, Sequence
 import hashlib
+import json
+import os
 from pathlib import Path
+from typing import Any
+
+from benchmarks.answer_response import parse_answer_block
+
 
 OFFLINE_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_PROMPT_DIR = OFFLINE_ROOT.parent / "Mem-Gallery" / "benchmark" / "prompt"
 PROMPT_DIR = Path(os.getenv("MEMGALLERY_PROMPT_DIR", DEFAULT_PROMPT_DIR)).expanduser().resolve()
-REQUIRED_PROMPTS = {
-    "system": "sys_prompt.txt",
-    "AR": "ar_prompt.txt",
-    "CD": "cd_prompt.txt",
-    "VS": "vs_prompt.txt",
-}
+
+PROMPT_VERSION = "answer-prompts-custom-20260909-v1"
+PROMPT_SOURCE = "answer_prompts.py:build_benchmark_answer_messages[mem_gallery]"
+ANSWER_TAG_CONTRACT = (
+    "Return only one non-empty <answer>...</answer> block, with the answer text inside the tags."
+)
+TASK_RULES = (
+    "Answer from the provided multimodal conversation memory. Ground the answer in that memory, prefer "
+    "the latest information when details change over time, and keep the response concise but complete. "
+    "When the question asks for images, preserve the exact image_id values."
+)
+SYSTEM_PROMPT = f"{TASK_RULES} {ANSWER_TAG_CONTRACT}"
 
 
-def load_prompt(name: str) -> str:
-    path = PROMPT_DIR / name
-    if not path.is_file():
-        raise FileNotFoundError(
-            f"Required Mem-Gallery prompt is missing: {path}. "
-            "Set MEMGALLERY_PROMPT_DIR to override the prompt directory."
+def build_answer_messages(
+    *,
+    question: str,
+    question_type: str,
+    memory_evidence: Sequence[str],
+    query_images: Any = None,
+) -> list[dict[str, str]]:
+    evidence = _validated_evidence(memory_evidence)
+    question = str(question or "").strip()
+    if not question:
+        raise ValueError("Direct answer generation requires sample_metadata.question.")
+    evidence_text = "\n\n".join(
+        f"[Evidence {index}]\n{item}" for index, item in enumerate(evidence, start=1)
+    )
+    sections = [f"Conversation memory:\n{evidence_text}"]
+    image_context = _format_query_images(query_images)
+    if image_context:
+        sections.append("Question Image:\n" + image_context)
+    sections.append(f"Question: {question}")
+    normalized_type = str(question_type or "").strip().upper()
+    if normalized_type == "CD":
+        sections.append(
+            'The text inside <answer>...</answer> must be exactly "Yes." or "No."'
         )
-    content = path.read_text(encoding="utf-8").strip()
-    if not content:
-        raise ValueError(f"Required Mem-Gallery prompt is empty: {path}")
-    return content
+    elif normalized_type == "VS":
+        sections.append(
+            "Return the exact matching image_id value or values. If several apply, sort them in ascending "
+            "order and separate them with commas."
+        )
+    return [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": "\n\n".join(sections)},
+    ]
 
 
-SYSTEM_PROMPT = load_prompt(REQUIRED_PROMPTS["system"])
-CATEGORY_PROMPTS = {
-    category: load_prompt(filename)
-    for category, filename in REQUIRED_PROMPTS.items()
-    if category != "system"
-}
+def parse_answer_response(raw: str) -> str:
+    return parse_answer_block(raw)
+
+
+def prompt_sha256() -> str:
+    source = json.dumps(
+        {
+            "version": PROMPT_VERSION,
+            "source": PROMPT_SOURCE,
+            "system": SYSTEM_PROMPT,
+            "cd": 'The text inside <answer>...</answer> must be exactly "Yes." or "No."',
+            "vs": (
+                "Return the exact matching image_id value or values. If several apply, sort them in ascending "
+                "order and separate them with commas."
+            ),
+            "evidence_heading": "Conversation memory",
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+    return hashlib.sha256(source.encode("utf-8")).hexdigest()
 
 
 def prompt_manifest() -> dict[str, object]:
-    """Return reproducibility metadata for the exact prompts used by QA."""
     return {
-        "prompt_dir": str(PROMPT_DIR),
-        "prompt_sha256": {
-            filename: hashlib.sha256((PROMPT_DIR / filename).read_bytes()).hexdigest()
-            for filename in REQUIRED_PROMPTS.values()
-        },
+        "prompt_version": PROMPT_VERSION,
+        "prompt_source": PROMPT_SOURCE,
+        "prompt_sha256": prompt_sha256(),
     }
 
 
@@ -65,20 +105,37 @@ def resolve_question_image(data_dir: Path, qa: dict) -> dict | None:
         path = str((data_dir / "image" / raw.replace("../image/", "")).resolve())
     else:
         path = str((data_dir / "image" / raw).resolve())
-    out = {"path": path}
+    out = {"path": path, "img_id": str(raw)}
     if qa.get("image_caption"):
         out["caption"] = qa["image_caption"]
     return out
 
 
-def format_question_prompt(question: str, category: str, speaker_a: str, speaker_b: str) -> str:
-    constraint = CATEGORY_PROMPTS.get(category, "")
-    if constraint:
-        constraint = "\n\n" + constraint
-    return (
-        f"Your task is to answer the question about the conversation between {speaker_a} and {speaker_b} "
-        "in a concise manner with the help of memory content.\n"
-        "Please only provide the content of the answer, without including introductory phrases like 'answer:'.\n"
-        "For questions that require answering a date or time, strictly follow the format and provide a specific date or time whenever possible.\n\n"
-        f"The current question is as follows:\n{question}{constraint}"
-    )
+def _validated_evidence(memory_evidence: Sequence[str]) -> list[str]:
+    if isinstance(memory_evidence, (str, bytes)):
+        raise ValueError("memory_evidence must be a sequence of evidence strings.")
+    evidence = [str(item).strip() for item in memory_evidence if str(item).strip()]
+    if not evidence:
+        raise ValueError(
+            "Direct answer generation requires at least one non-empty memory evidence item."
+        )
+    return evidence
+
+
+def _format_query_images(raw_images: Any) -> str:
+    if isinstance(raw_images, Mapping):
+        images = [raw_images]
+    elif isinstance(raw_images, Sequence) and not isinstance(raw_images, (str, bytes)):
+        images = [image for image in raw_images if isinstance(image, Mapping)]
+    else:
+        images = []
+    lines = []
+    for image in images:
+        image_id = " ".join(str(image.get("id") or "").split())
+        caption = " ".join(str(image.get("caption") or "").split())
+        if not image_id:
+            continue
+        lines.append(f"- image_id: {image_id}")
+        if caption:
+            lines.append(f"  image_caption: {caption}")
+    return "\n".join(lines)

@@ -41,12 +41,12 @@ SUPPORTED_BENCHMARKS = ("memgallery", "worldmemarena", "h2hmem")
 # Snapshot copied from evaluation_protocol_bundle on 2026-08-25. Keep the
 # protocol text, rendering, request shape, and parsing behavior in sync with
 # agentic_memrl/evaluation/{judge_protocols,run_llm_judge}.py.
-EVALUATION_PROTOCOL_SNAPSHOT = "evaluation_protocol_bundle@2026-08-25"
+EVALUATION_PROTOCOL_SNAPSHOT = "evaluation_protocol_bundle@2026-09-09-wma-context-fix"
 DEFAULT_JUDGE_MODEL = "openai/gpt-4o-mini"
 DEFAULT_JUDGE_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_JUDGE_TEMPERATURE = 0.0
 DEFAULT_JUDGE_MAX_NEW_TOKENS = 512
-JUDGE_CACHE_VERSION = "agentic_memrl.judge_cache.v3-calls"
+JUDGE_CACHE_VERSION = "agentic_memrl.judge_cache.v4-wma-context"
 
 GRADED_SCORES = (0.0, 0.25, 0.5, 0.75, 1.0)
 BINARY_SCORES = (0.0, 1.0)
@@ -100,17 +100,17 @@ _FIVE_LEVEL_RUBRIC = """**Score 0 (Incorrect / Miss):**
 
 _WORLD_RUBRIC = """### 1. Correct
 * The response accurately answers the question and is **semantically equivalent** to the Reference Answer.
-* No contradictions with the Reference Answer.
+* No contradictions with Key Memory Points or Reference Answer.
 * Synonyms, paraphrasing, and reasonable summarization are acceptable.
 
 ### 2. Hallucination
-* The response includes information that **contradicts** the Reference Answer.
+* The response includes information that **contradicts** the Reference Answer or Key Memory Points.
 * When the Reference Answer is *unknown/uncertain*, yet the response provides a specific fact.
 
 ### 3. Omission
 * The response is **incomplete** compared to the Reference Answer.
-* It states "don't know" or "no related memory" even though the Reference Answer supplies the answer.
-* For multi-element answers, missing **any** element counts as Omission.
+* It states "don't know" or "no related memory" even though relevant information exists.
+* For multi-element questions, missing **any** element counts as Omission.
 
 ## Priority Rules
 * Both missing info AND fabricated info -> **Hallucination**.
@@ -169,6 +169,8 @@ def render_judge_prompt(
     *,
     prediction: Any,
     references: Sequence[Any],
+    question: Any = "",
+    key_memory_points: Any = "",
 ) -> str:
     protocol = get_judge_protocol(protocol_id)
     clean_references = [
@@ -183,23 +185,35 @@ def render_judge_prompt(
     )
     prediction_text = str(prediction or "").strip()
     if protocol.labels == WORLD_LABELS:
+        question_text = str(question or "").strip()
+        if not question_text:
+            raise ValueError("WorldMemArena Judge requires a non-empty question.")
+        key_memory_text = str(key_memory_points or "").strip()
+        if not key_memory_text:
+            key_memory_text = "No evidence available."
         return f"""{protocol.official_role}
-Based **only** on the provided **Reference Answer**, strictly evaluate the **accuracy** of the **Memory System Response**. Classify it as one of **Correct**, **Hallucination**, or **Omission**. Do **not** use any external knowledge or subjective inference.
+Based **only** on the provided **"Question"**, **"Reference Answer"**, and **"Key Memory Points"**, strictly evaluate the **accuracy** of the **"Memory System Response."** Classify it as one of **"Correct"**, **"Hallucination"**, or **"Omission."** Do **not** use any external knowledge or subjective inference.
 
 # Evaluation Criteria
+
 {protocol.rubric}
 
 # Information
+
+* **Question:** {question_text}
 * **Reference Answer:** {reference_text}
+* **Key Memory Points:** {key_memory_text}
 * **Memory System Response:** {prediction_text}
 
 # Output
+
 ```json
 {{
   "reasoning": "Concise evaluation rationale",
   "evaluation_result": "Correct | Hallucination | Omission"
 }}
-```"""
+```
+"""
     reasoning_placeholder = (
         "" if protocol.protocol_id == "mem_gallery_answer_v1" else "<short explanation>"
     )
@@ -234,9 +248,15 @@ def validate_protocol_snapshot() -> None:
             protocol_id,
             prediction="PREDICTION_SENTINEL",
             references=["REFERENCE_SENTINEL"],
+            question="QUESTION_SENTINEL",
+            key_memory_points="KEY_MEMORY_SENTINEL",
         )
         if "PREDICTION_SENTINEL" not in prompt or "REFERENCE_SENTINEL" not in prompt:
             raise RuntimeError(f"Judge prompt inputs drifted for {protocol_id}.")
+        if protocol_id == "worldmemarena_answer_v1" and (
+            "QUESTION_SENTINEL" not in prompt or "KEY_MEMORY_SENTINEL" not in prompt
+        ):
+            raise RuntimeError("WorldMemArena Judge context inputs drifted.")
     if PROTOCOLS["worldmemarena_answer_v1"].labels != WORLD_LABELS:
         raise RuntimeError("WorldMemArena Judge labels drifted.")
     for protocol_id in ("mem_gallery_answer_v1", "h2hmem_answer_v1"):
@@ -259,6 +279,8 @@ def build_prompt(
         normalized["protocol_id"],
         prediction=normalized["prediction"],
         references=normalized["references"],
+        question=normalized["question"],
+        key_memory_points=normalized["key_memory_points"],
     )
 
 
@@ -457,6 +479,15 @@ def _references_from_row(row: Mapping[str, Any]) -> list[str]:
     return references
 
 
+def _wma_key_memory_points_from_row(row: Mapping[str, Any]) -> str:
+    raw = row.get("gold_evidence_contents", row.get("key_memory_points"))
+    if isinstance(raw, Sequence) and not isinstance(raw, (str, bytes)):
+        points = [str(value).strip() for value in raw if str(value).strip()]
+        return "\n".join(points) if points else "No evidence available."
+    text = str(raw or "").strip()
+    return text or "No evidence available."
+
+
 def normalize_judge_row(
     benchmark: str,
     row: Mapping[str, Any],
@@ -496,6 +527,9 @@ def normalize_judge_row(
         references,
     )
     uid = str(row.get("uid") or f"{dataset_source}:{conversation_id}:{question_id}")
+    question = str(row.get("question") or row.get("question_text") or "").strip()
+    if benchmark == "worldmemarena" and not question:
+        raise ValueError(f"{benchmark} row {index} is missing question text.")
     return {
         "uid": uid,
         "dataset_source": dataset_source,
@@ -503,6 +537,12 @@ def normalize_judge_row(
         "question_id": question_id,
         "prediction": str(row.get(prediction_key) or "").strip(),
         "references": references,
+        "question": question,
+        "key_memory_points": (
+            _wma_key_memory_points_from_row(row)
+            if benchmark == "worldmemarena"
+            else ""
+        ),
         "protocol_id": protocol_id,
     }
 
@@ -523,6 +563,8 @@ def judge_once(
         protocol.protocol_id,
         prediction=normalized["prediction"],
         references=normalized["references"],
+        question=normalized["question"],
+        key_memory_points=normalized["key_memory_points"],
     )
     request: dict[str, Any] = {
         "model": model,
@@ -584,6 +626,7 @@ def _result_record(
         "question_id": normalized["question_id"],
         "category": row.get("category", ""),
         "question": question,
+        "key_memory_points": normalized["key_memory_points"],
         "prediction": normalized["prediction"],
         "references": normalized["references"],
         "reference": normalized["references"][0],
@@ -635,6 +678,8 @@ def judge_with_retries(
         normalized["protocol_id"],
         prediction=normalized["prediction"],
         references=normalized["references"],
+        question=normalized["question"],
+        key_memory_points=normalized["key_memory_points"],
     )
     error_text = f"{type(last_error).__name__}: {last_error}"
     error_result = {
@@ -1042,6 +1087,20 @@ def main() -> None:
                 retrieval_metrics_path.read_text(encoding="utf-8")
             )
             combined = add_retrieval_memory_tokens(combined, retrieval_metrics)
+        # memory_metrics.json is retained from the memory-build phase and may
+        # contain legacy/unavailable cost fields. The canonical modeled
+        # efficiency values in metrics.json include the newly rerun QA usage,
+        # so they must win after memory/retrieval metadata is merged.
+        for key in (
+            "cost_mb",
+            "cost_qa",
+            "cost_total",
+            "latency_mb",
+            "latency_qa",
+            "latency_total",
+        ):
+            if key in benchmark_metrics:
+                combined[key] = benchmark_metrics[key]
         summary_path = out_dir / "summary.json"
         if not summary["provisional"] and len(ordered) == len(selected):
             # ``metrics.json`` is the canonical machine-readable artifact;
