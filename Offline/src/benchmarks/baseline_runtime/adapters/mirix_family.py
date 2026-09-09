@@ -12,6 +12,8 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
+from json_repair import repair_json
+
 from benchmarks.baseline_runtime.protocol import (
     BaselineAdapter,
     MemoryRecord,
@@ -92,6 +94,8 @@ class MirixFamilyAdapter(BaselineAdapter):
             return
         original_build = client_class.build_request_data
         original_request = client_class.request
+        original_request_async = client_class.request_async
+        original_convert = client_class.convert_response_to_chat_completion
 
         def build_request(client: Any, *args: Any, **kwargs: Any) -> dict[str, Any]:
             return _normalize_openai_tool_request(
@@ -101,9 +105,56 @@ class MirixFamilyAdapter(BaselineAdapter):
         def request(client: Any, request_data: dict[str, Any]) -> dict[str, Any]:
             return _normalize_openai_tool_tags(original_request(client, request_data))
 
+        async def request_async(
+            client: Any, request_data: dict[str, Any]
+        ) -> dict[str, Any]:
+            response = await original_request_async(client, request_data)
+            return _normalize_openai_tool_tags(response)
+
+        def convert_response_to_chat_completion(
+            client: Any, response_data: dict[str, Any], *args: Any, **kwargs: Any
+        ) -> Any:
+            # Keep the normalization at the final common conversion boundary
+            # as well. Some MIRIX/MMA agent paths obtain a raw response through
+            # an alternate async helper and reach this method without calling
+            # the patched request methods above.
+            return original_convert(
+                client,
+                _normalize_openai_tool_tags(response_data),
+                *args,
+                **kwargs,
+            )
+
         client_class.build_request_data = build_request
         client_class.request = request
+        client_class.request_async = request_async
+        client_class.convert_response_to_chat_completion = (
+            convert_response_to_chat_completion
+        )
         client_class._offline_tool_compat = True
+
+        # MIRIX/MMA still fall back to the legacy llm_api_tools.create path
+        # for streaming-enabled agent steps. That path bypasses OpenAIClient
+        # completely and calls this imported request function directly.
+        legacy_module = importlib.import_module(
+            f"{self.package}.llm_api.llm_api_tools"
+        )
+        if not getattr(legacy_module, "_offline_tool_compat", False):
+            original_legacy_request = legacy_module.openai_chat_completions_request
+            legacy_max_tokens = int(self.config.get("num_predict") or 512)
+
+            def legacy_request(*args: Any, **kwargs: Any) -> Any:
+                args, kwargs = _cap_legacy_request_tokens(
+                    args,
+                    kwargs,
+                    max_tokens=legacy_max_tokens,
+                )
+                return _normalize_openai_tool_response(
+                    original_legacy_request(*args, **kwargs)
+                )
+
+            legacy_module.openai_chat_completions_request = legacy_request
+            legacy_module._offline_tool_compat = True
 
     def _ensure_package_importable(self) -> None:
         """Load MMA's uppercase source directory under its expected lowercase name."""
@@ -133,7 +184,13 @@ class MirixFamilyAdapter(BaselineAdapter):
             model_endpoint_type="openai",
             model_endpoint=str(self.config["executor_base_url"]),
             model_wrapper=None,
-            context_window=int(self.config.get("context_window") or 24000),
+            # MIRIX/MMA's manager system prompt plus the complete native tool
+            # schema can exceed the 24k internal pressure threshold before a
+            # second dialogue message exists. In that state its summarizer has
+            # no eligible messages and raises instead of issuing the request.
+            # The configured vLLM servers expose a 32k window, so use it fully
+            # unless an experiment explicitly overrides the value.
+            context_window=int(self.config.get("context_window") or 32000),
             temperature=float(self.config.get("executor_temperature") or 0.0),
             max_tokens=int(self.config.get("num_predict") or 512),
         )
@@ -203,8 +260,13 @@ class MirixFamilyAdapter(BaselineAdapter):
             except Exception as exc:
                 if not _is_context_overflow_exception(exc):
                     raise
-                if not self._has_new_or_changed_memory(before):
-                    self._insert_fallback_memory(chunk)
+            # MIRIX's background message queue logs some manager failures and
+            # returns normally instead of propagating them.  Detect the
+            # observable outcome at the memory boundary so an accepted chunk
+            # is never silently lost, regardless of how the native queue
+            # reported the failure.
+            if not self._has_new_or_changed_memory(before):
+                self._insert_fallback_memory(chunk)
         current = self._memory_rows()
         if not current:
             self._insert_fallback_memory(chunk)
@@ -420,6 +482,57 @@ def _render_memory(manager: str, value: Any) -> str:
     return f"[{manager.removesuffix('_manager')}] " + " | ".join(fields)
 
 
+def _cap_legacy_request_tokens(
+    args: tuple[Any, ...],
+    kwargs: dict[str, Any],
+    *,
+    max_tokens: int,
+) -> tuple[tuple[Any, ...], dict[str, Any]]:
+    """Apply the configured output cap to MIRIX/MMA's legacy request path.
+
+    The legacy streaming fallback passes ``max_tokens=None`` to its request
+    model even when ``LLMConfig.max_tokens`` is set.  Without a cap, a local
+    vLLM request can generate until the context window and repeatedly outlive
+    the benchmark proxy timeout.
+    """
+    request = kwargs.get("chat_completion_request")
+    positional_index = 2
+    if request is None and len(args) > positional_index:
+        request = args[positional_index]
+    if request is None:
+        return args, kwargs
+
+    if isinstance(request, dict):
+        if (
+            request.get("max_tokens") is None
+            and request.get("max_completion_tokens") is None
+        ):
+            request["max_tokens"] = max_tokens
+        return args, kwargs
+
+    if (
+        getattr(request, "max_tokens", None) is not None
+        or getattr(request, "max_completion_tokens", None) is not None
+    ):
+        return args, kwargs
+    try:
+        request.max_tokens = max_tokens
+        return args, kwargs
+    except (AttributeError, TypeError, ValueError):
+        model_copy = getattr(request, "model_copy", None)
+        if not callable(model_copy):
+            return args, kwargs
+        request = model_copy(update={"max_tokens": max_tokens})
+        if "chat_completion_request" in kwargs:
+            kwargs = dict(kwargs)
+            kwargs["chat_completion_request"] = request
+        else:
+            mutable_args = list(args)
+            mutable_args[positional_index] = request
+            args = tuple(mutable_args)
+        return args, kwargs
+
+
 def _normalize_openai_tool_request(data: dict[str, Any]) -> dict[str, Any]:
     tools = data.get("tools") or []
     if data.get("tool_choice") == "required" and tools:
@@ -498,6 +611,17 @@ def _normalize_openai_tool_tags(response: dict[str, Any]) -> dict[str, Any]:
     return response
 
 
+def _normalize_openai_tool_response(response: Any) -> Any:
+    """Normalize either a raw dict or MIRIX's Pydantic response model."""
+    if isinstance(response, dict):
+        return _normalize_openai_tool_tags(response)
+    model_dump = getattr(response, "model_dump", None)
+    if not callable(model_dump):
+        return response
+    normalized = _normalize_openai_tool_tags(model_dump())
+    return type(response)(**normalized)
+
+
 def _is_context_overflow_exception(exc: Exception) -> bool:
     text = f"{type(exc).__name__}: {exc}".lower()
     markers = (
@@ -560,10 +684,19 @@ def _normalize_native_tool_arguments(name: str, arguments: Any) -> Any:
 
 
 def _tool_payload(text: str) -> dict[str, Any] | None:
-    match = re.search(r"<tool_call>\s*(\{.*?\})\s*</tool_call>", text, re.DOTALL)
-    candidate = match.group(1) if match else text
+    # Qwen occasionally finishes a valid JSON object at its generation limit
+    # without emitting the optional closing tag.  Treat the opening tag as the
+    # authoritative boundary so a valid native memory write is not discarded.
+    if "<tool_call>" in text:
+        candidate = text.split("<tool_call>", 1)[1]
+        candidate = candidate.split("</tool_call>", 1)[0].strip()
+    else:
+        candidate = text
     try:
         value = json.loads(candidate)
     except (json.JSONDecodeError, TypeError):
-        return None
+        try:
+            value = repair_json(candidate, return_objects=True)
+        except (TypeError, ValueError):
+            return None
     return value if isinstance(value, dict) else None

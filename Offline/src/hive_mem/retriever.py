@@ -19,6 +19,15 @@ from hive_mem.mau import MAUBank, MAU
 from hive_mem.output_layout import DatasetLayout
 
 
+DEFAULT_HIVEMEM_VECTOR_K = 5
+DEFAULT_HIVEMEM_GRAPH_OPTIONS = {
+    "seed_k": 0,
+    "mode": "append",
+    "append_k": 2,
+    "expansion_bonus": 0.2,
+}
+
+
 @dataclass(frozen=True)
 class MemoryHit:
     item: MAU
@@ -129,7 +138,7 @@ class SimpleMemoryIndex:
     def search(
         self,
         query_vector: list[float] | np.ndarray,
-        top_k: int = 5,
+        top_k: int = DEFAULT_HIVEMEM_VECTOR_K,
         *,
         category: str = "",
         allowed_session_ids: set[str] | None = None,
@@ -244,7 +253,7 @@ class GraphExpandedIndex(SimpleMemoryIndex):
     def search(
         self,
         query_vector: list[float] | np.ndarray,
-        top_k: int = 5,
+        top_k: int = DEFAULT_HIVEMEM_VECTOR_K,
         *,
         category: str = "",
         allowed_session_ids: set[str] | None = None,

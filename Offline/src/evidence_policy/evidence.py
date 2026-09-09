@@ -252,6 +252,85 @@ class WMADialogueStore(DialogueStore):
         )
 
 
+class H2HMemDialogueStore(DialogueStore):
+    """Lazy round lookup for H2HMem dyadic and multiparty conversations."""
+
+    def _load_dataset(self, dataset: str) -> dict[str, DialogueEvidence]:
+        import json
+
+        from embedding.chunk_builder import _h2h_speaker_blocks, iter_h2h_session_files
+
+        try:
+            variant, conversation_id = dataset.split("_", 1)
+        except ValueError as exc:
+            raise ValueError(
+                "H2HMem memory dataset names must be '<variant>_<conversation>', "
+                f"got {dataset!r}"
+            ) from exc
+        if variant not in {"dyadic", "multiparty"}:
+            raise ValueError(f"Unknown H2HMem memory dataset: {dataset!r}")
+
+        result: dict[str, DialogueEvidence] = {}
+        for path in iter_h2h_session_files(self.data_dir, variant=variant):
+            if path.parents[2].name != conversation_id:
+                continue
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            blocks = _h2h_speaker_blocks(payload.get("dialogue", []) or [], path.parent)
+            for offset in range(0, len(blocks), 2):
+                first = blocks[offset]
+                second = blocks[offset + 1] if offset + 1 < len(blocks) else None
+                dialogue_id = f"{path.parent.name}:R{offset // 2 + 1:04d}"
+
+                def render(block: dict[str, Any] | None) -> str:
+                    if block is None:
+                        return ""
+                    text = "\n".join(str(value) for value in block["texts"] if value)
+                    return f"{block['speaker']}: {text}" if text else str(block["speaker"])
+
+                result[dialogue_id] = DialogueEvidence(
+                    dataset=dataset,
+                    dialogue_id=dialogue_id,
+                    user=render(first),
+                    assistant=render(second),
+                )
+        if not result:
+            raise FileNotFoundError(
+                f"Missing H2HMem conversation for memory dataset {dataset!r}"
+            )
+        return result
+
+    def resolve_image_path(self, dataset: str, raw_path: str) -> Path:
+        path = Path(raw_path)
+        if path.is_file():
+            return path
+        try:
+            variant, conversation_id = dataset.split("_", 1)
+        except ValueError as exc:
+            raise ValueError(f"Invalid H2HMem memory dataset: {dataset!r}") from exc
+        variant_dir = "multi-party" if variant == "multiparty" else variant
+        normalized = str(raw_path).replace("\\", "/")
+        marker = "/scenes/"
+        candidates: list[Path] = []
+        if marker in normalized:
+            candidates.append(
+                self.data_dir
+                / variant_dir
+                / conversation_id
+                / "scenes"
+                / normalized.split(marker, 1)[1]
+            )
+        candidates.append(
+            self.data_dir / variant_dir / conversation_id / "scenes" / path.name
+        )
+        for candidate in candidates:
+            if candidate.is_file():
+                return candidate
+        raise FileNotFoundError(
+            f"Cannot map stored H2HMem image path {raw_path!r}; tried "
+            + ", ".join(str(candidate) for candidate in candidates)
+        )
+
+
 class EvidenceChainBuilder:
     """Convert independent per-MAU evidence masks into VLM memory items."""
 

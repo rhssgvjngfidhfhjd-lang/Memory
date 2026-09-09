@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import hashlib
-import inspect
+from contextlib import nullcontext
 import json
 import os
 from pathlib import Path
@@ -20,6 +19,7 @@ from benchmarks.wma_harness.retrieval.query_embedding_cache import (
 from benchmarks.wma_harness.runner.answer_client import (
     VLMAnswerClient,
     build_retrieved_memory_context,
+    build_retrieved_memory_evidence,
 )
 from benchmarks.memgallery_harness.runner.metrics import (
     add_memory_metrics,
@@ -28,11 +28,26 @@ from benchmarks.memgallery_harness.runner.metrics import (
     calculate_calls_mb,
     calculate_calls_qa,
     combine_call_metrics,
+    merge_existing_llm_judge_metrics,
     write_memory_metrics,
     write_snapshot_memory_metrics,
+    write_efficiency_metrics,
+    write_runtime_call_metrics,
+)
+from benchmarks.baseline_runtime.call_trace import (
+    CallRecorder,
+    CountingProxy,
+    TRACE_VERSION,
+    trace_filename,
 )
 from benchmarks.wma_harness.runner.metrics import summarize_results
-from benchmarks.wma_harness.runner.prompts import SYSTEM_PROMPT, format_question_prompt
+from benchmarks.wma_harness.runner.prompts import (
+    PROMPT_SOURCE,
+    PROMPT_VERSION,
+    build_answer_messages,
+    parse_answer_response,
+    prompt_sha256,
+)
 from benchmarks.baseline_runtime import baseline_metadata, canonical_name, create_adapter
 from benchmarks.baseline_runtime.parallel_runner import (
     load_sample_artifact,
@@ -75,6 +90,25 @@ def wma_manifest_question_id(
 ) -> str:
     """Canonical WMA question ID used by the split manifest."""
     return f"{sample_id}:{checkpoint_id}:Q{qa_index:03d}"
+
+
+def _with_manifest_question_id(job: dict[str, Any]) -> dict[str, Any]:
+    """Backfill canonical IDs in sample checkpoints written before manifests."""
+    if job.get("manifest_question_id"):
+        return job
+    qa_index = job.get("qa_index")
+    if qa_index is None:
+        raise KeyError(
+            "WMA job lacks both manifest_question_id and qa_index: "
+            f"{job.get('query_id', '<unknown>')}"
+        )
+    normalized = dict(job)
+    normalized["manifest_question_id"] = wma_manifest_question_id(
+        str(job["sample_id"]),
+        str(job["checkpoint_id"]),
+        int(qa_index),
+    )
+    return normalized
 
 
 def _order_wma_jobs(
@@ -271,6 +305,7 @@ def prepare_native_sample_jobs(
     memory_snapshots: list[dict[str, Any]] | None = None,
     excluded_categories: frozenset[str] = frozenset(),
     ordered_question_ids: tuple[str, ...] | None = None,
+    call_recorder: CallRecorder | None = None,
 ) -> list[dict[str, Any]]:
     """Stream one WMA sample through a native baseline without future leakage."""
     baseline = canonical_name(baseline)
@@ -306,9 +341,14 @@ def prepare_native_sample_jobs(
         for last_index, _, checkpoint, covered_sessions, visible_sessions in checkpoints:
             for session_index in range(ingested_through + 1, last_index + 1):
                 session_id = ordered_sessions[session_index]
-                for chunk in chunks_by_session.get(session_id, []):
-                    adapter.ingest(chunk)
-                adapter.end_session(session_id)
+                with (
+                    call_recorder.phase("memory_build")
+                    if call_recorder is not None
+                    else nullcontext()
+                ):
+                    for chunk in chunks_by_session.get(session_id, []):
+                        adapter.ingest(chunk)
+                    adapter.end_session(session_id)
             ingested_through = max(ingested_through, last_index)
             checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
             visible_session_set = set(visible_sessions)
@@ -335,16 +375,21 @@ def prepare_native_sample_jobs(
                     question=question,
                 )
                 vector = query_cache.get_by_id(query_id) if query_cache is not None else None
-                retrieval = adapter.retrieve(
-                    RetrievalRequest(
-                        query_id=query_id,
-                        text=question,
-                        category=category,
-                        top_k=top_k,
-                        visible_session_ids=tuple(visible_sessions),
-                        query_vector=vector,
+                with (
+                    call_recorder.phase("retrieval")
+                    if call_recorder is not None
+                    else nullcontext()
+                ):
+                    retrieval = adapter.retrieve(
+                        RetrievalRequest(
+                            query_id=query_id,
+                            text=question,
+                            category=category,
+                            top_k=top_k,
+                            visible_session_ids=tuple(visible_sessions),
+                            query_vector=vector,
+                        )
                     )
-                )
                 trace = result_trace_rows(retrieval)
                 evidence = qa.get("evidence", []) or []
                 evidence_ids = [
@@ -405,30 +450,56 @@ def prepare_native_sample_jobs(
 
 
 def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    job = _with_manifest_question_id(job)
     started = time.time()
+    memory_context, _ = build_retrieved_memory_context(
+        job["memory_items"], job["category"]
+    )
+    evidence, _ = build_retrieved_memory_evidence(
+        job["memory_items"], job["category"]
+    )
+    messages = build_answer_messages(
+        question=job["question"],
+        question_type=job["category"],
+        memory_evidence=evidence,
+    )
+    raw_answer = ""
+    answer_response = None
     try:
-        answer_response = client.answer_with_usage(
-            system_prompt=SYSTEM_PROMPT,
+        answer_response = client.answer_messages_with_usage(
+            messages=messages,
             memory_items=job["memory_items"],
-            question_prompt=format_question_prompt(job["question"], job["category"]),
             category=job["category"],
         )
-        answer = answer_response.text
+        raw_answer = answer_response.text
+        answer = parse_answer_response(raw_answer)
         answer_token_usage = answer_response.usage
         answer_attempts = answer_response.attempts
         answer_failed_attempts = answer_response.failed_attempts
+        answer_image_count = answer_response.image_count
         error = ""
     except Exception as exc:
         answer, error = "", str(exc)
-        answer_token_usage = None
-        answer_attempts = client.retries + 1
-        answer_failed_attempts = client.retries + 1
-    memory_context, _ = build_retrieved_memory_context(job["memory_items"], job["category"])
+        if answer_response is not None:
+            answer_token_usage = answer_response.usage
+            answer_attempts = answer_response.attempts
+            answer_failed_attempts = min(
+                answer_attempts, answer_response.failed_attempts + 1
+            )
+            answer_image_count = answer_response.image_count
+        else:
+            answer_token_usage = None
+            answer_attempts = client.retries + 1
+            answer_failed_attempts = answer_attempts
+            answer_image_count = client.count_answer_images(
+                job["memory_items"], category=job["category"]
+            )
     top_k = job["retrieval_top_k"]
     result = {key: value for key, value in job.items() if key not in {"memory_items", "retrieval_top_k"}}
     result.update(
         {
             "system_answer": answer,
+            "answer_raw_response": raw_answer,
             "retrieved_ids": [row["memory_id"] for row in top_k],
             "retrieved_source_groups": [row["source_dialogue_ids"] for row in top_k],
             "retrieved_sessions": [row["session_id"] for row in top_k],
@@ -436,6 +507,7 @@ def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, 
             "answer_token_usage": answer_token_usage,
             "answer_attempts": answer_attempts,
             "answer_failed_attempts": answer_failed_attempts,
+            "answer_image_count": answer_image_count,
             "answer_seconds": time.time() - started,
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         }
@@ -451,6 +523,7 @@ def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, 
         "visible_sessions": job["visible_sessions"],
         "top_k": top_k,
         "memory_context": memory_context,
+        "answer_prompt_messages": messages,
     }
     return result, trace
 
@@ -538,14 +611,16 @@ def _run_signature(
                     layout.existing_vector_path("image_mask.npy", "image_mask.npy"),
                 ]
             )
-    prompt_source = SYSTEM_PROMPT + "\n" + inspect.getsource(format_question_prompt)
     return {
         "prefix_graph_schema_version": PREFIX_GRAPH_SCHEMA_VERSION,
         "arguments": {
             key: value for key, value in vars(args).items() if key not in ignored
         },
         "inputs": file_manifest(input_paths),
-        "prompt_sha256": hashlib.sha256(prompt_source.encode("utf-8")).hexdigest(),
+        "prompt_version": PROMPT_VERSION,
+        "prompt_source": PROMPT_SOURCE,
+        "prompt_sha256": prompt_sha256(),
+        "call_trace_version": TRACE_VERSION,
     }
 
 
@@ -562,10 +637,10 @@ def main() -> None:
     parser.add_argument("--sample-concurrency", type=int, default=4)
     parser.add_argument("--sample-id", action="append", default=[])
     parser.add_argument("--max-qa", type=int, default=0)
-    parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--top-k", type=int, default=7)
     parser.add_argument(
         "--exclude-categories",
-        default="MB",
+        default="",
         help="Comma-separated QA categories to skip before embedding, retrieval, and answering.",
     )
     parser.add_argument("--embedding-dim", type=int, default=2048)
@@ -581,6 +656,7 @@ def main() -> None:
     parser.add_argument("--cost-mb-output-price", type=float, default=None)
     parser.add_argument("--cost-qa-input-price", type=float, default=None)
     parser.add_argument("--cost-qa-output-price", type=float, default=None)
+    parser.add_argument("--efficiency-config", default="configs/model_efficiency.json")
     parser.add_argument("--request-timeout", type=int, default=180)
     parser.add_argument("--retries", type=int, default=2)
     parser.add_argument("--think", action=argparse.BooleanOptionalAction, default=False)
@@ -636,6 +712,7 @@ def main() -> None:
             "append_k",
             "seed_k",
             "expansion_bonus",
+            "efficiency_config",
         },
     )
     args = parser.parse_args()
@@ -766,13 +843,7 @@ def main() -> None:
                 ordered_question_ids=ordered_ids_by_sample.get(path.stem),
             )
         else:
-            sample_jobs = prepare_native_sample_jobs(
-                path,
-                cache,
-                baseline=args.baseline,
-                state_root=baseline_state_root,
-                top_k=args.top_k,
-                config_overrides={
+            config_overrides = {
                     "answer_model": args.answer_model,
                     "answer_base_url": args.answer_base_url,
                     "answer_temperature": args.answer_temperature,
@@ -786,16 +857,40 @@ def main() -> None:
                     "top_k": args.top_k,
                     "request_timeout": args.request_timeout,
                     "retries": args.retries,
-                },
-                memory_snapshots=sample_snapshots,
-                excluded_categories=excluded_categories,
-                ordered_question_ids=ordered_ids_by_sample.get(path.stem),
+                }
+            call_trace_path = result_dir / "call_traces" / trace_filename(path.stem)
+            recorder = CallRecorder(
+                trace_path=call_trace_path,
+                baseline=args.baseline,
+                benchmark="WorldMemArena",
+                sample_id=path.stem,
+                reset=True,
             )
+            with CountingProxy(
+                args.executor_base_url,
+                recorder,
+                args.request_timeout,
+            ) as proxy:
+                config_overrides["executor_base_url"] = proxy.endpoint
+                sample_jobs = prepare_native_sample_jobs(
+                    path,
+                    cache,
+                    baseline=args.baseline,
+                    state_root=baseline_state_root,
+                    top_k=args.top_k,
+                    config_overrides=config_overrides,
+                    memory_snapshots=sample_snapshots,
+                    excluded_categories=excluded_categories,
+                    ordered_question_ids=ordered_ids_by_sample.get(path.stem),
+                    call_recorder=recorder,
+                )
         artifact = {
             "sample_id": path.stem,
             "jobs": sample_jobs,
             "snapshots": sample_snapshots,
         }
+        if args.baseline != "HiveMem":
+            artifact["call_trace_path"] = str(call_trace_path)
         save_sample_artifact(
             output_layout.sample_checkpoint_dir,
             path.stem,
@@ -811,7 +906,11 @@ def main() -> None:
         max_workers=args.sample_concurrency,
         item_key=lambda path: path.stem,
     )
-    jobs = [job for artifact in artifacts for job in artifact["jobs"]]
+    jobs = [
+        _with_manifest_question_id(job)
+        for artifact in artifacts
+        for job in artifact["jobs"]
+    ]
     expected_manifest_question_ids = (
         manifest_index.ordered_question_ids(
             manifest_split, data_source="worldmemarena_lifelong"
@@ -966,6 +1065,9 @@ def main() -> None:
             manifest_index.file_sha256 if manifest_index is not None else ""
         ),
         "ordered_question_ids": list(expected_manifest_question_ids or ()),
+        "prompt_version": PROMPT_VERSION,
+        "prompt_source": PROMPT_SOURCE,
+        "prompt_sha256": prompt_sha256(),
     }
     write_json_atomic(result_dir / "run_manifest.json", manifest | {"run_signature": signature})
     pipeline_path = result_dir / "pipeline_qa.jsonl"
@@ -977,27 +1079,27 @@ def main() -> None:
             f"partial results were saved under {result_dir}, but metrics were not written"
         )
     summary = summarize_results(results, k=args.top_k)
-    summary["cost_qa"] = calculate_cost_qa(
-        results,
-        sample_id_field="sample_id",
-        input_price=args.cost_qa_input_price,
-        output_price=args.cost_qa_output_price,
-    )
     evaluated_sample_ids = sorted(
         {str(row.get("sample_id") or "").strip() for row in results}
         - {""}
     )
-    summary["calls"] = combine_call_metrics(
-        calculate_calls_mb(
-            Path(args.index_root) if args.baseline == "HiveMem" else None,
-            evaluated_sample_ids,
-            unavailable_reason=(
-                f"The {args.baseline} baseline does not expose exact "
-                "Memory-Bank call counts."
-            ),
-        ),
-        calculate_calls_qa(results, sample_id_field="sample_id"),
-    )
+    if args.baseline == "HiveMem":
+        summary["calls"] = combine_call_metrics(
+            calculate_calls_mb(Path(args.index_root), evaluated_sample_ids),
+            calculate_calls_qa(results, sample_id_field="sample_id"),
+        )
+    else:
+        summary["calls"] = write_runtime_call_metrics(
+            [
+                artifact["call_trace_path"]
+                for artifact in artifacts
+                if artifact.get("call_trace_path")
+            ],
+            result_dir,
+            results,
+            sample_id_field="sample_id",
+            sample_ids=evaluated_sample_ids,
+        )
     try:
         if args.baseline == "HiveMem":
             memory_metrics = write_memory_metrics(
@@ -1026,6 +1128,31 @@ def main() -> None:
                 input_price=args.cost_mb_input_price,
                 output_price=args.cost_mb_output_price,
             )
+    efficiency = write_efficiency_metrics(
+        result_dir,
+        results,
+        sample_id_field="sample_id",
+        sample_ids=evaluated_sample_ids,
+        model=args.answer_model,
+        config_path=args.efficiency_config,
+        hivemem_index_root=(
+            Path(args.index_root) if args.baseline == "HiveMem" else None
+        ),
+    )
+    summary.update(
+        {
+            key: efficiency[key]
+            for key in (
+                "cost_mb",
+                "cost_qa",
+                "cost_total",
+                "latency_mb",
+                "latency_qa",
+                "latency_total",
+            )
+        }
+    )
+    summary = merge_existing_llm_judge_metrics(summary, result_dir)
     write_json_atomic(result_dir / "metrics.json", summary)
     write_jsonl_atomic(
         pipeline_path,

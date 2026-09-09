@@ -1610,15 +1610,19 @@ These keywords have been used to retrieve relevant memories from the database.
         if in_context_messages_openai[0]["role"] != "system":
             raise RuntimeError(f"in_context_messages_openai[0] should be system (instead got {in_context_messages_openai[0]})")
 
-        # If at this point there's nothing to summarize, throw an error
+        # A large first multimodal turn can cross the warning threshold before
+        # its input/response messages have been persisted.  At that point only
+        # the system message exists, so there is nothing that can be compressed.
+        # Keep the successful response and let a later turn summarize once
+        # actual history exists instead of turning memory pressure into a
+        # spurious ContextWindowExceededError.
         if len(in_context_messages_openai_no_system) == 0:
-            raise ContextWindowExceededError(
-                "Not enough messages to compress for summarization",
-                details={
-                    "num_candidate_messages": len(in_context_messages_openai_no_system),
-                    "num_total_messages": len(in_context_messages_openai),
-                },
+            self.logger.info(
+                "Skipping summarization because no persisted conversation history "
+                "is available yet"
             )
+            self.agent_alerted_about_memory_pressure = False
+            return
 
         cutoff = calculate_summarizer_cutoff(in_context_messages=in_context_messages, token_counts=token_counts, logger=self.logger)
 

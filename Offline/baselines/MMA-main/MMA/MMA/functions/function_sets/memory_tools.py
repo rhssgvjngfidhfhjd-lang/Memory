@@ -7,6 +7,7 @@ from mma.schemas.episodic_memory import EpisodicEventForLLM
 from mma.schemas.resource_memory import ResourceMemoryItemBase
 from mma.schemas.procedural_memory import ProceduralMemoryItemBase
 from mma.schemas.semantic_memory import SemanticMemoryItemBase
+from mma.orm.errors import NoResultFound
 
 def core_memory_append(self: "Agent", agent_state: "AgentState", label: str, content: str) -> Optional[str]:  # type: ignore
     """
@@ -149,9 +150,18 @@ def check_episodic_memory(self: "Agent", event_ids: List[str], timezone_str: str
     Returns:
         List[EpisodicEventForLLM]: List of episodic events with the given event_ids.
     """
-    episodic_memory = [
-        self.episodic_memory_manager.get_episodic_memory_by_id(event_id, timezone_str=timezone_str) for event_id in event_ids
-    ]
+    episodic_memory = []
+    for event_id in event_ids:
+        try:
+            episodic_memory.append(
+                self.episodic_memory_manager.get_episodic_memory_by_id(
+                    event_id, timezone_str=timezone_str
+                )
+            )
+        except NoResultFound:
+            # A check is a probe, so an unknown model-proposed id is an empty
+            # match rather than a failed native tool execution.
+            continue
 
     formatted_results = [{'event_id': x.id, 'timestamp': x.occurred_at, 'event_type': x.event_type, 'actor': x.actor, 'summary': x.summary, 'details': x.details, 'tree_path': x.tree_path} for x in episodic_memory]
 
@@ -260,9 +270,17 @@ def check_semantic_memory(self: "Agent", semantic_item_ids: List[str], timezone_
     Returns:
         List[SemanticMemoryItemBase]: List of semantic memory items with the given ids.
     """
-    semantic_memory = [
-        self.semantic_memory_manager.get_semantic_item_by_id(semantic_memory_id=id, timezone_str=timezone_str) for id in semantic_item_ids
-    ]
+    semantic_memory = []
+    for semantic_item_id in semantic_item_ids:
+        try:
+            semantic_memory.append(
+                self.semantic_memory_manager.get_semantic_item_by_id(
+                    semantic_memory_id=semantic_item_id,
+                    timezone_str=timezone_str,
+                )
+            )
+        except NoResultFound:
+            continue
 
     formatted_results = [{'semantic_item_id': x.id, 'name': x.name, 'summary': x.summary, 'details': x.details, 'source': x.source, 'tree_path': x.tree_path} for x in semantic_memory]
 

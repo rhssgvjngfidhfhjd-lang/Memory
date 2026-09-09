@@ -8,6 +8,20 @@
   "profiles_file": "configs/profiles.json",
   "output_dir": "outputs/evidence_policy_multibinary_vp",
   "top_k": 5,
+  "graph_options": {
+    "seed_k": 0,
+    "mode": "append",
+    "append_k": 2,
+    "expansion_bonus": 0.2,
+    "expand_temporal": true,
+    "expand_related": true,
+    "expand_entity": true,
+    "expand_attribute": true,
+    "df_max": 0.3,
+    "df_stop": 0.5,
+    "min_shared": 2,
+    "degree_cap": 10
+  },
   "excluded_categories": ["AR"],
   "visual_categories": ["VS", "VR", "TTL"],
   "evidence": {
@@ -19,7 +33,7 @@
   },
   "model": {
     "name": "Qwen/Qwen3-VL-4B-Instruct",
-    "base_url": "http://127.0.0.1:18000/v1",
+    "base_url": "http://127.0.0.1:8013/v1",
     "api_key": "EMPTY",
     "max_tokens": 512,
     "timeout": 180,
@@ -47,7 +61,14 @@
     "epochs": 6,
     "validation_at_start": true,
     "validation_interval_fraction": 0.5,
-    "validation_limit": 20
+    "validation_limit": 0
+  },
+  "reward": {
+    "quality_metric": "f1",
+    "cost_scope": "answer_llm_per_qa",
+    "reference_strategy": "full-evidence_validation",
+    "reference_cost_usd_per_qa": 0.00016019775641025642,
+    "reference_run": "outputs/reference_cost/ReferenceCost_0909_a/MemGallery/reference_cost/summary.json"
   },
   "split": {
     "train": [

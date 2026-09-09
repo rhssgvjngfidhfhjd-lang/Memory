@@ -17,7 +17,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate WorldMemArena result JSON.")
     parser.add_argument("--results", required=True)
     parser.add_argument("--output", required=True)
-    parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--top-k", type=int, default=7)
     parser.add_argument(
         "--official-mode", choices=("none", "metrics", "judge"), default="none"
     )

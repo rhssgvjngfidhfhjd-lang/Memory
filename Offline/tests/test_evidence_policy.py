@@ -2,14 +2,25 @@ from __future__ import annotations
 
 import json
 import tempfile
+import threading
+import time
 import unittest
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import replace
+from functools import partial
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 import numpy as np
+import requests
 import torch
 
 from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
+from benchmarks.memgallery_harness.retrieval.query_embedding_cache import (
+    QueryEmbeddingCache,
+    make_query_id,
+)
 from evidence_policy.evidence import (
     DialogueStore,
     EvidenceChainBuilder,
@@ -21,6 +32,7 @@ from evidence_policy.evidence import (
 )
 from evidence_policy.policy import EvidenceSelectionPolicy
 from evidence_policy.ppo import PPOBuffer, PPOTrainer
+from evidence_policy.retrieval import resolve_graph_options, validate_graph_config
 from evidence_policy.rollout import (
     EvidenceEpisode,
     EvidenceSelectionEnv,
@@ -30,9 +42,16 @@ from evidence_policy.vp_store import VPArtifactIndex
 from hive_mem.mau import MAU
 from hive_mem.retriever import MemoryHit
 from scripts.evidence_policy import (
+    RealtimeWandbLogger,
+    build_h2hmem_policy_messages,
+    build_wma_policy_messages,
     initial_validation_signature,
+    parse_h2hmem_policy_answer,
+    parse_wma_policy_answer,
     prepare_initial_validation,
+    reconcile_ppo_metrics_for_resume,
     resume_configs_match,
+    rollout_record,
     rollout_with_endpoint_recovery,
     validation_checkpoints,
 )
@@ -42,6 +61,144 @@ EMBEDDING_DIM = 8
 
 
 class ValidationScheduleTest(unittest.TestCase):
+    def test_answer_client_reduces_image_resolution_only_after_context_overflow(self):
+        client = VLMAnswerClient(base_url="http://127.0.0.1:1/v1")
+        response = {
+            "choices": [{"message": {"content": "answer"}}],
+            "usage": {"prompt_tokens": 10, "completion_tokens": 1, "total_tokens": 11},
+        }
+        with patch.object(
+            client,
+            "_build_openai_content",
+            return_value=[{"type": "text", "text": "prompt"}],
+        ) as build_content, patch.object(
+            client,
+            "_post_json",
+            side_effect=[
+                requests.HTTPError("decoder prompt exceeds maximum model length"),
+                response,
+            ],
+        ):
+            answer, usage = client._answer_openai_compatible(
+                system_prompt="system",
+                memory_items=[],
+                question_prompt="question",
+            )
+
+        self.assertEqual(answer, "answer")
+        self.assertEqual(usage["total_tokens"], 11)
+        self.assertEqual(
+            [call.kwargs["max_image_side"] for call in build_content.call_args_list],
+            [1344, 896],
+        )
+
+    def test_query_cache_falls_back_across_workspace_path_moves(self):
+        vector = np.arange(EMBEDDING_DIM, dtype=np.float32)
+        with tempfile.TemporaryDirectory() as directory:
+            cache_dir = Path(directory)
+            np.save(cache_dir / "vectors.npy", vector.reshape(1, -1))
+            old_image = {"path": "/old/workspace/image.jpg", "caption": "same image"}
+            metadata = {
+                "query_id": make_query_id(
+                    dataset_name="dataset",
+                    qa_index=1,
+                    category="VS",
+                    question="Where is it?",
+                    query_image=old_image,
+                ),
+                "dataset": "dataset",
+                "qa_index": 1,
+                "category": "VS",
+                "question": "Where is it?",
+            }
+            (cache_dir / "metadata.jsonl").write_text(
+                json.dumps(metadata) + "\n", encoding="utf-8"
+            )
+            (cache_dir / "manifest.json").write_text(
+                json.dumps({"count": 1, "dim": EMBEDDING_DIM}), encoding="utf-8"
+            )
+
+            cache = QueryEmbeddingCache(cache_dir, expected_dim=EMBEDDING_DIM)
+            actual = cache.get(
+                dataset_name="dataset",
+                qa_index=1,
+                category="VS",
+                question="Where is it?",
+                query_image={"path": "/new/workspace/image.jpg", "caption": "same image"},
+            )
+
+            self.assertEqual(actual, vector.tolist())
+
+    def test_query_cache_load_is_thread_safe(self):
+        vectors = np.arange(4 * EMBEDDING_DIM, dtype=np.float32).reshape(4, -1)
+        with tempfile.TemporaryDirectory() as directory:
+            cache_dir = Path(directory)
+            np.save(cache_dir / "vectors.npy", vectors)
+            rows = [
+                {
+                    "query_id": f"query-{index}",
+                    "dataset": "dataset",
+                    "qa_index": index,
+                    "category": "FR",
+                    "question": f"Question {index}",
+                }
+                for index in range(len(vectors))
+            ]
+            (cache_dir / "metadata.jsonl").write_text(
+                "".join(json.dumps(row) + "\n" for row in rows),
+                encoding="utf-8",
+            )
+            (cache_dir / "manifest.json").write_text(
+                json.dumps({"count": len(vectors), "dim": EMBEDDING_DIM}),
+                encoding="utf-8",
+            )
+            cache = QueryEmbeddingCache(cache_dir, expected_dim=EMBEDDING_DIM)
+            barrier = threading.Barrier(8)
+            real_load = np.load
+
+            def slow_load(*args, **kwargs):
+                time.sleep(0.05)
+                return real_load(*args, **kwargs)
+
+            def lookup(_: int):
+                barrier.wait()
+                return cache.get_by_id("query-2")
+
+            with patch(
+                "benchmarks.memgallery_harness.retrieval.query_embedding_cache.np.load",
+                side_effect=slow_load,
+            ) as load_vectors, ThreadPoolExecutor(max_workers=8) as pool:
+                actual = list(pool.map(lookup, range(8)))
+
+            self.assertEqual(load_vectors.call_count, 1)
+            self.assertEqual(actual, [vectors[2].tolist()] * 8)
+
+    def test_wandb_init_failure_is_persisted_without_raising(self):
+        fake_wandb = MagicMock()
+        fake_wandb.util.generate_id.return_value = "test-run-id"
+        fake_wandb.init.side_effect = RuntimeError("network unavailable")
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            "sys.modules", {"wandb": fake_wandb}
+        ):
+            logger = RealtimeWandbLogger(
+                enabled=True,
+                output_dir=Path(directory),
+                config={"benchmark": "wma"},
+                project="test-project",
+                entity="test-entity",
+                name="test-run",
+            )
+
+            self.assertIsNone(logger.run)
+            errors = [
+                json.loads(line)
+                for line in (Path(directory) / "run_control" / "wandb_errors.jsonl")
+                .read_text(encoding="utf-8")
+                .splitlines()
+            ]
+            self.assertEqual(errors[0]["stage"], "init")
+            self.assertIn("network unavailable", errors[0]["message"])
+
     def test_resume_allows_only_output_directory_to_change(self):
         stored = {"seed": 42, "output_dir": "/old", "ppo": {"epochs": 6}}
         current = {"seed": 42, "output_dir": "/new", "ppo": {"epochs": 6}}
@@ -49,6 +206,34 @@ class ValidationScheduleTest(unittest.TestCase):
         self.assertTrue(resume_configs_match(stored, current))
         current["seed"] = 43
         self.assertFalse(resume_configs_match(stored, current))
+
+    def test_resume_discards_uncommitted_and_duplicate_ppo_metrics(self):
+        rows = [
+            {"update_step": 1, "reward_mean": 0.1},
+            {"update_step": 2, "reward_mean": 0.2},
+            {"update_step": 3, "reward_mean": 0.3},
+            {"update_step": 2, "reward_mean": 0.25},
+            {"update_step": 4, "reward_mean": 0.4},
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "ppo_metrics.jsonl"
+            path.write_text(
+                "".join(json.dumps(row) + "\n" for row in rows),
+                encoding="utf-8",
+            )
+
+            result = reconcile_ppo_metrics_for_resume(
+                path,
+                checkpoint_update_step=2,
+            )
+
+            kept = [json.loads(line) for line in path.read_text().splitlines()]
+            self.assertEqual([row["update_step"] for row in kept], [1, 2])
+            self.assertEqual(kept[-1]["reward_mean"], 0.25)
+            self.assertEqual(result["original_rows"], 5)
+            self.assertEqual(result["kept_rows"], 2)
+            self.assertEqual(result["removed_rows"], 3)
+            self.assertTrue(Path(result["backup"]).is_file())
 
     def test_transient_endpoint_error_is_retried_without_zero_reward(self):
         failed = MagicMock(error="Connection refused", reward=0.0)
@@ -150,6 +335,23 @@ class ValidationScheduleTest(unittest.TestCase):
                     enabled=True,
                 )
             self.assertEqual(second, first)
+
+
+class GraphRetrievalConfigTest(unittest.TestCase):
+    def test_graph_defaults_are_five_plus_two_append(self):
+        options = resolve_graph_options({"top_k": 5})
+
+        self.assertIsNotNone(options)
+        self.assertEqual(options["mode"], "append")
+        self.assertEqual(options["append_k"], 2)
+        self.assertEqual(options["seed_k"], 0)
+        validate_graph_config({"top_k": 5})
+
+    def test_graph_five_plus_two_contract_is_validated(self):
+        with self.assertRaisesRegex(ValueError, "top_k=5"):
+            validate_graph_config({"top_k": 4})
+        with self.assertRaisesRegex(ValueError, "append_k=2"):
+            resolve_graph_options({"top_k": 5, "graph_options": {"append_k": 1}})
 
 
 def make_hit(
@@ -485,6 +687,204 @@ class RolloutTest(unittest.TestCase):
         self.assertFalse(first.cached)
         self.assertTrue(second.cached)
         self.assertEqual(second.reward, 1.0)
+        self.assertEqual(first.answer_attempts, 1)
+        self.assertEqual(first.answer_failed_attempts, 0)
+        self.assertEqual(second.answer_attempts, 1)
+        self.assertEqual(second.answer_failed_attempts, 0)
+
+    def test_retrieval_signature_separates_rollout_cache_entries(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dialogue_dataset(root)
+            client = self.FakeClient()
+            env = EvidenceSelectionEnv(
+                client,
+                EvidenceChainBuilder(DialogueStore(root)),
+                cache=RolloutCache(root / "cache.jsonl"),
+            )
+            episode = EvidenceEpisode(
+                query_id="q1",
+                dataset="toy",
+                category="FR",
+                question_prompt="What was baked?",
+                system_prompt="Answer briefly.",
+                ground_truth="fruit tart",
+                query_embedding=np.ones(EMBEDDING_DIM, dtype=np.float32),
+                memory_hits=(make_hit("m1"),),
+                retrieval_signature="graph-v1",
+            )
+
+            first = env.rollout(episode, EvidenceStrategy.SUMMARY)
+            second = env.rollout(
+                replace(episode, retrieval_signature="graph-v2"),
+                EvidenceStrategy.SUMMARY,
+            )
+
+        self.assertEqual(client.calls, 2)
+        self.assertFalse(first.cached)
+        self.assertFalse(second.cached)
+
+    def test_prompt_signature_separates_rollout_cache_entries(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dialogue_dataset(root)
+            client = self.FakeClient()
+            env = EvidenceSelectionEnv(
+                client,
+                EvidenceChainBuilder(DialogueStore(root)),
+                cache=RolloutCache(root / "cache.jsonl"),
+            )
+            episode = EvidenceEpisode(
+                query_id="q1",
+                dataset="toy",
+                category="FR",
+                question_prompt="What was baked?",
+                system_prompt="Answer briefly.",
+                ground_truth="fruit tart",
+                query_embedding=np.ones(EMBEDDING_DIM, dtype=np.float32),
+                memory_hits=(make_hit("m1"),),
+                prompt_signature="prompt-v1",
+            )
+
+            first = env.rollout(episode, EvidenceStrategy.SUMMARY)
+            second = env.rollout(
+                replace(episode, prompt_signature="prompt-v2"),
+                EvidenceStrategy.SUMMARY,
+            )
+
+        self.assertEqual(client.calls, 2)
+        self.assertFalse(first.cached)
+        self.assertFalse(second.cached)
+
+    def test_h2hmem_custom_messages_and_tag_parser_are_used_by_rollout(self):
+        class CapturingClient(self.FakeClient):
+            def answer_with_usage(self, **kwargs):
+                self.calls += 1
+                self.request = kwargs
+                return SimpleNamespace(
+                    text="<answer>fruit tart</answer>",
+                    usage={"prompt_tokens": 20, "completion_tokens": 5, "total_tokens": 25},
+                    attempts=1,
+                    failed_attempts=0,
+                    image_count=0,
+                )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dialogue_dataset(root)
+            client = CapturingClient()
+            env = EvidenceSelectionEnv(
+                client, EvidenceChainBuilder(DialogueStore(root))
+            )
+            episode = EvidenceEpisode(
+                query_id="q1",
+                dataset="toy",
+                category="Unimodal Precise Recall",
+                question_prompt="What was baked?",
+                system_prompt="",
+                ground_truth="fruit tart",
+                query_embedding=np.ones(EMBEDDING_DIM, dtype=np.float32),
+                memory_hits=(make_hit("m1"),),
+                answer_messages_builder=partial(
+                    build_h2hmem_policy_messages,
+                    question="What was baked?",
+                    category="Unimodal Precise Recall",
+                ),
+                answer_parser=parse_h2hmem_policy_answer,
+                prepend_memory_context=False,
+                prompt_signature="h2-custom",
+            )
+
+            rollout = env.rollout(episode, EvidenceStrategy.SUMMARY)
+
+        self.assertEqual(rollout.answer, "fruit tart")
+        self.assertEqual(rollout.reward, 1.0)
+        self.assertEqual(rollout.raw_answer, "<answer>fruit tart</answer>")
+        self.assertIn("memory testing system", client.request["system_prompt"])
+        self.assertFalse(client.request["prepend_memory_context"])
+        self.assertEqual(client.request["question_prompt"].count("summary fact"), 1)
+
+    def test_wma_custom_messages_and_tag_parser_are_used_by_rollout(self):
+        class CapturingClient(self.FakeClient):
+            def answer_with_usage(self, **kwargs):
+                self.calls += 1
+                self.request = kwargs
+                return SimpleNamespace(
+                    text="<answer>fruit tart</answer>",
+                    usage={"prompt_tokens": 20, "completion_tokens": 5, "total_tokens": 25},
+                    attempts=1,
+                    failed_attempts=0,
+                    image_count=0,
+                )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dialogue_dataset(root)
+            client = CapturingClient()
+            env = EvidenceSelectionEnv(
+                client, EvidenceChainBuilder(DialogueStore(root))
+            )
+            episode = EvidenceEpisode(
+                query_id="q1",
+                dataset="toy",
+                category="TR",
+                question_prompt="What was baked?",
+                system_prompt="official WMA system prompt",
+                ground_truth="fruit tart",
+                query_embedding=np.ones(EMBEDDING_DIM, dtype=np.float32),
+                memory_hits=(make_hit("m1"),),
+                answer_messages_builder=partial(
+                    build_wma_policy_messages,
+                    question="What was baked?",
+                    category="TR",
+                ),
+                answer_parser=parse_wma_policy_answer,
+                prepend_memory_context=False,
+                prompt_signature="wma-custom",
+            )
+
+            rollout = env.rollout(episode, EvidenceStrategy.SUMMARY)
+
+        self.assertEqual(rollout.answer, "fruit tart")
+        self.assertEqual(rollout.reward, 1.0)
+        self.assertEqual(rollout.raw_answer, "<answer>fruit tart</answer>")
+        self.assertFalse(client.request["prepend_memory_context"])
+        self.assertEqual(client.request["question_prompt"].count("summary fact"), 1)
+
+    def test_rollout_record_preserves_vector_and_graph_provenance(self):
+        client = self.FakeClient()
+        env = EvidenceSelectionEnv(
+            client,
+            EvidenceChainBuilder(DialogueStore(".")),
+        )
+        vector_hit = make_hit("vector")
+        graph_base = make_hit("graph")
+        graph_hit = MemoryHit(
+            item=graph_base.item,
+            score=0.5,
+            rank=2,
+            via="graph",
+        )
+        episode = EvidenceEpisode(
+            query_id="q1",
+            dataset="toy",
+            category="FR",
+            question_prompt="What was baked?",
+            system_prompt="Answer briefly.",
+            ground_truth="fruit tart",
+            query_embedding=np.ones(EMBEDDING_DIM, dtype=np.float32),
+            memory_hits=(vector_hit, graph_hit),
+            retrieval_signature="retrieval-signature",
+        )
+
+        rollout = env.rollout(episode, EvidenceStrategy.SUMMARY)
+        row = rollout_record(rollout, episode)
+
+        self.assertEqual(row["retrieval_signature"], "retrieval-signature")
+        self.assertEqual(
+            [hit["via"] for hit in row["retrieval_top_k"]],
+            ["vector", "graph"],
+        )
 
     def test_openai_payload_uses_vllm_thinking_switch(self):
         class CapturingClient(VLMAnswerClient):

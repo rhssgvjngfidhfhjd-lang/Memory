@@ -13,7 +13,7 @@ class RetrievalRequest:
     query_id: str
     text: str
     category: str = ""
-    top_k: int = 5
+    top_k: int = 7
     query_image: str | None = None
     visible_session_ids: tuple[str, ...] = ()
     query_vector: list[float] | None = None

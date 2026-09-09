@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "models": {
+    "Qwen/Qwen3-VL-4B-Instruct": {
+      "latency": {
+        "base_seconds": 0.332,
+        "input_seconds_per_token": 0.000003,
+        "output_seconds_per_token": 0.00664,
+        "image_seconds": 0.15,
+        "source": "inherited_qwen3_4b_text_with_heuristic_image_proxy"
+      },
+      "pricing": {
+        "input_per_million_usd": 0.05,
+        "output_per_million_usd": 0.25,
+        "source": "openrouter_reference"
+      }
+    }
+  }
+}

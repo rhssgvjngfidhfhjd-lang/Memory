@@ -29,6 +29,7 @@ from benchmarks.memgallery_harness.runner.metrics import (
     normalize_answer,
     provenance_hit,
     write_retrieval_memory_token,
+    write_efficiency_metrics,
 )
 from benchmarks.memgallery_harness.runner.answer_client import (
     VLMAnswerClient,
@@ -39,9 +40,8 @@ from hive_mem.build_memories import apply_config_defaults, completed_dataset_sta
 from hive_mem.output_layout import DatasetLayout
 from embedding.build_query_embeddings import _prepare_text_query, _resolve_devices
 from benchmarks.memgallery_harness.runner.prompts import (
-    CATEGORY_PROMPTS,
-    PROMPT_DIR,
     SYSTEM_PROMPT,
+    build_answer_messages,
     prompt_manifest,
 )
 from embedding.qwen3_text_embedding import (
@@ -164,16 +164,16 @@ class OfficialMetricAndAnswerRetryTest(unittest.TestCase):
 
 
 class RuntimeConfigurationTest(unittest.TestCase):
-    def test_memgallery_prompts_resolve_from_workspace_and_are_nonempty(self):
-        expected = Path(__file__).resolve().parents[2] / "Mem-Gallery" / "benchmark" / "prompt"
-        self.assertEqual(PROMPT_DIR, expected.resolve())
+    def test_memgallery_custom_prompt_and_manifest_are_nonempty(self):
         self.assertTrue(SYSTEM_PROMPT)
-        self.assertEqual(set(CATEGORY_PROMPTS), {"AR", "CD", "VS"})
-        self.assertTrue(all(CATEGORY_PROMPTS.values()))
+        self.assertEqual(
+            [message["role"] for message in build_answer_messages(
+                question="Question?", question_type="FR", memory_evidence=["memory"]
+            )],
+            ["system", "user"],
+        )
         manifest = prompt_manifest()
-        self.assertEqual(set(manifest["prompt_sha256"]), {
-            "sys_prompt.txt", "ar_prompt.txt", "cd_prompt.txt", "vs_prompt.txt"
-        })
+        self.assertEqual(len(manifest["prompt_sha256"]), 64)
 
     def test_config_overlay_can_be_limited_to_shared_wma_keys(self):
         parser = argparse.ArgumentParser()
@@ -423,10 +423,10 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         self.assertEqual(merged["llm_judge"], 0.75)
         self.assertEqual(merged["em"], 0.25)
         self.assertEqual(merged["by_category"]["AR"]["llm_judge"], 0.5)
-        self.assertEqual(list(merged)[:3], ["f1", "em", "llm_judge"])
+        self.assertEqual(list(merged)[:3], ["f1", "llm_judge", "em"])
         self.assertEqual(
             list(merged["by_category"]["AR"])[:3],
-            ["f1", "em", "llm_judge"],
+            ["f1", "llm_judge", "em"],
         )
         self.assertNotIn("exact_match", merged)
 
@@ -516,9 +516,12 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         self.assertEqual(cost["input_tokens"], 30)
         self.assertEqual(cost["output_tokens"], 10)
         self.assertEqual(cost["num_samples"], 2)
-        self.assertAlmostEqual(cost["cost_sum"], 9.0)
-        self.assertAlmostEqual(cost["mean_per_sample"], 4.5)
-        self.assertEqual(cost["formula"], "(30 * 0.1 + 10 * 0.6) / 2 = 4.5")
+        self.assertAlmostEqual(cost["cost_sum"], 0.000009)
+        self.assertAlmostEqual(cost["mean_per_sample"], 0.0000045)
+        self.assertEqual(
+            cost["formula"],
+            "((30 / 1000000) * 0.1 + (10 / 1000000) * 0.6) / 2 = 4.5e-06",
+        )
 
     def test_cost_mb_is_unavailable_without_prices_or_exact_usage(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -593,9 +596,71 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         self.assertEqual(cost["num_samples"], 2)
         self.assertEqual(cost["total_attempts"], 4)
         self.assertEqual(cost["retried_queries"], 1)
-        self.assertAlmostEqual(cost["cost_sum"], 12.0)
-        self.assertAlmostEqual(cost["mean_per_sample"], 6.0)
-        self.assertEqual(cost["formula"], "(60 * 0.1 + 10 * 0.6) / 2 = 6")
+        self.assertAlmostEqual(cost["cost_sum"], 0.000012)
+        self.assertAlmostEqual(cost["mean_per_sample"], 0.000006)
+        self.assertEqual(
+            cost["formula"],
+            "((60 / 1000000) * 0.1 + (10 / 1000000) * 0.6) / 2 = 6e-06",
+        )
+
+    def test_efficiency_metrics_use_pricing_latency_calls_and_images(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "call_trace.jsonl").write_text(
+                "\n".join(
+                    json.dumps(row)
+                    for row in (
+                        {
+                            "phase": "memory_build",
+                            "prompt_tokens": 100,
+                            "completion_tokens": 10,
+                            "total_tokens": 110,
+                            "image_count": 2,
+                        },
+                        {
+                            "phase": "retrieval",
+                            "prompt_tokens": 20,
+                            "completion_tokens": 5,
+                            "total_tokens": 25,
+                            "image_count": 1,
+                        },
+                    )
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            metrics = write_efficiency_metrics(
+                root,
+                [
+                    {
+                        "dataset": "sample",
+                        "answer_usage": {
+                            "prompt_tokens": 30,
+                            "completion_tokens": 4,
+                            "total_tokens": 34,
+                        },
+                        "answer_attempts": 2,
+                        "answer_image_count": 3,
+                    }
+                ],
+                sample_id_field="dataset",
+                sample_ids=["sample"],
+                model="Qwen/Qwen3-VL-4B-Instruct",
+                config_path=Path(__file__).parents[1]
+                / "configs"
+                / "model_efficiency.json",
+            )
+
+        self.assertAlmostEqual(metrics["cost_mb"]["cost_sum_usd"], 0.0000075)
+        self.assertAlmostEqual(metrics["cost_qa"]["cost_sum_usd"], 0.00000475)
+        self.assertAlmostEqual(
+            metrics["latency_mb"]["latency_sum_seconds"], 0.6987
+        )
+        self.assertAlmostEqual(
+            metrics["latency_qa"]["latency_sum_seconds"], 2.10591
+        )
+        self.assertEqual(metrics["latency_qa"]["calls"], 3)
+        self.assertEqual(metrics["latency_qa"]["image_count"], 7)
 
     def test_cost_qa_is_strict_about_prices_usage_and_answer_failures(self):
         valid = {
@@ -735,11 +800,11 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         )
         self.assertEqual(
             list(combined)[:5],
-            ["f1", "em", "llm_judge", "memory_build_tokens", "summary_characters"],
+            ["f1", "llm_judge", "em", "memory_build_tokens", "summary_characters"],
         )
         self.assertEqual(
             list(combined["by_category"]["AR"])[:3],
-            ["f1", "em", "llm_judge"],
+            ["f1", "llm_judge", "em"],
         )
 
     def test_inserts_are_never_deduplicated(self):
@@ -872,8 +937,8 @@ class RetrievalMemoryTokenTest(unittest.TestCase):
             list(combined)[:6],
             [
                 "f1",
-                "em",
                 "llm_judge",
+                "em",
                 "memory_build_tokens",
                 "summary_characters",
                 "retrieval_memory_tokens",
@@ -1792,6 +1857,9 @@ class GraphExpandedRetrievalTest(unittest.TestCase):
                     metadata={"session_id": f"S{index:02d}"},
                 )
             bank.memories[0].links["related"] = [
+                # Already present in vector top-5: skip it and keep looking for
+                # the next highest-scoring unique graph neighbour.
+                {"target": bank.memories[1].id, "type": "SAME_EPISODE"},
                 {"target": bank.memories[5].id, "type": "CAUSES"},
                 {"target": bank.memories[6].id, "type": "SAME_EPISODE"},
             ]
@@ -1842,6 +1910,51 @@ class GraphExpandedRetrievalTest(unittest.TestCase):
 
         self.assertEqual([row.metadata["via"] for row in result.items], ["vector", "vector", "graph"])
         self.assertEqual(result.trace["mode"], "append")
+        self.assertEqual(result.trace["graph_append_k"], 2)
+
+    def test_hivemem_adapter_uses_five_plus_two_with_shared_top_seven(self):
+        from benchmarks.baseline_runtime.adapters.hivemem import HiveMemAdapter
+        from benchmarks.baseline_runtime.protocol import RetrievalRequest
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dataset_dir = root / "datasets" / "toy"
+            bank = MAUBank()
+            for index, vector in enumerate(
+                ([1.0, 0.0], [0.9, 0.1], [0.8, 0.2], [0.7, 0.3],
+                 [0.6, 0.4], [0.1, 0.9], [0.05, 0.95], [0.0, 1.0])
+            ):
+                bank.add_memory(
+                    f"memory {index}",
+                    np.asarray(vector, dtype=np.float32),
+                    metadata={"session_id": f"S{index:02d}"},
+                )
+            bank.memories[0].links["related"] = [
+                {"target": bank.memories[5].id, "type": "CAUSES"},
+                {"target": bank.memories[6].id, "type": "SAME_EPISODE"},
+            ]
+            bank.save(dataset_dir)
+            adapter = HiveMemAdapter(
+                baseline="HiveMem",
+                source_root=Path(),
+                config={"index_root": str(root), "top_k": 7},
+            )
+            adapter.reset("toy", Path())
+            result = adapter.retrieve(
+                RetrievalRequest(
+                    query_id="q",
+                    text="q",
+                    top_k=7,
+                    query_vector=[1.0, 0.0],
+                )
+            )
+
+        self.assertEqual(len(result.items), 7)
+        self.assertEqual(
+            [row.metadata["via"] for row in result.items],
+            ["vector"] * 5 + ["graph"] * 2,
+        )
+        self.assertEqual(result.trace["vector_k"], 5)
         self.assertEqual(result.trace["graph_append_k"], 2)
 
     def test_category_gating_uses_plain_vector_for_other_categories(self):

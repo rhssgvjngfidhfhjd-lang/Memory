@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import nullcontext
 import json
 import os
 from pathlib import Path
@@ -17,6 +18,12 @@ from benchmarks.baseline_runtime.parallel_runner import (
     signature_digest,
 )
 from benchmarks.baseline_runtime.openai_compat import embed_texts
+from benchmarks.baseline_runtime.call_trace import (
+    CallRecorder,
+    CountingProxy,
+    TRACE_VERSION,
+    trace_filename,
+)
 from benchmarks.baseline_runtime.output_layout import BaselineOutputLayout
 from benchmarks.baseline_runtime.protocol import (
     RetrievalRequest,
@@ -25,6 +32,27 @@ from benchmarks.baseline_runtime.protocol import (
 )
 from benchmarks.io_utils import file_manifest, write_json_atomic, write_jsonl_atomic
 from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
+from benchmarks.memgallery_harness.runner.answer_client import (
+    build_retrieved_memory_context,
+    build_retrieved_memory_evidence,
+    query_image_prompt_metadata,
+)
+from benchmarks.h2hmem_harness.prompts import (
+    PROMPT_SOURCE,
+    PROMPT_VERSION,
+    build_answer_messages,
+    parse_answer_response,
+    prompt_sha256,
+)
+from benchmarks.memgallery_harness.runner.metrics import (
+    calculate_calls_mb,
+    calculate_calls_qa,
+    combine_call_metrics,
+    merge_existing_llm_judge_metrics,
+    summarize_results,
+    write_efficiency_metrics,
+    write_runtime_call_metrics,
+)
 from embedding.chunk_builder import (
     build_h2h_chunks_from_directory,
     iter_h2h_session_files,
@@ -35,10 +63,6 @@ from evidence_policy.split_manifest import SplitManifestIndex, normalize_split_n
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_H2HMEM_DATA_DIR = WORKSPACE_ROOT / "H2HMEM-main" / "dataset"
-SYSTEM_PROMPT = """You answer questions using only the supplied retrieved memories.
-Be concise and return only the answer. H2HMem records human-to-human conversations;
-track speakers, dates, updates, and visual evidence carefully. If the evidence does
-not support an answer, say that it is unknown instead of guessing."""
 
 
 def _natural_key(path: Path) -> tuple[Any, ...]:
@@ -83,14 +107,6 @@ def _question_rows(conversation_dir: Path) -> list[tuple[Path, int, dict[str, An
     return rows
 
 
-def _question_prompt(text: str, category: str) -> str:
-    return (
-        "Answer the following H2HMem question from the retrieved conversation "
-        "memories. Return only the answer, without an 'Answer:' prefix.\n\n"
-        f"Question type: {category}\nQuestion: {text}"
-    )
-
-
 def h2hmem_manifest_question_id(
     variant: str,
     conversation_id: str,
@@ -116,6 +132,7 @@ def prepare_conversation_jobs(
     config: dict[str, Any],
     max_qa: int = 0,
     ordered_question_ids: tuple[str, ...] | None = None,
+    call_recorder: CallRecorder | None = None,
 ) -> dict[str, Any]:
     variant_dir = "multi-party" if variant == "multiparty" else variant
     conversation_dir = data_dir / variant_dir / conversation_id
@@ -123,21 +140,26 @@ def prepare_conversation_jobs(
     sample_id = f"{variant}_{conversation_id}"
     try:
         adapter.reset(sample_id, state_root / variant / conversation_id)
-        if baseline != "HiveMem":
-            chunks = build_h2h_chunks_from_directory(
-                data_dir,
-                variant=variant,
-                conversation_ids={conversation_id},
-            )
-            current_session = ""
-            for chunk in chunks:
-                session_id = str(chunk.metadata.get("session_id") or "")
-                if current_session and session_id != current_session:
+        with (
+            call_recorder.phase("memory_build")
+            if call_recorder is not None
+            else nullcontext()
+        ):
+            if baseline != "HiveMem":
+                chunks = build_h2h_chunks_from_directory(
+                    data_dir,
+                    variant=variant,
+                    conversation_ids={conversation_id},
+                )
+                current_session = ""
+                for chunk in chunks:
+                    session_id = str(chunk.metadata.get("session_id") or "")
+                    if current_session and session_id != current_session:
+                        adapter.end_session(current_session)
+                    adapter.ingest(chunk)
+                    current_session = session_id
+                if current_session:
                     adapter.end_session(current_session)
-                adapter.ingest(chunk)
-                current_session = session_id
-            if current_session:
-                adapter.end_session(current_session)
 
         jobs: list[dict[str, Any]] = []
         indexed_questions = []
@@ -184,20 +206,25 @@ def prepare_conversation_jobs(
             query_vector = (
                 embed_texts([question], config)[0] if baseline == "HiveMem" else None
             )
-            retrieval = adapter.retrieve(
-                RetrievalRequest(
-                    query_id=query_id,
-                    text=question,
-                    category=category,
-                    top_k=int(config["top_k"]),
-                    query_image=(
-                        str(_question_image(question_file, question_data.get("image"))["path"])
-                        if question_data.get("image")
-                        else None
-                    ),
-                    query_vector=query_vector,
+            with (
+                call_recorder.phase("retrieval")
+                if call_recorder is not None
+                else nullcontext()
+            ):
+                retrieval = adapter.retrieve(
+                    RetrievalRequest(
+                        query_id=query_id,
+                        text=question,
+                        category=category,
+                        top_k=int(config["top_k"]),
+                        query_image=(
+                            str(_question_image(question_file, question_data.get("image"))["path"])
+                            if question_data.get("image")
+                            else None
+                        ),
+                        query_vector=query_vector,
+                    )
                 )
-            )
             memory_items = result_context_items(retrieval)
             trace_rows = result_trace_rows(retrieval)
             query_image = _question_image(question_file, question_data.get("image"))
@@ -219,7 +246,6 @@ def prepare_conversation_jobs(
                 "difficulty": qa.get("difficulty", ""),
                 "original_answer": qa.get("original_answer", ""),
                 "answer_session": qa.get("answer_session") or [],
-                "question_prompt": _question_prompt(question, category),
                 "query_image_payload": query_image,
                 "memory_items": memory_items,
                 "retrieval_top_k": trace_rows,
@@ -241,19 +267,49 @@ def answer_conversation_job(
     job: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     started = time.time()
+    memory_context, _ = build_retrieved_memory_context(
+        job["memory_items"], category="VR"
+    )
+    evidence, _ = build_retrieved_memory_evidence(
+        job["memory_items"], category="VR"
+    )
+    messages = build_answer_messages(
+        question=job["question"],
+        question_type=job["category"],
+        memory_evidence=evidence,
+        query_images=query_image_prompt_metadata(job.get("query_image_payload")),
+    )
+    raw_answer = ""
+    response = None
     try:
-        response = client.answer_with_usage(
-            system_prompt=SYSTEM_PROMPT,
+        response = client.answer_messages_with_usage(
+            messages=messages,
             memory_items=job["memory_items"],
-            question_prompt=job["question_prompt"],
             query_image=job.get("query_image_payload"),
             category="VR",
         )
-        answer, error = response.text, ""
+        raw_answer = response.text
+        answer = parse_answer_response(raw_answer)
+        error = ""
         usage, attempts = response.usage, response.attempts
+        failed_attempts = response.failed_attempts
+        image_count = response.image_count
     except Exception as exc:
-        answer, error, usage = "", str(exc), None
-        attempts = client.retries + 1
+        answer, error = "", str(exc)
+        if response is not None:
+            usage = response.usage
+            attempts = response.attempts
+            failed_attempts = min(attempts, response.failed_attempts + 1)
+            image_count = response.image_count
+        else:
+            usage = None
+            attempts = client.retries + 1
+            failed_attempts = attempts
+            image_count = client.count_answer_images(
+                job["memory_items"],
+                query_image=job.get("query_image_payload"),
+                category="VR",
+            )
     result = {
         key: value
         for key, value in job.items()
@@ -264,6 +320,7 @@ def answer_conversation_job(
     result.update(
         {
             "system_answer": answer,
+            "answer_raw_response": raw_answer,
             "retrieved_ids": [row["memory_id"] for row in job["retrieval_top_k"]],
             "retrieved_source_groups": [
                 row["source_dialogue_ids"] for row in job["retrieval_top_k"]
@@ -272,6 +329,8 @@ def answer_conversation_job(
             "answer_seconds": time.time() - started,
             "answer_token_usage": usage,
             "answer_attempts": attempts,
+            "answer_failed_attempts": failed_attempts,
+            "answer_image_count": image_count,
         }
     )
     trace = {
@@ -282,6 +341,8 @@ def answer_conversation_job(
         "question": job["question"],
         "category": job["category"],
         "top_k": job["retrieval_top_k"],
+        "memory_context": memory_context,
+        "answer_prompt_messages": messages,
     }
     return result, trace
 
@@ -329,7 +390,7 @@ def main() -> None:
     parser.add_argument("--checkpoint-every", type=int, default=10)
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--max-qa", type=int, default=0)
-    parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--top-k", type=int, default=7)
     parser.add_argument(
         "--graph-retrieval",
         action=argparse.BooleanOptionalAction,
@@ -354,6 +415,7 @@ def main() -> None:
     parser.add_argument("--executor-base-url", default="http://127.0.0.1:18000/v1")
     parser.add_argument("--executor-temperature", type=float, default=0.0)
     parser.add_argument("--executor-visual-input", choices=("image", "caption"), default="image")
+    parser.add_argument("--efficiency-config", default="configs/model_efficiency.json")
     parser.add_argument("--skip-model-check", action="store_true")
     apply_config_defaults(
         parser,
@@ -366,6 +428,7 @@ def main() -> None:
             "sample_concurrency", "answer_concurrency", "checkpoint_every",
             "graph_retrieval", "graph_mode", "append_k", "seed_k",
             "expansion_bonus",
+            "efficiency_config",
         },
     )
     args = parser.parse_args()
@@ -464,6 +527,7 @@ def main() -> None:
         "executor_visual_input": args.executor_visual_input,
         "request_timeout": args.request_timeout,
         "retries": args.retries,
+        "efficiency_config": args.efficiency_config,
     }
     sample_specs: list[tuple[str, str, int, tuple[str, ...] | None]] = []
     remaining_limit = args.max_qa
@@ -513,7 +577,10 @@ def main() -> None:
             file_manifest([Path(args.split_manifest)])
             if args.split_manifest else {}
         ),
-        "system_prompt": SYSTEM_PROMPT,
+        "prompt_version": PROMPT_VERSION,
+        "prompt_source": PROMPT_SOURCE,
+        "prompt_sha256": prompt_sha256(),
+        "call_trace_version": TRACE_VERSION,
     }
     sample_signature = signature_digest(signature)
 
@@ -531,16 +598,39 @@ def main() -> None:
             if cached is not None:
                 print(f"[resume] skip prepared conversation: {sample_id}", flush=True)
                 return cached
-        artifact = prepare_conversation_jobs(
+        call_trace_path = layout.root / "call_traces" / trace_filename(sample_id)
+        recorder = None
+        proxy_context = nullcontext(None)
+        sample_config = dict(config)
+        if args.baseline != "HiveMem":
+            recorder = CallRecorder(
+                trace_path=call_trace_path,
+                baseline=args.baseline,
+                benchmark="H2HMEM",
+                sample_id=sample_id,
+                reset=True,
+            )
+            proxy_context = CountingProxy(
+                args.executor_base_url,
+                recorder,
+                args.request_timeout,
+            )
+        with proxy_context as proxy:
+            if proxy is not None:
+                sample_config["executor_base_url"] = proxy.endpoint
+            artifact = prepare_conversation_jobs(
                 data_dir=data_dir,
                 variant=variant,
                 conversation_id=conversation_id,
                 baseline=args.baseline,
                 state_root=state_root,
-                config=config,
+                config=sample_config,
                 max_qa=quota,
                 ordered_question_ids=ordered_question_ids,
+                call_recorder=recorder,
             )
+        if recorder is not None:
+            artifact["call_trace_path"] = str(call_trace_path)
         save_sample_artifact(
             layout.sample_checkpoint_dir,
             sample_id,
@@ -658,6 +748,64 @@ def main() -> None:
 
     result_dir.mkdir(parents=True, exist_ok=True)
     write_json_atomic(result_dir / "results.json", results)
+    summary = summarize_results(results, k=args.top_k)
+    metric_results = []
+    for row in results:
+        normalized = dict(row)
+        normalized["_metric_sample_id"] = (
+            f"{row.get('variant', '')}/{row.get('conversation_id', '')}"
+        )
+        metric_results.append(normalized)
+    evaluated_sample_ids = sorted(
+        {
+            str(row.get("_metric_sample_id") or "")
+            for row in metric_results
+            if row.get("_metric_sample_id")
+        }
+    )
+    if args.baseline == "HiveMem":
+        summary["calls"] = combine_call_metrics(
+            calculate_calls_mb(Path(args.index_root), evaluated_sample_ids),
+            calculate_calls_qa(metric_results, sample_id_field="_metric_sample_id"),
+        )
+    else:
+        summary["calls"] = write_runtime_call_metrics(
+            [
+                artifact["call_trace_path"]
+                for artifact in artifacts
+                if artifact.get("call_trace_path")
+            ],
+            result_dir,
+            metric_results,
+            sample_id_field="_metric_sample_id",
+            sample_ids=evaluated_sample_ids,
+        )
+    efficiency = write_efficiency_metrics(
+        result_dir,
+        metric_results,
+        sample_id_field="_metric_sample_id",
+        sample_ids=evaluated_sample_ids,
+        model=args.answer_model,
+        config_path=args.efficiency_config,
+        hivemem_index_root=(
+            Path(args.index_root) if args.baseline == "HiveMem" else None
+        ),
+    )
+    summary.update(
+        {
+            key: efficiency[key]
+            for key in (
+                "cost_mb",
+                "cost_qa",
+                "cost_total",
+                "latency_mb",
+                "latency_qa",
+                "latency_total",
+            )
+        }
+    )
+    summary = merge_existing_llm_judge_metrics(summary, result_dir)
+    write_json_atomic(result_dir / "metrics.json", summary)
     write_jsonl_atomic(result_dir / "retrieval_trace.jsonl", traces)
     write_jsonl_atomic(layout.snapshot, snapshots)
     for variant in variants:
@@ -679,6 +827,9 @@ def main() -> None:
                 "sample_concurrency": args.sample_concurrency,
                 "answer_concurrency": args.answer_concurrency,
                 "checkpoint_every": args.checkpoint_every,
+                "prompt_version": PROMPT_VERSION,
+                "prompt_source": PROMPT_SOURCE,
+                "prompt_sha256": prompt_sha256(),
             },
             "memory_snapshot": str(layout.snapshot),
             "selection_mode": (
@@ -690,6 +841,9 @@ def main() -> None:
                 manifest_index.file_sha256 if manifest_index else ""
             ),
             "ordered_question_ids": list(expected_manifest_question_ids or ()),
+            "prompt_version": PROMPT_VERSION,
+            "prompt_source": PROMPT_SOURCE,
+            "prompt_sha256": prompt_sha256(),
         },
     )
 

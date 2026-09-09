@@ -44,6 +44,10 @@ CRITIC_FIELDS = (
 )
 EVIDENCE_ORDER = ("summary", "dialogue", "caption", "image", "vp")
 ALL_EVIDENCE_MASKS = tuple(f"{value:05b}" for value in range(32))
+EVIDENCE_LEVEL_CHART_SPEC = (
+    "rhssgvjngfidhfhjd-nanyang-technological-university-singapore/"
+    "hivemem-evidence-level-ratio-small-multiples-v2"
+)
 
 
 @dataclass(frozen=True)
@@ -78,6 +82,11 @@ def main() -> None:
         action="store_true",
         help="Only upload derived evidence charts; do not append scalar history",
     )
+    parser.add_argument(
+        "--summary-only",
+        action="store_true",
+        help="Only update run summary fields; do not append history or charts",
+    )
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -95,6 +104,7 @@ def main() -> None:
         run_id=args.run_id or None,
         tags=args.tag,
         charts_only=args.charts_only,
+        summary_only=args.summary_only,
     )
     dashboard_url = ""
     if not args.skip_workspace:
@@ -145,10 +155,26 @@ def load_run_data(run_dir: Path) -> RunData:
     config_path = run_dir / "config.json"
     config = json.loads(config_path.read_text(encoding="utf-8")) if config_path.exists() else {}
     warnings: list[str] = []
+    checkpoint_config, checkpoint_rows = load_checkpoint_epoch_rows(run_dir)
     if train_log.exists():
-        epoch_rows = tuple(read_jsonl(train_log))
+        log_rows = read_jsonl(train_log, skip_non_json=True)
+        logged_epochs = {int(row["epoch"]) for row in log_rows if "epoch" in row}
+        recovered_rows = [
+            row for row in checkpoint_rows if int(row["epoch"]) not in logged_epochs
+        ]
+        epoch_rows = tuple(
+            sorted(
+                [*log_rows, *recovered_rows],
+                key=lambda row: int(row.get("epoch", 0)),
+            )
+        )
+        if recovered_rows:
+            warnings.append(
+                "Missing train.log epoch summaries were recovered from checkpoints: "
+                + ", ".join(str(row["epoch"]) for row in recovered_rows)
+            )
     else:
-        checkpoint_config, epoch_rows = load_checkpoint_epoch_rows(run_dir)
+        epoch_rows = checkpoint_rows
         if not config:
             config = checkpoint_config
         warnings.append(
@@ -246,7 +272,7 @@ def load_checkpoint_epoch_rows(
     return config, tuple(rows)
 
 
-def read_jsonl(path: Path) -> list[dict[str, Any]]:
+def read_jsonl(path: Path, *, skip_non_json: bool = False) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         if not line.strip():
@@ -254,6 +280,8 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
         try:
             row = json.loads(line)
         except json.JSONDecodeError as exc:
+            if skip_non_json:
+                continue
             raise ValueError(f"Invalid JSON in {path}:{line_number}") from exc
         if not isinstance(row, dict):
             raise ValueError(f"Expected a JSON object in {path}:{line_number}")
@@ -479,6 +507,7 @@ def upload_to_wandb(
     run_id: str | None,
     tags: Iterable[str],
     charts_only: bool = False,
+    summary_only: bool = False,
 ) -> str:
     try:
         import wandb
@@ -498,7 +527,7 @@ def upload_to_wandb(
     if run_id:
         init_kwargs.update({"id": run_id, "resume": "allow"})
     run = wandb.init(**init_kwargs)
-    if not charts_only:
+    if not charts_only and not summary_only:
         run.define_metric("val/update_step")
         run.define_metric("val/*", step_metric="val/update_step")
         run.define_metric("val/action_ratio/*", step_metric="val/update_step")
@@ -540,7 +569,7 @@ def upload_to_wandb(
     predicted_values: list[float] = []
     target_values: list[float] = []
     critic_steps: list[int] = []
-    for row in (() if charts_only else data.update_rows):
+    for row in (() if charts_only or summary_only else data.update_rows):
         update_step = int(row["update_step"])
         payload: dict[str, Any] = {
             "actor/update_step": update_step,
@@ -564,10 +593,12 @@ def upload_to_wandb(
             target_values.append(float(target))
 
     charts: dict[str, Any] = {}
-    category_chart = None if charts_only else build_category_f1_chart(wandb, data)
+    category_chart = (
+        None if charts_only or summary_only else build_category_f1_chart(wandb, data)
+    )
     if category_chart is not None:
         charts["val/category_f1"] = category_chart
-    if not charts_only and critic_steps:
+    if not charts_only and not summary_only and critic_steps:
         charts["critic/predicted_value_vs_reward"] = wandb.plot.line_series(
             xs=critic_steps,
             ys=[predicted_values, target_values],
@@ -575,27 +606,38 @@ def upload_to_wandb(
             title="Predicted Value vs Reward",
             xname="PPO update step",
         )
-    validation_mask_chart = build_mask_ratio_line_chart(
+    validation_mask_chart = None if summary_only else build_mask_ratio_line_chart(
         wandb,
         data.validation_rows,
         title="Validation Evidence Combination Selection Ratio",
     )
     if validation_mask_chart is not None:
         charts["val/action_mask_ratio"] = validation_mask_chart
-    train_mask_chart = build_mask_ratio_line_chart(
+    validation_level_chart = (
+        None
+        if summary_only
+        else build_evidence_level_ratio_line_chart(
+            wandb,
+            data.validation_rows,
+            title="Validation Evidence Level Selection Ratio",
+        )
+    )
+    if validation_level_chart is not None:
+        charts["val/evidence_level_ratio"] = validation_level_chart
+    train_mask_chart = None if summary_only else build_mask_ratio_line_chart(
         wandb,
         data.train_action_rows,
         title="Training Evidence Combination Selection Ratio",
     )
     if train_mask_chart is not None:
         charts["train/action_mask_ratio"] = train_mask_chart
-    ratio_table = build_mask_ratio_table(wandb, data)
+    ratio_table = None if summary_only else build_mask_ratio_table(wandb, data)
     if ratio_table is not None:
         charts["evidence/action_mask_ratio_table"] = ratio_table
     test_counts, test_ratios, test_total = mask_distribution(
         data.test_metrics.get("evidence_actions")
     )
-    if test_total:
+    if test_total and not summary_only:
         test_table = wandb.Table(columns=["mask", "combination", "count", "ratio"])
         for mask in ALL_EVIDENCE_MASKS:
             run.summary[f"test/action_ratio/{mask}"] = test_ratios[mask]
@@ -634,18 +676,83 @@ def upload_to_wandb(
     if charts:
         run.log(charts)
 
-    for key in ("count", "f1", "exact_match", "em", "mean_reward", "errors"):
-        if key in data.test_metrics:
-            run.summary[f"test/{key}"] = data.test_metrics[key]
-    if "retrieval_hitrate@5" in data.test_metrics:
-        run.summary["test/retrieval_hitrate_at_5"] = data.test_metrics[
-            "retrieval_hitrate@5"
-        ]
+    for key, value in build_test_summary(data.test_metrics).items():
+        run.summary[key] = value
     if data.warnings:
         run.summary["upload/warnings"] = list(data.warnings)
     url = run.url
     run.finish()
     return url
+
+
+def build_test_summary(test_metrics: dict[str, Any]) -> dict[str, Any]:
+    """Flatten final test and call metrics into stable W&B summary keys."""
+    summary: dict[str, Any] = {}
+    for key in (
+        "count",
+        "f1",
+        "exact_match",
+        "em",
+        "mean_reward",
+        "llm_judge",
+        "errors",
+    ):
+        if key in test_metrics:
+            summary[f"test/{key}"] = test_metrics[key]
+    if "retrieval_hitrate@5" in test_metrics:
+        summary["test/retrieval_hitrate_at_5"] = test_metrics[
+            "retrieval_hitrate@5"
+        ]
+
+    for section in ("cost_mb", "cost_qa", "cost_total"):
+        values = test_metrics.get(section)
+        if not isinstance(values, dict):
+            continue
+        for field in (
+            "available",
+            "input_tokens",
+            "output_tokens",
+            "cost_sum_usd",
+            "num_samples",
+            "mean_per_sample_usd",
+        ):
+            if values.get(field) is not None:
+                summary[f"test/{section}/{field}"] = values[field]
+    for section in ("latency_mb", "latency_qa", "latency_total"):
+        values = test_metrics.get(section)
+        if not isinstance(values, dict):
+            continue
+        for field in (
+            "available",
+            "calls",
+            "input_tokens",
+            "output_tokens",
+            "image_count",
+            "latency_sum_seconds",
+            "num_samples",
+            "mean_per_sample_seconds",
+        ):
+            if values.get(field) is not None:
+                summary[f"test/{section}/{field}"] = values[field]
+
+    calls = test_metrics.get("calls")
+    if not isinstance(calls, dict):
+        return summary
+    for section in ("memory_bank", "qa", "total"):
+        values = calls.get(section)
+        if not isinstance(values, dict):
+            continue
+        for field in (
+            "available",
+            "total_calls",
+            "failed_calls",
+            "successful_calls",
+            "num_samples",
+            "mean_per_sample",
+        ):
+            if field in values:
+                summary[f"test/calls/{section}/{field}"] = values[field]
+    return summary
 
 
 def build_category_f1_chart(wandb: Any, data: RunData) -> Any | None:
@@ -704,6 +811,35 @@ def build_mask_ratio_line_chart(
         keys=[mask_label(mask) for mask in active_masks],
         title=title,
         xname="PPO update step",
+    )
+
+
+def build_evidence_level_ratio_line_chart(
+    wandb: Any,
+    rows: Iterable[dict[str, Any]],
+    *,
+    title: str,
+) -> Any | None:
+    materialized = list(rows)
+    if not materialized:
+        return None
+    distributions = [
+        evidence_level_distribution(row.get("evidence_actions"))
+        for row in materialized
+    ]
+    if not any(total for _, _, total in distributions):
+        return None
+    table = wandb.Table(columns=["step", "lineKey", "lineVal"])
+    for row, (_, ratios, _) in zip(materialized, distributions):
+        for evidence in EVIDENCE_ORDER:
+            table.add_data(
+                int(row["update_step"]), evidence, ratios[evidence]
+            )
+    return wandb.plot_table(
+        vega_spec_name=EVIDENCE_LEVEL_CHART_SPEC,
+        data_table=table,
+        fields={"step": "step", "lineKey": "lineKey", "lineVal": "lineVal"},
+        string_fields={"title": title, "xname": "PPO update step"},
     )
 
 
