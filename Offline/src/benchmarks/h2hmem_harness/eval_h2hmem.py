@@ -383,6 +383,11 @@ def main() -> None:
     parser.add_argument("--executor-temperature", type=float, default=0.0)
     parser.add_argument("--executor-visual-input", choices=("image", "caption"), default="image")
     parser.add_argument("--efficiency-config", default="configs/model_efficiency.json")
+    parser.add_argument("--graph-retrieval", action="store_true")
+    parser.add_argument("--seed-k", type=int, default=0)
+    parser.add_argument("--expansion-bonus", type=float, default=0.2)
+    parser.add_argument("--graph-mode", choices=("rerank", "append"), default="rerank")
+    parser.add_argument("--append-k", type=int, default=2)
     parser.add_argument("--skip-model-check", action="store_true")
     apply_config_defaults(
         parser,
@@ -465,9 +470,19 @@ def main() -> None:
     result_dir = Path(args.result_dir)
     layout = BaselineOutputLayout(result_dir)
     state_root = layout.state_root(args.baseline_state_dir)
+    graph_options = (
+        {
+            "seed_k": args.seed_k,
+            "expansion_bonus": args.expansion_bonus,
+            "mode": args.graph_mode,
+            "append_k": args.append_k,
+        }
+        if args.graph_retrieval else None
+    )
     config = {
         "top_k": args.top_k,
         "index_root": args.index_root,
+        "graph_options": graph_options,
         "embedding_dim": args.embedding_dim,
         "embedding_model": args.embedding_model,
         "embedding_base_url": args.embedding_base_url,
@@ -701,7 +716,12 @@ def main() -> None:
 
     result_dir.mkdir(parents=True, exist_ok=True)
     write_json_atomic(result_dir / "results.json", results)
-    summary = summarize_results(results, k=args.top_k)
+    effective_top_k = (
+        args.top_k + args.append_k
+        if args.graph_retrieval and args.graph_mode == "append"
+        else args.top_k
+    )
+    summary = summarize_results(results, k=effective_top_k)
     metric_results = []
     for row in results:
         normalized = dict(row)

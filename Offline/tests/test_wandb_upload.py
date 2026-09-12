@@ -128,7 +128,8 @@ class WandbUploadTest(unittest.TestCase):
         )
         self.assertEqual(data.validation_rows[0]["f1"], 0.5)
         self.assertEqual(data.validation_rows[1]["exact_match"], 1.0)
-        self.assertEqual(data.validation_rows[1]["retrieval_hitrate_at_5"], 1.0)
+        self.assertEqual(data.validation_rows[1]["retrieval_hitrate"], 1.0)
+        self.assertEqual(data.validation_rows[1]["retrieval_top_k"], 5)
         self.assertEqual(
             data.validation_rows[1]["by_category"], {"FR": {"f1": 1.0}}
         )

@@ -7,7 +7,7 @@
   "query_cache": "data/qwen3_vl_embedding_2b/query_embeddings",
   "profiles_file": "configs/profiles.json",
   "output_dir": "outputs/evidence_policy_ppo_rerun_20260818",
-  "top_k": 5,
+  "top_k": 7,
   "excluded_categories": ["AR"],
   "model": {
     "name": "Qwen/Qwen3-VL-4B-Instruct",

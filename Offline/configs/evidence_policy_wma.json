@@ -7,7 +7,7 @@
   "memory_bank": "outputs/hive_mem_wma_lifelong",
   "query_cache": "data/wma_qwen3_vl_embedding_2b/lifelong_query_embeddings",
   "output_dir": "outputs/evidence_policy_wma_lifelong_ppo",
-  "top_k": 5,
+  "top_k": 7,
   "excluded_categories": ["MB"],
   "visual_categories": [
     "VFR",

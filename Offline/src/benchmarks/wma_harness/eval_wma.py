@@ -129,21 +129,34 @@ def prepare_sample_jobs(
     excluded_categories: frozenset[str] = frozenset(),
     ordered_question_ids: tuple[str, ...] | None = None,
 ) -> list[dict[str, Any]]:
-    if graph_options is not None:
-        raise ValueError(
-            "Graph retrieval is disabled for WMA checkpoints: the current graph "
-            "statistics are built from the full memory bank and are not prefix-safe."
-        )
     payload = json.loads(sample_path.read_text(encoding="utf-8"))
     sample_id = str(payload["sample_id"])
-    adapter = create_adapter(
-        "HiveMem",
-        config_overrides={
-            "index_root": str(index_root),
-            "top_k": top_k,
-            "visual_categories": VISUAL_CATEGORIES,
-        },
-    )
+    adapters: dict[tuple[str, ...] | None, Any] = {}
+
+    def adapter_for(visible_sessions: list[str]):
+        # WMA is evaluated at multiple chronological checkpoints.  Build the
+        # derived entity/attribute graph from the visible prefix only, so a
+        # future session cannot affect graph DF statistics or degree caps.
+        scope = tuple(visible_sessions) if graph_options is not None else None
+        if scope not in adapters:
+            scoped_graph_options = None
+            if graph_options is not None:
+                scoped_graph_options = {
+                    **graph_options,
+                    "allowed_session_ids": set(visible_sessions),
+                }
+            adapter = create_adapter(
+                "HiveMem",
+                config_overrides={
+                    "index_root": str(index_root),
+                    "top_k": top_k,
+                    "visual_categories": VISUAL_CATEGORIES,
+                    "graph_options": scoped_graph_options,
+                },
+            )
+            adapter.reset(sample_id, Path())
+            adapters[scope] = adapter
+        return adapters[scope]
     ordered_sessions = session_ids(payload)
     gold_points = build_gold_evidence_map(payload)
     jobs: list[dict[str, Any]] = []
@@ -151,7 +164,6 @@ def prepare_sample_jobs(
         set(ordered_question_ids) if ordered_question_ids is not None else None
     )
     try:
-        adapter.reset(sample_id, Path())
         for checkpoint in payload.get("qa_checkpoints", []) or []:
             checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
             covered_sessions = [str(value) for value in checkpoint.get("covered_sessions", [])]
@@ -159,6 +171,7 @@ def prepare_sample_jobs(
                 ordered_sessions, covered_sessions
             )
             visible_session_set = set(visible_sessions)
+            adapter = adapter_for(visible_sessions)
             for qa_index, qa in enumerate(checkpoint.get("questions", []) or [], start=1):
                 manifest_question_id = wma_manifest_question_id(
                     sample_id, checkpoint_id, qa_index
@@ -256,7 +269,8 @@ def prepare_sample_jobs(
                     }
                 )
     finally:
-        adapter.close()
+        for adapter in adapters.values():
+            adapter.close()
     return _order_wma_jobs(
         jobs, ordered_question_ids, sample_id=sample_id
     )
@@ -1008,7 +1022,12 @@ def main() -> None:
             f"{answer_errors}/{len(results)} answer requests failed; "
             f"partial results were saved under {result_dir}, but metrics were not written"
         )
-    summary = summarize_results(results, k=args.top_k)
+    effective_top_k = (
+        args.top_k + args.append_k
+        if args.graph_retrieval and args.graph_mode == "append"
+        else args.top_k
+    )
+    summary = summarize_results(results, k=effective_top_k)
     evaluated_sample_ids = sorted(
         {str(row.get("sample_id") or "").strip() for row in results}
         - {""}

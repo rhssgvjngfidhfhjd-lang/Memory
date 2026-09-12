@@ -230,15 +230,43 @@ class WMARetrievalTest(unittest.TestCase):
             )
         self.assertEqual([hit.item.metadata["session_id"] for hit in hits], ["S00"])
 
-    def test_wma_runner_rejects_non_prefix_safe_graph(self):
-        with self.assertRaisesRegex(ValueError, "not prefix-safe"):
-            prepare_sample_jobs(
-                Path("unused.json"),
-                Path("unused"),
-                None,
-                top_k=5,
-                graph_options={"mode": "rerank"},
+    def test_graph_constructor_scope_excludes_future_from_adjacency(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bank = MAUBank()
+            bank.add_memory(
+                "visible seed", np.asarray([1.0, 0.0], dtype=np.float32),
+                metadata={"session_id": "S00"},
             )
+            bank.add_memory(
+                "visible neighbour", np.asarray([0.0, 1.0], dtype=np.float32),
+                metadata={"session_id": "S00"},
+            )
+            bank.add_memory(
+                "future neighbour", np.asarray([0.0, 1.0], dtype=np.float32),
+                metadata={"session_id": "S01"},
+            )
+            bank.memories[0].links["related"] = [
+                {"target": bank.memories[1].id, "type": "CAUSES"},
+                {"target": bank.memories[2].id, "type": "CAUSES"},
+            ]
+            bank.save(root)
+            index = GraphExpandedIndex(
+                root,
+                mode="append",
+                append_k=2,
+                expand_temporal=False,
+                expand_entity=False,
+                expand_attribute=False,
+                allowed_session_ids={"S00"},
+            )
+            hits = index.search(
+                [1.0, 0.0], top_k=1, allowed_session_ids={"S00"}
+            )
+        self.assertEqual(
+            [hit.item.summary for hit in hits],
+            ["visible seed", "visible neighbour"],
+        )
 
 
 class WMAEvidenceAndMetricsTest(unittest.TestCase):

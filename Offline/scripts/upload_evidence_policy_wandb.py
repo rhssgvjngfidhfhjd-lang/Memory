@@ -47,6 +47,21 @@ class RunData:
     warnings: tuple[str, ...]
 
 
+def _retrieval_hitrate(metrics: dict[str, Any]) -> tuple[int, float]:
+    keys = sorted(
+        key
+        for key in metrics
+        if key.startswith("retrieval_hitrate@")
+        and key.rsplit("@", 1)[1].isdigit()
+    )
+    if not keys:
+        return 0, 0.0
+    if len(keys) != 1:
+        raise ValueError(f"Expected one retrieval_hitrate@K metric, got {keys}")
+    key = keys[0]
+    return int(key.rsplit("@", 1)[1]), float(metrics[key])
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Upload Evidence Policy validation, actor, and critic charts to W&B"
@@ -172,6 +187,7 @@ def build_validation_rows(
             ]
         for event in validation_events:
             validation = event.get("metrics", {})
+            retrieval_top_k, retrieval_hitrate = _retrieval_hitrate(validation)
             update_step = event.get("update_step")
             if update_step is None:
                 update_step = epoch + 1
@@ -186,9 +202,8 @@ def build_validation_rows(
                     "reward": float(validation.get("mean_reward", 0.0)),
                     "f1": float(validation.get("f1", 0.0)),
                     "exact_match": float(validation.get("exact_match", 0.0)),
-                    "retrieval_hitrate_at_5": float(
-                        validation.get("retrieval_hitrate@5", 0.0)
-                    ),
+                    "retrieval_hitrate": retrieval_hitrate,
+                    "retrieval_top_k": retrieval_top_k,
                     "errors": float(validation.get("errors", 0)),
                     "by_category": validation.get("by_category", {}),
                 }
@@ -302,7 +317,9 @@ def upload_to_wandb(
                 "val/reward": row["reward"],
                 "val/f1": row["f1"],
                 "val/exact_match": row["exact_match"],
-                "val/retrieval_hitrate_at_5": row["retrieval_hitrate_at_5"],
+                f"val/retrieval_hitrate_at_{row['retrieval_top_k']}": row[
+                    "retrieval_hitrate"
+                ],
                 "val/errors": row["errors"],
             }
         )
@@ -351,10 +368,9 @@ def upload_to_wandb(
     for key in ("count", "f1", "exact_match", "mean_reward", "errors"):
         if key in data.test_metrics:
             run.summary[f"test/{key}"] = data.test_metrics[key]
-    if "retrieval_hitrate@5" in data.test_metrics:
-        run.summary["test/retrieval_hitrate_at_5"] = data.test_metrics[
-            "retrieval_hitrate@5"
-        ]
+    retrieval_top_k, retrieval_hitrate = _retrieval_hitrate(data.test_metrics)
+    if retrieval_top_k:
+        run.summary[f"test/retrieval_hitrate_at_{retrieval_top_k}"] = retrieval_hitrate
     if data.warnings:
         run.summary["upload/warnings"] = list(data.warnings)
     url = run.url

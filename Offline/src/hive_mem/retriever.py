@@ -129,7 +129,7 @@ class SimpleMemoryIndex:
     def search(
         self,
         query_vector: list[float] | np.ndarray,
-        top_k: int = 5,
+        top_k: int = 7,
         *,
         category: str = "",
         allowed_session_ids: set[str] | None = None,
@@ -177,8 +177,14 @@ class GraphExpandedIndex(SimpleMemoryIndex):
         min_shared: int = 2,
         degree_cap: int = 10,
         visual_categories: set[str] | None = None,
+        allowed_session_ids: set[str] | None = None,
     ):
         super().__init__(directory, visual_categories=visual_categories)
+        self.graph_allowed_session_ids = (
+            {str(value) for value in allowed_session_ids}
+            if allowed_session_ids is not None
+            else None
+        )
         self.seed_k = int(seed_k)
         self.expansion_bonus = float(expansion_bonus)
         if mode not in ("rerank", "append"):
@@ -199,10 +205,21 @@ class GraphExpandedIndex(SimpleMemoryIndex):
         self.adjacency: dict[int, set[int]] = {}
         index_by_id = {item.id: position for position, item in enumerate(self.bank.memories)}
 
+        def eligible(position: int) -> bool:
+            item = self.bank.memories[position]
+            return (
+                item.status == "ACTIVE"
+                and (
+                    self.graph_allowed_session_ids is None
+                    or str(item.metadata.get("session_id", ""))
+                    in self.graph_allowed_session_ids
+                )
+            )
+
         def connect(a: int | None, b: int | None) -> None:
             if a is None or b is None or a == b:
                 return
-            if self.bank.memories[a].status != "ACTIVE" or self.bank.memories[b].status != "ACTIVE":
+            if not eligible(a) or not eligible(b):
                 return
             self.adjacency.setdefault(a, set()).add(b)
             self.adjacency.setdefault(b, set()).add(a)
@@ -220,31 +237,37 @@ class GraphExpandedIndex(SimpleMemoryIndex):
                         continue
                     connect(position, index_by_id.get(edge.get("target")))
 
+        scoped_positions = [
+            position for position in range(len(self.bank.memories)) if eligible(position)
+        ]
+        scoped_bank = MAUBank()
+        scoped_bank.memories = [self.bank.memories[position] for position in scoped_positions]
+
         if expand_entity:
             alias_map = load_alias_map(Path(directory))
             for a, b in derive_entity_pairs(
-                self.bank,
+                scoped_bank,
                 alias_map=alias_map,
                 df_max=df_max,
                 df_stop=df_stop,
                 min_shared=min_shared,
                 degree_cap=degree_cap,
             ):
-                connect(a, b)
+                connect(scoped_positions[a], scoped_positions[b])
         if expand_attribute:
             for a, b in derive_attribute_pairs(
-                self.bank,
+                scoped_bank,
                 df_max=df_max,
                 df_stop=df_stop,
                 min_shared=min_shared,
                 degree_cap=degree_cap,
             ):
-                connect(a, b)
+                connect(scoped_positions[a], scoped_positions[b])
 
     def search(
         self,
         query_vector: list[float] | np.ndarray,
-        top_k: int = 5,
+        top_k: int = 7,
         *,
         category: str = "",
         allowed_session_ids: set[str] | None = None,
