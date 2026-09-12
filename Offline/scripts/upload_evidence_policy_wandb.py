@@ -61,6 +61,21 @@ class RunData:
     warnings: tuple[str, ...]
 
 
+def _retrieval_hitrate(metrics: dict[str, Any]) -> tuple[int, float]:
+    keys = sorted(
+        key
+        for key in metrics
+        if key.startswith("retrieval_hitrate@")
+        and key.rsplit("@", 1)[1].isdigit()
+    )
+    if not keys:
+        return 0, 0.0
+    if len(keys) != 1:
+        raise ValueError(f"Expected one retrieval_hitrate@K metric, got {keys}")
+    key = keys[0]
+    return int(key.rsplit("@", 1)[1]), float(metrics[key])
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Upload Evidence Policy validation, actor, and critic charts to W&B"
@@ -347,6 +362,7 @@ def validation_event_row(
     validation = event.get("metrics", {})
     if not isinstance(validation, dict):
         validation = {}
+    retrieval_top_k, retrieval_hitrate = _retrieval_hitrate(validation)
     return {
         "update_step": int(event.get("update_step", 0)),
         "epoch": int(event.get("epoch", default_epoch)),
@@ -356,7 +372,8 @@ def validation_event_row(
         "exact_match": float(
             validation.get("exact_match", validation.get("em", 0.0))
         ),
-        "retrieval_hitrate_at_5": float(validation.get("retrieval_hitrate@5", 0.0)),
+        "retrieval_hitrate": retrieval_hitrate,
+        "retrieval_top_k": retrieval_top_k,
         "errors": float(validation.get("errors", 0)),
         "by_category": validation.get("by_category", {}),
         "evidence_actions": validation.get("evidence_actions", {}),
@@ -545,7 +562,9 @@ def upload_to_wandb(
                 "val/reward": row["reward"],
                 "val/f1": row["f1"],
                 "val/exact_match": row["exact_match"],
-                "val/retrieval_hitrate_at_5": row["retrieval_hitrate_at_5"],
+                f"val/retrieval_hitrate_at_{row['retrieval_top_k']}": row[
+                    "retrieval_hitrate"
+                ],
                 "val/errors": row["errors"],
             }
             payload.update(
@@ -699,10 +718,9 @@ def build_test_summary(test_metrics: dict[str, Any]) -> dict[str, Any]:
     ):
         if key in test_metrics:
             summary[f"test/{key}"] = test_metrics[key]
-    if "retrieval_hitrate@5" in test_metrics:
-        summary["test/retrieval_hitrate_at_5"] = test_metrics[
-            "retrieval_hitrate@5"
-        ]
+    retrieval_top_k, retrieval_hitrate = _retrieval_hitrate(test_metrics)
+    if retrieval_top_k:
+        summary[f"test/retrieval_hitrate_at_{retrieval_top_k}"] = retrieval_hitrate
 
     for section in ("cost_mb", "cost_qa", "cost_total"):
         values = test_metrics.get(section)

@@ -881,7 +881,12 @@ def main() -> None:
             f"{answer_errors}/{len(all_results)} answer requests failed; "
             f"partial results were saved under {result_dir}, but metrics were not written"
         )
-    summary = summarize_results(all_results, k=args.top_k)
+    effective_top_k = (
+        args.top_k + args.append_k
+        if args.graph_retrieval and args.graph_mode == "append"
+        else args.top_k
+    )
+    summary = summarize_results(all_results, k=effective_top_k)
     evaluated_sample_ids = sorted(
         {str(row.get("dataset") or "").strip() for row in all_results}
         - {""}

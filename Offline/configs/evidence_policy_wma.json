@@ -7,7 +7,7 @@
   "memory_bank": "outputs/WorldMemArena/HiveMem/memory",
   "query_cache": "data/wma_qwen3_vl_embedding_2b/query_embeddings_lifelong",
   "output_dir": "outputs/evidence_policy_wma_lifelong_ppo",
-  "top_k": 5,
+  "top_k": 7,
   "graph_options": {
     "seed_k": 0,
     "mode": "append",
@@ -22,7 +22,7 @@
     "min_shared": 2,
     "degree_cap": 10
   },
-  "excluded_categories": [],
+  "excluded_categories": ["MB"],
   "evidence": {
     "schema_version": 2,
     "order": ["summary", "dialogue", "caption", "image", "vp"],
