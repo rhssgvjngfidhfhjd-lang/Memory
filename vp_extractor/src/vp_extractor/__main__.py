@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from .extractor import VPExtractor
-from .io import ArtifactStore, load_caption_map, scan_dataset, scan_path
+from .io import ArtifactStore, load_caption_map, scan_datasets, scan_path
 from .models import Settings
 from .vlm import ObjectDiscoverer, OpenAICompatibleVLM
 
@@ -70,6 +70,11 @@ def main(argv: list[str] | None = None) -> int:
         client.assert_available()
 
     sources = _resolve_sources(args)
+    if args.num_shards <= 0:
+        raise ValueError("--num-shards must be positive")
+    if not 0 <= args.shard_index < args.num_shards:
+        raise ValueError("--shard-index must be in [0, --num-shards)")
+    sources = sources[args.shard_index :: args.num_shards]
     if args.limit:
         sources = sources[: args.limit]
     discoverer = ObjectDiscoverer(
@@ -78,25 +83,35 @@ def main(argv: list[str] | None = None) -> int:
         relocalize_prompt,
         settings.max_primitives,
         caption_guided_prompt,
+        settings.retries,
     )
     extractor = VPExtractor(discoverer, settings)
 
     processed = skipped = failed = 0
+    per_dataset: dict[str, dict[str, int]] = {}
     for index, source in enumerate(sources, start=1):
+        stats = per_dataset.setdefault(
+            source.dataset, {"processed": 0, "skipped": 0, "failed": 0}
+        )
         if store.is_complete(source.image_id) and not args.force:
             skipped += 1
+            stats["skipped"] += 1
             continue
         try:
             store.save(extractor.extract_image(source))
             processed += 1
+            stats["processed"] += 1
         except Exception as exc:
             failed += 1
+            stats["failed"] += 1
             store.save_failure(source, exc)
             print(f"FAILED {source.relative_path}: {exc}")
         if index % 25 == 0 or index == len(sources):
             print(f"Progress {index}/{len(sources)}")
 
     store.export()
+    for dataset, stats in sorted(per_dataset.items()):
+        print(f"{dataset}: " + " ".join(f"{key}={value}" for key, value in stats.items()))
     print(f"Done: processed={processed} skipped={skipped} failed={failed}")
     return 1 if failed else 0
 
@@ -127,6 +142,8 @@ def _build_parser() -> argparse.ArgumentParser:
         default=str(PROJECT_ROOT / "configs" / "datasets.json"),
     )
     extract.add_argument("--limit", type=int, default=0)
+    extract.add_argument("--num-shards", type=int, default=1)
+    extract.add_argument("--shard-index", type=int, default=0)
     extract.add_argument("--force", action="store_true")
     extract.add_argument("--skip-model-check", action="store_true")
 
@@ -140,11 +157,8 @@ def _resolve_sources(args: argparse.Namespace):
         captions = load_caption_map(args.caption_file.resolve()) if args.caption_file else None
         return scan_path(args.input, dataset=args.dataset_name, captions=captions)
     datasets = _read_json(Path(args.datasets_config).resolve())
-    if args.dataset not in datasets:
-        raise ValueError(
-            f"Unknown dataset {args.dataset!r}; choose from {sorted(datasets)}"
-        )
-    return scan_dataset(args.dataset, datasets[args.dataset], PROJECT_ROOT)
+    names = sorted(datasets) if str(args.dataset).lower() == "all" else [args.dataset]
+    return scan_datasets(names, datasets, PROJECT_ROOT)
 
 
 def _apply_overrides(settings: Settings, args: argparse.Namespace) -> Settings:

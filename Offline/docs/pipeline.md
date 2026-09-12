@@ -25,11 +25,13 @@ LLM 调用与解析：`executor.py::execute / _parse_response` → `hive_mem/llm
 输入：查询向量（读第 4 步缓存）+ 记忆库目录（jsonl+npy）
 输出：top-5 向量命中 + ≤2 条图一跳追加（`MemoryHit` 列表，`via` 标注 vector/graph；VS/VR/TTL 类附带图文向量 max-fusion）
 
+WorldMemArena 在每个 checkpoint 答题前，从截至该点的累计可见 session 构建或复用独立 prefix graph；向量 top-5 和图追加 top-2 都只能来自这个前缀。
+
 ## 6. 答题  `benchmarks/memgallery_harness/eval_memgallery.py::run_dataset`（上下文打包：`SimpleMemoryMemGalleryAdapter.recall`，同文件）
-prompt2 拼装：`runner/prompts.py::SYSTEM_PROMPT + format_question_prompt`（+profile 注入 system prompt 尾部，config 默认开）
-LLM 调用：`runner/answer_client.py::VLMAnswerClient.answer`
-输入：top-5(+2) 记忆（文本+图片）+ 问题 + 类别约束 + profile
-输出：`results.json`（逐题答案+检索溯源）+ `retrieval_trace.jsonl`
+prompt2 拼装：`runner/prompts.py::build_answer_messages`（严格使用 `answer_prompts.py` 对应的自定义 Prompt，不向 system prompt 追加 profile）
+LLM 调用：`runner/answer_client.py::VLMAnswerClient.answer_messages_with_usage`
+输入：top-5(+2) 记忆（文本+图片）+ 问题 + 类别约束
+输出：`results.json`（严格解析 `<answer>...</answer>` 后的逐题答案及原始响应）+ `retrieval_trace.jsonl`
 
 ## 7. 指标（两波）
 7a 自动指标  `benchmarks/memgallery_harness/runner/metrics.py::summarize_results / provenance_hit / f1_score / exact_match`

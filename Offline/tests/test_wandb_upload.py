@@ -5,7 +5,17 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.upload_evidence_policy_wandb import load_run_data
+import torch
+
+from scripts.upload_evidence_policy_wandb import (
+    ALL_EVIDENCE_MASKS,
+    EVIDENCE_LEVEL_CHART_SPEC,
+    build_evidence_level_ratio_line_chart,
+    build_test_summary,
+    evidence_level_distribution,
+    load_run_data,
+    mask_distribution,
+)
 
 
 def write_jsonl(path: Path, rows: list[dict]) -> None:
@@ -16,6 +26,266 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 class WandbUploadTest(unittest.TestCase):
+    def test_builds_llm_judge_and_calls_summary(self) -> None:
+        summary = build_test_summary(
+            {
+                "count": 275,
+                "f1": 0.6,
+                "llm_judge": 0.67,
+                "cost_mb": {
+                    "available": True,
+                    "input_tokens": 100,
+                    "output_tokens": 10,
+                    "cost_sum_usd": 0.01,
+                    "num_samples": 4,
+                    "mean_per_sample_usd": 0.0025,
+                },
+                "latency_mb": {
+                    "available": True,
+                    "calls": 10,
+                    "input_tokens": 100,
+                    "output_tokens": 10,
+                    "image_count": 2,
+                    "latency_sum_seconds": 8.0,
+                    "num_samples": 4,
+                    "mean_per_sample_seconds": 2.0,
+                },
+                "calls": {
+                    "memory_bank": {
+                        "available": True,
+                        "total_calls": 670,
+                        "failed_calls": 2,
+                        "successful_calls": 668,
+                        "num_samples": 4,
+                        "mean_per_sample": 167.5,
+                    },
+                    "qa": {
+                        "available": True,
+                        "total_calls": 275,
+                        "failed_calls": 0,
+                        "successful_calls": 275,
+                        "num_samples": 4,
+                        "mean_per_sample": 68.75,
+                    },
+                    "total": {
+                        "available": True,
+                        "total_calls": 945,
+                        "failed_calls": 2,
+                        "successful_calls": 943,
+                        "num_samples": 4,
+                        "mean_per_sample": 236.25,
+                    },
+                },
+            }
+        )
+
+        self.assertEqual(summary["test/llm_judge"], 0.67)
+        self.assertEqual(summary["test/cost_mb/mean_per_sample_usd"], 0.0025)
+        self.assertEqual(summary["test/latency_mb/mean_per_sample_seconds"], 2.0)
+        self.assertEqual(summary["test/calls/memory_bank/total_calls"], 670)
+        self.assertEqual(summary["test/calls/qa/mean_per_sample"], 68.75)
+        self.assertEqual(summary["test/calls/total/mean_per_sample"], 236.25)
+
+    def test_builds_validation_evidence_level_ratio_lines_by_update_step(self) -> None:
+        class FakeTable:
+            def __init__(self, *, columns):
+                self.columns = columns
+                self.rows = []
+
+            def add_data(self, *values):
+                self.rows.append(list(values))
+
+        class FakeWandb:
+            Table = FakeTable
+
+            @staticmethod
+            def plot_table(**kwargs):
+                return kwargs
+
+        chart = build_evidence_level_ratio_line_chart(
+            FakeWandb(),
+            [
+                {
+                    "update_step": 0,
+                    "evidence_actions": {
+                        "mask:00000": 1,
+                        "mask:11000": 1,
+                    },
+                },
+                {
+                    "update_step": 29,
+                    "evidence_actions": {"mask:00011": 2},
+                },
+            ],
+            title="Evidence levels",
+        )
+
+        self.assertIsNotNone(chart)
+        self.assertEqual(chart["vega_spec_name"], EVIDENCE_LEVEL_CHART_SPEC)
+        self.assertEqual(
+            chart["data_table"].columns, ["step", "lineKey", "lineVal"]
+        )
+        self.assertEqual(
+            chart["data_table"].rows,
+            [
+                [0, "summary", 0.5],
+                [0, "dialogue", 0.5],
+                [0, "caption", 0.0],
+                [0, "image", 0.0],
+                [0, "vp", 0.0],
+                [29, "summary", 0.0],
+                [29, "dialogue", 0.0],
+                [29, "caption", 0.0],
+                [29, "image", 1.0],
+                [29, "vp", 1.0],
+            ],
+        )
+
+    def test_loads_step_zero_and_train_mask_ratios(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_jsonl(
+                root / "train.log",
+                [
+                    {
+                        "epoch": 0,
+                        "update_step": 2,
+                        "validations": [
+                            {
+                                "phase": "end",
+                                "update_step": 2,
+                                "metrics": {
+                                    "mean_reward": 0.75,
+                                    "evidence_actions": {"mask:11000": 4},
+                                },
+                            }
+                        ],
+                    }
+                ],
+            )
+            write_jsonl(
+                root / "ppo_metrics.jsonl",
+                [{"epoch": 0, "update_step": 2, "ppo_kl": 0.01}],
+            )
+            initial = {
+                "epoch": 0,
+                "phase": "initial",
+                "update_step": 0,
+                "train_question_count": 0,
+                "metrics": {
+                    "mean_reward": 0.25,
+                    "evidence_actions": {
+                        "mask:00000": 3,
+                        "mask:11000": 1,
+                    },
+                },
+            }
+            (root / "validation").mkdir()
+            (root / "validation" / "initial_metrics.json").write_text(
+                json.dumps(initial), encoding="utf-8"
+            )
+            write_jsonl(
+                root / "train" / "epoch_000_rollouts.jsonl",
+                [
+                    {
+                        "actions": [
+                            {"mask": "00000"},
+                            {"mask": "00011"},
+                            {"mask": "00011"},
+                        ]
+                    }
+                ],
+            )
+
+            data = load_run_data(root)
+
+        self.assertEqual([row["update_step"] for row in data.validation_rows], [0, 2])
+        self.assertEqual(data.validation_rows[0]["phase"], "initial")
+        counts, ratios, total = mask_distribution(
+            data.validation_rows[0]["evidence_actions"]
+        )
+        self.assertEqual(total, 4)
+        self.assertEqual(counts["00000"], 3)
+        self.assertEqual(ratios["00000"], 0.75)
+        self.assertEqual(len(ratios), 32)
+        self.assertAlmostEqual(sum(ratios.values()), 1.0)
+        train_counts, train_ratios, train_total = mask_distribution(
+            data.train_action_rows[0]["evidence_actions"]
+        )
+        self.assertEqual(train_total, 3)
+        self.assertEqual(train_counts["00011"], 2)
+        self.assertAlmostEqual(train_ratios["00011"], 2 / 3)
+        self.assertEqual(set(train_ratios), set(ALL_EVIDENCE_MASKS))
+
+    def test_evidence_level_ratios_are_derived_from_independent_mask_bits(self) -> None:
+        counts, ratios, total = evidence_level_distribution(
+            {
+                "mask:00000": 2,
+                "mask:01000": 3,
+                "mask:00011": 5,
+            }
+        )
+
+        self.assertEqual(total, 10)
+        self.assertEqual(
+            counts,
+            {
+                "summary": 0,
+                "dialogue": 3,
+                "caption": 0,
+                "image": 5,
+                "vp": 5,
+            },
+        )
+        self.assertEqual(ratios["dialogue"], 0.3)
+        self.assertEqual(ratios["image"], 0.5)
+        self.assertEqual(ratios["vp"], 0.5)
+
+    def test_recovers_epoch_summaries_from_checkpoints_without_train_log(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_jsonl(
+                root / "ppo_metrics.jsonl",
+                [{"epoch": 0, "update_step": 3, "ppo_kl": 0.01}],
+            )
+            checkpoint = root / "checkpoints" / "epoch_000.pt"
+            checkpoint.parent.mkdir(parents=True)
+            validation = {
+                "mean_reward": 0.75,
+                "f1": 0.5,
+                "exact_match": 0.25,
+                "retrieval_hitrate@5": 1.0,
+                "errors": 0,
+                "by_category": {},
+            }
+            torch.save(
+                {
+                    "epoch": 0,
+                    "update_steps": 3,
+                    "config": {"seed": 42, "ppo": {"learning_rate": 3e-4}},
+                    "extra": {
+                        "train_question_count": 32,
+                        "validation": validation,
+                        "validations": [
+                            {
+                                "phase": "end",
+                                "update_step": 3,
+                                "metrics": validation,
+                            }
+                        ],
+                    },
+                },
+                checkpoint,
+            )
+
+            data = load_run_data(root)
+
+        self.assertEqual(data.config["seed"], 42)
+        self.assertEqual(len(data.epoch_rows), 1)
+        self.assertEqual(data.validation_rows[0]["update_step"], 3)
+        self.assertEqual(data.validation_rows[0]["reward"], 0.75)
+        self.assertTrue(any("recovered from checkpoints" in row for row in data.warnings))
+
     def test_loads_validation_and_ppo_metrics_by_update_step(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

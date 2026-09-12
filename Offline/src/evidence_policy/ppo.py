@@ -10,7 +10,12 @@ import numpy as np
 import torch
 from torch import nn
 
-from .evidence import MAUEvidenceAction, PolicyObservation
+from .evidence import (
+    EVIDENCE_ORDER,
+    EVIDENCE_SCHEMA_VERSION,
+    MAUEvidenceAction,
+    PolicyObservation,
+)
 from .policy import EvidenceSelectionPolicy
 
 
@@ -292,6 +297,8 @@ class PPOTrainer:
                 "epoch": int(epoch),
                 "config": config,
                 "extra": extra or {},
+                "action_schema_version": EVIDENCE_SCHEMA_VERSION,
+                "evidence_order": [kind.value for kind in EVIDENCE_ORDER],
                 "python_random_state": random.getstate(),
                 "numpy_random_state": np.random.get_state(),
                 "torch_random_state": torch.get_rng_state(),
@@ -312,6 +319,7 @@ class PPOTrainer:
         # accepts a CPU ByteTensor; mapping the whole checkpoint to CUDA moves
         # this tensor as well and makes GPU resume fail before training starts.
         payload = torch.load(Path(path), map_location="cpu", weights_only=False)
+        _validate_action_schema(payload)
         self.policy.load_state_dict(payload["policy"])
         self.optimizer.load_state_dict(payload["optimizer"])
         self.update_steps = int(payload.get("update_steps", 0))
@@ -338,6 +346,7 @@ def load_policy_checkpoint(
     device: torch.device | str = "cpu",
 ) -> dict[str, Any]:
     payload = torch.load(Path(path), map_location=device, weights_only=False)
+    _validate_action_schema(payload)
     policy.load_state_dict(payload["policy"])
     return {
         "epoch": int(payload.get("epoch", 0)),
@@ -357,5 +366,19 @@ def _observation_to_cpu(observation: PolicyObservation) -> PolicyObservation:
         query_embedding=observation.query_embedding.detach().cpu().clone(),
         summary_embeddings=observation.summary_embeddings.detach().cpu().clone(),
         memory_ids=observation.memory_ids,
-        visual_choice_mask=observation.visual_choice_mask.detach().cpu().clone(),
+        evidence_availability_mask=(
+            observation.evidence_availability_mask.detach().cpu().clone()
+        ),
     )
+
+
+def _validate_action_schema(payload: dict[str, Any]) -> None:
+    version = int(payload.get("action_schema_version", 1))
+    order = payload.get("evidence_order")
+    expected_order = [kind.value for kind in EVIDENCE_ORDER]
+    if version != EVIDENCE_SCHEMA_VERSION or order != expected_order:
+        raise ValueError(
+            "Checkpoint action schema is incompatible with the five-bit evidence policy: "
+            f"version={version}, order={order!r}; expected "
+            f"version={EVIDENCE_SCHEMA_VERSION}, order={expected_order!r}"
+        )

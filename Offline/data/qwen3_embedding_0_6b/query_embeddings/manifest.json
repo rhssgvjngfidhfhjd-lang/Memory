@@ -1,0 +1,12 @@
+{
+  "count": 1711,
+  "dim": 1024,
+  "model_name": "Qwen/Qwen3-Embedding-0.6B",
+  "dtype": "bfloat16",
+  "data_dir": "/data/haozhen/Memory/Mem-Gallery/benchmark/data",
+  "vectors": "/data/haozhen/Memory/Offline/data/qwen3_embedding_0_6b/query_embeddings/vectors.npy",
+  "metadata": "/data/haozhen/Memory/Offline/data/qwen3_embedding_0_6b/query_embeddings/metadata.jsonl",
+  "modality": "text",
+  "query_instruction": "Given a memory-related question, retrieve relevant memory passages that answer the question",
+  "query_image_policy": "append image_caption when available; raw image is not encoded"
+}

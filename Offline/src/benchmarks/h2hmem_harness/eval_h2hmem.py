@@ -32,6 +32,18 @@ from benchmarks.baseline_runtime.protocol import (
 )
 from benchmarks.io_utils import file_manifest, write_json_atomic, write_jsonl_atomic
 from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
+from benchmarks.memgallery_harness.runner.answer_client import (
+    build_retrieved_memory_context,
+    build_retrieved_memory_evidence,
+    query_image_prompt_metadata,
+)
+from benchmarks.h2hmem_harness.prompts import (
+    PROMPT_SOURCE,
+    PROMPT_VERSION,
+    build_answer_messages,
+    parse_answer_response,
+    prompt_sha256,
+)
 from benchmarks.memgallery_harness.runner.metrics import (
     calculate_calls_mb,
     calculate_calls_qa,
@@ -51,10 +63,6 @@ from evidence_policy.split_manifest import SplitManifestIndex, normalize_split_n
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_H2HMEM_DATA_DIR = WORKSPACE_ROOT / "H2HMEM-main" / "dataset"
-SYSTEM_PROMPT = """You answer questions using only the supplied retrieved memories.
-Be concise and return only the answer. H2HMem records human-to-human conversations;
-track speakers, dates, updates, and visual evidence carefully. If the evidence does
-not support an answer, say that it is unknown instead of guessing."""
 
 
 def _natural_key(path: Path) -> tuple[Any, ...]:
@@ -97,14 +105,6 @@ def _question_rows(conversation_dir: Path) -> list[tuple[Path, int, dict[str, An
             if question.get("validated", True)
         )
     return rows
-
-
-def _question_prompt(text: str, category: str) -> str:
-    return (
-        "Answer the following H2HMem question from the retrieved conversation "
-        "memories. Return only the answer, without an 'Answer:' prefix.\n\n"
-        f"Question type: {category}\nQuestion: {text}"
-    )
 
 
 def h2hmem_manifest_question_id(
@@ -246,7 +246,6 @@ def prepare_conversation_jobs(
                 "difficulty": qa.get("difficulty", ""),
                 "original_answer": qa.get("original_answer", ""),
                 "answer_session": qa.get("answer_session") or [],
-                "question_prompt": _question_prompt(question, category),
                 "query_image_payload": query_image,
                 "memory_items": memory_items,
                 "retrieval_top_k": trace_rows,
@@ -268,27 +267,49 @@ def answer_conversation_job(
     job: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     started = time.time()
+    memory_context, _ = build_retrieved_memory_context(
+        job["memory_items"], category="VR"
+    )
+    evidence, _ = build_retrieved_memory_evidence(
+        job["memory_items"], category="VR"
+    )
+    messages = build_answer_messages(
+        question=job["question"],
+        question_type=job["category"],
+        memory_evidence=evidence,
+        query_images=query_image_prompt_metadata(job.get("query_image_payload")),
+    )
+    raw_answer = ""
+    response = None
     try:
-        response = client.answer_with_usage(
-            system_prompt=SYSTEM_PROMPT,
+        response = client.answer_messages_with_usage(
+            messages=messages,
             memory_items=job["memory_items"],
-            question_prompt=job["question_prompt"],
             query_image=job.get("query_image_payload"),
             category="VR",
         )
-        answer, error = response.text, ""
+        raw_answer = response.text
+        answer = parse_answer_response(raw_answer)
+        error = ""
         usage, attempts = response.usage, response.attempts
         failed_attempts = response.failed_attempts
         image_count = response.image_count
     except Exception as exc:
-        answer, error, usage = "", str(exc), None
-        attempts = client.retries + 1
-        failed_attempts = attempts
-        image_count = client.count_answer_images(
-            job["memory_items"],
-            query_image=job.get("query_image_payload"),
-            category="VR",
-        )
+        answer, error = "", str(exc)
+        if response is not None:
+            usage = response.usage
+            attempts = response.attempts
+            failed_attempts = min(attempts, response.failed_attempts + 1)
+            image_count = response.image_count
+        else:
+            usage = None
+            attempts = client.retries + 1
+            failed_attempts = attempts
+            image_count = client.count_answer_images(
+                job["memory_items"],
+                query_image=job.get("query_image_payload"),
+                category="VR",
+            )
     result = {
         key: value
         for key, value in job.items()
@@ -299,6 +320,7 @@ def answer_conversation_job(
     result.update(
         {
             "system_answer": answer,
+            "answer_raw_response": raw_answer,
             "retrieved_ids": [row["memory_id"] for row in job["retrieval_top_k"]],
             "retrieved_source_groups": [
                 row["source_dialogue_ids"] for row in job["retrieval_top_k"]
@@ -319,6 +341,8 @@ def answer_conversation_job(
         "question": job["question"],
         "category": job["category"],
         "top_k": job["retrieval_top_k"],
+        "memory_context": memory_context,
+        "answer_prompt_messages": messages,
     }
     return result, trace
 
@@ -367,6 +391,15 @@ def main() -> None:
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--max-qa", type=int, default=0)
     parser.add_argument("--top-k", type=int, default=7)
+    parser.add_argument(
+        "--graph-retrieval",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
+    parser.add_argument("--seed-k", type=int, default=0)
+    parser.add_argument("--expansion-bonus", type=float, default=0.2)
+    parser.add_argument("--graph-mode", choices=("rerank", "append"), default="append")
+    parser.add_argument("--append-k", type=int, default=2)
     parser.add_argument("--embedding-dim", type=int, default=2048)
     parser.add_argument("--embedding-model", default="Qwen/Qwen3-VL-Embedding-2B")
     parser.add_argument("--embedding-base-url", default="http://127.0.0.1:8001/v1")
@@ -398,6 +431,8 @@ def main() -> None:
             "embedding_base_url", "executor_model", "executor_base_url",
             "executor_temperature", "executor_visual_input",
             "sample_concurrency", "answer_concurrency", "checkpoint_every",
+            "graph_retrieval", "graph_mode", "append_k", "seed_k",
+            "expansion_bonus",
             "efficiency_config",
         },
     )
@@ -482,7 +517,16 @@ def main() -> None:
     config = {
         "top_k": args.top_k,
         "index_root": args.index_root,
-        "graph_options": graph_options,
+        "graph_options": (
+            {
+                "seed_k": args.seed_k,
+                "expansion_bonus": args.expansion_bonus,
+                "mode": args.graph_mode,
+                "append_k": args.append_k,
+            }
+            if args.graph_retrieval
+            else False
+        ),
         "embedding_dim": args.embedding_dim,
         "embedding_model": args.embedding_model,
         "embedding_base_url": args.embedding_base_url,
@@ -547,7 +591,9 @@ def main() -> None:
             file_manifest([Path(args.split_manifest)])
             if args.split_manifest else {}
         ),
-        "system_prompt": SYSTEM_PROMPT,
+        "prompt_version": PROMPT_VERSION,
+        "prompt_source": PROMPT_SOURCE,
+        "prompt_sha256": prompt_sha256(),
         "call_trace_version": TRACE_VERSION,
     }
     sample_signature = signature_digest(signature)
@@ -800,6 +846,9 @@ def main() -> None:
                 "sample_concurrency": args.sample_concurrency,
                 "answer_concurrency": args.answer_concurrency,
                 "checkpoint_every": args.checkpoint_every,
+                "prompt_version": PROMPT_VERSION,
+                "prompt_source": PROMPT_SOURCE,
+                "prompt_sha256": prompt_sha256(),
             },
             "memory_snapshot": str(layout.snapshot),
             "selection_mode": (
@@ -811,6 +860,9 @@ def main() -> None:
                 manifest_index.file_sha256 if manifest_index else ""
             ),
             "ordered_question_ids": list(expected_manifest_question_ids or ()),
+            "prompt_version": PROMPT_VERSION,
+            "prompt_source": PROMPT_SOURCE,
+            "prompt_sha256": prompt_sha256(),
         },
     )
 

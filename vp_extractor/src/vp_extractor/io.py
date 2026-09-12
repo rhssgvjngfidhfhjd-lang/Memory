@@ -3,9 +3,11 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
+from urllib.parse import urlsplit
 
 from PIL import Image, ImageDraw, ImageOps
 
@@ -63,6 +65,27 @@ def scan_dataset(
     return [_image_input(path, name, root, captions=captions) for path in files]
 
 
+def scan_datasets(
+    names: Iterable[str], specs: dict[str, Any], project_root: Path
+) -> list[ImageInput]:
+    """Scan multiple configured datasets with one stable, collision-free result."""
+    sources: list[ImageInput] = []
+    seen_ids: dict[str, ImageInput] = {}
+    for name in names:
+        if name not in specs:
+            raise ValueError(f"Unknown dataset {name!r}; choose from {sorted(specs)}")
+        for source in scan_dataset(name, specs[name], project_root):
+            previous = seen_ids.get(source.image_id)
+            if previous is not None:
+                raise ValueError(
+                    f"Duplicate image_id {source.image_id}: "
+                    f"{previous.path} and {source.path}"
+                )
+            seen_ids[source.image_id] = source
+            sources.append(source)
+    return sources
+
+
 def load_caption_map(path: Path) -> dict[str, str]:
     """Load image captions from one Mem-Gallery dialog JSON or a directory."""
     files = sorted(path.glob("*.json")) if path.is_dir() else [path]
@@ -90,6 +113,44 @@ def crop_extension(source: Path) -> str:
     return ".png"
 
 
+def extraction_signatures_compatible(
+    existing: dict[str, Any], requested: dict[str, Any]
+) -> bool:
+    """Allow only a loopback forwarding-port move in an otherwise equal run."""
+    if existing == requested:
+        return True
+    old = deepcopy(existing)
+    new = deepcopy(requested)
+    try:
+        old_vlm = old["settings"]["vlm"]
+        new_vlm = new["settings"]["vlm"]
+        old_url = str(old_vlm["base_url"])
+        new_url = str(new_vlm["base_url"])
+    except (KeyError, TypeError):
+        return False
+    if not _loopback_port_move(old_url, new_url):
+        return False
+    old_vlm["base_url"] = new_url
+    return old == new
+
+
+def _loopback_port_move(old_url: str, new_url: str) -> bool:
+    old = urlsplit(old_url)
+    new = urlsplit(new_url)
+    loopback = {"127.0.0.1", "localhost", "::1"}
+    return (
+        old.hostname in loopback
+        and new.hostname in loopback
+        and old.scheme == new.scheme
+        and old.path.rstrip("/") == new.path.rstrip("/")
+        and old.query == new.query
+        and old.fragment == new.fragment
+        and old.username == new.username
+        and old.password == new.password
+        and old.port != new.port
+    )
+
+
 class ArtifactStore:
     def __init__(
         self,
@@ -113,7 +174,9 @@ class ArtifactStore:
         path = self.root / "run.json"
         if path.exists():
             existing = json.loads(path.read_text(encoding="utf-8"))
-            if existing.get("signature") != signature:
+            if not extraction_signatures_compatible(
+                existing.get("signature", {}), signature
+            ):
                 raise RuntimeError(
                     f"Run {self.run_id!r} already exists with different settings"
                 )
@@ -287,7 +350,7 @@ def _write_json(path: Path, value: dict[str, Any]) -> None:
 
 def _write_jsonl(path: Path, rows: Iterable[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary = path.with_name(f"{path.name}.{os.getpid()}.tmp")
     with temporary.open("w", encoding="utf-8") as handle:
         for row in rows:
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")

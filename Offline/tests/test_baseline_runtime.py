@@ -113,6 +113,14 @@ class FakeBaseline(BaselineAdapter):
 class FakeAnswerClient:
     retries = 0
 
+    def answer_messages_with_usage(self, **kwargs):
+        return AnswerResponse(
+            text="<answer>answer from memory</answer>",
+            usage=None,
+            attempts=1,
+            failed_attempts=0,
+        )
+
     def answer_with_usage(self, **kwargs):
         return AnswerResponse(
             text="answer from memory",

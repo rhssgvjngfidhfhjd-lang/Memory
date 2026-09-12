@@ -1,6 +1,7 @@
 {
   "_comment": "Fixed protocol for the manifest-defined baseline test matrix. Paths are relative to this file.",
   "split": "test",
+  "run_id": "0907a",
   "split_manifest": "multimodal_split_manifest.json",
   "top_k": 7,
   "efficiency_config": "model_efficiency.json",

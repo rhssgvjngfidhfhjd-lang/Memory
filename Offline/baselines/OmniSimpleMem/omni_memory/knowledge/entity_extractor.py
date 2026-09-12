@@ -301,7 +301,7 @@ class EntityExtractor:
                             "content": self._get_system_prompt()
                         },
                         {
-                            "role": "user", 
+                            "role": "user",
                             "content": prompt
                         }
                     ],

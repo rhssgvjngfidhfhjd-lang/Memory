@@ -5,11 +5,60 @@ from pathlib import Path
 
 from PIL import Image
 
-from vp_extractor.io import ArtifactStore, load_caption_map, scan_path
+from vp_extractor.io import (
+    ArtifactStore,
+    extraction_signatures_compatible,
+    load_caption_map,
+    scan_datasets,
+    scan_path,
+)
 from vp_extractor.models import ExtractionResult, ImageRecord, PrimitiveRecord
 
 
 class StorageTests(unittest.TestCase):
+    def test_signature_allows_only_loopback_forwarding_port_move(self):
+        existing = {
+            "settings": {
+                "vlm": {
+                    "model": "model",
+                    "base_url": "http://127.0.0.1:18001/v1",
+                },
+                "crop": {"quality": 95},
+            }
+        }
+        moved = json.loads(json.dumps(existing))
+        moved["settings"]["vlm"]["base_url"] = "http://localhost:18003/v1/"
+        self.assertTrue(extraction_signatures_compatible(existing, moved))
+
+        changed_model = json.loads(json.dumps(moved))
+        changed_model["settings"]["vlm"]["model"] = "other"
+        self.assertFalse(extraction_signatures_compatible(existing, changed_model))
+
+        remote = json.loads(json.dumps(existing))
+        remote["settings"]["vlm"]["base_url"] = "http://example.com:18003/v1"
+        self.assertFalse(extraction_signatures_compatible(existing, remote))
+
+    def test_scan_datasets_combines_configured_sources(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for dataset, color in (("one", "blue"), ("two", "red")):
+                image_dir = root / dataset / "images" / "sample"
+                image_dir.mkdir(parents=True)
+                Image.new("RGB", (4, 4), color).save(image_dir / f"{dataset}.png")
+            specs = {
+                "One": {
+                    "root": "one",
+                    "include": ["images/**/*", "**/images/**/*"],
+                },
+                "Two": {
+                    "root": "two",
+                    "include": ["images/**/*", "**/images/**/*"],
+                },
+            }
+            sources = scan_datasets(("One", "Two"), specs, root)
+
+        self.assertEqual([row.dataset for row in sources], ["One", "Two"])
+
     def test_loads_mem_gallery_dialog_and_attaches_caption(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

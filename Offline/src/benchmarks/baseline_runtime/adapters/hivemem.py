@@ -12,6 +12,10 @@ from benchmarks.baseline_runtime.protocol import (
     RetrievedMemory,
 )
 from embedding.chunk_builder import Chunk
+from hive_mem.retriever import (
+    DEFAULT_HIVEMEM_GRAPH_OPTIONS,
+    DEFAULT_HIVEMEM_VECTOR_K,
+)
 
 
 class HiveMemAdapter(BaselineAdapter):
@@ -27,7 +31,15 @@ class HiveMemAdapter(BaselineAdapter):
         self.config = dict(config)
         raw_index_root = str(config.get("index_root") or "")
         self.index_root = Path(raw_index_root) if raw_index_root else None
-        self.graph_options = config.get("graph_options")
+        raw_graph_options = config.get("graph_options")
+        self.graph_options = (
+            None
+            if raw_graph_options is False
+            else {
+                **DEFAULT_HIVEMEM_GRAPH_OPTIONS,
+                **dict(raw_graph_options or {}),
+            }
+        )
         categories = (
             self.graph_options.get("categories")
             if isinstance(self.graph_options, dict)
@@ -54,6 +66,8 @@ class HiveMemAdapter(BaselineAdapter):
 
             options = dict(self.graph_options)
             options.pop("categories", None)
+            if self.visual_categories and "visual_categories" not in options:
+                options["visual_categories"] = self.visual_categories
             self.index = GraphExpandedIndex(self.directory, **options)
         else:
             from hive_mem.retriever import SimpleMemoryIndex
@@ -77,20 +91,23 @@ class HiveMemAdapter(BaselineAdapter):
             self.graph_categories is not None
             and request.category.upper() not in self.graph_categories
         )
+        # The shared benchmark budget is seven memories. HiveMem spends it as
+        # five vector hits plus up to two appended graph neighbours.
+        vector_k = min(int(request.top_k), DEFAULT_HIVEMEM_VECTOR_K)
         if graph_gated_off:
             from hive_mem.retriever import SimpleMemoryIndex
 
             hits = SimpleMemoryIndex.search(
                 self.index,
                 request.query_vector,
-                request.top_k,
+                vector_k,
                 category=request.category,
                 allowed_session_ids=allowed,
             )
         else:
             hits = self.index.search(
                 request.query_vector,
-                request.top_k,
+                vector_k,
                 category=request.category,
                 allowed_session_ids=allowed,
             )
@@ -113,7 +130,18 @@ class HiveMemAdapter(BaselineAdapter):
                     metadata={**meta, "via": hit.via},
                 )
             )
-        return RetrievalResult(items=items, trace={"baseline": self.baseline, "via": "hivemem"})
+        return RetrievalResult(
+            items=items,
+            trace={
+                "baseline": self.baseline,
+                "via": "hivemem",
+                "mode": getattr(self.index, "mode", "vector"),
+                "vector_k": vector_k,
+                "graph_append_k": int(getattr(self.index, "append_k", 0)),
+                "vector_count": sum(hit.via == "vector" for hit in hits),
+                "graph_count": sum(hit.via == "graph" for hit in hits),
+            },
+        )
 
     def snapshot(self) -> list[MemoryRecord]:
         path = self.directory / "memories.jsonl"

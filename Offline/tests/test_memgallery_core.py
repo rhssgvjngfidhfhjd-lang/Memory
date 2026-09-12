@@ -12,7 +12,7 @@ import numpy as np
 
 from hive_mem.executor import ExecutionResult, MemoryExecutor
 from hive_mem.mau import MAUBank
-from hive_mem.builder import MAUBuilder
+from hive_mem.builder import MAUBuilder, build_signatures_compatible
 from hive_mem.builder import MemoryEvent
 from benchmarks.memgallery_harness.runner.metrics import (
     add_memory_metrics,
@@ -40,9 +40,8 @@ from hive_mem.build_memories import apply_config_defaults, completed_dataset_sta
 from hive_mem.output_layout import DatasetLayout
 from embedding.build_query_embeddings import _prepare_text_query, _resolve_devices
 from benchmarks.memgallery_harness.runner.prompts import (
-    CATEGORY_PROMPTS,
-    PROMPT_DIR,
     SYSTEM_PROMPT,
+    build_answer_messages,
     prompt_manifest,
 )
 from embedding.qwen3_text_embedding import (
@@ -165,16 +164,16 @@ class OfficialMetricAndAnswerRetryTest(unittest.TestCase):
 
 
 class RuntimeConfigurationTest(unittest.TestCase):
-    def test_memgallery_prompts_resolve_from_workspace_and_are_nonempty(self):
-        expected = Path(__file__).resolve().parents[2] / "Mem-Gallery" / "benchmark" / "prompt"
-        self.assertEqual(PROMPT_DIR, expected.resolve())
+    def test_memgallery_custom_prompt_and_manifest_are_nonempty(self):
         self.assertTrue(SYSTEM_PROMPT)
-        self.assertEqual(set(CATEGORY_PROMPTS), {"AR", "CD", "VS"})
-        self.assertTrue(all(CATEGORY_PROMPTS.values()))
+        self.assertEqual(
+            [message["role"] for message in build_answer_messages(
+                question="Question?", question_type="FR", memory_evidence=["memory"]
+            )],
+            ["system", "user"],
+        )
         manifest = prompt_manifest()
-        self.assertEqual(set(manifest["prompt_sha256"]), {
-            "sys_prompt.txt", "ar_prompt.txt", "cd_prompt.txt", "vs_prompt.txt"
-        })
+        self.assertEqual(len(manifest["prompt_sha256"]), 64)
 
     def test_config_overlay_can_be_limited_to_shared_wma_keys(self):
         parser = argparse.ArgumentParser()
@@ -424,10 +423,10 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         self.assertEqual(merged["llm_judge"], 0.75)
         self.assertEqual(merged["em"], 0.25)
         self.assertEqual(merged["by_category"]["AR"]["llm_judge"], 0.5)
-        self.assertEqual(list(merged)[:3], ["f1", "em", "llm_judge"])
+        self.assertEqual(list(merged)[:3], ["f1", "llm_judge", "em"])
         self.assertEqual(
             list(merged["by_category"]["AR"])[:3],
-            ["f1", "em", "llm_judge"],
+            ["f1", "llm_judge", "em"],
         )
         self.assertNotIn("exact_match", merged)
 
@@ -635,7 +634,7 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
                 [
                     {
                         "dataset": "sample",
-                        "answer_token_usage": {
+                        "answer_usage": {
                             "prompt_tokens": 30,
                             "completion_tokens": 4,
                             "total_tokens": 34,
@@ -801,11 +800,11 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         )
         self.assertEqual(
             list(combined)[:5],
-            ["f1", "em", "llm_judge", "memory_build_tokens", "summary_characters"],
+            ["f1", "llm_judge", "em", "memory_build_tokens", "summary_characters"],
         )
         self.assertEqual(
             list(combined["by_category"]["AR"])[:3],
-            ["f1", "em", "llm_judge"],
+            ["f1", "llm_judge", "em"],
         )
 
     def test_inserts_are_never_deduplicated(self):
@@ -938,8 +937,8 @@ class RetrievalMemoryTokenTest(unittest.TestCase):
             list(combined)[:6],
             [
                 "f1",
-                "em",
                 "llm_judge",
+                "em",
                 "memory_build_tokens",
                 "summary_characters",
                 "retrieval_memory_tokens",
@@ -994,6 +993,24 @@ class IndexedFailureLLMClient:
 
 
 class BuilderResumeTest(unittest.TestCase):
+    def test_resume_allows_only_loopback_endpoint_port_change(self):
+        stored = {
+            "dataset": "demo",
+            "executor_model": "model",
+            "executor_base_url": "http://127.0.0.1:28001/v1",
+            "embedding_base_url": "http://127.0.0.1:8001/v1",
+        }
+        current = {
+            **stored,
+            "executor_base_url": "http://localhost:18000/v1",
+        }
+        self.assertTrue(build_signatures_compatible(stored, current))
+        self.assertFalse(
+            build_signatures_compatible(
+                stored, {**current, "executor_model": "different-model"}
+            )
+        )
+
     @staticmethod
     def events(count=5):
         return [
@@ -1816,6 +1833,129 @@ class GraphExpandedRetrievalTest(unittest.TestCase):
             self.assertEqual(hits[2].via, "graph")
             self.assertEqual(hits[2].rank, 3)
             self.assertEqual(hits[2].item.summary, "linked but dissimilar")
+
+    def test_append_mode_returns_five_vector_hits_plus_two_graph_hits(self):
+        from hive_mem.retriever import GraphExpandedIndex, SimpleMemoryIndex
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bank = MAUBank()
+            vectors = [
+                [1.0, 0.0],
+                [0.9, 0.1],
+                [0.8, 0.2],
+                [0.7, 0.3],
+                [0.6, 0.4],
+                [0.1, 0.9],
+                [0.05, 0.95],
+                [0.0, 1.0],
+            ]
+            for index, vector in enumerate(vectors):
+                bank.add_memory(
+                    f"memory {index}",
+                    np.asarray(vector, dtype=np.float32),
+                    metadata={"session_id": f"S{index:02d}"},
+                )
+            bank.memories[0].links["related"] = [
+                # Already present in vector top-5: skip it and keep looking for
+                # the next highest-scoring unique graph neighbour.
+                {"target": bank.memories[1].id, "type": "SAME_EPISODE"},
+                {"target": bank.memories[5].id, "type": "CAUSES"},
+                {"target": bank.memories[6].id, "type": "SAME_EPISODE"},
+            ]
+            bank.save(root)
+            baseline = SimpleMemoryIndex(root).search([1.0, 0.0], top_k=5)
+            graph = GraphExpandedIndex(
+                root,
+                mode="append",
+                append_k=2,
+                expand_temporal=False,
+                expand_entity=False,
+                expand_attribute=False,
+            ).search([1.0, 0.0], top_k=5)
+
+            self.assertEqual(len(graph), 7)
+            self.assertEqual(
+                [row.item.id for row in graph[:5]],
+                [row.item.id for row in baseline],
+            )
+            self.assertEqual([row.via for row in graph], ["vector"] * 5 + ["graph"] * 2)
+            self.assertEqual(
+                [row.item.summary for row in graph[5:]],
+                ["memory 5", "memory 6"],
+            )
+
+    def test_hivemem_adapter_defaults_to_append_graph_retrieval(self):
+        from benchmarks.baseline_runtime.adapters.hivemem import HiveMemAdapter
+        from benchmarks.baseline_runtime.protocol import RetrievalRequest
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dataset_dir = root / "datasets" / "toy"
+            self._build_index_dir(dataset_dir, graph=False)
+            adapter = HiveMemAdapter(
+                baseline="HiveMem",
+                source_root=Path(),
+                config={"index_root": str(root), "top_k": 2},
+            )
+            adapter.reset("toy", Path())
+            result = adapter.retrieve(
+                RetrievalRequest(
+                    query_id="q",
+                    text="q",
+                    top_k=2,
+                    query_vector=[1.0, 0.0],
+                )
+            )
+
+        self.assertEqual([row.metadata["via"] for row in result.items], ["vector", "vector", "graph"])
+        self.assertEqual(result.trace["mode"], "append")
+        self.assertEqual(result.trace["graph_append_k"], 2)
+
+    def test_hivemem_adapter_uses_five_plus_two_with_shared_top_seven(self):
+        from benchmarks.baseline_runtime.adapters.hivemem import HiveMemAdapter
+        from benchmarks.baseline_runtime.protocol import RetrievalRequest
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dataset_dir = root / "datasets" / "toy"
+            bank = MAUBank()
+            for index, vector in enumerate(
+                ([1.0, 0.0], [0.9, 0.1], [0.8, 0.2], [0.7, 0.3],
+                 [0.6, 0.4], [0.1, 0.9], [0.05, 0.95], [0.0, 1.0])
+            ):
+                bank.add_memory(
+                    f"memory {index}",
+                    np.asarray(vector, dtype=np.float32),
+                    metadata={"session_id": f"S{index:02d}"},
+                )
+            bank.memories[0].links["related"] = [
+                {"target": bank.memories[5].id, "type": "CAUSES"},
+                {"target": bank.memories[6].id, "type": "SAME_EPISODE"},
+            ]
+            bank.save(dataset_dir)
+            adapter = HiveMemAdapter(
+                baseline="HiveMem",
+                source_root=Path(),
+                config={"index_root": str(root), "top_k": 7},
+            )
+            adapter.reset("toy", Path())
+            result = adapter.retrieve(
+                RetrievalRequest(
+                    query_id="q",
+                    text="q",
+                    top_k=7,
+                    query_vector=[1.0, 0.0],
+                )
+            )
+
+        self.assertEqual(len(result.items), 7)
+        self.assertEqual(
+            [row.metadata["via"] for row in result.items],
+            ["vector"] * 5 + ["graph"] * 2,
+        )
+        self.assertEqual(result.trace["vector_k"], 5)
+        self.assertEqual(result.trace["graph_append_k"], 2)
 
     def test_category_gating_uses_plain_vector_for_other_categories(self):
         from benchmarks.baseline_runtime.adapters.hivemem import HiveMemAdapter

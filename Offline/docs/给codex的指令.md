@@ -1,0 +1,1 @@
+严格遵循 /data/haozhen/Memory-clean/Offline/configs/ppo.md 执行并完成三个 benchmark 的 PPO 全量训练、测试、W&B 实时记录及结果验收；持续监控至完成，失败时自动断点续跑，不覆盖已有实验目录

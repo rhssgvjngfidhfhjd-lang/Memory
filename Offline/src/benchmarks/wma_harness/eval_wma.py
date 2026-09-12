@@ -3,8 +3,6 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import nullcontext
-import hashlib
-import inspect
 import json
 import os
 from pathlib import Path
@@ -21,6 +19,7 @@ from benchmarks.wma_harness.retrieval.query_embedding_cache import (
 from benchmarks.wma_harness.runner.answer_client import (
     VLMAnswerClient,
     build_retrieved_memory_context,
+    build_retrieved_memory_evidence,
 )
 from benchmarks.memgallery_harness.runner.metrics import (
     add_memory_metrics,
@@ -42,7 +41,13 @@ from benchmarks.baseline_runtime.call_trace import (
     trace_filename,
 )
 from benchmarks.wma_harness.runner.metrics import summarize_results
-from benchmarks.wma_harness.runner.prompts import SYSTEM_PROMPT, format_question_prompt
+from benchmarks.wma_harness.runner.prompts import (
+    PROMPT_SOURCE,
+    PROMPT_VERSION,
+    build_answer_messages,
+    parse_answer_response,
+    prompt_sha256,
+)
 from benchmarks.baseline_runtime import baseline_metadata, canonical_name, create_adapter
 from benchmarks.baseline_runtime.parallel_runner import (
     load_sample_artifact,
@@ -63,6 +68,11 @@ from benchmarks.io_utils import file_manifest, write_json_atomic, write_jsonl_at
 from benchmarks.question_filter import is_excluded_category, parse_excluded_categories
 from embedding.chunk_builder import build_wma_chunks_from_data, iter_wma_sample_files
 from evidence_policy.split_manifest import SplitManifestIndex, normalize_split_name
+from hive_mem.prefix_graph import (
+    PREFIX_GRAPH_SCHEMA_VERSION,
+    materialize_prefix_graph,
+)
+from hive_mem.output_layout import DatasetLayout
 
 
 VISUAL_CATEGORIES = {"VFR", "VS", "VU", "CMR", ""}
@@ -125,53 +135,63 @@ def prepare_sample_jobs(
     query_cache: QueryEmbeddingCache,
     *,
     top_k: int,
-    graph_options: dict[str, Any] | None,
+    graph_options: dict[str, Any] | bool | None,
+    prefix_graph_root: Path | None = None,
     excluded_categories: frozenset[str] = frozenset(),
     ordered_question_ids: tuple[str, ...] | None = None,
 ) -> list[dict[str, Any]]:
     payload = json.loads(sample_path.read_text(encoding="utf-8"))
     sample_id = str(payload["sample_id"])
-    adapters: dict[tuple[str, ...] | None, Any] = {}
-
-    def adapter_for(visible_sessions: list[str]):
-        # WMA is evaluated at multiple chronological checkpoints.  Build the
-        # derived entity/attribute graph from the visible prefix only, so a
-        # future session cannot affect graph DF statistics or degree caps.
-        scope = tuple(visible_sessions) if graph_options is not None else None
-        if scope not in adapters:
-            scoped_graph_options = None
-            if graph_options is not None:
-                scoped_graph_options = {
-                    **graph_options,
-                    "allowed_session_ids": set(visible_sessions),
-                }
-            adapter = create_adapter(
-                "HiveMem",
-                config_overrides={
-                    "index_root": str(index_root),
-                    "top_k": top_k,
-                    "visual_categories": VISUAL_CATEGORIES,
-                    "graph_options": scoped_graph_options,
-                },
-            )
-            adapter.reset(sample_id, Path())
-            adapters[scope] = adapter
-        return adapters[scope]
     ordered_sessions = session_ids(payload)
     gold_points = build_gold_evidence_map(payload)
     jobs: list[dict[str, Any]] = []
     selected_question_ids = (
         set(ordered_question_ids) if ordered_question_ids is not None else None
     )
-    try:
-        for checkpoint in payload.get("qa_checkpoints", []) or []:
-            checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
-            covered_sessions = [str(value) for value in checkpoint.get("covered_sessions", [])]
-            visible_sessions = visible_sessions_for_checkpoint(
-                ordered_sessions, covered_sessions
+    prefix_graph_root = prefix_graph_root or index_root / ".prefix_graphs"
+    for checkpoint in payload.get("qa_checkpoints", []) or []:
+        checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
+        if (
+            not checkpoint_id
+            or Path(checkpoint_id).name != checkpoint_id
+            or checkpoint_id in {".", ".."}
+        ):
+            raise ValueError(f"Invalid WMA checkpoint id: {checkpoint_id!r}")
+        covered_sessions = [str(value) for value in checkpoint.get("covered_sessions", [])]
+        visible_sessions = visible_sessions_for_checkpoint(
+            ordered_sessions, covered_sessions
+        )
+        checkpoint_index_root = index_root
+        prefix_manifest = ""
+        if graph_options is not False:
+            checkpoint_index_root = (
+                prefix_graph_root / sample_id / checkpoint_id
             )
+            materialize_prefix_graph(
+                index_root / "datasets" / sample_id,
+                checkpoint_index_root,
+                sample_id=sample_id,
+                checkpoint_id=checkpoint_id,
+                visible_session_ids=visible_sessions,
+                graph_options=(
+                    graph_options if isinstance(graph_options, dict) else {}
+                ),
+            )
+            prefix_manifest = str(
+                checkpoint_index_root / "prefix_manifest.json"
+            )
+        adapter = create_adapter(
+            "HiveMem",
+            config_overrides={
+                "index_root": str(checkpoint_index_root),
+                "top_k": top_k,
+                "visual_categories": VISUAL_CATEGORIES,
+                "graph_options": graph_options,
+            },
+        )
+        try:
+            adapter.reset(sample_id, Path())
             visible_session_set = set(visible_sessions)
-            adapter = adapter_for(visible_sessions)
             for qa_index, qa in enumerate(checkpoint.get("questions", []) or [], start=1):
                 manifest_question_id = wma_manifest_question_id(
                     sample_id, checkpoint_id, qa_index
@@ -234,6 +254,7 @@ def prepare_sample_jobs(
                         "checkpoint_id": checkpoint_id,
                         "covered_sessions": covered_sessions,
                         "visible_sessions": visible_sessions,
+                        "graph_prefix_manifest": prefix_manifest,
                         "qa_index": qa_index,
                         "question": question,
                         "category": category,
@@ -268,12 +289,9 @@ def prepare_sample_jobs(
                         "retrieval_top_k": trace,
                     }
                 )
-    finally:
-        for adapter in adapters.values():
+        finally:
             adapter.close()
-    return _order_wma_jobs(
-        jobs, ordered_question_ids, sample_id=sample_id
-    )
+    return _order_wma_jobs(jobs, ordered_question_ids, sample_id=sample_id)
 
 
 def prepare_native_sample_jobs(
@@ -434,14 +452,27 @@ def prepare_native_sample_jobs(
 def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
     job = _with_manifest_question_id(job)
     started = time.time()
+    memory_context, _ = build_retrieved_memory_context(
+        job["memory_items"], job["category"]
+    )
+    evidence, _ = build_retrieved_memory_evidence(
+        job["memory_items"], job["category"]
+    )
+    messages = build_answer_messages(
+        question=job["question"],
+        question_type=job["category"],
+        memory_evidence=evidence,
+    )
+    raw_answer = ""
+    answer_response = None
     try:
-        answer_response = client.answer_with_usage(
-            system_prompt=SYSTEM_PROMPT,
+        answer_response = client.answer_messages_with_usage(
+            messages=messages,
             memory_items=job["memory_items"],
-            question_prompt=format_question_prompt(job["question"], job["category"]),
             category=job["category"],
         )
-        answer = answer_response.text
+        raw_answer = answer_response.text
+        answer = parse_answer_response(raw_answer)
         answer_token_usage = answer_response.usage
         answer_attempts = answer_response.attempts
         answer_failed_attempts = answer_response.failed_attempts
@@ -449,18 +480,26 @@ def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, 
         error = ""
     except Exception as exc:
         answer, error = "", str(exc)
-        answer_token_usage = None
-        answer_attempts = client.retries + 1
-        answer_failed_attempts = client.retries + 1
-        answer_image_count = client.count_answer_images(
-            job["memory_items"], category=job["category"]
-        )
-    memory_context, _ = build_retrieved_memory_context(job["memory_items"], job["category"])
+        if answer_response is not None:
+            answer_token_usage = answer_response.usage
+            answer_attempts = answer_response.attempts
+            answer_failed_attempts = min(
+                answer_attempts, answer_response.failed_attempts + 1
+            )
+            answer_image_count = answer_response.image_count
+        else:
+            answer_token_usage = None
+            answer_attempts = client.retries + 1
+            answer_failed_attempts = answer_attempts
+            answer_image_count = client.count_answer_images(
+                job["memory_items"], category=job["category"]
+            )
     top_k = job["retrieval_top_k"]
     result = {key: value for key, value in job.items() if key not in {"memory_items", "retrieval_top_k"}}
     result.update(
         {
             "system_answer": answer,
+            "answer_raw_response": raw_answer,
             "retrieved_ids": [row["memory_id"] for row in top_k],
             "retrieved_source_groups": [row["source_dialogue_ids"] for row in top_k],
             "retrieved_sessions": [row["session_id"] for row in top_k],
@@ -484,6 +523,7 @@ def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, 
         "visible_sessions": job["visible_sessions"],
         "top_k": top_k,
         "memory_context": memory_context,
+        "answer_prompt_messages": messages,
     }
     return result, trace
 
@@ -562,21 +602,24 @@ def _run_signature(
         input_paths.append(index_root / "build_manifest.json")
         for sample_path in sample_paths:
             bank = index_root / "datasets" / sample_path.stem
+            layout = DatasetLayout(bank)
             input_paths.extend(
                 [
                     bank / "memories.jsonl",
-                    bank / "text_vectors.npy",
-                    bank / "image_vectors.npy",
-                    bank / "image_mask.npy",
+                    layout.existing_vector_path("text.npy", "vectors.npy"),
+                    layout.existing_vector_path("image.npy", "image_vectors.npy"),
+                    layout.existing_vector_path("image_mask.npy", "image_mask.npy"),
                 ]
             )
-    prompt_source = SYSTEM_PROMPT + "\n" + inspect.getsource(format_question_prompt)
     return {
+        "prefix_graph_schema_version": PREFIX_GRAPH_SCHEMA_VERSION,
         "arguments": {
             key: value for key, value in vars(args).items() if key not in ignored
         },
         "inputs": file_manifest(input_paths),
-        "prompt_sha256": hashlib.sha256(prompt_source.encode("utf-8")).hexdigest(),
+        "prompt_version": PROMPT_VERSION,
+        "prompt_source": PROMPT_SOURCE,
+        "prompt_sha256": prompt_sha256(),
         "call_trace_version": TRACE_VERSION,
     }
 
@@ -597,7 +640,7 @@ def main() -> None:
     parser.add_argument("--top-k", type=int, default=7)
     parser.add_argument(
         "--exclude-categories",
-        default="MB",
+        default="",
         help="Comma-separated QA categories to skip before embedding, retrieval, and answering.",
     )
     parser.add_argument("--embedding-dim", type=int, default=2048)
@@ -629,10 +672,14 @@ def main() -> None:
     parser.add_argument("--skip-model-check", action="store_true")
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--checkpoint-every", type=int, default=10)
-    parser.add_argument("--graph-retrieval", action="store_true")
+    parser.add_argument(
+        "--graph-retrieval",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
     parser.add_argument("--seed-k", type=int, default=0)
     parser.add_argument("--expansion-bonus", type=float, default=0.2)
-    parser.add_argument("--graph-mode", choices=("rerank", "append"), default="rerank")
+    parser.add_argument("--graph-mode", choices=("rerank", "append"), default="append")
     parser.add_argument("--append-k", type=int, default=2)
     from hive_mem.build_memories import apply_config_defaults
     apply_config_defaults(
@@ -660,6 +707,11 @@ def main() -> None:
             "executor_base_url",
             "executor_temperature",
             "executor_visual_input",
+            "graph_retrieval",
+            "graph_mode",
+            "append_k",
+            "seed_k",
+            "expansion_bonus",
             "efficiency_config",
         },
     )
@@ -761,7 +813,7 @@ def main() -> None:
             "mode": args.graph_mode,
             "append_k": args.append_k,
         }
-        if args.graph_retrieval else None
+        if args.graph_retrieval else False
     )
     result_dir = Path(args.result_dir)
     output_layout = BaselineOutputLayout(result_dir)
@@ -786,6 +838,7 @@ def main() -> None:
             sample_jobs = prepare_sample_jobs(
                 path, Path(args.index_root), cache,
                 top_k=args.top_k, graph_options=graph_options,
+                prefix_graph_root=output_layout.memory_dir / "prefix_graphs",
                 excluded_categories=excluded_categories,
                 ordered_question_ids=ordered_ids_by_sample.get(path.stem),
             )
@@ -1012,6 +1065,9 @@ def main() -> None:
             manifest_index.file_sha256 if manifest_index is not None else ""
         ),
         "ordered_question_ids": list(expected_manifest_question_ids or ()),
+        "prompt_version": PROMPT_VERSION,
+        "prompt_source": PROMPT_SOURCE,
+        "prompt_sha256": prompt_sha256(),
     }
     write_json_atomic(result_dir / "run_manifest.json", manifest | {"run_signature": signature})
     pipeline_path = result_dir / "pipeline_qa.jsonl"

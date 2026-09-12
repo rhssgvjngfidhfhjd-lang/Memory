@@ -2,7 +2,7 @@
 """Run all non-HiveMem baselines on the manifest-defined test split.
 
 The runner creates read-only staged dataset views containing only test
-conversations, runs a shortest-job-first queue over three answer endpoints,
+conversations, runs a shortest-job-first queue over the configured answer endpoints,
 and starts OpenRouter judging on completed outputs without occupying a GPU
 worker.
 """
@@ -30,6 +30,15 @@ WORKSPACE = ROOT.parent
 sys.path.insert(0, str(ROOT / "src"))
 
 from evidence_policy.split_manifest import SplitManifestIndex  # noqa: E402
+from benchmarks.h2hmem_harness.prompts import (  # noqa: E402
+    prompt_sha256 as h2hmem_prompt_sha256,
+)
+from benchmarks.memgallery_harness.runner.prompts import (  # noqa: E402
+    prompt_sha256 as memgallery_prompt_sha256,
+)
+from benchmarks.wma_harness.runner.prompts import (  # noqa: E402
+    prompt_sha256 as wma_prompt_sha256,
+)
 
 
 MODEL = "Qwen/Qwen3-VL-4B-Instruct"
@@ -91,6 +100,7 @@ def load_protocol(path: Path = PROTOCOL_PATH) -> dict[str, Any]:
     protocol = load_json(path)
     required = {
         "split",
+        "run_id",
         "split_manifest",
         "top_k",
         "efficiency_config",
@@ -102,6 +112,8 @@ def load_protocol(path: Path = PROTOCOL_PATH) -> dict[str, Any]:
         raise ValueError(f"Missing test matrix protocol keys: {missing}")
     if str(protocol["split"]).casefold() != "test":
         raise ValueError("The baseline matrix protocol must select the test split")
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", str(protocol["run_id"])):
+        raise ValueError("Protocol run_id must be a safe path component")
     expected_counts = protocol["expected_qa_counts"]
     smoke_counts = protocol["smoke_expected_qa_counts"]
     expected_benchmarks = set(BENCHMARK_ARGUMENT)
@@ -116,6 +128,7 @@ def load_protocol(path: Path = PROTOCOL_PATH) -> dict[str, Any]:
 
 PROTOCOL = load_protocol()
 SPLIT_NAME = str(PROTOCOL["split"])
+RUN_ID = str(PROTOCOL["run_id"])
 EXPECTED_COUNTS = {
     benchmark: int(count)
     for benchmark, count in PROTOCOL["expected_qa_counts"].items()
@@ -138,6 +151,14 @@ def configured_efficiency_config() -> Path:
     if not path.is_absolute():
         path = PROTOCOL_PATH.parent / path
     return path.resolve()
+
+
+def formal_result_dir(output_root: Path, job: Job) -> Path:
+    return output_root / job.benchmark / job.method / RUN_ID
+
+
+def run_artifact_root(output_root: Path) -> Path:
+    return output_root / "_runs" / RUN_ID
 
 
 def write_json_atomic(path: Path, payload: Any) -> None:
@@ -410,8 +431,8 @@ def stage_inputs(stage_root: Path, selection: Selection) -> dict[str, Path]:
 
 
 def check_services(endpoints: list[str], embedding_url: str, config: dict[str, Any]) -> None:
-    if len(endpoints) != 3:
-        raise ValueError("Exactly three answer endpoints are required")
+    if not endpoints:
+        raise ValueError("At least one answer endpoint is required")
     for endpoint in endpoints:
         payload = request_json(endpoint.rstrip("/") + "/models")
         models = {str(row.get("id")) for row in payload.get("data") or []}
@@ -571,6 +592,14 @@ def validate_run_manifest_selection(
         raise RuntimeError(
             f"{job.name}: run_manifest question IDs do not exactly match manifest order"
         )
+    expected_prompt_sha = {
+        "Mem-Gallery": memgallery_prompt_sha256(),
+        "H2HMEM": h2hmem_prompt_sha256(),
+        "WorldMemArena": wma_prompt_sha256(),
+    }.get(job.benchmark)
+    actual_prompt_sha = manifest.get("prompt_sha256")
+    if expected_prompt_sha and actual_prompt_sha != expected_prompt_sha:
+        raise RuntimeError(f"{job.name}: answer prompt hash mismatch")
 
 
 def validate_output(
@@ -800,8 +829,8 @@ def judge_worker(
         if job is None:
             pending.task_done()
             return
-        result_dir = output_root / job.benchmark / job.method
-        log_path = output_root / "_logs" / "judge" / f"{job.name}.log"
+        result_dir = formal_result_dir(output_root, job)
+        log_path = run_artifact_root(output_root) / "_logs" / "judge" / f"{job.name}.log"
         command = [
             sys.executable,
             str(ROOT / "scripts" / "judge_results_llm_parallel.py"),
@@ -839,6 +868,20 @@ def judge_worker(
         pending.task_done()
 
 
+def judge_output_complete(job: Job, output_root: Path) -> bool:
+    metrics_path = formal_result_dir(output_root, job) / "llm_judge_metrics.json"
+    if not metrics_path.is_file():
+        return False
+    try:
+        metrics = load_json(metrics_path)
+    except (OSError, ValueError, TypeError):
+        return False
+    return (
+        int(metrics.get("count", -1)) == EXPECTED_COUNTS[job.benchmark]
+        and int(metrics.get("judge_errors", -1)) == 0
+    )
+
+
 def run_formal(
     endpoints: list[str],
     output_root: Path,
@@ -850,16 +893,33 @@ def run_formal(
 ) -> None:
     pending: queue.Queue[Job] = queue.Queue()
     jobs = [Job(method, benchmark) for method, benchmark in JOB_ORDER]
+    completed_jobs: list[Job] = []
     for priority, job in enumerate(jobs, start=1):
-        pending.put(job)
-        status.update(
-            "jobs",
-            job.name,
-            status="pending",
-            priority=priority,
-            method=job.method,
-            benchmark=job.benchmark,
-        )
+        result_dir = formal_result_dir(output_root, job)
+        try:
+            validate_output(job, result_dir, selection, config)
+        except Exception:
+            pending.put(job)
+            status.update(
+                "jobs",
+                job.name,
+                status="pending",
+                priority=priority,
+                method=job.method,
+                benchmark=job.benchmark,
+            )
+        else:
+            completed_jobs.append(job)
+            status.update(
+                "jobs",
+                job.name,
+                status="completed",
+                priority=priority,
+                method=job.method,
+                benchmark=job.benchmark,
+                result_dir=str(result_dir),
+                resumed_existing=True,
+            )
     judge_queue: queue.Queue[Job | None] = queue.Queue()
     judge_threads = [
         threading.Thread(
@@ -871,6 +931,13 @@ def run_formal(
     ]
     for judge_thread in judge_threads:
         judge_thread.start()
+    for job in completed_jobs:
+        if judge_output_complete(job, output_root):
+            status.update(
+                "judges", job.name, status="completed", resumed_existing=True
+            )
+        else:
+            judge_queue.put(job)
 
     def worker(endpoint: str) -> None:
         while True:
@@ -878,8 +945,8 @@ def run_formal(
                 job = pending.get_nowait()
             except queue.Empty:
                 return
-            result_dir = output_root / job.benchmark / job.method
-            log_path = output_root / "_logs" / "baseline" / f"{job.name}.log"
+            result_dir = formal_result_dir(output_root, job)
+            log_path = run_artifact_root(output_root) / "_logs" / "baseline" / f"{job.name}.log"
             succeeded = False
             error = ""
             for attempt in range(1, 3):
@@ -973,7 +1040,7 @@ def main() -> None:
         "--endpoint",
         action="append",
         default=[],
-        help="Repeat for the three OpenAI-compatible answer endpoints.",
+        help="Repeat for each OpenAI-compatible answer endpoint.",
     )
     parser.add_argument(
         "--embedding-base-url", default="http://127.0.0.1:8001/v1"
@@ -989,7 +1056,7 @@ def main() -> None:
     parser.add_argument(
         "--output-root",
         type=Path,
-        default=ROOT / "outputs" / "test_only_manifest_20260905_topk7",
+        default=ROOT / "outputs",
     )
     parser.add_argument("--skip-smoke", action="store_true")
     args = parser.parse_args()
@@ -1000,19 +1067,20 @@ def main() -> None:
         "http://127.0.0.1:8015/v1",
     ]
     output_root = args.output_root.expanduser().resolve()
+    run_root = run_artifact_root(output_root)
     config = load_json(args.defaults.expanduser().resolve())
     config["top_k"] = int(PROTOCOL["top_k"])
     config["efficiency_config"] = str(configured_efficiency_config())
     if str(config.get("judge_model")) != "openai/gpt-4o-mini":
         raise ValueError("This planned run requires judge_model=openai/gpt-4o-mini")
     selection = load_selection(args.split_manifest)
-    status = Status(output_root / "status.json", endpoints, output_root)
+    status = Status(run_root / "status.json", endpoints, output_root)
     try:
         check_services(endpoints, args.embedding_base_url, config)
-        data_dirs = stage_inputs(output_root / "_test_inputs", selection)
+        data_dirs = stage_inputs(run_root / "_test_inputs", selection)
         smoke_selection = write_smoke_manifest(
             selection.manifest_path,
-            output_root / "_preflight" / "smoke_split_manifest.json",
+            run_root / "_preflight" / "smoke_split_manifest.json",
         )
         status.update_root(
             phase="smoke" if not args.skip_smoke else "formal",
@@ -1020,6 +1088,7 @@ def main() -> None:
             split_manifest=str(selection.manifest_path),
             split_manifest_sha256=selection.manifest_sha256,
             top_k=config["top_k"],
+            run_id=RUN_ID,
             efficiency_config=config["efficiency_config"],
             judge_model=config["judge_model"],
             smoke_split_manifest=str(smoke_selection.manifest_path),
@@ -1028,7 +1097,7 @@ def main() -> None:
         if not args.skip_smoke:
             run_smokes(
                 endpoints,
-                output_root,
+                run_root,
                 args.embedding_base_url,
                 config,
                 data_dirs,

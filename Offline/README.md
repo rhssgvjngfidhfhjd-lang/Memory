@@ -7,8 +7,8 @@ Each memory unit (MAU) is produced by a single LLM call over a dialogue chunk an
 carries `summary + entities + per-entity attributes` (closed 6-type / 28-key ontology,
 see `src/hive_mem/entity_schema.py`). Edges are built deterministically from these
 fields — temporal chain, shared-entity and shared-attribute commonality — plus optional
-LLM-confirmed event relations. Retrieval is vector top-k with optional one-hop graph
-expansion (best config: append mode, +1.6pp JudgeAcc, McNemar p=0.032).
+LLM-confirmed event relations. HiveMem retrieval defaults to vector top-5 plus up to
+two highest-scoring one-hop graph results in append mode.
 
 ## Layout
 
@@ -123,7 +123,7 @@ python -m hive_mem.build_memories --mode c \
 # 2. Deterministic edges (temporal chain; entity/attribute pairs derived at load time)
 python -m hive_mem.build_memory_edges outputs/<run>/datasets/*
 
-# 3. QA eval (baseline = pure vector; add --graph-retrieval --graph-mode append for graph)
+# 3. QA eval (default = vector top-5 + up to 2 graph results; use --no-graph-retrieval for vector-only)
 python -m benchmarks.memgallery_harness.eval_memgallery --all-datasets \
   --data-dir ../Mem-Gallery/benchmark/data \
   --index-root outputs/<run> \
@@ -139,12 +139,18 @@ skips `AR`, and the WorldMemArena runner skips `MB`. The raw datasets and
 original QA indices remain unchanged. Override the policy with
 `--exclude-categories` (pass an empty value to include every category).
 
+WorldMemArena HiveMem evaluation builds a cumulative graph for each checkpoint
+under `<result-dir>/memory/prefix_graphs/<sample>/<checkpoint>/`. Each graph is
+rebuilt only from sessions visible at that checkpoint, so future MAUs and future
+graph statistics cannot affect retrieval. Matching prefix graphs are reused by
+content signature on resumed runs.
+
 ## Evidence-policy train/validation/test manifest
 
 The PPO evidence policy can use a conversation-level multimodal split manifest
 instead of the legacy per-config `split` lists. The checked manifest contains
-57/8/17 conversations and 3,766/562/1,075 questions for train/validation/test
-(approximately 70%/10%/20%). `validation` in the training CLI maps to `val` in
+49/16/17 conversations and 3,268/1,060/1,075 questions for train/validation/test
+(approximately 60%/20%/20%). `validation` in the training CLI maps to `val` in
 the manifest. A whole conversation always remains in one split.
 
 Validate an existing Mem-Gallery or WorldMemArena evidence-policy setup without
@@ -153,7 +159,6 @@ rewriting its config:
 ```bash
 python scripts/evidence_policy.py \
   --config configs/evidence_policy.json \
-  --split-manifest /path/to/multimodal_split_manifest.json \
   prepare-split
 ```
 
@@ -161,9 +166,9 @@ Train or evaluate with the same manifest:
 
 ```bash
 python scripts/evidence_policy.py --config configs/evidence_policy.json \
-  --split-manifest /path/to/multimodal_split_manifest.json train
+  train
 python scripts/evidence_policy.py --config configs/evidence_policy.json \
-  --split-manifest /path/to/multimodal_split_manifest.json eval \
+  eval \
   --strategy ppo --split validation --checkpoint <checkpoint.pt>
 ```
 
@@ -171,7 +176,7 @@ Materialize read-only JSONL indexes directly from all three source repositories:
 
 ```bash
 python -m evidence_policy.episode_sources \
-  --manifest /path/to/multimodal_split_manifest.json \
+  --manifest configs/multimodal_split_manifest.json \
   --workspace-root .. \
   --output outputs/evidence_policy_splits
 ```
@@ -185,3 +190,32 @@ exclusion yields 3,631/547/1,035 effective episodes while preserving the same
 conversation boundaries.
 
 Run tests: `python -m unittest discover -s tests -t .`
+
+### Five-bit VP evidence policy
+
+The PPO policy selects five independent Bernoulli evidence bits for every
+retrieved MAU, in the fixed order `summary, dialogue, caption, image, vp`.
+Every combination is valid, including `00000` (drop that MAU), `01000`
+(dialogue only), and `00011` (original image plus VP crops). Later bits do not
+observe earlier selections.
+
+Create one VP artifact run for every configured benchmark image before
+training:
+
+```bash
+cd ../vp_extractor
+PYTHONPATH=src python -m vp_extractor \
+  --base-url http://127.0.0.1:18001/v1 \
+  --run-id qwen3vl4b_all_v1 extract --dataset all
+```
+
+Then audit the memory-bank coverage and train:
+
+```bash
+cd ../Offline
+python scripts/evidence_policy.py --config configs/evidence_policy.json audit-vp
+python scripts/evidence_policy.py --config configs/evidence_policy.json train
+```
+
+Checkpoints produced by the former two-head categorical policy are not
+compatible with the five-bit policy and are rejected explicitly.

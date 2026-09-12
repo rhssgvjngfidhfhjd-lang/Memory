@@ -19,6 +19,10 @@ from omni_memory.knowledge.entity_extractor import ExtractedEntity, ExtractedRel
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_KNOWLEDGE_GRAPH_DIR = (
+    Path(__file__).resolve().parents[2] / "omni_memory_data" / "knowledge_graph"
+)
+
 
 @dataclass
 class Entity:
@@ -165,7 +169,9 @@ class KnowledgeGraph:
         config: Optional[Any] = None,
     ):
         self.config = config
-        self.storage_path = Path(storage_path) if storage_path else Path("./omni_memory_data/knowledge_graph")
+        self.storage_path = (
+            Path(storage_path) if storage_path else DEFAULT_KNOWLEDGE_GRAPH_DIR
+        )
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
         # Entity storage

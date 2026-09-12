@@ -1,0 +1,23 @@
+{
+  "chunks": 866,
+  "benchmark": "h2hmem",
+  "variant": "multiparty",
+  "with_images": 325,
+  "data_dir": "/data/haozhen/Memory-clean/H2HMEM-main/dataset",
+  "output": "/data/haozhen/Memory-clean/Offline/data/h2hmem/chunks_multiparty.jsonl",
+  "max_tokens": 800,
+  "target_tokens": null,
+  "wma_grouping": null,
+  "include_captions": false,
+  "include_images": true,
+  "include_profile": null,
+  "token_estimate": {
+    "min": 81,
+    "mean": 155.62,
+    "p10": 132,
+    "p50": 154,
+    "p90": 181,
+    "max": 316
+  },
+  "source_rounds": 866
+}
