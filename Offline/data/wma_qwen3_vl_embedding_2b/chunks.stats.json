@@ -1,0 +1,10 @@
+{
+  "chunks": 29930,
+  "benchmark": "wma",
+  "with_images": 15515,
+  "data_dir": "/data/haozhen/Memory/WorldMemArena/WorldMemArena",
+  "output": "/data/haozhen/Memory/Offline/data/wma_qwen3_vl_embedding_2b/chunks.jsonl",
+  "max_tokens": 800,
+  "include_captions": true,
+  "include_images": true
+}
