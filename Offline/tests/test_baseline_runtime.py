@@ -75,6 +75,7 @@ from benchmarks.memgallery_harness.eval_memgallery import (
     run_dataset,
 )
 from benchmarks.h2hmem_harness.eval_h2hmem import (
+    _mma_resume_signature_digests as h2h_mma_resume_signature_digests,
     prepare_conversation_jobs as prepare_h2h_conversation_jobs,
 )
 from benchmarks.wma_harness.eval_wma import (
@@ -2024,6 +2025,17 @@ class BaselineProtocolTest(unittest.TestCase):
 
 
 class BaselineHarnessTest(unittest.TestCase):
+    def test_h2h_mma_resume_accepts_legacy_execution_only_signature(self):
+        args = SimpleNamespace(
+            baseline="MMA",
+            m2a_skip_failed_build_points=False,
+            m2a_max_consecutive_failed_build_points=10,
+        )
+        signature = {"arguments": {"baseline": "MMA"}, "inputs": {}}
+        compatible = h2h_mma_resume_signature_digests(args, signature)
+        self.assertEqual(len(compatible), 2)
+        self.assertNotEqual(compatible[0], compatible[1])
+
     def test_memgallery_auth_failure_is_not_a_completed_native_qa(self):
         self.assertTrue(
             _is_hard_stop_native_qa_job(

@@ -600,6 +600,23 @@ def run_conversation(
     return [x[0] for x in pairs], [x[1] for x in pairs], artifact["snapshots"]
 
 
+def _mma_resume_signature_digests(
+    args: argparse.Namespace, signature: dict[str, Any]
+) -> tuple[str, ...]:
+    """Accept the pre-normalization digest for execution-only M2A flags."""
+    primary = signature_digest(signature)
+    if args.baseline != "MMA":
+        return (primary,)
+    legacy_arguments = dict(signature["arguments"])
+    for key in (
+        "m2a_skip_failed_build_points",
+        "m2a_max_consecutive_failed_build_points",
+    ):
+        legacy_arguments[key] = getattr(args, key)
+    legacy = signature_digest({**signature, "arguments": legacy_arguments})
+    return tuple(dict.fromkeys((primary, legacy)))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run a memory baseline on H2HMem.")
     parser.add_argument("--baseline", default="HiveMem")
@@ -897,7 +914,8 @@ def main() -> None:
         "prompt_sha256": prompt_sha256(),
         "call_trace_version": TRACE_VERSION,
     }
-    sample_signature = signature_digest(signature)
+    compatible_sample_signatures = _mma_resume_signature_digests(args, signature)
+    sample_signature = compatible_sample_signatures[0]
 
     def prepare(
         spec: tuple[str, str, int, tuple[str, ...] | None]
@@ -905,10 +923,20 @@ def main() -> None:
         variant, conversation_id, quota, ordered_question_ids = spec
         sample_id = f"{variant}/{conversation_id}"
         if args.resume:
-            cached = load_sample_artifact(
-                layout.sample_checkpoint_dir,
-                sample_id,
-                signature=sample_signature,
+            cached = next(
+                (
+                    artifact
+                    for compatible_signature in compatible_sample_signatures
+                    if (
+                        artifact := load_sample_artifact(
+                            layout.sample_checkpoint_dir,
+                            sample_id,
+                            signature=compatible_signature,
+                        )
+                    )
+                    is not None
+                ),
+                None,
             )
             if cached is not None:
                 print(f"[resume] skip prepared conversation: {sample_id}", flush=True)
@@ -929,7 +957,8 @@ def main() -> None:
             if (
                 native_progress.get("version") == 1
                 and native_progress.get("sample_id") == sample_id
-                and native_progress.get("signature") == sample_signature
+                and native_progress.get("signature")
+                in compatible_sample_signatures
             ):
                 native_progress_jobs = list(native_progress.get("jobs") or [])
 
@@ -972,6 +1001,9 @@ def main() -> None:
         sample_config = dict(config)
         sample_config["mma_resume_enabled"] = args.resume
         sample_config["mma_resume_signature"] = sample_signature
+        sample_config["mma_resume_compatible_signatures"] = list(
+            compatible_sample_signatures
+        )
         sample_config["mirix_resume_enabled"] = args.resume
         sample_config["mirix_resume_signature"] = sample_signature
         if args.baseline != "HiveMem":
