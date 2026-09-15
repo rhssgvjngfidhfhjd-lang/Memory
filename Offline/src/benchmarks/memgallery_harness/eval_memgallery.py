@@ -167,6 +167,30 @@ def _is_non_skippable_build_failure(exc: Exception) -> bool:
     return is_non_skippable_build_failure(exc)
 
 
+_HARD_STOP_NATIVE_QA_MARKERS = (
+    "unauthenticated",
+    "unauthorized",
+    "status 401",
+    "status code: 401",
+    "status 403",
+    "status code: 403",
+    "invalid api key",
+    "insufficient_quota",
+    "insufficient quota",
+    "insufficient credit",
+    "insufficient balance",
+)
+
+
+def _is_hard_stop_native_qa_job(job: dict[str, Any]) -> bool:
+    """Do not treat an infrastructure hard stop as a completed baseline QA."""
+    answer = job.get("native_answer") or {}
+    error = str(answer.get("error") or "").casefold()
+    return bool(error) and any(
+        marker in error for marker in _HARD_STOP_NATIVE_QA_MARKERS
+    )
+
+
 def _build_failure_row(
     *,
     exc: Exception,
@@ -1145,6 +1169,7 @@ def main() -> None:
             / Path(trace_filename(path.stem)).with_suffix(".json")
         )
         native_progress_jobs: list[dict[str, Any]] = []
+        invalidated_hard_stop_jobs: list[dict[str, Any]] = []
         if args.baseline in {"MMA", "MIRIX"} and args.resume and native_progress_path.is_file():
             try:
                 native_progress = json.loads(
@@ -1157,7 +1182,20 @@ def main() -> None:
                 and native_progress.get("sample_id") == path.stem
                 and native_progress.get("signature") == sample_signature
             ):
-                native_progress_jobs = list(native_progress.get("jobs") or [])
+                loaded_jobs = list(native_progress.get("jobs") or [])
+                invalidated_hard_stop_jobs = [
+                    *list(native_progress.get("invalidated_hard_stop_jobs") or []),
+                    *[
+                        row
+                        for row in loaded_jobs
+                        if _is_hard_stop_native_qa_job(row)
+                    ],
+                ]
+                native_progress_jobs = [
+                    row
+                    for row in loaded_jobs
+                    if not _is_hard_stop_native_qa_job(row)
+                ]
 
         def checkpoint_native_qa(job: dict[str, Any]) -> None:
             manifest_id = str(job.get("manifest_question_id") or "")
@@ -1174,7 +1212,10 @@ def main() -> None:
                     )
                 except (OSError, json.JSONDecodeError):
                     existing = {}
-                existing_count = int(existing.get("completed_questions") or 0)
+                existing_count = sum(
+                    not _is_hard_stop_native_qa_job(row)
+                    for row in (existing.get("jobs") or [])
+                )
                 if existing_count > len(native_progress_jobs):
                     raise RuntimeError(
                         "refusing to regress native QA checkpoint from "
@@ -1189,6 +1230,7 @@ def main() -> None:
                     "status": "running",
                     "completed_questions": len(native_progress_jobs),
                     "jobs": native_progress_jobs,
+                    "invalidated_hard_stop_jobs": invalidated_hard_stop_jobs,
                     "updated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
                 },
             )
@@ -1310,6 +1352,7 @@ def main() -> None:
                     "status": "completed",
                     "completed_questions": len(artifact.get("jobs") or []),
                     "jobs": list(artifact.get("jobs") or []),
+                    "invalidated_hard_stop_jobs": invalidated_hard_stop_jobs,
                     "updated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
                 },
             )

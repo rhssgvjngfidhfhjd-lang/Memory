@@ -69,7 +69,11 @@ from benchmarks.baseline_runtime.adapters.memverse import (
 from benchmarks.baseline_runtime.adapters.m2a import M2AAdapter
 from benchmarks.baseline_runtime.provenance import ProvenanceIndex
 from benchmarks.memgallery_harness.runner.answer_client import AnswerResponse
-from benchmarks.memgallery_harness.eval_memgallery import prepare_dataset_jobs, run_dataset
+from benchmarks.memgallery_harness.eval_memgallery import (
+    _is_hard_stop_native_qa_job,
+    prepare_dataset_jobs,
+    run_dataset,
+)
 from benchmarks.h2hmem_harness.eval_h2hmem import (
     prepare_conversation_jobs as prepare_h2h_conversation_jobs,
 )
@@ -2020,6 +2024,28 @@ class BaselineProtocolTest(unittest.TestCase):
 
 
 class BaselineHarnessTest(unittest.TestCase):
+    def test_memgallery_auth_failure_is_not_a_completed_native_qa(self):
+        self.assertTrue(
+            _is_hard_stop_native_qa_job(
+                {
+                    "native_answer": {
+                        "text": "",
+                        "error": "MMA answer_with_memory failed: AttributeError: UNAUTHENTICATED",
+                    }
+                }
+            )
+        )
+        self.assertFalse(
+            _is_hard_stop_native_qa_job(
+                {
+                    "native_answer": {
+                        "text": "",
+                        "error": "MMA Chat Agent did not return a final answer",
+                    }
+                }
+            )
+        )
+
     def test_wma_sample_retry_queue_isolates_then_retries(self):
         calls: list[str] = []
 
