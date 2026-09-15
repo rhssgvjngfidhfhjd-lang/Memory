@@ -22,6 +22,7 @@ def build_retrieved_memory_evidence(
 ) -> tuple[list[str], list[str]]:
     evidence: list[str] = []
     image_paths: list[str] = []
+    seen_image_paths: set[str] = set()
     include_images = category.upper() in MEMORY_IMAGE_CATEGORIES
     for rank, item in enumerate(memory_items, start=1):
         metadata = item.get("metadata", {}) or {}
@@ -29,11 +30,16 @@ def build_retrieved_memory_evidence(
         if not isinstance(raw_images, list):
             legacy = item.get("image")
             raw_images = [legacy] if isinstance(legacy, dict) else []
-        attached_images = [
-            image
-            for image in raw_images
-            if include_images and isinstance(image, dict) and bool(image.get("path"))
-        ]
+        attached_images: list[dict[str, Any]] = []
+        if include_images:
+            for image in raw_images:
+                if not isinstance(image, dict) or not image.get("path"):
+                    continue
+                image_path = str(image["path"])
+                if image_path in seen_image_paths:
+                    continue
+                seen_image_paths.add(image_path)
+                attached_images.append(image)
         attached_original = any(
             str(image.get("kind", "image")) == "image" for image in attached_images
         )

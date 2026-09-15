@@ -1,0 +1,6 @@
+.memlens_cache/
+*.cache
+*.cache.jsonl
+
+# legacy local staging dir from a prior restructure (never tracked)
+release_images_old/

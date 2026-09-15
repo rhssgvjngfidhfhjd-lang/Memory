@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import re
+import sys
 from typing import Any, Callable, Iterable, TypeVar
 
 from benchmarks.io_utils import write_json_atomic
@@ -104,6 +105,7 @@ def parallel_map_ordered(
                 value = worker(item)
             except Exception as exc:
                 failures.append((key, exc))
+                _report_sample_failure(key, exc)
                 if on_error is not None:
                     on_error(key, exc)
                 continue
@@ -125,6 +127,7 @@ def parallel_map_ordered(
                 value = future.result()
             except Exception as exc:
                 failures.append((key, exc))
+                _report_sample_failure(key, exc)
                 if on_error is not None:
                     on_error(key, exc)
                 continue
@@ -134,6 +137,25 @@ def parallel_map_ordered(
     if failures:
         _raise_parallel_failures(failures)
     return [completed[item_key(item)] for item in ordered]
+
+
+def _report_sample_failure(key: str, exc: Exception) -> None:
+    """Expose deferred sample failures immediately while peers checkpoint."""
+    print(
+        "[sample-error] "
+        + json.dumps(
+            {
+                "sample_id": str(key),
+                "error_type": type(exc).__name__,
+                "error": str(exc),
+                "action": "continue_other_samples_then_fail_job",
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+        ),
+        file=sys.stderr,
+        flush=True,
+    )
 
 
 def _raise_parallel_failures(failures: list[tuple[str, Exception]]) -> None:

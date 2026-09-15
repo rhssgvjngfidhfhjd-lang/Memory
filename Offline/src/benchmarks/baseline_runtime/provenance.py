@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from typing import Any
 
 from embedding.chunk_builder import Chunk
@@ -13,6 +14,27 @@ class ProvenanceIndex:
 
     def clear(self) -> None:
         self._rows.clear()
+
+    def export_rows(self) -> dict[str, dict[str, Any]]:
+        """Return a JSON-safe copy for native state checkpoints."""
+        return copy.deepcopy(self._rows)
+
+    def restore_rows(self, rows: dict[str, dict[str, Any]]) -> None:
+        """Restore a previously exported provenance map."""
+        restored: dict[str, dict[str, Any]] = {}
+        for memory_id, value in rows.items():
+            if not isinstance(value, dict):
+                raise ValueError(f"invalid provenance row for {memory_id!r}")
+            restored[str(memory_id)] = {
+                "session_id": str(value.get("session_id") or ""),
+                "session_ids": [str(item) for item in value.get("session_ids") or []],
+                "source_dialogue_ids": [
+                    str(item) for item in value.get("source_dialogue_ids") or []
+                ],
+                "image_ids": [str(item) for item in value.get("image_ids") or []],
+                "image_paths": [str(item) for item in value.get("image_paths") or []],
+            }
+        self._rows = restored
 
     def register(self, memory_id: str, chunk: Chunk) -> None:
         metadata = chunk.metadata

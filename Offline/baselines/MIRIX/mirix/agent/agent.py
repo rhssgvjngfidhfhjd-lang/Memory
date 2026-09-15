@@ -1441,7 +1441,11 @@ These keywords have been used to retrieve relevant memories from the database.
                     LLM_MAX_TOKENS[self.model] if (self.model is not None and self.model in LLM_MAX_TOKENS) else LLM_MAX_TOKENS["DEFAULT"]
                 )
 
-            if current_total_tokens > summarizer_settings.memory_warning_threshold * int(self.agent_state.llm_config.context_window):
+            should_summarize = current_total_tokens > (
+                summarizer_settings.memory_warning_threshold
+                * int(self.agent_state.llm_config.context_window)
+            )
+            if should_summarize:
                 self.logger.info(
                     f"Memory pressure detected: last response total_tokens ({current_total_tokens}) > {summarizer_settings.memory_warning_threshold * int(self.agent_state.llm_config.context_window)}"
                 )
@@ -1450,9 +1454,6 @@ These keywords have been used to retrieve relevant memories from the database.
                 if not self.agent_alerted_about_memory_pressure:
                     active_memory_warning = True
                     self.agent_alerted_about_memory_pressure = True  # it's up to the outer loop to handle this
-
-                # if it is too long then run summarization here.
-                self.summarize_messages_inplace()
 
             else:
                 self.logger.debug(
@@ -1474,6 +1475,15 @@ These keywords have been used to retrieve relevant memories from the database.
             self.agent_state = self.agent_manager.append_to_in_context_messages(
                 all_new_messages, agent_id=self.agent_state.id, actor=self.user
             )
+
+            # Summarize only after the successful turn has been persisted.
+            # With MIRIX's original very-large Gemini context this ordering was
+            # rarely observable.  On a 32k OpenAI-compatible Qwen backend, the
+            # just-completed multimodal turn can be the one that crosses the
+            # pressure threshold; summarizing before append cannot see it and
+            # leaves the next native agent call above the server limit.
+            if should_summarize:
+                self.summarize_messages_inplace()
 
             return AgentStepResponse(
                 messages=all_new_messages,

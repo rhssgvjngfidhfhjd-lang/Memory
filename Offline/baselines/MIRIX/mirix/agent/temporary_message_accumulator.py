@@ -329,7 +329,12 @@ class TemporaryMessageAccumulator:
                                     # Already uploaded file reference
                                     processed_image_uris.append(file_ref)
                             else:
-                                raise NotImplementedError("Non-GEMINI models do not support file uploads")
+                                # OpenAI-compatible vision models (including
+                                # Qwen3-VL) consume local paths through the
+                                # native file manager in _build_memory_message.
+                                # Gemini alone needs the asynchronous cloud
+                                # upload/resolution branch above.
+                                processed_image_uris.append(file_ref)
                         
                         if has_pending_uploads:
                             # Keep for next cycle if any uploads are still pending

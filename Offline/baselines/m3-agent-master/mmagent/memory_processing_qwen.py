@@ -64,7 +64,7 @@ def generate_video_context(
         frame_base64 = base64.b64encode(buffered.getvalue()).decode()
         face_frames.append((f"<face_{char_id}>:", frame_base64))
         face_only.append((f"<face_{char_id}>:", face["extra_data"]["face_base64"]))
-    
+
     if faces_input == "face_only":
         faces_input = face_only
     elif faces_input == "face_frames":
@@ -150,7 +150,10 @@ def generate_all_memories(video_context, model_type="sft"):
     ] + video_context
     
     messages = generate_messages(input)
-    epi_key = "video_descriptions"
+    # The prompt's output schema uses the singular key "video_description".
+    # Keep the parser aligned with that schema so the official Qwen
+    # memorization path can consume its own output.
+    epi_key = "video_description"
     sem_key = "high_level_conclusions"
     
     memories = None
@@ -252,4 +255,3 @@ def process_memories(video_graph, memory_contents, clip_id, type='episodic'):
         })
 
     update_video_graph(video_graph, memories, type)
-    

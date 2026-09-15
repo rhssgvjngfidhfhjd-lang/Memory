@@ -91,6 +91,10 @@ def create_local_adapter(
         from benchmarks.baseline_runtime.adapters.mirix_family import MirixFamilyAdapter
 
         return MirixFamilyAdapter(**common)
+    if adapter_name == "mma_original":
+        from benchmarks.baseline_runtime.adapters.mma_original import MMAOriginalAdapter
+
+        return MMAOriginalAdapter(**common)
     if adapter_name == "memverse":
         from benchmarks.baseline_runtime.adapters.memverse import MemVerseAdapter
 
@@ -116,7 +120,14 @@ def baseline_metadata(name: str) -> dict[str, Any]:
         "python_executable": resolve_python(entry),
         "in_process": bool(entry.get("in_process")),
     }
-    for key in ("compatibility_mode", "audio_enabled"):
+    for key in (
+        "compatibility_mode",
+        "audio_enabled",
+        "upstream_url",
+        "upstream_tag",
+        "upstream_commit",
+        "upstream_tree",
+    ):
         if key in entry:
             metadata[key] = entry[key]
     return metadata

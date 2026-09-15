@@ -34,18 +34,24 @@ from benchmarks.memgallery_harness.runner.answer_client import (  # noqa: E402
     query_image_prompt_metadata,
 )
 from benchmarks.memgallery_harness.runner.metrics import (  # noqa: E402
+    ChatPromptTokenCounter,
     add_efficiency_metrics,
     calculate_calls_mb,
     calculate_calls_qa,
+    calculate_usage_cost,
     combine_call_metrics,
+    load_model_efficiency_profile,
     summarize_results,
     write_efficiency_metrics,
+    write_runtime_call_metrics,
 )
 from benchmarks.memgallery_harness.runner.prompts import (  # noqa: E402
+    PPO_EMPTY_PROMPT_VERSION as MEMGALLERY_PPO_EMPTY_PROMPT_VERSION,
     PROMPT_SOURCE as MEMGALLERY_PROMPT_SOURCE,
     PROMPT_VERSION as MEMGALLERY_PROMPT_VERSION,
     build_answer_messages as build_memgallery_answer_messages,
     parse_answer_response as parse_memgallery_answer,
+    ppo_empty_prompt_sha256 as memgallery_ppo_empty_prompt_sha256,
     prompt_sha256 as memgallery_prompt_sha256,
     resolve_question_image,
 )
@@ -63,11 +69,22 @@ from evidence_policy.evidence import (  # noqa: E402
 )
 from evidence_policy.episode_sources import iter_source_questions  # noqa: E402
 from evidence_policy.policy import EvidenceSelectionPolicy  # noqa: E402
-from evidence_policy.ppo import PPOBuffer, PPOTrainer, load_policy_checkpoint, save_json  # noqa: E402
+from evidence_policy.ppo import (  # noqa: E402
+    PPOBuffer,
+    PPOTrainer,
+    SlidingCostNormalizer,
+    WANDB_SCHEMA_VERSION,
+    build_wandb_update_payload,
+    build_wandb_validation_payload,
+    define_wandb_metrics,
+    load_policy_checkpoint,
+    save_json,
+)
 from evidence_policy.retrieval import (  # noqa: E402
     build_graph_index,
     build_wma_prefix_graph_index,
-    resolve_graph_options,
+    retrieve_hits,
+    resolve_retrieval_settings,
     retrieval_signature,
     retrieval_trace,
     validate_graph_config,
@@ -98,29 +115,8 @@ TRANSIENT_ENDPOINT_ERROR_MARKERS = (
     "503 service unavailable",
     "504 gateway timeout",
 )
-
-
 class RealtimeWandbLogger:
     """Best-effort W&B logging with local state as the source of truth."""
-
-    ACTOR_FIELDS = (
-        "ppo_kl",
-        "pg_loss",
-        "pg_clipfrac",
-        "lr",
-        "grad_norm",
-        "entropy_loss",
-    )
-    CRITIC_FIELDS = (
-        "value_loss",
-        "absolute_value_error",
-        "explained_variance",
-        "predicted_value_mean",
-        "target_return_mean",
-        "reward_mean",
-        "reward_min",
-        "reward_max",
-    )
 
     def __init__(
         self,
@@ -168,16 +164,16 @@ class RealtimeWandbLogger:
                 id=run_id,
                 resume="allow",
                 job_type="ppo-training",
-                tags=["hivemem", "ppo", str(config.get("benchmark") or config.get("data_source") or "")],
-                config=config,
+                tags=[
+                    "hivemem",
+                    "ppo",
+                    WANDB_SCHEMA_VERSION,
+                    str(config.get("benchmark") or config.get("data_source") or ""),
+                ],
+                config={**config, "wandb_schema_version": WANDB_SCHEMA_VERSION},
                 settings=wandb.Settings(init_timeout=15),
             )
-            self.run.define_metric("actor/update_step")
-            self.run.define_metric("actor/*", step_metric="actor/update_step")
-            self.run.define_metric("critic/update_step")
-            self.run.define_metric("critic/*", step_metric="critic/update_step")
-            self.run.define_metric("val/update_step")
-            self.run.define_metric("val/*", step_metric="val/update_step")
+            define_wandb_metrics(self.run)
             save_json(
                 self.control_path,
                 {
@@ -196,47 +192,14 @@ class RealtimeWandbLogger:
     def log_update(self, row: dict[str, Any]) -> None:
         if self.run is None:
             return
-        step = int(row["update_step"])
-        payload: dict[str, Any] = {
-            "actor/update_step": step,
-            "critic/update_step": step,
-            "train/epoch": int(row["epoch"]),
-            "train/question_count": int(row["question_count"]),
-        }
-        for field in self.ACTOR_FIELDS:
-            self._add_finite(payload, f"actor/{field}", row.get(field))
-        for field in self.CRITIC_FIELDS:
-            name = {
-                "reward_mean": "rewards/mean",
-                "reward_min": "rewards/min",
-                "reward_max": "rewards/max",
-            }.get(field, field)
-            self._add_finite(payload, f"critic/{name}", row.get(field))
-        self._log("update", payload)
+        self._log("update", build_wandb_update_payload(row))
 
     def log_validation(self, event: dict[str, Any], *, epoch: int) -> None:
         if self.run is None:
             return
-        metrics = event.get("metrics") or {}
-        payload: dict[str, Any] = {
-            "val/update_step": int(event.get("update_step", 0)),
-            "val/epoch": int(epoch),
-            "val/phase": str(event.get("phase", "")),
-            "val/train_question_count": int(event.get("train_question_count", 0)),
-        }
-        for source, target in (
-            ("count", "count"),
-            ("f1", "f1"),
-            ("exact_match", "exact_match"),
-            ("retrieval_hitrate@5", "retrieval_hitrate_at_5"),
-            ("mean_reward", "reward"),
-            ("errors", "errors"),
-            ("cached_rollouts", "cached_rollouts"),
-        ):
-            self._add_finite(payload, f"val/{target}", metrics.get(source))
-        for evidence, count in (metrics.get("evidence_actions") or {}).items():
-            self._add_finite(payload, f"val/evidence_actions/{evidence}", count)
-        self._log("validation", payload)
+        self._log(
+            "validation", build_wandb_validation_payload(event, epoch=epoch)
+        )
 
     def finish(self) -> None:
         if self.run is None:
@@ -274,10 +237,315 @@ class RealtimeWandbLogger:
                 flush=True,
             )
 
-    @staticmethod
-    def _add_finite(payload: dict[str, Any], key: str, value: Any) -> None:
-        if isinstance(value, (int, float)) and math.isfinite(float(value)):
-            payload[key] = value
+class CostRewardRuntime:
+    """Compute shaped rewards while owning one benchmark's normalizer state."""
+
+    def __init__(
+        self,
+        config: dict[str, Any],
+        *,
+        token_counter: ChatPromptTokenCounter | None = None,
+    ) -> None:
+        reward = config.get("reward") or {}
+        self.enabled = bool(reward.get("cost_enabled", False))
+        if self.enabled and "cost_tradeoff_lambda" not in reward:
+            raise ValueError(
+                "reward.cost_tradeoff_lambda is required when cost reward is enabled"
+            )
+        self.cost_tradeoff_lambda = float(
+            reward.get("cost_tradeoff_lambda", 0.0)
+        )
+        if self.cost_tradeoff_lambda < 0:
+            raise ValueError("reward.cost_tradeoff_lambda must be non-negative")
+        self.normalizer = SlidingCostNormalizer(
+            window_size=int(reward.get("window_size", 512)),
+            min_window_size=int(reward.get("min_window_size", 128)),
+            lower_quantile=float(reward.get("lower_quantile", 0.05)),
+            upper_quantile=float(
+                reward.get("upper_quantile", reward.get("quantile", 0.95))
+            ),
+            initial_range_floor_ratio=float(
+                reward.get(
+                    "initial_range_floor_ratio",
+                    reward.get("initial_floor_ratio", 0.25),
+                )
+            ),
+            range_epsilon=float(reward.get("range_epsilon", 1e-12)),
+            std_epsilon=float(reward.get("std_epsilon", 1e-8)),
+            cost_transform=str(
+                reward.get("cost_transform", "sqrt_incremental")
+            ),
+        )
+        self.input_price = 0.0
+        self.output_price = 0.0
+        self.token_counter = token_counter
+        self._base_prompt_tokens_by_query: dict[str, int] = {}
+        if self.enabled:
+            efficiency_config = Path(
+                config.get("efficiency_config")
+                or ROOT / "configs" / "model_efficiency.json"
+            )
+            profile = load_model_efficiency_profile(
+                efficiency_config, str(config["model"]["name"])
+            )
+            self.input_price = float(profile["pricing"]["input_per_million_usd"])
+            self.output_price = float(profile["pricing"]["output_per_million_usd"])
+            if self.token_counter is None:
+                self.token_counter = ChatPromptTokenCounter(
+                    str(reward.get("tokenizer_name") or config["model"]["name"])
+                )
+
+    def snapshot(self) -> dict[str, Any]:
+        return self.normalizer.snapshot()
+
+    def apply(
+        self,
+        rollout: EvidenceRollout,
+        episode: EvidenceEpisode,
+        *,
+        snapshot: dict[str, Any] | None = None,
+    ) -> bool:
+        quality = float(
+            rollout.reward if rollout.quality_reward is None else rollout.quality_reward
+        )
+        rollout.quality_reward = quality
+        rollout.cost_weight = (
+            self.cost_tradeoff_lambda if self.enabled else 0.0
+        )
+        if not self.enabled:
+            rollout.reward = quality
+            return not bool(rollout.error)
+        if rollout.error:
+            rollout.cost_error = "answer rollout failed"
+            return False
+        if rollout.answer_usage is None:
+            rollout.cost_error = "missing exact answer usage"
+            return False
+        try:
+            raw_cost = calculate_usage_cost(
+                rollout.answer_usage,
+                input_price=self.input_price,
+                output_price=self.output_price,
+            )
+        except (TypeError, ValueError) as exc:
+            rollout.cost_error = str(exc)
+            return False
+
+        base_tokens = self._base_prompt_tokens(episode)
+        base_cost = calculate_usage_cost(
+            {
+                "prompt_tokens": base_tokens,
+                "completion_tokens": 0,
+                "total_tokens": base_tokens,
+            },
+            input_price=self.input_price,
+            output_price=self.output_price,
+        )
+        incremental = max(raw_cost - base_cost, 0.0)
+        state = snapshot or self.normalizer.snapshot()
+        normalized = self.normalizer.normalize(incremental, snapshot=state)
+        transformed = self.normalizer.transform(incremental)
+        effective_min = state.get("effective_transformed_cost_min")
+        effective_max = state.get("effective_transformed_cost_max")
+        scale_alpha = state.get("cost_scale_alpha")
+        effective_weight = (
+            self.cost_tradeoff_lambda * float(scale_alpha)
+            if scale_alpha is not None
+            else 0.0
+        )
+        rollout.raw_cost = raw_cost
+        rollout.base_cost = base_cost
+        rollout.cost_min = (
+            base_cost + self.normalizer.inverse_transform(float(effective_min))
+            if effective_min is not None
+            else None
+        )
+        rollout.incremental_cost = incremental
+        rollout.transformed_cost = transformed
+        rollout.cost_max = (
+            base_cost + self.normalizer.inverse_transform(float(effective_max))
+            if effective_max is not None
+            else None
+        )
+        rollout.normalized_cost = normalized
+        rollout.cost_scale_alpha = (
+            float(scale_alpha) if scale_alpha is not None else None
+        )
+        rollout.task_reward_std = (
+            float(state["task_reward_std"])
+            if state.get("task_reward_std") is not None
+            else None
+        )
+        rollout.normalized_cost_std = (
+            float(state["normalized_cost_std"])
+            if state.get("normalized_cost_std") is not None
+            else None
+        )
+        rollout.effective_cost_weight = (
+            effective_weight if scale_alpha is not None else None
+        )
+        rollout.cost_window_count = int(state["window_count"])
+        rollout.cost_normalizer_active = bool(state["active"])
+        rollout.reward = quality - effective_weight * normalized
+        rollout.cost_error = ""
+        return True
+
+    def commit(
+        self,
+        incremental_costs: Sequence[float],
+        quality_rewards: Sequence[float],
+    ) -> None:
+        if self.enabled:
+            self.normalizer.extend(incremental_costs, quality_rewards)
+
+    def state_dict(self) -> dict[str, Any]:
+        return {
+            "enabled": self.enabled,
+            "cost_tradeoff_lambda": self.cost_tradeoff_lambda,
+            "input_price_per_million_usd": self.input_price,
+            "output_price_per_million_usd": self.output_price,
+            "normalizer": self.normalizer.state_dict(),
+        }
+
+    def load_state_dict(self, state: Any) -> None:
+        if not isinstance(state, dict):
+            raise ValueError("Checkpoint is missing cost reward state")
+        if bool(state.get("enabled")) != self.enabled:
+            raise ValueError("Checkpoint cost reward enabled state does not match config")
+        if (
+            float(state.get("cost_tradeoff_lambda", -1.0))
+            != self.cost_tradeoff_lambda
+        ):
+            raise ValueError(
+                "Checkpoint cost reward lambda does not match config"
+            )
+        self.normalizer.load_state_dict(state.get("normalizer") or {})
+
+    def _base_prompt_tokens(self, episode: EvidenceEpisode) -> int:
+        if episode.query_id in self._base_prompt_tokens_by_query:
+            return self._base_prompt_tokens_by_query[episode.query_id]
+        if episode.answer_messages_builder is None or self.token_counter is None:
+            raise ValueError(
+                "BaseCost requires an answer messages builder and token counter"
+            )
+        messages = episode.answer_messages_builder(
+            [], allow_empty_evidence=True
+        )
+        image_paths = (
+            [str(episode.query_image["path"])]
+            if episode.query_image and episode.query_image.get("path")
+            else []
+        )
+        count = self.token_counter.count(messages, image_paths=image_paths)
+        self._base_prompt_tokens_by_query[episode.query_id] = count
+        return count
+
+def summarize_cost_rewards(rollouts: Sequence[EvidenceRollout]) -> dict[str, float]:
+    if not rollouts:
+        return {}
+    valid = [
+        rollout
+        for rollout in rollouts
+        if not rollout.cost_error and rollout.raw_cost is not None
+    ]
+    result = {
+        "all_zero_rollout_rate": float(
+            np.mean(
+                [
+                    all(action.bitmask == "00000" for action in rollout.actions)
+                    for rollout in rollouts
+                ]
+            )
+        )
+    }
+    if not valid:
+        return result
+
+    def mean(field: str) -> float:
+        return float(np.mean([float(getattr(row, field)) for row in valid]))
+
+    result.update(
+        {
+            "quality_reward_mean": mean("quality_reward"),
+            "final_reward_mean": mean("reward"),
+            "raw_cost_mean": mean("raw_cost"),
+            "base_cost_mean": mean("base_cost"),
+            "incremental_cost_mean": mean("incremental_cost"),
+            "transformed_cost_mean": mean("transformed_cost"),
+            "normalized_cost_mean": mean("normalized_cost"),
+            "cost_penalty_mean": float(
+                np.mean(
+                    [
+                        float(row.quality_reward) - float(row.reward)
+                        for row in valid
+                    ]
+                )
+            ),
+            "cost_window_count": float(valid[0].cost_window_count or 0),
+            "cost_normalizer_active": float(
+                bool(valid[0].cost_normalizer_active)
+            ),
+        }
+    )
+    if (
+        valid[0].cost_max is not None
+        and valid[0].cost_min is not None
+        and valid[0].base_cost is not None
+    ):
+        result["cost_min_mean"] = mean("cost_min")
+        result["cost_max_mean"] = mean("cost_max")
+        result["task_reward_std"] = float(valid[0].task_reward_std)
+        result["normalized_cost_std"] = float(valid[0].normalized_cost_std)
+        result["cost_scale_alpha"] = float(valid[0].cost_scale_alpha)
+        result["effective_cost_weight"] = float(
+            valid[0].effective_cost_weight
+        )
+        result["cost_low_clip_rate"] = float(
+            np.mean([float(row.normalized_cost) <= 0.0 for row in valid])
+        )
+        result["cost_high_clip_rate"] = float(
+            np.mean([float(row.normalized_cost) >= 1.0 for row in valid])
+        )
+        result["cost_saturation_rate"] = result["cost_high_clip_rate"]
+    return result
+
+
+def update_ppo_batch(
+    trainer: PPOTrainer,
+    buffer: PPOBuffer,
+    cost_runtime: CostRewardRuntime,
+    batch_rollouts: Sequence[EvidenceRollout],
+) -> dict[str, float]:
+    metrics = trainer.update(buffer)
+    metrics.update(summarize_cost_rewards(batch_rollouts))
+    snapshot = cost_runtime.snapshot()
+    for source, target in (
+        ("percentile_transformed_cost_min", "cost_percentile_transformed_min"),
+        ("percentile_transformed_cost_max", "cost_percentile_transformed_max"),
+        ("effective_transformed_cost_min", "cost_effective_transformed_min"),
+        ("effective_transformed_cost_max", "cost_effective_transformed_max"),
+        ("effective_transformed_cost_range", "cost_effective_transformed_range"),
+        ("task_reward_std", "task_reward_std"),
+        ("normalized_cost_std", "normalized_cost_std"),
+        ("cost_scale_alpha", "cost_scale_alpha"),
+    ):
+        value = snapshot.get(source)
+        if value is not None:
+            metrics[target] = float(value)
+    valid_cost_rollouts = [
+        rollout
+        for rollout in batch_rollouts
+        if rollout.incremental_cost is not None
+        and rollout.quality_reward is not None
+    ]
+    cost_runtime.commit(
+        [float(rollout.incremental_cost) for rollout in valid_cost_rollouts],
+        [float(rollout.quality_reward) for rollout in valid_cost_rollouts],
+    )
+    metrics["cost_window_count_after"] = float(
+        cost_runtime.snapshot()["window_count"]
+    )
+    return metrics
 
 
 def main() -> None:
@@ -300,6 +568,24 @@ def main() -> None:
         default="",
         help="Override the configured VLM endpoint for this run",
     )
+    parser.add_argument(
+        "--retrieval-mode",
+        choices=("vector", "random_append", "graph_append"),
+        default="",
+        help="Override the configured retrieval mode for a controlled ablation",
+    )
+    parser.add_argument(
+        "--top-k",
+        type=int,
+        default=0,
+        help="Override vector top-k for a controlled ablation",
+    )
+    parser.add_argument(
+        "--retrieval-seed",
+        type=int,
+        default=None,
+        help="Global random-append seed; per-question seeds are derived by SHA256",
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     split_parser = subparsers.add_parser("prepare-split", help="Create balanced benchmark splits")
@@ -314,7 +600,7 @@ def main() -> None:
     train_parser.add_argument("--validation-limit", type=int, default=0)
     train_parser.add_argument("--resume", default="")
     train_parser.add_argument("--wandb", action=argparse.BooleanOptionalAction, default=False)
-    train_parser.add_argument("--wandb-project", default="hivemem-evidence-policy")
+    train_parser.add_argument("--wandb-project", default="hivemem-evidence-policy-v2")
     train_parser.add_argument("--wandb-entity", default="")
     train_parser.add_argument("--wandb-name", default="")
 
@@ -337,6 +623,15 @@ def main() -> None:
         )
     if args.model_base_url:
         config["model"]["base_url"] = str(args.model_base_url).rstrip("/")
+    if args.retrieval_mode:
+        config["retrieval_mode"] = args.retrieval_mode
+    if args.top_k:
+        config["top_k"] = int(args.top_k)
+    if args.retrieval_seed is not None:
+        config["retrieval_seed"] = int(args.retrieval_seed)
+    config["qa_latency_denominator"] = str(
+        config.get("qa_latency_denominator", "queries")
+    )
     if args.split_manifest:
         config["split_manifest"] = str(Path(args.split_manifest).expanduser().resolve())
     if args.command == "train" and args.validation_limit:
@@ -564,6 +859,7 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
     output_dir = Path(config["output_dir"])
     output_dir.mkdir(parents=True, exist_ok=True)
     save_json(output_dir / "config.json", config)
+    cost_runtime = CostRewardRuntime(config)
     wandb_logger = RealtimeWandbLogger(
         enabled=bool(args.wandb),
         output_dir=output_dir,
@@ -589,6 +885,7 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                 state["extra"].get("train_question_step", 0),
             )
         )
+        cost_runtime.load_state_dict(state["extra"].get("cost_reward"))
         reconciliation = reconcile_ppo_metrics_for_resume(
             ppo_metrics_path,
             checkpoint_update_step=trainer.update_steps,
@@ -611,6 +908,7 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
         profiles,
         policy,
         trainer,
+        cost_runtime,
         output_dir=output_dir,
         device=device,
         enabled=(
@@ -624,6 +922,8 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
         ppo_metrics_path.unlink()
     for epoch in range(start_epoch, epochs):
         buffer = PPOBuffer()
+        batch_rollouts: list[EvidenceRollout] = []
+        cost_snapshot = cost_runtime.snapshot()
         episode_iter = iter_episodes(config, "train", query_cache, profiles)
         episodes = list(
             islice(episode_iter, args.max_train_episodes)
@@ -659,8 +959,11 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                 )
             step = rollout.policy_step
             assert step is not None
+            cost_eligible = cost_runtime.apply(
+                rollout, episode, snapshot=cost_snapshot
+            )
             train_rollouts.append(rollout_record(rollout, episode))
-            if rollout.error:
+            if rollout.error or not cost_eligible:
                 failed_rollouts += 1
             else:
                 buffer.add(
@@ -671,8 +974,11 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                     reward=rollout.reward,
                 )
                 rewards.append(rollout.reward)
+                batch_rollouts.append(rollout)
                 if len(buffer) >= int(config["ppo"]["rollout_batch_size"]):
-                    metrics = trainer.update(buffer)
+                    metrics = update_ppo_batch(
+                        trainer, buffer, cost_runtime, batch_rollouts
+                    )
                     updates.append(metrics)
                     update_row = {
                         "epoch": epoch,
@@ -686,6 +992,8 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                     )
                     wandb_logger.log_update(update_row)
                     buffer.clear()
+                    batch_rollouts.clear()
+                    cost_snapshot = cost_runtime.snapshot()
             validation_phase = validation_points.get(episode_index)
             if validation_phase is not None:
                 validation_event = run_training_validation(
@@ -699,11 +1007,14 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                     phase=validation_phase,
                     update_step=trainer.update_steps,
                     train_question_count=train_question_count,
+                    cost_runtime=cost_runtime,
                 )
                 validations.append(validation_event)
                 wandb_logger.log_validation(validation_event, epoch=epoch)
         if len(buffer):
-            metrics = trainer.update(buffer)
+            metrics = update_ppo_batch(
+                trainer, buffer, cost_runtime, batch_rollouts
+            )
             updates.append(metrics)
             update_row = {
                 "epoch": epoch,
@@ -716,6 +1027,8 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                 update_row,
             )
             wandb_logger.log_update(update_row)
+            buffer.clear()
+            batch_rollouts.clear()
         end_validation = run_training_validation(
             config,
             env,
@@ -727,6 +1040,7 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
             phase="end",
             update_step=trainer.update_steps,
             train_question_count=train_question_count,
+            cost_runtime=cost_runtime,
         )
         validations.append(end_validation)
         wandb_logger.log_validation(end_validation, epoch=epoch)
@@ -741,6 +1055,7 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                 "validation": end_validation["metrics"],
                 "validations": validations,
                 "train_question_count": train_question_count,
+                "cost_reward": cost_runtime.state_dict(),
             },
         )
         summary = {
@@ -799,6 +1114,7 @@ def run_training_validation(
     phase: str,
     update_step: int,
     train_question_count: int,
+    cost_runtime: CostRewardRuntime | None = None,
     deterministic: bool = True,
 ) -> dict[str, Any]:
     was_training = policy.training
@@ -814,6 +1130,7 @@ def run_training_validation(
             policy=policy,
             deterministic=deterministic,
             limit=int(config["ppo"].get("validation_limit", 0)),
+            cost_runtime=cost_runtime,
         )
     finally:
         if was_training:
@@ -845,6 +1162,7 @@ def prepare_initial_validation(
     profiles: dict[str, str],
     policy: EvidenceSelectionPolicy,
     trainer: PPOTrainer,
+    cost_runtime: CostRewardRuntime | None = None,
     *,
     output_dir: Path,
     device: torch.device,
@@ -857,6 +1175,8 @@ def prepare_initial_validation(
     """
     if not enabled:
         return None
+    if cost_runtime is None:
+        cost_runtime = CostRewardRuntime(config)
     metrics_path = output_dir / "validation" / "initial_metrics.json"
     checkpoint_path = output_dir / "checkpoints" / "initial.pt"
     signature = initial_validation_signature(config, device)
@@ -880,7 +1200,11 @@ def prepare_initial_validation(
                 checkpoint_path,
                 config=config,
                 epoch=-1,
-                extra={"initial_validation": event, "device": str(device)},
+                extra={
+                    "initial_validation": event,
+                    "device": str(device),
+                    "cost_reward": cost_runtime.state_dict(),
+                },
             )
         return event
 
@@ -905,6 +1229,7 @@ def prepare_initial_validation(
             phase="initial",
             update_step=0,
             train_question_count=0,
+            cost_runtime=cost_runtime,
             deterministic=False,
         )
     event.update(
@@ -924,7 +1249,11 @@ def prepare_initial_validation(
         checkpoint_path,
         config=config,
         epoch=-1,
-        extra={"initial_validation": event, "device": str(device)},
+        extra={
+            "initial_validation": event,
+            "device": str(device),
+            "cost_reward": cost_runtime.state_dict(),
+        },
     )
     return event
 
@@ -947,12 +1276,23 @@ def evaluate_command(config: dict[str, Any], args: argparse.Namespace) -> None:
     seed_everything(int(config["seed"]))
     strategy = EvidenceStrategy(args.strategy)
     policy = None
+    checkpoint_state: dict[str, Any] | None = None
     if strategy is EvidenceStrategy.PPO:
         if not args.checkpoint:
             raise ValueError("--checkpoint is required for --strategy ppo")
         policy = build_policy(config, torch.device(args.device))
-        load_policy_checkpoint(policy, args.checkpoint, device=args.device)
+        checkpoint_state = load_policy_checkpoint(
+            policy, args.checkpoint, device=args.device
+        )
         policy.eval()
+    cost_runtime = CostRewardRuntime(config)
+    checkpoint_cost_state = (
+        (checkpoint_state.get("extra") or {}).get("cost_reward")
+        if checkpoint_state is not None
+        else None
+    )
+    if checkpoint_cost_state is not None:
+        cost_runtime.load_state_dict(checkpoint_cost_state)
     client, env = build_environment(config)
     client.assert_model_available()
     query_cache = QueryEmbeddingCache(
@@ -968,9 +1308,11 @@ def evaluate_command(config: dict[str, Any], args: argparse.Namespace) -> None:
         policy=policy,
         deterministic=True,
         limit=args.limit,
+        cost_runtime=cost_runtime,
     )
     output = Path(config["output_dir"]) / "eval" / f"{args.split}_{strategy.value}"
     output.mkdir(parents=True, exist_ok=True)
+    save_json(Path(config["output_dir"]) / "config.json", config)
     sample_ids = sorted(
         {
             str(row.get("dataset") or "").strip()
@@ -982,6 +1324,20 @@ def evaluate_command(config: dict[str, Any], args: argparse.Namespace) -> None:
         config.get("efficiency_config")
         or ROOT / "configs" / "model_efficiency.json"
     )
+    runtime_calls = write_runtime_call_metrics(
+        [],
+        output,
+        result["rollouts"],
+        sample_id_field="dataset",
+        sample_ids=sample_ids,
+    )
+    # Runtime tracing owns the per-call audit files, but QA-only evaluation
+    # has no build trace paths to pass to it.  Keep the canonical MB and QA
+    # totals calculated by evaluate(), and attach retrieval calls separately.
+    canonical_calls = result["metrics"]["calls"]
+    canonical_calls["retrieval"] = runtime_calls["retrieval"]
+    result["metrics"]["calls"] = canonical_calls
+    save_json(output / "call_metrics.json", canonical_calls)
     efficiency = write_efficiency_metrics(
         output,
         result["rollouts"],
@@ -990,6 +1346,9 @@ def evaluate_command(config: dict[str, Any], args: argparse.Namespace) -> None:
         model=str(config["model"]["name"]),
         config_path=efficiency_config,
         hivemem_index_root=config["memory_bank"],
+        qa_latency_denominator=str(
+            config.get("qa_latency_denominator", "samples")
+        ),
     )
     result["metrics"] = add_efficiency_metrics(result["metrics"], efficiency)
     save_json(output / "metrics.json", result["metrics"])
@@ -997,6 +1356,34 @@ def evaluate_command(config: dict[str, Any], args: argparse.Namespace) -> None:
     with (output / "rollouts.jsonl").open("w", encoding="utf-8") as handle:
         for row in result["rollouts"]:
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+    save_json(output / "results.json", result["rollouts"])
+    with (output / "retrieval_trace.jsonl").open("w", encoding="utf-8") as handle:
+        for row in result["rollouts"]:
+            trace_row = {
+                key: row.get(key)
+                for key in (
+                    "query_id",
+                    "dataset",
+                    "category",
+                    "manifest_question_id",
+                    "retrieval_mode",
+                    "vector_k",
+                    "append_k_requested",
+                    "append_k_actual",
+                    "retrieval_seed",
+                    "retrieval_global_seed",
+                    "retrieval_vector_ids",
+                    "retrieval_append_ids",
+                    "retrieval_final_ids",
+                    "append_shortfall_reason",
+                    "retrieval_signature",
+                    "visible_sessions",
+                    "prefix_graph_signature",
+                )
+                if key in row
+            }
+            trace_row["hits"] = row.get("retrieval_top_k", [])
+            handle.write(json.dumps(trace_row, ensure_ascii=False) + "\n")
     print(json.dumps({"output": str(output), **result["metrics"]}, ensure_ascii=False))
 
 
@@ -1011,9 +1398,12 @@ def evaluate(
     policy: EvidenceSelectionPolicy | None,
     deterministic: bool,
     limit: int = 0,
+    cost_runtime: CostRewardRuntime | None = None,
 ) -> dict[str, Any]:
     records: list[dict[str, Any]] = []
     rollouts: list[dict[str, Any]] = []
+    rollout_objects: list[EvidenceRollout] = []
+    cost_snapshot = cost_runtime.snapshot() if cost_runtime is not None else None
     for index, episode in enumerate(iter_episodes(config, split, query_cache, profiles)):
         if limit and index >= limit:
             break
@@ -1025,6 +1415,8 @@ def evaluate(
                 policy=policy,
                 deterministic=deterministic,
             )
+        if cost_runtime is not None:
+            cost_runtime.apply(rollout, episode, snapshot=cost_snapshot)
         source_groups = [
             list(hit.item.metadata.get("source_dialogue_ids", []))
             for hit in episode.memory_hits
@@ -1049,6 +1441,7 @@ def evaluate(
             }
         )
         rollouts.append(rollout_record(rollout, episode, source_groups=source_groups))
+        rollout_objects.append(rollout)
     benchmark = str(config.get("benchmark", "memgallery")).lower()
     if benchmark == "wma":
         from benchmarks.wma_harness.runner.metrics import summarize_results as summarize_wma_results
@@ -1066,6 +1459,8 @@ def evaluate(
     metrics["evidence_actions"] = summarize_evidence_actions(rollouts)
     metrics["cached_rollouts"] = sum(bool(row["cached"]) for row in rollouts)
     metrics["errors"] = sum(bool(row["error"]) for row in rollouts)
+    if cost_runtime is not None:
+        metrics.update(summarize_cost_rewards(rollout_objects))
     evaluated_sample_ids = sorted(
         {str(row.get("dataset") or "").strip() for row in records} - {""}
     )
@@ -1188,8 +1583,10 @@ def rollout_with_endpoint_recovery(
         if not rollout.error:
             return rollout
         if not is_transient_endpoint_error(rollout.error):
+            action_masks = [action.bitmask for action in rollout.actions]
             raise RuntimeError(
-                f"Rollout failed for {episode.query_id}: {rollout.error}"
+                f"Rollout failed for {episode.query_id} with actions "
+                f"{action_masks}: {rollout.error}"
             )
         if attempt == attempts:
             break
@@ -1230,7 +1627,8 @@ def iter_episodes(
         if split_index is not None
         else tuple(config["split"][split])
     )
-    graph_options = resolve_graph_options(config)
+    retrieval_settings = resolve_retrieval_settings(config)
+    graph_options = retrieval_settings["graph_options"]
     prompt_digest = memgallery_prompt_sha256()
     for dataset_name in dataset_names:
         path = data_dir / "dialog" / f"{dataset_name}.json"
@@ -1241,7 +1639,18 @@ def iter_episodes(
             if graph_options is not None
             else SimpleMemoryIndex(dataset_dir)
         )
-        index_signature = retrieval_signature(dataset_dir, graph_options)
+        index_signature = retrieval_signature(
+            dataset_dir,
+            graph_options,
+            retrieval_mode=retrieval_settings["mode"],
+            vector_k=retrieval_settings["vector_k"],
+            append_k=retrieval_settings["append_k"],
+            retrieval_seed=(
+                retrieval_settings["retrieval_seed"]
+                if retrieval_settings["mode"] == "random_append"
+                else None
+            ),
+        )
         for qa_index, qa in enumerate(payload.get("human-annotated QAs", []), start=1):
             manifest_question_id = f"{dataset_name}_q{qa_index - 1:04d}"
             if split_index is not None and not split_index.contains_question(
@@ -1269,7 +1678,14 @@ def iter_episodes(
             )
             if query_vector is None:
                 raise KeyError(f"Missing cached query embedding: {query_id}")
-            hits = index.search(query_vector, top_k=int(config["top_k"]), category=category)
+            hits, retrieval_metadata = retrieve_hits(
+                index,
+                query_vector,
+                retrieval_settings,
+                benchmark="memgallery",
+                manifest_question_id=manifest_question_id,
+                category=category,
+            )
             raw_clue = qa.get("clue", [])
             clue = raw_clue if isinstance(raw_clue, list) else []
             yield EvidenceEpisode(
@@ -1298,9 +1714,12 @@ def iter_episodes(
                     "prompt_version": MEMGALLERY_PROMPT_VERSION,
                     "prompt_source": MEMGALLERY_PROMPT_SOURCE,
                     "prompt_sha256": prompt_digest,
-                    "retrieval_mode": "graph_append" if graph_options else "vector",
-                    "vector_k": int(config["top_k"]),
-                    "graph_append_k": int(graph_options["append_k"]) if graph_options else 0,
+                    "ppo_empty_prompt_version": MEMGALLERY_PPO_EMPTY_PROMPT_VERSION,
+                    "ppo_empty_prompt_sha256": memgallery_ppo_empty_prompt_sha256(),
+                    **retrieval_metadata,
+                    "graph_append_k": (
+                        int(graph_options["append_k"]) if graph_options else 0
+                    ),
                 },
             )
 
@@ -1311,6 +1730,7 @@ def build_memgallery_policy_messages(
     question: str,
     category: str,
     query_image: dict[str, Any] | None,
+    allow_empty_evidence: bool = False,
 ) -> list[dict[str, str]]:
     evidence, _ = build_retrieved_memory_evidence(list(memory_items), category)
     return build_memgallery_answer_messages(
@@ -1318,6 +1738,7 @@ def build_memgallery_policy_messages(
         question_type=category,
         memory_evidence=evidence,
         query_images=query_image_prompt_metadata(query_image),
+        allow_empty_evidence=allow_empty_evidence,
     )
 
 
@@ -1327,6 +1748,7 @@ def build_h2hmem_policy_messages(
     question: str,
     category: str,
     query_image: dict[str, Any] | None = None,
+    allow_empty_evidence: bool = False,
 ) -> list[dict[str, str]]:
     from benchmarks.h2hmem_harness.prompts import build_answer_messages
 
@@ -1338,6 +1760,7 @@ def build_h2hmem_policy_messages(
         question_type=category,
         memory_evidence=evidence,
         query_images=query_image_prompt_metadata(query_image),
+        allow_empty_evidence=allow_empty_evidence,
     )
 
 
@@ -1348,7 +1771,11 @@ def parse_h2hmem_policy_answer(raw: str) -> str:
 
 
 def build_wma_policy_messages(
-    memory_items: Sequence[dict[str, Any]], *, question: str, category: str
+    memory_items: Sequence[dict[str, Any]],
+    *,
+    question: str,
+    category: str,
+    allow_empty_evidence: bool = False,
 ) -> list[dict[str, str]]:
     from benchmarks.wma_harness.runner.answer_client import (
         build_retrieved_memory_evidence as build_wma_evidence,
@@ -1360,6 +1787,7 @@ def build_wma_policy_messages(
         question=question,
         question_type=category,
         memory_evidence=evidence,
+        allow_empty_evidence=allow_empty_evidence,
     )
 
 
@@ -1376,8 +1804,10 @@ def iter_h2hmem_episodes(
 ) -> Iterator[EvidenceEpisode]:
     from benchmarks.h2hmem_harness.eval_h2hmem import _question_image
     from benchmarks.h2hmem_harness.prompts import (
+        PPO_EMPTY_PROMPT_VERSION,
         PROMPT_SOURCE,
         PROMPT_VERSION,
+        ppo_empty_prompt_sha256,
         prompt_sha256,
     )
 
@@ -1392,7 +1822,8 @@ def iter_h2hmem_episodes(
         str(value).upper() for value in config.get("visual_categories", [])
     }
     prompt_digest = prompt_sha256()
-    graph_options = resolve_graph_options(config)
+    retrieval_settings = resolve_retrieval_settings(config)
+    graph_options = retrieval_settings["graph_options"]
     indexes: dict[str, Any] = {}
     index_signatures: dict[str, str] = {}
     for row in iter_source_questions(
@@ -1421,12 +1852,24 @@ def iter_h2hmem_episodes(
                 )
             )
             index_signatures[dataset_name] = retrieval_signature(
-                dataset_dir, graph_options
+                dataset_dir,
+                graph_options,
+                retrieval_mode=retrieval_settings["mode"],
+                vector_k=retrieval_settings["vector_k"],
+                append_k=retrieval_settings["append_k"],
+                retrieval_seed=(
+                    retrieval_settings["retrieval_seed"]
+                    if retrieval_settings["mode"] == "random_append"
+                    else None
+                ),
             )
         index = indexes[dataset_name]
-        hits = index.search(
+        hits, retrieval_metadata = retrieve_hits(
+            index,
             query_vector,
-            top_k=int(config["top_k"]),
+            retrieval_settings,
+            benchmark="h2hmem",
+            manifest_question_id=row.question_id,
             category=row.category,
         )
         raw_image = str(row.metadata.get("question_image", ""))
@@ -1463,9 +1906,12 @@ def iter_h2hmem_episodes(
                 "prompt_version": PROMPT_VERSION,
                 "prompt_source": PROMPT_SOURCE,
                 "prompt_sha256": prompt_digest,
-                "retrieval_mode": "graph_append" if graph_options else "vector",
-                "vector_k": int(config["top_k"]),
-                "graph_append_k": int(graph_options["append_k"]) if graph_options else 0,
+                "ppo_empty_prompt_version": PPO_EMPTY_PROMPT_VERSION,
+                "ppo_empty_prompt_sha256": ppo_empty_prompt_sha256(),
+                **retrieval_metadata,
+                "graph_append_k": (
+                    int(graph_options["append_k"]) if graph_options else 0
+                ),
                 # MemGallery's answer renderer uses compact visual category names.
                 # H2HMem category labels are descriptive, so force only the renderer
                 # into visual mode while retaining the original label for metrics.
@@ -1486,8 +1932,10 @@ def iter_wma_episodes(
         visible_sessions_for_checkpoint,
     )
     from benchmarks.wma_harness.runner.prompts import (
+        PPO_EMPTY_PROMPT_VERSION,
         PROMPT_SOURCE,
         PROMPT_VERSION,
+        ppo_empty_prompt_sha256,
         prompt_sha256,
     )
     from embedding.chunk_builder import iter_wma_sample_files
@@ -1509,7 +1957,8 @@ def iter_wma_episodes(
         if split_index is not None
         else tuple(config["split"][split])
     )
-    graph_options = resolve_graph_options(config)
+    retrieval_settings = resolve_retrieval_settings(config)
+    graph_options = retrieval_settings["graph_options"]
     prefix_cache_root = Path(config["output_dir"]) / "retrieval_indexes" / "wma_prefix"
     for sample_id in sample_ids:
         payload = json.loads(paths[sample_id].read_text(encoding="utf-8"))
@@ -1534,7 +1983,13 @@ def iter_wma_episodes(
                 ordered_sessions, covered_sessions
             )
             visible_session_set = set(visible_sessions)
-            prefix_signature = ""
+            prefix_signature = hashlib.sha256(
+                json.dumps(
+                    {"visible_sessions": visible_sessions},
+                    ensure_ascii=False,
+                    sort_keys=True,
+                ).encode("utf-8")
+            ).hexdigest()
             if graph_options is not None:
                 index, prefix_signature = build_wma_prefix_graph_index(
                     source_dataset_dir,
@@ -1550,9 +2005,16 @@ def iter_wma_episodes(
             if index is None:
                 raise RuntimeError(f"Failed to initialize retrieval index for {sample_id}")
             index_signature = retrieval_signature(
-                source_dataset_dir,
-                graph_options,
+                source_dataset_dir, graph_options,
                 prefix_signature=prefix_signature,
+                retrieval_mode=retrieval_settings["mode"],
+                vector_k=retrieval_settings["vector_k"],
+                append_k=retrieval_settings["append_k"],
+                retrieval_seed=(
+                    retrieval_settings["retrieval_seed"]
+                    if retrieval_settings["mode"] == "random_append"
+                    else None
+                ),
             )
             for qa_index, qa in enumerate(checkpoint.get("questions", []) or [], start=1):
                 manifest_question_id = f"{sample_id}:{checkpoint_id}:Q{qa_index:03d}"
@@ -1574,9 +2036,12 @@ def iter_wma_episodes(
                 query_vector = query_cache.get_by_id(query_id)
                 if query_vector is None:
                     raise KeyError(f"Missing cached query embedding: {query_id}")
-                hits = index.search(
+                hits, retrieval_metadata = retrieve_hits(
+                    index,
                     query_vector,
-                    top_k=int(config["top_k"]),
+                    retrieval_settings,
+                    benchmark="wma",
+                    manifest_question_id=manifest_question_id,
                     category=category,
                     allowed_session_ids=visible_session_set,
                 )
@@ -1620,12 +2085,15 @@ def iter_wma_episodes(
                         "prompt_version": PROMPT_VERSION,
                         "prompt_source": PROMPT_SOURCE,
                         "prompt_sha256": prompt_digest,
+                        "ppo_empty_prompt_version": PPO_EMPTY_PROMPT_VERSION,
+                        "ppo_empty_prompt_sha256": ppo_empty_prompt_sha256(),
                         "evidence": qa.get("evidence", []),
                         "covered_sessions": covered_sessions,
                         "visible_sessions": visible_sessions,
-                        "retrieval_mode": "graph_append" if graph_options else "vector",
-                        "vector_k": int(config["top_k"]),
-                        "graph_append_k": int(graph_options["append_k"]) if graph_options else 0,
+                        **retrieval_metadata,
+                        "graph_append_k": (
+                            int(graph_options["append_k"]) if graph_options else 0
+                        ),
                         "prefix_graph_signature": prefix_signature,
                         "gold_future_evidence_ids": [
                             value
@@ -1904,6 +2372,23 @@ def rollout_record(
             **episode.metadata,
         }
     )
+    empty_prompt_version = row.pop("ppo_empty_prompt_version", "")
+    empty_prompt_sha256 = row.pop("ppo_empty_prompt_sha256", "")
+    is_all_zero = not rollout.actions or all(
+        action.bitmask == "00000" for action in rollout.actions
+    )
+    if is_all_zero and empty_prompt_version and empty_prompt_sha256:
+        row.update(
+            {
+                "prompt_variant": "ppo_empty_evidence",
+                "base_prompt_version": row.get("prompt_version", ""),
+                "base_prompt_sha256": row.get("prompt_sha256", ""),
+                "prompt_version": empty_prompt_version,
+                "prompt_sha256": empty_prompt_sha256,
+            }
+        )
+    else:
+        row["prompt_variant"] = "standard"
     return row
 
 

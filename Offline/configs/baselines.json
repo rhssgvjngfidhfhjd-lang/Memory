@@ -11,28 +11,39 @@
   },
   "OmniSimpleMem": {
     "adapter": "omni_simplemem",
-    "source_root": "baselines/OmniSimpleMem",
-    "python_env": "OMNI_SIMPLEMEM_PYTHON"
+    "source_root": ".upstream/simplemem-836ce97/OmniSimpleMem",
+    "python_env": "OMNI_SIMPLEMEM_PYTHON",
+    "python_default": "/data/haozhen/miniconda3/envs/pipeline_repro/bin/python",
+    "upstream_url": "https://github.com/aiming-lab/SimpleMem.git",
+    "upstream_commit": "836ce9718f3e9cb7f93c9d7c842b47f62e177a66",
+    "upstream_tree": "685109637c4c8b9a2469e695ad3dbed40762c0f2",
+    "compatibility_mode": "official-core-offline-protocol-bridge-fixed-top7-benchmark-qa"
   },
   "M2A": {
     "adapter": "m2a",
     "source_root": "baselines/M2A",
     "python_env": "M2A_PYTHON",
-    "compatibility_mode": "semantic_store_direct"
+    "upstream_commit": "edd8c3b75bae8b2c9c1a0ac8ed67e38c2c2723f8",
+    "compatibility_mode": "native-agent-manager-retrieval-benchmark-answer-top7-handoff"
   },
   "MIRIX": {
     "adapter": "mirix_family",
-    "source_root": "baselines/MIRIX",
+    "source_root": ".upstream/mirix-v0.1.1",
     "python_env": "MIRIX_PYTHON",
     "python_default": ".venvs/mirix/bin/python",
-    "compatibility_mode": "empty_semantic_fallback"
+    "upstream_tag": "v0.1.1",
+    "upstream_commit": "ac0a1f2890df5e7435c66d6c2827f34c5c4ce32d",
+    "compatibility_mode": "v0.1.1-native-agent-retrieval-benchmark-answer"
   },
   "MMA": {
-    "adapter": "mirix_family",
-    "source_root": "baselines/MMA-main/MMA",
+    "adapter": "mma_original",
+    "source_root": ".upstream/mma-c0e1a12/MMA",
     "python_env": "MMA_PYTHON",
-    "python_default": ".venvs/mma/bin/python",
-    "compatibility_mode": "empty_semantic_fallback"
+    "python_default": ".venvs/mirix/bin/python",
+    "upstream_url": "https://github.com/AIGeeksGroup/MMA.git",
+    "upstream_commit": "c0e1a127722edcfa4db5e71d03708cba53363000",
+    "upstream_tree": "4bb8b33535cb9d14b39277d953bcc80b5aec2e4c",
+    "compatibility_mode": "official-agents-one-observation-absorption-structured-top7-native-chat"
   },
   "MemVerse": {
     "adapter": "memverse",
@@ -45,7 +56,10 @@
     "source_root": "baselines/m3-agent-master",
     "python_env": "M3_AGENT_PYTHON",
     "python_default": ".venvs/m3_agent/bin/python",
-    "compatibility_mode": "dialogue_round_as_clip",
+    "upstream_url": "https://github.com/ByteDance-Seed/m3-agent",
+    "upstream_commit": "0e3e41939bd8a0b66d756e7b7eb8d5fe9992da5c",
+    "upstream_tree": "af5aab0f5883ba4bf97209d10cc46b3837a9f94b",
+    "compatibility_mode": "official-memory-graph-control-dialogue-observation",
     "audio_enabled": false
   }
 }

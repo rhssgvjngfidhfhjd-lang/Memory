@@ -78,6 +78,10 @@ class MemEngineAdapter(BaselineAdapter):
         if isinstance(value, dict):
             if "topk" in value:
                 value["topk"] = int(self.config.get("top_k") or value["topk"])
+            if "max_nodes" in value:
+                value["max_nodes"] = int(
+                    self.config.get("top_k") or value["max_nodes"]
+                )
             method = str(value.get("method") or "")
             if method in {"APILLM", "OpenAILLM"}:
                 value.update(
@@ -138,6 +142,22 @@ class MemEngineAdapter(BaselineAdapter):
         if request.query_image:
             query["image"] = request.query_image
         value = self.memory.recall(query)
+
+        # AUGUSTUSMemory's native MultiModalUtilization returns one dictionary
+        # per recalled graph node.  Keep that boundary intact so the node's
+        # image reaches the benchmark answer client instead of being lost in a
+        # stringified list.
+        if isinstance(value, list):
+            items = [
+                self._retrieved_memory_from_native_row(row, request, rank)
+                for rank, row in enumerate(value, start=1)
+                if isinstance(row, dict)
+            ]
+            return RetrievalResult(
+                items=[item for item in items if item.text or item.image_paths],
+                trace={"baseline": self.baseline, "via": "native_recall"},
+            )
+
         text = value if isinstance(value, str) else str(value)
         source_ids = self._last_retrieved_source_ids()
         session_id = ""
@@ -162,6 +182,68 @@ class MemEngineAdapter(BaselineAdapter):
         return RetrievalResult(
             items=[] if not text or text == "None" else [item],
             trace={"baseline": self.baseline, "via": "native_recall"},
+        )
+
+    def _retrieved_memory_from_native_row(
+        self,
+        row: dict[str, Any],
+        request: RetrievalRequest,
+        rank: int,
+    ) -> RetrievedMemory:
+        dialogue_id = str(row.get("dialogue_id") or "")
+        source_ids = [str(x) for x in row.get("source_dialogue_ids") or [] if x]
+        if dialogue_id and dialogue_id not in source_ids:
+            source_ids.append(dialogue_id)
+
+        chunk = next(
+            (
+                candidate
+                for candidate in self._chunks
+                if str(candidate.metadata.get("dialogue_id") or candidate.chunk_id)
+                == dialogue_id
+            ),
+            None,
+        )
+        image_ids: list[str] = []
+        image_paths: list[str] = []
+        raw_images = row.get("images")
+        native_images = list(raw_images) if isinstance(raw_images, list) else []
+        if row.get("image"):
+            native_images.insert(0, row["image"])
+        for image in native_images:
+            if isinstance(image, dict):
+                path = image.get("path")
+                image_id = image.get("img_id") or image.get("image_id") or image.get("id")
+                if path:
+                    image_paths.append(str(path))
+                if image_id:
+                    image_ids.append(str(image_id))
+            elif image:
+                image_paths.append(str(image))
+
+        session_id = str(row.get("session_id") or "")
+        if chunk is not None:
+            session_id = session_id or str(chunk.metadata.get("session_id") or "")
+            image_paths.extend(str(path) for path in chunk.images if path)
+            image_ids.extend(
+                str(image_id)
+                for image_id in chunk.metadata.get("image_ids") or []
+                if image_id
+            )
+
+        return RetrievedMemory(
+            memory_id=f"{self.baseline}:context:{request.query_id}:{rank}",
+            text=str(row.get("text") or ""),
+            score=None,
+            session_id=session_id,
+            source_dialogue_ids=list(dict.fromkeys(source_ids)),
+            image_ids=list(dict.fromkeys(image_ids)),
+            image_paths=list(dict.fromkeys(image_paths)),
+            metadata={
+                "aggregated_context": False,
+                "timestamp": row.get("timestamp"),
+                "dialogue_id": dialogue_id,
+            },
         )
 
     def _last_retrieved_source_ids(self) -> list[str]:

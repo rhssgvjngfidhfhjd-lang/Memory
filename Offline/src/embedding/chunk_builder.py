@@ -113,6 +113,33 @@ def _as_list(value: Any) -> list[Any]:
     return [value]
 
 
+def _m2a_turn(
+    *,
+    turn_id: str,
+    source_dialogue_id: str,
+    role: str,
+    speaker: str,
+    text: Any,
+    timestamp: Any,
+    images: Iterable[str] = (),
+) -> dict[str, Any]:
+    """Return one source-grounded utterance for M2A's native ingest path.
+
+    This representation deliberately lives in metadata: the shared chunk text
+    and image list remain byte-for-byte compatible with the other baselines.
+    Callers must derive ``images`` from the source message that owns them.
+    """
+    return {
+        "turn_id": str(turn_id),
+        "source_dialogue_id": str(source_dialogue_id),
+        "role": str(role),
+        "speaker": str(speaker),
+        "text": "" if text is None else str(text),
+        "timestamp": "" if timestamp is None else str(timestamp),
+        "images": [str(path) for path in images if path],
+    }
+
+
 def _parse_round_number(round_id: str) -> int | None:
     if ":" not in round_id:
         return None
@@ -262,6 +289,31 @@ def build_chunks_from_data(
             )
             round_number = _parse_round_number(round_id)
             chunk_id = f"{dataset_name}:{round_id or len(chunks) + 1}"
+            turn_prefix = f"{dataset_name}:{round_id or len(chunks) + 1}"
+            m2a_turns: list[dict[str, Any]] = []
+            if "user" in dialog:
+                m2a_turns.append(
+                    _m2a_turn(
+                        turn_id=f"{turn_prefix}:user",
+                        source_dialogue_id=round_id,
+                        role="user",
+                        speaker=str(profile.get("name") or "user"),
+                        text=dialog.get("user"),
+                        timestamp=date,
+                        images=(path for path in image_paths if path),
+                    )
+                )
+            if "assistant" in dialog:
+                m2a_turns.append(
+                    _m2a_turn(
+                        turn_id=f"{turn_prefix}:assistant",
+                        source_dialogue_id=round_id,
+                        role="assistant",
+                        speaker="assistant",
+                        text=dialog.get("assistant"),
+                        timestamp=date,
+                    )
+                )
             metadata = {
                 "dataset": dataset_name,
                 "profile_name": profile.get("name", ""),
@@ -277,6 +329,15 @@ def build_chunks_from_data(
                 "category": "",
                 "has_image": any(image_paths),
                 "token_estimate": estimate_tokens(chunk_text),
+                "m2a_turns": m2a_turns,
+                "m2a_speakers": list(
+                    dict.fromkeys(turn["speaker"] for turn in m2a_turns)
+                ),
+                # ``input_image`` is the benchmark's round-input field. M2A
+                # requires an image to belong to one utterance, so it is
+                # assigned to the user input and recorded for deviation audit.
+                "image_scope": "round_input",
+                "image_assignment": "user",
             }
             chunks.append(
                 Chunk(
@@ -403,8 +464,16 @@ def build_wma_chunks_from_data(
     chunks: list[Chunk] = []
     for session in sample.get("sessions", []) or []:
         session_id = str(session.get("_v2_session_id") or session.get("session_id") or "")
+        session_dialogue = session.get("dialogue", []) or []
+        session_m2a_speakers = list(
+            dict.fromkeys(
+                str(row.get("role"))
+                for row in session_dialogue
+                if isinstance(row, dict) and row.get("role")
+            )
+        )
         previous_summary = ""
-        for round_number, user_row, assistant_row in _wma_rounds(session.get("dialogue", []) or []):
+        for round_number, user_row, assistant_row in _wma_rounds(session_dialogue):
             dialogue_id = f"{session_id}:R{round_number:04d}"
             attachments = _wma_attachments(user_row, assistant_row)
             image_ids = [str(row.get("image_id", "")) for row in attachments]
@@ -420,6 +489,33 @@ def build_wma_chunks_from_data(
                 for row in attachments
             ]
             timestamp = str(user_row.get("timestamp") or assistant_row.get("timestamp") or "")
+            m2a_turns: list[dict[str, Any]] = []
+            for role_name, row in (("user", user_row), ("assistant", assistant_row)):
+                if not row:
+                    continue
+                row_attachments = _wma_attachments(row)
+                row_images = [
+                    str(
+                        (
+                            Path(str(attachment["file_path"]))
+                            if Path(str(attachment["file_path"])).is_absolute()
+                            else image_base_dir / str(attachment["file_path"])
+                        ).resolve()
+                    )
+                    for attachment in row_attachments
+                ]
+                source_role = str(row.get("role") or role_name)
+                m2a_turns.append(
+                    _m2a_turn(
+                        turn_id=f"{sample_id}:{dialogue_id}:{role_name}",
+                        source_dialogue_id=dialogue_id,
+                        role=source_role,
+                        speaker=source_role,
+                        text=row.get("content"),
+                        timestamp=row.get("timestamp"),
+                        images=row_images,
+                    )
+                )
             chunk_text = _make_chunk_text(
                 profile_summary="",
                 session_id=session_id,
@@ -448,6 +544,8 @@ def build_wma_chunks_from_data(
                 "category": "",
                 "has_image": bool(image_paths),
                 "token_estimate": estimate_tokens(chunk_text),
+                "m2a_turns": m2a_turns,
+                "m2a_speakers": session_m2a_speakers,
             }
             chunks.append(
                 Chunk(
@@ -549,6 +647,20 @@ def _merge_wma_chunk_group(chunks: list[Chunk], group_number: int) -> Chunk:
         if value
     ]
     images = [path for chunk in chunks for path in chunk.images]
+    m2a_turns = [
+        dict(turn)
+        for chunk in chunks
+        for turn in chunk.metadata.get("m2a_turns", [])
+        if isinstance(turn, dict)
+    ]
+    m2a_speakers = list(
+        dict.fromkeys(
+            str(speaker)
+            for chunk in chunks
+            for speaker in chunk.metadata.get("m2a_speakers", [])
+            if speaker
+        )
+    )
     text = _wma_balanced_text(chunks)
     start_id, end_id = source_ids[0], source_ids[-1]
     metadata.update(
@@ -565,6 +677,8 @@ def _merge_wma_chunk_group(chunks: list[Chunk], group_number: int) -> Chunk:
             "has_image": bool(images),
             "token_estimate": estimate_tokens(text),
             "chunking": "balanced_complete_rounds",
+            "m2a_turns": m2a_turns,
+            "m2a_speakers": m2a_speakers,
         }
     )
     sample_id = str(metadata.get("dataset") or "wma")
@@ -575,6 +689,81 @@ def _merge_wma_chunk_group(chunks: list[Chunk], group_number: int) -> Chunk:
         images=images,
         metadata=metadata,
     )
+
+
+def batch_wma_rounds_for_m2a(
+    chunks: Iterable[Chunk], *, rounds_per_batch: int = 4
+) -> list[Chunk]:
+    """Pack WMA rounds into fewer M2A ingest calls without crossing sessions.
+
+    M2A's native ``ChatAgent.chat`` transport accepts one image-bearing source
+    message per call.  A batch therefore closes before a second image-bearing
+    turn, while a source turn that already owns multiple attachments retains
+    the upstream first-image behavior.  The original source turns stay in
+    ``metadata.m2a_turns`` for provenance and are rendered together by the M2A
+    adapter at ingest time.
+    """
+    if rounds_per_batch <= 0:
+        raise ValueError("rounds_per_batch must be positive")
+    result: list[Chunk] = []
+    current: list[Chunk] = []
+    current_key: tuple[str, str] | None = None
+    current_image_turns = 0
+    group_number = 0
+
+    def image_turn_count(chunk: Chunk) -> int:
+        return sum(
+            bool(turn.get("images"))
+            for turn in chunk.metadata.get("m2a_turns", [])
+            if isinstance(turn, dict)
+        )
+
+    def flush() -> None:
+        nonlocal current, current_image_turns, group_number
+        if not current:
+            return
+        group_number += 1
+        merged = _merge_wma_chunk_group(current, group_number)
+        source_turns = [
+            turn
+            for turn in merged.metadata.get("m2a_turns", [])
+            if isinstance(turn, dict)
+        ]
+        merged.metadata.update(
+            {
+                "chunking": "m2a_batched_complete_rounds",
+                "m2a_ingest_mode": "batched_rounds",
+                "m2a_rounds_per_ingest": rounds_per_batch,
+                "m2a_source_turn_count": len(source_turns),
+                "m2a_source_turn_ids": [
+                    str(turn.get("turn_id") or "") for turn in source_turns
+                ],
+                "m2a_image_policy": "first_image_from_only_image_bearing_turn",
+            }
+        )
+        result.append(merged)
+        current = []
+        current_image_turns = 0
+
+    for chunk in chunks:
+        key = (
+            str(chunk.metadata.get("dataset") or ""),
+            str(chunk.metadata.get("session_id") or ""),
+        )
+        chunk_image_turns = image_turn_count(chunk)
+        if current_key is not None and key != current_key:
+            flush()
+            group_number = 0
+        current_key = key
+        if current and (
+            len(current) >= rounds_per_batch
+            or current_image_turns + chunk_image_turns > 1
+        ):
+            flush()
+        current.append(chunk)
+        current_image_turns += chunk_image_turns
+    flush()
+    return result
 
 
 def balance_wma_chunks(
@@ -719,7 +908,7 @@ def _h2h_speaker_blocks(
     include_captions: bool = True,
 ) -> list[dict[str, Any]]:
     blocks: list[dict[str, Any]] = []
-    for row in dialogue:
+    for source_turn_index, row in enumerate(dialogue, start=1):
         speaker = compact_text(row.get("role"))
         content = row.get("content") or {}
         if not isinstance(content, dict):
@@ -740,12 +929,20 @@ def _h2h_speaker_blocks(
             _h2h_caption_text(session_dir, image_name)
             for image_name in raw_images
         ] if include_captions else ["" for _ in raw_images]
+        source_speaker = "" if row.get("role") is None else str(row.get("role"))
+        source_turn = {
+            "source_turn_index": source_turn_index,
+            "speaker": source_speaker,
+            "text": "" if content.get("text") is None else str(content.get("text")),
+            "images": image_paths,
+        }
         if blocks and blocks[-1]["speaker"] == speaker:
             if text:
                 blocks[-1]["texts"].append(text)
             blocks[-1]["image_names"].extend(raw_images)
             blocks[-1]["image_paths"].extend(image_paths)
             blocks[-1]["captions"].extend(captions)
+            blocks[-1]["source_turns"].append(source_turn)
             continue
         blocks.append(
             {
@@ -754,6 +951,7 @@ def _h2h_speaker_blocks(
                 "image_names": raw_images,
                 "image_paths": image_paths,
                 "captions": captions,
+                "source_turns": [source_turn],
             }
         )
     return blocks
@@ -857,6 +1055,14 @@ def build_h2h_chunks_from_data(
         path.parent,
         include_captions=include_captions,
     )
+    session_m2a_speakers = list(
+        dict.fromkeys(
+            source_turn["speaker"]
+            for block in blocks
+            for source_turn in block["source_turns"]
+            if source_turn["speaker"]
+        )
+    )
     chunks: list[Chunk] = []
     previous_summary = ""
     for offset in range(0, len(blocks), 2):
@@ -871,6 +1077,25 @@ def build_h2h_chunks_from_data(
         image_ids = [
             f"h2hmem:{variant}:{conversation_id}:{scene_id}:{name}"
             for name in image_names
+        ]
+        m2a_turns = [
+            _m2a_turn(
+                turn_id=(
+                    f"h2hmem:{variant}:{conversation_id}:{scene_id}:"
+                    f"T{int(source_turn['source_turn_index']):04d}"
+                ),
+                source_dialogue_id=round_id,
+                # H2HMem's raw ``role`` contains the participant name; retain
+                # it verbatim in both fields rather than invent user/assistant
+                # roles for a multiparty conversation.
+                role=source_turn["speaker"],
+                speaker=source_turn["speaker"],
+                text=source_turn["text"],
+                timestamp=date,
+                images=source_turn["images"],
+            )
+            for block in all_blocks
+            for source_turn in block["source_turns"]
         ]
         text = _make_h2h_chunk_text(
             variant=variant,
@@ -918,6 +1143,8 @@ def build_h2h_chunks_from_data(
                     "image_captions": captions,
                     "has_image": bool(image_paths),
                     "token_estimate": estimate_tokens(text),
+                    "m2a_turns": m2a_turns,
+                    "m2a_speakers": session_m2a_speakers,
                 },
             )
         )

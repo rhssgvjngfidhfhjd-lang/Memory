@@ -3,6 +3,8 @@
 from benchmarks.baseline_runtime.protocol import (
     BaselineAdapter,
     MemoryRecord,
+    NativeAnswerRequest,
+    NativeAnswerResult,
     RetrievalRequest,
     RetrievalResult,
     RetrievedMemory,
@@ -22,6 +24,8 @@ __all__ = [
     "baseline_metadata",
     "canonical_name",
     "MemoryRecord",
+    "NativeAnswerRequest",
+    "NativeAnswerResult",
     "RetrievalRequest",
     "RetrievalResult",
     "RetrievedMemory",

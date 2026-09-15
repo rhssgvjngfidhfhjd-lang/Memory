@@ -41,7 +41,6 @@ from benchmarks.wma_harness.runner.prompts import (  # noqa: E402
 )
 
 
-MODEL = "Qwen/Qwen3-VL-4B-Instruct"
 EMBEDDING_MODEL = "Qwen/Qwen3-VL-Embedding-2B"
 PROTOCOL_PATH = ROOT / "configs" / "test_baseline_matrix.json"
 BENCHMARK_ARGUMENT = {
@@ -79,6 +78,8 @@ SMOKE_JOB_ORDER = (
     ("M3-Agent-caption", "Mem-Gallery"),
     ("M3-Agent-caption", "WorldMemArena"),
     ("M2A", "Mem-Gallery"),
+    ("M2A", "H2HMEM"),
+    ("M2A", "WorldMemArena"),
     ("AUGUSTUSMemory", "Mem-Gallery"),
     ("MMA", "Mem-Gallery"),
     ("MIRIX", "Mem-Gallery"),
@@ -94,6 +95,13 @@ def slug(value: str) -> str:
 
 def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def formal_job_attempts(config: dict[str, Any]) -> int:
+    attempts = int(config.get("formal_job_attempts", 2))
+    if attempts < 1:
+        raise ValueError("formal_job_attempts must be positive")
+    return attempts
 
 
 def load_protocol(path: Path = PROTOCOL_PATH) -> dict[str, Any]:
@@ -433,11 +441,18 @@ def stage_inputs(stage_root: Path, selection: Selection) -> dict[str, Path]:
 def check_services(endpoints: list[str], embedding_url: str, config: dict[str, Any]) -> None:
     if not endpoints:
         raise ValueError("At least one answer endpoint is required")
+    answer_model = str(config["answer_model"])
+    answer_api_key = os.getenv("OPENAI_API_KEY") or "EMPTY"
     for endpoint in endpoints:
-        payload = request_json(endpoint.rstrip("/") + "/models")
+        payload = request_json(
+            endpoint.rstrip("/") + "/models",
+            api_key=answer_api_key,
+        )
         models = {str(row.get("id")) for row in payload.get("data") or []}
-        if MODEL not in models:
-            raise RuntimeError(f"Answer model missing at {endpoint}: {sorted(models)}")
+        if answer_model not in models:
+            raise RuntimeError(
+                f"Answer model {answer_model!r} missing at {endpoint}: {sorted(models)}"
+            )
     payload = request_json(
         embedding_url.rstrip("/") + "/embeddings",
         {"model": EMBEDDING_MODEL, "input": ["test-only matrix preflight"]},
@@ -480,7 +495,24 @@ def common_args(
     *,
     smoke: bool,
 ) -> list[str]:
-    return [
+    executor_max_tokens = int(config["executor_max_tokens"])
+    if job.method == "M2A":
+        executor_max_tokens = int(
+            config.get("m2a_executor_max_tokens") or executor_max_tokens
+        )
+    elif job.method == "MMA":
+        executor_max_tokens = int(
+            config.get("mma_executor_max_tokens") or 4096
+        )
+    elif job.method == "M3-Agent-caption":
+        executor_max_tokens = int(
+            config.get("m3_executor_max_tokens") or 1024
+        )
+    elif job.method == "MIRIX":
+        executor_max_tokens = int(
+            config.get("mirix_executor_max_tokens") or 8192
+        )
+    arguments = [
         "--baseline", job.method,
         "--result-dir", str(result_dir),
         "--baseline-state-dir", str(result_dir / "memory" / "datasets"),
@@ -494,6 +526,7 @@ def common_args(
         "--executor-model", str(config["executor_model"]),
         "--executor-base-url", endpoint,
         "--executor-temperature", str(config["executor_temperature"]),
+        "--executor-max-tokens", str(executor_max_tokens),
         "--executor-visual-input", str(config["executor_visual_input"]),
         "--embedding-model", str(config["embedding_model"]),
         "--embedding-base-url", embedding_url,
@@ -504,6 +537,45 @@ def common_args(
         "--efficiency-config", str(config["efficiency_config"]),
         "--resume",
     ]
+    reasoning_effort = str(config.get("reasoning_effort") or "").strip()
+    if reasoning_effort:
+        arguments.extend(["--reasoning-effort", reasoning_effort])
+    if job.method == "M2A" and job.benchmark == "WorldMemArena":
+        arguments.extend(
+            [
+                "--m2a-wma-rounds-per-ingest",
+                str(int(config.get("m2a_wma_rounds_per_ingest") or 1)),
+            ]
+        )
+    if job.method == "M2A" and bool(
+        config.get("m2a_skip_failed_build_points", False)
+    ):
+        arguments.extend(
+            [
+                "--m2a-skip-failed-build-points",
+                "--m2a-max-consecutive-failed-build-points",
+                str(
+                    int(
+                        config.get(
+                            "m2a_max_consecutive_failed_build_points", 10
+                        )
+                    )
+                ),
+            ]
+        )
+    if job.method == "MMA":
+        arguments.extend(
+            [
+                "--mma-native-batch-size",
+                str(int(config.get("mma_native_batch_size") or 20)),
+            ]
+        )
+    if job.method == "M3-Agent-caption":
+        reuse_roots = config.get("m3_reuse_state_roots") or {}
+        reuse_root = str(reuse_roots.get(job.benchmark) or "").strip()
+        if reuse_root:
+            arguments.extend(["--m3-reuse-state-root", reuse_root])
+    return arguments
 
 
 def command_for(
@@ -528,26 +600,88 @@ def command_for(
         "--split", SPLIT_NAME,
     ]
     if job.benchmark == "Mem-Gallery":
-        return [
+        command = [
             "-m", "benchmarks.memgallery_harness.eval_memgallery",
             *common,
             "--data-dir", str(data_dirs[job.benchmark]),
             "--all-datasets",
             *strict_selection,
         ]
+        if job.method == "MIRIX" and bool(
+            config.get("mirix_skip_failed_build_points", False)
+        ):
+            command.extend(
+                [
+                    "--mirix-skip-failed-build-points",
+                    "--mirix-max-consecutive-failed-build-points",
+                    str(
+                        int(
+                            config.get(
+                                "mirix_max_consecutive_failed_build_points", 10
+                            )
+                        )
+                    ),
+                ]
+            )
+        retrieval_tokenizer = str(
+            config.get("retrieval_memory_tokenizer") or ""
+        ).strip()
+        if retrieval_tokenizer:
+            command.extend(["--retrieval-memory-tokenizer", retrieval_tokenizer])
+        return command
     if job.benchmark == "WorldMemArena":
-        return [
+        command = [
             "-m", "benchmarks.wma_harness.eval_wma",
             *common,
             "--data-dir", str(data_dirs[job.benchmark]),
             *strict_selection,
         ]
-    return [
+        if job.method == "MIRIX":
+            command.extend(
+                [
+                    "--sample-attempts",
+                    str(int(config.get("wma_sample_attempts") or 3)),
+                ]
+            )
+            if bool(config.get("mirix_skip_failed_build_points", False)):
+                command.extend(
+                    [
+                        "--mirix-skip-failed-build-points",
+                        "--mirix-max-consecutive-failed-build-points",
+                        str(
+                            int(
+                                config.get(
+                                    "mirix_max_consecutive_failed_build_points",
+                                    10,
+                                )
+                            )
+                        ),
+                    ]
+                )
+        return command
+    command = [
         "-m", "benchmarks.h2hmem_harness.eval_h2hmem",
         *common,
         "--data-dir", str(data_dirs[job.benchmark]),
         *strict_selection,
     ]
+    if job.method == "MIRIX" and bool(
+        config.get("mirix_skip_failed_build_points", False)
+    ):
+        command.extend(
+            [
+                "--mirix-skip-failed-build-points",
+                "--mirix-max-consecutive-failed-build-points",
+                str(
+                    int(
+                        config.get(
+                            "mirix_max_consecutive_failed_build_points", 10
+                        )
+                    )
+                ),
+            ]
+        )
+    return command
 
 
 def sample_keys(results: list[dict[str, Any]], benchmark: str) -> set[str]:
@@ -749,10 +883,12 @@ def run_smokes(
     data_dirs: dict[str, Path],
     selection: Selection,
     status: Status,
+    smoke_jobs: list[Job] | None = None,
 ) -> None:
-    smoke_jobs = [
-        Job(method, benchmark) for method, benchmark in SMOKE_JOB_ORDER
-    ]
+    if smoke_jobs is None:
+        smoke_jobs = [
+            Job(method, benchmark) for method, benchmark in SMOKE_JOB_ORDER
+        ]
     pending: queue.Queue[Job] = queue.Queue()
     for job in smoke_jobs:
         pending.put(job)
@@ -890,9 +1026,12 @@ def run_formal(
     data_dirs: dict[str, Path],
     selection: Selection,
     status: Status,
+    jobs: list[Job] | None = None,
 ) -> None:
+    max_job_attempts = formal_job_attempts(config)
     pending: queue.Queue[Job] = queue.Queue()
-    jobs = [Job(method, benchmark) for method, benchmark in JOB_ORDER]
+    if jobs is None:
+        jobs = [Job(method, benchmark) for method, benchmark in JOB_ORDER]
     completed_jobs: list[Job] = []
     for priority, job in enumerate(jobs, start=1):
         result_dir = formal_result_dir(output_root, job)
@@ -949,7 +1088,7 @@ def run_formal(
             log_path = run_artifact_root(output_root) / "_logs" / "baseline" / f"{job.name}.log"
             succeeded = False
             error = ""
-            for attempt in range(1, 3):
+            for attempt in range(1, max_job_attempts + 1):
                 status.update(
                     "jobs",
                     job.name,
@@ -982,7 +1121,7 @@ def run_formal(
                 except Exception as exc:
                     error = f"{type(exc).__name__}: {exc}"
                     status.update("jobs", job.name, status="retrying", error=error)
-                    if attempt < 2:
+                    if attempt < max_job_attempts:
                         time.sleep(60)
                 else:
                     succeeded = True
@@ -1035,6 +1174,7 @@ def run_formal(
 
 
 def main() -> None:
+    global RUN_ID
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--endpoint",
@@ -1049,6 +1189,11 @@ def main() -> None:
         "--defaults", type=Path, default=ROOT / "configs" / "defaults.json"
     )
     parser.add_argument(
+        "--efficiency-config",
+        type=Path,
+        default=configured_efficiency_config(),
+    )
+    parser.add_argument(
         "--split-manifest",
         type=Path,
         default=configured_split_manifest(),
@@ -1058,8 +1203,69 @@ def main() -> None:
         type=Path,
         default=ROOT / "outputs",
     )
+    parser.add_argument(
+        "--run-id",
+        help="Override the protocol Run-ID without changing the fixed split protocol.",
+    )
+    parser.add_argument(
+        "--m3-reuse-run-id",
+        default="",
+        help=(
+            "Reuse M3 memory graphs read-only from this prior Run-ID while "
+            "writing QA and all new artifacts under --run-id."
+        ),
+    )
+    parser.add_argument(
+        "--baseline",
+        action="append",
+        choices=sorted({method for method, _benchmark in JOB_ORDER}),
+        help="Run only this baseline. Repeat to select more than one.",
+    )
+    parser.add_argument(
+        "--benchmark",
+        action="append",
+        choices=sorted(BENCHMARK_ARGUMENT),
+        help="Run only this benchmark. Repeat to select more than one.",
+    )
     parser.add_argument("--skip-smoke", action="store_true")
+    parser.add_argument(
+        "--smoke-only",
+        action="store_true",
+        help="Run configured smoke jobs, validate them, and stop before formal jobs.",
+    )
     args = parser.parse_args()
+
+    if args.skip_smoke and args.smoke_only:
+        parser.error("--skip-smoke and --smoke-only cannot be used together")
+
+    if args.run_id:
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", args.run_id):
+            raise ValueError("--run-id must be a safe path component")
+        RUN_ID = args.run_id
+    if args.m3_reuse_run_id:
+        if not re.fullmatch(
+            r"[A-Za-z0-9][A-Za-z0-9._-]*", args.m3_reuse_run_id
+        ):
+            raise ValueError("--m3-reuse-run-id must be a safe path component")
+        if args.m3_reuse_run_id == RUN_ID:
+            raise ValueError("M3 reuse Run-ID must differ from the new --run-id")
+
+    selected_baselines = set(args.baseline or ())
+    selected_benchmarks = set(args.benchmark or ())
+    jobs = [
+        Job(method, benchmark)
+        for method, benchmark in JOB_ORDER
+        if (not selected_baselines or method in selected_baselines)
+        and (not selected_benchmarks or benchmark in selected_benchmarks)
+    ]
+    if not jobs:
+        raise ValueError("The baseline/benchmark filters selected no jobs")
+    selected_job_keys = {(job.method, job.benchmark) for job in jobs}
+    smoke_jobs = [
+        Job(method, benchmark)
+        for method, benchmark in SMOKE_JOB_ORDER
+        if (method, benchmark) in selected_job_keys
+    ]
 
     endpoints = args.endpoint or [
         "http://127.0.0.1:8013/v1",
@@ -1069,8 +1275,32 @@ def main() -> None:
     output_root = args.output_root.expanduser().resolve()
     run_root = run_artifact_root(output_root)
     config = load_json(args.defaults.expanduser().resolve())
+    if args.m3_reuse_run_id:
+        reuse_roots = {
+            benchmark: (
+                output_root
+                / benchmark
+                / "M3-Agent-caption"
+                / args.m3_reuse_run_id
+                / "memory"
+                / "datasets"
+            ).resolve()
+            for benchmark in BENCHMARK_ARGUMENT
+        }
+        missing_reuse_roots = [
+            str(path) for path in reuse_roots.values() if not path.is_dir()
+        ]
+        if missing_reuse_roots:
+            raise FileNotFoundError(
+                f"M3 reuse state roots do not exist: {missing_reuse_roots}"
+            )
+        config["m3_reuse_state_roots"] = {
+            benchmark: str(path) for benchmark, path in reuse_roots.items()
+        }
     config["top_k"] = int(PROTOCOL["top_k"])
-    config["efficiency_config"] = str(configured_efficiency_config())
+    config["efficiency_config"] = str(
+        args.efficiency_config.expanduser().resolve()
+    )
     if str(config.get("judge_model")) != "openai/gpt-4o-mini":
         raise ValueError("This planned run requires judge_model=openai/gpt-4o-mini")
     selection = load_selection(args.split_manifest)
@@ -1092,9 +1322,16 @@ def main() -> None:
             efficiency_config=config["efficiency_config"],
             judge_model=config["judge_model"],
             smoke_split_manifest=str(smoke_selection.manifest_path),
-            job_order=[Job(method, benchmark).name for method, benchmark in JOB_ORDER],
+            job_order=[job.name for job in jobs],
+            m3_reuse_run_id=args.m3_reuse_run_id,
+            m3_reuse_state_roots=config.get("m3_reuse_state_roots", {}),
         )
         if not args.skip_smoke:
+            if not smoke_jobs:
+                raise RuntimeError(
+                    "The selected jobs have no configured smoke test; use --skip-smoke "
+                    "only after a separate smoke test has passed"
+                )
             run_smokes(
                 endpoints,
                 run_root,
@@ -1103,7 +1340,11 @@ def main() -> None:
                 data_dirs,
                 smoke_selection,
                 status,
+                smoke_jobs,
             )
+        if args.smoke_only:
+            status.update_root(phase="smoke_completed", finished_at=now())
+            return
         status.update_root(phase="formal")
         run_formal(
             endpoints,
@@ -1113,6 +1354,7 @@ def main() -> None:
             data_dirs,
             selection,
             status,
+            jobs,
         )
     except Exception as exc:
         status.update_root(

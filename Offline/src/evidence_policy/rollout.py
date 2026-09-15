@@ -29,9 +29,7 @@ EVIDENCE_CACHE_VERSION = 7
 
 
 AnswerPromptBuilder = Callable[[Sequence[dict[str, Any]]], str]
-AnswerMessagesBuilder = Callable[
-    [Sequence[dict[str, Any]]], list[dict[str, str]]
-]
+AnswerMessagesBuilder = Callable[..., list[dict[str, str]]]
 AnswerParser = Callable[[str], str]
 
 
@@ -86,6 +84,22 @@ class EvidenceRollout:
     answer_usage: dict[str, int] | None = None
     answer_image_count: int | None = None
     policy_step: PolicyStep | None = None
+    quality_reward: float | None = None
+    raw_cost: float | None = None
+    base_cost: float | None = None
+    cost_min: float | None = None
+    incremental_cost: float | None = None
+    transformed_cost: float | None = None
+    cost_max: float | None = None
+    normalized_cost: float | None = None
+    cost_weight: float | None = None
+    cost_scale_alpha: float | None = None
+    task_reward_std: float | None = None
+    normalized_cost_std: float | None = None
+    effective_cost_weight: float | None = None
+    cost_window_count: int | None = None
+    cost_normalizer_active: bool | None = None
+    cost_error: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         row: dict[str, Any] = {
@@ -102,6 +116,24 @@ class EvidenceRollout:
             "answer_failed_attempts": self.answer_failed_attempts,
             "answer_usage": self.answer_usage,
             "answer_image_count": self.answer_image_count,
+            "quality_reward": (
+                self.reward if self.quality_reward is None else self.quality_reward
+            ),
+            "raw_cost": self.raw_cost,
+            "base_cost": self.base_cost,
+            "cost_min": self.cost_min,
+            "incremental_cost": self.incremental_cost,
+            "transformed_cost": self.transformed_cost,
+            "cost_max": self.cost_max,
+            "normalized_cost": self.normalized_cost,
+            "cost_weight": self.cost_weight,
+            "cost_scale_alpha": self.cost_scale_alpha,
+            "task_reward_std": self.task_reward_std,
+            "normalized_cost_std": self.normalized_cost_std,
+            "effective_cost_weight": self.effective_cost_weight,
+            "cost_window_count": self.cost_window_count,
+            "cost_normalizer_active": self.cost_normalizer_active,
+            "cost_error": self.cost_error,
             "evidence_availability_mask": [
                 [bool(value) for value in values]
                 for values in self.observation.evidence_availability_mask.detach()
@@ -220,27 +252,55 @@ class EvidenceSelectionEnv:
         answer_category = str(
             episode.metadata.get("answer_category", episode.category)
         )
-        if episode.answer_messages_builder is not None:
-            request = {
-                "messages": episode.answer_messages_builder(items),
-                "memory_items": items,
-                "query_image": episode.query_image,
-                "category": answer_category,
-            }
-        else:
-            question_prompt = (
-                episode.answer_prompt_builder(items)
-                if episode.answer_prompt_builder is not None
-                else episode.question_prompt
+        try:
+            if episode.answer_messages_builder is not None:
+                builder_kwargs = (
+                    {"allow_empty_evidence": True}
+                    if strategy is EvidenceStrategy.PPO
+                    else {}
+                )
+                request = {
+                    "messages": episode.answer_messages_builder(
+                        items, **builder_kwargs
+                    ),
+                    "memory_items": items,
+                    "query_image": episode.query_image,
+                    "category": answer_category,
+                }
+            else:
+                question_prompt = (
+                    episode.answer_prompt_builder(items)
+                    if episode.answer_prompt_builder is not None
+                    else episode.question_prompt
+                )
+                request = {
+                    "system_prompt": episode.system_prompt,
+                    "memory_items": items,
+                    "question_prompt": question_prompt,
+                    "query_image": episode.query_image,
+                    "category": answer_category,
+                    "prepend_memory_context": episode.prepend_memory_context,
+                }
+        except Exception as exc:
+            reward = float(self.reward_function("", episode.ground_truth))
+            return EvidenceRollout(
+                query_id=episode.query_id,
+                dataset=episode.dataset,
+                category=episode.category,
+                observation=observation,
+                actions=tuple(actions),
+                answer="",
+                raw_answer="",
+                reward=reward,
+                error=f"answer request construction failed: {exc}",
+                cached=False,
+                answer_attempts=0,
+                answer_failed_attempts=0,
+                answer_usage=None,
+                answer_image_count=0,
+                policy_step=policy_step,
+                quality_reward=reward,
             )
-            request = {
-                "system_prompt": episode.system_prompt,
-                "memory_items": items,
-                "question_prompt": question_prompt,
-                "query_image": episode.query_image,
-                "category": answer_category,
-                "prepend_memory_context": episode.prepend_memory_context,
-            }
         cache_key = self._cache_key(episode, actions, items, request=request)
         cached = self.cache.get(cache_key) if self.cache is not None else None
         if cached is not None:
@@ -288,8 +348,8 @@ class EvidenceSelectionEnv:
                     is not None
                 ):
                     response = self.client.answer_messages_with_usage(**request)
-                    raw_answer = response.text
-                    answer = self._parse_answer(episode, raw_answer)
+                    raw_answer = str(getattr(response, "raw_text", None) or response.text)
+                    answer = self._parse_answer(episode, response.text)
                     answer_attempts = int(response.attempts)
                     answer_failed_attempts = int(response.failed_attempts)
                     answer_usage = _optional_usage(response.usage)
@@ -405,6 +465,7 @@ class EvidenceSelectionEnv:
             answer_usage=answer_usage,
             answer_image_count=answer_image_count,
             policy_step=policy_step,
+            quality_reward=reward,
         )
 
     def _cache_key(

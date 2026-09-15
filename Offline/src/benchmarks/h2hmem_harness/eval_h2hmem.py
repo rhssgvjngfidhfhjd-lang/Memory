@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 import re
 import time
-from typing import Any
+from typing import Any, Callable
 
 from benchmarks.baseline_runtime import baseline_metadata, canonical_name, create_adapter
 from benchmarks.baseline_runtime.parallel_runner import (
@@ -24,9 +24,20 @@ from benchmarks.baseline_runtime.call_trace import (
     TRACE_VERSION,
     trace_filename,
 )
+from benchmarks.baseline_runtime.build_fault_policy import (
+    ConsecutiveBuildFaultPolicy,
+)
+from benchmarks.baseline_runtime.adapters.m2a import m2a_conformance_manifest
+from benchmarks.baseline_runtime.adapters.m3_agent import m3_conformance_manifest
+from benchmarks.baseline_runtime.adapters.mma_original import (
+    is_mma_consecutive_bad_point_error,
+    mma_conformance_manifest,
+)
 from benchmarks.baseline_runtime.output_layout import BaselineOutputLayout
 from benchmarks.baseline_runtime.protocol import (
+    NativeAnswerRequest,
     RetrievalRequest,
+    RetrievalResult,
     result_context_items,
     result_trace_rows,
 )
@@ -52,6 +63,16 @@ from benchmarks.memgallery_harness.runner.metrics import (
     summarize_results,
     write_efficiency_metrics,
     write_runtime_call_metrics,
+)
+from benchmarks.fixed_chunks import chunk_source_manifest, h2hmem_chunks
+from benchmarks.baseline_runtime.omni_inputs import (
+    build_omni_h2h_chunks_from_directory,
+    omni_conformance_manifest,
+    omni_input_manifest,
+)
+from benchmarks.baseline_runtime.m3_inputs import (
+    build_m3_h2h_chunks_from_directory,
+    m3_input_manifest,
 )
 from embedding.chunk_builder import (
     build_h2h_chunks_from_directory,
@@ -133,11 +154,46 @@ def prepare_conversation_jobs(
     max_qa: int = 0,
     ordered_question_ids: tuple[str, ...] | None = None,
     call_recorder: CallRecorder | None = None,
+    completed_jobs: dict[str, dict[str, Any]] | None = None,
+    on_qa_completed: Callable[[dict[str, Any]], None] | None = None,
+    allow_native_qa_errors: bool = False,
 ) -> dict[str, Any]:
     variant_dir = "multi-party" if variant == "multiparty" else variant
     conversation_dir = data_dir / variant_dir / conversation_id
-    adapter = create_adapter(baseline, config_overrides=config)
+    adapter_config = dict(config)
+    reuse_root = str(adapter_config.get("m3_reuse_state_root") or "").strip()
+    if baseline == "M3-Agent-caption" and reuse_root:
+        adapter_config["m3_reuse_sample_state"] = str(
+            Path(reuse_root) / variant / conversation_id
+        )
+    adapter = create_adapter(baseline, config_overrides=adapter_config)
     sample_id = f"{variant}_{conversation_id}"
+    build_fault_policy = ConsecutiveBuildFaultPolicy(
+        baseline=baseline,
+        benchmark="H2HMEM",
+        enabled=(
+            baseline == "MMA"
+            or (
+                baseline == "M2A"
+                and bool(config.get("m2a_skip_failed_build_points", False))
+            )
+            or (
+                baseline == "MIRIX"
+                and bool(config.get("mirix_skip_failed_build_points", False))
+            )
+        ),
+        maximum=int(
+            config.get(
+                (
+                    "mirix_max_consecutive_failed_build_points"
+                    if baseline == "MIRIX"
+                    else "m2a_max_consecutive_failed_build_points"
+                )
+            )
+            or 10
+        ),
+        recorder=call_recorder,
+    )
     try:
         adapter.reset(sample_id, state_root / variant / conversation_id)
         with (
@@ -146,22 +202,79 @@ def prepare_conversation_jobs(
             else nullcontext()
         ):
             if baseline != "HiveMem":
-                chunks = build_h2h_chunks_from_directory(
-                    data_dir,
-                    variant=variant,
-                    conversation_ids={conversation_id},
-                )
+                if baseline == "M2A":
+                    chunks = build_h2h_chunks_from_directory(
+                        data_dir,
+                        variant=variant,
+                        conversation_ids={conversation_id},
+                    )
+                elif baseline in {"OmniSimpleMem", "MMA"}:
+                    chunks = build_omni_h2h_chunks_from_directory(
+                        data_dir,
+                        variant=variant,
+                        conversation_id=conversation_id,
+                    )
+                elif baseline == "M3-Agent-caption":
+                    chunks = build_m3_h2h_chunks_from_directory(
+                        data_dir,
+                        variant=variant,
+                        conversation_id=conversation_id,
+                    )
+                else:
+                    chunks = h2hmem_chunks(
+                        config,
+                        variant=variant,
+                        conversation_id=conversation_id,
+                    )
+                if baseline == "MMA":
+                    chunks = adapter.filter_completed_session_chunks(chunks)
                 current_session = ""
                 for chunk in chunks:
                     session_id = str(chunk.metadata.get("session_id") or "")
-                    if current_session and session_id != current_session:
-                        adapter.end_session(current_session)
-                    adapter.ingest(chunk)
+                    if (
+                        baseline != "MIRIX"
+                        and current_session
+                        and session_id != current_session
+                    ):
+                        try:
+                            adapter.end_session(current_session)
+                        except Exception as exc:
+                            build_fault_policy.handle(
+                                exc,
+                                chunk=None,
+                                point_kind="end_session",
+                                session_id=current_session,
+                            )
+                        else:
+                            build_fault_policy.success()
+                    try:
+                        adapter.ingest(chunk)
+                    except Exception as exc:
+                        build_fault_policy.handle(
+                            exc,
+                            chunk=chunk,
+                            point_kind="ingest",
+                            session_id=session_id,
+                        )
+                        current_session = session_id
+                        continue
+                    build_fault_policy.success()
                     current_session = session_id
                 if current_session:
-                    adapter.end_session(current_session)
+                    try:
+                        adapter.end_session(current_session)
+                    except Exception as exc:
+                        build_fault_policy.handle(
+                            exc,
+                            chunk=None,
+                            point_kind="end_session",
+                            session_id=current_session,
+                        )
+                    else:
+                        build_fault_policy.success()
 
         jobs: list[dict[str, Any]] = []
+        completed_jobs = dict(completed_jobs or {})
         indexed_questions = []
         for question_file, qa_index, qa in _question_rows(conversation_dir):
             session_id = question_file.parent.name
@@ -203,32 +316,115 @@ def prepare_conversation_jobs(
                 or f"{conversation_id}:{session_id}:{qa_index}"
             )
             query_id = f"h2hmem:{variant}:{conversation_id}:{question_id}"
+            if manifest_question_id in completed_jobs:
+                jobs.append(completed_jobs[manifest_question_id])
+                continue
             query_vector = (
                 embed_texts([question], config)[0] if baseline == "HiveMem" else None
             )
-            with (
-                call_recorder.phase("retrieval")
-                if call_recorder is not None
-                else nullcontext()
-            ):
-                retrieval = adapter.retrieve(
-                    RetrievalRequest(
-                        query_id=query_id,
-                        text=question,
-                        category=category,
-                        top_k=int(config["top_k"]),
-                        query_image=(
-                            str(_question_image(question_file, question_data.get("image"))["path"])
-                            if question_data.get("image")
-                            else None
-                        ),
-                        query_vector=query_vector,
+            retrieval_error = ""
+            try:
+                with (
+                    call_recorder.phase("retrieval")
+                    if call_recorder is not None
+                    else nullcontext()
+                ):
+                    retrieval = adapter.retrieve(
+                        RetrievalRequest(
+                            query_id=query_id,
+                            text=question,
+                            category=category,
+                            top_k=int(config["top_k"]),
+                            query_image=(
+                                str(_question_image(question_file, question_data.get("image"))["path"])
+                                if question_data.get("image")
+                                else None
+                            ),
+                            query_vector=query_vector,
+                        )
                     )
+            except Exception as exc:
+                if not (allow_native_qa_errors and baseline == "MIRIX"):
+                    raise
+                retrieval_error = str(exc)
+                retrieval = RetrievalResult(
+                    trace={
+                        "failed": True,
+                        "stage": "retrieval",
+                        "error": retrieval_error,
+                    }
                 )
             memory_items = result_context_items(retrieval)
             trace_rows = result_trace_rows(retrieval)
             query_image = _question_image(question_file, question_data.get("image"))
-            jobs.append({
+            native_answer = None
+            terminal_native_error: Exception | None = None
+            if baseline == "MIRIX" and retrieval_error:
+                native_answer = {
+                    "text": "",
+                    "error": retrieval_error,
+                    "usage": None,
+                    "attempts": int(config.get("retries") or 0) + 1,
+                    "failed_attempts": int(config.get("retries") or 0) + 1,
+                    "image_count": 1 if query_image else 0,
+                    "trace": {
+                        "failed": True,
+                        "stage": "retrieval",
+                        "error": retrieval_error,
+                    },
+                }
+            elif baseline in {"MIRIX", "MMA"}:
+                native_evidence, _ = build_retrieved_memory_evidence(
+                    memory_items, category="VR"
+                )
+                native_messages = build_answer_messages(
+                    question=question,
+                    question_type=category,
+                    memory_evidence=native_evidence,
+                    query_images=query_image_prompt_metadata(query_image),
+                    allow_empty_evidence=True,
+                )
+                with (
+                    call_recorder.phase("qa")
+                    if call_recorder is not None
+                    else nullcontext()
+                ):
+                    try:
+                        native_result = adapter.answer_with_memory(
+                            NativeAnswerRequest(
+                                query_id=query_id,
+                                messages=native_messages,
+                                retrieval=retrieval,
+                                query_image=(
+                                    str(query_image.get("path") or "")
+                                    if isinstance(query_image, dict)
+                                    else None
+                                ),
+                                top_k=int(config["top_k"]),
+                            )
+                        )
+                    except Exception as exc:
+                        if not allow_native_qa_errors:
+                            raise
+                        if baseline == "MMA" and is_mma_consecutive_bad_point_error(exc):
+                            terminal_native_error = exc
+                        error = str(exc)
+                        native_answer = {
+                            "text": "",
+                            "error": error,
+                            "usage": None,
+                            "attempts": int(config.get("retries") or 0) + 1,
+                            "failed_attempts": int(config.get("retries") or 0) + 1,
+                            "image_count": 1 if query_image else 0,
+                            "trace": {"failed": True, "error": error},
+                        }
+                    else:
+                        if native_result.retrieval is not None:
+                            retrieval = native_result.retrieval
+                            memory_items = result_context_items(retrieval)
+                            trace_rows = result_trace_rows(retrieval)
+                        native_answer = native_result.to_dict()
+            job = {
                 "uid": query_id,
                 "query_id": query_id,
                 "manifest_question_id": manifest_question_id,
@@ -249,7 +445,18 @@ def prepare_conversation_jobs(
                 "query_image_payload": query_image,
                 "memory_items": memory_items,
                 "retrieval_top_k": trace_rows,
-            })
+                "retrieval_method_trace": dict(retrieval.trace),
+                "native_answer": native_answer,
+            }
+            jobs.append(job)
+            if on_qa_completed is not None:
+                if not job.get("native_answer"):
+                    raise RuntimeError(
+                        "durable native QA checkpoint requires a native answer"
+                    )
+                on_qa_completed(job)
+            if terminal_native_error is not None:
+                raise terminal_native_error
         snapshots = [row.to_dict() for row in adapter.snapshot()]
         return {
             "sample_id": sample_id,
@@ -257,6 +464,7 @@ def prepare_conversation_jobs(
             "conversation_id": conversation_id,
             "jobs": jobs,
             "snapshots": snapshots,
+            "build_failures": build_fault_policy.failures,
         }
     finally:
         adapter.close()
@@ -281,19 +489,29 @@ def answer_conversation_job(
     )
     raw_answer = ""
     response = None
+    native = job.get("native_answer")
     try:
-        response = client.answer_messages_with_usage(
-            messages=messages,
-            memory_items=job["memory_items"],
-            query_image=job.get("query_image_payload"),
-            category="VR",
-        )
-        raw_answer = response.text
+        if native:
+            usage = native.get("usage")
+            attempts = int(native.get("attempts") or 1)
+            failed_attempts = int(native.get("failed_attempts") or 0)
+            image_count = int(native.get("image_count") or 0)
+            if native.get("error"):
+                raise RuntimeError(str(native["error"]))
+            raw_answer = str(native.get("text") or "")
+        else:
+            response = client.answer_messages_with_usage(
+                messages=messages,
+                memory_items=job["memory_items"],
+                query_image=job.get("query_image_payload"),
+                category="VR",
+            )
+            raw_answer = response.text
+            usage, attempts = response.usage, response.attempts
+            failed_attempts = response.failed_attempts
+            image_count = response.image_count
         answer = parse_answer_response(raw_answer)
         error = ""
-        usage, attempts = response.usage, response.attempts
-        failed_attempts = response.failed_attempts
-        image_count = response.image_count
     except Exception as exc:
         answer, error = "", str(exc)
         if response is not None:
@@ -301,7 +519,7 @@ def answer_conversation_job(
             attempts = response.attempts
             failed_attempts = min(attempts, response.failed_attempts + 1)
             image_count = response.image_count
-        else:
+        elif not native:
             usage = None
             attempts = client.retries + 1
             failed_attempts = attempts
@@ -314,7 +532,8 @@ def answer_conversation_job(
         key: value
         for key, value in job.items()
         if key not in {
-            "question_prompt", "query_image_payload", "memory_items", "retrieval_top_k"
+            "question_prompt", "query_image_payload", "memory_items", "retrieval_top_k",
+            "retrieval_method_trace", "native_answer",
         }
     }
     result.update(
@@ -331,6 +550,9 @@ def answer_conversation_job(
             "answer_attempts": attempts,
             "answer_failed_attempts": failed_attempts,
             "answer_image_count": image_count,
+            "native_answer_trace": dict(
+                (job.get("native_answer") or {}).get("trace") or {}
+            ),
         }
     )
     trace = {
@@ -343,6 +565,10 @@ def answer_conversation_job(
         "top_k": job["retrieval_top_k"],
         "memory_context": memory_context,
         "answer_prompt_messages": messages,
+        "retrieval_method_trace": dict(job.get("retrieval_method_trace") or {}),
+        "m2a_trace": dict(
+            (job.get("retrieval_method_trace") or {}).get("m2a_trace") or {}
+        ),
     }
     return result, trace
 
@@ -374,6 +600,23 @@ def run_conversation(
     return [x[0] for x in pairs], [x[1] for x in pairs], artifact["snapshots"]
 
 
+def _mma_resume_signature_digests(
+    args: argparse.Namespace, signature: dict[str, Any]
+) -> tuple[str, ...]:
+    """Accept the pre-normalization digest for execution-only M2A flags."""
+    primary = signature_digest(signature)
+    if args.baseline != "MMA":
+        return (primary,)
+    legacy_arguments = dict(signature["arguments"])
+    for key in (
+        "m2a_skip_failed_build_points",
+        "m2a_max_consecutive_failed_build_points",
+    ):
+        legacy_arguments[key] = getattr(args, key)
+    legacy = signature_digest({**signature, "arguments": legacy_arguments})
+    return tuple(dict.fromkeys((primary, legacy)))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run a memory baseline on H2HMem.")
     parser.add_argument("--baseline", default="HiveMem")
@@ -384,6 +627,11 @@ def main() -> None:
     parser.add_argument("--split", default="")
     parser.add_argument("--index-root", default="")
     parser.add_argument("--baseline-state-dir", default="")
+    parser.add_argument(
+        "--m3-reuse-state-root",
+        default="",
+        help="Read-only M3 memory/datasets root from a completed prior run.",
+    )
     parser.add_argument("--result-dir", required=True)
     parser.add_argument("--sample-concurrency", type=int, default=4)
     parser.add_argument("--answer-concurrency", type=int, default=16)
@@ -405,15 +653,48 @@ def main() -> None:
     parser.add_argument("--embedding-base-url", default="http://127.0.0.1:8001/v1")
     parser.add_argument("--answer-base-url", default=os.getenv("OPENAI_BASE_URL") or "http://127.0.0.1:18000/v1")
     parser.add_argument("--answer-model", default="Qwen/Qwen3-VL-4B-Instruct")
-    parser.add_argument("--answer-api-key", default="EMPTY")
+    parser.add_argument(
+        "--answer-api-key", default=os.getenv("OPENAI_API_KEY") or "EMPTY"
+    )
     parser.add_argument("--answer-temperature", type=float, default=0.0)
     parser.add_argument("--num-predict", type=int, default=512)
     parser.add_argument("--request-timeout", type=int, default=180)
     parser.add_argument("--retries", type=int, default=2)
     parser.add_argument("--think", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--reasoning-effort", default="")
     parser.add_argument("--executor-model", default="Qwen/Qwen3-VL-4B-Instruct")
     parser.add_argument("--executor-base-url", default="http://127.0.0.1:18000/v1")
     parser.add_argument("--executor-temperature", type=float, default=0.0)
+    parser.add_argument("--executor-max-tokens", type=int, default=512)
+    parser.add_argument(
+        "--allow-answer-errors",
+        action="store_true",
+        help=(
+            "After native answer retries are exhausted, checkpoint an empty "
+            "answer with the error and continue."
+        ),
+    )
+    parser.add_argument(
+        "--mirix-skip-failed-build-points",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+    )
+    parser.add_argument(
+        "--mirix-max-consecutive-failed-build-points",
+        type=int,
+        default=10,
+    )
+    parser.add_argument(
+        "--m2a-skip-failed-build-points",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+    )
+    parser.add_argument(
+        "--m2a-max-consecutive-failed-build-points",
+        type=int,
+        default=10,
+    )
+    parser.add_argument("--mma-native-batch-size", type=int, default=20)
     parser.add_argument("--executor-visual-input", choices=("image", "caption"), default="image")
     parser.add_argument("--efficiency-config", default="configs/model_efficiency.json")
     parser.add_argument("--graph-retrieval", action="store_true")
@@ -427,13 +708,19 @@ def main() -> None:
         allowed_keys={
             "answer_base_url", "answer_model", "answer_api_key",
             "answer_temperature", "num_predict", "request_timeout", "retries",
-            "think", "top_k", "embedding_dim", "embedding_model",
+            "think", "reasoning_effort", "top_k", "embedding_dim", "embedding_model",
             "embedding_base_url", "executor_model", "executor_base_url",
-            "executor_temperature", "executor_visual_input",
+            "executor_temperature", "executor_max_tokens", "executor_visual_input",
+            "allow_answer_errors",
             "sample_concurrency", "answer_concurrency", "checkpoint_every",
             "graph_retrieval", "graph_mode", "append_k", "seed_k",
             "expansion_bonus",
             "efficiency_config",
+            "m3_reuse_state_root",
+            "mirix_skip_failed_build_points",
+            "mirix_max_consecutive_failed_build_points",
+            "m2a_skip_failed_build_points",
+            "m2a_max_consecutive_failed_build_points",
         },
     )
     args = parser.parse_args()
@@ -448,7 +735,13 @@ def main() -> None:
     args.baseline = canonical_name(args.baseline)
     if args.baseline == "HiveMem" and not args.index_root:
         parser.error("--index-root is required when --baseline=HiveMem")
-    if args.sample_concurrency < 1 or args.answer_concurrency < 1 or args.checkpoint_every < 1:
+    if (
+        args.sample_concurrency < 1
+        or args.answer_concurrency < 1
+        or args.checkpoint_every < 1
+        or args.mirix_max_consecutive_failed_build_points < 1
+        or args.m2a_max_consecutive_failed_build_points < 1
+    ):
         parser.error("Sample/answer concurrency and checkpoint interval must be positive")
 
     data_dir = Path(args.data_dir)
@@ -498,6 +791,7 @@ def main() -> None:
         timeout=args.request_timeout,
         retries=args.retries,
         think=args.think,
+        reasoning_effort=args.reasoning_effort,
     )
     if not args.skip_model_check:
         client.assert_model_available()
@@ -535,13 +829,26 @@ def main() -> None:
         "answer_temperature": args.answer_temperature,
         "num_predict": args.num_predict,
         "think": args.think,
+        "reasoning_effort": args.reasoning_effort,
         "executor_model": args.executor_model,
         "executor_base_url": args.executor_base_url,
         "executor_temperature": args.executor_temperature,
+        "executor_max_tokens": args.executor_max_tokens,
+        "mma_native_batch_size": args.mma_native_batch_size,
         "executor_visual_input": args.executor_visual_input,
+        "executor_native_tool_calls": args.baseline in {"MIRIX", "MMA"},
         "request_timeout": args.request_timeout,
         "retries": args.retries,
         "efficiency_config": args.efficiency_config,
+        "m3_reuse_state_root": args.m3_reuse_state_root,
+        "mirix_skip_failed_build_points": args.mirix_skip_failed_build_points,
+        "mirix_max_consecutive_failed_build_points": (
+            args.mirix_max_consecutive_failed_build_points
+        ),
+        "m2a_skip_failed_build_points": args.m2a_skip_failed_build_points,
+        "m2a_max_consecutive_failed_build_points": (
+            args.m2a_max_consecutive_failed_build_points
+        ),
     }
     sample_specs: list[tuple[str, str, int, tuple[str, ...] | None]] = []
     remaining_limit = args.max_qa
@@ -575,6 +882,17 @@ def main() -> None:
             if key not in {
                 "answer_api_key", "sample_concurrency", "answer_concurrency",
                 "checkpoint_every", "resume", "skip_model_check", "result_dir",
+                "allow_answer_errors",
+                # Execution-only fault policy. Excluding these two additions
+                # preserves compatibility with checkpoints created before the
+                # MIRIX policy was exposed by this harness.
+                "mirix_skip_failed_build_points",
+                "mirix_max_consecutive_failed_build_points",
+                # These execution-only M2A controls do not affect MMA state.
+                # Keeping them in the shared signature made an MMA resume
+                # incompatible merely because the M2A CLI gained new flags.
+                "m2a_skip_failed_build_points",
+                "m2a_max_consecutive_failed_build_points",
             }
         },
         "inputs": file_manifest(
@@ -596,7 +914,8 @@ def main() -> None:
         "prompt_sha256": prompt_sha256(),
         "call_trace_version": TRACE_VERSION,
     }
-    sample_signature = signature_digest(signature)
+    compatible_sample_signatures = _mma_resume_signature_digests(args, signature)
+    sample_signature = compatible_sample_signatures[0]
 
     def prepare(
         spec: tuple[str, str, int, tuple[str, ...] | None]
@@ -604,30 +923,119 @@ def main() -> None:
         variant, conversation_id, quota, ordered_question_ids = spec
         sample_id = f"{variant}/{conversation_id}"
         if args.resume:
-            cached = load_sample_artifact(
-                layout.sample_checkpoint_dir,
-                sample_id,
-                signature=sample_signature,
+            cached = next(
+                (
+                    artifact
+                    for compatible_signature in compatible_sample_signatures
+                    if (
+                        artifact := load_sample_artifact(
+                            layout.sample_checkpoint_dir,
+                            sample_id,
+                            signature=compatible_signature,
+                        )
+                    )
+                    is not None
+                ),
+                None,
             )
             if cached is not None:
                 print(f"[resume] skip prepared conversation: {sample_id}", flush=True)
                 return cached
+        native_progress_path = (
+            layout.checkpoint_dir
+            / "native_samples"
+            / Path(trace_filename(sample_id)).with_suffix(".json")
+        )
+        native_progress_jobs: list[dict[str, Any]] = []
+        if args.baseline in {"MMA", "MIRIX"} and args.resume and native_progress_path.is_file():
+            try:
+                native_progress = json.loads(
+                    native_progress_path.read_text(encoding="utf-8")
+                )
+            except (OSError, json.JSONDecodeError):
+                native_progress = {}
+            if (
+                native_progress.get("version") == 1
+                and native_progress.get("sample_id") == sample_id
+                and native_progress.get("signature")
+                in compatible_sample_signatures
+            ):
+                native_progress_jobs = list(native_progress.get("jobs") or [])
+
+        def checkpoint_native_qa(job: dict[str, Any]) -> None:
+            manifest_id = str(job.get("manifest_question_id") or "")
+            if any(
+                str(row.get("manifest_question_id") or "") == manifest_id
+                for row in native_progress_jobs
+            ):
+                return
+            native_progress_jobs.append(job)
+            if native_progress_path.is_file():
+                try:
+                    existing = json.loads(
+                        native_progress_path.read_text(encoding="utf-8")
+                    )
+                except (OSError, json.JSONDecodeError):
+                    existing = {}
+                existing_count = int(existing.get("completed_questions") or 0)
+                if existing_count > len(native_progress_jobs):
+                    raise RuntimeError(
+                        "refusing to regress native QA checkpoint from "
+                        f"{existing_count} to {len(native_progress_jobs)} questions"
+                    )
+            write_json_atomic(
+                native_progress_path,
+                {
+                    "version": 1,
+                    "sample_id": sample_id,
+                    "signature": sample_signature,
+                    "status": "running",
+                    "completed_questions": len(native_progress_jobs),
+                    "jobs": native_progress_jobs,
+                    "updated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+                },
+            )
         call_trace_path = layout.root / "call_traces" / trace_filename(sample_id)
         recorder = None
         proxy_context = nullcontext(None)
         sample_config = dict(config)
+        sample_config["mma_resume_enabled"] = args.resume
+        sample_config["mma_resume_signature"] = sample_signature
+        sample_config["mma_resume_compatible_signatures"] = list(
+            compatible_sample_signatures
+        )
+        sample_config["mirix_resume_enabled"] = args.resume
+        sample_config["mirix_resume_signature"] = sample_signature
         if args.baseline != "HiveMem":
             recorder = CallRecorder(
                 trace_path=call_trace_path,
                 baseline=args.baseline,
                 benchmark="H2HMEM",
                 sample_id=sample_id,
-                reset=True,
+                reset=not (
+                    args.baseline in {"MMA", "MIRIX"}
+                    and
+                    args.resume
+                    and (
+                        state_root
+                        / variant
+                        / conversation_id
+                        / (
+                            ".offline_mma_resume.json"
+                            if args.baseline == "MMA"
+                            else ".offline_mirix_resume.json"
+                        )
+                    ).is_file()
+                ),
             )
             proxy_context = CountingProxy(
                 args.executor_base_url,
                 recorder,
                 args.request_timeout,
+                max_output_tokens=args.executor_max_tokens,
+                temperature=args.executor_temperature,
+                qa_max_output_tokens=args.num_predict,
+                reasoning_effort=args.reasoning_effort,
             )
         with proxy_context as proxy:
             if proxy is not None:
@@ -642,6 +1050,17 @@ def main() -> None:
                 max_qa=quota,
                 ordered_question_ids=ordered_question_ids,
                 call_recorder=recorder,
+                completed_jobs={
+                    str(row.get("manifest_question_id") or ""): row
+                    for row in native_progress_jobs
+                    if row.get("manifest_question_id")
+                },
+                on_qa_completed=(
+                    checkpoint_native_qa
+                    if args.baseline in {"MMA", "MIRIX"}
+                    else None
+                ),
+                allow_native_qa_errors=args.allow_answer_errors,
             )
         if recorder is not None:
             artifact["call_trace_path"] = str(call_trace_path)
@@ -651,6 +1070,19 @@ def main() -> None:
             signature=sample_signature,
             artifact=artifact,
         )
+        if args.baseline in {"MMA", "MIRIX"}:
+            write_json_atomic(
+                native_progress_path,
+                {
+                    "version": 1,
+                    "sample_id": sample_id,
+                    "signature": sample_signature,
+                    "status": "completed",
+                    "completed_questions": len(artifact.get("jobs") or []),
+                    "jobs": list(artifact.get("jobs") or []),
+                    "updated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+                },
+            )
         print(f"[prepared] {sample_id}: {len(artifact['jobs'])} question(s)", flush=True)
         return artifact
 
@@ -726,7 +1158,8 @@ def main() -> None:
     completed_answers = {
         query_id
         for query_id, row in results_by_id.items()
-        if not row.get("error") and query_id in traces_by_id
+        if query_id in traces_by_id
+        and (args.baseline == "MMA" or not row.get("error"))
     }
     pending = [job for job in jobs if job["query_id"] not in completed_answers]
     since_checkpoint = 0
@@ -833,9 +1266,7 @@ def main() -> None:
             result_dir / filename,
             {"predictions": [row for row in results if row["variant"] == variant]},
         )
-    write_json_atomic(
-        result_dir / "run_manifest.json",
-        {
+    run_manifest = {
             "benchmark": "H2HMEM",
             "baseline": baseline_metadata(args.baseline),
             "variants": list(variants),
@@ -860,11 +1291,35 @@ def main() -> None:
                 manifest_index.file_sha256 if manifest_index else ""
             ),
             "ordered_question_ids": list(expected_manifest_question_ids or ()),
+            "chunk_inputs": [
+                (
+                    omni_input_manifest(f"h2hmem_{variant}")
+                    if args.baseline in {"OmniSimpleMem", "MMA"}
+                    else m3_input_manifest(f"h2hmem_{variant}")
+                    if args.baseline == "M3-Agent-caption"
+                    else chunk_source_manifest({}, f"h2hmem_{variant}")
+                )
+                for variant in variants
+            ],
             "prompt_version": PROMPT_VERSION,
             "prompt_source": PROMPT_SOURCE,
             "prompt_sha256": prompt_sha256(),
-        },
-    )
+        }
+    if args.baseline == "M2A":
+        run_manifest["m2a_conformance"] = m2a_conformance_manifest(
+            answer_prompt_sha256=prompt_sha256()
+        )
+    if args.baseline == "MMA":
+        run_manifest["mma_conformance"] = mma_conformance_manifest(
+            answer_prompt_sha256=prompt_sha256()
+        )
+    if args.baseline == "OmniSimpleMem":
+        run_manifest["omni_conformance"] = omni_conformance_manifest("h2hmem")
+    if args.baseline == "M3-Agent-caption":
+        run_manifest["m3_conformance"] = m3_conformance_manifest(
+            "h2hmem", answer_prompt_sha256=prompt_sha256()
+        )
+    write_json_atomic(result_dir / "run_manifest.json", run_manifest)
 
 
 if __name__ == "__main__":

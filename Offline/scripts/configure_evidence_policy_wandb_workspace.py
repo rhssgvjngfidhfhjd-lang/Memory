@@ -10,14 +10,64 @@ from typing import Any
 DEFAULT_ENTITY = (
     "rhssgvjngfidhfhjd-nanyang-technological-university-singapore"
 )
-DEFAULT_PROJECT = "hivemem-evidence-policy"
+DEFAULT_PROJECT = "hivemem-evidence-policy-v2"
 DEFAULT_WORKSPACE_NAME = "Evidence Policy PPO Dashboard"
-DEFAULT_WORKSPACE_URL = (
-    "https://wandb.ai/"
-    "rhssgvjngfidhfhjd-nanyang-technological-university-singapore/"
-    "hivemem-evidence-policy?nw=aw3roht3dqk"
-)
+DEFAULT_WORKSPACE_URL = ""
 VALIDATION_ACTION_MASKS = tuple(f"{value:05b}" for value in range(32))
+TRAIN_METRICS = (
+    "ppo_kl",
+    "pg_loss",
+    "pg_clipfrac",
+    "lr",
+    "grad_norm",
+    "entropy_loss",
+)
+TRAIN_COST_METRICS = (
+    "quality_reward_mean",
+    "final_reward_mean",
+    "raw_cost_mean",
+    "base_cost_mean",
+    "cost_min_mean",
+    "cost_max_mean",
+    "incremental_cost_mean",
+    "transformed_cost_mean",
+    "normalized_cost_mean",
+    "cost_penalty_mean",
+    "cost_effective_transformed_min",
+    "cost_effective_transformed_max",
+    "cost_effective_transformed_range",
+    "task_reward_std",
+    "normalized_cost_std",
+    "cost_scale_alpha",
+    "effective_cost_weight",
+    "cost_low_clip_rate",
+    "cost_high_clip_rate",
+    "cost_saturation_rate",
+    "all_zero_rollout_rate",
+)
+VALIDATION_COST_METRICS = (
+    "quality_reward_mean",
+    "final_reward_mean",
+    "raw_cost_mean",
+    "base_cost_mean",
+    "cost_min_mean",
+    "cost_max_mean",
+    "incremental_cost_mean",
+    "transformed_cost_mean",
+    "normalized_cost_mean",
+    "cost_penalty_mean",
+    "cost_effective_transformed_min",
+    "cost_effective_transformed_max",
+    "cost_effective_transformed_range",
+    "task_reward_std",
+    "normalized_cost_std",
+    "cost_scale_alpha",
+    "effective_cost_weight",
+    "cost_low_clip_rate",
+    "cost_high_clip_rate",
+    "cost_saturation_rate",
+    "all_zero_rollout_rate",
+)
 EVIDENCE_LEVEL_CHART_SPEC = (
     f"{DEFAULT_ENTITY}/hivemem-evidence-level-ratio-small-multiples-v2"
 )
@@ -41,9 +91,59 @@ def custom_table_chart(
 
 
 def build_sections(ws: Any, wr: Any) -> list[Any]:
+    frontier = ws.Section(
+        name="Quality-Cost Frontier",
+        is_open=True,
+        panels=[
+            wr.ScatterPlot(
+                title="Test F1 vs Raw QA Cost",
+                x=wr.SummaryMetric("test/cost/raw_cost_mean"),
+                y=wr.SummaryMetric("test/f1"),
+                z=wr.Config("cost_tradeoff_lambda"),
+                legend_template="${runName}: lambda=${config:cost_tradeoff_lambda}",
+            )
+        ],
+    )
+    training = ws.Section(
+        name="Training",
+        is_open=True,
+        panels=[
+            *[
+                wr.LinePlot(
+                    title=f"train/{metric}",
+                    x="train/update_step",
+                    y=[f"train/{metric}"],
+                    smoothing_type="none",
+                )
+                for metric in TRAIN_METRICS
+            ],
+            *[
+                wr.LinePlot(
+                    title=f"train/cost/{metric}",
+                    x="train/update_step",
+                    y=[f"train/cost/{metric}"],
+                    smoothing_type="none",
+                )
+                for metric in TRAIN_COST_METRICS
+            ],
+            custom_table_chart(
+                wr,
+                table_key="train/action_mask_ratio_table",
+                panel_def_id="wandb/lineseries/v0",
+                field_settings={
+                    "lineKey": "lineKey",
+                    "lineVal": "lineVal",
+                    "step": "step",
+                },
+                title="Training Evidence Combination Ratio",
+                string_settings={"xname": "PPO update step"},
+            ),
+        ],
+    )
+
     validation = ws.Section(
         name="Validation",
-        is_open=True,
+        is_open=False,
         panels=[
             custom_table_chart(
                 wr,
@@ -97,6 +197,15 @@ def build_sections(ws: Any, wr: Any) -> list[Any]:
                 title_y="Errors",
                 smoothing_type="none",
             ),
+            *[
+                wr.LinePlot(
+                    title=f"val/cost/{metric}",
+                    x="val/update_step",
+                    y=[f"val/cost/{metric}"],
+                    smoothing_type="none",
+                )
+                for metric in VALIDATION_COST_METRICS
+            ],
             custom_table_chart(
                 wr,
                 table_key="val/action_mask_ratio_table",
@@ -132,6 +241,13 @@ def build_sections(ws: Any, wr: Any) -> list[Any]:
                 )
                 for mask in VALIDATION_ACTION_MASKS
             ],
+        ],
+    )
+
+    test = ws.Section(
+        name="Test",
+        is_open=False,
+        panels=[
             custom_table_chart(
                 wr,
                 table_key="test/action_mask_ratio_table",
@@ -145,58 +261,6 @@ def build_sections(ws: Any, wr: Any) -> list[Any]:
                 panel_def_id="wandb/bar/v0",
                 field_settings={"label": "evidence_level", "value": "ratio"},
                 title="Final Evidence Level Ratio",
-            ),
-        ],
-    )
-
-    actor = ws.Section(
-        name="Actor",
-        is_open=False,
-        panels=[
-            wr.LinePlot(
-                title="actor/update_step",
-                x="Step",
-                y=["actor/update_step"],
-                smoothing_type="none",
-            ),
-            wr.LinePlot(
-                title="actor/ppo_kl",
-                x="actor/update_step",
-                y=["actor/ppo_kl"],
-                smoothing_type="none",
-            ),
-            wr.LinePlot(
-                title="actor/pg_loss",
-                x="actor/update_step",
-                y=["actor/pg_loss"],
-                smoothing_type="none",
-            ),
-            wr.LinePlot(
-                title="actor/pg_clipfrac",
-                x="actor/update_step",
-                y=["actor/pg_clipfrac"],
-                smoothing_type="none",
-            ),
-            wr.LinePlot(
-                title="actor/lr",
-                x="actor/update_step",
-                y=["actor/lr"],
-                smoothing_type="none",
-            ),
-            wr.LinePlot(
-                title="actor/grad_norm",
-                x="actor/update_step",
-                y=["actor/grad_norm"],
-                smoothing_type="none",
-            ),
-            wr.LinePlot(
-                title="actor/entropy_loss",
-                x="actor/update_step",
-                y=["actor/entropy_loss"],
-                title_x="actor/update_step",
-                smoothing_factor=0.6,
-                smoothing_type="exponential",
-                smoothing_show_original=True,
             ),
         ],
     )
@@ -264,7 +328,7 @@ def build_sections(ws: Any, wr: Any) -> list[Any]:
             ),
         ],
     )
-    return [validation, critic, actor]
+    return [frontier, training, critic, validation, test]
 
 
 def configure_workspace(
@@ -275,6 +339,7 @@ def configure_workspace(
     workspace_url: str = "",
     run_name: str = "",
     run_id: str = "",
+    run_name_regex: str = "",
 ) -> str:
     try:
         import wandb_workspaces.reports.v2 as wr
@@ -286,8 +351,8 @@ def configure_workspace(
 
     sections = build_sections(ws, wr)
     runset_settings = ws.RunsetSettings(
-        query=f"^{re.escape(run_name)}$" if run_name else "",
-        regex_query=bool(run_name),
+        query=run_name_regex or (f"^{re.escape(run_name)}$" if run_name else ""),
+        regex_query=bool(run_name_regex or run_name),
         pinned_runs=[run_id] if run_id else [],
     )
     if workspace_url:
@@ -322,6 +387,7 @@ def main() -> None:
     )
     parser.add_argument("--run-name", default="")
     parser.add_argument("--run-id", default="")
+    parser.add_argument("--run-name-regex", default="")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -351,6 +417,7 @@ def main() -> None:
         workspace_url=args.workspace_url,
         run_name=args.run_name,
         run_id=args.run_id,
+        run_name_regex=args.run_name_regex,
     )
     print(json.dumps({"url": url}, indent=2))
 

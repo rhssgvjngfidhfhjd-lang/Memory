@@ -12,6 +12,11 @@ from benchmarks.answer_response import parse_answer_block
 
 PROMPT_VERSION = "answer-prompts-custom-20260909-v1"
 PROMPT_SOURCE = "answer_prompts.py:build_benchmark_answer_messages[h2hmem]"
+PPO_EMPTY_PROMPT_VERSION = "ppo-empty-evidence-20260911-v1"
+PPO_EMPTY_EVIDENCE_INSTRUCTION = (
+    "No conversation-memory evidence was selected. Answer using only the question and its "
+    "Question Image, if present; do not invent missing memory facts."
+)
 ANSWER_TAG_CONTRACT = (
     "Return only one non-empty <answer>...</answer> block, with the answer text inside the tags."
 )
@@ -27,6 +32,10 @@ INSTRUCTIONS = {
     "answer refusal": "Determine whether the question can be answered from the conversation memory.",
 }
 
+QUESTION_TYPE_ALIASES = {
+    "multimodal causal inference": "multimodal causal reasoning",
+}
+
 
 def build_answer_messages(
     *,
@@ -34,17 +43,22 @@ def build_answer_messages(
     question_type: str,
     memory_evidence: Sequence[str],
     query_images: Any = None,
+    allow_empty_evidence: bool = False,
 ) -> list[dict[str, str]]:
-    evidence = _validated_evidence(memory_evidence)
+    evidence = _validated_evidence(
+        memory_evidence, allow_empty_evidence=allow_empty_evidence
+    )
     question = str(question or "").strip()
     if not question:
         raise ValueError("Direct answer generation requires sample_metadata.question.")
     normalized_type = str(question_type or "").strip().casefold()
+    normalized_type = QUESTION_TYPE_ALIASES.get(normalized_type, normalized_type)
     type_instruction = INSTRUCTIONS.get(
         normalized_type, INSTRUCTIONS["unimodal precise recall"]
     )
+    task_instruction = type_instruction if evidence else PPO_EMPTY_EVIDENCE_INSTRUCTION
     task_rules = (
-        f"You are a memory testing system. {type_instruction} Answer directly in English without reasoning, "
+        f"You are a memory testing system. {task_instruction} Answer directly in English without reasoning, "
         "using no more than 100 words."
     )
     if normalized_type == "conflict detection":
@@ -52,10 +66,13 @@ def build_answer_messages(
     elif normalized_type == "answer refusal":
         task_rules += ' If the information is absent, the answer text must be exactly "Not mentioned."'
     system_prompt = f"{task_rules} {ANSWER_TAG_CONTRACT}"
-    evidence_text = "\n\n".join(
-        f"[Evidence {index}]\n{item}" for index, item in enumerate(evidence, start=1)
-    )
-    sections = [f"Conversation memory:\n{evidence_text}"]
+    sections = []
+    if evidence:
+        evidence_text = "\n\n".join(
+            f"[Evidence {index}]\n{item}"
+            for index, item in enumerate(evidence, start=1)
+        )
+        sections.append(f"Conversation memory:\n{evidence_text}")
     image_context = _format_query_images(query_images)
     if image_context:
         sections.append("Question Image:\n" + image_context)
@@ -77,6 +94,7 @@ def prompt_sha256() -> str:
             "source": PROMPT_SOURCE,
             "answer_tag_contract": ANSWER_TAG_CONTRACT,
             "instructions": INSTRUCTIONS,
+            "question_type_aliases": QUESTION_TYPE_ALIASES,
             "evidence_heading": "Conversation memory",
         },
         ensure_ascii=False,
@@ -85,11 +103,28 @@ def prompt_sha256() -> str:
     return hashlib.sha256(source.encode("utf-8")).hexdigest()
 
 
-def _validated_evidence(memory_evidence: Sequence[str]) -> list[str]:
+def ppo_empty_prompt_sha256() -> str:
+    source = json.dumps(
+        {
+            "version": PPO_EMPTY_PROMPT_VERSION,
+            "base_prompt_sha256": prompt_sha256(),
+            "empty_instruction": PPO_EMPTY_EVIDENCE_INSTRUCTION,
+            "answer_tag_contract": ANSWER_TAG_CONTRACT,
+            "evidence_section": "omitted",
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+    return hashlib.sha256(source.encode("utf-8")).hexdigest()
+
+
+def _validated_evidence(
+    memory_evidence: Sequence[str], *, allow_empty_evidence: bool = False
+) -> list[str]:
     if isinstance(memory_evidence, (str, bytes)):
         raise ValueError("memory_evidence must be a sequence of evidence strings.")
     evidence = [str(item).strip() for item in memory_evidence if str(item).strip()]
-    if not evidence:
+    if not evidence and not allow_empty_evidence:
         raise ValueError(
             "Direct answer generation requires at least one non-empty memory evidence item."
         )

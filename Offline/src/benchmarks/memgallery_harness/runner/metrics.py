@@ -14,6 +14,7 @@ from benchmarks.baseline_runtime.call_trace import load_call_rows, summarize_cal
 from nltk.stem import PorterStemmer
 
 from benchmarks.memgallery_harness.runner.answer_client import (
+    MAX_IMAGE_SIDE_FOR_ANSWER,
     build_retrieved_memory_context,
 )
 
@@ -57,6 +58,101 @@ def f1_score(prediction: str, ground_truth: str) -> float:
 
 def exact_match(prediction: str, ground_truth: str) -> float:
     return float(normalize_answer(prediction) == normalize_answer(ground_truth))
+
+
+def calculate_usage_cost(
+    usage: dict[str, Any],
+    *,
+    input_price: float,
+    output_price: float,
+) -> float:
+    """Return one request's USD cost from exact provider token usage."""
+
+    normalized = _token_usage(usage)
+    if normalized is None:
+        raise ValueError("usage must contain prompt_tokens, completion_tokens, and total_tokens")
+    if any(value < 0 for value in normalized.values()):
+        raise ValueError("usage token counts must be non-negative")
+    prices = _validated_cost_prices(input_price, output_price)
+    if prices is None:
+        raise ValueError("input_price and output_price are required")
+    input_coefficient, output_coefficient = prices
+    return (
+        normalized["prompt_tokens"] * input_coefficient
+        + normalized["completion_tokens"] * output_coefficient
+    ) / 1_000_000
+
+
+class ChatPromptTokenCounter:
+    """Count chat prompt tokens with the answer model's tokenizer/processor."""
+
+    def __init__(
+        self,
+        model: str,
+        *,
+        processor: Any = None,
+        max_image_side: int = MAX_IMAGE_SIDE_FOR_ANSWER,
+    ) -> None:
+        if not str(model).strip() and processor is None:
+            raise ValueError("model is required when processor is not supplied")
+        if processor is None:
+            from transformers import AutoProcessor
+
+            processor = AutoProcessor.from_pretrained(
+                _resolve_tokenizer_name(str(model)), trust_remote_code=True
+            )
+        self.processor = processor
+        self.tokenizer = getattr(processor, "tokenizer", processor)
+        self.max_image_side = int(max_image_side)
+        if self.max_image_side <= 0:
+            raise ValueError("max_image_side must be positive")
+
+    def count(
+        self,
+        messages: list[dict[str, str]],
+        *,
+        image_paths: Iterable[str] = (),
+    ) -> int:
+        normalized = [
+            {"role": str(row["role"]), "content": str(row["content"])}
+            for row in messages
+        ]
+        paths = [str(path) for path in image_paths if str(path)]
+        if not paths:
+            token_ids = self.tokenizer.apply_chat_template(
+                normalized, tokenize=True, add_generation_prompt=True
+            )
+            return _token_sequence_length(token_ids)
+
+        from PIL import Image
+
+        multimodal = [
+            {
+                "role": row["role"],
+                "content": [{"type": "text", "text": row["content"]}],
+            }
+            for row in normalized
+        ]
+        user_index = max(
+            index for index, row in enumerate(multimodal) if row["role"] == "user"
+        )
+        images = []
+        try:
+            for path in paths:
+                with Image.open(path) as source:
+                    image = source.copy()
+                image.thumbnail((self.max_image_side, self.max_image_side))
+                images.append(image)
+                multimodal[user_index]["content"].append(
+                    {"type": "image", "image": image}
+                )
+            token_ids = self.processor.apply_chat_template(
+                multimodal, tokenize=True, add_generation_prompt=True
+            )
+            return _token_sequence_length(token_ids)
+        finally:
+            for image in images:
+                image.close()
 
 
 def provenance_hit(source_groups: list[list[str]], clue_ids: list[str], k: int = 5) -> float:
@@ -412,7 +508,15 @@ def load_model_efficiency_profile(
     model: str,
 ) -> dict[str, Any]:
     """Load and validate one model's pricing and modeled-latency constants."""
-    path = Path(config_path).expanduser().resolve()
+    path = Path(config_path).expanduser()
+    if not path.is_absolute():
+        # CLI defaults are relative to Offline/, not to whichever directory
+        # happened to launch the harness. Keep an explicitly existing cwd
+        # path valid, then fall back to the relocatable package root.
+        cwd_path = Path.cwd() / path
+        offline_path = Path(__file__).resolve().parents[4] / path
+        path = cwd_path if cwd_path.is_file() else offline_path
+    path = path.resolve()
     payload = json.loads(path.read_text(encoding="utf-8"))
     raw = (payload.get("models") or {}).get(model)
     if not isinstance(raw, dict):
@@ -562,14 +666,35 @@ def _call_trace_inference_aggregate(
             reason=f"missing call trace: {path}",
         )
     rows = [row for row in _read_jsonl(path) if row.get("phase") == phase]
+    cumulative_usage_groups = {
+        (
+            str(row.get("sample_id") or ""),
+            str(row.get("query_id") or row.get("call_id") or f"row:{index}"),
+        )
+        for index, row in enumerate(rows, start=1)
+        if row.get("usage_scope") == "cumulative_query_attempts"
+        and _token_usage(row) is not None
+    }
     input_tokens = 0
     output_tokens = 0
     image_count = 0
     missing_usage: list[int] = []
     missing_images: list[int] = []
     for index, row in enumerate(rows, start=1):
+        usage_group = (
+            str(row.get("sample_id") or ""),
+            str(row.get("query_id") or row.get("call_id") or f"row:{index}"),
+        )
         usage = _token_usage(row)
-        if usage is None:
+        if usage_group in cumulative_usage_groups and row.get("usage_scope") != (
+            "cumulative_query_attempts"
+        ):
+            # A later row carries provider usage accumulated across every
+            # attempt for this logical query. Earlier per-attempt placeholders
+            # must still count as calls, but must not make token accounting
+            # unavailable or be added again.
+            pass
+        elif usage is None:
             missing_usage.append(index)
         else:
             input_tokens += usage["prompt_tokens"]
@@ -749,6 +874,7 @@ def _latency_from_inference_aggregate(
     profile: dict[str, Any],
     *,
     aggregation: str,
+    denominator_unit: str = "sample",
 ) -> dict[str, Any]:
     latency = profile["latency"]
     input_tokens = aggregate.get("input_tokens")
@@ -767,6 +893,7 @@ def _latency_from_inference_aggregate(
         "image_seconds": latency["image_seconds"],
         "latency_sum_seconds": None,
         "num_samples": num_samples,
+        "denominator_unit": denominator_unit,
         "mean_per_sample_seconds": None,
         "formula": None,
         "aggregation": aggregation,
@@ -800,7 +927,7 @@ def _latency_from_inference_aggregate(
             f"{input_tokens} * {latency['input_seconds_per_token']:g} + "
             f"{output_tokens} * {latency['output_seconds_per_token']:g} + "
             f"{image_count} * {latency['image_seconds']:g}) / "
-            f"{num_samples} = {mean:.12g} seconds/sample"
+            f"{num_samples} = {mean:.12g} seconds/{denominator_unit}"
         ),
         "available": True,
     }
@@ -815,6 +942,7 @@ def write_efficiency_metrics(
     model: str,
     config_path: str | Path,
     hivemem_index_root: str | Path | None = None,
+    qa_latency_denominator: str = "samples",
 ) -> dict[str, Any]:
     """Write modeled LLM cost and latency for MB, query-time QA, and total.
 
@@ -839,12 +967,44 @@ def write_efficiency_metrics(
         retrieval = _call_trace_inference_aggregate(
             trace_path, phase="retrieval", num_samples=len(samples)
         )
-    answer = _answer_inference_aggregate(
-        results, sample_id_field=sample_id_field
+    # Native agent baselines can make several provider requests during one
+    # benchmark answer.  The counting proxy records those individual calls,
+    # whereas ``answer_attempts`` intentionally remains one logical harness
+    # attempt.  Prefer the provider trace when present and retain the result
+    # aggregate as the fallback used by ordinary one-shot answer clients.
+    if hivemem_index_root is None:
+        traced_answer = _call_trace_inference_aggregate(
+            Path(result_dir) / CALL_TRACE_FILENAME,
+            phase="qa",
+            num_samples=len(samples),
+        )
+    else:
+        traced_answer = _inference_aggregate(
+            num_samples=len(samples),
+            source="call_trace:qa",
+            input_tokens=None,
+            output_tokens=None,
+            calls=0,
+            image_count=None,
+            reason="HiveMem answer requests are recorded in result rows.",
+        )
+    answer = (
+        traced_answer
+        if int(traced_answer.get("calls") or 0) > 0
+        else _answer_inference_aggregate(results, sample_id_field=sample_id_field)
     )
     qa = _combine_inference_aggregates(
         retrieval, answer, source="retrieval_plus_answer"
     )
+    if qa_latency_denominator not in {"samples", "queries"}:
+        raise ValueError("qa_latency_denominator must be 'samples' or 'queries'")
+    qa_latency = dict(qa)
+    qa_latency_unit = "sample"
+    qa_latency_aggregation = "sum_retrieval_answer_latency_divided_by_samples"
+    if qa_latency_denominator == "queries":
+        qa_latency["num_samples"] = len(results)
+        qa_latency_unit = "QA"
+        qa_latency_aggregation = "sum_retrieval_answer_latency_divided_by_queries"
     total = _combine_inference_aggregates(
         memory_bank, qa, source="memory_build_plus_retrieval_plus_answer"
     )
@@ -867,9 +1027,10 @@ def write_efficiency_metrics(
             memory_bank, profile, aggregation="sum_mb_latency_divided_by_samples"
         ),
         "latency_qa": _latency_from_inference_aggregate(
-            qa,
+            qa_latency,
             profile,
-            aggregation="sum_retrieval_answer_latency_divided_by_samples",
+            aggregation=qa_latency_aggregation,
+            denominator_unit=qa_latency_unit,
         ),
         "latency_total": _latency_from_inference_aggregate(
             total, profile, aggregation="sum_total_latency_divided_by_samples"
@@ -1089,7 +1250,20 @@ def write_runtime_call_metrics(
     """
     paths = [Path(value) for value in trace_paths]
     rows = load_call_rows(paths)
-    rows.extend(_result_attempt_rows(results, sample_id_field=sample_id_field))
+    # For native Chat-Agent answers, sample-local proxy traces contain every
+    # provider request. Do not add one synthetic row per logical QA on top of
+    # them. Baselines whose answers bypass the worker proxy keep the existing
+    # result-derived fallback.
+    traced_qa_samples = {
+        str(row.get("sample_id") or "")
+        for row in rows
+        if row.get("phase") == "qa" and str(row.get("sample_id") or "")
+    }
+    rows.extend(
+        row
+        for row in _result_attempt_rows(results, sample_id_field=sample_id_field)
+        if str(row.get("sample_id") or "") not in traced_qa_samples
+    )
     rows.sort(
         key=lambda row: (
             str(row.get("sample_id") or ""),
@@ -1117,10 +1291,12 @@ def write_runtime_call_metrics(
         phase="retrieval",
         num_samples=len(normalized_samples),
     )
-    calls = combine_call_metrics(
-        memory_bank,
-        calculate_calls_qa(results, sample_id_field=sample_id_field),
+    qa = summarize_call_rows(
+        rows,
+        phase="qa",
+        num_samples=len(normalized_samples),
     )
+    calls = combine_call_metrics(memory_bank, qa)
     calls["retrieval"] = retrieval
     metrics_path = root / CALL_METRICS_FILENAME
     metrics_path.write_text(
@@ -1604,6 +1780,24 @@ def _read_jsonl(path: Path):
         for line in handle:
             if line.strip():
                 yield json.loads(line)
+
+
+def _token_sequence_length(value: Any) -> int:
+    if hasattr(value, "tolist"):
+        value = value.tolist()
+    if isinstance(value, dict):
+        value = value.get("input_ids")
+        if hasattr(value, "tolist"):
+            value = value.tolist()
+    if (
+        isinstance(value, list)
+        and len(value) == 1
+        and isinstance(value[0], list)
+    ):
+        value = value[0]
+    if not isinstance(value, list):
+        raise TypeError("Tokenizer did not return a token-id sequence")
+    return len(value)
 
 
 def _token_usage(value: Any) -> dict[str, int] | None:
