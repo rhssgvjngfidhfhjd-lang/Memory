@@ -149,7 +149,7 @@ class SimpleMemoryIndex:
             return []
         scores = self._scores(query_vector, category, allowed_session_ids)
         actual_k = min(int(top_k), int(np.isfinite(scores).sum()))
-        indices = np.argsort(scores)[::-1][:actual_k]
+        indices = _rank_indices(scores, self.bank.memories, actual_k)
         return [
             MemoryHit(item=self.bank.memories[int(index)], score=float(scores[index]), rank=rank)
             for rank, index in enumerate(indices, start=1)
@@ -165,6 +165,16 @@ def _normalize_rows(matrix: np.ndarray) -> np.ndarray:
     if matrix.size == 0:
         return matrix
     return matrix / (np.linalg.norm(matrix, axis=1, keepdims=True) + 1e-8)
+
+
+def _rank_indices(scores: np.ndarray, memories: list[MAU], limit: int) -> list[int]:
+    """Rank deterministically, including when separate banks order ties differently."""
+
+    eligible = (int(index) for index in np.flatnonzero(np.isfinite(scores)))
+    return sorted(
+        eligible,
+        key=lambda index: (-float(scores[index]), str(memories[index].id)),
+    )[: int(limit)]
 
 
 class GraphExpandedIndex(SimpleMemoryIndex):
@@ -265,7 +275,7 @@ class GraphExpandedIndex(SimpleMemoryIndex):
         scores = self._scores(query_vector, category, allowed_session_ids)
         active_count = int(np.isfinite(scores).sum())
         seed_count = min(self.seed_k or int(top_k), active_count)
-        seed_indices = [int(i) for i in np.argsort(scores)[::-1][:seed_count]]
+        seed_indices = _rank_indices(scores, self.bank.memories, seed_count)
 
         if self.mode == "append":
             return self._search_append(scores, seed_indices, int(top_k), active_count)
@@ -286,7 +296,14 @@ class GraphExpandedIndex(SimpleMemoryIndex):
                     final[neighbour] = candidate
                     via[neighbour] = "graph"
 
-        ranked = sorted(final.items(), key=lambda kv: -kv[1])[: min(int(top_k), len(final))]
+        ranked = sorted(
+            final.items(),
+            key=lambda kv: (
+                -kv[1],
+                0 if via[kv[0]] == "vector" else 1,
+                str(self.bank.memories[kv[0]].id),
+            ),
+        )[: min(int(top_k), len(final))]
         return [
             MemoryHit(
                 item=self.bank.memories[index],
@@ -313,7 +330,10 @@ class GraphExpandedIndex(SimpleMemoryIndex):
                 value = float(scores[neighbour]) + self.expansion_bonus * float(scores[seed])
                 if value > candidate.get(neighbour, float("-inf")):
                     candidate[neighbour] = value
-        extra = sorted(candidate.items(), key=lambda kv: -kv[1])[: self.append_k]
+        extra = sorted(
+            candidate.items(),
+            key=lambda kv: (-kv[1], str(self.bank.memories[kv[0]].id)),
+        )[: self.append_k]
         for offset, (index, score) in enumerate(extra, start=1):
             hits.append(
                 MemoryHit(

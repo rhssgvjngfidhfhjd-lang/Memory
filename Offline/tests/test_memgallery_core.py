@@ -1,4 +1,5 @@
 import argparse
+import io
 import json
 import tempfile
 import threading
@@ -26,6 +27,7 @@ from benchmarks.memgallery_harness.runner.metrics import (
     calculate_retrieval_memory_tokens,
     merge_llm_judge_metrics,
     f1_score,
+    load_model_efficiency_profile,
     normalize_answer,
     provenance_hit,
     write_retrieval_memory_token,
@@ -44,6 +46,11 @@ from benchmarks.memgallery_harness.runner.prompts import (
     build_answer_messages,
     prompt_manifest,
 )
+from benchmarks.memgallery_harness.eval_memgallery import (
+    select_diagnostic_chunks,
+    validate_diagnostic_qa_coverage,
+)
+from embedding.chunk_builder import Chunk
 from embedding.qwen3_text_embedding import (
     DEFAULT_QUERY_INSTRUCTION,
     Qwen3TextEmbeddingService,
@@ -132,6 +139,50 @@ class OfficialMetricAndAnswerRetryTest(unittest.TestCase):
             {"prompt_tokens": 30, "completion_tokens": 8, "total_tokens": 38},
         )
 
+
+class AnswerImageTransportCompressionTest(unittest.TestCase):
+    def test_large_png_uses_smaller_jpeg_copy_without_modifying_source(self):
+        from PIL import Image
+        from benchmarks.memgallery_harness.runner.answer_client import (
+            _prepare_image_bytes,
+            _transport_image_bytes,
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "evidence.png"
+            pixels = np.random.default_rng(7).integers(
+                0, 256, size=(600, 800, 3), dtype=np.uint8
+            )
+            Image.fromarray(pixels, mode="RGB").save(path, format="PNG")
+            original = path.read_bytes()
+            _transport_image_bytes.cache_clear()
+
+            encoded, mime = _prepare_image_bytes(str(path), max_side=1344)
+
+            self.assertEqual(path.read_bytes(), original)
+            self.assertEqual(mime, "image/jpeg")
+            self.assertLess(len(encoded), len(original))
+            with Image.open(io.BytesIO(encoded)) as transported:
+                self.assertEqual(transported.size, (800, 600))
+
+    def test_transport_keeps_original_when_jpeg_candidate_is_not_smaller(self):
+        from PIL import Image
+        from benchmarks.memgallery_harness.runner.answer_client import (
+            _prepare_image_bytes,
+            _transport_image_bytes,
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "tiny.png"
+            Image.new("RGB", (1, 1), "white").save(path, format="PNG")
+            original = path.read_bytes()
+            _transport_image_bytes.cache_clear()
+
+            encoded, mime = _prepare_image_bytes(str(path), max_side=1344)
+
+            self.assertEqual(encoded, original)
+            self.assertEqual(mime, "image/png")
+
     def test_retry_without_usage_marks_aggregate_usage_unavailable(self):
         class MissingRetryUsageClient(VLMAnswerClient):
             def __init__(self):
@@ -164,6 +215,31 @@ class OfficialMetricAndAnswerRetryTest(unittest.TestCase):
 
 
 class RuntimeConfigurationTest(unittest.TestCase):
+    def test_diagnostic_dialogue_selection_preserves_source_order(self):
+        chunks = [
+            Chunk(chunk_id=value, text=value, metadata={"dialogue_id": value})
+            for value in ("D1:1", "D2:6", "D2:7")
+        ]
+        selected = select_diagnostic_chunks(
+            chunks, dialogue_ids=("D2:7", "D2:6")
+        )
+        self.assertEqual([chunk.chunk_id for chunk in selected], ["D2:6", "D2:7"])
+
+    def test_diagnostic_qa_coverage_rejects_missing_clue(self):
+        chunks = [
+            Chunk(chunk_id="D1:1", text="first", metadata={"dialogue_id": "D1:1"})
+        ]
+        selected_qas = [("dataset_q0001", 2, {"clue": ["D2:6"]})]
+        with self.assertRaisesRegex(ValueError, r"QA 2: missing \['D2:6'\]"):
+            validate_diagnostic_qa_coverage(selected_qas, chunks)
+
+    def test_diagnostic_qa_coverage_accepts_matching_clue(self):
+        chunks = [
+            Chunk(chunk_id="D2:6", text="target", metadata={"dialogue_id": "D2:6"})
+        ]
+        selected_qas = [("dataset_q0001", 2, {"clue": ["D2:6"]})]
+        validate_diagnostic_qa_coverage(selected_qas, chunks)
+
     def test_memgallery_custom_prompt_and_manifest_are_nonempty(self):
         self.assertTrue(SYSTEM_PROMPT)
         self.assertEqual(
@@ -602,6 +678,14 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
             cost["formula"],
             "((60 / 1000000) * 0.1 + (10 / 1000000) * 0.6) / 2 = 6e-06",
         )
+
+    def test_efficiency_config_default_is_independent_of_launch_cwd(self):
+        profile = load_model_efficiency_profile(
+            "configs/model_efficiency.json",
+            "Qwen/Qwen3-VL-4B-Instruct",
+        )
+
+        self.assertTrue(Path(profile["config_path"]).is_file())
 
     def test_efficiency_metrics_use_pricing_latency_calls_and_images(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -1834,6 +1918,47 @@ class GraphExpandedRetrievalTest(unittest.TestCase):
             self.assertEqual(hits[2].rank, 3)
             self.assertEqual(hits[2].item.summary, "linked but dissimilar")
 
+    def test_tied_vector_scores_are_ordered_by_memory_id_across_banks(self):
+        from hive_mem.retriever import GraphExpandedIndex, SimpleMemoryIndex
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            vector_root = root / "vector"
+            graph_root = root / "graph"
+            rows = [
+                ("memory-c", "c", [1.0, 0.0]),
+                ("memory-a", "a", [1.0, 0.0]),
+                ("memory-b", "b", [1.0, 0.0]),
+            ]
+            for bank_root, ordered_rows in (
+                (vector_root, rows),
+                (graph_root, list(reversed(rows))),
+            ):
+                bank = MAUBank()
+                for summary, memory_id, vector in ordered_rows:
+                    bank.add_memory(summary, np.asarray(vector, dtype=np.float32))
+                    bank.memories[-1].id = memory_id
+                bank.save(bank_root)
+
+            vector_ids = [
+                hit.item.id
+                for hit in SimpleMemoryIndex(vector_root).search([1.0, 0.0], top_k=2)
+            ]
+            graph_ids = [
+                hit.item.id
+                for hit in GraphExpandedIndex(
+                    graph_root,
+                    mode="append",
+                    append_k=0,
+                    expand_temporal=False,
+                    expand_related=False,
+                    expand_entity=False,
+                    expand_attribute=False,
+                ).search([1.0, 0.0], top_k=2)
+            ]
+            self.assertEqual(vector_ids, ["a", "b"])
+            self.assertEqual(graph_ids, vector_ids)
+
     def test_append_mode_returns_five_vector_hits_plus_two_graph_hits(self):
         from hive_mem.retriever import GraphExpandedIndex, SimpleMemoryIndex
 
@@ -2065,6 +2190,23 @@ class AnswerPromptImageIdLeakTest(unittest.TestCase):
         self.assertIn("IMG:D6:IMG_001", text)
         self.assertIn("Attached memory image 1: D6:IMG_001", text)
         self.assertEqual(paths, ["/tmp/memory.png"])
+
+    def test_duplicate_image_paths_across_memory_items_are_attached_once(self):
+        image = {"path": "/tmp/shared.png", "img_id": "D6:IMG_001"}
+        first = {**self.memory, "image": image}
+        second = {
+            **self.memory,
+            "images": [dict(image)],
+            "metadata": {
+                **self.memory["metadata"],
+                "dialogue_id": "D6:2",
+            },
+        }
+        text, paths = self.client._build_text_and_image_paths(
+            [first, second], "question", None, "TTL"
+        )
+        self.assertEqual(paths, ["/tmp/shared.png"])
+        self.assertEqual(text.count("Attached memory image"), 1)
 
     def test_nonvisual_question_does_not_expose_unattached_candidate_id(self):
         memory = {**self.memory, "image": {"path": "/tmp/memory.png", "img_id": "D6:IMG_001"}}

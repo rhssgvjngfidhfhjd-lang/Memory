@@ -76,10 +76,18 @@
   },
   "reward": {
     "quality_metric": "f1",
+    "cost_enabled": true,
+    "cost_tradeoff_lambda": 0.1,
     "cost_scope": "answer_llm_per_qa",
-    "reference_strategy": "full-evidence_validation",
-    "reference_cost_usd_per_qa": 0.0002138218181818182,
-    "reference_run": "outputs/reference_cost/ReferenceCost_0909_a/WMA/reference_cost/summary.json"
+    "cost_transform": "sqrt_incremental",
+    "tokenizer_name": "/data/shared_models/Qwen3-VL-4B-Instruct",
+    "window_size": 512,
+    "min_window_size": 128,
+    "lower_quantile": 0.05,
+    "upper_quantile": 0.95,
+    "initial_range_floor_ratio": 0.25,
+    "range_epsilon": 1e-12,
+    "std_epsilon": 1e-8
   },
   "split": {
     "train": [

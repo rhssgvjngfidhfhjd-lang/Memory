@@ -1,0 +1,41 @@
+MEMLENS Dataset License — Creative Commons Attribution 4.0 International (CC-BY-4.0)
+
+Copyright (c) 2026 Xiyu Ren, Zhaowei Wang, and the MemLens Authors
+
+The MemLens dataset — comprising the per-question metadata (question,
+reference answer, evidence pointers, task-type and context-length labels),
+conversation sessions, prompt templates, judge artefacts, and human-annotation
+worksheets — is licensed under the Creative Commons Attribution 4.0
+International License (CC-BY-4.0).
+
+You are free to:
+  - Share — copy and redistribute the material in any medium or format
+  - Adapt — remix, transform, and build upon the material for any purpose,
+    even commercially.
+
+Under the following terms:
+  - Attribution — You must give appropriate credit, provide a link to the
+    license, and indicate if changes were made. You may do so in any
+    reasonable manner, but not in any way that suggests the licensor
+    endorses you or your use.
+
+  - No additional restrictions — You may not apply legal terms or
+    technological measures that legally restrict others from doing anything
+    the license permits.
+
+The full legal code is available at:
+  https://creativecommons.org/licenses/by/4.0/legalcode
+
+A human-readable summary is available at:
+  https://creativecommons.org/licenses/by/4.0/
+
+IMPORTANT — UNDERLYING IMAGE LICENSING:
+
+The CC-BY-4.0 grant above applies to the dataset *artefacts authored by the
+project* (metadata, conversation sessions, prompts, judge rubrics, annotation
+worksheets). Images in `release_images/` are sourced from the public web.
+Each image retains its original source-site license, and downstream users are
+responsible for honoring those source-side terms.
+
+A takedown contact is provided in the project repository, and any flagged
+image will be removed within seven days.

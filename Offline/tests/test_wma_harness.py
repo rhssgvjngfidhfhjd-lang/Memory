@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from argparse import Namespace
 import json
 import tempfile
 import unittest
@@ -13,7 +14,12 @@ from benchmarks.wma_harness.retrieval.query_embedding_cache import (
     make_query_id,
     visible_sessions_for_checkpoint,
 )
-from benchmarks.wma_harness.eval_wma import prepare_sample_jobs
+from benchmarks.wma_harness.eval_wma import (
+    _mma_resume_signature_digests,
+    _run_signature,
+    m2a_wma_input_manifest,
+    prepare_sample_jobs,
+)
 from benchmarks.wma_harness.runner.answer_client import build_retrieved_memory_context
 from benchmarks.wma_harness.runner.metrics import (
     answer_span_exact_match,
@@ -104,6 +110,73 @@ def sample_payload() -> dict:
 
 
 class WMAChunkTest(unittest.TestCase):
+    def test_mma_signature_ignores_retry_and_m2a_only_switches(self):
+        with tempfile.TemporaryDirectory() as directory:
+            sample_path = Path(directory) / "sample.json"
+            sample_path.write_text("{}", encoding="utf-8")
+            common = {
+                "baseline": "MMA",
+                "split_manifest": "",
+                "answer_api_key": "secret",
+                "answer_concurrency": 16,
+                "sample_concurrency": 2,
+                "allow_answer_errors": True,
+                "checkpoint_every": 10,
+                "result_dir": "results",
+                "resume": True,
+                "skip_model_check": False,
+                "sample_attempts": 3,
+                "mirix_skip_failed_build_points": False,
+                "mirix_max_consecutive_failed_build_points": 10,
+                "m2a_skip_failed_build_points": False,
+                "m2a_max_consecutive_failed_build_points": 10,
+                "top_k": 7,
+            }
+            first = _run_signature(Namespace(**common), [sample_path])
+            changed = dict(common)
+            changed.update(
+                sample_attempts=99,
+                m2a_skip_failed_build_points=True,
+                m2a_max_consecutive_failed_build_points=2,
+            )
+            second = _run_signature(Namespace(**changed), [sample_path])
+
+            self.assertEqual(first, second)
+            digests = _mma_resume_signature_digests(
+                Namespace(**changed), second
+            )
+            self.assertEqual(len(digests), 2)
+            self.assertEqual(digests[0], _mma_resume_signature_digests(
+                Namespace(**common), first
+            )[0])
+
+    def test_m2a_input_manifest_records_native_builder_and_raw_files(self):
+        payload = sample_payload()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sample_path = root / "personal" / "sample_01.json"
+            image_path = (
+                sample_path.parent
+                / "images"
+                / "sample_01"
+                / "sample_01_img_001.png"
+            )
+            image_path.parent.mkdir(parents=True)
+            image_path.write_bytes(b"image")
+            sample_path.parent.mkdir(parents=True, exist_ok=True)
+            sample_path.write_text(json.dumps(payload), encoding="utf-8")
+
+            manifest = m2a_wma_input_manifest([sample_path])
+
+        self.assertEqual(
+            manifest["builder"],
+            "embedding.chunk_builder.build_wma_chunks_from_data",
+        )
+        self.assertFalse(manifest["shared_fixed_chunks"])
+        self.assertEqual(manifest["input_file_count"], 2)
+        self.assertIn(str(sample_path.resolve()), manifest["input_files"])
+        self.assertIn(str(image_path.resolve()), manifest["input_files"])
+
     def test_balanced_chunks_keep_rounds_whole_and_sessions_separate(self):
         rounds = []
         for session_id, count in (("S00", 3), ("S01", 1)):
@@ -459,6 +532,24 @@ class WMAEvidenceAndMetricsTest(unittest.TestCase):
         )
         self.assertEqual(images, [])
         self.assertNotIn("sample_01_img_001", text)
+
+    def test_duplicate_image_paths_across_memory_items_are_attached_once(self):
+        image = {"path": "/tmp/shared.png", "img_id": "sample_01_img_001"}
+        memory_items = [
+            {
+                "text": "First visual memory.",
+                "images": [image],
+                "metadata": {"session_id": "S00", "dialogue_id": "S00:R0001"},
+            },
+            {
+                "text": "Second visual memory.",
+                "images": [dict(image)],
+                "metadata": {"session_id": "S01", "dialogue_id": "S01:R0001"},
+            },
+        ]
+        text, images = build_retrieved_memory_context(memory_items, "VFR")
+        self.assertEqual(images, ["/tmp/shared.png"])
+        self.assertEqual(text.count("Attached memory image"), 1)
 
     def test_wma_visual_categories_enable_policy_image_action(self):
         item = MAU(

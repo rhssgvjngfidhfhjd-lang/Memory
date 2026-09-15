@@ -13,7 +13,15 @@ from langgraph.types import Command
 from ..stores import RawMessage, RawMessageStore, ImageManager
 from .memory_manager import MemoryManager
 from ..config import ChatAgentConfig
-from ..utils.message import encode_image_to_base64
+from ..utils.message import (
+    deduplicate_message_images,
+    encode_image_to_base64,
+    raise_for_truncated_completion,
+)
+from .tool_call_normalizer import (
+    cap_tool_calls_to_budget,
+    normalize_qwen_tool_calls,
+)
 
 @dataclass
 class ChatAgentState:
@@ -65,7 +73,9 @@ class ChatAgent:
         self.image_manager = image_manager
         self.raw_messages = []
         self.update_memory = update_memory
+        self.update_only = update_only
         self.config = config
+        self._tool_budget_events: list[dict] = []
 
         self.tools = {
             "query": self._create_query_tool(),
@@ -73,6 +83,63 @@ class ChatAgent:
         }
         self.graph = self._build_graph(update_only)
         self.chat_messages = []
+
+    def pop_tool_budget_events(self) -> list[dict]:
+        events = list(self._tool_budget_events)
+        self._tool_budget_events.clear()
+        return events
+
+    def _record_forced_finalize(
+        self, *, operation: str, iterations: int, max_iterations: int
+    ) -> None:
+        self._tool_budget_events.append(
+            {
+                "operation": operation,
+                "tool_iterations": iterations,
+                "max_tool_iterations": max_iterations,
+                "budget_exhausted": True,
+                "forced_finalize": True,
+            }
+        )
+
+    def _cap_response_tool_calls(
+        self,
+        response: AIMessage,
+        *,
+        operation: str,
+        iterations: int,
+        max_iterations: int,
+    ) -> AIMessage:
+        remaining = max(0, max_iterations - iterations)
+        offered = len(response.tool_calls)
+        if offered > remaining:
+            self._tool_budget_events.append(
+                {
+                    "operation": operation,
+                    "tool_iterations": iterations,
+                    "max_tool_iterations": max_iterations,
+                    "budget_exhausted": True,
+                    "forced_finalize": False,
+                    "tool_calls_offered": offered,
+                    "tool_calls_accepted": remaining,
+                    "tool_calls_omitted": offered - remaining,
+                }
+            )
+        return cap_tool_calls_to_budget(response, remaining)
+
+    @staticmethod
+    def _has_text_content(response: AIMessage) -> bool:
+        content = response.content
+        if isinstance(content, str):
+            return bool(content.strip())
+        if isinstance(content, list):
+            return any(
+                isinstance(block, str) and bool(block.strip())
+                or isinstance(block, dict)
+                and bool(str(block.get("text") or block.get("content") or "").strip())
+                for block in content
+            )
+        return False
 
     def init_conversation(self, system_prompt: Optional[str] = None):
         """Initialize conversation for evaluation mode"""
@@ -96,7 +163,7 @@ You are an AI assistant with access to long-term memory.
                 image_path = x["url"]
                 image_token = self.image_manager.image_to_image_token(image_path)
                 res.append({"type": "text", "text": f"{image_token}: "})
-                x['url'] = encode_image_to_base64(image_path)
+                x['url'] = encode_image_to_base64(image_path, compress=True)
                 res.append(x)
         return res
     
@@ -116,12 +183,10 @@ You are an AI assistant with access to long-term memory.
             - If uncertain whether memory is needed, DO NOT query.
 
             WHEN to query memory:
-            - The user asks about past events, history, prior actions, prior
-              outcomes, prior tool-calls, or any observation recorded earlier.
-            - The user references entities, objects, locations, or events not
-              present in the recent context.
-            - The user asks about stored facts, relationships, identities,
-              preferences, task state, or environment history.
+            - The user asks about past events or history
+            (e.g. “What did Jane do last month?”).
+            - The user references people, objects, or entities not present in the recent context.
+            - The user asks about stored preferences, facts, relationships, or identities.
             - Temporal or historical questions
             (e.g. “When did X happen?”, “Have we discussed Y before?”).
 
@@ -175,14 +240,12 @@ You are an AI assistant with access to long-term memory.
         
         for tool_call in last_message.tool_calls:
             if tool_call['name'] == "query_memory":
+                if state.query_iteration >= self.config.max_query_iteration:
+                    raise RuntimeError(
+                        "M2A ChatAgent received a query tool call after its tool budget "
+                        "was exhausted"
+                    )
                 state.query_iteration += 1
-                if state.query_iteration == self.config.max_query_iteration:
-                    print("MAX_ITERATION_REACHED")
-                    state.messages.append(ToolMessage(
-                        content="Tool call failed: generate response state max tool call count limit exceeded!",
-                        tool_call_id=tool_call["id"]
-                    ))
-                    return state
                 
                 tool_call_id = tool_call["id"]
                 query_text = tool_call['args'].get('text')
@@ -229,11 +292,41 @@ You are an AI assistant with access to long-term memory.
         )
         # assert messages[-1].type == 'human'
         llm = self.llm
-        if state.query_iteration < self.config.max_query_iteration:
+        request_messages = deduplicate_message_images(messages)
+        forced_finalize = state.query_iteration >= self.config.max_query_iteration
+        if not forced_finalize:
             # only allow tool call if not reach max_query_iteration
-            response = llm.bind_tools([self.tools["query"]]).invoke(messages)
+            response = llm.bind_tools([self.tools["query"]]).invoke(request_messages)
         else:
-            response = llm.invoke(messages)
+            self._record_forced_finalize(
+                operation="query",
+                iterations=state.query_iteration,
+                max_iterations=self.config.max_query_iteration,
+            )
+            # The original terminal transition invokes the model without tools.
+            # Return directly so the exhausted budget can never route another
+            # tool call into query_memory.
+            response = llm.invoke(request_messages)
+            raise_for_truncated_completion(response)
+            if not self._has_text_content(response):
+                raise RuntimeError(
+                    "M2A ChatAgent returned an empty query response during "
+                    "forced finalization"
+                )
+            messages.append(response)
+            return Command(
+                update={"messages": messages, "query_iteration": 0},
+                goto="respond"
+            )
+
+        raise_for_truncated_completion(response)
+        response = normalize_qwen_tool_calls(response)
+        response = self._cap_response_tool_calls(
+            response,
+            operation="query",
+            iterations=state.query_iteration,
+            max_iterations=self.config.max_query_iteration,
+        )
         messages.append(response)
         if not response.tool_calls:
             # reset query call counts
@@ -265,28 +358,15 @@ You are an AI assistant with access to long-term memory.
 
             CRITICAL RULES:
             - DO NOT duplicate existing memories.
-            - DEFAULT TO UPDATE: When uncertain, prefer updating over skipping.
-            - Every incoming user message in an agent / task / tool-use
-              trajectory (observations, actions, feedback, plans, intermediate
-              results) is information-bearing and SHOULD be recorded — do not
-              dismiss these as "transient state". Err on the side of calling
-              update_memory at least once per turn unless the message is pure
-              phatic chat.
+            - DEFAULT TO UPDATE: When uncertain, prefer updating over skipping
 
             WHEN to update memory:
-            # NOTE: this prompt has been broadened from the upstream's
-            # "Personal facts" scoping — on VAB-MM / agent-task data the
-            # narrow personal-assistant framing rejected every agent
-            # observation, giving memory_recall = 0%.  The generalised
-            # categories below restore coverage without changing code.
-            - Any durable factual observation from the conversation that may be
-              referenced later: entities, objects, locations, events, states,
-              actions, outcomes, tool-calls, agent observations, task steps,
-              environment feedback, errors, results.
-            - Personal facts (when applicable): Names, relationships, roles,
-              identities, preferences, habits, travel plans, scheduled events.
-            - Temporal markers: Dates, times, event sequences, duration mentions.
-            - Stable factual information that should persist across turns/sessions.
+            - Personal facts: Names, relationships, roles, identities,\x20
+            (e.g. long-term preferences, habits, relationships, travel plans, scheduled events).
+            - Temporal markers: Dates, times, event sequences, duration mentions
+            - Stable factual information that should persist
+            - Preferences & habits: Likes/dislikes, routines, behavioral patterns
+            - Preferences, opinions, or behavioral patterns. (Both explicitly mentioned ones and which can be infered/reasoned from the conversation.)
             - Summarize over a conversation session
                 - Session boundary: Detect topic shifts OR >30min gaps in timestamps
                 - Coverage goal: Every message(except cases mentioned in "NOT TO UPDATE" below) 
@@ -359,18 +439,39 @@ You are an AI assistant with access to long-term memory.
         )
         
         llm = self.llm
-        if state.update_iteration < self.config.max_update_iteration:
+        request_messages = deduplicate_message_images(messages)
+        update_tools = [self.tools["query"], self.tools["update"]]
+        forced_finalize = state.update_iteration >= self.config.max_update_iteration
+        if not forced_finalize:
             # only allow tool call if not reach max_query_iteration
             response = llm.bind_tools(
-                [
-                    self.tools["query"],
-                    self.tools["update"]
-                ], 
+                update_tools,
                 parallel_tool_calls=False
-            ).invoke(messages)
+            ).invoke(request_messages)
         else:
-            response = llm.invoke(messages)
-        
+            self._record_forced_finalize(
+                operation="update",
+                iterations=state.update_iteration,
+                max_iterations=self.config.max_update_iteration,
+            )
+            # Finish with a plain model request and stop the graph immediately;
+            # tools are neither advertised nor executable past the hard cap.
+            response = llm.invoke(request_messages)
+            raise_for_truncated_completion(response)
+            messages.append(response)
+            return Command(
+                update={"messages": messages},
+                goto=END
+            )
+
+        raise_for_truncated_completion(response)
+        response = normalize_qwen_tool_calls(response)
+        response = self._cap_response_tool_calls(
+            response,
+            operation="update",
+            iterations=state.update_iteration,
+            max_iterations=self.config.max_update_iteration,
+        )
         messages.append(response)
         if not response.tool_calls:
             return Command(
@@ -395,14 +496,12 @@ You are an AI assistant with access to long-term memory.
  
         for tool_call in last_message.tool_calls:
             if tool_call['name'] == "query_memory":
+                if state.update_iteration >= self.config.max_update_iteration:
+                    raise RuntimeError(
+                        "M2A ChatAgent received an update-stage query tool call after "
+                        "its tool budget was exhausted"
+                    )
                 state.update_iteration += 1
-                if state.update_iteration == self.config.max_update_iteration:
-                    print("MAX_ITERATION_REACHED")
-                    state.messages.append(ToolMessage(
-                        content="Tool call failed: update state max tool call count limit exceeded!",
-                        tool_call_id=tool_call["id"]
-                    ))
-                    return state
                 
                 tool_call_id = tool_call["id"]
                 query_text = tool_call['args'].get('text')
@@ -426,21 +525,22 @@ You are an AI assistant with access to long-term memory.
                     query_image=query_image,
                     context=context
                 )
-                memory_result = self._prepair_message_content(memory_result)
+                # MemoryManager.query already returns API-ready multimodal
+                # content from ImageManager.format_obj_to_content. Preparing it
+                # again would treat its data: URL as a local filesystem path
+                # and register the base64 transport blob as a new image identity.
                 
                 state.messages.append(
                     ToolMessage(content=memory_result, tool_call_id=tool_call['id'])
                 )
 
             elif tool_call['name'] == "update_memory":
+                if state.update_iteration >= self.config.max_update_iteration:
+                    raise RuntimeError(
+                        "M2A ChatAgent received an update tool call after its tool "
+                        "budget was exhausted"
+                    )
                 state.update_iteration += 1
-                if state.update_iteration == self.config.max_update_iteration:
-                    print("MAX_ITERATION_REACHED")
-                    state.messages.append(ToolMessage(
-                        content="Tool call failed: update state max tool call count limit exceeded!",
-                        tool_call_id=tool_call["id"]
-                    ))
-                    return state
                 
                 tool_call_id = tool_call["id"]
                 query_text = tool_call['args'].get('text')
@@ -552,6 +652,9 @@ You are an AI assistant with access to long-term memory.
             user_message=user_text,
             user_image_path=user_image_path_or_url
         )
+
+        if not self.update_only:
+            self.memory_manager.reset_retrieval_trace()
         
         # 4. run graph
         result = self.graph.invoke(
@@ -567,6 +670,9 @@ You are an AI assistant with access to long-term memory.
         #     AIMessage(result['response'])
         # ]
         self.chat_messages = result['messages']
+
+        if self.update_only:
+            return ""
         
         # 5. Store assistant response
         self.raw_store.append(RawMessage(

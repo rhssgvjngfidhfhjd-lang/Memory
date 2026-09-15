@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "models": {
+    "openai/gpt-5-mini": {
+      "latency": {
+        "base_seconds": 3.47,
+        "input_seconds_per_token": 0.000003,
+        "output_seconds_per_token": 0.01754386,
+        "image_seconds": 0.30,
+        "source": "openrouter_openai_p50_with_heuristic_input_image_proxy",
+        "source_url": "https://openrouter.ai/openai/gpt-5-mini",
+        "reference_date": "2026-09-12"
+      },
+      "pricing": {
+        "input_per_million_usd": 0.25,
+        "output_per_million_usd": 2.00,
+        "source": "openrouter_standard",
+        "source_url": "https://openrouter.ai/openai/gpt-5-mini",
+        "reference_date": "2026-09-12"
+      }
+    }
+  }
+}

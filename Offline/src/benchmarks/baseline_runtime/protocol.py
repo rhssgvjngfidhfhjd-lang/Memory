@@ -49,23 +49,36 @@ class RetrievedMemory:
         return cls(**dict(value))
 
     def to_context_item(self) -> dict[str, Any]:
-        image = None
-        if self.image_paths:
-            image = {
-                "path": self.image_paths[0],
-                "img_id": self.image_ids[0] if self.image_ids else "",
+        images = [
+            {
+                "path": path,
+                "img_id": self.image_ids[index] if index < len(self.image_ids) else "",
+                "kind": "image",
             }
+            for index, path in enumerate(self.image_paths)
+        ]
+        image = (
+            {"path": images[0]["path"], "img_id": images[0]["img_id"]}
+            if images
+            else None
+        )
         metadata = dict(self.metadata)
         metadata.update(
             {
                 "session_id": self.session_id,
                 "dialogue_id": self.source_dialogue_ids[0] if self.source_dialogue_ids else "",
                 "source_dialogue_ids": list(self.source_dialogue_ids),
+                "image_id": self.image_ids[0] if self.image_ids else "",
                 "image_ids": list(self.image_ids),
                 "image_paths": list(self.image_paths),
             }
         )
-        return {"text": self.text, "image": image, "metadata": metadata}
+        return {
+            "text": self.text,
+            "image": image,
+            "images": images,
+            "metadata": metadata,
+        }
 
     def to_trace(self, rank: int, *, via: str = "native") -> dict[str, Any]:
         return {
@@ -95,6 +108,57 @@ class RetrievalResult:
             items=[RetrievedMemory.from_dict(row) for row in value.get("items") or []],
             trace=dict(value.get("trace") or {}),
         )
+
+
+@dataclass(frozen=True)
+class NativeAnswerRequest:
+    """A method-owned answer request seeded by the retrieval phase."""
+
+    query_id: str
+    messages: list[dict[str, Any]]
+    retrieval: RetrievalResult
+    query_image: str | None = None
+    top_k: int = 7
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "query_id": self.query_id,
+            "messages": list(self.messages),
+            "retrieval": self.retrieval.to_dict(),
+            "query_image": self.query_image,
+            "top_k": self.top_k,
+        }
+
+    @classmethod
+    def from_dict(cls, value: dict[str, Any]) -> "NativeAnswerRequest":
+        data = dict(value)
+        data["retrieval"] = RetrievalResult.from_dict(data["retrieval"])
+        return cls(**data)
+
+
+@dataclass
+class NativeAnswerResult:
+    text: str
+    attempts: int = 1
+    failed_attempts: int = 0
+    image_count: int = 0
+    usage: dict[str, Any] | None = None
+    trace: dict[str, Any] = field(default_factory=dict)
+    retrieval: RetrievalResult | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        value = asdict(self)
+        value["retrieval"] = self.retrieval.to_dict() if self.retrieval else None
+        return value
+
+    @classmethod
+    def from_dict(cls, value: dict[str, Any]) -> "NativeAnswerResult":
+        data = dict(value)
+        retrieval = data.get("retrieval")
+        data["retrieval"] = (
+            RetrievalResult.from_dict(retrieval) if retrieval is not None else None
+        )
+        return cls(**data)
 
 
 @dataclass
@@ -139,6 +203,9 @@ class BaselineAdapter(ABC):
 
     def capabilities(self) -> dict[str, Any]:
         return {"backend": type(self).__name__, "available": True}
+
+    def answer_with_memory(self, request: NativeAnswerRequest) -> NativeAnswerResult:
+        raise NotImplementedError(f"{type(self).__name__} has no native chat answer path")
 
     def close(self) -> None:
         return None

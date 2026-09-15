@@ -7,7 +7,10 @@ import wandb_workspaces.reports.v2 as wr
 import wandb_workspaces.workspaces as ws
 
 from scripts.configure_evidence_policy_wandb_workspace import (
+    TRAIN_COST_METRICS,
+    TRAIN_METRICS,
     VALIDATION_ACTION_MASKS,
+    VALIDATION_COST_METRICS,
     build_sections,
     configure_workspace,
 )
@@ -20,24 +23,44 @@ class WandbWorkspaceTest(unittest.TestCase):
 
         self.assertEqual(
             [section.name for section in sections],
-            ["Validation", "Critic", "Actor"],
+            [
+                "Quality-Cost Frontier",
+                "Training",
+                "Critic",
+                "Validation",
+                "Test",
+            ],
         )
         self.assertEqual(
             panel_counts,
             {
-                "Validation": 42,
+                "Quality-Cost Frontier": 1,
+                "Training": 28,
                 "Critic": 8,
-                "Actor": 7,
+                "Validation": 61,
+                "Test": 2,
             },
         )
         self.assertTrue(sections[0].is_open)
-        self.assertFalse(sections[1].is_open)
+        self.assertTrue(sections[1].is_open)
         self.assertFalse(sections[2].is_open)
+        self.assertFalse(sections[3].is_open)
+        self.assertFalse(sections[4].is_open)
 
-    def test_required_actor_and_critic_metrics_are_independent_panels(self) -> None:
+    def test_frontier_is_the_first_visible_section(self) -> None:
+        frontier = build_sections(ws, wr)[0]
+
+        self.assertEqual(frontier.name, "Quality-Cost Frontier")
+        self.assertTrue(frontier.is_open)
+        self.assertEqual(
+            frontier.panels[0].title,
+            "Test F1 vs Raw QA Cost",
+        )
+
+    def test_required_training_and_critic_metrics_are_independent_panels(self) -> None:
         sections = build_sections(ws, wr)
         critic = next(section for section in sections if section.name == "Critic")
-        actor = next(section for section in sections if section.name == "Actor")
+        training = next(section for section in sections if section.name == "Training")
 
         reward_mean = next(
             panel
@@ -46,14 +69,25 @@ class WandbWorkspaceTest(unittest.TestCase):
         )
         entropy = next(
             panel
-            for panel in actor.panels
-            if getattr(panel, "title", None) == "actor/entropy_loss"
+            for panel in training.panels
+            if getattr(panel, "title", None) == "train/entropy_loss"
         )
 
         self.assertEqual(reward_mean.y, ["critic/rewards/mean"])
-        self.assertEqual(entropy.y, ["actor/entropy_loss"])
+        self.assertEqual(entropy.y, ["train/entropy_loss"])
         self.assertTrue(reward_mean.smoothing_show_original)
-        self.assertTrue(entropy.smoothing_show_original)
+        self.assertEqual(entropy.smoothing_type, "none")
+
+    def test_training_contains_fixed_policy_and_cost_panels(self) -> None:
+        training = next(
+            section for section in build_sections(ws, wr)
+            if section.name == "Training"
+        )
+        titles = {getattr(panel, "title", None) for panel in training.panels}
+        self.assertTrue({f"train/{name}" for name in TRAIN_METRICS} <= titles)
+        self.assertTrue(
+            {f"train/cost/{name}" for name in TRAIN_COST_METRICS} <= titles
+        )
 
     def test_validation_has_requested_metrics_and_evidence_panels(self) -> None:
         sections = build_sections(ws, wr)
@@ -75,12 +109,21 @@ class WandbWorkspaceTest(unittest.TestCase):
                 "Validation Exact Match",
                 "Validation Retrieval Hit Rate@5",
                 "Validation Errors",
+                *[f"val/cost/{name}" for name in VALIDATION_COST_METRICS],
                 "Evidence Combination Ratio",
                 "Evidence Level Selection Ratio",
                 *[f"val/action_ratio/{mask}" for mask in VALIDATION_ACTION_MASKS],
-                "Final Combination Distribution",
-                "Final Evidence Level Ratio",
             ],
+        )
+
+    def test_test_section_contains_only_final_distributions(self) -> None:
+        test = next(
+            section for section in build_sections(ws, wr)
+            if section.name == "Test"
+        )
+        self.assertEqual(
+            [panel.chart_strings["title"] for panel in test.panels],
+            ["Final Combination Distribution", "Final Evidence Level Ratio"],
         )
 
     def test_each_validation_action_mask_has_an_independent_ratio_panel(self) -> None:

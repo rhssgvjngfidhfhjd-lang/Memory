@@ -1,28 +1,40 @@
 from __future__ import annotations
 
+import ast
+import copy
 import importlib
 import importlib.util
+import base64
+import contextvars
+import hashlib
 import json
+import math
+import mimetypes
 import os
 import re
 import shutil
+import sqlite3
 import sys
 import uuid
 from contextlib import contextmanager
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
+from urllib.parse import urlsplit
 
 from json_repair import repair_json
 
 from benchmarks.baseline_runtime.protocol import (
     BaselineAdapter,
     MemoryRecord,
+    NativeAnswerRequest,
+    NativeAnswerResult,
     RetrievalRequest,
     RetrievalResult,
     RetrievedMemory,
 )
 from benchmarks.baseline_runtime.provenance import ProvenanceIndex
-from embedding.chunk_builder import Chunk
+from embedding.chunk_builder import Chunk, compact_text
 
 
 _PARTITIONS: tuple[tuple[str, str, str], ...] = (
@@ -33,6 +45,181 @@ _PARTITIONS: tuple[tuple[str, str, str], ...] = (
     ("knowledge_vault_manager", "knowledge_vault_agent_state", "list_knowledge"),
 )
 
+_ACTIVE_MIRIX_RETRIEVAL: contextvars.ContextVar[Any | None] = contextvars.ContextVar(
+    "offline_active_mirix_retrieval", default=None
+)
+_ACTIVE_MIRIX_QA_TRUNCATION: contextvars.ContextVar[dict[str, Any] | None] = (
+    contextvars.ContextVar("offline_active_mirix_qa_truncation", default=None)
+)
+
+_MIRIX_BOUNDED_MEMORY_PROMPTS = {
+    "semantic_memory_agent": (
+        "[Offline bounded memory-update protocol]\n"
+        "Keep the complete function-call arguments below 700 tokens. For "
+        "semantic_memory_insert, consolidate related facts and return at most "
+        "three of the most important concepts. Keep name at most 120 characters, "
+        "summary at most 240 characters, details at most 500 characters, and "
+        "source at most 160 characters. Never transcribe whole sessions."
+    ),
+    "episodic_memory_agent": (
+        "[Offline bounded memory-update protocol]\n"
+        "Keep the complete function-call arguments below 650 tokens. This "
+        "instruction overrides requests to repeat all prior event details. For "
+        "episodic_memory_merge, the schema exposes details_delta: include only "
+        "new event details that are not already stored, at most 900 characters. "
+        "Do not repeat the old details. The runtime deterministically appends "
+        "details_delta to the stored event. Keep combined_summary standalone but "
+        "concise, at most 300 characters. For episodic_memory_insert, return "
+        "exactly one most-significant event, with details at most 900 characters "
+        "and summary at most 300 characters."
+    ),
+    "resource_memory_agent": (
+        "[Offline bounded memory-update protocol]\n"
+        "Keep the complete function-call arguments below 600 tokens. This "
+        "instruction overrides any earlier request for very long or maximally "
+        "detailed content. Summarize; never transcribe whole sessions. For "
+        "resource_memory_insert, write a compact standalone content field of at "
+        "most 900 characters. For resource_memory_update, the schema exposes "
+        "content_delta: include only new information that is not already in the "
+        "existing item, at most 900 characters. Do not repeat the old content. "
+        "The runtime deterministically appends content_delta to the stored content. "
+        "Return a complete updated summary, title, resource_type, and tree_path."
+    ),
+    "procedural_memory_agent": (
+        "[Offline bounded memory-update protocol]\n"
+        "Keep the complete function-call arguments below 700 tokens. For "
+        "procedural_memory_insert, use at most eight concise steps. For "
+        "procedural_memory_update, the schema exposes steps_delta: include only "
+        "new or changed steps that are not already stored, at most six concise "
+        "steps. Do not repeat old steps. The runtime deterministically merges "
+        "steps_delta into the stored procedure. Return a complete updated summary, "
+        "entry_type, and tree_path."
+    ),
+}
+
+
+class _MirixRetrievalBudget:
+    """Limit detailed native Chat-Agent retrievals to one shared QA budget."""
+
+    def __init__(self, adapter: "MirixFamilyAdapter", query_id: str, top_k: int) -> None:
+        self.adapter = adapter
+        self.query_id = query_id
+        self.top_k = top_k
+        self.items: list[RetrievedMemory] = []
+        self._ids: set[str] = set()
+        self.tool_calls: list[dict[str, Any]] = []
+        self.prefetches: list[dict[str, Any]] = []
+        self.provisional_answer = ""
+        self._prefetch_payload: dict[str, Any] | None = None
+
+    def install_prefetch(
+        self,
+        payload: dict[str, Any],
+        selected: list[tuple[str, Any]],
+        trace: dict[str, Any],
+    ) -> None:
+        """Reserve real automatic-prefetch rows in the shared Top-K budget."""
+        if self._prefetch_payload is not None:
+            return
+        selected_ids: list[str] = []
+        for memory_type, row in selected:
+            data = _model_dump(row) or {}
+            data["memory_type"] = memory_type
+            raw_id = _native_result_id(data)
+            memory_id = f"{memory_type}_memory_manager:{raw_id}"
+            if memory_id in self._ids or len(self.items) >= self.top_k:
+                continue
+            item = self.adapter._retrieved_memory_from_native(data, raw_id)
+            item.metadata["via"] = "native_chat_agent_automatic_prefetch"
+            self._ids.add(memory_id)
+            self.items.append(item)
+            selected_ids.append(memory_id)
+        self._prefetch_payload = copy.deepcopy(payload)
+        self.prefetches.append(
+            {
+                **trace,
+                "selected_count": len(selected_ids),
+                "memory_ids": selected_ids,
+                "budget_after": self.top_k - len(self.items),
+            }
+        )
+
+    def prefetch_payload(self, agent: Any, topics: Any) -> dict[str, Any]:
+        if self._prefetch_payload is None:
+            payload, selected, trace = self.adapter._capped_native_prefetch(
+                agent, topics=topics, top_k=self.top_k
+            )
+            self.install_prefetch(payload, selected, trace)
+        return copy.deepcopy(self._prefetch_payload)
+
+    def limit_tool_result(self, function_name: str, result: Any) -> Any:
+        if function_name not in {"search_in_memory", "list_memory_within_timerange"}:
+            return result
+        rows: list[Any] | None = None
+        tuple_result = isinstance(result, tuple) and len(result) == 2
+        if tuple_result and isinstance(result[0], list):
+            rows = list(result[0])
+        elif isinstance(result, list):
+            rows = list(result)
+        call = {
+            "tool": function_name,
+            "raw_count": len(rows) if rows is not None else 0,
+            "budget_before": self.top_k - len(self.items),
+        }
+        if rows is None:
+            call["returned_count"] = 0
+            call["result_type"] = type(result).__name__
+            self.tool_calls.append(call)
+            return result
+
+        allowed: list[Any] = []
+        for row in rows:
+            raw_id = _native_result_id(row)
+            item = self.adapter._retrieved_memory_from_native(row, raw_id)
+            if item.memory_id in self._ids:
+                continue
+            if len(self.items) >= self.top_k:
+                break
+            self._ids.add(item.memory_id)
+            self.items.append(item)
+            allowed.append(row)
+        call["returned_count"] = len(allowed)
+        call["budget_after"] = self.top_k - len(self.items)
+        call["memory_ids"] = [item.memory_id for item in self.items[-len(allowed):]] if allowed else []
+        self.tool_calls.append(call)
+        return (allowed, len(allowed)) if tuple_result else allowed
+
+    def capture_prefetch(self, retrieved: Any) -> None:
+        if not isinstance(retrieved, dict):
+            return
+        counts: dict[str, Any] = {}
+        for key, value in retrieved.items():
+            if isinstance(value, dict):
+                counts[key] = {
+                    field: count
+                    for field, count in value.items()
+                    if field.endswith("count") or field.endswith("number_of_items")
+                }
+            elif key == "core":
+                counts[key] = {"resident": True}
+        self.prefetches.append(counts)
+
+    def result(self, *, stage: str) -> RetrievalResult:
+        return RetrievalResult(
+            items=list(self.items),
+            trace={
+                "baseline": "MIRIX",
+                "via": "native_chat_agent_tools",
+                "ranking": "native_agent_selected",
+                "requested_top_k": self.top_k,
+                "returned_memories": len(self.items),
+                "remaining_budget": self.top_k - len(self.items),
+                "stage": stage,
+                "tool_calls": list(self.tool_calls),
+                "automatic_system_prefetch": list(self.prefetches),
+                "automatic_prefetch_counts_toward_top_k": True,
+            },
+        )
 
 class MirixFamilyAdapter(BaselineAdapter):
     def __init__(self, *, baseline: str, source_root: Path, config: dict[str, Any]) -> None:
@@ -44,18 +231,48 @@ class MirixFamilyAdapter(BaselineAdapter):
         self.provenance = ProvenanceIndex()
         self._known_ids: set[str] = set()
         self._last_chunk: Chunk | None = None
+        self._pending_chunks: list[Chunk] = []
         self._ingested_chunks = 0
+        self._qa_budgets: dict[str, _MirixRetrievalBudget] = {}
+        self._sample_id = ""
+        self._state_dir: Path | None = None
+        self._completed_session_ids: list[str] = []
+        self._seen_session_ids: list[str] = []
         if str(source_root) not in sys.path:
             sys.path.insert(0, str(source_root))
 
     def reset(self, sample_id: str, state_dir: Path) -> None:
-        if state_dir.exists():
+        resume_payload = self._load_resume_checkpoint(sample_id, state_dir)
+        if resume_payload is None and state_dir.exists():
             shutil.rmtree(state_dir)
-        state_dir.mkdir(parents=True)
+        state_dir.mkdir(parents=True, exist_ok=True)
+        if resume_payload is not None:
+            self._restore_resume_database(state_dir, resume_payload)
         temp_dir = state_dir / "tmp"
         temp_dir.mkdir(parents=True, exist_ok=True)
         env_name = "MMA_DIR" if self.baseline == "MMA" else "MIRIX_DIR"
         os.environ[env_name] = str(state_dir)
+        if self.baseline == "MIRIX":
+            # v0.1.1's constants ignore MIRIX_DIR for SQLite. Its supported
+            # MEMGPT_CONFIG_PATH does isolate all three native stores without
+            # mutating HOME or the official checkout.
+            native_config = state_dir / "config"
+            native_config.write_text(
+                "[defaults]\n"
+                "preset = memgpt_chat\n"
+                "persona = sam_pov\n"
+                "human = basic\n\n"
+                "[archival_storage]\n"
+                f"type = sqlite\npath = {state_dir}\n\n"
+                "[recall_storage]\n"
+                f"type = sqlite\npath = {state_dir}\n\n"
+                "[metadata_storage]\n"
+                f"type = sqlite\npath = {state_dir}\n\n"
+                "[version]\nmirix_version = 0.1.0\n",
+                encoding="utf-8",
+            )
+            os.environ["MEMGPT_CONFIG_PATH"] = str(native_config)
+            os.environ["MIRIX_IMAGES_DIR"] = str(state_dir / "images")
         os.environ["TMPDIR"] = str(temp_dir)
         os.environ["SQLITE_TMPDIR"] = str(temp_dir)
         os.environ["OPENAI_API_BASE"] = str(self.config["executor_base_url"])
@@ -63,7 +280,27 @@ class MirixFamilyAdapter(BaselineAdapter):
         os.environ.setdefault("OPENAI_API_KEY", str(self.config.get("executor_api_key") or "EMPTY"))
 
         self._ensure_package_importable()
-        self._patch_openai_tool_compat()
+        if self.baseline == "MIRIX":
+            self._verify_official_mirix_source()
+            self._patch_v011_prompt_layout()
+            self._patch_v011_embedding_model()
+            self._patch_v011_local_images()
+            self._patch_v011_openai_error_handler()
+            self._patch_v011_vllm_tool_call_boundary()
+            self._install_native_retrieval_hooks()
+            # v0.1.1's legacy/streaming request path drops
+            # LLMConfig.max_tokens. Enforce the experiment's configured cap
+            # without changing native tool selection or response handling.
+            self._patch_legacy_request_token_cap()
+            if not bool(self.config.get("executor_native_tool_calls", False)):
+                raise ValueError(
+                    "strict MIRIX v0.1.1 requires executor_native_tool_calls=true; "
+                    "textual tool-call repair is forbidden"
+                )
+            if bool(self.config.get("mirix_semantic_fallback_on_error", False)):
+                raise ValueError("strict MIRIX forbids semantic fallback on error")
+        else:
+            self._patch_openai_tool_compat()
         constants = importlib.import_module(f"{self.package}.agent.app_constants")
         wrapper_module = importlib.import_module(f"{self.package}.agent.agent_wrapper")
         model = str(self.config["executor_model"])
@@ -80,11 +317,513 @@ class MirixFamilyAdapter(BaselineAdapter):
         llm, embedding = self._model_configs()
         with self._patched_defaults(llm, embedding):
             self.backend = agent_module.AgentWrapper(str(config_path))
+        self._configure_native_absorption_batch()
         self._apply_model_config(llm, embedding)
         self.provenance.clear()
         self._known_ids = set()
         self._last_chunk = None
+        self._pending_chunks = []
         self._ingested_chunks = 0
+        self._qa_budgets = {}
+        self._sample_id = str(sample_id)
+        self._state_dir = state_dir
+        self._completed_session_ids = []
+        self._seen_session_ids = []
+        if resume_payload is not None:
+            self._ingested_chunks = int(resume_payload.get("ingested_chunks") or 0)
+            self._completed_session_ids = [
+                str(value)
+                for value in resume_payload.get("completed_session_ids") or []
+            ]
+            self._seen_session_ids = list(self._completed_session_ids)
+            self._known_ids = {
+                str(value) for value in resume_payload.get("known_ids") or []
+            }
+            self.provenance.restore_rows(
+                dict(resume_payload.get("provenance") or {})
+            )
+
+    def _verify_official_mirix_source(self) -> None:
+        expected = "ac0a1f2890df5e7435c66d6c2827f34c5c4ce32d"
+        head_path = self.source_root / ".git" / "HEAD"
+        if not head_path.exists():
+            raise RuntimeError(
+                f"MIRIX v0.1.1 checkout is missing at {self.source_root}; "
+                "run Offline/scripts/prepare_mirix_v011.py"
+            )
+        import subprocess
+
+        head = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=self.source_root, text=True
+        ).strip()
+        dirty = subprocess.check_output(
+            ["git", "status", "--porcelain"], cwd=self.source_root, text=True
+        ).strip()
+        if head != expected or dirty:
+            raise RuntimeError(
+                f"MIRIX source must be clean v0.1.1 ({expected}); "
+                f"found head={head}, dirty={bool(dirty)}"
+            )
+
+    def _install_native_retrieval_hooks(self) -> None:
+        module = importlib.import_module("mirix.agent.agent")
+        agent_class = module.Agent
+        if getattr(agent_class, "_offline_native_budget_hooks", False):
+            return
+        original_execute = agent_class.execute_tool_and_persist_state
+        original_prompt = agent_class.build_system_prompt_with_memories
+        original_handle_response = agent_class._handle_ai_response
+
+        def execute(agent: Any, function_name: str, *args: Any, **kwargs: Any) -> Any:
+            if function_name in _MIRIX_BOUNDED_EXECUTION_TOOLS and args:
+                mutable_args = list(args)
+                function_args = mutable_args[0]
+                if isinstance(function_args, dict):
+                    mutable_args[0] = _expand_mirix_delta_update(
+                        agent, function_name, function_args
+                    )
+                    args = tuple(mutable_args)
+            result = original_execute(agent, function_name, *args, **kwargs)
+            budget = _ACTIVE_MIRIX_RETRIEVAL.get()
+            if budget is None or str(getattr(agent.agent_state, "name", "")) != "chat_agent":
+                return result
+            return budget.limit_tool_result(function_name, result)
+
+        def handle_response(agent: Any, *args: Any, **kwargs: Any) -> Any:
+            result = original_handle_response(agent, *args, **kwargs)
+            if (
+                _ACTIVE_MIRIX_RETRIEVAL.get() is None
+                or str(getattr(agent.agent_state, "name", "")) != "chat_agent"
+                or len(result) < 3
+            ):
+                return result
+            response_message = (
+                args[1] if len(args) > 1 else kwargs.get("response_message")
+            )
+            if _response_message_tool_names(response_message) != ["send_message"]:
+                return result
+            # MIRIX's ToolRulesSolver can incorrectly override send_message's
+            # terminal decision. Its plain-text compatibility path can also
+            # mark a successfully emitted send_message as failed during native
+            # bookkeeping; Agent.step then ignores chaining=False and retries
+            # the same answer eleven times. The validated send_message payload
+            # is already the final answer, so preserve its messages and make
+            # this single-tool turn terminal and successful.
+            return result[0], False, False
+
+        def build_prompt(agent: Any, *args: Any, **kwargs: Any) -> Any:
+            budget = _ACTIVE_MIRIX_RETRIEVAL.get()
+            if budget is not None and str(getattr(agent.agent_state, "name", "")) == "chat_agent":
+                topics = kwargs.get("topics")
+                if len(args) > 1:
+                    topics = args[1]
+                capped = budget.prefetch_payload(agent, topics)
+                mutable_args = list(args)
+                if len(mutable_args) > 2:
+                    mutable_args[2] = capped
+                else:
+                    kwargs = dict(kwargs)
+                    kwargs["retrieved_memories"] = capped
+                return original_prompt(agent, *mutable_args, **kwargs)
+            return original_prompt(agent, *args, **kwargs)
+
+        agent_class.execute_tool_and_persist_state = execute
+        agent_class._handle_ai_response = handle_response
+        agent_class.build_system_prompt_with_memories = build_prompt
+        agent_class._offline_native_budget_hooks = True
+
+    def _capped_native_prefetch(
+        self, agent: Any, *, topics: Any, top_k: int
+    ) -> tuple[dict[str, Any], list[tuple[str, Any]], dict[str, Any]]:
+        """Build MIRIX's automatic prompt prefetch under one global budget.
+
+        MIRIX v0.1.1 independently preloads up to ten rows from every memory
+        bank.  For the benchmark, preserve those native per-bank rankings, then
+        interleave banks by rank so one large bank cannot consume all seven
+        slots.  The exact selected rows are both rendered into the system prompt
+        and registered as retrieval evidence.
+        """
+        state = agent.agent_state
+        timezone_str = agent.user_manager.get_user_by_id(agent.user.id).timezone
+        key_words = topics if topics is not None else state.topic
+        constants = importlib.import_module("mirix.constants")
+        native_limit = int(getattr(constants, "MAX_RETRIEVAL_LIMIT_IN_SYSTEM", 10))
+
+        episodic_manager = agent.episodic_memory_manager
+        semantic_manager = agent.semantic_memory_manager
+        procedural_manager = agent.procedural_memory_manager
+        resource_manager = agent.resource_memory_manager
+        vault_manager = agent.knowledge_vault_manager
+
+        recent = list(
+            episodic_manager.list_episodic_memory(
+                agent_state=state,
+                limit=native_limit,
+                timezone_str=timezone_str,
+            )
+            or []
+        )
+        relevant = list(
+            episodic_manager.list_episodic_memory(
+                agent_state=state,
+                embedded_text=None,
+                query=key_words,
+                search_field="details",
+                search_method="bm25",
+                limit=native_limit,
+                timezone_str=timezone_str,
+            )
+            or []
+        )
+        episodic = _dedupe_native_rows(relevant + recent)
+        semantic = list(
+            semantic_manager.list_semantic_items(
+                agent_state=state,
+                embedded_text=None,
+                query=key_words,
+                search_field="details",
+                search_method="bm25",
+                limit=native_limit,
+                timezone_str=timezone_str,
+            )
+            or []
+        )
+        procedural = list(
+            procedural_manager.list_procedures(
+                agent_state=state,
+                embedded_text=None,
+                query=key_words,
+                search_field="summary",
+                search_method="bm25",
+                limit=native_limit,
+                timezone_str=timezone_str,
+            )
+            or []
+        )
+        resource = list(
+            resource_manager.list_resources(
+                agent_state=state,
+                embedded_text=None,
+                query=key_words,
+                search_field="summary",
+                search_method="bm25",
+                limit=native_limit,
+                timezone_str=timezone_str,
+            )
+            or []
+        )
+        knowledge_vault = list(
+            vault_manager.list_knowledge(
+                agent_state=state,
+                embedded_text=None,
+                query=key_words,
+                search_field="caption",
+                search_method="bm25",
+                limit=native_limit,
+                timezone_str=timezone_str,
+                sensitivity=["low", "medium"],
+            )
+            or []
+        )
+
+        groups = [
+            ("episodic", episodic),
+            ("semantic", semantic),
+            ("procedural", procedural),
+            ("resource", resource),
+            ("knowledge_vault", knowledge_vault),
+        ]
+        selected = _round_robin_native_rows(groups, top_k)
+        selected_by_type: dict[str, list[Any]] = {name: [] for name, _ in groups}
+        for memory_type, row in selected:
+            selected_by_type[memory_type].append(row)
+
+        episodic_rows = selected_by_type["episodic"]
+        if key_words is None:
+            recent_text = _format_prefetched_episodic(episodic_rows)
+            relevant_text = ""
+            recent_count = len(episodic_rows)
+            relevant_count = 0
+        else:
+            recent_text = ""
+            relevant_text = _format_prefetched_episodic(episodic_rows)
+            recent_count = 0
+            relevant_count = len(episodic_rows)
+
+        payload = {
+            "key_words": key_words,
+            "episodic": {
+                "total_number_of_items": episodic_manager.get_total_number_of_items(),
+                "recent_count": recent_count,
+                "relevant_count": relevant_count,
+                "recent_episodic_memory": recent_text,
+                "relevant_episodic_memory": relevant_text,
+            },
+            "semantic": {
+                "total_number_of_items": semantic_manager.get_total_number_of_items(),
+                "current_count": len(selected_by_type["semantic"]),
+                "text": _format_prefetched_semantic(selected_by_type["semantic"]),
+            },
+            "procedural": {
+                "total_number_of_items": procedural_manager.get_total_number_of_items(),
+                "current_count": len(selected_by_type["procedural"]),
+                "text": _format_prefetched_procedural(selected_by_type["procedural"]),
+            },
+            "resource": {
+                "total_number_of_items": resource_manager.get_total_number_of_items(),
+                "current_count": len(selected_by_type["resource"]),
+                "text": _format_prefetched_resource(selected_by_type["resource"]),
+            },
+            "knowledge_vault": {
+                "total_number_of_items": vault_manager.get_total_number_of_items(),
+                "current_count": len(selected_by_type["knowledge_vault"]),
+                "text": _format_prefetched_vault(selected_by_type["knowledge_vault"]),
+            },
+        }
+        trace = {
+            "raw_counts": {name: len(rows) for name, rows in groups},
+            "selected_counts": {
+                name: len(selected_by_type[name]) for name, _ in groups
+            },
+            "selection": "native_per_bank_rank_round_robin",
+        }
+        return payload, selected, trace
+
+    def _patch_v011_prompt_layout(self) -> None:
+        """Map the v0.1.1 loader to its committed ``system/base`` files."""
+        module = importlib.import_module("mirix.prompts.gpt_system")
+        if getattr(module, "_offline_v011_base_layout", False):
+            return
+        original = module.get_system_text
+
+        def get_system_text(key: str) -> str:
+            try:
+                text = original(key)
+            except FileNotFoundError:
+                path = self.source_root / "mirix" / "prompts" / "system" / "base" / f"{key}.txt"
+                if not path.is_file():
+                    raise
+                text = path.read_text(encoding="utf-8").strip()
+            addendum = _MIRIX_BOUNDED_MEMORY_PROMPTS.get(key)
+            if addendum:
+                if key == "resource_memory_agent":
+                    text = text.replace(
+                        "The content needs to be as detailed as possible, so it is okay if it is very long.",
+                        "The content must be a compact summary of the source material.",
+                    ).replace(
+                        "Content can be very long, which is acceptable and expected",
+                        "Content must stay within the bounded protocol below",
+                    )
+                text = f"{text.rstrip()}\n\n{addendum}"
+            return text
+
+        module.get_system_text = get_system_text
+        module._offline_v011_base_layout = True
+
+    def _patch_v011_embedding_model(self) -> None:
+        """Honor EmbeddingConfig.embedding_model, ignored by v0.1.1 upstream."""
+        module = importlib.import_module("mirix.embeddings")
+        if getattr(module, "_offline_v011_configured_model", False):
+            return
+
+        def embedding_model(config: Any, user_id: Any = None) -> Any:
+            if str(config.embedding_endpoint_type) != "openai":
+                return module._offline_v011_original_embedding_model(config, user_id)
+            from llama_index.embeddings.openai import OpenAIEmbedding
+
+            additional = {"user_id": user_id} if user_id else {}
+            return OpenAIEmbedding(
+                model_name=str(config.embedding_model),
+                api_base=str(config.embedding_endpoint),
+                api_key=os.getenv("OPENAI_API_KEY") or "EMPTY",
+                dimensions=int(config.embedding_dim),
+                additional_kwargs=additional,
+            )
+
+        module._offline_v011_original_embedding_model = module.embedding_model
+        module.embedding_model = embedding_model
+        module._offline_v011_configured_model = True
+        # Managers import the function by value, so update those native module
+        # bindings without changing manager behavior.
+        for name in (
+            "semantic_memory_manager",
+            "episodic_memory_manager",
+            "procedural_memory_manager",
+            "resource_memory_manager",
+            "knowledge_vault_manager",
+            "utils",
+        ):
+            native = importlib.import_module(f"mirix.services.{name}")
+            if hasattr(native, "embedding_model"):
+                native.embedding_model = embedding_model
+
+    def _patch_v011_local_images(self) -> None:
+        """Preserve size-controlled local images as database content for OpenAI VLMs."""
+        module = importlib.import_module("mirix.agent.temporary_message_accumulator")
+        upload_module = importlib.import_module("mirix.agent.upload_manager")
+        cls = module.TemporaryMessageAccumulator
+        if getattr(cls, "_offline_v011_local_images", False):
+            return
+        original = cls._build_memory_message
+        prefix = "offline_database_image:"
+        compressor = object.__new__(upload_module.UploadManager)
+        compressor.logger = importlib.import_module("logging").getLogger(
+            "Mirix.OfflineImageTransport"
+        )
+
+        def build(accumulator: Any, ready: Any, voice: Any) -> Any:
+            converted = []
+            for timestamp, item in ready:
+                item_copy = dict(item)
+                refs = []
+                for ref in list(item_copy.get("image_uris") or []):
+                    if isinstance(ref, str):
+                        # The native cloud-upload path normally invokes
+                        # UploadManager._compress_image. Our local-database path
+                        # bypasses uploads, so stage the same transport copy
+                        # explicitly before saving it in MIRIX's image store.
+                        transport_path = _stage_native_transport_image(
+                            ref,
+                            cache_dir=(
+                                Path(accumulator.client.images_dir).parent
+                                / "tmp"
+                                / "image_transport"
+                            ),
+                            compressor=compressor,
+                        )
+                        metadata = accumulator.client._save_image_from_file_uri(
+                            str(transport_path)
+                        )
+                        refs.append(SimpleNamespace(uri=prefix + str(metadata.id)))
+                    else:
+                        refs.append(ref)
+                item_copy["image_uris"] = refs
+                converted.append((timestamp, item_copy))
+            result = original(accumulator, converted, voice)
+            for part in result:
+                if part.get("type") != "google_cloud_file_uri":
+                    continue
+                uri = str(part.get("google_cloud_file_uri") or "")
+                if uri.startswith(prefix):
+                    part.clear()
+                    part.update(
+                        {"type": "database_image_id", "image_id": uri[len(prefix):]}
+                    )
+            return result
+
+        cls._build_memory_message = build
+        cls._offline_v011_local_images = True
+
+    def _configure_native_absorption_batch(self) -> None:
+        """Fit MIRIX's native batch to the configured Qwen context window.
+
+        MIRIX defaults to 20 screenshots per Meta Memory Agent turn for its
+        million-token Gemini backend.  The benchmark deliberately substitutes
+        a 32k Qwen backbone, where that same native turn can exceed the server
+        limit before history compression is possible.  Only the batch boundary
+        changes here; every chunk still goes through the original accumulator,
+        Meta Memory Agent, and selected memory agents.
+        """
+        accumulator = getattr(self.backend, "temp_message_accumulator", None)
+        if accumulator is None:
+            return
+        batch_size = 20 if self.baseline == "MIRIX" else int(
+            self.config.get("mirix_native_batch_size") or 5
+        )
+        if batch_size < 1:
+            raise ValueError("mirix_native_batch_size must be positive")
+        accumulator.temporary_message_limit = batch_size
+
+    def _patch_v011_openai_error_handler(self) -> None:
+        """Repair v0.1.1's references to ErrorCode members it never defined.
+
+        A malformed/truncated native tool call is returned as HTTP 400. MIRIX
+        intends to convert that response to LLMError and use its built-in
+        retry path, but v0.1.1 instead raises AttributeError while looking up
+        ErrorCode.INVALID_ARGUMENT. Preserve the original retry behavior by
+        returning the intended bad-request exception with a valid enum value.
+        """
+        client_module = importlib.import_module("mirix.llm_api.openai_client")
+        errors_module = importlib.import_module("mirix.errors")
+        client_class = client_module.OpenAIClient
+        if getattr(client_class, "_offline_v011_error_codes", False):
+            return
+        original = client_class.handle_llm_error
+
+        def handle(client: Any, error: Exception) -> Exception:
+            try:
+                return original(client, error)
+            except AttributeError as exc:
+                if str(exc) not in {
+                    "INVALID_ARGUMENT",
+                    "UNAUTHENTICATED",
+                    "PERMISSION_DENIED",
+                    "NOT_FOUND",
+                }:
+                    raise
+                return errors_module.LLMBadRequestError(
+                    message=f"Bad request to OpenAI: {error}",
+                    code=errors_module.ErrorCode.INTERNAL_SERVER_ERROR,
+                    details=getattr(error, "body", None) or {},
+                )
+
+        client_class.handle_llm_error = handle
+        client_class._offline_v011_error_codes = True
+
+    def _patch_v011_vllm_tool_call_boundary(self) -> None:
+        """Keep each native Qwen response to MIRIX's documented one tool call.
+
+        Qwen3-VL's chat template permits one or more adjacent ``<tool_call>``
+        envelopes, while the MIRIX memory-agent prompts require exactly one
+        function call per response. vLLM ignores ``parallel_tool_calls=False``
+        for auto tool parsing, so use the native closing envelope as a stop
+        boundary. MIRIX chaining remains unchanged and can issue another model
+        turn when another tool is needed.
+        """
+        client_module = importlib.import_module("mirix.llm_api.openai_client")
+        client_class = client_module.OpenAIClient
+        if getattr(client_class, "_offline_vllm_tool_boundary", False):
+            return
+        original_build = client_class.build_request_data
+        original_convert = client_class.convert_response_to_chat_completion
+        repetition_penalty = float(
+            self.config.get("mirix_native_repetition_penalty") or 1.10
+        )
+
+        def build_request(client: Any, *args: Any, **kwargs: Any) -> dict[str, Any]:
+            data = original_build(client, *args, **kwargs)
+            data = _prepare_mirix_delta_tool_request(data)
+            return _bound_native_vllm_tool_request(
+                data, repetition_penalty=repetition_penalty
+            )
+
+        def convert_response(
+            client: Any, response_data: dict[str, Any], *args: Any, **kwargs: Any
+        ) -> Any:
+            _accept_truncated_native_qa_text(response_data)
+            _reject_native_tool_response_integrity(response_data)
+            try:
+                _reject_unparsed_native_tool_response(response_data)
+            except ValueError:
+                if _has_native_tool_calls(response_data):
+                    # Native arguments came from the provider as malformed
+                    # JSON. Never pass them through json_repair: doing so can
+                    # turn a capped partial write into a destructive update.
+                    raise
+                # Hermes occasionally fails on a Qwen-selected tool envelope
+                # because of a missing comma/bracket. Recover only that JSON
+                # representation; MIRIX still validates the native function
+                # schema and performs the original tool execution.
+                response_data = _normalize_openai_tool_tags(response_data)
+                _reject_native_tool_response_integrity(response_data)
+                _reject_unparsed_native_tool_response(response_data)
+            _accept_recovered_native_tool_finish(response_data)
+            _promote_native_chat_text_response(response_data)
+            return original_convert(client, response_data, *args, **kwargs)
+
+        client_class.build_request_data = build_request
+        client_class.convert_response_to_chat_completion = convert_response
+        client_class._offline_vllm_tool_boundary = True
 
     def _patch_openai_tool_compat(self) -> None:
         """Normalize Qwen tool tags when vLLM auto-tool parsing is disabled."""
@@ -96,11 +835,22 @@ class MirixFamilyAdapter(BaselineAdapter):
         original_request = client_class.request
         original_request_async = client_class.request_async
         original_convert = client_class.convert_response_to_chat_completion
+        original_prepare_client_kwargs = getattr(
+            client_class, "_prepare_client_kwargs", None
+        )
+
+        def prepare_client_kwargs(client: Any) -> dict[str, Any]:
+            if original_prepare_client_kwargs is None:
+                return {"timeout": float(self.config.get("request_timeout") or 180)}
+            kwargs = dict(original_prepare_client_kwargs(client))
+            kwargs["timeout"] = float(self.config.get("request_timeout") or 180)
+            return kwargs
 
         def build_request(client: Any, *args: Any, **kwargs: Any) -> dict[str, Any]:
-            return _normalize_openai_tool_request(
-                original_build(client, *args, **kwargs)
-            )
+            data = original_build(client, *args, **kwargs)
+            if bool(self.config.get("executor_native_tool_calls", False)):
+                return data
+            return _normalize_openai_tool_request(data)
 
         def request(client: Any, request_data: dict[str, Any]) -> dict[str, Any]:
             return _normalize_openai_tool_tags(original_request(client, request_data))
@@ -126,6 +876,8 @@ class MirixFamilyAdapter(BaselineAdapter):
             )
 
         client_class.build_request_data = build_request
+        if original_prepare_client_kwargs is not None:
+            client_class._prepare_client_kwargs = prepare_client_kwargs
         client_class.request = request
         client_class.request_async = request_async
         client_class.convert_response_to_chat_completion = (
@@ -133,13 +885,19 @@ class MirixFamilyAdapter(BaselineAdapter):
         )
         client_class._offline_tool_compat = True
 
+        self._patch_legacy_request_token_cap(normalize_response=True)
+
+    def _patch_legacy_request_token_cap(
+        self, *, normalize_response: bool = False
+    ) -> None:
+        """Keep v0.1.1's legacy request path within the configured output cap."""
         # MIRIX/MMA still fall back to the legacy llm_api_tools.create path
         # for streaming-enabled agent steps. That path bypasses OpenAIClient
         # completely and calls this imported request function directly.
         legacy_module = importlib.import_module(
             f"{self.package}.llm_api.llm_api_tools"
         )
-        if not getattr(legacy_module, "_offline_tool_compat", False):
+        if not getattr(legacy_module, "_offline_request_token_cap", False):
             original_legacy_request = legacy_module.openai_chat_completions_request
             legacy_max_tokens = int(self.config.get("num_predict") or 512)
 
@@ -149,12 +907,13 @@ class MirixFamilyAdapter(BaselineAdapter):
                     kwargs,
                     max_tokens=legacy_max_tokens,
                 )
-                return _normalize_openai_tool_response(
-                    original_legacy_request(*args, **kwargs)
-                )
+                response = original_legacy_request(*args, **kwargs)
+                if normalize_response:
+                    return _normalize_openai_tool_response(response)
+                return response
 
             legacy_module.openai_chat_completions_request = legacy_request
-            legacy_module._offline_tool_compat = True
+            legacy_module._offline_request_token_cap = True
 
     def _ensure_package_importable(self) -> None:
         """Load MMA's uppercase source directory under its expected lowercase name."""
@@ -179,20 +938,44 @@ class MirixFamilyAdapter(BaselineAdapter):
 
     def _model_configs(self) -> tuple[Any, Any]:
         package = importlib.import_module(self.package)
+        model = str(self.config["executor_model"])
+        endpoint = str(self.config["executor_base_url"])
+        configured_handle = self.config.get("mirix_executor_handle")
+        if configured_handle is not None:
+            mirix_handle = str(configured_handle).strip() or None
+        else:
+            mirix_handle = _mirix_model_handle(
+                baseline=self.baseline, model=model, endpoint=endpoint
+            )
         llm = package.LLMConfig(
-            model=str(self.config["executor_model"]),
+            model=model,
             model_endpoint_type="openai",
-            model_endpoint=str(self.config["executor_base_url"]),
+            model_endpoint=endpoint,
             model_wrapper=None,
-            # MIRIX/MMA's manager system prompt plus the complete native tool
-            # schema can exceed the 24k internal pressure threshold before a
-            # second dialogue message exists. In that state its summarizer has
-            # no eligible messages and raises instead of issuing the request.
-            # The configured vLLM servers expose a 32k window, so use it fully
-            # unless an experiment explicitly overrides the value.
-            context_window=int(self.config.get("context_window") or 32000),
+            # MIRIX v0.1.1 uses the provider handle (rather than the endpoint
+            # type) to recognize a local OpenAI-compatible vLLM server. Without
+            # this handle it uses tool_choice="required", which makes vLLM
+            # replace Qwen's native XML tool protocol with an unbounded JSON
+            # array schema.  The official vLLM provider sets this same handle
+            # and deliberately selects tool_choice="auto".
+            handle=mirix_handle,
+            # MIRIX/MMA's manager system prompt plus one native 20-chunk
+            # multimodal batch can exceed 32k before a second dialogue message
+            # exists. In that state the upstream pressure handler has no
+            # eligible history to summarize. Keep this value aligned with the
+            # configured vLLM context so the first native turn is admitted;
+            # later turns retain MIRIX's original history-compression logic.
+            context_window=int(
+                self.config.get("mirix_context_window")
+                or self.config.get("context_window")
+                or 131072
+            ),
             temperature=float(self.config.get("executor_temperature") or 0.0),
-            max_tokens=int(self.config.get("num_predict") or 512),
+            max_tokens=int(
+                self.config.get("executor_max_tokens")
+                or self.config.get("num_predict")
+                or 512
+            ),
         )
         embedding = package.EmbeddingConfig(
             embedding_model=str(self.config["embedding_model"]),
@@ -252,30 +1035,44 @@ class MirixFamilyAdapter(BaselineAdapter):
         if timestamp:
             kwargs["specific_timestamps"] = [timestamp]
         self._last_chunk = chunk
+        session_id = str(chunk.metadata.get("session_id") or "")
+        seen_session_ids = getattr(self, "_seen_session_ids", None)
+        if seen_session_ids is None:
+            seen_session_ids = []
+            self._seen_session_ids = seen_session_ids
+        if session_id and session_id not in seen_session_ids:
+            seen_session_ids.append(session_id)
+        self._pending_chunks.append(chunk)
+        queued_before = self._queued_message_count()
         if self._should_direct_insert(chunk):
             self._insert_fallback_memory(chunk)
-        else:
-            try:
-                self.backend.send_message(**kwargs)
-            except Exception as exc:
-                if not _is_context_overflow_exception(exc):
-                    raise
-            # MIRIX's background message queue logs some manager failures and
-            # returns normally instead of propagating them.  Detect the
-            # observable outcome at the memory boundary so an accepted chunk
-            # is never silently lost, regardless of how the native queue
-            # reported the failure.
-            if not self._has_new_or_changed_memory(before):
+            current = self._memory_rows()
+            self._register_native_changes(before, current, self._pending_chunks)
+            self._pending_chunks.clear()
+            self._ingested_chunks += 1
+            return
+        try:
+            self.backend.send_message(**kwargs)
+        except Exception as exc:
+            if self.baseline == "MMA" and _is_context_overflow_exception(exc):
+                pass
+            elif bool(self.config.get("mirix_semantic_fallback_on_error", False)):
                 self._insert_fallback_memory(chunk)
+            else:
+                if self.baseline == "MIRIX":
+                    self._finalize_failed_native_absorption(before)
+                    self._ingested_chunks += 1
+                raise
         current = self._memory_rows()
-        if not current:
+        if self.baseline == "MMA" and not self._has_new_or_changed_memory(before):
             self._insert_fallback_memory(chunk)
             current = self._memory_rows()
-        for row in current:
-            memory_id = row["memory_id"]
-            if memory_id not in before or before[memory_id] != row["text"]:
-                self.provenance.register(memory_id, chunk)
-                self._known_ids.add(memory_id)
+        self._register_native_changes(before, current, self._pending_chunks)
+        # Native MIRIX buffers up to 20 messages. A queue reduction means the
+        # complete native absorption cycle ran, even when its agents correctly
+        # decided that no memory should be written.
+        if self._queued_message_count() < queued_before + 1:
+            self._pending_chunks.clear()
         self._ingested_chunks += 1
 
     def _has_new_or_changed_memory(self, before: dict[str, str]) -> bool:
@@ -286,17 +1083,9 @@ class MirixFamilyAdapter(BaselineAdapter):
         return False
 
     def _should_direct_insert(self, chunk: Chunk) -> bool:
-        """Avoid native agent context spirals on very long WMA samples.
-
-        MIRIX/MMA keep their memory-manager dialogue history inside each
-        per-sample database.  WorldMemArena lifelong samples have 400+ chunks;
-        after a few hundred native LLM tool turns, some manager agents hit
-        their own context-recovery recursion and can hang until the outer
-        worker watchdog kills the whole sample.  Direct semantic insertion is
-        only used after the configurable native-ingest prefix, preserving
-        chronological writes without letting late-session bookkeeping poison
-        the full run.
-        """
+        """Retain MMA's historical compatibility path; MIRIX is strict native."""
+        if self.baseline != "MMA":
+            return False
         benchmark = str(chunk.metadata.get("benchmark") or "").lower()
         is_wma_chunk = benchmark in {"worldmemarena", "wma"} or all(
             key in chunk.metadata
@@ -308,7 +1097,7 @@ class MirixFamilyAdapter(BaselineAdapter):
         return self._ingested_chunks >= limit
 
     def _insert_fallback_memory(self, chunk: Chunk) -> None:
-        """Use the native semantic store only when the agent produced no memory."""
+        """Explicit opt-in compatibility fallback; disabled in formal runs."""
         server = self.backend.client.server
         manager = server.semantic_memory_manager
         state = self.backend.agent_states.semantic_memory_agent_state
@@ -332,22 +1121,200 @@ class MirixFamilyAdapter(BaselineAdapter):
 
     def end_session(self, session_id: str) -> None:
         del session_id
-        before = {row["memory_id"] for row in self._memory_rows()}
+        before = {row["memory_id"]: row["text"] for row in self._memory_rows()}
         try:
-            self.backend.send_message(
-                message="",
-                memorizing=True,
-                force_absorb_content=True,
-                async_upload=False,
-            )
+            if self.baseline == "MIRIX":
+                accumulator = self.backend.temp_message_accumulator
+                ready = list(accumulator.temporary_messages)
+                if ready:
+                    # The v0.1.1 force-flush branch rejects non-Gemini local
+                    # images. Passing the already-ready native queue exercises
+                    # the same absorption chain without an upload conversion.
+                    accumulator.absorb_content_into_memory(
+                        self.backend.agent_states, ready_messages=ready
+                    )
+                    self.backend.clear_old_screenshots()
+            else:
+                self.backend.send_message(
+                    message="",
+                    memorizing=True,
+                    force_absorb_content=True,
+                    async_upload=False,
+                )
         except Exception:
+            if self.baseline == "MMA" or bool(
+                self.config.get("mirix_semantic_fallback_on_error", False)
+            ):
+                for chunk in self._pending_chunks:
+                    self._insert_fallback_memory(chunk)
+            else:
+                if self.baseline == "MIRIX":
+                    self._finalize_failed_native_absorption(before)
+                raise
+        self._register_native_changes(before, self._memory_rows(), self._pending_chunks)
+        self._pending_chunks.clear()
+        if self.baseline == "MIRIX":
+            self._checkpoint_completed_sessions()
+
+    def completed_session_ids(self) -> tuple[str, ...]:
+        """Return the contiguous WMA session prefix in the SQLite checkpoint."""
+        return tuple(self._completed_session_ids)
+
+    def filter_completed_session_chunks(self, chunks: list[Chunk]) -> list[Chunk]:
+        """Drop only sessions restored from a consistent MIRIX checkpoint."""
+        completed = self.completed_session_ids()
+        if not completed:
+            return chunks
+        ordered_sessions: list[str] = []
+        for chunk in chunks:
+            session_id = str(chunk.metadata.get("session_id") or "")
+            if not session_id:
+                raise RuntimeError("MIRIX resumable chunk is missing session_id")
+            if not ordered_sessions or ordered_sessions[-1] != session_id:
+                ordered_sessions.append(session_id)
+        if tuple(ordered_sessions[: len(completed)]) != completed:
+            raise RuntimeError(
+                "MIRIX resume checkpoint is not a contiguous source-session prefix: "
+                f"checkpoint={list(completed)}, source={ordered_sessions}"
+            )
+        completed_set = set(completed)
+        return [
+            chunk
+            for chunk in chunks
+            if str(chunk.metadata.get("session_id") or "") not in completed_set
+        ]
+
+    def _resume_manifest_path(self, state_dir: Path) -> Path:
+        return state_dir / ".offline_mirix_resume.json"
+
+    def _resume_signature(self) -> str:
+        return str(self.config.get("mirix_resume_signature") or "")
+
+    def _load_resume_checkpoint(
+        self, sample_id: str, state_dir: Path
+    ) -> dict[str, Any] | None:
+        if self.baseline != "MIRIX" or not bool(
+            self.config.get("mirix_resume_enabled", False)
+        ):
+            return None
+        manifest = self._resume_manifest_path(state_dir)
+        if not manifest.is_file():
+            return None
+        try:
+            payload = json.loads(manifest.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return None
+        if (
+            payload.get("version") != 1
+            or payload.get("sample_id") != str(sample_id)
+            or payload.get("signature") != self._resume_signature()
+        ):
+            return None
+        snapshot_name = str(payload.get("sqlite_snapshot") or "")
+        if not snapshot_name or Path(snapshot_name).name != snapshot_name:
+            return None
+        if not (state_dir / ".resume" / snapshot_name).is_file():
+            return None
+        return payload
+
+    @staticmethod
+    def _restore_resume_database(
+        state_dir: Path, payload: dict[str, Any]
+    ) -> None:
+        snapshot = state_dir / ".resume" / str(payload["sqlite_snapshot"])
+        target = state_dir / "sqlite.db"
+        temporary = state_dir / ".sqlite.db.restore"
+        shutil.copyfile(snapshot, temporary)
+        os.replace(temporary, target)
+        for suffix in ("-wal", "-shm", "-journal"):
+            Path(str(target) + suffix).unlink(missing_ok=True)
+
+    def _checkpoint_completed_sessions(self) -> None:
+        """Atomically save SQLite and provenance at a flushed WMA boundary."""
+        if self.baseline != "MIRIX" or not bool(
+            self.config.get("mirix_resume_enabled", False)
+        ):
+            return
+        if self._seen_session_ids == self._completed_session_ids:
+            return
+        if self._state_dir is None or not self._sample_id:
+            raise RuntimeError("MIRIX resume checkpoint requested before reset")
+        database = self._state_dir / "sqlite.db"
+        if not database.is_file():
+            raise RuntimeError(f"MIRIX SQLite database is missing: {database}")
+        resume_dir = self._state_dir / ".resume"
+        resume_dir.mkdir(parents=True, exist_ok=True)
+        snapshot_name = f"sqlite.session-{len(self._seen_session_ids):06d}.db"
+        snapshot = resume_dir / snapshot_name
+        temporary = resume_dir / f".{snapshot_name}.tmp"
+        temporary.unlink(missing_ok=True)
+        source = sqlite3.connect(str(database))
+        destination = sqlite3.connect(str(temporary))
+        try:
+            source.backup(destination)
+        finally:
+            destination.close()
+            source.close()
+        os.replace(temporary, snapshot)
+        payload = {
+            "version": 1,
+            "sample_id": self._sample_id,
+            "signature": self._resume_signature(),
+            "sqlite_snapshot": snapshot_name,
+            "completed_session_ids": list(self._seen_session_ids),
+            "ingested_chunks": self._ingested_chunks,
+            "known_ids": sorted(self._known_ids),
+            "provenance": self.provenance.export_rows(),
+        }
+        manifest = self._resume_manifest_path(self._state_dir)
+        manifest_tmp = manifest.with_suffix(manifest.suffix + ".tmp")
+        manifest_tmp.write_text(
+            json.dumps(payload, ensure_ascii=False, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        os.replace(manifest_tmp, manifest)
+        self._completed_session_ids = list(self._seen_session_ids)
+        for old_snapshot in resume_dir.glob("sqlite.session-*.db"):
+            if old_snapshot.name != snapshot_name:
+                old_snapshot.unlink()
+
+    def _finalize_failed_native_absorption(self, before: dict[str, str]) -> None:
+        """Keep completed bank writes while discarding the failed native batch.
+
+        MIRIX removes a ready batch from its temporary accumulator before it
+        dispatches the independent memory agents. If a later agent fails, some
+        earlier banks may already be durably updated. Preserve and attribute
+        those valid writes, but never carry the failed batch into a later point.
+        """
+        try:
+            self._register_native_changes(before, self._memory_rows(), self._pending_chunks)
+        except Exception:
+            # Cleanup must not hide the original native-agent failure.
             pass
-        if self._last_chunk is not None:
-            for row in self._memory_rows():
-                memory_id = row["memory_id"]
-                if memory_id not in before:
-                    self.provenance.register(memory_id, self._last_chunk)
-                    self._known_ids.add(memory_id)
+        finally:
+            accumulator = getattr(self.backend, "temp_message_accumulator", None)
+            temporary = getattr(accumulator, "temporary_messages", None)
+            if hasattr(temporary, "clear"):
+                temporary.clear()
+            self._pending_chunks.clear()
+
+    def _queued_message_count(self) -> int:
+        accumulator = getattr(self.backend, "temp_message_accumulator", None)
+        return len(getattr(accumulator, "temporary_messages", None) or [])
+
+    def _register_native_changes(
+        self,
+        before: dict[str, str],
+        current: list[dict[str, Any]],
+        chunks: list[Chunk],
+    ) -> None:
+        for row in current:
+            memory_id = row["memory_id"]
+            if memory_id in before and before[memory_id] == row["text"]:
+                continue
+            for chunk in chunks:
+                self.provenance.register(memory_id, chunk)
+            self._known_ids.add(memory_id)
 
     def _memory_rows(self) -> list[dict[str, Any]]:
         rows = []
@@ -360,6 +1327,8 @@ class MirixFamilyAdapter(BaselineAdapter):
             try:
                 values = getattr(manager, method_name)(state, limit=None) or []
             except Exception:
+                if self.baseline == "MIRIX":
+                    raise
                 values = []
             for value in values:
                 raw_id = str(getattr(value, "id", None) or uuid.uuid4().hex[:12])
@@ -374,15 +1343,24 @@ class MirixFamilyAdapter(BaselineAdapter):
         return rows
 
     def retrieve(self, request: RetrievalRequest) -> RetrievalResult:
+        if self.baseline == "MIRIX" and request.top_k != 7:
+            raise ValueError(
+                f"MIRIX native Chat Agent requires the fixed global top_k=7; got {request.top_k}"
+            )
+        if self.baseline == "MIRIX":
+            return self._retrieve_with_native_chat(request)
         candidates: list[tuple[float, dict[str, Any]]] = []
         visible = set(request.visible_session_ids)
         server = self.backend.client.server
+        query_embedding = self._query_embedding(request)
+        used_native_scores = True
         for manager_name, state_name, method_name in _PARTITIONS:
             manager = getattr(server, manager_name, None)
             state = getattr(self.backend.agent_states, state_name, None)
             if manager is None or state is None:
                 continue
             hits = []
+            selected_field = ""
             for field in ("summary", "name", "description", "details"):
                 try:
                     hits = getattr(manager, method_name)(
@@ -395,6 +1373,7 @@ class MirixFamilyAdapter(BaselineAdapter):
                 except Exception:
                     hits = []
                 if hits:
+                    selected_field = field
                     break
             for rank, hit in enumerate(hits):
                 raw_id = str(getattr(hit, "id", rank))
@@ -403,9 +1382,20 @@ class MirixFamilyAdapter(BaselineAdapter):
                 session_id = str(source.get("session_id") or "")
                 if visible and session_id not in visible:
                     continue
-                native_score = getattr(hit, "score", None)
+                native_score = _embedding_similarity(
+                    query_embedding,
+                    getattr(hit, f"{selected_field}_embedding", None),
+                )
+                if native_score is None:
+                    native_score = getattr(hit, "score", None)
                 confidence = getattr(hit, "confidence", None) if self.baseline == "MMA" else None
-                score = float(confidence if confidence is not None else native_score if native_score is not None else 1.0 / (rank + 1))
+                if confidence is not None:
+                    score = float(confidence)
+                elif native_score is not None:
+                    score = float(native_score)
+                else:
+                    score = 1.0 / (rank + 1)
+                    used_native_scores = False
                 candidates.append(
                     (
                         score,
@@ -414,6 +1404,7 @@ class MirixFamilyAdapter(BaselineAdapter):
                             "text": _render_memory(manager_name, hit),
                             "source": source,
                             "partition": manager_name.removesuffix("_manager"),
+                            "search_field": selected_field,
                         },
                     )
                 )
@@ -438,8 +1429,150 @@ class MirixFamilyAdapter(BaselineAdapter):
             trace={
                 "baseline": self.baseline,
                 "via": "confidence" if self.baseline == "MMA" else "partition_search",
+                "ranking": (
+                    "global_embedding_similarity"
+                    if used_native_scores
+                    else "global_embedding_similarity_with_rank_fallback"
+                ),
+                "requested_top_k": request.top_k,
+                "returned_memories": len(items),
             },
         )
+
+    def _retrieve_with_native_chat(self, request: RetrievalRequest) -> RetrievalResult:
+        if request.query_id in self._qa_budgets:
+            raise ValueError(f"duplicate MIRIX retrieval query_id: {request.query_id}")
+        budget = _MirixRetrievalBudget(self, request.query_id, request.top_k)
+        client = self.backend.client
+        chat_state = self.backend.agent_states.agent_state
+        saved = _capture_chat_state(client, chat_state.id)
+        token = _ACTIVE_MIRIX_RETRIEVAL.set(budget)
+        try:
+            response = client.send_message(
+                agent_id=chat_state.id,
+                role="user",
+                message=_raw_chat_query(request.text, request.query_image),
+                force_response=True,
+                # This is a retrieval-only probe. One native step is enough to
+                # expose an explicit search result, while automatic prefetch is
+                # already reserved in the same evidence budget. Do not let a
+                # direct send_message answer chain repeatedly.
+                chaining=False,
+            )
+            # MIRIX v0.1.1 has no retrieval-only endpoint. This provisional
+            # native response is ignored; its autonomous tools supply evidence.
+            budget.provisional_answer = _extract_chat_answer(response)
+        finally:
+            _ACTIVE_MIRIX_RETRIEVAL.reset(token)
+            _restore_chat_state(client, chat_state.id, saved)
+        self._qa_budgets[request.query_id] = budget
+        return budget.result(stage="retrieval")
+
+    def _retrieved_memory_from_native(
+        self, row: Any, raw_id: str
+    ) -> RetrievedMemory:
+        data = row if isinstance(row, dict) else _model_dump(row) or {}
+        memory_type = str(data.get("memory_type") or "unknown")
+        memory_id = f"{memory_type}_memory_manager:{raw_id}"
+        source = self.provenance.get(memory_id)
+        return RetrievedMemory(
+            memory_id=memory_id,
+            # Native ORM rows also contain one or more 2048-dimensional
+            # embedding columns. Serializing the whole row makes the final QA
+            # request many times larger than the actual memory and can produce
+            # an HTTP-200 error envelope with no ChatCompletion choices. Keep
+            # only the human-readable fields MIRIX exposes as memory content.
+            text=_render_memory(f"{memory_type}_memory_manager", data),
+            score=None,
+            session_id=str(source.get("session_id") or ""),
+            source_dialogue_ids=list(source.get("source_dialogue_ids") or []),
+            image_ids=list(source.get("image_ids") or []),
+            image_paths=list(source.get("image_paths") or []),
+            metadata={
+                "partition": f"{memory_type}_memory",
+                "via": "native_chat_agent_tool",
+            },
+        )
+
+    def _query_embedding(self, request: RetrievalRequest) -> list[float] | None:
+        if request.query_vector:
+            return [float(value) for value in request.query_vector]
+        try:
+            module = importlib.import_module(f"{self.package}.embeddings")
+            state = self.backend.agent_states.agent_state
+            values = module.embedding_model(state.embedding_config).get_text_embedding(
+                request.text
+            )
+            return [float(value) for value in values]
+        except Exception:
+            if self.config.get("baseline_strict_config", True):
+                raise
+            return None
+
+    def answer_with_memory(self, request: NativeAnswerRequest) -> NativeAnswerResult:
+        if self.baseline != "MIRIX":
+            return super().answer_with_memory(request)
+        if request.top_k != 7:
+            raise ValueError(f"MIRIX Chat Agent top_k must be 7; got {request.top_k}")
+        budget = self._qa_budgets.pop(request.query_id, None)
+        if budget is None:
+            raise KeyError(
+                f"MIRIX answer has no preceding native retrieval: {request.query_id}"
+            )
+        client = self.backend.client
+        chat_state = self.backend.agent_states.agent_state
+        saved = _capture_chat_state(client, chat_state.id)
+        token = _ACTIVE_MIRIX_RETRIEVAL.set(budget)
+        truncation_state = {
+            "accepted": False,
+            "finish_reason": "",
+            "native_finish_reason": "",
+        }
+        truncation_token = _ACTIVE_MIRIX_QA_TRUNCATION.set(truncation_state)
+        try:
+            response = _send_native_benchmark_messages(
+                client,
+                chat_state.id,
+                request.messages,
+                request.query_image,
+            )
+            text = _ensure_answer_block(_extract_chat_answer(response))
+            if not text or text == "ERROR":
+                raise RuntimeError("MIRIX Chat Agent did not return a final answer")
+            usage = _model_dump(getattr(response, "usage", None))
+            retrieval = budget.result(stage="answer_complete")
+            selected_ids = [item.memory_id for item in retrieval.items]
+            return NativeAnswerResult(
+                text=text,
+                attempts=1,
+                failed_attempts=0,
+                image_count=1 if request.query_image else 0,
+                usage=usage,
+                trace={
+                    "via": "mirix_native_chat_agent",
+                    "core_memory": "resident",
+                    "global_top_k": request.top_k,
+                    "retrieved_count": len(selected_ids),
+                    "retrieved_memory_ids": selected_ids,
+                    "remaining_retrieval_budget": request.top_k - len(selected_ids),
+                    "autonomous_retrieval": "enabled_until_final_send_message",
+                    "candidate_freezing": False,
+                    "provisional_native_answer_ignored": bool(budget.provisional_answer),
+                    "chat_tool_calls": _response_tool_names(response),
+                    "accepted_truncated_qa": bool(truncation_state["accepted"]),
+                    "accepted_truncated_qa_finish_reason": str(
+                        truncation_state["finish_reason"]
+                    ),
+                    "accepted_truncated_qa_native_finish_reason": str(
+                        truncation_state["native_finish_reason"]
+                    ),
+                },
+                retrieval=retrieval,
+            )
+        finally:
+            _ACTIVE_MIRIX_QA_TRUNCATION.reset(truncation_token)
+            _ACTIVE_MIRIX_RETRIEVAL.reset(token)
+            _restore_chat_state(client, chat_state.id, saved)
 
     def snapshot(self) -> list[MemoryRecord]:
         records = []
@@ -457,6 +1590,20 @@ class MirixFamilyAdapter(BaselineAdapter):
                     metadata={"partition": row["partition"]},
                 )
             )
+        if self.baseline == "MIRIX":
+            chat_state = self.backend.agent_states.agent_state
+            for block in chat_state.memory.get_blocks():
+                block_id = str(getattr(block, "id", "") or uuid.uuid4().hex[:12])
+                label = str(getattr(block, "label", "") or "core")
+                value = str(getattr(block, "value", "") or "")
+                records.append(
+                    MemoryRecord(
+                        memory_id=f"core_memory:{block_id}",
+                        text=f"[{label}] {value}",
+                        backend_type="mirix_core_memory",
+                        metadata={"partition": "core_memory", "resident": True},
+                    )
+                )
         return records
 
     def capabilities(self) -> dict[str, Any]:
@@ -467,19 +1614,488 @@ class MirixFamilyAdapter(BaselineAdapter):
             "supports_images": True,
             "supports_session_filter": True,
             "confidence_ranking": self.baseline == "MMA",
+            "native_chat_answer": self.baseline == "MIRIX",
+            "fixed_global_top_k": 7 if self.baseline == "MIRIX" else None,
+            "native_memory_build": self.baseline == "MIRIX",
+            "native_absorption_batch": 20 if self.baseline == "MIRIX" else None,
+            "retrieval_candidate_freezing": False if self.baseline == "MIRIX" else None,
+            "source_commit": (
+                "ac0a1f2890df5e7435c66d6c2827f34c5c4ce32d"
+                if self.baseline == "MIRIX"
+                else None
+            ),
+            "semantic_fallback_on_error": (
+                bool(self.config.get("mirix_semantic_fallback_on_error", False))
+                if self.baseline == "MIRIX"
+                else True
+            ),
         }
 
     def close(self) -> None:
         self.backend = None
 
 
+def _dedupe_native_rows(rows: list[Any]) -> list[Any]:
+    deduped = []
+    seen: set[str] = set()
+    for row in rows:
+        row_id = _native_result_id(row)
+        if row_id in seen:
+            continue
+        seen.add(row_id)
+        deduped.append(row)
+    return deduped
+
+
+def _round_robin_native_rows(
+    groups: list[tuple[str, list[Any]]], top_k: int
+) -> list[tuple[str, Any]]:
+    """Interleave native per-bank rankings under one global item cap."""
+    selected: list[tuple[str, Any]] = []
+    seen: set[tuple[str, str]] = set()
+    max_rows = max((len(rows) for _, rows in groups), default=0)
+    for rank in range(max_rows):
+        for memory_type, rows in groups:
+            if rank >= len(rows):
+                continue
+            row = rows[rank]
+            key = (memory_type, _native_result_id(row))
+            if key in seen:
+                continue
+            seen.add(key)
+            selected.append((memory_type, row))
+            if len(selected) >= top_k:
+                return selected
+    return selected
+
+
+def _tree_suffix(row: Any, separator: str = ";") -> str:
+    tree_path = list(getattr(row, "tree_path", None) or [])
+    return f" {separator} Path: {' > '.join(tree_path)}" if tree_path else ""
+
+
+def _format_prefetched_episodic(rows: list[Any]) -> str:
+    lines = []
+    for index, row in enumerate(rows):
+        occurred_at = getattr(row, "occurred_at", "")
+        if hasattr(occurred_at, "strftime"):
+            occurred_at = occurred_at.strftime("%Y-%m-%d %H:%M:%S")
+        details = str(getattr(row, "details", "") or "")
+        lines.append(
+            f"[{index}] Timestamp: {occurred_at} - {getattr(row, 'summary', '')}"
+            f"{_tree_suffix(row, separator='-')} (Details: {len(details)} Characters)"
+        )
+    return "\n".join(lines)
+
+
+def _format_prefetched_semantic(rows: list[Any]) -> str:
+    return "\n".join(
+        f"[{index}] Name: {getattr(row, 'name', '')}; Summary: "
+        f"{getattr(row, 'summary', '')}{_tree_suffix(row)}"
+        for index, row in enumerate(rows)
+    )
+
+
+def _format_prefetched_procedural(rows: list[Any]) -> str:
+    return "\n".join(
+        f"[{index}] Entry Type: {getattr(row, 'entry_type', '')}; Summary: "
+        f"{getattr(row, 'summary', '')}{_tree_suffix(row)}"
+        for index, row in enumerate(rows)
+    )
+
+
+def _format_prefetched_resource(rows: list[Any]) -> str:
+    return "\n".join(
+        f"[{index}] Resource Title: {getattr(row, 'title', '')}; Resource Summary: "
+        f"{getattr(row, 'summary', '')} Resource Type: "
+        f"{getattr(row, 'resource_type', '')}{_tree_suffix(row)}"
+        for index, row in enumerate(rows)
+    )
+
+
+def _format_prefetched_vault(rows: list[Any]) -> str:
+    return "\n".join(
+        f"[{index}] Knowledge Vault Item ID: {getattr(row, 'id', '')}; Caption: "
+        f"{getattr(row, 'caption', '')}"
+        for index, row in enumerate(rows)
+    )
+
+
 def _render_memory(manager: str, value: Any) -> str:
     fields = []
-    for key in ("summary", "details", "description", "steps", "content", "name", "secret_value", "source"):
-        item = getattr(value, key, None)
+    for key in (
+        "summary",
+        "details",
+        "description",
+        "steps",
+        "content",
+        "name",
+        "title",
+        "caption",
+        "secret_value",
+        "source",
+    ):
+        item = value.get(key) if isinstance(value, dict) else getattr(value, key, None)
         if item:
             fields.append(f"{key}: {item}")
     return f"[{manager.removesuffix('_manager')}] " + " | ".join(fields)
+
+
+def _stage_native_transport_image(
+    image_path: str | Path,
+    *,
+    cache_dir: Path,
+    compressor: Any,
+) -> Path:
+    """Run MIRIX's native upload compression without modifying source images."""
+    source = Path(image_path).resolve()
+    if source.suffix.lower() not in {".jpg", ".jpeg", ".png"}:
+        return source
+    stat = source.stat()
+    cache_key = hashlib.sha256(
+        f"{source}:{stat.st_size}:{stat.st_mtime_ns}:1920x1080:q85".encode("utf-8")
+    ).hexdigest()[:24]
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    staged_source = cache_dir / f"{cache_key}{source.suffix.lower()}"
+    compressed_path = cache_dir / f"{cache_key}_compressed.jpg"
+    if compressed_path.is_file():
+        return compressed_path
+
+    shutil.copy2(source, staged_source)
+    try:
+        result = compressor._compress_image(
+            str(staged_source), quality=85, max_size=(1920, 1080)
+        )
+        candidate = Path(result) if result else None
+        if candidate is None or not candidate.is_file():
+            return source
+        if candidate.stat().st_size >= source.stat().st_size:
+            candidate.unlink()
+            return source
+        return candidate
+    finally:
+        if staged_source.is_file():
+            staged_source.unlink()
+
+
+def _embedding_similarity(left: Any, right: Any) -> float | None:
+    """Return cosine similarity for native MIRIX vectors from any supported DB."""
+    left_values = _vector_values(left)
+    right_values = _vector_values(right)
+    if not left_values or not right_values:
+        return None
+    size = min(len(left_values), len(right_values))
+    left_values = left_values[:size]
+    right_values = right_values[:size]
+    left_norm = math.sqrt(sum(value * value for value in left_values))
+    right_norm = math.sqrt(sum(value * value for value in right_values))
+    if left_norm == 0.0 or right_norm == 0.0:
+        return None
+    return sum(a * b for a, b in zip(left_values, right_values)) / (
+        left_norm * right_norm
+    )
+
+
+def _vector_values(value: Any) -> list[float]:
+    if value is None:
+        return []
+    if isinstance(value, str):
+        try:
+            value = json.loads(value)
+        except json.JSONDecodeError:
+            return []
+    tolist = getattr(value, "tolist", None)
+    if callable(tolist):
+        value = tolist()
+    try:
+        return [float(item) for item in value]
+    except (TypeError, ValueError):
+        return []
+
+
+def _native_result_id(row: Any) -> str:
+    data = row if isinstance(row, dict) else _model_dump(row) or {}
+    raw_id = str(data.get("id") or "").strip()
+    if raw_id:
+        return raw_id
+    payload = json.dumps(data, ensure_ascii=False, default=str, sort_keys=True)
+    return "anonymous_" + hashlib.sha256(payload.encode("utf-8")).hexdigest()[:20]
+
+
+def _raw_chat_query(text: str, query_image: str | None) -> str | list[dict[str, Any]]:
+    if not query_image:
+        return text
+    return [
+        {"type": "text", "text": text},
+        {"type": "file_uri", "file_uri": str(Path(query_image).resolve())},
+    ]
+
+
+def _capture_chat_state(client: Any, agent_id: str) -> dict[str, Any]:
+    messages = client.get_in_context_messages(agent_id)
+    actor = client.server.user_manager.get_user_by_id(client.user.id)
+    state = client.server.agent_manager.get_agent_by_id(agent_id=agent_id, actor=actor)
+    return {
+        "message_ids": [str(row.id) for row in messages],
+        "topic": getattr(state, "topic", None),
+    }
+
+
+def _restore_chat_state(client: Any, agent_id: str, saved: dict[str, Any]) -> None:
+    """Restore both history and topic so benchmark questions cannot leak."""
+    try:
+        server = client.server
+        actor = server.user_manager.get_user_by_id(client.user.id)
+        server.agent_manager.set_in_context_messages(
+            agent_id=agent_id,
+            message_ids=list(saved["message_ids"]),
+            actor=actor,
+        )
+        server.message_manager.delete_detached_messages_for_agent(
+            agent_id=agent_id,
+            actor=actor,
+        )
+        update_module = importlib.import_module("mirix.schemas.agent")
+        updated = server.agent_manager.update_agent(
+            agent_id=agent_id,
+            agent_update=update_module.UpdateAgent(topic=saved.get("topic")),
+            actor=actor,
+        )
+        # AgentWrapper caches the chat state separately from the DB manager.
+        # The following native step will otherwise reuse the provisional topic.
+        return updated
+    except Exception as exc:
+        raise RuntimeError("Failed to restore MIRIX Chat Agent history/topic after QA") from exc
+
+
+def _send_native_benchmark_messages(
+    client: Any,
+    agent_id: str,
+    messages: list[dict[str, Any]],
+    query_image: str | None,
+) -> Any:
+    """Run the benchmark's exact messages through the original Chat Agent."""
+    message_module = importlib.import_module("mirix.schemas.message")
+    enum_module = importlib.import_module("mirix.schemas.enums")
+    content_module = importlib.import_module("mirix.schemas.mirix_message_content")
+    response_module = importlib.import_module("mirix.schemas.mirix_response")
+    packed = []
+    for index, row in enumerate(messages):
+        role = str(row.get("role") or "user")
+        content: list[Any] = [
+            content_module.TextContent(text=str(row.get("content") or ""))
+        ]
+        if query_image and role == "user" and index == len(messages) - 1:
+            metadata = client._save_image_from_file_uri(str(Path(query_image).resolve()))
+            content.append(content_module.ImageContent(image_id=metadata.id, detail="auto"))
+        packed.append(
+            message_module.MessageCreate(
+                role=enum_module.MessageRole(role),
+                content=content,
+            )
+        )
+    client.interface.clear()
+    server = client.server
+    usage = server.send_messages(
+        actor=server.user_manager.get_user_by_id(client.user.id),
+        agent_id=agent_id,
+        input_messages=packed,
+        interface=client.interface,
+        force_response=True,
+        # The benchmark prompt requests the final answer in one response. A
+        # second step after send_message only duplicates the same answer.
+        chaining=False,
+    )
+    mirix_messages = []
+    for event in client.interface.to_list():
+        mirix_messages.extend(event.to_mirix_message())
+    return response_module.MirixResponse(messages=mirix_messages, usage=usage)
+
+
+def _chat_retrieved_memories(
+    items: list[RetrievedMemory], *, query: str
+) -> dict[str, Any]:
+    grouped: dict[str, list[str]] = {
+        "episodic": [],
+        "semantic": [],
+        "procedural": [],
+        "resource": [],
+        "knowledge_vault": [],
+    }
+    for item in items:
+        partition = str(item.metadata.get("partition") or "")
+        key = partition.removesuffix("_memory")
+        if key in grouped:
+            grouped[key].append(item.text)
+        else:
+            grouped["semantic"].append(item.text)
+
+    # MIRIX's native prompt builder currently retrieves Knowledge Vault but
+    # omits its dedicated section. Preserve those selected rows inside the
+    # visible semantic section so all globally selected memories reach Chat.
+    semantic_rows = grouped["semantic"] + grouped["knowledge_vault"]
+    return {
+        "key_words": query,
+        # Core is intentionally absent: MIRIX loads it as resident context.
+        "episodic": ["", "\n".join(grouped["episodic"])],
+        "semantic": "\n".join(semantic_rows),
+        "procedural": "\n".join(grouped["procedural"]),
+        "resource": "\n".join(grouped["resource"]),
+        "knowledge_vault": "\n".join(grouped["knowledge_vault"]),
+    }
+
+
+def _messages_question(messages: list[dict[str, Any]]) -> str:
+    return "\n".join(
+        str(row.get("content") or "")
+        for row in messages
+        if str(row.get("role") or "") == "user"
+    ).strip()
+
+
+def _chat_message_content(
+    messages: list[dict[str, Any]], query_image: str | None
+) -> str | list[dict[str, Any]]:
+    sections = []
+    for row in messages:
+        role = str(row.get("role") or "user").upper()
+        content = str(row.get("content") or "").strip()
+        if content:
+            sections.append(f"[{role} INSTRUCTION]\n{content}")
+    text = (
+        "Use the resident Core Memory and the globally selected Top-7 memory "
+        "items supplied in your system context. Native memory-search tools may "
+        "be used when helpful; their searchable scope is frozen to those same "
+        "Top-7 items.\n\n" + "\n\n".join(sections)
+    )
+    if not query_image:
+        return text
+    path = Path(query_image)
+    mime = mimetypes.guess_type(path.name)[0] or "image/jpeg"
+    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+    return [
+        {"type": "text", "text": text},
+        {
+            "type": "image_url",
+            "image_url": {"url": f"data:{mime};base64,{encoded}", "detail": "auto"},
+        },
+    ]
+
+
+def _extract_chat_answer(response: Any) -> str:
+    messages = list(getattr(response, "messages", None) or [])
+    for message in reversed(messages):
+        tool_call = getattr(message, "tool_call", None)
+        if tool_call is None and isinstance(message, dict):
+            tool_call = message.get("tool_call")
+        if tool_call is None:
+            continue
+        name = getattr(tool_call, "name", None)
+        arguments = getattr(tool_call, "arguments", None)
+        if isinstance(tool_call, dict):
+            name = tool_call.get("name", name)
+            arguments = tool_call.get("arguments", arguments)
+        if name and str(name) != "send_message":
+            continue
+        payload = _tool_payload(str(arguments or ""))
+        if payload and payload.get("message"):
+            return str(payload["message"])
+    return ""
+
+
+def _ensure_answer_block(text: str) -> str:
+    """Normalize MIRIX's visible Chat response to the benchmark contract."""
+    text = str(text or "").strip()
+    if not text:
+        return ""
+    matches = re.findall(r"<answer>\s*(.*?)\s*</answer>", text, flags=re.DOTALL)
+    if len(matches) == 1:
+        return f"<answer>{matches[0].strip()}</answer>"
+    if text.casefold().startswith("<answer>"):
+        text = text[len("<answer>") :].strip()
+    if text.casefold().endswith("</answer>"):
+        text = text[: -len("</answer>")].strip()
+    return f"<answer>{text}</answer>"
+
+
+def _model_dump(value: Any) -> dict[str, Any] | None:
+    if value is None:
+        return None
+    if isinstance(value, dict):
+        return dict(value)
+    dump = getattr(value, "model_dump", None)
+    return dump() if callable(dump) else None
+
+
+def _restore_chat_messages(client: Any, agent_id: str, message_ids: list[str]) -> None:
+    """Prevent one benchmark question/answer from leaking into the next one."""
+    try:
+        server = client.server
+        actor = server.user_manager.get_user_by_id(client.user.id)
+        server.agent_manager.set_in_context_messages(
+            agent_id=agent_id,
+            message_ids=message_ids,
+            actor=actor,
+        )
+        server.message_manager.delete_detached_messages_for_agent(
+            agent_id=agent_id,
+            actor=actor,
+        )
+    except Exception:
+        # Restoration is part of correctness. Do not silently continue with
+        # leaked QA history when the native backend cannot roll it back.
+        raise RuntimeError("Failed to restore MIRIX Chat Agent history after QA")
+
+
+@contextmanager
+def _frozen_native_search_scope(backend: Any, items: list[RetrievedMemory]):
+    """Keep MIRIX's autonomous tools, but restrict them to the frozen Top-K set."""
+    allowed: dict[str, set[str]] = {}
+    for item in items:
+        manager_name, _, raw_id = item.memory_id.partition(":")
+        allowed.setdefault(manager_name, set()).add(raw_id)
+
+    patched = []
+    server = backend.client.server
+    try:
+        for manager_name, _, method_name in _PARTITIONS:
+            manager = getattr(server, manager_name, None)
+            if manager is None:
+                continue
+            manager_class = type(manager)
+            original = getattr(manager_class, method_name)
+            allowed_ids = allowed.get(manager_name, set())
+
+            def restricted(
+                instance: Any,
+                *args: Any,
+                _original: Any = original,
+                _allowed_ids: set[str] = allowed_ids,
+                **kwargs: Any,
+            ) -> list[Any]:
+                rows = _original(instance, *args, **kwargs) or []
+                return [row for row in rows if str(getattr(row, "id", "")) in _allowed_ids]
+
+            setattr(manager_class, method_name, restricted)
+            patched.append((manager_class, method_name, original))
+        yield
+    finally:
+        for manager_class, method_name, original in reversed(patched):
+            setattr(manager_class, method_name, original)
+
+
+def _response_tool_names(response: Any) -> list[str]:
+    names = []
+    for message in list(getattr(response, "messages", None) or []):
+        tool_call = getattr(message, "tool_call", None)
+        if tool_call is None and isinstance(message, dict):
+            tool_call = message.get("tool_call")
+        name = getattr(tool_call, "name", None)
+        if isinstance(tool_call, dict):
+            name = tool_call.get("name", name)
+        if name:
+            names.append(str(name))
+    return names
 
 
 def _cap_legacy_request_tokens(
@@ -544,6 +2160,735 @@ def _normalize_openai_tool_request(data: dict[str, Any]) -> dict[str, Any]:
         # which _normalize_openai_tool_tags converts below.
         data["tool_choice"] = "none"
     return data
+
+
+def _mirix_model_handle(*, baseline: str, model: str, endpoint: str) -> str | None:
+    """Use MIRIX's vLLM compatibility handle only for a local executor."""
+    if baseline != "MIRIX":
+        return None
+    try:
+        hostname = (urlsplit(endpoint).hostname or "").casefold()
+    except ValueError:
+        hostname = ""
+    if hostname in {"127.0.0.1", "localhost", "0.0.0.0", "::1"}:
+        return f"vllm/{model}"
+    # Hosted OpenAI-compatible providers support required native tool calls;
+    # labeling them as vLLM incorrectly downgrades tool_choice to auto.
+    return None
+
+
+def _bound_native_vllm_tool_request(
+    data: dict[str, Any], *, repetition_penalty: float = 1.10
+) -> dict[str, Any]:
+    """Apply the native Qwen/MIRIX one-tool response boundary.
+
+    MIRIX already injects every memory bank's current summary into memory-
+    update agents via ``build_system_prompt_with_memories``.  Its v0.1.1
+    agents nevertheless expose the universal search/list tools as well as
+    their write tools.  Qwen3-VL-4B strongly prefers the redundant read tool,
+    and v0.1.1 then ends the update turn because memory-update chaining is
+    disabled.  Hide only those redundant read tools when a native write tool
+    is present.  The Chat Agent has no write tool and therefore keeps its
+    original autonomous search tools and the shared Top-7 budget.
+    """
+    if data.get("tool_choice") != "auto" or not data.get("tools"):
+        return data
+    data = _restrict_native_memory_update_tools(data)
+    stop = data.get("stop")
+    if isinstance(stop, str):
+        stops = [stop]
+    elif isinstance(stop, list):
+        stops = list(stop)
+    else:
+        stops = []
+    if "</tool_call>" not in stops:
+        stops.append("</tool_call>")
+    data["stop"] = stops
+    extra_body = data.get("extra_body")
+    if not isinstance(extra_body, dict):
+        extra_body = {}
+    else:
+        extra_body = dict(extra_body)
+    # This is a vLLM extension, so the OpenAI SDK requires it under
+    # ``extra_body`` rather than as a top-level create() argument.
+    extra_body["include_stop_str_in_output"] = True
+    # Qwen3-VL-4B can otherwise loop inside a long JSON string (most often a
+    # Resource Memory image description) without ever closing the tool-call
+    # envelope.  A small penalty prevents that decoding failure while leaving
+    # temperature, prompts, tool choice, and MIRIX execution unchanged.
+    extra_body["repetition_penalty"] = repetition_penalty
+    data["extra_body"] = extra_body
+    return data
+
+
+_MIRIX_NATIVE_MEMORY_WRITE_TOOLS = {
+    "trigger_memory_update",
+    "core_memory_append",
+    "core_memory_rewrite",
+    "episodic_memory_insert",
+    "episodic_memory_merge",
+    "episodic_memory_replace",
+    "check_episodic_memory",
+    "procedural_memory_insert",
+    "procedural_memory_update",
+    "resource_memory_insert",
+    "resource_memory_update",
+    "knowledge_vault_insert",
+    "knowledge_vault_update",
+    "semantic_memory_insert",
+    "semantic_memory_update",
+    "check_semantic_memory",
+}
+_MIRIX_REDUNDANT_MEMORY_UPDATE_READ_TOOLS = {
+    "search_in_memory",
+    "list_memory_within_timerange",
+}
+_MIRIX_DELTA_UPDATE_TOOLS = {
+    "resource_memory_update": ("content", "content_delta"),
+    "procedural_memory_update": ("steps", "steps_delta"),
+}
+_MIRIX_BOUNDED_EXECUTION_TOOLS = set(_MIRIX_DELTA_UPDATE_TOOLS) | {
+    "semantic_memory_insert",
+    "episodic_memory_insert",
+    "episodic_memory_merge",
+}
+_MIRIX_TRUNCATED_FINISH_REASONS = {
+    "length",
+    "max_tokens",
+    "max_output_tokens",
+}
+_MIRIX_MAX_TRAILING_TOOL_WHITESPACE = 128
+
+
+def _native_tool_name(tool: Any) -> str:
+    if not isinstance(tool, dict):
+        return ""
+    function = tool.get("function")
+    if not isinstance(function, dict):
+        return ""
+    return str(function.get("name") or "")
+
+
+def _response_message_tool_names(response_message: Any) -> list[str]:
+    tool_calls = getattr(response_message, "tool_calls", None)
+    if isinstance(response_message, dict):
+        tool_calls = response_message.get("tool_calls", tool_calls)
+    names: list[str] = []
+    for tool_call in tool_calls or []:
+        function = getattr(tool_call, "function", None)
+        if isinstance(tool_call, dict):
+            function = tool_call.get("function", function)
+        name = getattr(function, "name", None)
+        if isinstance(function, dict):
+            name = function.get("name", name)
+        if name:
+            names.append(str(name))
+    return names
+
+
+def _prepare_mirix_delta_tool_request(data: dict[str, Any]) -> dict[str, Any]:
+    """Expose bounded delta fields without changing MIRIX's stored tool definitions."""
+    tools = data.get("tools")
+    if not isinstance(tools, list):
+        return data
+    changed = False
+    rewritten_tools: list[Any] = []
+    for raw_tool in tools:
+        tool = copy.deepcopy(raw_tool)
+        function = tool.get("function") if isinstance(tool, dict) else None
+        name = str(function.get("name") or "") if isinstance(function, dict) else ""
+        parameters = function.get("parameters") if isinstance(function, dict) else None
+        properties = parameters.get("properties") if isinstance(parameters, dict) else None
+        if not isinstance(properties, dict):
+            rewritten_tools.append(tool)
+            continue
+
+        if name in _MIRIX_DELTA_UPDATE_TOOLS:
+            old_field, delta_field = _MIRIX_DELTA_UPDATE_TOOLS[name]
+            new_items = properties.get("new_items")
+            item_schema = (
+                new_items.get("items") if isinstance(new_items, dict) else None
+            )
+            item_properties = (
+                item_schema.get("properties")
+                if isinstance(item_schema, dict)
+                else None
+            )
+            if isinstance(item_properties, dict) and old_field in item_properties:
+                rewritten: dict[str, Any] = {}
+                for field, schema in item_properties.items():
+                    if field != old_field:
+                        rewritten[field] = schema
+                        continue
+                    delta_schema = dict(schema) if isinstance(schema, dict) else {}
+                    if delta_field == "content_delta":
+                        delta_schema["description"] = (
+                            "Only new information absent from the old resource; do not "
+                            "repeat old content or transcribe sessions; maximum 900 characters."
+                        )
+                    else:
+                        delta_schema["description"] = (
+                            "Only new or changed steps absent from the old procedure; "
+                            "do not repeat old steps; at most six concise strings."
+                        )
+                    rewritten[delta_field] = delta_schema
+                item_schema["properties"] = rewritten
+                required = item_schema.get("required")
+                if isinstance(required, list):
+                    item_schema["required"] = [
+                        delta_field if field == old_field else field
+                        for field in required
+                    ]
+                function["description"] = (
+                    f"{str(function.get('description') or '').rstrip()} "
+                    f"For updates, {delta_field} is a bounded delta that the runtime "
+                    "merges with the referenced old item."
+                ).strip()
+                changed = True
+        elif name == "episodic_memory_merge":
+            details_schema = properties.pop("combined_details", None)
+            if details_schema is not None:
+                delta_schema = (
+                    dict(details_schema) if isinstance(details_schema, dict) else {}
+                )
+                delta_schema["description"] = (
+                    "Only new event details absent from the stored event; do not "
+                    "repeat old details; maximum 900 characters."
+                )
+                properties["details_delta"] = delta_schema
+                required = parameters.get("required")
+                if isinstance(required, list):
+                    parameters["required"] = [
+                        "details_delta" if field == "combined_details" else field
+                        for field in required
+                    ]
+                summary_schema = properties.get("combined_summary")
+                if isinstance(summary_schema, dict):
+                    summary_schema["description"] = (
+                        "Complete standalone event summary, maximum 300 characters."
+                    )
+                function["description"] = (
+                    f"{str(function.get('description') or '').rstrip()} "
+                    "details_delta is a bounded delta that the runtime appends "
+                    "to the referenced event."
+                ).strip()
+                changed = True
+        elif name == "semantic_memory_insert":
+            items_schema = properties.get("items")
+            item_schema = (
+                items_schema.get("items")
+                if isinstance(items_schema, dict)
+                else None
+            )
+            item_properties = (
+                item_schema.get("properties")
+                if isinstance(item_schema, dict)
+                else None
+            )
+            if isinstance(items_schema, dict) and isinstance(item_properties, dict):
+                items_schema["maxItems"] = 3
+                limits = {
+                    "name": 120,
+                    "summary": 240,
+                    "details": 500,
+                    "source": 160,
+                }
+                for field, max_length in limits.items():
+                    schema = item_properties.get(field)
+                    if isinstance(schema, dict):
+                        schema["maxLength"] = max_length
+                tree_path = item_properties.get("tree_path")
+                if isinstance(tree_path, dict):
+                    tree_path["maxItems"] = 4
+                    tree_item = tree_path.get("items")
+                    if isinstance(tree_item, dict):
+                        tree_item["maxLength"] = 64
+                inner_schema = properties.get("inner_thoughts")
+                if isinstance(inner_schema, dict):
+                    inner_schema["maxLength"] = 200
+                function["description"] = (
+                    f"{str(function.get('description') or '').rstrip()} "
+                    "Consolidate related facts and insert at most three of the "
+                    "most important bounded concepts per call."
+                ).strip()
+                changed = True
+        elif name == "episodic_memory_insert":
+            items_schema = properties.get("items")
+            item_schema = (
+                items_schema.get("items")
+                if isinstance(items_schema, dict)
+                else None
+            )
+            item_properties = (
+                item_schema.get("properties")
+                if isinstance(item_schema, dict)
+                else None
+            )
+            if isinstance(items_schema, dict) and isinstance(item_properties, dict):
+                items_schema["maxItems"] = 1
+                details_schema = item_properties.get("details")
+                if isinstance(details_schema, dict):
+                    details_schema["maxLength"] = 900
+                    details_schema["description"] = (
+                        "Compact details for the single most-significant event; "
+                        "maximum 900 characters; never transcribe all messages."
+                    )
+                summary_schema = item_properties.get("summary")
+                if isinstance(summary_schema, dict):
+                    summary_schema["maxLength"] = 300
+                    summary_schema["description"] = (
+                        "Concise standalone event summary, maximum 300 characters."
+                    )
+                inner_schema = properties.get("inner_thoughts")
+                if isinstance(inner_schema, dict):
+                    inner_schema["maxLength"] = 300
+                function["description"] = (
+                    f"{str(function.get('description') or '').rstrip()} Insert "
+                    "exactly one most-significant bounded event per call."
+                ).strip()
+                changed = True
+        elif name == "resource_memory_insert":
+            items = properties.get("items")
+            item_schema = items.get("items") if isinstance(items, dict) else None
+            item_properties = (
+                item_schema.get("properties")
+                if isinstance(item_schema, dict)
+                else None
+            )
+            content_schema = (
+                item_properties.get("content")
+                if isinstance(item_properties, dict)
+                else None
+            )
+            if isinstance(content_schema, dict):
+                content_schema["description"] = (
+                    "Compact summarized resource content; never transcribe whole sessions; "
+                    "maximum 900 characters."
+                )
+                changed = True
+        elif name == "procedural_memory_insert":
+            items = properties.get("items")
+            item_schema = items.get("items") if isinstance(items, dict) else None
+            item_properties = (
+                item_schema.get("properties")
+                if isinstance(item_schema, dict)
+                else None
+            )
+            steps_schema = (
+                item_properties.get("steps")
+                if isinstance(item_properties, dict)
+                else None
+            )
+            if isinstance(steps_schema, dict):
+                steps_schema["description"] = (
+                    "At most eight concise step strings containing the essential procedure."
+                )
+                changed = True
+        rewritten_tools.append(tool)
+    if not changed:
+        return data
+    bounded = dict(data)
+    bounded["tools"] = rewritten_tools
+    return bounded
+
+
+def _has_native_tool_calls(response_data: dict[str, Any]) -> bool:
+    return any(
+        (choice.get("message") or {}).get("tool_calls")
+        for choice in response_data.get("choices") or []
+        if isinstance(choice, dict)
+    )
+
+
+def _reject_native_tool_response_integrity(response_data: dict[str, Any]) -> None:
+    """Reject provider truncation and whitespace-degenerate native tool output."""
+    for choice in response_data.get("choices") or []:
+        finish_reasons = {
+            str(choice.get("finish_reason") or "").lower(),
+            str(choice.get("native_finish_reason") or "").lower(),
+        }
+        capped = finish_reasons.intersection(_MIRIX_TRUNCATED_FINISH_REASONS)
+        if capped:
+            raise ValueError(
+                "MIRIX provider response was truncated before tool execution: "
+                + ", ".join(sorted(capped))
+            )
+        message = choice.get("message") or {}
+        for tool_call in message.get("tool_calls") or []:
+            function = tool_call.get("function") or {}
+            arguments = function.get("arguments")
+            if not isinstance(arguments, str) or not arguments.strip():
+                raise ValueError("MIRIX returned empty native tool-call arguments")
+            trailing = len(arguments) - len(arguments.rstrip())
+            if trailing >= _MIRIX_MAX_TRAILING_TOOL_WHITESPACE:
+                raise ValueError(
+                    "MIRIX returned whitespace-degenerate native tool-call arguments "
+                    f"({trailing} trailing whitespace characters)"
+                )
+            try:
+                payload = json.loads(arguments)
+            except json.JSONDecodeError as exc:
+                raise ValueError(
+                    "MIRIX returned incomplete native tool-call JSON; refusing repair"
+                ) from exc
+            if not isinstance(payload, dict):
+                raise ValueError("MIRIX returned non-object native tool-call arguments")
+
+
+def _accept_truncated_native_qa_text(response_data: dict[str, Any]) -> bool:
+    """Accept only non-empty plain QA text when the provider reaches 512 tokens."""
+    state = _ACTIVE_MIRIX_QA_TRUNCATION.get()
+    if state is None:
+        return False
+    accepted = False
+    for choice in response_data.get("choices") or []:
+        finish_reason = str(choice.get("finish_reason") or "").lower()
+        native_finish_reason = str(
+            choice.get("native_finish_reason") or ""
+        ).lower()
+        if not {
+            finish_reason,
+            native_finish_reason,
+        }.intersection(_MIRIX_TRUNCATED_FINISH_REASONS):
+            continue
+        message = choice.get("message") or {}
+        content = message.get("content")
+        # A truncated tool-call JSON is never safe to repair or execute. This
+        # exception is only for already-visible final answer text.
+        if (
+            message.get("tool_calls")
+            or not isinstance(content, str)
+            or not content.strip()
+        ):
+            continue
+        state["accepted"] = True
+        state["finish_reason"] = finish_reason
+        state["native_finish_reason"] = native_finish_reason
+        choice["finish_reason"] = "stop"
+        if "native_finish_reason" in choice:
+            choice["native_finish_reason"] = "completed"
+        accepted = True
+    return accepted
+
+
+def _unique_nonempty_strings(values: list[Any]) -> list[str]:
+    result: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        text = str(value or "").strip()
+        key = re.sub(r"\s+", " ", text).casefold()
+        if not text or key in seen:
+            continue
+        seen.add(key)
+        result.append(text)
+    return result
+
+
+def _bounded_memory_text(value: Any, max_chars: int) -> str:
+    text = compact_text(value)
+    if len(text) <= max_chars:
+        return text
+    boundary = max(text.rfind(mark, 0, max_chars + 1) for mark in (". ", "; ", ": "))
+    if boundary >= max_chars // 2:
+        return text[: boundary + 1].rstrip()
+    return text[: max_chars - 3].rstrip() + "..."
+
+
+def _merge_mirix_delta_update(
+    function_name: str,
+    function_args: dict[str, Any],
+    old_items: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Expand bounded model deltas into complete validated replacement items."""
+    if function_name not in _MIRIX_DELTA_UPDATE_TOOLS:
+        return function_args
+    old_field, delta_field = _MIRIX_DELTA_UPDATE_TOOLS[function_name]
+    new_items = function_args.get("new_items")
+    if not isinstance(new_items, list) or not new_items:
+        return function_args
+    if not any(
+        isinstance(item, dict) and delta_field in item for item in new_items
+    ):
+        return function_args
+    if not old_items:
+        raise ValueError(f"{function_name} delta update references no existing item")
+    if len(old_items) not in {1, len(new_items)} and len(new_items) != 1:
+        raise ValueError(
+            f"ambiguous {function_name} delta mapping: "
+            f"{len(old_items)} old items and {len(new_items)} new items"
+        )
+
+    expanded: list[dict[str, Any]] = []
+    for index, raw_delta in enumerate(new_items):
+        if not isinstance(raw_delta, dict) or delta_field not in raw_delta:
+            raise ValueError(f"{function_name} requires {delta_field} on every item")
+        bases = (
+            old_items
+            if len(new_items) == 1
+            else [old_items[index] if len(old_items) > 1 else old_items[0]]
+        )
+        base = dict(bases[0])
+        delta = dict(raw_delta)
+        if function_name == "resource_memory_update":
+            base_content = _unique_nonempty_strings(
+                [item.get("content") for item in bases]
+            )
+            delta_content = _bounded_memory_text(delta.pop(delta_field, ""), 900)
+            if delta_content and not any(
+                delta_content in content for content in base_content
+            ):
+                base_content.append(delta_content)
+            item = {
+                "title": str(delta.get("title") or base.get("title") or "").strip(),
+                "summary": str(
+                    delta.get("summary") or base.get("summary") or ""
+                ).strip()[:600],
+                "resource_type": str(
+                    delta.get("resource_type") or base.get("resource_type") or ""
+                ).strip(),
+                "content": "\n\n".join(base_content),
+                "tree_path": delta.get("tree_path") or base.get("tree_path") or [],
+            }
+            schema_module = importlib.import_module("mirix.schemas.resource_memory")
+            validated = schema_module.ResourceMemoryItemBase(**item)
+        else:
+            base_steps: list[Any] = []
+            for old_item in bases:
+                steps = old_item.get("steps") or []
+                if isinstance(steps, str):
+                    try:
+                        steps = json.loads(steps)
+                    except json.JSONDecodeError:
+                        steps = [steps]
+                if isinstance(steps, list):
+                    base_steps.extend(steps)
+            delta_steps = delta.pop(delta_field, [])
+            if not isinstance(delta_steps, list):
+                raise ValueError("procedural_memory_update steps_delta must be a list")
+            delta_steps = [
+                _bounded_memory_text(step, 240) for step in delta_steps[:6]
+            ]
+            item = {
+                "entry_type": str(
+                    delta.get("entry_type") or base.get("entry_type") or ""
+                ).strip(),
+                "summary": str(
+                    delta.get("summary") or base.get("summary") or ""
+                ).strip()[:600],
+                "steps": _unique_nonempty_strings(base_steps + delta_steps),
+                "tree_path": delta.get("tree_path") or base.get("tree_path") or [],
+            }
+            schema_module = importlib.import_module("mirix.schemas.procedural_memory")
+            validated = schema_module.ProceduralMemoryItemBase(**item)
+        model_dump = getattr(validated, "model_dump", None)
+        expanded.append(model_dump() if callable(model_dump) else dict(validated))
+
+    result = dict(function_args)
+    result["new_items"] = expanded
+    return result
+
+
+def _expand_mirix_delta_update(
+    agent: Any, function_name: str, function_args: dict[str, Any]
+) -> dict[str, Any]:
+    """Load referenced native rows and expand a delta immediately before execution."""
+    if function_name == "semantic_memory_insert":
+        items = function_args.get("items")
+        if not isinstance(items, list) or not items:
+            raise ValueError("semantic_memory_insert requires bounded items")
+        bounded_items: list[dict[str, Any]] = []
+        schema_module = importlib.import_module("mirix.schemas.semantic_memory")
+        for raw_item in items[:3]:
+            if not isinstance(raw_item, dict):
+                raise ValueError("semantic_memory_insert item must be an object")
+            item = dict(raw_item)
+            item["name"] = _bounded_memory_text(item.get("name"), 120)
+            item["summary"] = _bounded_memory_text(item.get("summary"), 240)
+            item["details"] = _bounded_memory_text(item.get("details"), 500)
+            item["source"] = _bounded_memory_text(item.get("source"), 160)
+            tree_path = item.get("tree_path") or []
+            if not isinstance(tree_path, list):
+                raise ValueError("semantic_memory_insert tree_path must be a list")
+            item["tree_path"] = [
+                _bounded_memory_text(value, 64) for value in tree_path[:4]
+            ]
+            validated = schema_module.SemanticMemoryItemBase(**item)
+            model_dump = getattr(validated, "model_dump", None)
+            bounded_items.append(
+                model_dump() if callable(model_dump) else dict(validated)
+            )
+        result = dict(function_args)
+        result["inner_thoughts"] = _bounded_memory_text(
+            result.get("inner_thoughts"), 200
+        )
+        result["items"] = bounded_items
+        return result
+
+    if function_name == "episodic_memory_insert":
+        items = function_args.get("items")
+        if not isinstance(items, list) or len(items) != 1:
+            raise ValueError(
+                "episodic_memory_insert requires exactly one bounded event"
+            )
+        item = dict(items[0]) if isinstance(items[0], dict) else None
+        if item is None:
+            raise ValueError("episodic_memory_insert item must be an object")
+        item["summary"] = _bounded_memory_text(item.get("summary"), 300)
+        item["details"] = _bounded_memory_text(item.get("details"), 900)
+        schema_module = importlib.import_module("mirix.schemas.episodic_memory")
+        validated = schema_module.EpisodicEventForLLM(**item)
+        model_dump = getattr(validated, "model_dump", None)
+        result = dict(function_args)
+        result["items"] = [
+            model_dump() if callable(model_dump) else dict(validated)
+        ]
+        return result
+
+    if function_name == "episodic_memory_merge":
+        if "details_delta" not in function_args:
+            return function_args
+        event_id = str(function_args.get("event_id") or "").strip()
+        if not event_id:
+            raise ValueError("episodic_memory_merge delta requires event_id")
+        old_event = agent.episodic_memory_manager.get_episodic_memory_by_id(event_id)
+        if old_event is None:
+            raise ValueError(
+                f"episodic_memory_merge references missing event_id: {event_id}"
+            )
+        old_data = _model_dump(old_event) or {}
+        details_delta = _bounded_memory_text(
+            function_args.get("details_delta"), 900
+        )
+        if details_delta and details_delta in str(old_data.get("details") or ""):
+            details_delta = ""
+        result = dict(function_args)
+        result.pop("details_delta", None)
+        result["combined_details"] = details_delta
+        result["combined_summary"] = _bounded_memory_text(
+            result.get("combined_summary") or old_data.get("summary"), 300
+        )
+        schema_module = importlib.import_module("mirix.schemas.episodic_memory")
+        schema_module.EpisodicEventUpdate(
+            id=event_id,
+            summary=result["combined_summary"],
+            details=result["combined_details"],
+        )
+        return result
+
+    old_ids = [str(value) for value in function_args.get("old_ids") or []]
+    if not old_ids or not function_args.get("new_items"):
+        return function_args
+    if function_name == "resource_memory_update":
+        manager = agent.resource_memory_manager
+        rows = manager.list_resources(agent.agent_state, limit=None) or []
+    elif function_name == "procedural_memory_update":
+        manager = agent.procedural_memory_manager
+        rows = manager.list_procedures(agent.agent_state, limit=None) or []
+    else:
+        return function_args
+    by_id = {
+        str(getattr(row, "id", "")): (_model_dump(row) or {}) for row in rows
+    }
+    missing = [old_id for old_id in old_ids if old_id not in by_id]
+    if missing:
+        raise ValueError(
+            f"{function_name} references missing old_ids: {', '.join(missing)}"
+        )
+    return _merge_mirix_delta_update(
+        function_name, function_args, [by_id[old_id] for old_id in old_ids]
+    )
+
+
+def _restrict_native_memory_update_tools(data: dict[str, Any]) -> dict[str, Any]:
+    """Remove redundant read tools only from native memory-update agents."""
+    tools = data.get("tools")
+    if not isinstance(tools, list):
+        return data
+    names = {_native_tool_name(tool) for tool in tools}
+    if not names.intersection(_MIRIX_NATIVE_MEMORY_WRITE_TOOLS):
+        return data
+    filtered = [
+        tool
+        for tool in tools
+        if _native_tool_name(tool) not in _MIRIX_REDUNDANT_MEMORY_UPDATE_READ_TOOLS
+    ]
+    if len(filtered) == len(tools):
+        return data
+    bounded = dict(data)
+    bounded["tools"] = filtered
+    return bounded
+
+
+def _reject_unparsed_native_tool_response(response_data: dict[str, Any]) -> None:
+    """Reject a malformed native envelope that compatibility recovery missed."""
+    for choice in response_data.get("choices") or []:
+        message = choice.get("message") or {}
+        content = message.get("content")
+        for tool_call in message.get("tool_calls") or []:
+            function = tool_call.get("function") or {}
+            arguments = function.get("arguments")
+            try:
+                parsed_arguments = json.loads(arguments)
+            except (TypeError, json.JSONDecodeError):
+                raise ValueError(
+                    "vLLM returned malformed native tool-call arguments"
+                )
+            if not isinstance(parsed_arguments, dict):
+                raise ValueError(
+                    "vLLM returned non-object native tool-call arguments"
+                )
+        if (
+            isinstance(content, str)
+            and "<tool_call>" in content
+            and not message.get("tool_calls")
+        ):
+            raise ValueError(
+                "vLLM returned an unparsed native <tool_call> envelope"
+            )
+
+
+def _accept_recovered_native_tool_finish(response_data: dict[str, Any]) -> None:
+    """Treat a capped response as a tool response only after JSON validation."""
+    for choice in response_data.get("choices") or []:
+        if choice.get("finish_reason") != "length":
+            continue
+        message = choice.get("message") or {}
+        tool_calls = message.get("tool_calls") or []
+        if not tool_calls:
+            continue
+        for tool_call in tool_calls:
+            function = tool_call.get("function") or {}
+            arguments = json.loads(function.get("arguments") or "")
+            if not isinstance(arguments, dict) or not function.get("name"):
+                break
+        else:
+            choice["finish_reason"] = "tool_calls"
+
+
+def _promote_native_chat_text_response(response_data: dict[str, Any]) -> None:
+    """Map Qwen's plain Chat-Agent answer to MIRIX's native send tool."""
+    if _ACTIVE_MIRIX_RETRIEVAL.get() is None:
+        return
+    for choice in response_data.get("choices") or []:
+        message = choice.get("message") or {}
+        content = message.get("content")
+        if message.get("tool_calls") or not isinstance(content, str):
+            continue
+        content = content.removesuffix("<|im_end|>").strip()
+        if not content:
+            continue
+        message["content"] = None
+        message["tool_calls"] = [
+            {
+                "id": f"call_{uuid.uuid4().hex}",
+                "type": "function",
+                "function": {
+                    "name": "send_message",
+                    "arguments": json.dumps({"message": content}, ensure_ascii=False),
+                },
+            }
+        ]
+        choice["finish_reason"] = "tool_calls"
 
 
 def _normalize_openai_tool_tags(response: dict[str, Any]) -> dict[str, Any]:
@@ -692,6 +3037,14 @@ def _tool_payload(text: str) -> dict[str, Any] | None:
         candidate = candidate.split("</tool_call>", 1)[0].strip()
     else:
         candidate = text
+    # OpenRouter Qwen can honor the tool schema semantically while rendering
+    # the call as Python-like text instead of an OpenAI ``tool_calls`` object:
+    # ``trigger_memory_update(memory_types=['core', 'episodic'])``. Promote
+    # that representation at the same compatibility boundary; the original
+    # MIRIX tool executor remains responsible for validation and execution.
+    python_payload = _python_style_tool_payload(candidate)
+    if python_payload is not None:
+        return python_payload
     try:
         value = json.loads(candidate)
     except (json.JSONDecodeError, TypeError):
@@ -700,3 +3053,48 @@ def _tool_payload(text: str) -> dict[str, Any] | None:
         except (TypeError, ValueError):
             return None
     return value if isinstance(value, dict) else None
+
+
+def _python_style_tool_payload(text: str) -> dict[str, Any] | None:
+    cleaned = "\n".join(
+        line
+        for line in str(text or "").splitlines()
+        if not line.strip().startswith("```")
+    ).strip()
+    if cleaned in {"finish_memory_update", "finish_memory_update()"}:
+        return {"name": "finish_memory_update", "arguments": {}}
+
+    for match in re.finditer(r"(?m)^\s*([A-Za-z_]\w*)\s*\(", cleaned):
+        start = match.start(1)
+        suffix = cleaned[start:]
+        # Try complete line boundaries in order. ``ast`` determines the real
+        # closing parenthesis and safely handles multiline calls, nested lists,
+        # and triple-quoted strings without executing model-produced text.
+        boundaries = [offset + 1 for offset, char in enumerate(suffix) if char == "\n"]
+        boundaries.append(len(suffix))
+        for end in boundaries:
+            candidate = suffix[:end].strip()
+            try:
+                expression = ast.parse(candidate, mode="eval").body
+            except (SyntaxError, ValueError):
+                continue
+            if not isinstance(expression, ast.Call) or not isinstance(
+                expression.func, ast.Name
+            ):
+                break
+            if expression.args or any(
+                keyword.arg is None for keyword in expression.keywords
+            ):
+                break
+            try:
+                arguments = {
+                    str(keyword.arg): ast.literal_eval(keyword.value)
+                    for keyword in expression.keywords
+                }
+            except (ValueError, TypeError, SyntaxError):
+                break
+            remainder = (cleaned[:start] + suffix[end:]).strip()
+            if remainder:
+                arguments.setdefault("inner_thoughts", remainder)
+            return {"name": expression.func.id, "arguments": arguments}
+    return None

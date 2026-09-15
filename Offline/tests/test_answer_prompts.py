@@ -8,7 +8,11 @@ from types import SimpleNamespace
 
 from PIL import Image
 
-from benchmarks.answer_response import AnswerFormatError, parse_answer_block
+from benchmarks.answer_response import (
+    AnswerFormatError,
+    parse_answer_block,
+    recover_unique_answer_block,
+)
 from benchmarks.h2hmem_harness.eval_h2hmem import answer_conversation_job
 from benchmarks.h2hmem_harness import prompts as h2_prompts
 from benchmarks.memgallery_harness.eval_memgallery import answer_dataset_job
@@ -64,7 +68,11 @@ class CustomPromptParityTest(unittest.TestCase):
                 )
 
     def test_h2hmem_messages_match_reference_for_every_question_type(self):
-        for question_type in h2_prompts.INSTRUCTIONS:
+        question_types = (
+            *h2_prompts.INSTRUCTIONS,
+            *h2_prompts.QUESTION_TYPE_ALIASES,
+        )
+        for question_type in question_types:
             with self.subTest(question_type=question_type):
                 self.assert_prompt_parity(
                     "h2hmem",
@@ -77,6 +85,15 @@ class CustomPromptParityTest(unittest.TestCase):
                     ["first memory", "second memory"],
                 )
 
+    def test_h2hmem_causal_inference_uses_causal_instruction(self):
+        messages = h2_prompts.build_answer_messages(
+            question="What caused the change?",
+            question_type="Multimodal Causal Inference",
+            query_images=None,
+            memory_evidence=["text and visual evidence"],
+        )
+        self.assertIn("causal reasoning", messages[0]["content"])
+
     def test_wma_messages_match_reference(self):
         self.assert_prompt_parity(
             "worldmemarena",
@@ -88,6 +105,33 @@ class CustomPromptParityTest(unittest.TestCase):
             },
             ["first memory", "second memory"],
         )
+
+    def test_empty_evidence_is_opt_in_and_omits_memory_section(self):
+        cases = (
+            (memgallery_prompts, "FR", "Conversation memory:"),
+            (h2_prompts, "Unimodal Precise Recall", "Conversation memory:"),
+            (wma_prompts, "TR", "Retrieved memories:"),
+        )
+        for module, question_type, evidence_heading in cases:
+            kwargs = {
+                "question": "What happened?",
+                "question_type": question_type,
+                "query_images": [{"id": "Q_IMG_1", "caption": "A park"}],
+                "memory_evidence": [],
+            }
+            with self.subTest(module=module.__name__, mode="strict"):
+                with self.assertRaisesRegex(ValueError, "at least one non-empty"):
+                    module.build_answer_messages(**kwargs)
+            with self.subTest(module=module.__name__, mode="ppo-empty"):
+                messages = module.build_answer_messages(
+                    **kwargs, allow_empty_evidence=True
+                )
+                self.assertIn("No conversation-memory evidence was selected", messages[0]["content"])
+                self.assertNotIn(evidence_heading, messages[1]["content"])
+                self.assertIn("Question Image:", messages[1]["content"])
+                self.assertIn("Question: What happened?", messages[1]["content"])
+                self.assertEqual(module.PPO_EMPTY_PROMPT_VERSION, "ppo-empty-evidence-20260911-v1")
+                self.assertEqual(len(module.ppo_empty_prompt_sha256()), 64)
 
     def test_retired_answer_prompts_are_absent_from_production_code(self):
         retired_fragments = (
@@ -120,8 +164,167 @@ class AnswerContractTest(unittest.TestCase):
             with self.subTest(raw=raw), self.assertRaises(AnswerFormatError):
                 parse_answer_block(raw)
 
+    def test_recovery_accepts_only_one_embedded_nonempty_block(self):
+        self.assertEqual(
+            recover_unique_answer_block("prefix <answer>Paris</answer> suffix"),
+            "Paris",
+        )
+        for raw in (
+            "Paris",
+            "<answer></answer>",
+            "<answer>Paris</answer><answer>London</answer>",
+        ):
+            with self.subTest(raw=raw), self.assertRaises(AnswerFormatError):
+                recover_unique_answer_block(raw)
+
 
 class PrebuiltMessageClientTest(unittest.TestCase):
+    def test_context_capacity_truncation_retries_with_smaller_images(self):
+        class ContextLimitedClient(VLMAnswerClient):
+            def __init__(self):
+                super().__init__(num_predict=512, retries=0)
+                self.payloads = []
+
+            def _post_json(self, _url, payload):
+                self.payloads.append(payload)
+                if len(self.payloads) == 1:
+                    return {
+                        "choices": [
+                            {
+                                "message": {"content": "<answer>Par"},
+                                "finish_reason": "length",
+                            }
+                        ],
+                        "usage": {
+                            "prompt_tokens": 32760,
+                            "completion_tokens": 8,
+                            "total_tokens": 32768,
+                        },
+                    }
+                return {
+                    "choices": [
+                        {
+                            "message": {"content": "<answer>Paris</answer>"},
+                            "finish_reason": "stop",
+                        }
+                    ],
+                    "usage": {
+                        "prompt_tokens": 20000,
+                        "completion_tokens": 3,
+                        "total_tokens": 20003,
+                    },
+                }
+
+        client = ContextLimitedClient()
+        response = client.answer_messages_with_usage(
+            messages=[
+                {"role": "system", "content": "Return an answer block."},
+                {"role": "user", "content": "Where?"},
+            ],
+            memory_items=[],
+        )
+
+        self.assertEqual(response.text, "<answer>Paris</answer>")
+        self.assertEqual(len(client.payloads), 2)
+        self.assertEqual(response.attempts, 1)
+        self.assertEqual(response.failed_attempts, 0)
+        self.assertEqual(response.usage["prompt_tokens"], 52760)
+        self.assertEqual(response.usage["completion_tokens"], 11)
+
+    def test_format_retry_adds_repetition_penalty_without_changing_messages(self):
+        class RetryingClient(VLMAnswerClient):
+            def __init__(self):
+                super().__init__(retries=1)
+                self.payloads = []
+
+            def _post_json(self, _url, payload):
+                self.payloads.append(payload)
+                content = "malformed" if len(self.payloads) == 1 else "<answer>Paris</answer>"
+                return {
+                    "choices": [{"message": {"content": content}}],
+                    "usage": {
+                        "prompt_tokens": 10,
+                        "completion_tokens": 3,
+                        "total_tokens": 13,
+                    },
+                }
+
+        messages = [
+            {"role": "system", "content": "Return an answer block."},
+            {"role": "user", "content": "Where?"},
+        ]
+        client = RetryingClient()
+        response = client.answer_messages_with_usage(messages=messages, memory_items=[])
+
+        self.assertEqual(response.text, "<answer>Paris</answer>")
+        self.assertNotIn("repetition_penalty", client.payloads[0])
+        self.assertEqual(client.payloads[1]["repetition_penalty"], 1.05)
+        self.assertEqual(client.payloads[0]["messages"], client.payloads[1]["messages"])
+
+    def test_openrouter_format_retry_uses_json_schema_without_changing_messages(self):
+        class RetryingClient(VLMAnswerClient):
+            def __init__(self):
+                super().__init__(base_url="https://openrouter.ai/api/v1", retries=1)
+                self.payloads = []
+
+            def _post_json(self, _url, payload):
+                self.payloads.append(payload)
+                content = "Paris" if len(self.payloads) == 1 else '{"answer":"Paris"}'
+                return {
+                    "choices": [{"message": {"content": content}}],
+                    "usage": {
+                        "prompt_tokens": 10,
+                        "completion_tokens": 3,
+                        "total_tokens": 13,
+                    },
+                }
+
+        messages = [
+            {"role": "system", "content": "Return an answer block."},
+            {"role": "user", "content": "Where?"},
+        ]
+        client = RetryingClient()
+        response = client.answer_messages_with_usage(messages=messages, memory_items=[])
+
+        self.assertEqual(response.text, "<answer>Paris</answer>")
+        self.assertIn("structured_outputs", client.payloads[0])
+        self.assertNotIn("response_format", client.payloads[0])
+        self.assertNotIn("structured_outputs", client.payloads[1])
+        self.assertEqual(
+            client.payloads[1]["response_format"]["json_schema"]["name"],
+            "benchmark_answer",
+        )
+        self.assertNotIn("provider", client.payloads[1])
+        self.assertEqual(client.payloads[0]["messages"], client.payloads[1]["messages"])
+
+    def test_exhausted_format_retries_recover_one_embedded_block(self):
+        class RecoveringClient(VLMAnswerClient):
+            def _post_json(self, _url, _payload):
+                return {
+                    "choices": [
+                        {"message": {"content": "prefix <answer>Paris</answer> suffix"}}
+                    ],
+                    "usage": {
+                        "prompt_tokens": 10,
+                        "completion_tokens": 3,
+                        "total_tokens": 13,
+                    },
+                }
+
+        client = RecoveringClient(retries=2)
+        response = client.answer_messages_with_usage(
+            messages=[
+                {"role": "system", "content": "Return an answer block."},
+                {"role": "user", "content": "Where?"},
+            ],
+            memory_items=[],
+        )
+        self.assertEqual(response.text, "<answer>Paris</answer>")
+        self.assertEqual(response.raw_text, "prefix <answer>Paris</answer> suffix")
+        self.assertEqual(response.attempts, 3)
+        self.assertEqual(response.failed_attempts, 2)
+        self.assertEqual(response.usage["total_tokens"], 39)
+
     def test_attaching_images_does_not_modify_prompt_text(self):
         class CapturingClient(VLMAnswerClient):
             def _post_json(self, _url, payload):

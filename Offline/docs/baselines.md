@@ -22,8 +22,9 @@
 1. 在 GPU 3、4、5 启动 vLLM，并完成服务预检。
 2. 运行 smoke test；通过后启动 21 组正式实验。
 3. 按 `run_test_baseline_matrix.py` 中的 `JOB_ORDER` 从预计耗时短到长分配任务。
-4. 本次 Prompt 重跑复用 `0907a` 已有的 memory、snapshot 与兼容的冻结检索；不重新建库。重新生成 QA，并异步运行 LLM Judge。
-5. 记录 F1、EM、Judge、MB/QA calls、cost、latency，以及运行配置和断点状态。
+4. 三个 benchmark 均严格读取当前已有的固定 chunk JSONL，并依据 test manifest 筛选样本，禁止运行时重新切分或静默重建 chunk
+5.若有多agent，运行原生 Chat Agent 自主检索，保证每道 QA 最终返回的 memory 总数不超过 top_k=7
+6. 记录 F1、EM、Judge、MB/QA calls、cost、latency，以及运行配置和断点状态。
 
 ## 4.完成条件
 
@@ -48,7 +49,7 @@
 
 `/data/haozhen/Memory-clean/Offline/outputs/<Benchmark>/<Baseline>/<Run-ID>/`
 
-本次 Prompt 重跑的 `Run-ID` 为 `0909_custom_prompt_qa`。例如：
+举例：本次 Prompt 重跑的 `Run-ID` 为 `0909_custom_prompt_qa`。例如：
 
 `/data/haozhen/Memory-clean/Offline/outputs/Mem-Gallery/M2A/0909_custom_prompt_qa/`
 

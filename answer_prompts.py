@@ -22,6 +22,10 @@ _H2HMEM_INSTRUCTIONS = {
     "answer refusal": "Determine whether the question can be answered from the conversation memory.",
 }
 
+_H2HMEM_QUESTION_TYPE_ALIASES = {
+    "multimodal causal inference": "multimodal causal reasoning",
+}
+
 
 def build_benchmark_answer_messages(
     *,
@@ -81,6 +85,9 @@ def _system_prompt(dataset_kind: str, metadata: Mapping[str, Any]) -> str:
         )
     else:
         question_type = str(metadata.get("question_type") or "").strip().casefold()
+        question_type = _H2HMEM_QUESTION_TYPE_ALIASES.get(
+            question_type, question_type
+        )
         type_instruction = _H2HMEM_INSTRUCTIONS.get(
             question_type,
             _H2HMEM_INSTRUCTIONS["unimodal precise recall"],

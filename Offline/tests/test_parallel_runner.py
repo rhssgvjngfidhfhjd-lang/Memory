@@ -33,6 +33,25 @@ def test_parallel_map_preserves_input_order() -> None:
     assert peak >= 2
 
 
+def test_parallel_map_reports_deferred_sample_failure(capsys) -> None:
+    def worker(value: int) -> int:
+        if value == 2:
+            raise ValueError("broken sample")
+        return value
+
+    try:
+        parallel_map_ordered([1, 2, 3], worker, max_workers=1)
+    except RuntimeError:
+        pass
+    else:
+        raise AssertionError("parallel_map_ordered should report aggregate failure")
+
+    captured = capsys.readouterr()
+    assert "[sample-error]" in captured.err
+    assert '"sample_id": "2"' in captured.err
+    assert "broken sample" in captured.err
+
+
 def test_sample_artifact_is_signature_guarded_and_atomic() -> None:
     with tempfile.TemporaryDirectory() as directory:
         root = Path(directory)

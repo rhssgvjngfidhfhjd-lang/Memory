@@ -8,6 +8,7 @@ venv/
 .venv/
 env/
 offline_env/
+Offline/.upstream/
 
 # 环境变量和本地密钥
 .env

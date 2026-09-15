@@ -12,6 +12,8 @@ from benchmarks.baseline_runtime.config import OFFLINE_ROOT
 from benchmarks.baseline_runtime.protocol import (
     BaselineAdapter,
     MemoryRecord,
+    NativeAnswerRequest,
+    NativeAnswerResult,
     RetrievalRequest,
     RetrievalResult,
 )
@@ -119,9 +121,26 @@ class BaselineProcess(BaselineAdapter):
     def end_session(self, session_id: str) -> None:
         self._request("end_session", session_id=session_id)
 
+    def completed_session_ids(self) -> tuple[str, ...]:
+        return tuple(str(value) for value in self._request("completed_session_ids") or [])
+
+    def filter_completed_session_chunks(self, chunks: list[Chunk]) -> list[Chunk]:
+        return [
+            Chunk.from_dict(row)
+            for row in self._request(
+                "filter_completed_session_chunks",
+                chunks=[chunk.to_dict() for chunk in chunks],
+            ) or []
+        ]
+
     def retrieve(self, request: RetrievalRequest) -> RetrievalResult:
         return RetrievalResult.from_dict(
             self._request("retrieve", request=request.to_dict()) or {}
+        )
+
+    def answer_with_memory(self, request: NativeAnswerRequest) -> NativeAnswerResult:
+        return NativeAnswerResult.from_dict(
+            self._request("answer_with_memory", request=request.to_dict()) or {}
         )
 
     def snapshot(self) -> list[MemoryRecord]:

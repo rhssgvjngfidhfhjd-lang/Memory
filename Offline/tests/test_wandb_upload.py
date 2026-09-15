@@ -7,10 +7,18 @@ from pathlib import Path
 
 import torch
 
+from evidence_policy.ppo import (
+    WANDB_SCHEMA_VERSION,
+    WANDB_TOP_LEVEL_GROUPS,
+    build_wandb_update_payload,
+    build_wandb_validation_payload,
+)
 from scripts.upload_evidence_policy_wandb import (
     ALL_EVIDENCE_MASKS,
     EVIDENCE_LEVEL_CHART_SPEC,
+    FrontierPoint,
     build_evidence_level_ratio_line_chart,
+    build_quality_cost_frontier_chart,
     build_test_summary,
     evidence_level_distribution,
     load_run_data,
@@ -26,6 +34,85 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 class WandbUploadTest(unittest.TestCase):
+    def test_builds_cross_lambda_quality_cost_frontier(self) -> None:
+        class FakePlot:
+            @staticmethod
+            def scatter(**kwargs):
+                return kwargs
+
+        class FakeTable:
+            def __init__(self, *, columns):
+                self.columns = columns
+                self.rows = []
+
+            def add_data(self, *values):
+                self.rows.append(list(values))
+
+        class FakeWandb:
+            plot = FakePlot()
+            Table = FakeTable
+
+        chart = build_quality_cost_frontier_chart(
+            FakeWandb(),
+            [
+                FrontierPoint("run-high", 0.0, 0.02, 0.6),
+                FrontierPoint("run-low", 0.2, 0.01, 0.5),
+            ],
+        )
+
+        self.assertEqual(chart["x"], "raw_cost_mean")
+        self.assertEqual(chart["y"], "f1")
+        self.assertEqual(
+            chart["table"].rows,
+            [
+                [0.01, 0.5, 0.2, "run-low"],
+                [0.02, 0.6, 0.0, "run-high"],
+            ],
+        )
+
+    def test_shared_schema_uses_only_four_top_level_groups(self) -> None:
+        update = build_wandb_update_payload(
+            {
+                "epoch": 0,
+                "question_count": 16,
+                "update_step": 1,
+                "pg_loss": -0.1,
+                "value_loss": 0.2,
+                "normalized_cost_mean": 0.3,
+                "cost_scale_alpha": 0.5,
+                "effective_cost_weight": 0.05,
+            }
+        )
+        validation = build_wandb_validation_payload(
+            {
+                "phase": "half",
+                "update_step": 1,
+                "train_question_count": 16,
+                "metrics": {
+                    "f1": 0.5,
+                    "mean_reward": 0.4,
+                    "normalized_cost_mean": 0.3,
+                    "evidence_actions": {"mask:11000": 2},
+                },
+            },
+            epoch=0,
+        )
+        keys = {*update, *validation, *build_test_summary({"f1": 0.6})}
+
+        self.assertEqual(WANDB_SCHEMA_VERSION, "evidence-policy-v2")
+        self.assertEqual(
+            {key.split("/", 1)[0] for key in keys},
+            WANDB_TOP_LEVEL_GROUPS,
+        )
+        self.assertIn("train/pg_loss", update)
+        self.assertIn("train/cost/normalized_cost_mean", update)
+        self.assertEqual(update["train/cost/cost_scale_alpha"], 0.5)
+        self.assertEqual(update["train/cost/effective_cost_weight"], 0.05)
+        self.assertNotIn("actor/pg_loss", update)
+        self.assertNotIn("cost/normalized_cost_mean", update)
+        self.assertIn("val/cost/normalized_cost_mean", validation)
+        self.assertAlmostEqual(validation["val/action_ratio/11000"], 1.0)
+
     def test_builds_llm_judge_and_calls_summary(self) -> None:
         summary = build_test_summary(
             {
@@ -216,6 +303,39 @@ class WandbUploadTest(unittest.TestCase):
         self.assertEqual(train_counts["00011"], 2)
         self.assertAlmostEqual(train_ratios["00011"], 2 / 3)
         self.assertEqual(set(train_ratios), set(ALL_EVIDENCE_MASKS))
+
+    def test_ignores_resume_control_records_in_train_log(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_jsonl(
+                root / "train.log",
+                [
+                    {
+                        "resume_metrics_reconciliation": {
+                            "checkpoint_update_step": 1,
+                            "removed_rows": 1,
+                        }
+                    },
+                    {
+                        "epoch": 0,
+                        "update_step": 1,
+                        "validations": [
+                            {
+                                "phase": "end",
+                                "update_step": 1,
+                                "metrics": {"f1": 0.5},
+                            }
+                        ],
+                    },
+                ],
+            )
+            write_jsonl(root / "ppo_metrics.jsonl", [{"epoch": 0, "update_step": 1}])
+
+            data = load_run_data(root)
+
+        self.assertEqual(len(data.epoch_rows), 1)
+        self.assertEqual(len(data.validation_rows), 1)
+        self.assertEqual(data.validation_rows[0]["f1"], 0.5)
 
     def test_evidence_level_ratios_are_derived_from_independent_mask_bits(self) -> None:
         counts, ratios, total = evidence_level_distribution(

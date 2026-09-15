@@ -1,9 +1,10 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from copy import deepcopy
 import json
 import re
 from langgraph.graph import END
-from typing import Literal, Optional
+from typing import Any, Callable, Literal, Optional
 from langchain.tools import tool
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langchain_core.tools import BaseTool
@@ -13,6 +14,12 @@ from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Command
 from ..stores import RawMessage, RawMessageStore, SemanticStore, SemanticMemory, ImageManager
 from ..config import TIME_FMT, MemoryManagerConfig
+from ..utils.evidence import normalize_evidence_ranges
+from ..utils.message import deduplicate_message_images, raise_for_truncated_completion
+from .tool_call_normalizer import (
+    cap_tool_calls_to_budget,
+    normalize_qwen_tool_calls,
+)
 
 class MemoryManagerTools:
     """Tools for MemoryManager to query storage layers"""
@@ -29,11 +36,105 @@ class MemoryManagerTools:
         semantic_store: SemanticStore,
         image_manager: ImageManager,
         max_raw_msg: int = 20,
+        retrieval_trace_hook: Optional[Callable[[dict[str, Any]], None]] = None,
+        handoff_cap: Optional[int] = None,
     ):
         self.raw = raw_store
         self.semantic = semantic_store
         self.image_manager = image_manager
         self.max_raw_msg = max_raw_msg
+        self.retrieval_trace_hook = retrieval_trace_hook
+        self._retrieval_trace: list[dict[str, Any]] = []
+        self._handoff_memories: list[dict[str, Any]] = []
+        self._handoff_memory_ids: set[str] = set()
+        self.set_handoff_cap(handoff_cap)
+
+    def set_retrieval_trace_hook(
+        self, hook: Optional[Callable[[dict[str, Any]], None]]
+    ) -> None:
+        self.retrieval_trace_hook = hook
+
+    def set_handoff_cap(self, cap: Optional[int]) -> None:
+        """Configure the external handoff view without changing agent retrieval."""
+        if cap is not None and cap <= 0:
+            raise ValueError("handoff_cap must be a positive integer or None")
+        self.handoff_cap = cap
+
+    def reset_retrieval_trace(self) -> None:
+        self._retrieval_trace = []
+        self._handoff_memories = []
+        self._handoff_memory_ids = set()
+
+    def get_retrieval_trace(self) -> list[dict[str, Any]]:
+        return deepcopy(self._retrieval_trace)
+
+    def get_handoff_memories(
+        self, cap: Optional[int] = None
+    ) -> list[dict[str, Any]]:
+        """Return first-seen, de-duplicated search hits for an external answerer."""
+        effective_cap = self.handoff_cap if cap is None else cap
+        if effective_cap is not None and effective_cap <= 0:
+            raise ValueError("handoff cap must be a positive integer or None")
+        memories = self._handoff_memories
+        if effective_cap is not None:
+            memories = memories[:effective_cap]
+        return deepcopy(memories)
+
+    def _record_retrieval(self, event: dict[str, Any]) -> None:
+        snapshot = deepcopy(event)
+        self._retrieval_trace.append(snapshot)
+        if self.retrieval_trace_hook is not None:
+            self.retrieval_trace_hook(deepcopy(snapshot))
+
+    def record_memory_manager_query(
+        self, *, query_text: Optional[str], query_image: Optional[str]
+    ) -> None:
+        self._record_retrieval(
+            {
+                "operation": "memory_manager_query",
+                "query_text": query_text,
+                "query_image": query_image,
+            }
+        )
+
+    @staticmethod
+    def _semantic_memory_record(mem: SemanticMemory, rank: int) -> dict[str, Any]:
+        return {
+            "memory_id": str(mem.memory_id),
+            "rank": rank,
+            "text": mem.text or "",
+            "image_caption": mem.image_caption or "",
+            "image_path": mem.image_path or "",
+            "evidence_ids": deepcopy(mem.evidence_ids),
+        }
+
+    def _record_semantic_search(
+        self,
+        *,
+        query_text: Optional[str],
+        query_image: Optional[str],
+        top_k: int,
+        results: list[SemanticMemory],
+    ) -> None:
+        records = [
+            self._semantic_memory_record(memory, rank)
+            for rank, memory in enumerate(results, start=1)
+        ]
+        self._record_retrieval(
+            {
+                "operation": "search_semantic_memories",
+                "query_text": query_text,
+                "query_image": query_image,
+                "requested_top_k": top_k,
+                "semantic_ids": [record["memory_id"] for record in records],
+                "results": records,
+            }
+        )
+        for record in records:
+            memory_id = record["memory_id"]
+            if memory_id not in self._handoff_memory_ids:
+                self._handoff_memory_ids.add(memory_id)
+                self._handoff_memories.append(record)
     
     def get_search_semantic_memories(self):
         @tool
@@ -51,6 +152,7 @@ class MemoryManagerTools:
                 query_image: Query image. Use image token to refer to image(e.g. <image23>). IMPORTANT: Image tokens are ONLY allowed in this field and MUST NOT appear in others. Set query_image=None if this memory contains no image.
                 top_k: Number of results to return
             """
+            requested_query_image = query_image
             if query_image and query_image != 'N/A':
                 query_image = self.image_manager.image_token_to_image(query_image)
             
@@ -58,6 +160,13 @@ class MemoryManagerTools:
                 query_text=query_text,
                 query_image_path=query_image,  # For prototype, text-only
                 top_k=top_k
+            )
+
+            self._record_semantic_search(
+                query_text=query_text,
+                query_image=requested_query_image,
+                top_k=top_k,
+                results=results,
             )
             
             if not results:
@@ -105,6 +214,15 @@ class MemoryManagerTools:
                 messages = self.raw.fetch_by_ids(ranges)
                 
                 if not messages:
+                    self._record_retrieval(
+                        {
+                            "operation": "fetch_raw_messages",
+                            "requested_id_ranges": ranges,
+                            "returned_count": 0,
+                            "truncated": False,
+                            "results": [],
+                        }
+                    )
                     return f"No messages found in ranges {id_ranges}"
                 
                 output = [{
@@ -123,6 +241,25 @@ class MemoryManagerTools:
                     })
                     if msg.image_path:
                         images.append(msg.image_path)
+
+                self._record_retrieval(
+                    {
+                        "operation": "fetch_raw_messages",
+                        "requested_id_ranges": ranges,
+                        "returned_count": min(len(messages), self.max_raw_msg),
+                        "truncated": len(messages) > self.max_raw_msg,
+                        "results": [
+                            {
+                                "msg_id": msg.msg_id,
+                                "timestamp": msg.timestamp.strftime(TIME_FMT),
+                                "role": msg.role,
+                                "text": msg.text or "",
+                                "image_path": msg.image_path or "",
+                            }
+                            for msg in messages[:self.max_raw_msg]
+                        ],
+                    }
+                )
                               
                 return self.image_manager.format_obj_to_content(output, images)
 
@@ -149,11 +286,41 @@ class MemoryManagerTools:
                 messages = self.raw.fetch_by_timerange(start, end)
                 
                 if not messages:
+                    self._record_retrieval(
+                        {
+                            "operation": "fetch_raw_messages_by_time",
+                            "start_date": start_date,
+                            "end_date": end_date,
+                            "returned_count": 0,
+                            "truncated": False,
+                            "results": [],
+                        }
+                    )
                     return f"No messages between {start_date} and {end_date}"
                 
                 output = [f"Found {len(messages)} messages:\n"]
                 for msg in messages[:20]:  # Limit output
                     output.append(f"[{msg.msg_id}] {msg.timestamp.strftime(TIME_FMT)} - {msg.role}: {msg.text[:50]}...")
+
+                self._record_retrieval(
+                    {
+                        "operation": "fetch_raw_messages_by_time",
+                        "start_date": start_date,
+                        "end_date": end_date,
+                        "returned_count": min(len(messages), 20),
+                        "truncated": len(messages) > 20,
+                        "results": [
+                            {
+                                "msg_id": msg.msg_id,
+                                "timestamp": msg.timestamp.strftime(TIME_FMT),
+                                "role": msg.role,
+                                "text": msg.text or "",
+                                "image_path": msg.image_path or "",
+                            }
+                            for msg in messages[:20]
+                        ],
+                    }
+                )
                 
                 return "\n".join(output)
             except Exception as e:
@@ -182,7 +349,16 @@ class MemoryManagerTools:
                 evidence_ids: JSON string of ID ranges, e.g. "[[1,3], [5,5]]"
             """
             try:
-                ev_ids = json.loads(evidence_ids)
+                raw_ev_ids = json.loads(evidence_ids)
+                ev_ids = normalize_evidence_ranges(raw_ev_ids)
+                if ev_ids != raw_ev_ids:
+                    self.semantic.log.append(
+                        {
+                            "op": "normalize_evidence_ids",
+                            "original": raw_ev_ids,
+                            "normalized": ev_ids,
+                        }
+                    )
                 if image == 'N/A':
                     image = None
                 if image_caption == 'N/A':
@@ -265,10 +441,80 @@ class MemoryManager:
         }
         self.tool_cls = tools
         self.config = config
+        self._tool_budget_events: list[dict[str, Any]] = []
         
         self.image_manager = image_manager
         self.llm = llm
         self.graph = self._build_graph()
+
+    def pop_tool_budget_events(self) -> list[dict[str, Any]]:
+        events = list(self._tool_budget_events)
+        self._tool_budget_events.clear()
+        return events
+
+    def _record_forced_finalize(self, *, operation: str, iterations: int) -> None:
+        self._tool_budget_events.append(
+            {
+                "operation": operation,
+                "tool_iterations": iterations,
+                "max_tool_iterations": self.max_iteration,
+                "budget_exhausted": True,
+                "forced_finalize": True,
+            }
+        )
+
+    def _cap_response_tool_calls(
+        self, response: AIMessage, *, operation: str, iterations: int
+    ) -> AIMessage:
+        remaining = max(0, self.max_iteration - iterations)
+        offered = len(response.tool_calls)
+        if offered > remaining:
+            self._tool_budget_events.append(
+                {
+                    "operation": operation,
+                    "tool_iterations": iterations,
+                    "max_tool_iterations": self.max_iteration,
+                    "budget_exhausted": True,
+                    "forced_finalize": False,
+                    "tool_calls_offered": offered,
+                    "tool_calls_accepted": remaining,
+                    "tool_calls_omitted": offered - remaining,
+                }
+            )
+        return cap_tool_calls_to_budget(response, remaining)
+
+    @staticmethod
+    def _has_text_content(response: AIMessage) -> bool:
+        content = response.content
+        if isinstance(content, str):
+            return bool(content.strip())
+        if isinstance(content, list):
+            return any(
+                isinstance(block, str) and bool(block.strip())
+                or isinstance(block, dict)
+                and bool(str(block.get("text") or block.get("content") or "").strip())
+                for block in content
+            )
+        return False
+
+    def reset_retrieval_trace(self) -> None:
+        self.tool_cls.reset_retrieval_trace()
+
+    def set_retrieval_trace_hook(
+        self, hook: Optional[Callable[[dict[str, Any]], None]]
+    ) -> None:
+        self.tool_cls.set_retrieval_trace_hook(hook)
+
+    def set_handoff_cap(self, cap: Optional[int]) -> None:
+        self.tool_cls.set_handoff_cap(cap)
+
+    def get_retrieval_trace(self) -> list[dict[str, Any]]:
+        return self.tool_cls.get_retrieval_trace()
+
+    def get_handoff_memories(
+        self, cap: Optional[int] = None
+    ) -> list[dict[str, Any]]:
+        return self.tool_cls.get_handoff_memories(cap)
         
     def _prepair_context(self, context: list[RawMessage]) -> list[dict]:
         content = [{
@@ -363,12 +609,53 @@ Current query: <query>
         state: MemoryManagerState
     ) -> Command:
         messages = state.messages
-        
-        response = self.llm.bind_tools([
+        request_messages = deduplicate_message_images(messages)
+        query_tools = [
             self.tools["search_semantic_memories"],
             self.tools["fetch_raw_messages"],
             self.tools["fetch_raw_messages_by_time"],      
-        ], parallel_tool_calls=False).invoke(messages)
+        ]
+        forced_finalize = state.iteration_count >= self.max_iteration
+        if forced_finalize:
+            self._record_forced_finalize(
+                operation="query", iterations=state.iteration_count
+            )
+            # Match the original M2A terminal transition: once the tool budget
+            # is exhausted, make a plain completion request with no tool schema.
+            # Returning here also guarantees that no additional tool call can be
+            # routed to exec_tool, even if a provider populates tool_calls.
+            response = self.llm.invoke(request_messages)
+            raise_for_truncated_completion(response)
+            if not self._has_text_content(response):
+                raise RuntimeError(
+                    "M2A MemoryManager returned an empty query response during "
+                    "forced finalization"
+                )
+            messages.append(response)
+            try:
+                formatted_response = self.image_manager.format_msg_to_content(
+                    response.content
+                )
+            except Exception as e:
+                messages.append(HumanMessage(content=str(e)))
+                return Command(
+                    update={"messages": messages},
+                    goto="handle_query"
+                )
+            return Command(
+                update={"messages": messages, "response": formatted_response},
+                goto=END
+            )
+
+        response = self.llm.bind_tools(
+            query_tools,
+            parallel_tool_calls=False,
+        ).invoke(request_messages)
+        raise_for_truncated_completion(response)
+        response = normalize_qwen_tool_calls(response)
+        response = self._cap_response_tool_calls(
+            response, operation="query", iterations=state.iteration_count
+        )
         messages.append(response)
         if not response.tool_calls:
             try:
@@ -401,14 +688,12 @@ Current query: <query>
             return state
 
         for tool_call in last_message.tool_calls:
+            if state.iteration_count >= self.max_iteration:
+                raise RuntimeError(
+                    "M2A MemoryManager received a tool call after its tool budget "
+                    "was exhausted"
+                )
             state.iteration_count += 1
-            if state.iteration_count == self.max_iteration:
-                print("MAX_ITERATION_REACHED")
-                state.messages.append(ToolMessage(
-                    content="Tool call failed: Tool call count limit exceeded!",
-                    tool_call_id=tool_call["id"]
-                ))
-                return state
             
             try:
                 query_image = tool_call["args"].get("query_image")
@@ -535,16 +820,39 @@ ChatAgent suggests: <query>
     
     def _handle_update(self, state: MemoryManagerState) -> Command:
         messages = state.messages
-
-        response = self.llm.bind_tools([
+        request_messages = deduplicate_message_images(messages)
+        update_tools = [
             self.tools["search_semantic_memories"],
             self.tools["fetch_raw_messages"],
             self.tools["fetch_raw_messages_by_time"],   
             
             self.tools["add_memory"],
             self.tools["delete_memory"],
-        ], parallel_tool_calls=False).invoke(messages)
-        
+        ]
+        forced_finalize = state.iteration_count >= self.max_iteration
+        if forced_finalize:
+            self._record_forced_finalize(
+                operation="update", iterations=state.iteration_count
+            )
+            # Do not expose tools in the terminal request.  The hard tool budget
+            # remains unchanged and the response cannot enter exec_tool.
+            response = self.llm.invoke(request_messages)
+            raise_for_truncated_completion(response)
+            messages.append(response)
+            return Command(
+                update={"messages": messages, "response": response.content},
+                goto=END
+            )
+
+        response = self.llm.bind_tools(
+            update_tools,
+            parallel_tool_calls=False,
+        ).invoke(request_messages)
+        raise_for_truncated_completion(response)
+        response = normalize_qwen_tool_calls(response)
+        response = self._cap_response_tool_calls(
+            response, operation="update", iterations=state.iteration_count
+        )
         messages.append(response)
         if not response.tool_calls:
             return Command(
@@ -594,6 +902,10 @@ ChatAgent suggests: <query>
         query_image: Optional[str] = None,
     ) -> list[dict]:
         """Handle memory query from ChatAgent"""
+        self.tool_cls.record_memory_manager_query(
+            query_text=query_text,
+            query_image=query_image,
+        )
         state = MemoryManagerState(
             operation="query",
             query_text=query_text,

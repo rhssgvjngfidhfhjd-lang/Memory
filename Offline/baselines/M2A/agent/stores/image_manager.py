@@ -116,7 +116,7 @@ class ImageManager:
 
         image_url = image
         if image_url and not image_url.startswith(("http", "data:")):
-            image_url = encode_image_to_base64(image_url)
+            image_url = encode_image_to_base64(image_url, compress=True)
 
         for chunk in chunks:
             if chunk == '"<image>"':

@@ -18,6 +18,11 @@ PROMPT_DIR = Path(os.getenv("MEMGALLERY_PROMPT_DIR", DEFAULT_PROMPT_DIR)).expand
 
 PROMPT_VERSION = "answer-prompts-custom-20260909-v1"
 PROMPT_SOURCE = "answer_prompts.py:build_benchmark_answer_messages[mem_gallery]"
+PPO_EMPTY_PROMPT_VERSION = "ppo-empty-evidence-20260911-v1"
+PPO_EMPTY_EVIDENCE_INSTRUCTION = (
+    "No conversation-memory evidence was selected. Answer using only the question and its "
+    "Question Image, if present; do not invent missing memory facts."
+)
 ANSWER_TAG_CONTRACT = (
     "Return only one non-empty <answer>...</answer> block, with the answer text inside the tags."
 )
@@ -35,15 +40,24 @@ def build_answer_messages(
     question_type: str,
     memory_evidence: Sequence[str],
     query_images: Any = None,
+    allow_empty_evidence: bool = False,
 ) -> list[dict[str, str]]:
-    evidence = _validated_evidence(memory_evidence)
+    evidence = _validated_evidence(
+        memory_evidence, allow_empty_evidence=allow_empty_evidence
+    )
     question = str(question or "").strip()
     if not question:
         raise ValueError("Direct answer generation requires sample_metadata.question.")
-    evidence_text = "\n\n".join(
-        f"[Evidence {index}]\n{item}" for index, item in enumerate(evidence, start=1)
-    )
-    sections = [f"Conversation memory:\n{evidence_text}"]
+    sections = []
+    system_prompt = SYSTEM_PROMPT
+    if evidence:
+        evidence_text = "\n\n".join(
+            f"[Evidence {index}]\n{item}"
+            for index, item in enumerate(evidence, start=1)
+        )
+        sections.append(f"Conversation memory:\n{evidence_text}")
+    else:
+        system_prompt = f"{PPO_EMPTY_EVIDENCE_INSTRUCTION} {ANSWER_TAG_CONTRACT}"
     image_context = _format_query_images(query_images)
     if image_context:
         sections.append("Question Image:\n" + image_context)
@@ -59,7 +73,7 @@ def build_answer_messages(
             "order and separate them with commas."
         )
     return [
-        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "system", "content": system_prompt},
         {"role": "user", "content": "\n\n".join(sections)},
     ]
 
@@ -80,6 +94,20 @@ def prompt_sha256() -> str:
                 "order and separate them with commas."
             ),
             "evidence_heading": "Conversation memory",
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+    return hashlib.sha256(source.encode("utf-8")).hexdigest()
+
+
+def ppo_empty_prompt_sha256() -> str:
+    source = json.dumps(
+        {
+            "version": PPO_EMPTY_PROMPT_VERSION,
+            "base_prompt_sha256": prompt_sha256(),
+            "system": f"{PPO_EMPTY_EVIDENCE_INSTRUCTION} {ANSWER_TAG_CONTRACT}",
+            "evidence_section": "omitted",
         },
         ensure_ascii=False,
         sort_keys=True,
@@ -111,11 +139,13 @@ def resolve_question_image(data_dir: Path, qa: dict) -> dict | None:
     return out
 
 
-def _validated_evidence(memory_evidence: Sequence[str]) -> list[str]:
+def _validated_evidence(
+    memory_evidence: Sequence[str], *, allow_empty_evidence: bool = False
+) -> list[str]:
     if isinstance(memory_evidence, (str, bytes)):
         raise ValueError("memory_evidence must be a sequence of evidence strings.")
     evidence = [str(item).strip() for item in memory_evidence if str(item).strip()]
-    if not evidence:
+    if not evidence and not allow_empty_evidence:
         raise ValueError(
             "Direct answer generation requires at least one non-empty memory evidence item."
         )

@@ -7,7 +7,7 @@ import traceback
 from pathlib import Path
 from typing import Any
 
-from benchmarks.baseline_runtime.protocol import RetrievalRequest
+from benchmarks.baseline_runtime.protocol import NativeAnswerRequest, RetrievalRequest
 from benchmarks.baseline_runtime.registry import create_local_adapter
 from embedding.chunk_builder import Chunk
 
@@ -22,8 +22,20 @@ def _dispatch(adapter: Any, operation: str, request: dict[str, Any]) -> Any:
     if operation == "end_session":
         adapter.end_session(str(request["session_id"]))
         return None
+    if operation == "completed_session_ids":
+        return list(adapter.completed_session_ids())
+    if operation == "filter_completed_session_chunks":
+        chunks = [Chunk.from_dict(row) for row in request.get("chunks") or []]
+        return [
+            chunk.to_dict()
+            for chunk in adapter.filter_completed_session_chunks(chunks)
+        ]
     if operation == "retrieve":
         return adapter.retrieve(RetrievalRequest.from_dict(request["request"])).to_dict()
+    if operation == "answer_with_memory":
+        return adapter.answer_with_memory(
+            NativeAnswerRequest.from_dict(request["request"])
+        ).to_dict()
     if operation == "snapshot":
         return [row.to_dict() for row in adapter.snapshot()]
     if operation == "capabilities":

@@ -17,6 +17,7 @@ import requests
 import torch
 
 from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
+from benchmarks.memgallery_harness.runner.metrics import calculate_usage_cost
 from benchmarks.memgallery_harness.retrieval.query_embedding_cache import (
     QueryEmbeddingCache,
     make_query_id,
@@ -31,8 +32,15 @@ from evidence_policy.evidence import (
     make_policy_observation,
 )
 from evidence_policy.policy import EvidenceSelectionPolicy
-from evidence_policy.ppo import PPOBuffer, PPOTrainer
-from evidence_policy.retrieval import resolve_graph_options, validate_graph_config
+from evidence_policy.ppo import PPOBuffer, PPOTrainer, SlidingCostNormalizer
+from evidence_policy.retrieval import (
+    question_retrieval_seed,
+    resolve_graph_options,
+    resolve_retrieval_settings,
+    retrieval_signature,
+    retrieve_hits,
+    validate_graph_config,
+)
 from evidence_policy.rollout import (
     EvidenceEpisode,
     EvidenceSelectionEnv,
@@ -40,8 +48,9 @@ from evidence_policy.rollout import (
 )
 from evidence_policy.vp_store import VPArtifactIndex
 from hive_mem.mau import MAU
-from hive_mem.retriever import MemoryHit
+from hive_mem.retriever import MemoryHit, SimpleMemoryIndex
 from scripts.evidence_policy import (
+    CostRewardRuntime,
     RealtimeWandbLogger,
     build_h2hmem_policy_messages,
     build_wma_policy_messages,
@@ -58,6 +67,191 @@ from scripts.evidence_policy import (
 
 
 EMBEDDING_DIM = 8
+
+
+class CostRewardTest(unittest.TestCase):
+    def test_exact_usage_cost_formula(self):
+        self.assertAlmostEqual(
+            calculate_usage_cost(
+                {
+                    "prompt_tokens": 200,
+                    "completion_tokens": 40,
+                    "total_tokens": 240,
+                },
+                input_price=0.05,
+                output_price=0.25,
+            ),
+            0.00002,
+        )
+
+    def test_sliding_normalizer_warmup_snapshot_floor_and_round_trip(self):
+        normalizer = SlidingCostNormalizer(
+            window_size=4,
+            min_window_size=2,
+            lower_quantile=0.05,
+            upper_quantile=0.95,
+            initial_range_floor_ratio=0.25,
+        )
+        warmup = normalizer.snapshot()
+        self.assertFalse(warmup["active"])
+        self.assertEqual(normalizer.normalize(10.0, snapshot=warmup), 0.0)
+
+        normalizer.extend([1.0, 4.0], [0.2, 0.8])
+        fixed = normalizer.snapshot()
+        self.assertTrue(fixed["active"])
+        self.assertEqual(normalizer.normalize(1.0, snapshot=fixed), 0.0)
+        self.assertEqual(normalizer.normalize(4.0, snapshot=fixed), 1.0)
+        expected = (1.5 - fixed["effective_transformed_cost_min"]) / fixed[
+            "effective_transformed_cost_range"
+        ]
+        self.assertAlmostEqual(fixed["task_reward_std"], 0.3)
+        self.assertAlmostEqual(fixed["normalized_cost_std"], 0.5)
+        self.assertAlmostEqual(
+            fixed["cost_scale_alpha"],
+            fixed["task_reward_std"]
+            / (fixed["normalized_cost_std"] + normalizer.std_epsilon),
+        )
+        normalizer.extend([400.0, 900.0], [0.1, 0.9])
+        self.assertAlmostEqual(
+            normalizer.normalize(2.25, snapshot=fixed), expected
+        )
+
+        initial_range = (
+            normalizer.initial_transformed_cost_max
+            - normalizer.initial_transformed_cost_min
+        )
+        normalizer.extend([0.0, 0.0, 0.0, 0.0], [0.4, 0.4, 0.4, 0.4])
+        collapsed = normalizer.snapshot()
+        self.assertGreaterEqual(
+            collapsed["effective_transformed_cost_range"], 0.25 * initial_range
+        )
+        self.assertEqual(list(normalizer.transformed_costs), [0.0] * 4)
+        self.assertEqual(list(normalizer.quality_rewards), [0.4] * 4)
+        restored = SlidingCostNormalizer(
+            window_size=4,
+            min_window_size=2,
+            lower_quantile=0.05,
+            upper_quantile=0.95,
+            initial_range_floor_ratio=0.25,
+        )
+        restored.load_state_dict(normalizer.state_dict())
+        self.assertEqual(restored.state_dict(), normalizer.state_dict())
+
+    def test_cost_runtime_uses_frozen_window_and_alpha_zero_is_f1_only(self):
+        def config(alpha):
+            return {
+                "model": {"name": "Qwen/Qwen3-VL-4B-Instruct"},
+                "efficiency_config": str(
+                    Path(__file__).resolve().parents[1]
+                    / "configs"
+                    / "model_efficiency.json"
+                ),
+                "reward": {
+                    "cost_enabled": True,
+                    "cost_tradeoff_lambda": alpha,
+                    "cost_transform": "sqrt_incremental",
+                    "window_size": 4,
+                    "min_window_size": 2,
+                    "lower_quantile": 0.05,
+                    "upper_quantile": 0.95,
+                    "initial_range_floor_ratio": 0.25,
+                    "range_epsilon": 1e-12,
+                    "std_epsilon": 1e-8,
+                },
+            }
+
+        def build_messages(items, *, allow_empty_evidence=False):
+            if not items and not allow_empty_evidence:
+                raise ValueError("empty evidence is disabled")
+            evidence = (
+                f"Conversation memory:\n[Evidence 1]\n{items[0]['text']}\n\n"
+                if items
+                else ""
+            )
+            return [
+                {"role": "system", "content": "system"},
+                {"role": "user", "content": f"{evidence}Question: question"},
+            ]
+
+        episode = SimpleNamespace(
+            query_id="q1",
+            answer_messages_builder=build_messages,
+            query_image=None,
+        )
+
+        def rollout():
+            return SimpleNamespace(
+                reward=0.8,
+                quality_reward=0.8,
+                error="",
+                answer_usage={
+                    "prompt_tokens": 300,
+                    "completion_tokens": 20,
+                    "total_tokens": 320,
+                },
+                cost_weight=None,
+                cost_error="",
+            )
+
+        counter = MagicMock()
+        counter.count.return_value = 100
+        runtime = CostRewardRuntime(config(0.1), token_counter=counter)
+        first = rollout()
+        warmup_snapshot = runtime.snapshot()
+        self.assertTrue(runtime.apply(first, episode, snapshot=warmup_snapshot))
+        self.assertNotIn(
+            "Conversation memory:", counter.count.call_args.args[0][1]["content"]
+        )
+        self.assertEqual(first.reward, first.quality_reward)
+        self.assertIsNone(first.cost_min)
+        self.assertIsNone(first.cost_max)
+        runtime.commit(
+            [first.incremental_cost, 0.000035],
+            [first.quality_reward, 0.4],
+        )
+
+        second = rollout()
+        second.answer_usage = {
+            "prompt_tokens": 1000,
+            "completion_tokens": 20,
+            "total_tokens": 1020,
+        }
+        active_snapshot = runtime.snapshot()
+        self.assertTrue(runtime.apply(second, episode, snapshot=active_snapshot))
+        self.assertAlmostEqual(second.normalized_cost, 1.0)
+        expected_scale = active_snapshot["task_reward_std"] / (
+            active_snapshot["normalized_cost_std"] + 1e-8
+        )
+        self.assertAlmostEqual(second.cost_scale_alpha, expected_scale)
+        self.assertAlmostEqual(
+            second.reward,
+            second.quality_reward - 0.1 * expected_scale,
+        )
+        self.assertAlmostEqual(
+            second.transformed_cost,
+            np.sqrt(second.incremental_cost),
+        )
+        self.assertAlmostEqual(
+            second.cost_min,
+            second.base_cost
+            + active_snapshot["effective_transformed_cost_min"] ** 2,
+        )
+        self.assertGreater(second.cost_max, second.cost_min)
+
+        no_penalty = CostRewardRuntime(config(0.0), token_counter=counter)
+        no_penalty.commit(
+            [first.incremental_cost, 0.000035],
+            [first.quality_reward, 0.4],
+        )
+        third = rollout()
+        third.answer_usage = second.answer_usage
+        self.assertTrue(no_penalty.apply(third, episode, snapshot=no_penalty.snapshot()))
+        self.assertEqual(third.reward, third.quality_reward)
+
+        missing = rollout()
+        missing.answer_usage = None
+        self.assertFalse(runtime.apply(missing, episode, snapshot=active_snapshot))
+        self.assertIn("missing exact", missing.cost_error)
 
 
 class ValidationScheduleTest(unittest.TestCase):
@@ -352,6 +546,114 @@ class GraphRetrievalConfigTest(unittest.TestCase):
             validate_graph_config({"top_k": 4})
         with self.assertRaisesRegex(ValueError, "append_k=2"):
             resolve_graph_options({"top_k": 5, "graph_options": {"append_k": 1}})
+
+    def test_ablation_modes_resolve_without_changing_legacy_defaults(self):
+        self.assertEqual(
+            resolve_retrieval_settings(
+                {"retrieval_mode": "vector", "top_k": 7, "seed": 42}
+            )["vector_k"],
+            7,
+        )
+        random_settings = resolve_retrieval_settings(
+            {
+                "retrieval_mode": "random_append",
+                "top_k": 5,
+                "random_append_k": 2,
+                "retrieval_seed": 43,
+            }
+        )
+        self.assertEqual(random_settings["append_k"], 2)
+        self.assertIsNone(random_settings["graph_options"])
+
+    def test_random_append_is_question_deterministic_unique_and_auditable(self):
+        items = [
+            MAU(
+                id=f"m{index}",
+                summary=f"memory {index}",
+                embedding=np.full(EMBEDDING_DIM, index + 1, dtype=np.float32),
+                metadata={"session_id": "visible"},
+            )
+            for index in range(10)
+        ]
+        index = SimpleMemoryIndex.__new__(SimpleMemoryIndex)
+        index.bank = SimpleNamespace(memories=items)
+        index.search = MagicMock(
+            return_value=[
+                MemoryHit(item=item, score=1.0 - rank / 100, rank=rank)
+                for rank, item in enumerate(items[:5], start=1)
+            ]
+        )
+        index._scores = MagicMock(return_value=np.linspace(1.0, 0.1, 10))
+        settings = resolve_retrieval_settings(
+            {
+                "retrieval_mode": "random_append",
+                "top_k": 5,
+                "random_append_k": 2,
+                "retrieval_seed": 42,
+            }
+        )
+
+        first, first_metadata = retrieve_hits(
+            index,
+            np.ones(EMBEDDING_DIM),
+            settings,
+            benchmark="wma",
+            manifest_question_id="sample:QA00:Q001",
+            allowed_session_ids={"visible"},
+        )
+        second, second_metadata = retrieve_hits(
+            index,
+            np.ones(EMBEDDING_DIM),
+            settings,
+            benchmark="wma",
+            manifest_question_id="sample:QA00:Q001",
+            allowed_session_ids={"visible"},
+        )
+
+        self.assertEqual(
+            [hit.item.id for hit in first], [hit.item.id for hit in second]
+        )
+        self.assertEqual([hit.rank for hit in first], list(range(1, 8)))
+        self.assertEqual([hit.via for hit in first], ["vector"] * 5 + ["random"] * 2)
+        self.assertEqual(len(set(first_metadata["retrieval_final_ids"])), 7)
+        self.assertEqual(first_metadata, second_metadata)
+        self.assertEqual(first_metadata["append_k_actual"], 2)
+        score_args = index._scores.call_args.args
+        np.testing.assert_array_equal(score_args[0], np.ones(EMBEDDING_DIM))
+        self.assertEqual(score_args[1:], ("", {"visible"}))
+
+    def test_question_seed_and_retrieval_signatures_are_isolated(self):
+        self.assertEqual(
+            question_retrieval_seed(42, "wma", "q1"),
+            question_retrieval_seed(42, "wma", "q1"),
+        )
+        self.assertNotEqual(
+            question_retrieval_seed(42, "wma", "q1"),
+            question_retrieval_seed(43, "wma", "q1"),
+        )
+        vector = retrieval_signature(
+            ".", None, retrieval_mode="vector", vector_k=5
+        )
+        top7 = retrieval_signature(
+            ".", None, retrieval_mode="vector", vector_k=7
+        )
+        random42 = retrieval_signature(
+            ".",
+            None,
+            retrieval_mode="random_append",
+            vector_k=5,
+            append_k=2,
+            retrieval_seed=42,
+        )
+        random43 = retrieval_signature(
+            ".",
+            None,
+            retrieval_mode="random_append",
+            vector_k=5,
+            append_k=2,
+            retrieval_seed=43,
+        )
+        self.assertEqual(len({vector, top7, random42, random43}), 4)
 
 
 def make_hit(
@@ -755,6 +1057,67 @@ class RolloutTest(unittest.TestCase):
         self.assertEqual(client.calls, 2)
         self.assertFalse(first.cached)
         self.assertFalse(second.cached)
+
+    def test_ppo_all_zero_uses_empty_evidence_prompt(self):
+        class CapturingClient(self.FakeClient):
+            def answer(self, **kwargs):
+                self.calls += 1
+                self.request = kwargs
+                return "fruit tart"
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dialogue_dataset(root)
+            client = CapturingClient()
+            env = EvidenceSelectionEnv(
+                client, EvidenceChainBuilder(DialogueStore(root))
+            )
+            episode = EvidenceEpisode(
+                query_id="q1",
+                dataset="toy",
+                category="Unimodal Precise Recall",
+                question_prompt="What was baked?",
+                system_prompt="",
+                ground_truth="fruit tart",
+                query_embedding=np.ones(EMBEDDING_DIM, dtype=np.float32),
+                memory_hits=(make_hit("m1"),),
+                answer_messages_builder=partial(
+                    build_h2hmem_policy_messages,
+                    question="What was baked?",
+                    category="Unimodal Precise Recall",
+                ),
+                prepend_memory_context=False,
+                metadata={
+                    "prompt_version": "answer-prompts-custom-20260909-v1",
+                    "prompt_sha256": "base-sha",
+                    "ppo_empty_prompt_version": "ppo-empty-evidence-20260911-v1",
+                    "ppo_empty_prompt_sha256": "empty-sha",
+                },
+            )
+            policy = EvidenceSelectionPolicy(
+                embedding_dim=EMBEDDING_DIM, hidden_dim=16, hidden_layers=1
+            )
+            with torch.no_grad():
+                policy.evidence_head.bias.fill_(-100.0)
+            rollout = env.rollout(
+                episode,
+                EvidenceStrategy.PPO,
+                policy=policy,
+                deterministic=True,
+            )
+
+        self.assertFalse(rollout.error)
+        self.assertTrue(all(action.bitmask == "00000" for action in rollout.actions))
+        self.assertNotIn("Conversation memory:", client.request["question_prompt"])
+        self.assertIn(
+            "No conversation-memory evidence was selected",
+            client.request["system_prompt"],
+        )
+        record = rollout_record(rollout, episode)
+        self.assertEqual(record["prompt_variant"], "ppo_empty_evidence")
+        self.assertEqual(record["prompt_version"], "ppo-empty-evidence-20260911-v1")
+        self.assertEqual(record["prompt_sha256"], "empty-sha")
+        self.assertEqual(record["base_prompt_sha256"], "base-sha")
 
     def test_h2hmem_custom_messages_and_tag_parser_are_used_by_rollout(self):
         class CapturingClient(self.FakeClient):

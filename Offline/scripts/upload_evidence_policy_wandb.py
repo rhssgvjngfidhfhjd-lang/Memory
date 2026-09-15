@@ -25,23 +25,20 @@ if SRC in sys.path:
     sys.path.remove(SRC)
 sys.path.insert(0, SRC)
 
+from evidence_policy.ppo import (  # noqa: E402
+    WANDB_COST_FIELDS,
+    WANDB_CRITIC_FIELDS,
+    WANDB_SCHEMA_VERSION,
+    WANDB_TRAIN_FIELDS,
+    assert_wandb_schema,
+    build_wandb_test_summary,
+    build_wandb_update_payload,
+    build_wandb_validation_payload,
+    define_wandb_metrics,
+)
 
-ACTOR_FIELDS = (
-    "ppo_kl",
-    "pg_loss",
-    "pg_clipfrac",
-    "lr",
-    "grad_norm",
-    "entropy_loss",
-)
-CRITIC_FIELDS = (
-    "value_loss",
-    "absolute_value_error",
-    "explained_variance",
-    "reward_mean",
-    "reward_min",
-    "reward_max",
-)
+ACTOR_FIELDS = WANDB_TRAIN_FIELDS
+CRITIC_FIELDS = WANDB_CRITIC_FIELDS
 EVIDENCE_ORDER = ("summary", "dialogue", "caption", "image", "vp")
 ALL_EVIDENCE_MASKS = tuple(f"{value:05b}" for value in range(32))
 EVIDENCE_LEVEL_CHART_SPEC = (
@@ -61,16 +58,33 @@ class RunData:
     warnings: tuple[str, ...]
 
 
+@dataclass(frozen=True)
+class FrontierPoint:
+    run_name: str
+    cost_lambda: float
+    raw_cost_mean: float
+    f1: float
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Upload Evidence Policy validation, actor, and critic charts to W&B"
     )
     parser.add_argument("--run-dir", required=True, help="Evidence Policy output directory")
-    parser.add_argument("--project", default="hivemem-evidence-policy")
+    parser.add_argument("--project", default="hivemem-evidence-policy-v2")
     parser.add_argument("--entity", default="")
     parser.add_argument("--name", default="")
     parser.add_argument("--run-id", default="")
     parser.add_argument("--tag", action="append", default=[])
+    parser.add_argument(
+        "--frontier-run-dir",
+        action="append",
+        default=[],
+        help=(
+            "Completed run directory to include in the cross-lambda test "
+            "quality-cost chart; repeat for every lambda"
+        ),
+    )
     parser.add_argument(
         "--workspace-url",
         default="",
@@ -92,8 +106,20 @@ def main() -> None:
 
     run_dir = Path(args.run_dir).resolve()
     data = load_run_data(run_dir)
+    frontier_points = load_frontier_points(args.frontier_run_dir)
     if args.dry_run:
-        print(json.dumps(data_summary(data), ensure_ascii=False, indent=2))
+        print(
+            json.dumps(
+                {
+                    **data_summary(data),
+                    "frontier_points": [
+                        point.__dict__ for point in frontier_points
+                    ],
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
         return
     run_url = upload_to_wandb(
         data,
@@ -105,6 +131,7 @@ def main() -> None:
         tags=args.tag,
         charts_only=args.charts_only,
         summary_only=args.summary_only,
+        frontier_points=frontier_points,
     )
     dashboard_url = ""
     if not args.skip_workspace:
@@ -157,7 +184,14 @@ def load_run_data(run_dir: Path) -> RunData:
     warnings: list[str] = []
     checkpoint_config, checkpoint_rows = load_checkpoint_epoch_rows(run_dir)
     if train_log.exists():
-        log_rows = read_jsonl(train_log, skip_non_json=True)
+        # A resumed train log also contains JSON control records such as
+        # ``resume_metrics_reconciliation``. They are not epoch summaries and
+        # must not be interpreted as synthetic validation epochs.
+        log_rows = [
+            row
+            for row in read_jsonl(train_log, skip_non_json=True)
+            if "epoch" in row
+        ]
         logged_epochs = {int(row["epoch"]) for row in log_rows if "epoch" in row}
         recovered_rows = [
             row for row in checkpoint_rows if int(row["epoch"]) not in logged_epochs
@@ -229,6 +263,48 @@ def load_run_data(run_dir: Path) -> RunData:
         test_metrics=test_metrics,
         warnings=tuple(warnings),
     )
+
+
+def load_frontier_points(run_dirs: Iterable[str | Path]) -> tuple[FrontierPoint, ...]:
+    points: list[FrontierPoint] = []
+    for value in run_dirs:
+        run_dir = Path(value).resolve()
+        config_path = run_dir / "run_control" / "effective_config.json"
+        if not config_path.exists():
+            config_path = run_dir / "config.json"
+        metrics_path = run_dir / "eval" / "test_ppo" / "metrics.json"
+        if not config_path.exists() or not metrics_path.exists():
+            raise FileNotFoundError(
+                f"Frontier run is missing config or test metrics: {run_dir}"
+            )
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+        metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
+        if int(metrics.get("errors", 0)) != 0:
+            raise ValueError(f"Frontier run has test errors: {run_dir}")
+        cost_lambda = config.get("reward", {}).get("cost_tradeoff_lambda")
+        raw_cost_mean = metrics.get("raw_cost_mean")
+        f1 = metrics.get("f1")
+        if not all(is_finite(item) for item in (cost_lambda, raw_cost_mean, f1)):
+            raise ValueError(
+                f"Frontier run lacks lambda, raw_cost_mean, or f1: {run_dir}"
+            )
+        metadata_path = run_dir / "run_control" / "wandb.json"
+        metadata = (
+            json.loads(metadata_path.read_text(encoding="utf-8"))
+            if metadata_path.exists()
+            else {}
+        )
+        points.append(
+            FrontierPoint(
+                run_name=str(metadata.get("name") or run_dir.name),
+                cost_lambda=float(cost_lambda),
+                raw_cost_mean=float(raw_cost_mean),
+                f1=float(f1),
+            )
+        )
+    if len({point.cost_lambda for point in points}) != len(points):
+        raise ValueError("Frontier runs must have unique cost lambda values")
+    return tuple(sorted(points, key=lambda point: point.raw_cost_mean))
 
 
 def load_checkpoint_epoch_rows(
@@ -347,7 +423,7 @@ def validation_event_row(
     validation = event.get("metrics", {})
     if not isinstance(validation, dict):
         validation = {}
-    return {
+    row = {
         "update_step": int(event.get("update_step", 0)),
         "epoch": int(event.get("epoch", default_epoch)),
         "phase": str(event.get("phase", "end")),
@@ -361,6 +437,10 @@ def validation_event_row(
         "by_category": validation.get("by_category", {}),
         "evidence_actions": validation.get("evidence_actions", {}),
     }
+    for field in WANDB_COST_FIELDS:
+        if validation.get(field) is not None:
+            row[field] = validation[field]
+    return row
 
 
 def build_train_action_rows(
@@ -508,6 +588,7 @@ def upload_to_wandb(
     tags: Iterable[str],
     charts_only: bool = False,
     summary_only: bool = False,
+    frontier_points: Iterable[FrontierPoint] = (),
 ) -> str:
     try:
         import wandb
@@ -521,69 +602,37 @@ def upload_to_wandb(
         "entity": entity,
         "name": name,
         "job_type": "evidence-policy-metrics",
-        "tags": list(tags),
+        "tags": [*tags, WANDB_SCHEMA_VERSION],
         "config": safe_wandb_config(data.config, run_dir),
     }
     if run_id:
         init_kwargs.update({"id": run_id, "resume": "allow"})
     run = wandb.init(**init_kwargs)
     if not charts_only and not summary_only:
-        run.define_metric("val/update_step")
-        run.define_metric("val/*", step_metric="val/update_step")
-        run.define_metric("val/action_ratio/*", step_metric="val/update_step")
-        run.define_metric("train/update_step")
-        run.define_metric("train/action_ratio/*", step_metric="train/update_step")
-        run.define_metric("actor/update_step")
-        run.define_metric("actor/*", step_metric="actor/update_step")
-        run.define_metric("critic/update_step")
-        run.define_metric("critic/*", step_metric="critic/update_step")
+        define_wandb_metrics(run)
 
         for row in data.validation_rows:
-            _, ratios, _ = mask_distribution(row.get("evidence_actions"))
-            payload = {
-                "val/update_step": row["update_step"],
-                "val/reward": row["reward"],
-                "val/f1": row["f1"],
-                "val/exact_match": row["exact_match"],
-                "val/retrieval_hitrate_at_5": row["retrieval_hitrate_at_5"],
-                "val/errors": row["errors"],
-            }
-            payload.update(
-                {f"val/action_ratio/{mask}": ratio for mask, ratio in ratios.items()}
-            )
-            run.log(payload)
+            run.log(build_wandb_validation_payload(row))
 
         for row in data.train_action_rows:
             _, ratios, _ = mask_distribution(row.get("evidence_actions"))
-            run.log(
-                {
-                    "train/update_step": row["update_step"],
-                    "train/epoch": row["epoch"],
-                    **{
-                        f"train/action_ratio/{mask}": ratio
-                        for mask, ratio in ratios.items()
-                    },
-                }
-            )
+            payload = {
+                "train/update_step": row["update_step"],
+                "train/epoch": row["epoch"],
+                **{
+                    f"train/action_ratio/{mask}": ratio
+                    for mask, ratio in ratios.items()
+                },
+            }
+            assert_wandb_schema(payload)
+            run.log(payload)
 
     predicted_values: list[float] = []
     target_values: list[float] = []
     critic_steps: list[int] = []
     for row in (() if charts_only or summary_only else data.update_rows):
         update_step = int(row["update_step"])
-        payload: dict[str, Any] = {
-            "actor/update_step": update_step,
-            "critic/update_step": update_step,
-        }
-        for field in ACTOR_FIELDS:
-            add_finite(payload, f"actor/{field}", row.get(field))
-        for field in CRITIC_FIELDS:
-            wandb_name = {
-                "reward_mean": "rewards/mean",
-                "reward_min": "rewards/min",
-                "reward_max": "rewards/max",
-            }.get(field, field)
-            add_finite(payload, f"critic/{wandb_name}", row.get(field))
+        payload = build_wandb_update_payload(row)
         run.log(payload)
         predicted = row.get("predicted_value_mean")
         target = row.get("target_return_mean")
@@ -631,9 +680,6 @@ def upload_to_wandb(
     )
     if train_mask_chart is not None:
         charts["train/action_mask_ratio"] = train_mask_chart
-    ratio_table = None if summary_only else build_mask_ratio_table(wandb, data)
-    if ratio_table is not None:
-        charts["evidence/action_mask_ratio_table"] = ratio_table
     test_counts, test_ratios, test_total = mask_distribution(
         data.test_metrics.get("evidence_actions")
     )
@@ -673,13 +719,21 @@ def upload_to_wandb(
             "ratio",
             title="Final Evidence Level Selection Ratio",
         )
+    frontier_chart = (
+        None
+        if summary_only
+        else build_quality_cost_frontier_chart(wandb, frontier_points)
+    )
+    if frontier_chart is not None:
+        charts["test/quality_cost_frontier"] = frontier_chart
     if charts:
+        assert_wandb_schema(charts)
         run.log(charts)
 
     for key, value in build_test_summary(data.test_metrics).items():
         run.summary[key] = value
     if data.warnings:
-        run.summary["upload/warnings"] = list(data.warnings)
+        run.summary["train/upload_warnings"] = list(data.warnings)
     url = run.url
     run.finish()
     return url
@@ -687,72 +741,7 @@ def upload_to_wandb(
 
 def build_test_summary(test_metrics: dict[str, Any]) -> dict[str, Any]:
     """Flatten final test and call metrics into stable W&B summary keys."""
-    summary: dict[str, Any] = {}
-    for key in (
-        "count",
-        "f1",
-        "exact_match",
-        "em",
-        "mean_reward",
-        "llm_judge",
-        "errors",
-    ):
-        if key in test_metrics:
-            summary[f"test/{key}"] = test_metrics[key]
-    if "retrieval_hitrate@5" in test_metrics:
-        summary["test/retrieval_hitrate_at_5"] = test_metrics[
-            "retrieval_hitrate@5"
-        ]
-
-    for section in ("cost_mb", "cost_qa", "cost_total"):
-        values = test_metrics.get(section)
-        if not isinstance(values, dict):
-            continue
-        for field in (
-            "available",
-            "input_tokens",
-            "output_tokens",
-            "cost_sum_usd",
-            "num_samples",
-            "mean_per_sample_usd",
-        ):
-            if values.get(field) is not None:
-                summary[f"test/{section}/{field}"] = values[field]
-    for section in ("latency_mb", "latency_qa", "latency_total"):
-        values = test_metrics.get(section)
-        if not isinstance(values, dict):
-            continue
-        for field in (
-            "available",
-            "calls",
-            "input_tokens",
-            "output_tokens",
-            "image_count",
-            "latency_sum_seconds",
-            "num_samples",
-            "mean_per_sample_seconds",
-        ):
-            if values.get(field) is not None:
-                summary[f"test/{section}/{field}"] = values[field]
-
-    calls = test_metrics.get("calls")
-    if not isinstance(calls, dict):
-        return summary
-    for section in ("memory_bank", "qa", "total"):
-        values = calls.get(section)
-        if not isinstance(values, dict):
-            continue
-        for field in (
-            "available",
-            "total_calls",
-            "failed_calls",
-            "successful_calls",
-            "num_samples",
-            "mean_per_sample",
-        ):
-            if field in values:
-                summary[f"test/calls/{section}/{field}"] = values[field]
-    return summary
+    return build_wandb_test_summary(test_metrics)
 
 
 def build_category_f1_chart(wandb: Any, data: RunData) -> Any | None:
@@ -843,6 +832,31 @@ def build_evidence_level_ratio_line_chart(
     )
 
 
+def build_quality_cost_frontier_chart(
+    wandb: Any,
+    points: Iterable[FrontierPoint],
+) -> Any | None:
+    ordered = sorted(points, key=lambda point: point.raw_cost_mean)
+    if len(ordered) < 2:
+        return None
+    table = wandb.Table(
+        columns=["raw_cost_mean", "f1", "lambda", "run_name"]
+    )
+    for point in ordered:
+        table.add_data(
+            point.raw_cost_mean,
+            point.f1,
+            point.cost_lambda,
+            point.run_name,
+        )
+    return wandb.plot.scatter(
+        table=table,
+        x="raw_cost_mean",
+        y="f1",
+        title="Test Quality-Cost Frontier",
+    )
+
+
 def build_mask_ratio_table(wandb: Any, data: RunData) -> Any | None:
     table = wandb.Table(
         columns=[
@@ -899,10 +913,13 @@ def build_mask_ratio_table(wandb: Any, data: RunData) -> Any | None:
 def safe_wandb_config(config: dict[str, Any], run_dir: Path) -> dict[str, Any]:
     model = config.get("model", {})
     split = config.get("split", {})
+    reward = config.get("reward", {})
     return {
+        "wandb_schema_version": WANDB_SCHEMA_VERSION,
         "source_run_dir": run_dir.name,
         "seed": config.get("seed"),
         "top_k": config.get("top_k"),
+        "cost_tradeoff_lambda": reward.get("cost_tradeoff_lambda"),
         "model": model.get("name"),
         "policy": config.get("policy", {}),
         "ppo": config.get("ppo", {}),
@@ -921,11 +938,6 @@ def data_summary(data: RunData) -> dict[str, Any]:
         "train_action_points": len(data.train_action_rows),
         "warnings": list(data.warnings),
     }
-
-
-def add_finite(payload: dict[str, Any], key: str, value: Any) -> None:
-    if is_finite(value):
-        payload[key] = float(value)
 
 
 def is_finite(value: Any) -> bool:

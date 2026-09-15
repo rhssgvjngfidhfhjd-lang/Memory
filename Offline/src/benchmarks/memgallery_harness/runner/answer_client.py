@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import base64
+from functools import lru_cache
 import io
+import json
+import logging
 import mimetypes
 import re
 import time
@@ -11,20 +14,46 @@ from typing import Any, Mapping
 from urllib.parse import urlparse
 
 import requests
-from PIL import Image
+from PIL import Image, ImageOps
 
 from benchmarks.answer_response import (
     ANSWER_BLOCK_REGEX,
     ANSWER_BLOCK_RETRY_REGEX,
     AnswerFormatError,
     parse_answer_block,
+    recover_unique_answer_block,
 )
 
 
+LOGGER = logging.getLogger(__name__)
 MAX_IMAGE_SIDE_FOR_ANSWER = 1344
+ANSWER_IMAGE_JPEG_QUALITY = 90
 CONTEXT_RECOVERY_IMAGE_SIDES = (896, 672, 448)
 IMAGE_ID_PATTERN = re.compile(r"\bD\d+:IMG_\d+\b", re.IGNORECASE)
 MEMORY_IMAGE_CATEGORIES = frozenset({"VS", "VR", "TTL"})
+ANSWER_FORMAT_RETRY_REPETITION_PENALTY = 1.05
+OPENROUTER_HOSTS = frozenset({"openrouter.ai", "www.openrouter.ai"})
+OPENROUTER_ANSWER_SCHEMA = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "benchmark_answer",
+        "strict": True,
+        "schema": {
+            "type": "object",
+            "properties": {
+                "answer": {
+                    "type": "string",
+                    "description": (
+                        "Concise answer text only, without XML tags; use at most "
+                        "100 words."
+                    ),
+                }
+            },
+            "required": ["answer"],
+            "additionalProperties": False,
+        },
+    },
+}
 
 
 @dataclass(frozen=True)
@@ -34,12 +63,19 @@ class AnswerResponse:
     attempts: int
     failed_attempts: int
     image_count: int = 0
+    raw_text: str | None = None
 
 
 class _AnswerAttemptError(RuntimeError):
-    def __init__(self, message: str, usage: dict[str, int] | None = None):
+    def __init__(
+        self,
+        message: str,
+        usage: dict[str, int] | None = None,
+        raw_text: str | None = None,
+    ):
         super().__init__(message)
         self.usage = usage
+        self.raw_text = raw_text
 
 
 def build_retrieved_memory_context(
@@ -62,6 +98,7 @@ def build_retrieved_memory_evidence(
     """Render one prompt evidence string per retrieval item plus image paths."""
     evidence: list[str] = []
     image_paths: list[str] = []
+    seen_image_paths: set[str] = set()
     image_num = 0
     include_memory_images = category.upper() in MEMORY_IMAGE_CATEGORIES
     for idx, item in enumerate(memory_items, start=1):
@@ -70,13 +107,16 @@ def build_retrieved_memory_evidence(
         if not isinstance(raw_images, list):
             legacy = item.get("image")
             raw_images = [legacy] if isinstance(legacy, dict) else []
-        attached_images = [
-            image
-            for image in raw_images
-            if include_memory_images
-            and isinstance(image, dict)
-            and bool(image.get("path"))
-        ]
+        attached_images: list[dict[str, Any]] = []
+        if include_memory_images:
+            for image in raw_images:
+                if not isinstance(image, dict) or not image.get("path"):
+                    continue
+                image_path = str(image["path"])
+                if image_path in seen_image_paths:
+                    continue
+                seen_image_paths.add(image_path)
+                attached_images.append(image)
         has_attached_original = any(
             str(image.get("kind", "image")) == "image" for image in attached_images
         )
@@ -142,6 +182,7 @@ class VLMAnswerClient:
         timeout: int = 180,
         retries: int = 0,
         think: bool | None = None,
+        reasoning_effort: str = "",
         backend: str = "openai",
     ):
         self.model = model
@@ -152,6 +193,7 @@ class VLMAnswerClient:
         self.timeout = timeout
         self.retries = max(0, int(retries))
         self.think = think
+        self.reasoning_effort = str(reasoning_effort).strip()
         self.backend = backend
         self._session = requests.Session()
         if (urlparse(self.base_url).hostname or "").lower() in {
@@ -252,6 +294,14 @@ class VLMAnswerClient:
                     image_count=image_count,
                 )
             except Exception as exc:
+                LOGGER.warning(
+                    "Answer attempt %d/%d failed (images=%d): %s: %s",
+                    attempt + 1,
+                    self.retries + 1,
+                    image_count,
+                    type(exc).__name__,
+                    exc,
+                )
                 attempt_usage = (
                     exc.usage if isinstance(exc, _AnswerAttemptError) else None
                 )
@@ -293,6 +343,11 @@ class VLMAnswerClient:
                         category=category,
                     )
                 else:
+                    use_openrouter_json = (
+                        attempt > 0
+                        and (urlparse(self.base_url).hostname or "").lower()
+                        in OPENROUTER_HOSTS
+                    )
                     text, usage = self._answer_prebuilt_openai_compatible(
                         messages=normalized,
                         memory_items=memory_items,
@@ -303,11 +358,17 @@ class VLMAnswerClient:
                             if attempt == 0
                             else ANSWER_BLOCK_RETRY_REGEX
                         ),
+                        repetition_penalty=(
+                            None
+                            if attempt == 0
+                            else ANSWER_FORMAT_RETRY_REPETITION_PENALTY
+                        ),
+                        structured_json=use_openrouter_json,
                     )
                 try:
                     parse_answer_block(text)
                 except AnswerFormatError as exc:
-                    raise _AnswerAttemptError(str(exc), usage) from exc
+                    raise _AnswerAttemptError(str(exc), usage, raw_text=text) from exc
                 if usage is None:
                     usage_is_exact = False
                 else:
@@ -320,6 +381,14 @@ class VLMAnswerClient:
                     image_count=image_count,
                 )
             except Exception as exc:
+                LOGGER.warning(
+                    "Answer attempt %d/%d failed (images=%d): %s: %s",
+                    attempt + 1,
+                    self.retries + 1,
+                    image_count,
+                    type(exc).__name__,
+                    exc,
+                )
                 attempt_usage = (
                     exc.usage if isinstance(exc, _AnswerAttemptError) else None
                 )
@@ -332,6 +401,24 @@ class VLMAnswerClient:
                 last_error = exc
                 if attempt < self.retries:
                     time.sleep(1 + attempt)
+        if isinstance(last_error, _AnswerAttemptError) and last_error.raw_text:
+            try:
+                recovered = recover_unique_answer_block(last_error.raw_text)
+            except AnswerFormatError as exc:
+                preview = repr(last_error.raw_text[:500])
+                raise _AnswerAttemptError(
+                    f"{last_error}; unrecoverable raw response: {preview}",
+                    cumulative_usage if usage_is_exact else None,
+                    raw_text=last_error.raw_text,
+                ) from exc
+            return AnswerResponse(
+                text=f"<answer>{recovered}</answer>",
+                raw_text=last_error.raw_text,
+                usage=cumulative_usage if usage_is_exact else None,
+                attempts=self.retries + 1,
+                failed_attempts=self.retries,
+                image_count=image_count,
+            )
         assert last_error is not None
         raise last_error
 
@@ -384,6 +471,8 @@ class VLMAnswerClient:
                 # template. Top-level ``think``/``extra_body`` fields are ignored
                 # by its OpenAI-compatible request schema.
                 payload["chat_template_kwargs"] = {"enable_thinking": self.think}
+            if self.reasoning_effort:
+                payload["reasoning"] = {"effort": self.reasoning_effort}
             try:
                 data = self._post_json(f"{self.base_url}/chat/completions", payload)
                 break
@@ -411,6 +500,8 @@ class VLMAnswerClient:
         query_image: dict[str, Any] | None,
         category: str,
         structured_regex: str,
+        repetition_penalty: float | None = None,
+        structured_json: bool = False,
     ) -> tuple[str, dict[str, int] | None]:
         _, image_paths = self._build_text_and_image_paths(
             memory_items,
@@ -420,6 +511,12 @@ class VLMAnswerClient:
             prepend_memory_context=False,
         )
         data: dict[str, Any] | None = None
+        context_retry_usage = {
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+        }
+        context_retry_usage_exact = True
         image_sides = (MAX_IMAGE_SIDE_FOR_ANSWER, *CONTEXT_RECOVERY_IMAGE_SIDES)
         for side_index, image_side in enumerate(image_sides):
             payload_messages: list[dict[str, Any]] = [dict(message) for message in messages]
@@ -449,21 +546,71 @@ class VLMAnswerClient:
                 # message text above remains byte-for-byte unchanged.
                 "structured_outputs": {"regex": structured_regex},
             }
+            if structured_json:
+                # OpenRouter's documented constrained-output interface is JSON
+                # Schema. Use it only after the unchanged benchmark request has
+                # failed its answer-tag contract, then normalize the transport
+                # envelope back to the contract expected by every harness.
+                payload.pop("structured_outputs", None)
+                payload["response_format"] = OPENROUTER_ANSWER_SCHEMA
+            if repetition_penalty is not None:
+                # Deterministic retries otherwise reproduce the same malformed
+                # repetition until max_tokens. This changes decoding only; the
+                # benchmark-authored prompt remains byte-for-byte identical.
+                payload["repetition_penalty"] = float(repetition_penalty)
             if self.think is not None:
                 payload["chat_template_kwargs"] = {"enable_thinking": self.think}
+            if self.reasoning_effort:
+                payload["reasoning"] = {"effort": self.reasoning_effort}
             try:
                 data = self._post_json(f"{self.base_url}/chat/completions", payload)
+                if (
+                    _is_context_capacity_truncation(data, self.num_predict)
+                    and side_index + 1 < len(image_sides)
+                ):
+                    retry_usage = _normalize_answer_usage(data, backend="openai")
+                    if retry_usage is None:
+                        context_retry_usage_exact = False
+                    else:
+                        context_retry_usage = _sum_answer_usage(
+                            context_retry_usage, retry_usage
+                        )
+                    LOGGER.warning(
+                        "Answer response exhausted context capacity at image side %d; "
+                        "retrying with side %d",
+                        image_side,
+                        image_sides[side_index + 1],
+                    )
+                    continue
                 break
             except requests.HTTPError as exc:
                 if side_index + 1 == len(image_sides) or not _is_context_length_error(exc):
                     raise
         assert data is not None
         usage = _normalize_answer_usage(data, backend="openai")
+        if usage is None or not context_retry_usage_exact:
+            usage = None
+        else:
+            usage = _sum_answer_usage(context_retry_usage, usage)
         choices = data.get("choices") or []
         if not choices:
             raise _AnswerAttemptError("Answer endpoint returned no choices", usage)
         message = choices[0].get("message") or {}
         answer = (message.get("content") or message.get("reasoning_content") or "").strip()
+        if structured_json:
+            try:
+                structured_answer = str(json.loads(answer)["answer"]).strip()
+            except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+                raise _AnswerAttemptError(
+                    "Answer endpoint returned invalid structured JSON",
+                    usage,
+                    raw_text=answer,
+                ) from exc
+            try:
+                structured_answer = parse_answer_block(structured_answer)
+            except AnswerFormatError:
+                pass
+            answer = f"<answer>{structured_answer}</answer>"
         if not answer:
             raise _AnswerAttemptError("Answer endpoint returned an empty response", usage)
         return answer, usage
@@ -656,6 +803,20 @@ def _is_context_length_error(error: Exception) -> bool:
     return "maximum model length" in message or "decoder prompt" in message
 
 
+def _is_context_capacity_truncation(
+    payload: Mapping[str, Any], requested_completion_tokens: int
+) -> bool:
+    """Detect HTTP-200 responses whose prompt consumed the generation budget."""
+
+    choices = payload.get("choices") or []
+    if not choices or str(choices[0].get("finish_reason") or "") != "length":
+        return False
+    usage = _normalize_answer_usage(payload, backend="openai")
+    if usage is None:
+        return False
+    return int(usage["completion_tokens"]) < int(requested_completion_tokens)
+
+
 def _validate_prebuilt_messages(
     messages: list[dict[str, str]],
 ) -> list[dict[str, str]]:
@@ -751,15 +912,58 @@ def _encode_image_data_url(
 def _prepare_image_bytes(
     path: str, *, max_side: int = MAX_IMAGE_SIDE_FOR_ANSWER
 ) -> tuple[bytes, str]:
-    p = Path(path)
-    mime = mimetypes.guess_type(path)[0] or "image/jpeg"
-    with Image.open(p) as image:
-        width, height = image.size
-        if max(width, height) <= max_side:
-            return p.read_bytes(), mime
-        image.thumbnail((max_side, max_side))
-        if image.mode not in {"RGB", "L"}:
+    """Return a size-controlled copy used only for remote VLM transport.
+
+    The source image is never modified.  Even an image already within the
+    dimension cap can be a very large PNG, so build a JPEG candidate and use
+    it only when it is smaller than the original bytes.  The cache follows the
+    M2A transport-compression policy and is invalidated by file size or mtime.
+    """
+    if max_side <= 0:
+        raise ValueError("max_side must be positive")
+    p = Path(path).resolve()
+    stat = p.stat()
+    original = p.read_bytes()
+    original_mime = mimetypes.guess_type(str(p))[0] or "image/jpeg"
+    compressed = _transport_image_bytes(
+        str(p),
+        stat.st_size,
+        stat.st_mtime_ns,
+        int(max_side),
+        ANSWER_IMAGE_JPEG_QUALITY,
+    )
+    if len(compressed) >= len(original):
+        return original, original_mime
+    return compressed, "image/jpeg"
+
+
+@lru_cache(maxsize=256)
+def _transport_image_bytes(
+    image_path: str,
+    source_size: int,
+    source_mtime_ns: int,
+    max_side: int,
+    quality: int,
+) -> bytes:
+    """Create a cached JPEG transport candidate without touching the source."""
+    del source_size, source_mtime_ns  # Included solely to invalidate the cache.
+    with Image.open(image_path) as source:
+        image = ImageOps.exif_transpose(source)
+        image.thumbnail((max_side, max_side), Image.Resampling.LANCZOS)
+        if image.mode in {"RGBA", "LA"} or (
+            image.mode == "P" and "transparency" in image.info
+        ):
+            rgba = image.convert("RGBA")
+            background = Image.new("RGB", rgba.size, "white")
+            background.paste(rgba, mask=rgba.getchannel("A"))
+            image = background
+        elif image.mode not in {"RGB", "L"}:
             image = image.convert("RGB")
-        buffer = io.BytesIO()
-        image.save(buffer, format="JPEG", quality=90, optimize=True)
-        return buffer.getvalue(), "image/jpeg"
+        output = io.BytesIO()
+        image.save(
+            output,
+            format="JPEG",
+            quality=quality,
+            optimize=True,
+        )
+        return output.getvalue()
