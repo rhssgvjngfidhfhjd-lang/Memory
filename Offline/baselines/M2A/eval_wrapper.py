@@ -55,6 +55,7 @@ class M2AEvaluationWrapper:
             api_key=self.m2a.config.llm.api_key,
             temperature=0.0,
             max_tokens=50,
+            max_retries=self.m2a.config.llm.max_retries,
         )
 
         # Track conversation state

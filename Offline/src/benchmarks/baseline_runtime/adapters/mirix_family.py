@@ -15,6 +15,8 @@ import re
 import shutil
 import sqlite3
 import sys
+import urllib.error
+import urllib.request
 import uuid
 from contextlib import contextmanager
 from pathlib import Path
@@ -51,6 +53,56 @@ _ACTIVE_MIRIX_RETRIEVAL: contextvars.ContextVar[Any | None] = contextvars.Contex
 _ACTIVE_MIRIX_QA_TRUNCATION: contextvars.ContextVar[dict[str, Any] | None] = (
     contextvars.ContextVar("offline_active_mirix_qa_truncation", default=None)
 )
+_ACTIVE_MIRIX_NATIVE_MEMORY_TOOL_REQUIRED: contextvars.ContextVar[bool] = (
+    contextvars.ContextVar(
+        "offline_active_mirix_native_memory_tool_required", default=False
+    )
+)
+_ACTIVE_MIRIX_NATIVE_MEMORY_MAX_OUTPUT_TOKENS: contextvars.ContextVar[int] = (
+    contextvars.ContextVar(
+        "offline_active_mirix_native_memory_max_output_tokens", default=0
+    )
+)
+
+# MIRIX runs one benchmark sample per worker process. Native memory agents may
+# embed fields concurrently in child threads, so a process-local context (not a
+# ContextVar) is used to make the current ingestion images visible to all of
+# them. The value is installed only around a synchronous native build/answer
+# lifecycle and restored before the worker advances to the next point.
+_ACTIVE_MIRIX_MULTIMODAL_EMBEDDING: dict[str, Any] | None = None
+
+
+class _MirixEmbeddingProxy:
+    """Add optional image inputs without changing MIRIX's text-only default."""
+
+    def __init__(
+        self,
+        delegate: Any,
+        *,
+        model: str,
+        endpoint: str,
+        dimensions: int,
+    ) -> None:
+        self._delegate = delegate
+        self._model = str(model)
+        self._endpoint = str(endpoint)
+        self._dimensions = int(dimensions)
+
+    def get_text_embedding(self, text: str) -> list[float]:
+        active = _ACTIVE_MIRIX_MULTIMODAL_EMBEDDING
+        images = list((active or {}).get("images") or [])
+        if not images:
+            return list(self._delegate.get_text_embedding(text))
+        return _request_mirix_multimodal_embedding(
+            endpoint=self._endpoint,
+            model=self._model,
+            dimensions=self._dimensions,
+            text=str(text),
+            image_paths=images,
+        )
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._delegate, name)
 
 _MIRIX_BOUNDED_MEMORY_PROMPTS = {
     "semantic_memory_agent": (
@@ -221,6 +273,23 @@ class _MirixRetrievalBudget:
             },
         )
 
+    def fork(self) -> "_MirixRetrievalBudget":
+        """Copy the post-retrieval budget for an isolated QA retry.
+
+        A failed Chat-Agent attempt may already have consumed part of the
+        shared Top-K budget.  Retrying that mutated object would silently give
+        the next attempt a smaller budget, so each full QA attempt starts from
+        the same post-retrieval state.
+        """
+        forked = _MirixRetrievalBudget(self.adapter, self.query_id, self.top_k)
+        forked.items = list(self.items)
+        forked._ids = set(self._ids)
+        forked.tool_calls = copy.deepcopy(self.tool_calls)
+        forked.prefetches = copy.deepcopy(self.prefetches)
+        forked.provisional_answer = self.provisional_answer
+        forked._prefetch_payload = copy.deepcopy(self._prefetch_payload)
+        return forked
+
 class MirixFamilyAdapter(BaselineAdapter):
     def __init__(self, *, baseline: str, source_root: Path, config: dict[str, Any]) -> None:
         self.baseline = baseline
@@ -285,6 +354,8 @@ class MirixFamilyAdapter(BaselineAdapter):
             self._patch_v011_prompt_layout()
             self._patch_v011_embedding_model()
             self._patch_v011_local_images()
+            self._patch_v011_summarizer_cutoff()
+            self._patch_v011_message_queue_cleanup()
             self._patch_v011_openai_error_handler()
             self._patch_v011_vllm_tool_call_boundary()
             self._install_native_retrieval_hooks()
@@ -391,15 +462,31 @@ class MirixFamilyAdapter(BaselineAdapter):
 
         def handle_response(agent: Any, *args: Any, **kwargs: Any) -> Any:
             result = original_handle_response(agent, *args, **kwargs)
+            response_message = (
+                args[1] if len(args) > 1 else kwargs.get("response_message")
+            )
+            if (
+                str(getattr(agent.agent_state, "name", "")) == "meta_memory_agent"
+                and len(result) >= 3
+                and bool(result[2])
+                and "trigger_memory_update"
+                in _response_message_tool_names(response_message)
+            ):
+                # v0.1.1 lets the meta agent continue after one of the child
+                # memory agents failed, and it can then claim that it applied
+                # the update "manually" before returning success.  No write
+                # happened in that failed child, so make the build point fail
+                # and let the harness resume/retry it from its checkpoint.
+                raise RuntimeError(
+                    "MIRIX child memory-agent update failed; refusing to mark "
+                    "the build point successful"
+                )
             if (
                 _ACTIVE_MIRIX_RETRIEVAL.get() is None
                 or str(getattr(agent.agent_state, "name", "")) != "chat_agent"
                 or len(result) < 3
             ):
                 return result
-            response_message = (
-                args[1] if len(args) > 1 else kwargs.get("response_message")
-            )
             if _response_message_tool_names(response_message) != ["send_message"]:
                 return result
             # MIRIX's ToolRulesSolver can incorrectly override send_message's
@@ -439,7 +526,7 @@ class MirixFamilyAdapter(BaselineAdapter):
 
         MIRIX v0.1.1 independently preloads up to ten rows from every memory
         bank.  For the benchmark, preserve those native per-bank rankings, then
-        interleave banks by rank so one large bank cannot consume all seven
+        interleave banks by rank so one large bank cannot consume all configured
         slots.  The exact selected rows are both rendered into the system prompt
         and registered as retrieval evidence.
         """
@@ -632,12 +719,18 @@ class MirixFamilyAdapter(BaselineAdapter):
             from llama_index.embeddings.openai import OpenAIEmbedding
 
             additional = {"user_id": user_id} if user_id else {}
-            return OpenAIEmbedding(
+            delegate = OpenAIEmbedding(
                 model_name=str(config.embedding_model),
                 api_base=str(config.embedding_endpoint),
                 api_key=os.getenv("OPENAI_API_KEY") or "EMPTY",
                 dimensions=int(config.embedding_dim),
                 additional_kwargs=additional,
+            )
+            return _MirixEmbeddingProxy(
+                delegate,
+                model=str(config.embedding_model),
+                endpoint=str(config.embedding_endpoint),
+                dimensions=int(config.embedding_dim),
             )
 
         module._offline_v011_original_embedding_model = module.embedding_model
@@ -727,8 +820,10 @@ class MirixFamilyAdapter(BaselineAdapter):
         accumulator = getattr(self.backend, "temp_message_accumulator", None)
         if accumulator is None:
             return
-        batch_size = 20 if self.baseline == "MIRIX" else int(
-            self.config.get("mirix_native_batch_size") or 5
+        batch_size = (
+            int(self.config.get("mirix_native_batch_size") or 5)
+            if self.baseline == "MIRIX"
+            else 20
         )
         if batch_size < 1:
             raise ValueError("mirix_native_batch_size must be positive")
@@ -752,7 +847,7 @@ class MirixFamilyAdapter(BaselineAdapter):
 
         def handle(client: Any, error: Exception) -> Exception:
             try:
-                return original(client, error)
+                mapped = original(client, error)
             except AttributeError as exc:
                 if str(exc) not in {
                     "INVALID_ARGUMENT",
@@ -761,14 +856,164 @@ class MirixFamilyAdapter(BaselineAdapter):
                     "NOT_FOUND",
                 }:
                     raise
-                return errors_module.LLMBadRequestError(
+                mapped = errors_module.LLMBadRequestError(
                     message=f"Bad request to OpenAI: {error}",
                     code=errors_module.ErrorCode.INTERNAL_SERVER_ERROR,
                     details=getattr(error, "body", None) or {},
                 )
+            message = str(error).casefold()
+            if (
+                "invalid json" in message
+                or (
+                    "call_trace_proxy_error" in message
+                    and "timed out" in message
+                )
+                or (
+                    "decoder prompt" in message
+                    and "maximum model length" in message
+                )
+            ):
+                # These failures are deterministic for the completed provider
+                # request. MIRIX v0.1.1 would repeat the same long generation
+                # up to three times (and then retry a shortened history once
+                # more). Fail this build point immediately; the harness owns
+                # the audited skip/consecutive-failure policy.
+                raise RuntimeError(f"non-retryable MIRIX provider response: {error}")
+            return mapped
 
         client_class.handle_llm_error = handle
         client_class._offline_v011_error_codes = True
+
+    def _patch_v011_message_queue_cleanup(self) -> None:
+        """Release a native memory-agent queue slot when its request fails.
+
+        MIRIX v0.1.1 removes a queue item only after ``client.send_message``
+        succeeds.  A deterministic provider/tool-integrity failure therefore
+        leaves a started-but-unfinished item behind, and every later request
+        for that memory type waits forever.  Keep the native ordering logic,
+        but remove only the failed started item before re-raising the original
+        exception.
+        """
+        queue_module = importlib.import_module(
+            f"{self.package}.agent.message_queue"
+        )
+        queue_class = queue_module.MessageQueue
+        if getattr(queue_class, "_offline_failed_item_cleanup", False):
+            return
+        original_send = queue_class.send_message_in_queue
+
+        def send_message_in_queue(
+            queue: Any,
+            client: Any,
+            agent_id: str,
+            kwargs: dict[str, Any],
+            agent_type: str = "chat",
+        ) -> Any:
+            try:
+                return original_send(
+                    queue,
+                    client,
+                    agent_id,
+                    kwargs,
+                    agent_type,
+                )
+            except BaseException:
+                with queue._message_queue_lock:
+                    failed = [
+                        key
+                        for key, item in queue.message_queue.items()
+                        if item.get("type") == agent_type
+                        and item.get("started")
+                        and not item.get("finished")
+                    ]
+                    for key in failed:
+                        queue.message_queue.pop(key, None)
+                raise
+
+        queue_class.send_message_in_queue = send_message_in_queue
+        queue_class._offline_failed_item_cleanup = True
+
+    def _patch_v011_summarizer_cutoff(self) -> None:
+        """Keep v0.1.1's summarizer from reading beyond its message list.
+
+        The upstream cutoff scan extends an eviction boundary across a run of
+        tool messages, but reads ``cutoff + 1`` without first checking that the
+        next element exists.  Long MIRIX histories regularly end in such a
+        run, so WMA eventually raises ``IndexError`` while trying to compact a
+        memory agent's context.  Preserve the upstream cutoff policy and only
+        add the missing boundary check.  Patch the symbol imported into
+        ``agent.py`` as well as the helper module's public function.
+        """
+        helpers_module = importlib.import_module(
+            f"{self.package}.llm_api.helpers"
+        )
+        agent_module = importlib.import_module(f"{self.package}.agent.agent")
+        if getattr(helpers_module, "_offline_safe_summarizer_cutoff", False):
+            agent_module.calculate_summarizer_cutoff = (
+                helpers_module.calculate_summarizer_cutoff
+            )
+            return
+        settings = helpers_module.summarizer_settings
+
+        def role_name(value: Any) -> str:
+            return str(getattr(value, "value", value)).casefold()
+
+        def calculate_summarizer_cutoff(
+            in_context_messages: list[Any],
+            token_counts: list[int],
+            logger: Any,
+        ) -> int:
+            if len(in_context_messages) != len(token_counts):
+                raise ValueError(
+                    "Given in_context_messages has different length from given "
+                    f"token_counts: {len(in_context_messages)} != "
+                    f"{len(token_counts)}"
+                )
+            messages = [message.to_openai_dict() for message in in_context_messages]
+            if settings.evict_all_messages:
+                logger.info("Evicting all messages...")
+                return len(in_context_messages)
+            if len(messages) < 2:
+                raise ValueError("summarizer cutoff requires a non-system message")
+
+            desired = int(
+                sum(token_counts) * (1 - settings.desired_memory_token_pressure)
+            )
+            logger.info(f"desired_token_count_to_summarize={desired}")
+            tokens_so_far = 0
+            cutoff = 0
+            for index, message in enumerate(messages):
+                if index == 0:
+                    continue
+                cutoff = index
+                tokens_so_far += token_counts[index]
+                role = role_name(message.get("role"))
+                if role not in {"user", "tool", "function"} and tokens_so_far >= desired:
+                    break
+                if (
+                    len(in_context_messages) - cutoff - 1
+                    <= settings.keep_last_n_messages
+                ):
+                    logger.warning(
+                        "Breaking summary cutoff early on role="
+                        f"{message.get('role')} because we hit the "
+                        "`keep_last_n_messages`="
+                        f"{settings.keep_last_n_messages}"
+                    )
+                    break
+
+            while (
+                cutoff + 1 < len(messages)
+                and role_name(messages[cutoff + 1].get("role")) == "tool"
+            ):
+                cutoff += 1
+
+            logger.info(f"Evicting {cutoff}/{len(in_context_messages)} messages...")
+            return cutoff + 1
+
+        helpers_module.calculate_summarizer_cutoff = calculate_summarizer_cutoff
+        helpers_module._offline_safe_summarizer_cutoff = True
+        agent_module.calculate_summarizer_cutoff = calculate_summarizer_cutoff
 
     def _patch_v011_vllm_tool_call_boundary(self) -> None:
         """Keep each native Qwen response to MIRIX's documented one tool call.
@@ -785,14 +1030,28 @@ class MirixFamilyAdapter(BaselineAdapter):
         if getattr(client_class, "_offline_vllm_tool_boundary", False):
             return
         original_build = client_class.build_request_data
+        original_request = client_class.request
+        original_request_async = client_class.request_async
         original_convert = client_class.convert_response_to_chat_completion
         repetition_penalty = float(
             self.config.get("mirix_native_repetition_penalty") or 1.10
+        )
+        retry_max_tokens = int(
+            self.config.get("mirix_executor_retry_max_tokens") or 4096
+        )
+        corrective_retry_max_tokens = int(
+            self.config.get("mirix_executor_corrective_retry_max_tokens") or 512
         )
 
         def build_request(client: Any, *args: Any, **kwargs: Any) -> dict[str, Any]:
             data = original_build(client, *args, **kwargs)
             data = _prepare_mirix_delta_tool_request(data)
+            _ACTIVE_MIRIX_NATIVE_MEMORY_TOOL_REQUIRED.set(
+                _mirix_request_requires_native_memory_tool(data)
+            )
+            _ACTIVE_MIRIX_NATIVE_MEMORY_MAX_OUTPUT_TOKENS.set(
+                int(data.get("max_completion_tokens") or data.get("max_tokens") or 0)
+            )
             return _bound_native_vllm_tool_request(
                 data, repetition_penalty=repetition_penalty
             )
@@ -800,28 +1059,134 @@ class MirixFamilyAdapter(BaselineAdapter):
         def convert_response(
             client: Any, response_data: dict[str, Any], *args: Any, **kwargs: Any
         ) -> Any:
+            memory_tool_required = (
+                _ACTIVE_MIRIX_NATIVE_MEMORY_TOOL_REQUIRED.get()
+            )
             _accept_truncated_native_qa_text(response_data)
-            _reject_native_tool_response_integrity(response_data)
+            if memory_tool_required:
+                _promote_first_complete_native_memory_tool_call(response_data)
+            _reject_native_tool_response_integrity(
+                response_data,
+                fail_fast=memory_tool_required,
+            )
             try:
                 _reject_unparsed_native_tool_response(response_data)
-            except ValueError:
+            except ValueError as exc:
                 if _has_native_tool_calls(response_data):
                     # Native arguments came from the provider as malformed
                     # JSON. Never pass them through json_repair: doing so can
                     # turn a capped partial write into a destructive update.
+                    if memory_tool_required:
+                        raise RuntimeError(str(exc)) from exc
                     raise
                 # Hermes occasionally fails on a Qwen-selected tool envelope
                 # because of a missing comma/bracket. Recover only that JSON
                 # representation; MIRIX still validates the native function
                 # schema and performs the original tool execution.
                 response_data = _normalize_openai_tool_tags(response_data)
-                _reject_native_tool_response_integrity(response_data)
-                _reject_unparsed_native_tool_response(response_data)
+                _reject_native_tool_response_integrity(
+                    response_data,
+                    fail_fast=memory_tool_required,
+                )
+                try:
+                    _reject_unparsed_native_tool_response(response_data)
+                except ValueError as normalized_exc:
+                    if memory_tool_required:
+                        raise RuntimeError(str(normalized_exc)) from normalized_exc
+                    raise
             _accept_recovered_native_tool_finish(response_data)
+            _reject_missing_native_memory_tool_response(
+                response_data,
+                required=memory_tool_required,
+                max_output_tokens=(
+                    _ACTIVE_MIRIX_NATIVE_MEMORY_MAX_OUTPUT_TOKENS.get()
+                ),
+                fail_fast=memory_tool_required,
+            )
             _promote_native_chat_text_response(response_data)
             return original_convert(client, response_data, *args, **kwargs)
 
+        def request(client: Any, request_data: dict[str, Any]) -> dict[str, Any]:
+            try:
+                response = original_request(client, request_data)
+            except Exception as exc:
+                if not _mirix_native_memory_bad_request_retry_required(
+                    request_data, exc
+                ):
+                    raise
+                retry = _prepare_mirix_native_memory_retry(
+                    request_data,
+                    max_output_tokens=min(
+                        _request_output_token_cap(request_data),
+                        corrective_retry_max_tokens,
+                    ),
+                )
+                _ACTIVE_MIRIX_NATIVE_MEMORY_MAX_OUTPUT_TOKENS.set(
+                    int(retry["max_tokens"])
+                )
+                return original_request(client, retry)
+            reason = _mirix_native_memory_corrective_retry_reason(
+                request_data, response
+            )
+            if reason is not None:
+                retry_tokens = (
+                    retry_max_tokens
+                    if reason == "truncation"
+                    else min(
+                        _request_output_token_cap(request_data),
+                        corrective_retry_max_tokens,
+                    )
+                )
+                retry = _prepare_mirix_native_memory_retry(
+                    request_data, max_output_tokens=retry_tokens
+                )
+                _ACTIVE_MIRIX_NATIVE_MEMORY_MAX_OUTPUT_TOKENS.set(retry_tokens)
+                response = original_request(client, retry)
+            return response
+
+        async def request_async(
+            client: Any, request_data: dict[str, Any]
+        ) -> dict[str, Any]:
+            try:
+                response = await original_request_async(client, request_data)
+            except Exception as exc:
+                if not _mirix_native_memory_bad_request_retry_required(
+                    request_data, exc
+                ):
+                    raise
+                retry = _prepare_mirix_native_memory_retry(
+                    request_data,
+                    max_output_tokens=min(
+                        _request_output_token_cap(request_data),
+                        corrective_retry_max_tokens,
+                    ),
+                )
+                _ACTIVE_MIRIX_NATIVE_MEMORY_MAX_OUTPUT_TOKENS.set(
+                    int(retry["max_tokens"])
+                )
+                return await original_request_async(client, retry)
+            reason = _mirix_native_memory_corrective_retry_reason(
+                request_data, response
+            )
+            if reason is not None:
+                retry_tokens = (
+                    retry_max_tokens
+                    if reason == "truncation"
+                    else min(
+                        _request_output_token_cap(request_data),
+                        corrective_retry_max_tokens,
+                    )
+                )
+                retry = _prepare_mirix_native_memory_retry(
+                    request_data, max_output_tokens=retry_tokens
+                )
+                _ACTIVE_MIRIX_NATIVE_MEMORY_MAX_OUTPUT_TOKENS.set(retry_tokens)
+                response = await original_request_async(client, retry)
+            return response
+
         client_class.build_request_data = build_request
+        client_class.request = request
+        client_class.request_async = request_async
         client_class.convert_response_to_chat_completion = convert_response
         client_class._offline_vllm_tool_boundary = True
 
@@ -973,8 +1338,7 @@ class MirixFamilyAdapter(BaselineAdapter):
             temperature=float(self.config.get("executor_temperature") or 0.0),
             max_tokens=int(
                 self.config.get("executor_max_tokens")
-                or self.config.get("num_predict")
-                or 512
+                or 2048
             ),
         )
         embedding = package.EmbeddingConfig(
@@ -1052,7 +1416,8 @@ class MirixFamilyAdapter(BaselineAdapter):
             self._ingested_chunks += 1
             return
         try:
-            self.backend.send_message(**kwargs)
+            with self._multimodal_embedding_scope(self._pending_chunks):
+                self.backend.send_message(**kwargs)
         except Exception as exc:
             if self.baseline == "MMA" and _is_context_overflow_exception(exc):
                 pass
@@ -1130,9 +1495,10 @@ class MirixFamilyAdapter(BaselineAdapter):
                     # The v0.1.1 force-flush branch rejects non-Gemini local
                     # images. Passing the already-ready native queue exercises
                     # the same absorption chain without an upload conversion.
-                    accumulator.absorb_content_into_memory(
-                        self.backend.agent_states, ready_messages=ready
-                    )
+                    with self._multimodal_embedding_scope(self._pending_chunks):
+                        accumulator.absorb_content_into_memory(
+                            self.backend.agent_states, ready_messages=ready
+                        )
                     self.backend.clear_old_screenshots()
             else:
                 self.backend.send_message(
@@ -1155,6 +1521,31 @@ class MirixFamilyAdapter(BaselineAdapter):
         self._pending_chunks.clear()
         if self.baseline == "MIRIX":
             self._checkpoint_completed_sessions()
+
+    @contextmanager
+    def _multimodal_embedding_scope(self, chunks: list[Chunk]):
+        """Expose one native absorption batch's source images to its embedders."""
+        global _ACTIVE_MIRIX_MULTIMODAL_EMBEDDING
+        if not bool(self.config.get("mirix_multimodal_embedding", False)):
+            yield
+            return
+        images = list(
+            dict.fromkeys(
+                str(image)
+                for chunk in chunks
+                for image in (chunk.images or ())
+                if image and Path(str(image)).is_file()
+            )
+        )
+        previous = _ACTIVE_MIRIX_MULTIMODAL_EMBEDDING
+        _ACTIVE_MIRIX_MULTIMODAL_EMBEDDING = {
+            "mode": "context",
+            "images": images,
+        }
+        try:
+            yield
+        finally:
+            _ACTIVE_MIRIX_MULTIMODAL_EMBEDDING = previous
 
     def completed_session_ids(self) -> tuple[str, ...]:
         """Return the contiguous WMA session prefix in the SQLite checkpoint."""
@@ -1343,10 +1734,8 @@ class MirixFamilyAdapter(BaselineAdapter):
         return rows
 
     def retrieve(self, request: RetrievalRequest) -> RetrievalResult:
-        if self.baseline == "MIRIX" and request.top_k != 7:
-            raise ValueError(
-                f"MIRIX native Chat Agent requires the fixed global top_k=7; got {request.top_k}"
-            )
+        if self.baseline == "MIRIX" and request.top_k < 1:
+            raise ValueError("MIRIX native Chat Agent requires a positive global top_k")
         if self.baseline == "MIRIX":
             return self._retrieve_with_native_chat(request)
         candidates: list[tuple[float, dict[str, Any]]] = []
@@ -1443,30 +1832,13 @@ class MirixFamilyAdapter(BaselineAdapter):
         if request.query_id in self._qa_budgets:
             raise ValueError(f"duplicate MIRIX retrieval query_id: {request.query_id}")
         budget = _MirixRetrievalBudget(self, request.query_id, request.top_k)
-        client = self.backend.client
-        chat_state = self.backend.agent_states.agent_state
-        saved = _capture_chat_state(client, chat_state.id)
-        token = _ACTIVE_MIRIX_RETRIEVAL.set(budget)
-        try:
-            response = client.send_message(
-                agent_id=chat_state.id,
-                role="user",
-                message=_raw_chat_query(request.text, request.query_image),
-                force_response=True,
-                # This is a retrieval-only probe. One native step is enough to
-                # expose an explicit search result, while automatic prefetch is
-                # already reserved in the same evidence budget. Do not let a
-                # direct send_message answer chain repeatedly.
-                chaining=False,
-            )
-            # MIRIX v0.1.1 has no retrieval-only endpoint. This provisional
-            # native response is ignored; its autonomous tools supply evidence.
-            budget.provisional_answer = _extract_chat_answer(response)
-        finally:
-            _ACTIVE_MIRIX_RETRIEVAL.reset(token)
-            _restore_chat_state(client, chat_state.id, saved)
+        # MIRIX has no independent retrieval endpoint: automatic prefetch and
+        # explicit search tools are part of the native Chat Agent lifecycle.
+        # Defer that lifecycle to answer_with_memory so the benchmark question
+        # is executed exactly once and its selected evidence is returned with
+        # the native answer.
         self._qa_budgets[request.query_id] = budget
-        return budget.result(stage="retrieval")
+        return budget.result(stage="deferred_to_native_answer")
 
     def _retrieved_memory_from_native(
         self, row: Any, raw_id: str
@@ -1512,16 +1884,20 @@ class MirixFamilyAdapter(BaselineAdapter):
     def answer_with_memory(self, request: NativeAnswerRequest) -> NativeAnswerResult:
         if self.baseline != "MIRIX":
             return super().answer_with_memory(request)
-        if request.top_k != 7:
-            raise ValueError(f"MIRIX Chat Agent top_k must be 7; got {request.top_k}")
-        budget = self._qa_budgets.pop(request.query_id, None)
-        if budget is None:
+        base_budget = self._qa_budgets.pop(request.query_id, None)
+        if base_budget is None:
             raise KeyError(
                 f"MIRIX answer has no preceding native retrieval: {request.query_id}"
+            )
+        if request.top_k != base_budget.top_k:
+            raise ValueError(
+                "MIRIX answer global top_k does not match its retrieval budget: "
+                f"answer={request.top_k}, retrieval={base_budget.top_k}"
             )
         client = self.backend.client
         chat_state = self.backend.agent_states.agent_state
         saved = _capture_chat_state(client, chat_state.id)
+        budget = base_budget
         token = _ACTIVE_MIRIX_RETRIEVAL.set(budget)
         truncation_state = {
             "accepted": False,
@@ -1529,13 +1905,17 @@ class MirixFamilyAdapter(BaselineAdapter):
             "native_finish_reason": "",
         }
         truncation_token = _ACTIVE_MIRIX_QA_TRUNCATION.set(truncation_state)
+        embedding_scope = self._query_multimodal_embedding_scope(
+            request.query_image
+        )
         try:
-            response = _send_native_benchmark_messages(
-                client,
-                chat_state.id,
-                request.messages,
-                request.query_image,
-            )
+            with embedding_scope:
+                response = _send_native_benchmark_messages(
+                    client,
+                    chat_state.id,
+                    request.messages,
+                    request.query_image,
+                )
             text = _ensure_answer_block(_extract_chat_answer(response))
             if not text or text == "ERROR":
                 raise RuntimeError("MIRIX Chat Agent did not return a final answer")
@@ -1557,8 +1937,13 @@ class MirixFamilyAdapter(BaselineAdapter):
                     "remaining_retrieval_budget": request.top_k - len(selected_ids),
                     "autonomous_retrieval": "enabled_until_final_send_message",
                     "candidate_freezing": False,
-                    "provisional_native_answer_ignored": bool(budget.provisional_answer),
+                    "single_agent_lifecycle": True,
+                    "native_agent_lifecycle_count": 1,
+                    "retrieval_deferred_to_answer": True,
+                    "provisional_native_answer_ignored": False,
                     "chat_tool_calls": _response_tool_names(response),
+                    "qa_answer_attempts": 1,
+                    "qa_answer_failed_attempts": 0,
                     "accepted_truncated_qa": bool(truncation_state["accepted"]),
                     "accepted_truncated_qa_finish_reason": str(
                         truncation_state["finish_reason"]
@@ -1573,6 +1958,27 @@ class MirixFamilyAdapter(BaselineAdapter):
             _ACTIVE_MIRIX_QA_TRUNCATION.reset(truncation_token)
             _ACTIVE_MIRIX_RETRIEVAL.reset(token)
             _restore_chat_state(client, chat_state.id, saved)
+
+    @contextmanager
+    def _query_multimodal_embedding_scope(self, query_image: str | None):
+        """Attach the benchmark image to native Chat-Agent query embeddings."""
+        global _ACTIVE_MIRIX_MULTIMODAL_EMBEDDING
+        if (
+            not bool(self.config.get("mirix_multimodal_embedding", False))
+            or not query_image
+            or not Path(query_image).is_file()
+        ):
+            yield
+            return
+        previous = _ACTIVE_MIRIX_MULTIMODAL_EMBEDDING
+        _ACTIVE_MIRIX_MULTIMODAL_EMBEDDING = {
+            "mode": "query",
+            "images": [str(Path(query_image).resolve())],
+        }
+        try:
+            yield
+        finally:
+            _ACTIVE_MIRIX_MULTIMODAL_EMBEDDING = previous
 
     def snapshot(self) -> list[MemoryRecord]:
         records = []
@@ -1615,8 +2021,20 @@ class MirixFamilyAdapter(BaselineAdapter):
             "supports_session_filter": True,
             "confidence_ranking": self.baseline == "MMA",
             "native_chat_answer": self.baseline == "MIRIX",
-            "fixed_global_top_k": 7 if self.baseline == "MIRIX" else None,
+            "fixed_global_top_k": (
+                int(self.config.get("top_k", 7))
+                if self.baseline == "MIRIX" else None
+            ),
+            "global_top_k_scope": (
+                "automatic_prefetch_plus_explicit_tools"
+                if self.baseline == "MIRIX" else None
+            ),
             "native_memory_build": self.baseline == "MIRIX",
+            "multimodal_embedding": (
+                bool(self.config.get("mirix_multimodal_embedding", False))
+                if self.baseline == "MIRIX"
+                else False
+            ),
             "native_absorption_batch": 20 if self.baseline == "MIRIX" else None,
             "retrieval_candidate_freezing": False if self.baseline == "MIRIX" else None,
             "source_commit": (
@@ -1633,6 +2051,61 @@ class MirixFamilyAdapter(BaselineAdapter):
 
     def close(self) -> None:
         self.backend = None
+
+
+def _request_mirix_multimodal_embedding(
+    *,
+    endpoint: str,
+    model: str,
+    dimensions: int,
+    text: str,
+    image_paths: list[str],
+) -> list[float]:
+    """Call the local VL embedder with text and concrete source images."""
+    content: list[dict[str, Any]] = [{"type": "text", "text": text or " "}]
+    for image_path in image_paths:
+        path = Path(image_path).resolve()
+        if not path.is_file():
+            continue
+        content.append(
+            {
+                "type": "image_url",
+                "image_url": {"url": str(path)},
+            }
+        )
+    if len(content) == 1:
+        raise ValueError("multimodal embedding requested without a readable image")
+    payload = {
+        "model": str(model),
+        "messages": [{"role": "user", "content": content}],
+    }
+    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    url = f"{str(endpoint).rstrip('/')}/embeddings"
+    request = urllib.request.Request(
+        url,
+        data=body,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=120) as response:
+            result = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(
+            f"multimodal embedding endpoint returned HTTP {exc.code}: {detail}"
+        ) from exc
+    rows = result.get("data") if isinstance(result, dict) else None
+    vector = rows[0].get("embedding") if isinstance(rows, list) and rows else None
+    if not isinstance(vector, list):
+        raise TypeError("multimodal embedding response has no data[0].embedding")
+    values = [float(value) for value in vector]
+    if len(values) != int(dimensions):
+        raise ValueError(
+            "multimodal embedding dimension mismatch: "
+            f"expected {dimensions}, received {len(values)}"
+        )
+    return values
 
 
 def _dedupe_native_rows(rows: list[Any]) -> list[Any]:
@@ -1879,14 +2352,32 @@ def _send_native_benchmark_messages(
     enum_module = importlib.import_module("mirix.schemas.enums")
     content_module = importlib.import_module("mirix.schemas.mirix_message_content")
     response_module = importlib.import_module("mirix.schemas.mirix_response")
+    query_image_path: Path | None = None
+    if query_image:
+        # The native local-file helper copies images verbatim.  Route question
+        # images through the same bounded transport copy used during memory
+        # ingestion so a high-resolution QA image cannot consume the entire
+        # 32k multimodal context before MIRIX has any history to summarize.
+        upload_module = importlib.import_module("mirix.agent.upload_manager")
+        compressor = object.__new__(upload_module.UploadManager)
+        compressor.logger = importlib.import_module("logging").getLogger(
+            "Mirix.OfflineImageTransport"
+        )
+        query_image_path = _stage_native_transport_image(
+            query_image,
+            cache_dir=(
+                Path(client.images_dir).parent / "tmp" / "image_transport"
+            ),
+            compressor=compressor,
+        )
     packed = []
     for index, row in enumerate(messages):
         role = str(row.get("role") or "user")
         content: list[Any] = [
             content_module.TextContent(text=str(row.get("content") or ""))
         ]
-        if query_image and role == "user" and index == len(messages) - 1:
-            metadata = client._save_image_from_file_uri(str(Path(query_image).resolve()))
+        if query_image_path and role == "user" and index == len(messages) - 1:
+            metadata = client._save_image_from_file_uri(str(query_image_path))
             content.append(content_module.ImageContent(image_id=metadata.id, detail="auto"))
         packed.append(
             message_module.MessageCreate(
@@ -1902,9 +2393,11 @@ def _send_native_benchmark_messages(
         input_messages=packed,
         interface=client.interface,
         force_response=True,
-        # The benchmark prompt requests the final answer in one response. A
-        # second step after send_message only duplicates the same answer.
-        chaining=False,
+        # Qwen-family agents commonly search first and call ``send_message``
+        # on the following step.  The installed native hook makes the first
+        # validated ``send_message`` terminal, so chaining is required here
+        # without reintroducing the historical repeated-answer loop.
+        chaining=True,
     )
     mirix_messages = []
     for event in client.interface.to_list():
@@ -2203,6 +2696,8 @@ def _bound_native_vllm_tool_request(
         stops = []
     if "</tool_call>" not in stops:
         stops.append("</tool_call>")
+    if "<|im_end|>" not in stops:
+        stops.append("<|im_end|>")
     data["stop"] = stops
     extra_body = data.get("extra_body")
     if not isinstance(extra_body, dict):
@@ -2210,8 +2705,12 @@ def _bound_native_vllm_tool_request(
     else:
         extra_body = dict(extra_body)
     # This is a vLLM extension, so the OpenAI SDK requires it under
-    # ``extra_body`` rather than as a top-level create() argument.
-    extra_body["include_stop_str_in_output"] = True
+    # ``extra_body`` rather than as a top-level create() argument. Excluding
+    # the boundary is intentional: otherwise a structured JSON response that
+    # stops on ``<|im_end|>`` is rejected by vLLM as trailing characters. The
+    # compatibility parser accepts a valid tool object without its closing XML
+    # tag.
+    extra_body["include_stop_str_in_output"] = False
     # Qwen3-VL-4B can otherwise loop inside a long JSON string (most often a
     # Resource Memory image description) without ever closing the tool-call
     # envelope.  A small penalty prevents that decoding failure while leaving
@@ -2258,6 +2757,11 @@ _MIRIX_TRUNCATED_FINISH_REASONS = {
     "max_output_tokens",
 }
 _MIRIX_MAX_TRAILING_TOOL_WHITESPACE = 128
+_MIRIX_QA_REPAIRABLE_TOOLS = {
+    "search_in_memory",
+    "list_memory_within_timerange",
+    "send_message",
+}
 
 
 def _native_tool_name(tool: Any) -> str:
@@ -2317,11 +2821,29 @@ def _prepare_mirix_delta_tool_request(data: dict[str, Any]) -> dict[str, Any]:
             if isinstance(item_properties, dict) and old_field in item_properties:
                 rewritten: dict[str, Any] = {}
                 for field, schema in item_properties.items():
+                    if name == "resource_memory_update" and field == "summary":
+                        delta_schema = dict(schema) if isinstance(schema, dict) else {}
+                        delta_schema["maxLength"] = 300
+                        delta_schema["description"] = (
+                            "Only new summary information absent from the stored resource; "
+                            "do not repeat its existing summary or content; maximum 300 "
+                            "characters."
+                        )
+                        rewritten["summary_delta"] = delta_schema
+                        continue
+                    if name == "resource_memory_update" and field == old_field:
+                        # Qwen3-VL copies the complete stored resource whenever
+                        # an update content field is exposed, even when that
+                        # field is described as a short delta.  The compact
+                        # summary_delta already captures the new information;
+                        # the runtime appends it to both summary and content.
+                        continue
                     if field != old_field:
                         rewritten[field] = schema
                         continue
                     delta_schema = dict(schema) if isinstance(schema, dict) else {}
                     if delta_field == "content_delta":
+                        delta_schema["maxLength"] = 900
                         delta_schema["description"] = (
                             "Only new information absent from the old resource; do not "
                             "repeat old content or transcribe sessions; maximum 900 characters."
@@ -2335,14 +2857,35 @@ def _prepare_mirix_delta_tool_request(data: dict[str, Any]) -> dict[str, Any]:
                 item_schema["properties"] = rewritten
                 required = item_schema.get("required")
                 if isinstance(required, list):
-                    item_schema["required"] = [
-                        delta_field if field == old_field else field
-                        for field in required
-                    ]
+                    rewritten_required = []
+                    for field in required:
+                        if name == "resource_memory_update" and field == old_field:
+                            continue
+                        rewritten_required.append(
+                            "summary_delta"
+                            if name == "resource_memory_update" and field == "summary"
+                            else delta_field if field == old_field else field
+                        )
+                    if (
+                        name == "resource_memory_update"
+                        and "summary_delta" not in rewritten_required
+                    ):
+                        rewritten_required.append("summary_delta")
+                    item_schema["required"] = rewritten_required
+                if name == "resource_memory_update":
+                    delta_description = (
+                        "For updates, provide only summary_delta with the new facts. "
+                        "The runtime merges it into both the referenced resource's "
+                        "summary and content; never repeat stored resource text."
+                    )
+                else:
+                    delta_description = (
+                        f"For updates, {delta_field} is a bounded delta that the runtime "
+                        "merges with the referenced old item."
+                    )
                 function["description"] = (
                     f"{str(function.get('description') or '').rstrip()} "
-                    f"For updates, {delta_field} is a bounded delta that the runtime "
-                    "merges with the referenced old item."
+                    f"{delta_description}"
                 ).strip()
                 changed = True
         elif name == "episodic_memory_merge":
@@ -2500,8 +3043,263 @@ def _has_native_tool_calls(response_data: dict[str, Any]) -> bool:
     )
 
 
-def _reject_native_tool_response_integrity(response_data: dict[str, Any]) -> None:
+def _has_unparsed_native_tool_envelope(response_data: dict[str, Any]) -> bool:
+    return any(
+        isinstance((choice.get("message") or {}).get("content"), str)
+        and "<tool_call>" in (choice.get("message") or {}).get("content", "")
+        and not (choice.get("message") or {}).get("tool_calls")
+        for choice in response_data.get("choices") or []
+        if isinstance(choice, dict)
+    )
+
+
+def _mirix_native_memory_truncation_retry_required(
+    request_data: dict[str, Any], response_data: dict[str, Any]
+) -> bool:
+    """Retry one memory-tool turn only when the provider reports truncation."""
+    return _mirix_request_requires_native_memory_tool(request_data) and any(
+        {
+            str(choice.get("finish_reason") or "").casefold(),
+            str(choice.get("native_finish_reason") or "").casefold(),
+        }.intersection(_MIRIX_TRUNCATED_FINISH_REASONS)
+        for choice in response_data.get("choices") or []
+        if isinstance(choice, dict)
+    )
+
+
+def _request_output_token_cap(request_data: dict[str, Any]) -> int:
+    """Return the configured output cap for one provider request."""
+    return max(
+        1,
+        int(
+            request_data.get("max_completion_tokens")
+            or request_data.get("max_tokens")
+            or 2048
+        ),
+    )
+
+
+def _mirix_native_memory_corrective_retry_reason(
+    request_data: dict[str, Any], response_data: dict[str, Any]
+) -> str | None:
+    """Select one bounded retry for a malformed native memory-agent turn.
+
+    The retry happens inside the failing memory agent request, before MIRIX can
+    execute a tool. Other memory agents in the same update are therefore not
+    replayed and their successful writes cannot be duplicated.
+    """
+    if not _mirix_request_requires_native_memory_tool(request_data):
+        return None
+    if _mirix_native_memory_truncation_retry_required(
+        request_data, response_data
+    ):
+        return "truncation"
+    try:
+        _reject_unparsed_native_tool_response(response_data)
+    except ValueError:
+        return "malformed_tool_call"
+    if not _has_native_tool_calls(response_data):
+        return "missing_tool_call"
+    return None
+
+
+def _mirix_native_memory_bad_request_retry_required(
+    request_data: dict[str, Any], exc: Exception
+) -> bool:
+    """Retry only vLLM's generated invalid-JSON tool-call 400 response."""
+    if not _mirix_request_requires_native_memory_tool(request_data):
+        return False
+    status_code = getattr(exc, "status_code", None)
+    if status_code != 400:
+        return False
+    body = getattr(exc, "body", None)
+    try:
+        body_text = json.dumps(body, ensure_ascii=False)
+    except (TypeError, ValueError):
+        body_text = str(body)
+    text = f"{exc}\n{body_text}".casefold()
+    return (
+        "invalid json" in text
+        and ("control character" in text or "json_invalid" in text)
+    )
+
+
+def _prepare_mirix_native_memory_retry(
+    request_data: dict[str, Any], *, max_output_tokens: int = 4096
+) -> dict[str, Any]:
+    """Request one bounded native tool for a single corrective retry.
+
+    vLLM's ``tool_choice=required`` enables grammar-constrained decoding over
+    MIRIX's large union of tool schemas.  On Qwen3-VL-4B that path can take
+    longer than the request timeout for a few hundred tokens.  Keep native
+    auto-tool parsing and change only the format instruction; the response is
+    still rejected before execution unless it contains a valid native tool
+    call with schema-valid arguments.
+    """
+    retry = copy.deepcopy(request_data)
+    retry["tool_choice"] = "auto"
+    retry["parallel_tool_calls"] = False
+    retry["max_tokens"] = int(max_output_tokens)
+    retry.pop("max_completion_tokens", None)
+    retry["stop"] = ["</tool_call>", "<|im_end|>"]
+    extra_body = dict(retry.get("extra_body") or {})
+    extra_body["include_stop_str_in_output"] = False
+    retry["extra_body"] = extra_body
+
+    correction = (
+        "The previous response was rejected only because its tool-call JSON "
+        "was missing or malformed. Return exactly one of the provided tools "
+        "now, with complete valid JSON arguments. Keep string values concise "
+        "and do not answer in plain text."
+    )
+    messages = retry.get("messages")
+    if isinstance(messages, list):
+        messages = copy.deepcopy(messages)
+        for message in messages:
+            if (
+                isinstance(message, dict)
+                and message.get("role") == "system"
+                and isinstance(message.get("content"), str)
+            ):
+                message["content"] = f"{message['content']}\n\n{correction}"
+                break
+        else:
+            messages.insert(0, {"role": "system", "content": correction})
+        retry["messages"] = messages
+
+    def visit(value: Any, *, field_name: str = "") -> None:
+        if isinstance(value, dict):
+            if value.get("type") == "string":
+                limit = 300 if field_name == "inner_thoughts" else 1024
+                configured = value.get("maxLength")
+                value["maxLength"] = min(
+                    int(configured) if configured is not None else limit,
+                    limit,
+                )
+            elif value.get("type") == "array":
+                configured = value.get("maxItems")
+                value["maxItems"] = min(
+                    int(configured) if configured is not None else 8,
+                    8,
+                )
+            for key, child in value.items():
+                visit(child, field_name=key)
+        elif isinstance(value, list):
+            for child in value:
+                visit(child, field_name=field_name)
+
+    visit(retry.get("tools") or [])
+    return retry
+
+
+def _mirix_request_requires_native_memory_tool(data: dict[str, Any]) -> bool:
+    """Return whether this native MIRIX turn is a memory-update agent turn."""
+    return any(
+        _native_tool_name(tool) in _MIRIX_NATIVE_MEMORY_WRITE_TOOLS
+        for tool in data.get("tools") or []
+    )
+
+
+def _reject_missing_native_memory_tool_response(
+    response_data: dict[str, Any],
+    *,
+    required: bool,
+    max_output_tokens: int = 0,
+    fail_fast: bool = False,
+) -> None:
+    """Reject capped or plain-text memory-agent turns before they can write."""
+    if not required:
+        return
+    usage = response_data.get("usage") or {}
+    completion_tokens = int(usage.get("completion_tokens") or 0)
+    if (
+        max_output_tokens > 0
+        and completion_tokens >= max_output_tokens
+        and not response_data.get("_offline_complete_native_tool_prefix")
+    ):
+        error_type = RuntimeError if fail_fast else ValueError
+        raise error_type(
+            "MIRIX memory-update response reached the configured token limit "
+            f"({completion_tokens}/{max_output_tokens}); refusing to execute it"
+        )
+    if not _has_native_tool_calls(response_data):
+        error_type = RuntimeError if fail_fast else ValueError
+        raise error_type(
+            "MIRIX memory-update response contained no native tool call; "
+            "refusing to count plain text as a successful build point"
+        )
+
+
+def _promote_first_complete_native_memory_tool_call(
+    response_data: dict[str, Any],
+) -> bool:
+    """Accept one complete write call before a truncated extra-call suffix.
+
+    This is deliberately not JSON repair: ``raw_decode`` must consume a
+    complete JSON object, its function must be a known memory-write tool, and
+    any remaining non-whitespace text must begin at a tool-envelope boundary.
+    The incomplete suffix is never parsed or executed.
+    """
+    recovered = False
+    decoder = json.JSONDecoder()
+    for choice in response_data.get("choices") or []:
+        if not isinstance(choice, dict):
+            continue
+        message = choice.get("message") or {}
+        content = message.get("content")
+        if message.get("tool_calls") or not isinstance(content, str):
+            continue
+        if "<tool_call>" not in content:
+            continue
+        candidate = content.split("<tool_call>", 1)[1].lstrip()
+        try:
+            payload, end = decoder.raw_decode(candidate)
+        except (json.JSONDecodeError, TypeError):
+            continue
+        if not isinstance(payload, dict) or set(payload) - {
+            "name",
+            "arguments",
+            "args",
+        }:
+            continue
+        function_name = str(payload.get("name") or "")
+        arguments = payload.get("arguments", payload.get("args"))
+        if (
+            function_name not in _MIRIX_NATIVE_MEMORY_WRITE_TOOLS
+            or not isinstance(arguments, dict)
+        ):
+            continue
+        remainder = candidate[end:].lstrip()
+        if remainder.startswith("</tool_call>"):
+            remainder = remainder[len("</tool_call>") :].lstrip()
+        if remainder and not remainder.startswith("<tool_call>"):
+            continue
+        arguments = _normalize_native_tool_arguments(function_name, arguments)
+        message["content"] = None
+        message["tool_calls"] = [
+            {
+                "id": f"call_{uuid.uuid4().hex}",
+                "type": "function",
+                "function": {
+                    "name": function_name,
+                    "arguments": json.dumps(arguments, ensure_ascii=False),
+                },
+            }
+        ]
+        choice["finish_reason"] = "tool_calls"
+        if "native_finish_reason" in choice:
+            choice["native_finish_reason"] = "completed"
+        recovered = True
+    if recovered:
+        response_data["_offline_complete_native_tool_prefix"] = True
+    return recovered
+
+
+def _reject_native_tool_response_integrity(
+    response_data: dict[str, Any], *, fail_fast: bool = False
+) -> None:
     """Reject provider truncation and whitespace-degenerate native tool output."""
+    error_type = RuntimeError if fail_fast else ValueError
     for choice in response_data.get("choices") or []:
         finish_reasons = {
             str(choice.get("finish_reason") or "").lower(),
@@ -2509,7 +3307,7 @@ def _reject_native_tool_response_integrity(response_data: dict[str, Any]) -> Non
         }
         capped = finish_reasons.intersection(_MIRIX_TRUNCATED_FINISH_REASONS)
         if capped:
-            raise ValueError(
+            raise error_type(
                 "MIRIX provider response was truncated before tool execution: "
                 + ", ".join(sorted(capped))
             )
@@ -2518,21 +3316,23 @@ def _reject_native_tool_response_integrity(response_data: dict[str, Any]) -> Non
             function = tool_call.get("function") or {}
             arguments = function.get("arguments")
             if not isinstance(arguments, str) or not arguments.strip():
-                raise ValueError("MIRIX returned empty native tool-call arguments")
+                raise error_type("MIRIX returned empty native tool-call arguments")
             trailing = len(arguments) - len(arguments.rstrip())
             if trailing >= _MIRIX_MAX_TRAILING_TOOL_WHITESPACE:
-                raise ValueError(
+                raise error_type(
                     "MIRIX returned whitespace-degenerate native tool-call arguments "
                     f"({trailing} trailing whitespace characters)"
                 )
             try:
                 payload = json.loads(arguments)
             except json.JSONDecodeError as exc:
-                raise ValueError(
+                raise error_type(
                     "MIRIX returned incomplete native tool-call JSON; refusing repair"
                 ) from exc
             if not isinstance(payload, dict):
-                raise ValueError("MIRIX returned non-object native tool-call arguments")
+                raise error_type(
+                    "MIRIX returned non-object native tool-call arguments"
+                )
 
 
 def _accept_truncated_native_qa_text(response_data: dict[str, Any]) -> bool:
@@ -2606,8 +3406,12 @@ def _merge_mirix_delta_update(
     new_items = function_args.get("new_items")
     if not isinstance(new_items, list) or not new_items:
         return function_args
+    required_delta_field = (
+        "summary_delta" if function_name == "resource_memory_update" else delta_field
+    )
     if not any(
-        isinstance(item, dict) and delta_field in item for item in new_items
+        isinstance(item, dict) and required_delta_field in item
+        for item in new_items
     ):
         return function_args
     if not old_items:
@@ -2620,8 +3424,10 @@ def _merge_mirix_delta_update(
 
     expanded: list[dict[str, Any]] = []
     for index, raw_delta in enumerate(new_items):
-        if not isinstance(raw_delta, dict) or delta_field not in raw_delta:
-            raise ValueError(f"{function_name} requires {delta_field} on every item")
+        if not isinstance(raw_delta, dict) or required_delta_field not in raw_delta:
+            raise ValueError(
+                f"{function_name} requires {required_delta_field} on every item"
+            )
         bases = (
             old_items
             if len(new_items) == 1
@@ -2630,19 +3436,32 @@ def _merge_mirix_delta_update(
         base = dict(bases[0])
         delta = dict(raw_delta)
         if function_name == "resource_memory_update":
+            delta_summary = _bounded_memory_text(
+                delta.pop("summary_delta", ""), 300
+            )
             base_content = _unique_nonempty_strings(
                 [item.get("content") for item in bases]
             )
-            delta_content = _bounded_memory_text(delta.pop(delta_field, ""), 900)
+            delta_content = _bounded_memory_text(
+                delta.pop(delta_field, "") or delta_summary,
+                900,
+            )
             if delta_content and not any(
                 delta_content in content for content in base_content
             ):
                 base_content.append(delta_content)
+            old_summaries = _unique_nonempty_strings(
+                [item.get("summary") for item in bases]
+            )
+            summary = _bounded_memory_text(
+                "\n\n".join(
+                    _unique_nonempty_strings([delta_summary, *old_summaries])
+                ),
+                600,
+            )
             item = {
                 "title": str(delta.get("title") or base.get("title") or "").strip(),
-                "summary": str(
-                    delta.get("summary") or base.get("summary") or ""
-                ).strip()[:600],
+                "summary": summary,
                 "resource_type": str(
                     delta.get("resource_type") or base.get("resource_type") or ""
                 ).strip(),
@@ -2936,7 +3755,10 @@ def _normalize_openai_tool_tags(response: dict[str, Any]) -> dict[str, Any]:
             function["arguments"] = json.dumps(arguments, ensure_ascii=False)
         if message.get("tool_calls"):
             continue
-        payload = _tool_payload(str(message.get("content") or ""))
+        payload = _tool_payload(
+            str(message.get("content") or ""),
+            allow_qa_repair=_ACTIVE_MIRIX_RETRIEVAL.get() is not None,
+        )
         if payload is None:
             continue
         arguments = payload.get("arguments") or payload.get("args") or {}
@@ -3028,7 +3850,9 @@ def _normalize_native_tool_arguments(name: str, arguments: Any) -> Any:
     return normalized
 
 
-def _tool_payload(text: str) -> dict[str, Any] | None:
+def _tool_payload(
+    text: str, *, allow_qa_repair: bool = False
+) -> dict[str, Any] | None:
     # Qwen occasionally finishes a valid JSON object at its generation limit
     # without emitting the optional closing tag.  Treat the opening tag as the
     # authoritative boundary so a valid native memory write is not discarded.
@@ -3037,6 +3861,7 @@ def _tool_payload(text: str) -> dict[str, Any] | None:
         candidate = candidate.split("</tool_call>", 1)[0].strip()
     else:
         candidate = text
+    candidate = _strip_safe_json_wrappers(candidate)
     # OpenRouter Qwen can honor the tool schema semantically while rendering
     # the call as Python-like text instead of an OpenAI ``tool_calls`` object:
     # ``trigger_memory_update(memory_types=['core', 'episodic'])``. Promote
@@ -3048,11 +3873,101 @@ def _tool_payload(text: str) -> dict[str, Any] | None:
     try:
         value = json.loads(candidate)
     except (json.JSONDecodeError, TypeError):
-        try:
-            value = repair_json(candidate, return_objects=True)
-        except (TypeError, ValueError):
-            return None
+        repaired = _close_unique_json_suffix(candidate)
+        if repaired is not None:
+            try:
+                value = json.loads(repaired)
+            except (json.JSONDecodeError, TypeError):
+                value = None
+        else:
+            value = None
+        if not isinstance(value, dict) and allow_qa_repair:
+            value = _repair_qa_tool_payload(candidate)
     return value if isinstance(value, dict) else None
+
+
+def _repair_qa_tool_payload(candidate: str) -> dict[str, Any] | None:
+    """Repair malformed JSON only for validated, non-writing Chat-Agent tools."""
+    try:
+        payload = repair_json(
+            candidate,
+            return_objects=True,
+            skip_json_loads=True,
+        )
+    except Exception:
+        return None
+    if not isinstance(payload, dict):
+        return None
+    if set(payload) - {"name", "arguments", "args"}:
+        return None
+    name = str(payload.get("name") or "")
+    if name not in _MIRIX_QA_REPAIRABLE_TOOLS:
+        return None
+    arguments = payload.get("arguments", payload.get("args"))
+    if not isinstance(arguments, dict):
+        return None
+    if name == "send_message":
+        if not isinstance(arguments.get("message"), str) or not str(
+            arguments["message"]
+        ).strip():
+            return None
+    elif name == "search_in_memory":
+        if not isinstance(arguments.get("query"), str) or not str(
+            arguments["query"]
+        ).strip():
+            return None
+    elif not all(
+        isinstance(arguments.get(key), str) and str(arguments[key]).strip()
+        for key in ("start_time", "end_time")
+    ):
+        return None
+    return {"name": name, "arguments": arguments}
+
+
+def _strip_safe_json_wrappers(text: str) -> str:
+    """Remove only deterministic transport noise around one JSON value."""
+    cleaned = str(text or "").strip()
+    while cleaned.endswith("<|im_end|>"):
+        cleaned = cleaned[: -len("<|im_end|>")].rstrip()
+    if cleaned.startswith("```"):
+        first_newline = cleaned.find("\n")
+        if first_newline >= 0:
+            cleaned = cleaned[first_newline + 1 :]
+        if cleaned.rstrip().endswith("```"):
+            cleaned = cleaned.rstrip()[:-3]
+    return cleaned.strip()
+
+
+def _close_unique_json_suffix(text: str) -> str | None:
+    """Close a JSON value only when its missing suffix is unambiguous."""
+    source = str(text or "").strip()
+    if not source:
+        return None
+    stack: list[str] = []
+    in_string = False
+    escaped = False
+    for char in source:
+        if in_string:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                in_string = False
+            continue
+        if char == '"':
+            in_string = True
+        elif char in "[{":
+            stack.append(char)
+        elif char in "]}":
+            expected = "[" if char == "]" else "{"
+            if not stack or stack.pop() != expected:
+                return None
+    if escaped:
+        return None
+    suffix = '"' if in_string else ""
+    suffix += "".join("]" if char == "[" else "}" for char in reversed(stack))
+    return source + suffix if suffix else None
 
 
 def _python_style_tool_payload(text: str) -> dict[str, Any] | None:

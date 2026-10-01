@@ -89,14 +89,21 @@ C_{max}(q_i,t)=B_i+(C'_{max,t})^2
 \alpha_t^{scale}=\frac{std(F1)}{std(C_{norm})+\epsilon_{std}}
 \]
 
-最终奖励为：
+最终奖励为（`Z_i=1` 表示该 QA 的全部召回 MAU 均选择 `00000`）：
 
 \[
-R_i=F1_i-\lambda\alpha_t^{scale}C_{norm,i}
+R_i=
+\begin{cases}
+-1, & Z_i=1\\
+F1_i-\lambda\alpha_t^{scale}C_{norm,i}, & Z_i=0
+\end{cases}
 \]
 
+全零 rollout 仍进入 PPO buffer，并继续以原始 `F1_i` 和成本更新配对窗口；
+`-1` 只覆盖 PPO 使用的最终 reward，不参与 `std(F1)` 的计算。
+
 - `window_size=512`，`min_window_size=128`，`lower_quantile=0.05`，`upper_quantile=0.95`，`initial_range_floor_ratio=0.25`。
-- 前 128 个有效 train rollout 仅收集 cost，使用 `R=F1`；收集完后固定初始 P5、P95 和区间 `S_0`。
+- 前 128 个有效 train rollout 仅收集 cost；非全零使用 `R=F1`，全零仍使用 `R=-1`。收集完后固定初始 P5、P95 和区间 `S_0`。
 - `0.25 * S_0` 是区间下限，避免 policy 成本分布收缩后归一化范围塌缩。
 - 每个 rollout batch 开始时快照一次 P5/P95、有效区间和动态尺度，同一 batch 所有样本共用；PPO update 完成后才把本 batch 的 `(C'_i, F1_i)` 加入窗口。
 - 窗口跨 epoch 保留，validation/test 只读取冻结状态，不更新窗口。

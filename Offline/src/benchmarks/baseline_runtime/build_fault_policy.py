@@ -61,6 +61,10 @@ class ConsecutiveBuildFaultPolicy:
     enabled: bool
     maximum: int = 10
     recorder: CallRecorder | None = None
+    # M2A formal runs may deliberately prefer completing a benchmark with an
+    # audited missing point over aborting the entire sample.  In that mode,
+    # even failures normally classified as global/system-level are skippable.
+    fail_open: bool = False
     consecutive: int = 0
     failures: list[dict[str, Any]] = field(default_factory=list)
 
@@ -78,7 +82,9 @@ class ConsecutiveBuildFaultPolicy:
         point_kind: str,
         session_id: str,
     ) -> None:
-        if not self.enabled or is_non_skippable_build_failure(exc):
+        if not self.enabled or (
+            is_non_skippable_build_failure(exc) and not self.fail_open
+        ):
             raise exc
         self.consecutive += 1
         metadata = dict(getattr(chunk, "metadata", None) or {})

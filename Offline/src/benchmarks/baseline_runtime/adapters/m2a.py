@@ -32,13 +32,14 @@ M2A_INTERNAL_PROMPT_SHA256 = {
 }
 M2A_DEVIATIONS = [
     "The original M2A Gemini backbone is replaced by the configured Qwen-VL model.",
-    "The original agent-selected searches remain unchanged; only the memories handed to the benchmark answer prompt are capped to the experiment Top-7 budget.",
-    "The final answer uses the selected benchmark harness QA prompt instead of M2A's answer text; M2A's original ChatAgent prompt is retained for memory retrieval.",
+    "The original agent-selected searches remain unchanged; only the memories handed to the benchmark answer prompt are capped to the configured experiment Top-K budget.",
+    "The final answer uses a fresh two-message benchmark QA-only conversation instead of M2A's answer text; no internal ChatAgent prompt, tool history, or agent response is exposed to the answer model.",
     "Qwen textual <tool_call> output is normalized into the structured tool-call object expected by the unchanged M2A agent graphs; accompanying assistant content is preserved and hash-audited.",
     "QA retrieval uses a disposable raw-message store so checkpoint questions cannot contaminate the persistent conversation memory bank.",
     "Remote VLM requests deduplicate identical image attachments and use size-controlled JPEG transport copies; original image paths, memory records, evidence, and embedding inputs remain unchanged.",
     "Tool-loop budgets preserve their original limits; if a provider returns multiple calls at the boundary only calls within the remaining budget are retained, the final legal call is executed, and an unbound no-tools completion produces a traced final response.",
     "Malformed evidence tuples containing more than two explicit raw-message IDs are losslessly canonicalized into sorted ranges before storage, and the original and normalized values are retained in the native semantic log.",
+    "When explicitly enabled, a length-truncated MemoryManager update salvages complete rendered CREATE/DELETE JSON operations, stores an unfinished CREATE text prefix with a [TRUNCATED] marker, and falls back to storing the raw truncated response when no memory text can be recovered.",
     "WorldMemArena may batch up to the configured number of complete rounds from one session into one labelled ChatAgent update; batches close before a second image-bearing source turn, retain every source turn in provenance, and parse WMA's fixed timestamp format locally before falling back to the original time-conversion LLM.",
 ]
 
@@ -81,6 +82,7 @@ class M2AAdapter(BaselineAdapter):
             temperature=float(self.config.get("executor_temperature") or 0.0),
             max_tokens=int(self.config.get("executor_max_tokens") or 2048),
             timeout=int(self.config.get("request_timeout") or 180),
+            max_retries=int(self.config.get("retries", 2)),
         )
         embedding_url = str(self.config.get("embedding_base_url") or "")
         text_embedding = TextEmbeddingConfig(
@@ -107,7 +109,11 @@ class M2AAdapter(BaselineAdapter):
             multimodal_embedding=multimodal_embedding,
             memory=memory,
             chat_agent=ChatAgentConfig(),
-            memory_manager=MemoryManagerConfig(),
+            memory_manager=MemoryManagerConfig(
+                salvage_truncated_updates=bool(
+                    self.config.get("m2a_salvage_truncated_updates", False)
+                )
+            ),
         )
 
     def reset(self, sample_id: str, state_dir: Path) -> None:
@@ -138,6 +144,7 @@ class M2AAdapter(BaselineAdapter):
             temperature=0.0,
             max_tokens=50,
             timeout=self.backend.config.llm.timeout,
+            max_retries=self.backend.config.llm.max_retries,
         )
         self._eval_wrapper.chat_idx = sample_id
         self._raw_sources = {}
@@ -419,15 +426,31 @@ class M2AAdapter(BaselineAdapter):
         scratch_store = RawMessageStore(db_path=str(scratch_path), reuse=False)
         agent_response = ""
         query_agent: Any = None
+        retrieval_error = ""
+        # This experiment treats retrieval-agent faults as point-local: keep
+        # any completed semantic hits (or an empty handoff) and continue QA.
+        # Callers that need the original strict behavior can still opt out.
+        fail_open = bool(self.config.get("m2a_fail_open_retrieval", True))
         try:
             self.backend.raw_store = scratch_store
             self._eval_wrapper.m2a = self.backend
             self._eval_wrapper.conv_info = dict(self._conversation_info)
             self._eval_wrapper.cur_time = self._cur_time
-            agent_response = self._eval_wrapper.question(
-                text=request.text,
-                image=[request.query_image] if request.query_image else None,
-            )
+            try:
+                agent_response = self._eval_wrapper.question(
+                    text=request.text,
+                    image=[request.query_image] if request.query_image else None,
+                )
+            except Exception as exc:
+                if not fail_open:
+                    raise
+                retrieval_error = f"{type(exc).__name__}: {exc}"
+                self._trace_event(
+                    component="M2AAdapter",
+                    action="retrieval_fail_open",
+                    query_id=request.query_id,
+                    error=retrieval_error,
+                )
             query_agent = self._eval_wrapper.m2a.chat_agent
         finally:
             if query_agent is None:
@@ -448,14 +471,54 @@ class M2AAdapter(BaselineAdapter):
             event for event in native_events if event.get("operation") == "memory_manager_query"
         ]
         if not query_events or not search_events:
-            raise RuntimeError(
-                "M2A ChatAgent retrieval completed without the required MemoryManager semantic search"
+            missing_search_error = (
+                "M2A ChatAgent retrieval completed without the required "
+                "MemoryManager semantic search"
             )
+            if not fail_open and not retrieval_error:
+                raise RuntimeError(missing_search_error)
+            if not retrieval_error:
+                retrieval_error = f"RuntimeError: {missing_search_error}"
+                self._trace_event(
+                    component="M2AAdapter",
+                    action="retrieval_fail_open",
+                    query_id=request.query_id,
+                    error=retrieval_error,
+                )
         all_candidates = manager.get_handoff_memories(cap=1_000_000)
-        handoff = manager.get_handoff_memories(cap=request.top_k)
-        items = [self._retrieved_memory(record) for record in handoff]
+        candidate_items: list[RetrievedMemory] = []
+        rejected_candidates: list[dict[str, str]] = []
+        for record in all_candidates:
+            try:
+                candidate_items.append(self._retrieved_memory(record))
+            except Exception as exc:
+                if not fail_open:
+                    raise
+                rejected_candidates.append(
+                    {
+                        "memory_id": f"m2a:{record.get('memory_id', '')}",
+                        "reason": f"conversion_error: {type(exc).__name__}: {exc}",
+                    }
+                )
         if request.visible_session_ids:
-            self._validate_visible_session_scope(items, request.visible_session_ids)
+            if fail_open:
+                candidate_items, scope_rejections = self._filter_visible_session_scope(
+                    candidate_items, request.visible_session_ids
+                )
+                rejected_candidates.extend(scope_rejections)
+            else:
+                self._validate_visible_session_scope(
+                    candidate_items[: request.top_k], request.visible_session_ids
+                )
+            # WMA's agent can return several semantic memories containing the
+            # same evidence.  Deduplicate the full ranked candidate stream
+            # before applying Top-K so lower-ranked distinct evidence refills
+            # the handoff instead of returning repeated slots.
+            candidate_items, duplicate_rejections = self._deduplicate_wma_handoff(
+                candidate_items
+            )
+            rejected_candidates.extend(duplicate_rejections)
+        items = candidate_items[: request.top_k]
         final_ids = [item.memory_id for item in items]
         semantic_searches = [
             {
@@ -487,6 +550,10 @@ class M2AAdapter(BaselineAdapter):
             "final_memory_count": len(final_ids),
             "handoff_cap": request.top_k,
             "agent_retrieval_response": agent_response,
+            "fail_open_enabled": fail_open,
+            "retrieval_error": retrieval_error,
+            "rejected_candidates": rejected_candidates,
+            "rejected_candidate_count": len(rejected_candidates),
         }
         for event in native_events:
             operation = str(event.get("operation") or "")
@@ -514,6 +581,9 @@ class M2AAdapter(BaselineAdapter):
             memory_ids=final_ids,
             candidate_count=len(all_candidates),
             handoff_cap=request.top_k,
+            fail_open=bool(retrieval_error or rejected_candidates),
+            retrieval_error=retrieval_error,
+            rejected_candidates=rejected_candidates,
         )
         return RetrievalResult(
             items=items,
@@ -542,6 +612,70 @@ class M2AAdapter(BaselineAdapter):
                     f"M2A WMA memory {item.memory_id} references non-visible "
                     f"session(s): {future}"
                 )
+
+    @staticmethod
+    def _filter_visible_session_scope(
+        items: list[RetrievedMemory], visible_session_ids: tuple[str, ...]
+    ) -> tuple[list[RetrievedMemory], list[dict[str, str]]]:
+        """Drop unsafe WMA candidates so one malformed memory cannot abort QA."""
+        visible = set(visible_session_ids)
+        accepted: list[RetrievedMemory] = []
+        rejected: list[dict[str, str]] = []
+        for item in items:
+            sessions = {
+                str(value)
+                for value in item.metadata.get("session_ids", [])
+                if str(value)
+            }
+            if not sessions:
+                rejected.append(
+                    {"memory_id": item.memory_id, "reason": "missing_session_provenance"}
+                )
+                continue
+            future = sorted(sessions - visible)
+            if future:
+                rejected.append(
+                    {
+                        "memory_id": item.memory_id,
+                        "reason": f"non_visible_sessions: {future}",
+                    }
+                )
+                continue
+            accepted.append(item)
+        return accepted, rejected
+
+    @staticmethod
+    def _deduplicate_wma_handoff(
+        items: list[RetrievedMemory],
+    ) -> tuple[list[RetrievedMemory], list[dict[str, str]]]:
+        accepted: list[RetrievedMemory] = []
+        rejected: list[dict[str, str]] = []
+        seen_text: set[str] = set()
+        seen_provenance: set[tuple[str, ...]] = set()
+        for item in items:
+            text_key = " ".join(str(item.text or "").casefold().split())
+            provenance_key = tuple(
+                sorted({str(value) for value in item.source_dialogue_ids if str(value)})
+            )
+            if text_key and text_key in seen_text:
+                rejected.append(
+                    {"memory_id": item.memory_id, "reason": "duplicate_memory_text"}
+                )
+                continue
+            if provenance_key and provenance_key in seen_provenance:
+                rejected.append(
+                    {
+                        "memory_id": item.memory_id,
+                        "reason": f"duplicate_provenance: {list(provenance_key)}",
+                    }
+                )
+                continue
+            accepted.append(item)
+            if text_key:
+                seen_text.add(text_key)
+            if provenance_key:
+                seen_provenance.add(provenance_key)
+        return accepted, rejected
 
     def _retrieved_memory(self, record: dict[str, Any]) -> RetrievedMemory:
         memory_id = str(record["memory_id"])
@@ -686,9 +820,10 @@ class M2AAdapter(BaselineAdapter):
             if not callable(pop_events):
                 continue
             for event in pop_events():
+                action = str(event.get("op") or "tool_budget_exhausted")
                 self._trace_event(
                     component=component,
-                    action="tool_budget_exhausted",
+                    action=action,
                     **fields,
                     **event,
                 )
@@ -716,7 +851,7 @@ class M2AAdapter(BaselineAdapter):
             "requires_python": ">=3.10",
             "upstream_url": M2A_UPSTREAM_URL,
             "upstream_commit": M2A_UPSTREAM_COMMIT,
-            "compatibility_mode": "native_agent_manager_handoff_top7",
+            "compatibility_mode": "native_agent_manager_handoff_topk",
         }
 
 

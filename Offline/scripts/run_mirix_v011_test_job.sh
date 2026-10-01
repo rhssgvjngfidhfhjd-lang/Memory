@@ -58,7 +58,9 @@ common=(
   --baseline MIRIX
   --executor-base-url "$answer_url"
   --executor-model Qwen/Qwen3-VL-4B-Instruct
-  --executor-max-tokens 8192
+  --executor-max-tokens 2048
+  --mirix-skip-failed-build-points
+  --mirix-max-consecutive-failed-build-points 10
   --answer-base-url "$answer_url"
   --answer-model Qwen/Qwen3-VL-4B-Instruct
   --answer-temperature 0

@@ -9,3 +9,6 @@
 	url = ../Memory.git
 	branch = h2hmem-dataset-captions-20260905
 	shallow = true
+[submodule "Offline/baselines/UniversalRAG"]
+	path = Offline/baselines/UniversalRAG
+	url = https://github.com/wgcyeo/UniversalRAG.git

@@ -69,7 +69,7 @@ def _write_derived_defaults(
     run_root = output_root / "_runs" / run_id
     run_root.mkdir(parents=True, exist_ok=True)
     path = run_root / "memverse_embedding06_top5_defaults.json"
-    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary = path.with_suffix(path.suffix + f".{os.getpid()}.tmp")
     temporary.write_text(
         json.dumps(config, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
@@ -98,6 +98,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-root", type=Path, default=OUTPUT_ROOT)
     parser.add_argument("--skip-smoke", action="store_true")
     parser.add_argument("--smoke-only", action="store_true")
+    parser.add_argument(
+        "--benchmark",
+        action="append",
+        choices=BENCHMARKS,
+        default=[],
+        help="Run only the selected existing benchmark; repeat as needed.",
+    )
     parser.add_argument(
         "--reuse-state",
         action="store_true",
@@ -129,7 +136,8 @@ def main() -> None:
 
     matrix.EMBEDDING_MODEL = EMBEDDING_MODEL
     matrix.PROTOCOL = {**matrix.PROTOCOL, "top_k": TOP_K}
-    matrix.SMOKE_JOB_ORDER = tuple(("MemVerse", name) for name in BENCHMARKS)
+    benchmarks = tuple(args.benchmark or BENCHMARKS)
+    matrix.SMOKE_JOB_ORDER = tuple(("MemVerse", name) for name in benchmarks)
 
     if args.reuse_state:
         os.environ["MEMVERSE_REUSE_STATE"] = "1"
@@ -153,12 +161,16 @@ def main() -> None:
         str(output_root),
         "--run-id",
         args.run_id,
+        "--status-file-name",
+        "matrix_status_"
+        + "__".join(re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_") for name in benchmarks)
+        + ".json",
         "--embedding-base-url",
         EMBEDDING_BASE_URL,
         "--baseline",
         "MemVerse",
     ]
-    for benchmark in BENCHMARKS:
+    for benchmark in benchmarks:
         delegated.extend(["--benchmark", benchmark])
     for endpoint in endpoints:
         delegated.extend(["--endpoint", endpoint])
@@ -178,6 +190,7 @@ def main() -> None:
                 "embedding_dimension_adapter": "right_zero_pad_1024_to_2048",
                 "embedding_base_url": EMBEDDING_BASE_URL,
                 "top_k": TOP_K,
+                "benchmarks": list(benchmarks),
                 "answer_endpoints": endpoints,
                 "derived_defaults": str(derived_defaults),
             },

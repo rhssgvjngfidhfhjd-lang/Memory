@@ -31,6 +31,7 @@ GRAPH_OPTION_KEYS = {
     "df_stop",
     "min_shared",
     "degree_cap",
+    "attribute_weighting",
 }
 
 RETRIEVAL_MODES = frozenset({"vector", "random_append", "graph_append"})
@@ -63,8 +64,6 @@ def resolve_retrieval_settings(config: dict[str, Any]) -> dict[str, Any]:
     )
     retrieval_seed = int(config.get("retrieval_seed", config.get("seed", 0)))
 
-    if explicit_mode == "graph_append" and vector_k != 5:
-        raise ValueError("graph_append retrieval requires top_k=5")
     if explicit_mode == "random_append" and (vector_k != 5 or append_k != 2):
         raise ValueError("random_append retrieval requires top_k=5 and random_append_k=2")
     return {
@@ -94,8 +93,8 @@ def resolve_graph_options(config: dict[str, Any]) -> dict[str, Any] | None:
         raise ValueError(f"Unknown graph_options: {', '.join(unknown)}")
     if options.get("mode") != "append":
         raise ValueError("Evidence-policy graph retrieval requires mode='append'")
-    if int(options.get("append_k", 0)) != 2:
-        raise ValueError("Evidence-policy graph retrieval requires append_k=2")
+    if int(options.get("append_k", 0)) < 0:
+        raise ValueError("Evidence-policy graph retrieval requires append_k>=0")
     return options
 
 

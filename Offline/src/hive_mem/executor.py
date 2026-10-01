@@ -1,10 +1,4 @@
-"""Insert-only memory executor.
-
-One LLM call per chunk produces memory items (MEMORY_ITEM + ENTITIES lines).
-The UPDATE/DELETE/NOOP machinery was removed on 2026-08-06, and the MAUBank
-mutation/query helpers (supersede_memory etc.) on 2026-08-07 — restore from
-git for mutable-memory experiments.
-"""
+"""One-call, one-node chunk summarization and attribute extraction."""
 
 import json
 import re
@@ -15,13 +9,66 @@ import numpy as np
 from json_repair import repair_json
 
 from .entity_schema import (
+    MAX_ATTRIBUTE_RECORDS,
+    MAX_ATTRIBUTE_VALUES,
+    TEXT_ATTRIBUTE_KEYS,
+    VISUAL_ATTRIBUTE_KEYS,
+    attribute_prompt_block,
     normalize_entities,
-    ontology_prompt_block,
+    normalize_attributes,
     parse_entities_payload,
 )
 
 
 EXECUTOR_VISUAL_INPUTS = ("image", "caption", "image_caption")
+EXECUTOR_PROMPT_SCHEMA_VERSION = 6
+
+
+def _attribute_schema(keys: Sequence[str]) -> dict:
+    return {
+        "type": "object",
+        "properties": {
+            "entity": {"type": "string"},
+            "attribute": {"type": "string", "enum": list(keys)},
+            "value": {
+                "type": "array",
+                "items": {"type": "string"},
+                "minItems": 1,
+                "maxItems": MAX_ATTRIBUTE_VALUES,
+            },
+        },
+        # OpenAI strict structured outputs require every declared property to
+        # appear in ``required``. An unknown entity is represented by "".
+        "required": ["entity", "attribute", "value"],
+        "additionalProperties": False,
+    }
+
+
+MEMORY_RESPONSE_FORMAT = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "hivemem_chunk_node",
+        "strict": True,
+        "schema": {
+            "type": "object",
+            "properties": {
+                "summary": {"type": "string", "minLength": 1},
+                "Ti": {
+                    "type": "array",
+                    "items": _attribute_schema(TEXT_ATTRIBUTE_KEYS),
+                    "maxItems": MAX_ATTRIBUTE_RECORDS,
+                },
+                "Vi": {
+                    "type": "array",
+                    "items": _attribute_schema(VISUAL_ATTRIBUTE_KEYS),
+                    "maxItems": MAX_ATTRIBUTE_RECORDS,
+                },
+            },
+            "required": ["summary", "Ti", "Vi"],
+            "additionalProperties": False,
+        },
+    },
+}
 
 
 
@@ -32,6 +79,8 @@ class ExecutionResult:
     reasoning: str = ""
     # Entities extracted by the same LLM call that produced memory_content.
     entities: List[dict] = None
+    text_attributes: List[dict] = None
+    visual_attributes: List[dict] = None
 
     def to_dict(self):
         return {
@@ -39,6 +88,8 @@ class ExecutionResult:
             "memory_content": self.memory_content,
             "reasoning": self.reasoning,
             "entities": self.entities,
+            "Ti": self.text_attributes,
+            "Vi": self.visual_attributes,
         }
 
 
@@ -105,6 +156,9 @@ class MemoryExecutor:
             usage = {}
             call_stats = {}
         results = self._parse_response(raw_response)
+        if not selected_images:
+            for result in results:
+                result.visual_attributes = []
         return raw_response, results, usage, call_stats
 
     @staticmethod
@@ -133,6 +187,8 @@ class MemoryExecutor:
         results: List[ExecutionResult],
         memory_bank,
         event_metadata=None,
+        raw_chunk: str = "",
+        node_id: str = "",
     ):  #加到之前的memorybank里
         # Each successful memory item becomes a MAU directly; the dedup/merge
         # machinery was removed 2026-08-06 together with build-time retrieval.
@@ -152,12 +208,12 @@ class MemoryExecutor:
             memory_bank.add_memory(
                 result.memory_content.strip(), embedding, metadata=metadata,
                 entities=result.entities or [],
+                text_attributes=result.text_attributes or [],
+                visual_attributes=result.visual_attributes or [],
+                raw_chunk=raw_chunk,
+                memory_id=node_id or None,
             )
 
-    # The single build prompt. The MEMORY_ITEM rules encode three
-    # empirically-motivated fixes from the 2026-08 evaluation rounds: explicit
-    # date anchoring (TR/MR), no persona boilerplate (embedding dilution),
-    # completeness over ENTITIES.
     def _build_prompt(
         self,
         chunk_text: str,
@@ -165,36 +221,34 @@ class MemoryExecutor:
         *,
         has_images: bool = False,
     ) -> str:
+        profile_name = self._profile_name(profile)
         profile_block = (
             "### User Profile\n"
-            "Background reference for resolving who/what names refer to; "
-            "do NOT copy profile facts into memories.\n"
-            f"{profile}\n\n"
-        ) if profile else ""
+            "Use this name only to resolve references to the user. No other profile "
+            "facts are provided or permitted as summary/Ti evidence.\n"
+            f"name: {profile_name}\n\n"
+        ) if profile_name else ""
         image_block = (
-            "### Attached Image\n"
-            "The original image referenced by the image_id in the current chunk is "
-            "attached. Inspect the image itself and preserve visual details that may "
-            "be needed to answer future questions; do not guess details that are not "
-            "visible.\n\n"
+            "### Attached Images\n"
+            "The original images associated with this chunk are attached. Inspect "
+            "the images directly. Do not guess information that is not visibly "
+            "supported.\n\n"
         ) if has_images else ""
-
-        subject_rule = (
-            '- The "user" in the chunk is the person described in the profile: always '
-            'refer to them by name (e.g. "Julian said ..."), never as "the user".\n'
-            if profile
-            else '- No named profile is available: refer to the subject as "the user" or '
-            '"the agent" unless the chunk explicitly provides a name.\n'
-        )
 
         return (
             "### Role\n"
-            "You summarize conversation chunks into memory items and, in the same "
-            "pass, extract each item's entities and attributes.\n\n"
+            "You convert one conversation chunk and its attached images into exactly "
+            "one structured memory record.\n\n"
 
             "### Task\n"
-            "Turn the current chunk into standalone memory items, each able to "
-            "answer future questions on its own.\n\n"
+            "Produce exactly one complete summary for the entire chunk, together with:\n"
+            "- Ti: attributes explicitly stated in the chunk text.\n"
+            "- Vi: attributes directly observable in the attached original images.\n\n"
+            "The summary may use relevant information from both the chunk text and "
+            "the attached images. Ti and Vi must strictly follow their respective "
+            "sources. Ti and Vi are sparse retrieval properties, not exhaustive "
+            "scene graphs: include only concrete, distinctive properties useful for "
+            "linking this chunk to another chunk.\n\n"
             + profile_block +
 
             "### Current Chunk\n"
@@ -202,70 +256,92 @@ class MemoryExecutor:
             f"{image_block}"
 
             "### Output Format\n"
-            "Output one memory item per independent fact, written as a MEMORY_ITEM line "
-            "plus an ENTITIES line, and nothing else.\n"
-            "MEMORY_ITEM: <concise but complete memory>\n"
-            'ENTITIES: <single-line JSON array: [{"name": "...", "type": "...", '
-            '"attributes": {"key": "value or [values]"}}]>\n\n'
+            "Output exactly one JSON object and nothing else:\n"
+            '{"summary":"<one complete summary of the entire chunk>",'
+            '"Ti":[{"entity":"<optional entity name>","attribute":"<allowed textual attribute>","value":["<one or more values>"]}],'
+            '"Vi":[{"entity":"<optional visible entity>","attribute":"<allowed visual attribute>","value":["<one or more values>"]}]}\n\n'
+            "Do not output a JSON array, multiple JSON objects, multiple summaries, "
+            "MEMORY_ITEM: lines, ENTITIES: lines, Markdown, or explanatory text.\n\n"
 
-            "### Memory Item Rules\n"
-            + subject_rule +
-            "- Split unrelated facts into separate memory items; one topic per item.\n"
-            '- When the chunk has a non-empty date, every MEMORY_ITEM MUST begin '
-            'with "On <session date>, " (e.g. "On 2024-06-17, Julian ..."); if '
-            'the date field is empty, do not invent a date or add an "On" prefix. '
-            'Resolve relative time ("last week") to absolute dates when possible.\n'
-            '- Refer to people by bare name only. WRONG: "Julian Vance, a 31-year-old '
-            'UX strategist focused on emerging tech, asked ..." RIGHT: "Julian asked '
-            '...". Never copy age/occupation/personality from the profile into a '
-            "memory unless this chunk's conversation is itself about that background.\n"
-            "- Preserve the specifics needed to answer questions later: entities, "
-            "numbers, dates, decisions and their reasons, and image references (image IDs).\n"
-            "- Skip pure greetings and filler.\n"
-            "- MEMORY_ITEM completeness has priority: never shorten it to make room "
-            "for ENTITIES.\n\n"
+            "### Summary Rules\n"
+            "- Write exactly one non-empty summary for the entire chunk.\n"
+            "- Combine all useful facts into this single summary, even when the chunk "
+            "contains multiple facts or topics.\n"
+            "- Never split the chunk into multiple memory items or summaries.\n"
+            "- Preserve names, numbers, dates, decisions, reasons, and image details "
+            "needed to answer future questions.\n"
+            "- Do not add unsupported information or unrelated profile details.\n"
+            '- When the chunk has a non-empty date, begin the summary with "On <session date>, ".\n'
+            "- Resolve relative dates when the chunk provides enough information.\n\n"
 
-            "### Entities Rules\n"
-            '- Every entity object MUST contain "name" and "type"; an entity without '
-            "a name is discarded, e.g. "
-            '{"name": "Lumi", "type": "ANIMAL", "attributes": {"breed": "Maltese"}}.\n'
-            "- Resolve pronouns to canonical names; never include the user or the "
-            "assistant as entities.\n"
-            "- Fill only attribute keys the chunk explicitly states, restricted to "
-            "the allowed keys below.\n\n"
-            "### Entity Ontology\n"
-            + ontology_prompt_block()
+            "### Ti Rules\n"
+            "- Ti may use only information explicitly stated in the chunk text.\n"
+            "- Do not use an attached image to add or complete a Ti attribute.\n"
+            "- Each attribute must use a key from the closed Ti attribute set.\n"
+            "- The entity field is optional metadata and does not participate in graph matching.\n"
+            "- Always return value as a JSON array of strings, including for one value.\n"
+            f"- Each value array may contain at most {MAX_ATTRIBUTE_VALUES} distinct values.\n"
+            "- Do not infer attributes that the text does not state.\n\n"
+            "- A Ti value must be supported by words in Current Chunk itself; facts "
+            "found only in User Profile are forbidden.\n"
+            "- Do not create attributes for conversation mechanics or metadata such "
+            "as user, assistant, session, round, dialogue, speaker, or conversation partner.\n"
+            "- Do not turn a question or uncertain suggestion into an asserted attribute.\n\n"
+            f"- Ti must contain at most {MAX_ATTRIBUTE_RECORDS} objects. Prefer the most "
+            "specific and distinctive facts.\n"
+            "- Combine multiple values for the same entity and attribute into one object.\n"
+            "- Never repeat or paraphrase the same fact under multiple keys or values.\n\n"
+
+            "### Vi Rules\n"
+            "- Vi may use only information directly observable in the attached images.\n"
+            "- Do not use the chunk text, image caption, or profile to add or complete a Vi attribute.\n"
+            '- If no image is attached, output "Vi": [].\n'
+            "- Each attribute must use a key from the closed Vi attribute set.\n"
+            "- The entity field is optional metadata and does not participate in graph matching.\n"
+            "- Always return value as a JSON array of strings, including for one value.\n"
+            f"- Each value array may contain at most {MAX_ATTRIBUTE_VALUES} distinct values.\n"
+            "- Do not infer occupation, ownership, preference, causality, identity, date, "
+            "or other facts that cannot be determined visually.\n\n"
+            f"- Vi must contain at most {MAX_ATTRIBUTE_RECORDS} objects. Prefer the most "
+            "specific and distinctive visible facts.\n"
+            "- Combine multiple values for the same entity and attribute into one object.\n"
+            "- Never repeat or paraphrase the same visible fact under multiple keys or values.\n\n"
+            + attribute_prompt_block()
             + "\n\n"
 
+            "### Cross-source Rule\n"
+            "If the same attribute is independently supported by both the text and the "
+            "image, include it once in Ti and once in Vi. Do not copy an attribute from "
+            "one source into the other.\n\n"
+
             "### Final Requirement\n"
-            "Output only memory items. Do not add prose outside them. "
-            "You MUST output at least one memory item that captures the content of "
-            "the current chunk.\n"
+            "Return exactly one valid JSON object containing exactly one summary, Ti, and Vi.\n"
         )
+
+    @staticmethod
+    def _profile_name(profile: str) -> str:
+        match = re.search(r"(?:^|;)\s*name\s*:\s*([^;\n]+)", str(profile), re.IGNORECASE)
+        return match.group(1).strip() if match else ""
 
     def _parse_response(self, response: str) -> List[ExecutionResult]:
         response = self._normalize_response(response)
+        json_results = self._parse_json_response(response)
+        if json_results:
+            return json_results[:1]
+        # Read old checkpoints and scripted fixtures without allowing a new
+        # model response to create more than one node for a chunk.
         pattern = re.compile(r"(?im)^MEMORY[_ ]ITEM\s*(?::|=|-)")
         matches = list(pattern.finditer(response))
 
         if not matches:
-            json_results = self._parse_json_response(response)
-            if json_results:
-                return json_results
             return [
                 ExecutionResult(
                     success=False,
-                    reasoning="No MEMORY_ITEM block found in response.",
+                    reasoning="No valid summary/Ti/Vi JSON object found in response.",
                 )
             ]
-
-        results: List[ExecutionResult] = []
-        for index, match in enumerate(matches):
-            block_start = match.start()
-            block_end = matches[index + 1].start() if index + 1 < len(matches) else len(response)
-            block = response[block_start:block_end].strip()
-            results.append(self._parse_single_action(block))
-        return results
+        block_end = matches[1].start() if len(matches) > 1 else len(response)
+        return [self._parse_single_action(response[matches[0].start():block_end].strip())]
 
     def _normalize_response(self, response: str) -> str:
         text = str(response or "").replace("\r\n", "\n").strip()
@@ -298,23 +374,24 @@ class MemoryExecutor:
         except Exception:
             return []
 
-        items = payload if isinstance(payload, list) else [payload]
-        results = []
-        for item in items:
-            if not isinstance(item, dict):
-                continue
-            content = str(item.get("memory_item", item.get("MEMORY_ITEM", ""))).strip()
-            if content:
-                results.append(
-                    ExecutionResult(
-                        success=True,
-                        memory_content=content,
-                        entities=normalize_entities(
-                            item.get("entities", item.get("ENTITIES")) or []
-                        ),
-                    )
-                )
-        return results
+        if not isinstance(payload, dict):
+            return []
+        content = str(
+            payload.get("summary", payload.get("memory_item", payload.get("MEMORY_ITEM", "")))
+        ).strip()
+        if not content:
+            return []
+        return [
+            ExecutionResult(
+                success=True,
+                memory_content=content,
+                entities=normalize_entities(
+                    payload.get("entities", payload.get("ENTITIES")) or []
+                ),
+                text_attributes=normalize_attributes(payload.get("Ti"), visual=False),
+                visual_attributes=normalize_attributes(payload.get("Vi"), visual=True),
+            )
+        ]
 
     def _parse_single_action(self, block: str) -> ExecutionResult:
         content_match = re.search(

@@ -78,6 +78,28 @@ def test_final_artifacts_require_complete_set(tmp_path: Path) -> None:
     assert monitor.final_artifacts_present(tmp_path)
 
 
+def test_sample_error_restart_counts_are_scoped_to_error_fingerprint() -> None:
+    first = (
+        '[sample-error] {"sample_id":"academic_03","error_type":"RuntimeError",'
+        '"error":"malformed retrievals\\nTraceback"}'
+    )
+    second = (
+        '[sample-error] {"sample_id":"finance_01","error_type":"RuntimeError",'
+        '"error":"malformed retrievals\\nTraceback"}'
+    )
+    first_reason = monitor.sample_error_fingerprint(first)
+    second_reason = monitor.sample_error_fingerprint(second)
+    assert first_reason != second_reason
+
+    job = {"automatic_restart_count": 3}
+    assert monitor.restart_count_for_reason(job, first_reason) == 0
+    assert monitor.record_restart_for_reason(job, first_reason) == 1
+    assert monitor.record_restart_for_reason(job, first_reason) == 2
+    assert monitor.record_restart_for_reason(job, second_reason) == 1
+    assert monitor.restart_count_for_reason(job, first_reason) == 2
+    assert job["automatic_restart_count"] == 6
+
+
 def test_launch_environment_prepends_offline_source(
     tmp_path: Path, monkeypatch
 ) -> None:

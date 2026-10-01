@@ -36,12 +36,20 @@ from benchmarks.memgallery_harness.runner.metrics import (
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SUPPORTED_BENCHMARKS = ("memgallery", "worldmemarena", "h2hmem")
+SUPPORTED_BENCHMARKS = (
+    "memgallery",
+    "worldmemarena",
+    "h2hmem",
+    "memlens",
+    "memeye",
+)
 
-# Snapshot copied from evaluation_protocol_bundle on 2026-08-25. Keep the
-# protocol text, rendering, request shape, and parsing behavior in sync with
-# agentic_memrl/evaluation/{judge_protocols,run_llm_judge}.py.
-EVALUATION_PROTOCOL_SNAPSHOT = "evaluation_protocol_bundle@2026-08-25"
+# Base snapshot copied from evaluation_protocol_bundle on 2026-08-25. MEMLENS
+# and MemEye reuse its generic graded memory-QA rubric through explicit,
+# separately versioned protocol IDs.
+EVALUATION_PROTOCOL_SNAPSHOT = (
+    "evaluation_protocol_bundle@2026-08-25+memlens-memeye-adapter-v1"
+)
 DEFAULT_JUDGE_MODEL = "openai/gpt-4o-mini"
 DEFAULT_JUDGE_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_JUDGE_TEMPERATURE = 0.0
@@ -130,6 +138,18 @@ PROTOCOLS = {
         _MEMORY_QA_JUDGE_ROLE,
         _FIVE_LEVEL_RUBRIC,
     ),
+    "memlens_answer_v1": JudgeProtocol(
+        "memlens_answer_v1",
+        "MEMLENS",
+        _MEMORY_QA_JUDGE_ROLE,
+        _FIVE_LEVEL_RUBRIC,
+    ),
+    "memeye_answer_v1": JudgeProtocol(
+        "memeye_answer_v1",
+        "MemEye",
+        _MEMORY_QA_JUDGE_ROLE,
+        _FIVE_LEVEL_RUBRIC,
+    ),
     "worldmemarena_answer_v1": JudgeProtocol(
         "worldmemarena_answer_v1",
         "WorldMemArena",
@@ -161,6 +181,10 @@ def judge_protocol_id_for_sample(
         return "h2hmem_answer_v1"
     if "mem_gallery" in source:
         return "mem_gallery_answer_v1"
+    if "memlens" in source:
+        return "memlens_answer_v1"
+    if "memeye" in source:
+        return "memeye_answer_v1"
     raise ValueError(f"No final-evaluation judge protocol for data_source={data_source!r}.")
 
 
@@ -226,6 +250,8 @@ def validate_protocol_snapshot() -> None:
         "mem_gallery": "mem_gallery_answer_v1",
         "worldmemarena": "worldmemarena_answer_v1",
         "h2hmem": "h2hmem_answer_v1",
+        "memlens": "memlens_answer_v1",
+        "memeye": "memeye_answer_v1",
     }
     for data_source, protocol_id in expected.items():
         if judge_protocol_id_for_sample(data_source) != protocol_id:
@@ -239,7 +265,12 @@ def validate_protocol_snapshot() -> None:
             raise RuntimeError(f"Judge prompt inputs drifted for {protocol_id}.")
     if PROTOCOLS["worldmemarena_answer_v1"].labels != WORLD_LABELS:
         raise RuntimeError("WorldMemArena Judge labels drifted.")
-    for protocol_id in ("mem_gallery_answer_v1", "h2hmem_answer_v1"):
+    for protocol_id in (
+        "mem_gallery_answer_v1",
+        "h2hmem_answer_v1",
+        "memlens_answer_v1",
+        "memeye_answer_v1",
+    ):
         if PROTOCOLS[protocol_id].score_values != GRADED_SCORES:
             raise RuntimeError(f"Judge score space drifted for {protocol_id}.")
 
@@ -476,6 +507,8 @@ def normalize_judge_row(
         "memgallery": "mem_gallery",
         "worldmemarena": "worldmemarena",
         "h2hmem": "h2hmem",
+        "memlens": "memlens",
+        "memeye": "memeye",
     }[benchmark]
     conversation_id = str(
         row.get("conversation_id")
@@ -833,7 +866,10 @@ def build_tasks(
 def main() -> None:
     validate_protocol_snapshot()
     parser = argparse.ArgumentParser(
-        description="Parallel LLM Judge for Mem-Gallery, WorldMemArena, and H2HMem."
+        description=(
+            "Parallel LLM Judge for Mem-Gallery, WorldMemArena, H2HMem, "
+            "MEMLENS, and MemEye."
+        )
     )
     parser.add_argument(
         "--benchmark",

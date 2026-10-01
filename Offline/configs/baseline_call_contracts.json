@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "baselines": {
+    "MIRIX": {
+      "final_answer_owner": "native_chat_agent",
+      "max_agent_lifecycles_per_qa": 1,
+      "api_calls_allowed_in_retrieval": false,
+      "require_answer_success": true,
+      "require_single_attempt": true,
+      "require_zero_build_faults": true,
+      "automatic_prefetch_counts_toward_top_k": true,
+      "top_k": 7,
+      "expected_qa_counts": {
+        "Mem-Gallery": 275,
+        "H2HMEM": 360,
+        "WorldMemArena": 440
+      }
+    },
+    "NaiveRAG": {
+      "final_answer_owner": "benchmark_harness",
+      "api_calls_allowed_in_retrieval": false,
+      "require_answer_success": true,
+      "require_zero_build_faults": true,
+      "top_k": 7,
+      "expected_qa_counts": {
+        "Mem-Gallery": 275,
+        "H2HMEM": 360,
+        "WorldMemArena": 440
+      }
+    },
+    "MuRAG": {
+      "final_answer_owner": "benchmark_harness",
+      "api_calls_allowed_in_retrieval": false,
+      "require_answer_success": true,
+      "require_zero_build_faults": true,
+      "top_k": 7,
+      "expected_qa_counts": {
+        "Mem-Gallery": 275,
+        "H2HMEM": 360,
+        "WorldMemArena": 440
+      }
+    },
+    "UniversalRAG": {
+      "final_answer_owner": "benchmark_harness",
+      "api_calls_allowed_in_retrieval": true,
+      "require_answer_success": true,
+      "require_zero_build_faults": true,
+      "top_k": 7,
+      "expected_qa_counts": {
+        "Mem-Gallery": 275,
+        "H2HMEM": 360,
+        "WorldMemArena": 440
+      }
+    }
+  }
+}

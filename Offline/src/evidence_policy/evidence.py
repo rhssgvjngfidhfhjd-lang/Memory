@@ -572,3 +572,25 @@ def choose_baseline_actions(
 
 def action_signature(actions: Sequence[MAUEvidenceAction]) -> str:
     return "|".join(f"{action.memory_id}:{action.bitmask}" for action in actions)
+
+
+def add_available_evidence(
+    actions: Sequence[MAUEvidenceAction],
+    availability: Sequence[Sequence[bool]] | torch.Tensor,
+    evidence_types: Sequence[EvidenceType],
+) -> tuple[MAUEvidenceAction, ...]:
+    """Add selected evidence only where the corresponding evidence is available."""
+    rows = torch.as_tensor(availability, dtype=torch.bool)
+    if rows.shape != (len(actions), len(EVIDENCE_ORDER)):
+        raise ValueError(
+            "Evidence availability must have shape "
+            f"({len(actions)}, {len(EVIDENCE_ORDER)}), got {tuple(rows.shape)}"
+        )
+    selected_indices = {EVIDENCE_ORDER.index(kind) for kind in evidence_types}
+    augmented: list[MAUEvidenceAction] = []
+    for action, available in zip(actions, rows.tolist()):
+        mask = list(action.mask)
+        for index in selected_indices:
+            mask[index] = mask[index] or available[index]
+        augmented.append(MAUEvidenceAction.from_mask(action.memory_id, mask))
+    return tuple(augmented)

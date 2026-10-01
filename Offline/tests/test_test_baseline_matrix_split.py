@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from pathlib import Path
+import tempfile
 import unittest
+from unittest.mock import patch
 
 from scripts.run_test_baseline_matrix import (
     EXPECTED_COUNTS,
@@ -10,6 +12,7 @@ from scripts.run_test_baseline_matrix import (
     SMOKE_JOB_ORDER,
     PROTOCOL,
     ROOT,
+    check_services,
     command_for,
     formal_job_attempts,
     load_json,
@@ -55,7 +58,7 @@ class TestBaselineMatrixSplitRegressionTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "must be positive"):
             formal_job_attempts({"formal_job_attempts": 0})
 
-    def test_matrix_contains_all_seven_non_hivemem_baselines(self):
+    def test_matrix_contains_all_ten_non_hivemem_baselines(self):
         methods = {method for method, _ in JOB_ORDER}
         benchmarks = {benchmark for _, benchmark in JOB_ORDER}
         self.assertEqual(
@@ -68,10 +71,13 @@ class TestBaselineMatrixSplitRegressionTest(unittest.TestCase):
                 "MMA",
                 "MemVerse",
                 "M3-Agent-caption",
+                "NaiveRAG",
+                "MuRAG",
+                "UniversalRAG",
             },
         )
         self.assertEqual(benchmarks, set(EXPECTED_COUNTS))
-        self.assertEqual(len(JOB_ORDER), 21)
+        self.assertEqual(len(JOB_ORDER), 30)
 
     def test_m2a_smoke_covers_all_three_benchmarks(self):
         self.assertEqual(
@@ -79,6 +85,16 @@ class TestBaselineMatrixSplitRegressionTest(unittest.TestCase):
                 benchmark
                 for method, benchmark in SMOKE_JOB_ORDER
                 if method == "M2A"
+            },
+            set(EXPECTED_COUNTS),
+        )
+
+    def test_mirix_smoke_covers_all_three_benchmarks(self):
+        self.assertEqual(
+            {
+                benchmark
+                for method, benchmark in SMOKE_JOB_ORDER
+                if method == "MIRIX"
             },
             set(EXPECTED_COUNTS),
         )
@@ -122,7 +138,7 @@ class TestBaselineMatrixSplitRegressionTest(unittest.TestCase):
         }
         for method, expected in (
             ("M3-Agent-caption", "1024"),
-            ("MIRIX", "8192"),
+            ("MIRIX", "2048"),
             ("M2A", "4096"),
         ):
             with self.subTest(method=method):
@@ -138,6 +154,87 @@ class TestBaselineMatrixSplitRegressionTest(unittest.TestCase):
                 self.assertEqual(command.count("--executor-max-tokens"), 1)
                 option_index = command.index("--executor-max-tokens")
                 self.assertEqual(command[option_index + 1], expected)
+                if method == "MIRIX":
+                    hard_index = command.index("--executor-hard-max-tokens")
+                    self.assertEqual(command[hard_index + 1], "4096")
+
+    def test_smoke_uses_configured_sample_concurrency(self):
+        data_dirs = {
+            benchmark: Path("/tmp") / benchmark
+            for benchmark in EXPECTED_COUNTS
+        }
+        command = command_for(
+            Job("MIRIX", "H2HMEM"),
+            Path("/tmp/result"),
+            "http://127.0.0.1:8014/v1",
+            "http://127.0.0.1:8001/v1",
+            self.config,
+            data_dirs,
+            self.selection,
+            smoke=True,
+        )
+        index = command.index("--sample-concurrency")
+        self.assertEqual(command[index + 1], "4")
+
+    def test_mirix_wma_uses_lower_formal_sample_concurrency(self):
+        data_dirs = {
+            benchmark: Path("/tmp") / benchmark
+            for benchmark in EXPECTED_COUNTS
+        }
+        command = command_for(
+            Job("MIRIX", "WorldMemArena"),
+            Path("/tmp/result"),
+            "http://127.0.0.1:8015/v1",
+            "http://127.0.0.1:8001/v1",
+            self.config,
+            data_dirs,
+            self.selection,
+        )
+        index = command.index("--sample-concurrency")
+        self.assertEqual(command[index + 1], "2")
+
+    def test_default_mirix_formal_run_does_not_skip_build_faults(self):
+        self.assertFalse(self.config["mirix_skip_failed_build_points"])
+
+    def test_service_preflight_uses_configured_embedding_model(self):
+        config = dict(self.config)
+        config.update(
+            {
+                "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+                "embedding_dim": 3,
+            }
+        )
+        calls = []
+
+        def fake_request(url, payload=None, **_kwargs):
+            calls.append((url, payload))
+            if url.endswith("/models"):
+                return {"data": [{"id": config["answer_model"]}]}
+            if url.endswith("/embeddings"):
+                return {"data": [{"embedding": [0.0, 0.0, 0.0]}]}
+            return {"choices": [{"message": {"content": "OK"}}]}
+
+        with tempfile.TemporaryDirectory() as directory:
+            key_file = Path(directory) / "key"
+            key_file.write_text("sk-or-v1-test", encoding="utf-8")
+            config["judge_key_file"] = str(key_file)
+            with patch(
+                "scripts.run_test_baseline_matrix.request_json",
+                side_effect=fake_request,
+            ):
+                check_services(
+                    ["http://127.0.0.1:8014/v1"],
+                    "http://127.0.0.1:8002/v1",
+                    config,
+                )
+
+        embedding_payloads = [
+            payload for url, payload in calls if url.endswith("/embeddings")
+        ]
+        self.assertEqual(
+            embedding_payloads,
+            [{"model": "Qwen/Qwen3-Embedding-0.6B", "input": ["test-only matrix preflight"]}],
+        )
 
     def test_m2a_build_fault_policy_reaches_all_three_harnesses(self):
         data_dirs = {
@@ -162,6 +259,27 @@ class TestBaselineMatrixSplitRegressionTest(unittest.TestCase):
                     "--m2a-max-consecutive-failed-build-points"
                 )
                 self.assertEqual(command[option_index + 1], "10")
+
+    def test_m2a_build_fault_policy_explicitly_disables_skipping(self):
+        data_dirs = {
+            benchmark: Path("/tmp") / benchmark
+            for benchmark in EXPECTED_COUNTS
+        }
+        config = {
+            **self.config,
+            "m2a_skip_failed_build_points": False,
+        }
+        command = command_for(
+            Job("M2A", "Mem-Gallery"),
+            Path("/tmp/result"),
+            "https://openrouter.ai/api/v1",
+            "http://127.0.0.1:8002/v1",
+            config,
+            data_dirs,
+            self.selection,
+        )
+        self.assertIn("--no-m2a-skip-failed-build-points", command)
+        self.assertNotIn("--m2a-skip-failed-build-points", command)
 
     def test_mirix_build_fault_policy_reaches_memgallery_and_h2hmem(self):
         data_dirs = {

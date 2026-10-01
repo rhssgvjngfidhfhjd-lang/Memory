@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+import base64
+import copy
 import json
 import asyncio
+import os
 import sqlite3
+import struct
 import sys
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 from types import ModuleType
@@ -34,6 +39,11 @@ from benchmarks.baseline_runtime.registry import (
     canonical_name,
 )
 from benchmarks.baseline_runtime.adapters import mirix_family as mirix_family_module
+from benchmarks.baseline_runtime.adapters.mma_original import (
+    MMAOriginalAdapter,
+    _cosine_similarity as mma_cosine_similarity,
+    _vector_values as mma_vector_values,
+)
 from benchmarks.baseline_runtime.adapters.mirix_family import (
     MirixFamilyAdapter,
     _MirixRetrievalBudget,
@@ -45,13 +55,17 @@ from benchmarks.baseline_runtime.adapters.mirix_family import (
     _expand_mirix_delta_update,
     _merge_mirix_delta_update,
     _mirix_model_handle,
+    _mirix_native_memory_corrective_retry_reason,
+    _mirix_request_requires_native_memory_tool,
     _normalize_openai_tool_request,
     _normalize_openai_tool_response,
     _normalize_openai_tool_tags,
     _prepare_mirix_delta_tool_request,
     _python_style_tool_payload,
+    _promote_first_complete_native_memory_tool_call,
     _promote_native_chat_text_response,
     _reject_native_tool_response_integrity,
+    _reject_missing_native_memory_tool_response,
     _reject_unparsed_native_tool_response,
     _round_robin_native_rows,
     _send_native_benchmark_messages,
@@ -77,6 +91,7 @@ from benchmarks.memgallery_harness.eval_memgallery import (
 from benchmarks.h2hmem_harness.eval_h2hmem import (
     _mma_resume_signature_digests as h2h_mma_resume_signature_digests,
     prepare_conversation_jobs as prepare_h2h_conversation_jobs,
+    run_conversation_retry_queue,
 )
 from benchmarks.wma_harness.eval_wma import (
     prepare_native_sample_jobs,
@@ -166,6 +181,62 @@ class FakeAnswerClient:
 
 
 class BaselineProtocolTest(unittest.TestCase):
+    def test_mma_decodes_base64_float32_blob_embeddings(self):
+        expected = [0.25, -0.5, 0.75, 1.0]
+        encoded = base64.b64encode(struct.pack("<4f", *expected))
+
+        self.assertEqual(mma_vector_values(encoded), expected)
+        self.assertEqual(mma_vector_values(memoryview(encoded)), expected)
+        self.assertAlmostEqual(mma_cosine_similarity(expected, encoded), 1.0)
+
+    def test_mma_rejects_invalid_blob_and_non_finite_embeddings(self):
+        non_finite = base64.b64encode(struct.pack("<2f", 1.0, float("nan")))
+
+        self.assertEqual(mma_vector_values(b"not-base64"), [])
+        self.assertEqual(mma_vector_values(base64.b64encode(b"abc")), [])
+        self.assertEqual(mma_vector_values(non_finite), [])
+
+    def test_mma_hydrates_unprojected_knowledge_vault_embedding(self):
+        expected = [0.25, -0.5, 0.75, 1.0]
+        encoded = base64.b64encode(struct.pack("<4f", *expected))
+        complete_hit = SimpleNamespace(caption_embedding=encoded)
+        manager = Mock()
+        manager.get_item_by_id.return_value = complete_hit
+        user_manager = Mock()
+        actor = SimpleNamespace(id="user")
+        user_manager.get_user_by_id.return_value = actor
+        adapter = object.__new__(MMAOriginalAdapter)
+        adapter._retrieval_embedding_cache = {}
+        adapter.backend = SimpleNamespace(
+            client=SimpleNamespace(user=SimpleNamespace(id="user"))
+        )
+
+        memory_id = "knowledge_vault_manager:kv_TEST"
+        raw_id = "kv_TEST"
+        hit = SimpleNamespace(id=raw_id, caption_embedding=None)
+        server = SimpleNamespace(user_manager=user_manager)
+        spec = {
+            "manager": "knowledge_vault_manager",
+            "embedding_field": "caption_embedding",
+        }
+
+        embedding_value = adapter._embedding_value_for_hit(
+            server=server,
+            manager=manager,
+            spec=spec,
+            hit=hit,
+            raw_id=raw_id,
+            memory_id=memory_id,
+            timezone_str="UTC",
+        )
+
+        self.assertEqual(mma_vector_values(embedding_value), expected)
+        manager.get_item_by_id.assert_called_once_with(
+            knowledge_vault_item_id=raw_id,
+            actor=actor,
+            timezone_str="UTC",
+        )
+
     def test_mirix_wma_checkpoint_backs_up_sqlite_and_provenance(self):
         adapter = object.__new__(MirixFamilyAdapter)
         adapter.baseline = "MIRIX"
@@ -253,6 +324,63 @@ class BaselineProtocolTest(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "non-visible session"):
             M2AAdapter._validate_visible_session_scope([future], ("S00",))
 
+    def test_m2a_wma_fail_open_filters_bad_provenance_and_refills_handoff(self):
+        missing = RetrievedMemory(memory_id="m2a:1", text="unscoped")
+        future = RetrievedMemory(
+            memory_id="m2a:2",
+            text="future",
+            metadata={"session_ids": ["S01"]},
+        )
+        valid = RetrievedMemory(
+            memory_id="m2a:3",
+            text="visible",
+            metadata={"session_ids": ["S00"]},
+        )
+
+        accepted, rejected = M2AAdapter._filter_visible_session_scope(
+            [missing, future, valid], ("S00",)
+        )
+
+        self.assertEqual([item.memory_id for item in accepted], ["m2a:3"])
+        self.assertEqual(
+            [row["reason"] for row in rejected],
+            ["missing_session_provenance", "non_visible_sessions: ['S01']"],
+        )
+
+    def test_m2a_wma_deduplicates_text_then_provenance_before_top_k(self):
+        items = [
+            RetrievedMemory(
+                memory_id="m2a:1",
+                text="Same evidence",
+                source_dialogue_ids=["round-1"],
+            ),
+            RetrievedMemory(
+                memory_id="m2a:2",
+                text="  same   evidence ",
+                source_dialogue_ids=["round-2"],
+            ),
+            RetrievedMemory(
+                memory_id="m2a:3",
+                text="Another phrasing from the same round",
+                source_dialogue_ids=["round-1"],
+            ),
+            RetrievedMemory(
+                memory_id="m2a:4",
+                text="Distinct evidence",
+                source_dialogue_ids=["round-3"],
+            ),
+        ]
+
+        accepted, rejected = M2AAdapter._deduplicate_wma_handoff(items)
+
+        self.assertEqual(
+            [item.memory_id for item in accepted], ["m2a:1", "m2a:4"]
+        )
+        self.assertEqual(
+            [row["reason"] for row in rejected],
+            ["duplicate_memory_text", "duplicate_provenance: ['round-1']"],
+        )
+
     def test_mirix_native_vllm_stops_after_one_complete_tool_envelope(self):
         request = {
             "tools": [{"type": "function", "function": {"name": "search"}}],
@@ -262,9 +390,127 @@ class BaselineProtocolTest(unittest.TestCase):
 
         bounded = _bound_native_vllm_tool_request(request)
 
-        self.assertEqual(bounded["stop"], ["existing-stop", "</tool_call>"])
-        self.assertTrue(bounded["extra_body"]["include_stop_str_in_output"])
+        self.assertEqual(
+            bounded["stop"],
+            ["existing-stop", "</tool_call>", "<|im_end|>"],
+        )
+        self.assertFalse(bounded["extra_body"]["include_stop_str_in_output"])
         self.assertEqual(bounded["extra_body"]["repetition_penalty"], 1.10)
+
+    def test_mirix_failed_message_queue_item_is_removed_before_reraise(self):
+        class FakeQueue:
+            def __init__(self):
+                self._message_queue_lock = threading.Lock()
+                self.message_queue = {}
+
+            def send_message_in_queue(
+                self, _client, _agent_id, _kwargs, agent_type="chat"
+            ):
+                self.message_queue["failed"] = {
+                    "type": agent_type,
+                    "started": True,
+                    "finished": False,
+                }
+                self.message_queue["waiting"] = {
+                    "type": agent_type,
+                    "started": False,
+                    "finished": False,
+                }
+                raise RuntimeError("deterministic tool failure")
+
+        fake_module = SimpleNamespace(MessageQueue=FakeQueue)
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.package = "fake_mirix"
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mirix_family.importlib.import_module",
+            return_value=fake_module,
+        ):
+            adapter._patch_v011_message_queue_cleanup()
+
+        queue = FakeQueue()
+        with self.assertRaisesRegex(RuntimeError, "deterministic tool failure"):
+            queue.send_message_in_queue(None, "agent", {}, "resource_memory")
+
+        self.assertNotIn("failed", queue.message_queue)
+        self.assertIn("waiting", queue.message_queue)
+
+    def test_mirix_summarizer_cutoff_stops_at_trailing_tool_boundary(self):
+        class FakeMessage:
+            def __init__(self, role):
+                self.role = role
+
+            def to_openai_dict(self):
+                return {"role": self.role, "content": "x"}
+
+        helper_module = SimpleNamespace(
+            summarizer_settings=SimpleNamespace(
+                evict_all_messages=False,
+                desired_memory_token_pressure=0.5,
+                keep_last_n_messages=1,
+            ),
+            calculate_summarizer_cutoff=lambda *_args, **_kwargs: -1,
+        )
+        agent_module = SimpleNamespace(calculate_summarizer_cutoff=None)
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.package = "fake_mirix"
+
+        def import_module(name):
+            if name.endswith("llm_api.helpers"):
+                return helper_module
+            if name.endswith("agent.agent"):
+                return agent_module
+            raise AssertionError(name)
+
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mirix_family.importlib.import_module",
+            side_effect=import_module,
+        ):
+            adapter._patch_v011_summarizer_cutoff()
+
+        messages = [
+            FakeMessage("system"),
+            FakeMessage("assistant"),
+            FakeMessage("tool"),
+            FakeMessage("tool"),
+        ]
+        logger = SimpleNamespace(info=Mock(), warning=Mock())
+        cutoff = helper_module.calculate_summarizer_cutoff(
+            messages, [1, 10, 1, 1], logger
+        )
+
+        self.assertEqual(cutoff, len(messages))
+        self.assertIs(
+            agent_module.calculate_summarizer_cutoff,
+            helper_module.calculate_summarizer_cutoff,
+        )
+
+    def test_mirix_meta_agent_propagates_child_update_failure(self):
+        class FakeAgent:
+            def execute_tool_and_persist_state(self, *_args, **_kwargs):
+                return "ok"
+
+            def build_system_prompt_with_memories(self, *_args, **_kwargs):
+                return "prompt"
+
+            def _handle_ai_response(self, *_args, **_kwargs):
+                return ["tool-error"], True, True
+
+        adapter = object.__new__(MirixFamilyAdapter)
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mirix_family.importlib.import_module",
+            return_value=SimpleNamespace(Agent=FakeAgent),
+        ):
+            adapter._install_native_retrieval_hooks()
+
+        agent = FakeAgent()
+        agent.agent_state = SimpleNamespace(name="meta_memory_agent")
+        response = {
+            "tool_calls": [
+                {"function": {"name": "trigger_memory_update"}}
+            ]
+        }
+        with self.assertRaisesRegex(RuntimeError, "child memory-agent update failed"):
+            agent._handle_ai_response(None, response)
 
     def test_mirix_delta_request_replaces_only_update_payload_fields(self):
         request = {
@@ -283,10 +529,16 @@ class BaselineProtocolTest(unittest.TestCase):
                                         "type": "object",
                                         "properties": {
                                             "title": {"type": "string"},
+                                            "summary": {"type": "string"},
                                             "content": {"type": "string"},
                                             "tree_path": {"type": "array"},
                                         },
-                                        "required": ["title", "content", "tree_path"],
+                                        "required": [
+                                            "title",
+                                            "summary",
+                                            "content",
+                                            "tree_path",
+                                        ],
                                     },
                                 },
                             },
@@ -301,10 +553,14 @@ class BaselineProtocolTest(unittest.TestCase):
             "new_items"
         ]["items"]
 
-        self.assertIn("content_delta", item["properties"])
+        self.assertNotIn("content_delta", item["properties"])
         self.assertNotIn("content", item["properties"])
+        self.assertIn("summary_delta", item["properties"])
+        self.assertNotIn("summary", item["properties"])
+        self.assertEqual(item["properties"]["summary_delta"]["maxLength"], 300)
         self.assertEqual(
-            item["required"], ["title", "content_delta", "tree_path"]
+            item["required"],
+            ["title", "summary_delta", "tree_path"],
         )
         self.assertIn("content", request["tools"][0]["function"]["parameters"]["properties"]["new_items"]["items"]["properties"])
 
@@ -479,6 +735,8 @@ class BaselineProtocolTest(unittest.TestCase):
 
         with self.assertRaisesRegex(ValueError, "truncated"):
             _reject_native_tool_response_integrity(capped)
+        with self.assertRaisesRegex(RuntimeError, "truncated"):
+            _reject_native_tool_response_integrity(capped, fail_fast=True)
         with self.assertRaisesRegex(ValueError, "whitespace-degenerate"):
             _reject_native_tool_response_integrity(whitespace_loop)
 
@@ -496,9 +754,8 @@ class BaselineProtocolTest(unittest.TestCase):
             "new_items": [
                 {
                     "title": "Updated notes",
-                    "summary": "Updated compact summary",
+                    "summary_delta": "Updated compact summary",
                     "resource_type": "markdown",
-                    "content_delta": "New fact C.",
                     "tree_path": ["research", "notes"],
                 }
             ],
@@ -522,9 +779,14 @@ class BaselineProtocolTest(unittest.TestCase):
             )
 
         item = merged["new_items"][0]
-        self.assertEqual(item["content"], "Old facts A and B.\n\nNew fact C.")
+        self.assertEqual(
+            item["content"],
+            "Old facts A and B.\n\nUpdated compact summary",
+        )
         self.assertNotIn("content_delta", item)
-        self.assertEqual(item["summary"], "Updated compact summary")
+        self.assertEqual(
+            item["summary"], "Updated compact summary Old summary"
+        )
 
     def test_mirix_procedural_delta_deduplicates_old_steps(self):
         class FakeSchema:
@@ -750,6 +1012,370 @@ class BaselineProtocolTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unparsed native"):
             _reject_unparsed_native_tool_response(response)
 
+    def test_mirix_memory_agent_retries_truncation_with_larger_cap(self):
+        truncated = {
+            "choices": [
+                {
+                    "finish_reason": "length",
+                    "message": {"content": "", "tool_calls": []},
+                }
+            ]
+        }
+        structured = {
+            "choices": [
+                {
+                    "message": {
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "function": {
+                                    "name": "resource_memory_insert",
+                                    "arguments": '{"items":[]}',
+                                }
+                            }
+                        ],
+                    }
+                }
+            ]
+        }
+
+        class FakeOpenAIClient:
+            def __init__(self):
+                self.requests = []
+                self.responses = [truncated, structured]
+
+            def build_request_data(self):
+                return {}
+
+            def request(self, request_data):
+                self.requests.append(copy.deepcopy(request_data))
+                return self.responses.pop(0)
+
+            async def request_async(self, request_data):
+                return self.request(request_data)
+
+            def convert_response_to_chat_completion(self, response_data):
+                return response_data
+
+        fake_module = SimpleNamespace(OpenAIClient=FakeOpenAIClient)
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.config = {
+            "mirix_native_repetition_penalty": 1.10,
+            "mirix_executor_retry_max_tokens": 4096,
+        }
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mirix_family.importlib.import_module",
+            return_value=fake_module,
+        ):
+            adapter._patch_v011_vllm_tool_call_boundary()
+
+        tools = [
+            {
+                "type": "function",
+                "function": {
+                    "name": "resource_memory_insert",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "inner_thoughts": {"type": "string"},
+                            "content": {"type": "string"},
+                        },
+                    },
+                },
+            }
+        ]
+        client = FakeOpenAIClient()
+        self.assertIs(
+            client.request(
+                {"tools": tools, "tool_choice": "auto", "max_tokens": 2048}
+            ),
+            structured,
+        )
+        self.assertEqual(len(client.requests), 2)
+        self.assertEqual(client.requests[1]["tool_choice"], "auto")
+        self.assertFalse(client.requests[1]["parallel_tool_calls"])
+        self.assertEqual(client.requests[1]["max_tokens"], 4096)
+        self.assertEqual(
+            client.requests[1]["stop"], ["</tool_call>", "<|im_end|>"]
+        )
+        self.assertFalse(
+            client.requests[1]["extra_body"]["include_stop_str_in_output"]
+        )
+        properties = client.requests[1]["tools"][0]["function"]["parameters"][
+            "properties"
+        ]
+        self.assertEqual(properties["inner_thoughts"]["maxLength"], 300)
+        self.assertEqual(properties["content"]["maxLength"], 1024)
+
+    def test_mirix_memory_agent_retries_missing_tool_at_short_corrective_cap(self):
+        plain_text = {
+            "choices": [
+                {
+                    "finish_reason": "stop",
+                    "message": {"content": "I will update memory now."},
+                }
+            ]
+        }
+        structured = {
+            "choices": [
+                {
+                    "finish_reason": "tool_calls",
+                    "message": {
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "function": {
+                                    "name": "resource_memory_insert",
+                                    "arguments": '{"items":[]}',
+                                }
+                            }
+                        ],
+                    },
+                }
+            ]
+        }
+
+        class FakeOpenAIClient:
+            def __init__(self):
+                self.requests = []
+                self.responses = [plain_text, structured]
+
+            def build_request_data(self):
+                return {}
+
+            def request(self, request_data):
+                self.requests.append(copy.deepcopy(request_data))
+                return self.responses.pop(0)
+
+            async def request_async(self, request_data):
+                return self.request(request_data)
+
+            def convert_response_to_chat_completion(self, response_data):
+                return response_data
+
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.config = {
+            "mirix_native_repetition_penalty": 1.10,
+            "mirix_executor_retry_max_tokens": 4096,
+            "mirix_executor_corrective_retry_max_tokens": 512,
+        }
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mirix_family.importlib.import_module",
+            return_value=SimpleNamespace(OpenAIClient=FakeOpenAIClient),
+        ):
+            adapter._patch_v011_vllm_tool_call_boundary()
+
+        client = FakeOpenAIClient()
+        response = client.request(
+            {
+                "messages": [
+                    {"role": "system", "content": "memory agent"},
+                    {"role": "user", "content": "remember this"},
+                ],
+                "tools": [
+                    {
+                        "type": "function",
+                        "function": {"name": "resource_memory_insert"},
+                    }
+                ],
+                "tool_choice": "auto",
+                "max_tokens": 2048,
+            }
+        )
+        self.assertIs(response, structured)
+        self.assertEqual(len(client.requests), 2)
+        self.assertEqual(client.requests[1]["tool_choice"], "auto")
+        self.assertEqual(client.requests[1]["max_tokens"], 512)
+        self.assertIn(
+            "complete valid JSON arguments",
+            client.requests[1]["messages"][0]["content"],
+        )
+        self.assertEqual(client.requests[1]["messages"][1]["content"], "remember this")
+
+    def test_mirix_memory_agent_does_not_recursively_retry_corrective_failure(self):
+        plain_text = {
+            "choices": [
+                {
+                    "finish_reason": "stop",
+                    "message": {"content": "I will update memory now."},
+                }
+            ]
+        }
+
+        class FakeOpenAIClient:
+            def __init__(self):
+                self.requests = []
+
+            def build_request_data(self):
+                return {}
+
+            def request(self, request_data):
+                self.requests.append(copy.deepcopy(request_data))
+                return copy.deepcopy(plain_text)
+
+            async def request_async(self, request_data):
+                return self.request(request_data)
+
+            def convert_response_to_chat_completion(self, response_data):
+                return response_data
+
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.config = {
+            "mirix_native_repetition_penalty": 1.10,
+            "mirix_executor_retry_max_tokens": 4096,
+            "mirix_executor_corrective_retry_max_tokens": 512,
+        }
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mirix_family.importlib.import_module",
+            return_value=SimpleNamespace(OpenAIClient=FakeOpenAIClient),
+        ):
+            adapter._patch_v011_vllm_tool_call_boundary()
+
+        client = FakeOpenAIClient()
+        response = client.request(
+            {
+                "tools": [
+                    {
+                        "type": "function",
+                        "function": {"name": "resource_memory_insert"},
+                    }
+                ],
+                "tool_choice": "auto",
+                "max_tokens": 2048,
+            }
+        )
+
+        self.assertEqual(response, plain_text)
+        self.assertEqual(len(client.requests), 2)
+        required_token = (
+            mirix_family_module._ACTIVE_MIRIX_NATIVE_MEMORY_TOOL_REQUIRED.set(True)
+        )
+        max_tokens_token = (
+            mirix_family_module._ACTIVE_MIRIX_NATIVE_MEMORY_MAX_OUTPUT_TOKENS.set(512)
+        )
+        try:
+            with self.assertRaisesRegex(RuntimeError, "no native tool call"):
+                client.convert_response_to_chat_completion(response)
+        finally:
+            mirix_family_module._ACTIVE_MIRIX_NATIVE_MEMORY_MAX_OUTPUT_TOKENS.reset(
+                max_tokens_token
+            )
+            mirix_family_module._ACTIVE_MIRIX_NATIVE_MEMORY_TOOL_REQUIRED.reset(
+                required_token
+            )
+        self.assertEqual(len(client.requests), 2)
+
+    def test_mirix_memory_agent_marks_malformed_native_arguments_for_retry(self):
+        request = {
+            "tools": [
+                {
+                    "type": "function",
+                    "function": {"name": "semantic_memory_insert"},
+                }
+            ],
+            "max_tokens": 2048,
+        }
+        response = {
+            "choices": [
+                {
+                    "message": {
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "function": {
+                                    "name": "semantic_memory_insert",
+                                    "arguments": '{"items":[}',
+                                }
+                            }
+                        ],
+                    }
+                }
+            ]
+        }
+        self.assertEqual(
+            _mirix_native_memory_corrective_retry_reason(request, response),
+            "malformed_tool_call",
+        )
+
+    def test_mirix_memory_agent_retries_invalid_json_400_once(self):
+        structured = {
+            "choices": [
+                {
+                    "finish_reason": "tool_calls",
+                    "message": {
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "function": {
+                                    "name": "core_memory_append",
+                                    "arguments": '{"content":"safe"}',
+                                }
+                            }
+                        ],
+                    },
+                }
+            ]
+        }
+
+        class InvalidToolJSON(Exception):
+            status_code = 400
+            body = {
+                "error": {
+                    "message": "Invalid JSON: control character found",
+                    "type": "BadRequestError",
+                    "code": 400,
+                }
+            }
+
+        class FakeOpenAIClient:
+            def __init__(self):
+                self.requests = []
+
+            def build_request_data(self):
+                return {}
+
+            def request(self, request_data):
+                self.requests.append(copy.deepcopy(request_data))
+                if len(self.requests) == 1:
+                    raise InvalidToolJSON("Invalid JSON: control character")
+                return structured
+
+            async def request_async(self, request_data):
+                return self.request(request_data)
+
+            def convert_response_to_chat_completion(self, response_data):
+                return response_data
+
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.config = {
+            "mirix_native_repetition_penalty": 1.10,
+            "mirix_executor_retry_max_tokens": 4096,
+            "mirix_executor_corrective_retry_max_tokens": 512,
+        }
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mirix_family.importlib.import_module",
+            return_value=SimpleNamespace(OpenAIClient=FakeOpenAIClient),
+        ):
+            adapter._patch_v011_vllm_tool_call_boundary()
+
+        client = FakeOpenAIClient()
+        response = client.request(
+            {
+                "tools": [
+                    {
+                        "type": "function",
+                        "function": {"name": "core_memory_append"},
+                    }
+                ],
+                "tool_choice": "auto",
+                "max_tokens": 2048,
+            }
+        )
+        self.assertIs(response, structured)
+        self.assertEqual(len(client.requests), 2)
+        self.assertEqual(client.requests[1]["tool_choice"], "auto")
+        self.assertEqual(client.requests[1]["max_tokens"], 512)
+
     def test_mirix_accepts_server_parsed_native_tool_envelope(self):
         response = {
             "choices": [
@@ -947,6 +1573,65 @@ class BaselineProtocolTest(unittest.TestCase):
         self.assertEqual(llm.handle, "vllm/Qwen/Qwen3-VL-4B-Instruct")
         self.assertEqual(llm.model_endpoint_type, "openai")
 
+    def test_mirix_embedding_proxy_uses_images_only_inside_active_scope(self):
+        delegate = Mock()
+        delegate.get_text_embedding.return_value = [0.1, 0.2]
+        proxy = mirix_family_module._MirixEmbeddingProxy(
+            delegate,
+            model="vl-embedding",
+            endpoint="http://127.0.0.1:8001/v1",
+            dimensions=2,
+        )
+        previous = mirix_family_module._ACTIVE_MIRIX_MULTIMODAL_EMBEDDING
+        try:
+            mirix_family_module._ACTIVE_MIRIX_MULTIMODAL_EMBEDDING = None
+            self.assertEqual(proxy.get_text_embedding("plain"), [0.1, 0.2])
+            with patch.object(
+                mirix_family_module,
+                "_request_mirix_multimodal_embedding",
+                return_value=[0.3, 0.4],
+            ) as request_embedding:
+                mirix_family_module._ACTIVE_MIRIX_MULTIMODAL_EMBEDDING = {
+                    "mode": "context",
+                    "images": ["/tmp/source.png"],
+                }
+                self.assertEqual(proxy.get_text_embedding("visual"), [0.3, 0.4])
+                request_embedding.assert_called_once_with(
+                    endpoint="http://127.0.0.1:8001/v1",
+                    model="vl-embedding",
+                    dimensions=2,
+                    text="visual",
+                    image_paths=["/tmp/source.png"],
+                )
+        finally:
+            mirix_family_module._ACTIVE_MIRIX_MULTIMODAL_EMBEDDING = previous
+
+    def test_mirix_build_cap_defaults_to_2048_independently_of_qa_cap(self):
+        class FakeConfig:
+            def __init__(self, **kwargs):
+                self.__dict__.update(kwargs)
+
+        fake_package = ModuleType("fake_mirix_default_cap")
+        fake_package.LLMConfig = FakeConfig
+        fake_package.EmbeddingConfig = FakeConfig
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.baseline = "MIRIX"
+        adapter.package = "fake_mirix_default_cap"
+        adapter.config = {
+            "executor_model": "qwen/qwen3.5-9b",
+            "executor_base_url": "https://openrouter.ai/api/v1",
+            "executor_temperature": 0.0,
+            "num_predict": 512,
+            "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+            "embedding_base_url": "http://127.0.0.1:8002/v1",
+            "embedding_dim": 2048,
+        }
+
+        with patch.dict(sys.modules, {"fake_mirix_default_cap": fake_package}):
+            llm, _embedding = adapter._model_configs()
+
+        self.assertEqual(llm.max_tokens, 2048)
+
     def test_mirix_global_similarity_uses_cosine_score(self):
         self.assertAlmostEqual(_embedding_similarity([1, 0], [1, 0]), 1.0)
         self.assertAlmostEqual(_embedding_similarity([1, 0], [0, 1]), 0.0)
@@ -1055,27 +1740,75 @@ class BaselineProtocolTest(unittest.TestCase):
             ],
         )
 
-    def test_mirix_retrieval_probe_disables_chaining(self):
+    def test_mirix_retrieval_is_deferred_without_model_call(self):
         client = SimpleNamespace(send_message=Mock(return_value=SimpleNamespace(messages=[])))
         adapter = object.__new__(MirixFamilyAdapter)
+        adapter.baseline = "MIRIX"
         adapter.backend = SimpleNamespace(
             client=client,
             agent_states=SimpleNamespace(agent_state=SimpleNamespace(id="chat")),
         )
         adapter._qa_budgets = {}
+        retrieval = adapter._retrieve_with_native_chat(
+            RetrievalRequest(query_id="q", text="question", top_k=7)
+        )
+
+        client.send_message.assert_not_called()
+        self.assertEqual(retrieval.items, [])
+        self.assertEqual(retrieval.trace["stage"], "deferred_to_native_answer")
+        self.assertIn("q", adapter._qa_budgets)
+
+    def test_mirix_answer_executes_one_native_agent_lifecycle(self):
+        adapter = object.__new__(MirixFamilyAdapter)
+        adapter.baseline = "MIRIX"
+        adapter.config = {"retries": 9}
+        adapter.backend = SimpleNamespace(
+            client=SimpleNamespace(),
+            agent_states=SimpleNamespace(agent_state=SimpleNamespace(id="chat")),
+        )
+        budget = _MirixRetrievalBudget(adapter, "q", 7)
+        adapter._qa_budgets = {"q": budget}
+        response = SimpleNamespace(
+            messages=[
+                {
+                    "tool_call": {
+                        "name": "send_message",
+                        "arguments": json.dumps({"message": "final"}),
+                    }
+                }
+            ],
+            usage={"prompt_tokens": 11, "completion_tokens": 2},
+        )
         with (
             patch.object(
                 mirix_family_module,
                 "_capture_chat_state",
                 return_value={"message_ids": [], "topic": None},
             ),
-            patch.object(mirix_family_module, "_restore_chat_state"),
+            patch.object(mirix_family_module, "_restore_chat_state") as restore,
+            patch.object(
+                mirix_family_module,
+                "_send_native_benchmark_messages",
+                return_value=response,
+            ) as send,
         ):
-            adapter._retrieve_with_native_chat(
-                RetrievalRequest(query_id="q", text="question", top_k=7)
+            result = adapter.answer_with_memory(
+                NativeAnswerRequest(
+                    query_id="q",
+                    messages=[{"role": "user", "content": "question"}],
+                    retrieval=RetrievalResult(),
+                    top_k=7,
+                )
             )
 
-        self.assertFalse(client.send_message.call_args.kwargs["chaining"])
+        send.assert_called_once()
+        restore.assert_called_once()
+        self.assertEqual(result.text, "<answer>final</answer>")
+        self.assertEqual(result.attempts, 1)
+        self.assertEqual(result.failed_attempts, 0)
+        self.assertTrue(result.trace["single_agent_lifecycle"])
+        self.assertEqual(result.trace["native_agent_lifecycle_count"], 1)
+        self.assertFalse(result.trace["provisional_native_answer_ignored"])
 
     def test_mirix_single_send_message_clears_native_failure_and_stops(self):
         class FakeAgent:
@@ -1159,7 +1892,79 @@ class BaselineProtocolTest(unittest.TestCase):
                 None,
             )
 
-        self.assertFalse(server.send_messages.call_args.kwargs["chaining"])
+        self.assertTrue(server.send_messages.call_args.kwargs["chaining"])
+
+    def test_mirix_native_answer_compresses_query_image_before_saving(self):
+        class FakeUploadManager:
+            pass
+
+        message_module = SimpleNamespace(
+            MessageCreate=lambda **kwargs: SimpleNamespace(**kwargs)
+        )
+        enum_module = SimpleNamespace(MessageRole=lambda value: value)
+        content_module = SimpleNamespace(
+            TextContent=lambda text: {"type": "text", "text": text},
+            ImageContent=lambda **kwargs: kwargs,
+        )
+        response_module = SimpleNamespace(
+            MirixResponse=lambda **kwargs: SimpleNamespace(**kwargs)
+        )
+        upload_module = SimpleNamespace(UploadManager=FakeUploadManager)
+        server = SimpleNamespace(
+            user_manager=SimpleNamespace(get_user_by_id=lambda _id: object()),
+            send_messages=Mock(return_value={"total_tokens": 1}),
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "large.jpg"
+            compressed = root / "state" / "tmp" / "image_transport" / "small.jpg"
+            source.write_bytes(b"source")
+            compressed.parent.mkdir(parents=True)
+            compressed.write_bytes(b"compressed")
+            save_image = Mock(return_value=SimpleNamespace(id="image-small"))
+            client = SimpleNamespace(
+                user=SimpleNamespace(id="user"),
+                server=server,
+                interface=SimpleNamespace(clear=Mock(), to_list=lambda: []),
+                images_dir=root / "state" / "images",
+                _save_image_from_file_uri=save_image,
+            )
+            modules = {
+                "mirix.schemas.message": message_module,
+                "mirix.schemas.enums": enum_module,
+                "mirix.schemas.mirix_message_content": content_module,
+                "mirix.schemas.mirix_response": response_module,
+                "mirix.agent.upload_manager": upload_module,
+                "logging": __import__("logging"),
+            }
+
+            with (
+                patch.object(
+                    mirix_family_module.importlib,
+                    "import_module",
+                    side_effect=lambda name: modules[name],
+                ),
+                patch.object(
+                    mirix_family_module,
+                    "_stage_native_transport_image",
+                    return_value=compressed,
+                ) as stage,
+            ):
+                _send_native_benchmark_messages(
+                    client,
+                    "chat",
+                    [{"role": "user", "content": "question"}],
+                    str(source),
+                )
+
+            stage.assert_called_once()
+            self.assertEqual(stage.call_args.args[0], str(source))
+            self.assertEqual(
+                stage.call_args.kwargs["cache_dir"],
+                root / "state" / "tmp" / "image_transport",
+            )
+            save_image.assert_called_once_with(str(compressed))
 
     def test_mirix_reuses_native_upload_compression_without_modifying_source(self):
         from PIL import Image
@@ -1199,10 +2004,11 @@ class BaselineProtocolTest(unittest.TestCase):
                 {"quality": 85, "max_size": (1920, 1080)},
             )
 
-    def test_mirix_rejects_non_seven_chat_budget(self):
+    def test_mirix_rejects_answer_budget_mismatch(self):
         adapter = object.__new__(MirixFamilyAdapter)
         adapter.baseline = "MIRIX"
-        with self.assertRaisesRegex(ValueError, "top_k must be 7"):
+        adapter._qa_budgets = {"q": SimpleNamespace(top_k=7)}
+        with self.assertRaisesRegex(ValueError, "does not match"):
             adapter.answer_with_memory(
                 NativeAnswerRequest(
                     query_id="q",
@@ -1228,6 +2034,128 @@ class BaselineProtocolTest(unittest.TestCase):
         request = {"tools": [{"function": {"name": "insert_memory"}}], "tool_choice": choice}
         normalized = _normalize_openai_tool_request(request)
         self.assertEqual(normalized["tool_choice"], choice)
+
+    def test_mirix_memory_update_plain_text_is_not_a_successful_build(self):
+        request = {
+            "tools": [
+                {
+                    "type": "function",
+                    "function": {"name": "semantic_memory_insert"},
+                },
+                {"type": "function", "function": {"name": "finish"}},
+            ]
+        }
+        self.assertTrue(_mirix_request_requires_native_memory_tool(request))
+        plain_text = {
+            "choices": [
+                {
+                    "finish_reason": "stop",
+                    "message": {"content": "I will update the memory now."},
+                }
+            ]
+        }
+        with self.assertRaisesRegex(ValueError, "no native tool call"):
+            _reject_missing_native_memory_tool_response(
+                plain_text, required=True
+            )
+
+    def test_mirix_native_finish_is_valid_for_memory_update_turn(self):
+        response = {
+            "choices": [
+                {
+                    "finish_reason": "tool_calls",
+                    "message": {
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "type": "function",
+                                "function": {
+                                    "name": "finish",
+                                    "arguments": "{}",
+                                },
+                            }
+                        ],
+                    },
+                }
+            ]
+        }
+        _reject_missing_native_memory_tool_response(response, required=True)
+
+    def test_mirix_memory_update_is_rejected_at_exact_token_cap(self):
+        response = {
+            "usage": {"completion_tokens": 2048},
+            "choices": [
+                {
+                    "finish_reason": "tool_calls",
+                    "message": {
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "type": "function",
+                                "function": {
+                                    "name": "resource_memory_insert",
+                                    "arguments": '{"content":"complete"}',
+                                },
+                            }
+                        ],
+                    },
+                }
+            ],
+        }
+        with self.assertRaisesRegex(ValueError, "2048/2048"):
+            _reject_missing_native_memory_tool_response(
+                response, required=True, max_output_tokens=2048
+            )
+
+    def test_mirix_promotes_only_complete_first_write_before_truncated_suffix(self):
+        response = {
+            "usage": {"completion_tokens": 512},
+            "choices": [
+                {
+                    "finish_reason": "length",
+                    "message": {
+                        "content": (
+                            '<tool_call>{"name":"resource_memory_update",'
+                            '"arguments":{"old_ids":["res_1"],'
+                            '"new_items":[{"content_delta":"safe"}]}}\n\n'
+                            '<tool_call>{"name":"resource_memory_insert",'
+                            '"arguments":{"items":[{"content":"cut'
+                        ),
+                        "tool_calls": [],
+                    },
+                }
+            ],
+        }
+        self.assertTrue(_promote_first_complete_native_memory_tool_call(response))
+        choice = response["choices"][0]
+        self.assertEqual(choice["finish_reason"], "tool_calls")
+        calls = choice["message"]["tool_calls"]
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(calls[0]["function"]["name"], "resource_memory_update")
+        self.assertTrue(response["_offline_complete_native_tool_prefix"])
+        _reject_native_tool_response_integrity(response)
+        _reject_missing_native_memory_tool_response(
+            response, required=True, max_output_tokens=512
+        )
+
+    def test_mirix_does_not_promote_incomplete_first_write(self):
+        response = {
+            "choices": [
+                {
+                    "finish_reason": "length",
+                    "message": {
+                        "content": (
+                            '<tool_call>{"name":"resource_memory_update",'
+                            '"arguments":{"old_ids":["res_1"]'
+                        ),
+                        "tool_calls": [],
+                    },
+                }
+            ]
+        }
+        self.assertFalse(_promote_first_complete_native_memory_tool_call(response))
+        with self.assertRaisesRegex(ValueError, "truncated"):
+            _reject_native_tool_response_integrity(response)
 
     def test_mirix_tool_compat_wraps_sync_and_async_requests(self):
         textual = {
@@ -1431,6 +2359,79 @@ class BaselineProtocolTest(unittest.TestCase):
         self.assertEqual(function["name"], "insert_memory")
         self.assertEqual(json.loads(function["arguments"]), {"title": "Almond"})
 
+    def test_mirix_repairs_internal_missing_comma_for_qa_send_message(self):
+        response = {
+            "choices": [
+                {
+                    "message": {
+                        "content": (
+                            '<tool_call>{"name":"send_message" '
+                            '"arguments":{"message":"answer"}}</tool_call>'
+                        ),
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        }
+        token = mirix_family_module._ACTIVE_MIRIX_RETRIEVAL.set(object())
+        try:
+            message = _normalize_openai_tool_tags(response)["choices"][0]["message"]
+        finally:
+            mirix_family_module._ACTIVE_MIRIX_RETRIEVAL.reset(token)
+        function = message["tool_calls"][0]["function"]
+        self.assertEqual(function["name"], "send_message")
+        self.assertEqual(json.loads(function["arguments"]), {"message": "answer"})
+
+    def test_mirix_does_not_repair_internal_missing_comma_outside_qa(self):
+        content = (
+            '<tool_call>{"name":"send_message" '
+            '"arguments":{"message":"answer"}}</tool_call>'
+        )
+        response = {
+            "choices": [
+                {"message": {"content": content, "tool_calls": []}}
+            ]
+        }
+        message = _normalize_openai_tool_tags(response)["choices"][0]["message"]
+        self.assertEqual(message["content"], content)
+        self.assertFalse(message["tool_calls"])
+
+    def test_mirix_does_not_json_repair_memory_write_during_qa(self):
+        content = (
+            '<tool_call>{"name":"semantic_memory_insert" '
+            '"arguments":{"items":[]}}</tool_call>'
+        )
+        response = {
+            "choices": [
+                {"message": {"content": content, "tool_calls": []}}
+            ]
+        }
+        token = mirix_family_module._ACTIVE_MIRIX_RETRIEVAL.set(object())
+        try:
+            message = _normalize_openai_tool_tags(response)["choices"][0]["message"]
+        finally:
+            mirix_family_module._ACTIVE_MIRIX_RETRIEVAL.reset(token)
+        self.assertEqual(message["content"], content)
+        self.assertFalse(message["tool_calls"])
+
+    def test_mirix_rejects_repaired_qa_tool_without_required_field(self):
+        content = (
+            '<tool_call>{"name":"send_message" '
+            '"arguments":{"topic":"budget"}}</tool_call>'
+        )
+        response = {
+            "choices": [
+                {"message": {"content": content, "tool_calls": []}}
+            ]
+        }
+        token = mirix_family_module._ACTIVE_MIRIX_RETRIEVAL.set(object())
+        try:
+            message = _normalize_openai_tool_tags(response)["choices"][0]["message"]
+        finally:
+            mirix_family_module._ACTIVE_MIRIX_RETRIEVAL.reset(token)
+        self.assertEqual(message["content"], content)
+        self.assertFalse(message["tool_calls"])
+
     def test_mirix_repairs_truncated_textual_tool_json(self):
         response = {
             "choices": [
@@ -1629,7 +2630,7 @@ class BaselineProtocolTest(unittest.TestCase):
 
         adapter._configure_native_absorption_batch()
 
-        self.assertEqual(accumulator.temporary_message_limit, 20)
+        self.assertEqual(accumulator.temporary_message_limit, 5)
 
     def test_output_layout_keeps_memory_under_baseline_root(self):
         layout = BaselineOutputLayout(Path("outputs/Mem-Gallery/M2A"))
@@ -1658,10 +2659,16 @@ class BaselineProtocolTest(unittest.TestCase):
                 "MMA",
                 "MemVerse",
                 "M3-Agent-caption",
+                "NaiveRAG",
+                "MuRAG",
+                "UniversalRAG",
             },
         )
         self.assertEqual(canonical_name("m3-agent"), "M3-Agent-caption")
         self.assertEqual(canonical_name("omni-simplemem"), "OmniSimpleMem")
+        self.assertEqual(canonical_name("naiverag"), "NaiveRAG")
+        self.assertEqual(canonical_name("murag"), "MuRAG")
+        self.assertEqual(canonical_name("universalrag"), "UniversalRAG")
         with self.assertRaises(KeyError):
             canonical_name("MGMemory")
         self.assertEqual(
@@ -1834,6 +2841,62 @@ class BaselineProtocolTest(unittest.TestCase):
             adapter._loop.close()
         self.assertEqual(max_active, 3)
         self.assertEqual(len(result.items), 3)
+
+    def test_memverse_core_only_drops_untraced_media(self):
+        calls = []
+
+        class Store:
+            async def aquery(self, _text, *, param):
+                calls.append(param)
+                return "native core response"
+
+        fake_lightrag = ModuleType(
+            "MemoryKB.Long_Term_Memory.Graph_Construction.lightrag"
+        )
+        fake_lightrag.QueryParam = lambda **kwargs: kwargs
+        adapter = object.__new__(MemVerseAdapter)
+        adapter.module = SimpleNamespace(
+            mem_core=Store(), mem_epi=Store(), mem_sem=Store()
+        )
+        adapter.baseline = "MemVerse"
+        adapter._records = {
+            "core": MemoryRecord(
+                memory_id="core",
+                text="memory",
+                session_id="s1",
+                source_dialogue_ids=["d1"],
+                image_ids=["i1"],
+                image_paths=["/tmp/i1.jpg"],
+                backend_type="memverse_core",
+                metadata={"memory_type": "core"},
+            )
+        }
+        adapter._loop = asyncio.new_event_loop()
+        try:
+            with patch.dict(
+                os.environ,
+                {
+                    "MEMVERSE_CORE_ONLY": "1",
+                    "MEMVERSE_DROP_UNTRACED_MEDIA": "1",
+                },
+            ), patch.dict(
+                sys.modules,
+                {
+                    "MemoryKB.Long_Term_Memory.Graph_Construction.lightrag": fake_lightrag
+                },
+            ):
+                result = adapter.retrieve(
+                    RetrievalRequest(query_id="q", text="question", top_k=5)
+                )
+        finally:
+            adapter._loop.close()
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(len(result.items), 1)
+        self.assertEqual(result.items[0].text, "native core response")
+        self.assertEqual(result.items[0].source_dialogue_ids, [])
+        self.assertEqual(result.items[0].image_paths, [])
+        self.assertEqual(result.trace["stores"], ["core"])
+        self.assertTrue(result.trace["untraced_media_dropped"])
 
     def test_memverse_bounds_verbose_gleaning_history(self):
         class CharacterTokenizer:
@@ -2025,6 +3088,52 @@ class BaselineProtocolTest(unittest.TestCase):
 
 
 class BaselineHarnessTest(unittest.TestCase):
+    def test_h2h_sample_retry_queue_skips_bad_sample_and_continues(self):
+        calls: list[str] = []
+        specs = [
+            ("dyadic", "bad", 0, None),
+            ("dyadic", "good", 0, None),
+        ]
+
+        def worker(spec):
+            key = f"{spec[0]}/{spec[1]}"
+            calls.append(key)
+            if spec[1] == "bad":
+                raise TimeoutError("MIRIX worker timed out during ingest")
+            return {"sample_id": key}
+
+        def skipped(spec, error):
+            return {
+                "sample_id": f"{spec[0]}/{spec[1]}",
+                "skipped": True,
+                "skip_error": error,
+            }
+
+        with tempfile.TemporaryDirectory() as directory:
+            status_path = Path(directory) / "sample_status.json"
+            artifacts = run_conversation_retry_queue(
+                specs,
+                worker,
+                max_attempts=3,
+                status_path=status_path,
+                on_skipped=skipped,
+            )
+            status = json.loads(status_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(
+            calls,
+            [
+                "dyadic/bad",
+                "dyadic/good",
+                "dyadic/bad",
+                "dyadic/bad",
+            ],
+        )
+        self.assertTrue(artifacts[0]["skipped"])
+        self.assertEqual(artifacts[1]["sample_id"], "dyadic/good")
+        self.assertEqual(status["samples"]["dyadic/bad"]["state"], "skipped")
+        self.assertEqual(status["samples"]["dyadic/good"]["state"], "completed")
+
     def test_h2h_mma_resume_accepts_legacy_execution_only_signature(self):
         args = SimpleNamespace(
             baseline="MMA",
@@ -2347,13 +3456,22 @@ class BaselineHarnessTest(unittest.TestCase):
                             "question": "failed question",
                             "answer": "gold",
                             "question_type_abbrev": "FR",
-                        }
+                        },
+                        {
+                            "question": "must be skipped",
+                            "answer": "gold two",
+                            "question_type_abbrev": "FR",
+                        },
                     ],
                 }
             ],
         }
 
         class ThresholdMMA(FakeBaseline):
+            def __init__(self):
+                super().__init__()
+                self.answer_calls = 0
+
             def completed_session_ids(self):
                 return ()
 
@@ -2361,6 +3479,7 @@ class BaselineHarnessTest(unittest.TestCase):
                 return chunks
 
             def answer_with_memory(self, _request: NativeAnswerRequest):
+                self.answer_calls += 1
                 raise RuntimeError(
                     "MMA answer_with_memory failed: MMAConsecutiveBadPointError: "
                     "MMA produced 10 consecutive failed QA points"
@@ -2378,33 +3497,37 @@ class BaselineHarnessTest(unittest.TestCase):
             root = Path(directory)
             sample_path = root / "sample_01.json"
             sample_path.write_text(json.dumps(payload), encoding="utf-8")
+            adapter = ThresholdMMA()
             with patch(
                 "benchmarks.wma_harness.eval_wma.create_adapter",
-                return_value=ThresholdMMA(),
+                return_value=adapter,
             ), patch(
                 "benchmarks.wma_harness.eval_wma.build_omni_wma_chunks_from_data",
                 return_value=fixed,
             ):
-                with self.assertRaisesRegex(
-                    RuntimeError, "10 consecutive failed QA points"
-                ):
-                    prepare_native_sample_jobs(
-                        sample_path,
-                        None,
-                        baseline="MMA",
-                        state_root=root / "state",
-                        top_k=7,
-                        config_overrides={},
-                        checkpoint_answer_client=FakeAnswerClient(),
-                        on_qa_completed=lambda job, result, _trace: checkpointed.append(
-                            (job, result)
-                        ),
-                        allow_native_qa_errors=True,
-                    )
+                jobs = prepare_native_sample_jobs(
+                    sample_path,
+                    None,
+                    baseline="MMA",
+                    state_root=root / "state",
+                    top_k=7,
+                    config_overrides={},
+                    checkpoint_answer_client=FakeAnswerClient(),
+                    on_qa_completed=lambda job, result, _trace: checkpointed.append(
+                        (job, result)
+                    ),
+                    allow_native_qa_errors=True,
+                )
 
-        self.assertEqual(len(checkpointed), 1)
+        self.assertEqual(len(jobs), 2)
+        self.assertEqual(len(checkpointed), 2)
+        self.assertEqual(adapter.answer_calls, 1)
         self.assertEqual(checkpointed[0][0]["native_answer"]["text"], "")
         self.assertTrue(checkpointed[0][1]["error"])
+        self.assertTrue(
+            checkpointed[1][0]["skipped_after_consecutive_bad_points"]
+        )
+        self.assertEqual(checkpointed[1][0]["memory_items"], [])
 
     def test_memgallery_mma_skips_durable_native_qa_on_resume(self):
         payload = {
@@ -2489,6 +3612,68 @@ class BaselineHarnessTest(unittest.TestCase):
         self.assertEqual(resumed.retrieve_calls, 0)
         self.assertEqual(resumed.answer_calls, 0)
 
+    def test_memgallery_mma_terminal_retrieval_pads_remaining_questions(self):
+        payload = {
+            "character_profile": {"name": "Sample"},
+            "human-annotated QAs": [
+                {"question": "first", "answer": "one", "point": "FR"},
+                {"question": "second", "answer": "two", "point": "FR"},
+            ],
+        }
+
+        class ThresholdMMA(FakeBaseline):
+            def __init__(self):
+                super().__init__()
+                self.retrieve_calls = 0
+                self.answer_calls = 0
+
+            def filter_completed_session_chunks(self, chunks):
+                return chunks
+
+            def retrieve(self, _request: RetrievalRequest):
+                self.retrieve_calls += 1
+                raise RuntimeError(
+                    "MMA retrieve failed: MMAConsecutiveBadPointError: "
+                    "MMA produced 10 consecutive malformed retrieval requests"
+                )
+
+            def answer_with_memory(self, _request: NativeAnswerRequest):
+                self.answer_calls += 1
+                raise AssertionError("terminal retrieval must not call QA")
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dataset_path = root / "sample.json"
+            dataset_path.write_text(json.dumps(payload), encoding="utf-8")
+            adapter = ThresholdMMA()
+            with patch(
+                "benchmarks.memgallery_harness.eval_memgallery.create_adapter",
+                return_value=adapter,
+            ), patch(
+                "benchmarks.memgallery_harness.eval_memgallery.build_omni_memgallery_chunks",
+                return_value=[],
+            ):
+                artifact = prepare_dataset_jobs(
+                    dataset_path,
+                    root,
+                    root,
+                    None,
+                    baseline="MMA",
+                    state_root=root / "state",
+                    allow_native_qa_errors=True,
+                )
+
+        self.assertEqual(len(artifact["jobs"]), 2)
+        self.assertEqual(adapter.retrieve_calls, 1)
+        self.assertEqual(adapter.answer_calls, 0)
+        self.assertFalse(
+            artifact["jobs"][0]["skipped_after_consecutive_bad_points"]
+        )
+        self.assertTrue(
+            artifact["jobs"][1]["skipped_after_consecutive_bad_points"]
+        )
+        self.assertEqual(artifact["jobs"][1]["memory_items"], [])
+
     def test_h2hmem_mma_skips_durable_native_qa_on_resume(self):
         qa = {
             "question_id": "q1",
@@ -2519,7 +3704,9 @@ class BaselineHarnessTest(unittest.TestCase):
             def answer_with_memory(self, request: NativeAnswerRequest):
                 self.answer_calls += 1
                 return NativeAnswerResult(
-                    text="<answer>ok</answer>", retrieval=request.retrieval
+                    text="",
+                    retrieval=request.retrieval,
+                    trace={"bad_qa_point": True},
                 )
 
         completed: dict[str, dict[str, Any]] = {}
@@ -2578,6 +3765,83 @@ class BaselineHarnessTest(unittest.TestCase):
         self.assertEqual(first.answer_calls, 1)
         self.assertEqual(resumed.retrieve_calls, 0)
         self.assertEqual(resumed.answer_calls, 0)
+
+    def test_h2hmem_mma_terminal_retrieval_pads_remaining_questions(self):
+        qas = [
+            {
+                "question_id": "q1",
+                "question": {"text": "first"},
+                "question_type": {"sub_type": "FR"},
+                "original_answer": "one",
+            },
+            {
+                "question_id": "q2",
+                "question": {"text": "second"},
+                "question_type": {"sub_type": "FR"},
+                "original_answer": "two",
+            },
+        ]
+
+        class ThresholdMMA(FakeBaseline):
+            def __init__(self):
+                super().__init__()
+                self.retrieve_calls = 0
+                self.answer_calls = 0
+
+            def filter_completed_session_chunks(self, chunks):
+                return chunks
+
+            def retrieve(self, _request: RetrievalRequest):
+                self.retrieve_calls += 1
+                raise RuntimeError(
+                    "MMA retrieve failed: MMAConsecutiveBadPointError: "
+                    "MMA produced 10 consecutive malformed retrieval requests"
+                )
+
+            def answer_with_memory(self, _request: NativeAnswerRequest):
+                self.answer_calls += 1
+                raise AssertionError("terminal retrieval must not call QA")
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            conversation = root / "dyadic" / "dialogue1" / "S1"
+            conversation.mkdir(parents=True)
+            question_file = conversation / "questions.json"
+            adapter = ThresholdMMA()
+            rows = [
+                (question_file, index, qa)
+                for index, qa in enumerate(qas, start=1)
+            ]
+            with patch(
+                "benchmarks.h2hmem_harness.eval_h2hmem.create_adapter",
+                return_value=adapter,
+            ), patch(
+                "benchmarks.h2hmem_harness.eval_h2hmem.build_omni_h2h_chunks_from_directory",
+                return_value=[],
+            ), patch(
+                "benchmarks.h2hmem_harness.eval_h2hmem._question_rows",
+                return_value=rows,
+            ):
+                artifact = prepare_h2h_conversation_jobs(
+                    data_dir=root,
+                    variant="dyadic",
+                    conversation_id="dialogue1",
+                    baseline="MMA",
+                    state_root=root / "state",
+                    config={"top_k": 7},
+                    allow_native_qa_errors=True,
+                )
+
+        self.assertEqual(len(artifact["jobs"]), 2)
+        self.assertEqual(adapter.retrieve_calls, 1)
+        self.assertEqual(adapter.answer_calls, 0)
+        self.assertFalse(
+            artifact["jobs"][0]["skipped_after_consecutive_bad_points"]
+        )
+        self.assertTrue(
+            artifact["jobs"][1]["skipped_after_consecutive_bad_points"]
+        )
+        self.assertEqual(artifact["jobs"][1]["memory_items"], [])
 
     def test_memgallery_m2a_stops_at_ten_consecutive_build_faults(self):
         payload = {"character_profile": {}, "human-annotated QAs": []}

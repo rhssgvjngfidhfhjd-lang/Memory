@@ -59,6 +59,8 @@ from benchmarks.baseline_runtime.parallel_runner import (
     parallel_map_ordered,
     save_sample_artifact,
     signature_digest,
+    validated_paired_resume_signatures,
+    validated_qa_only_resume_signatures,
 )
 from benchmarks.baseline_runtime.output_layout import (
     BaselineOutputLayout,
@@ -73,6 +75,7 @@ from benchmarks.baseline_runtime.protocol import (
     result_trace_rows,
 )
 from benchmarks.question_filter import is_excluded_category, parse_excluded_categories
+from benchmarks.zero_hit import evidence_with_zero_hit_marker
 from benchmarks.fixed_chunks import chunk_source_manifest, memgallery_chunks
 from benchmarks.baseline_runtime.omni_inputs import (
     build_omni_memgallery_chunks,
@@ -189,6 +192,11 @@ def _is_hard_stop_native_qa_job(job: dict[str, Any]) -> bool:
     return bool(error) and any(
         marker in error for marker in _HARD_STOP_NATIVE_QA_MARKERS
     )
+
+
+def _is_failed_native_qa_job(job: dict[str, Any]) -> bool:
+    """Retry only infrastructure hard stops, never baseline QA bad points."""
+    return _is_hard_stop_native_qa_job(job)
 
 
 def _build_failure_row(
@@ -320,7 +328,9 @@ def prepare_dataset_jobs(
         session_id: str,
     ) -> None:
         nonlocal consecutive_build_failures
-        if not skip_failed_build_points or _is_non_skippable_build_failure(exc):
+        if not skip_failed_build_points or (
+            baseline != "M2A" and _is_non_skippable_build_failure(exc)
+        ):
             raise exc
         consecutive_build_failures += 1
         row = _build_failure_row(
@@ -370,7 +380,10 @@ def prepare_dataset_jobs(
                     chunk_limit=integration_limit,
                     dialogue_ids=integration_dialogue_ids,
                 )
-                if baseline == "MMA":
+                if baseline == "MMA" or (
+                    baseline == "MIRIX"
+                    and bool(overrides.get("mirix_resume_enabled", False))
+                ):
                     chunks = native_adapter.filter_completed_session_chunks(chunks)
                 if integration_limit or integration_dialogue_ids:
                     validate_diagnostic_qa_coverage(selected_qas, chunks)
@@ -432,6 +445,7 @@ def prepare_dataset_jobs(
                         )
                     else:
                         consecutive_build_failures = 0
+        terminal_sample_error = ""
         for manifest_question_id, qa_index, qa in selected_qas:
             category = str(qa.get("point", ""))
             if ordered_question_ids is None and is_excluded_category(
@@ -452,52 +466,112 @@ def prepare_dataset_jobs(
                 query_image=query_image,
             )
             if manifest_question_id in completed_jobs:
-                jobs.append(completed_jobs[manifest_question_id])
+                completed_job = completed_jobs[manifest_question_id]
+                jobs.append(completed_job)
+                completed_error = str(
+                    (completed_job.get("native_answer") or {}).get("error") or ""
+                )
+                if (
+                    baseline == "MMA"
+                    and completed_error
+                    and is_mma_consecutive_bad_point_error(
+                        RuntimeError(completed_error)
+                    )
+                ):
+                    terminal_sample_error = completed_error
                 continue
-            query_vector = query_cache.get_by_id(query_id) if query_cache is not None else None
-            if baseline == "HiveMem" and query_vector is None:
+            skipped_after_terminal = bool(terminal_sample_error)
+            query_vector = (
+                query_cache.get(
+                    dataset_name=dataset_name,
+                    qa_index=qa_index,
+                    category=category,
+                    question=question,
+                    query_image=query_image,
+                )
+                if query_cache is not None and not skipped_after_terminal
+                else None
+            )
+            if (
+                baseline == "HiveMem"
+                and query_vector is None
+                and not skipped_after_terminal
+            ):
                 raise KeyError(f"Missing cached query embedding: {query_id}")
             retrieval_error = ""
-            try:
-                with (
-                    call_recorder.phase("retrieval")
-                    if call_recorder is not None
-                    else nullcontext()
-                ):
-                    retrieval = native_adapter.retrieve(
-                        RetrievalRequest(
-                            query_id=query_id,
-                            text=(
-                                question
-                                if baseline in {"MIRIX", "MMA", "M2A"}
-                                else f"[{category}] {question}"
-                            ),
-                            category=category,
-                            top_k=top_k,
-                            query_image=(
-                                str(query_image.get("path") or "")
-                                if isinstance(query_image, dict)
-                                else None
-                            ),
-                            query_vector=query_vector,
-                        )
-                    )
-            except Exception as exc:
-                if not (allow_native_qa_errors and baseline == "MIRIX"):
-                    raise
-                retrieval_error = str(exc)
+            if skipped_after_terminal:
+                retrieval_error = terminal_sample_error
                 retrieval = RetrievalResult(
                     trace={
                         "failed": True,
-                        "stage": "retrieval",
+                        "stage": "sample_terminal_skip",
                         "error": retrieval_error,
+                        "skipped_after_consecutive_bad_points": True,
                     }
                 )
+            else:
+                try:
+                    with (
+                        call_recorder.scope(
+                            query_id=query_id,
+                            chain_id=query_id,
+                            operation="native_retrieve",
+                            attempt=1,
+                        )
+                        if call_recorder is not None
+                        else nullcontext()
+                    ), (
+                        call_recorder.phase("retrieval")
+                        if call_recorder is not None
+                        else nullcontext()
+                    ):
+                        retrieval = native_adapter.retrieve(
+                            RetrievalRequest(
+                                query_id=query_id,
+                                text=(
+                                    question
+                                    if baseline in {"MIRIX", "MMA", "M2A"}
+                                    else f"[{category}] {question}"
+                                ),
+                                category=category,
+                                top_k=top_k,
+                                query_image=(
+                                    str(query_image.get("path") or "")
+                                    if isinstance(query_image, dict)
+                                    else None
+                                ),
+                                query_vector=query_vector,
+                            )
+                        )
+                except Exception as exc:
+                    terminal_retrieval = (
+                        allow_native_qa_errors
+                        and baseline == "MMA"
+                        and is_mma_consecutive_bad_point_error(exc)
+                    )
+                    if not (
+                        allow_native_qa_errors
+                        and (baseline == "MIRIX" or terminal_retrieval)
+                    ):
+                        raise
+                    retrieval_error = str(exc)
+                    if terminal_retrieval:
+                        terminal_sample_error = retrieval_error
+                    retrieval = RetrievalResult(
+                        trace={
+                            "failed": True,
+                            "stage": "retrieval",
+                            "error": retrieval_error,
+                            "sample_terminal": terminal_retrieval,
+                        }
+                    )
             memory_items = result_context_items(retrieval)
             trace_rows = result_trace_rows(retrieval)
             native_answer = None
             terminal_native_error: Exception | None = None
-            if baseline == "MIRIX" and retrieval_error:
+            if retrieval_error and (
+                baseline == "MIRIX" or bool(terminal_sample_error)
+            ):
                 native_answer = {
                     "text": "",
                     "error": retrieval_error,
@@ -523,6 +597,15 @@ def prepare_dataset_jobs(
                     allow_empty_evidence=True,
                 )
                 with (
+                    call_recorder.scope(
+                        query_id=query_id,
+                        chain_id=query_id,
+                        operation="native_answer",
+                        attempt=1,
+                    )
+                    if call_recorder is not None
+                    else nullcontext()
+                ), (
                     call_recorder.phase("qa")
                     if call_recorder is not None
                     else nullcontext()
@@ -546,6 +629,7 @@ def prepare_dataset_jobs(
                             raise
                         if baseline == "MMA" and is_mma_consecutive_bad_point_error(exc):
                             terminal_native_error = exc
+                            terminal_sample_error = str(exc)
                         error = str(exc)
                         native_answer = {
                             "text": "",
@@ -586,6 +670,8 @@ def prepare_dataset_jobs(
                     "retrieval_top_k": trace_rows,
                     "retrieval_method_trace": dict(retrieval.trace),
                     "native_answer": native_answer,
+                    "sample_terminal_error": terminal_sample_error,
+                    "skipped_after_consecutive_bad_points": skipped_after_terminal,
                 }
             jobs.append(job)
             if on_qa_completed is not None:
@@ -594,8 +680,6 @@ def prepare_dataset_jobs(
                         "durable native QA checkpoint requires a native answer"
                     )
                 on_qa_completed(job)
-            if terminal_native_error is not None:
-                raise terminal_native_error
         snapshots = (
             [row.to_dict() for row in native_adapter.snapshot()]
             if baseline != "HiveMem"
@@ -629,10 +713,13 @@ def answer_dataset_job(
     evidence, _ = build_retrieved_memory_evidence(
         job["memory_items"], job["category"]
     )
+    prompt_evidence, zero_hit_prompt_marker_used = evidence_with_zero_hit_marker(
+        evidence
+    )
     messages = build_answer_messages(
         question=str(job.get("question") or ""),
         question_type=str(job.get("category") or ""),
-        memory_evidence=evidence,
+        memory_evidence=prompt_evidence,
         query_images=query_image_prompt_metadata(job.get("query_image")),
     )
     raw_answer = ""
@@ -708,6 +795,7 @@ def answer_dataset_job(
             "native_answer_trace": dict(
                 (job.get("native_answer") or {}).get("trace") or {}
             ),
+            "zero_hit_prompt_marker_used": zero_hit_prompt_marker_used,
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         }
     )
@@ -722,6 +810,7 @@ def answer_dataset_job(
         "top_k": job["retrieval_top_k"],
         "memory_context": memory_context,
         "answer_prompt_messages": messages,
+        "zero_hit_prompt_marker_used": zero_hit_prompt_marker_used,
         "retrieval_method_trace": dict(job.get("retrieval_method_trace") or {}),
         "m2a_trace": dict(
             (job.get("retrieval_method_trace") or {}).get("m2a_trace") or {}
@@ -858,6 +947,15 @@ def main() -> None:
     parser.add_argument("--embedding-dim", type=int, default=2048)
     parser.add_argument("--embedding-model", default="Qwen/Qwen3-VL-Embedding-2B")
     parser.add_argument("--embedding-base-url", default="http://127.0.0.1:8001/v1")
+    parser.add_argument(
+        "--mirix-multimodal-embedding",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help=(
+            "For MIRIX only, embed each native memory field with the source "
+            "batch images and embed visual questions with their query image."
+        ),
+    )
     parser.add_argument("--result-dir", required=True)
     parser.add_argument("--sample-concurrency", type=int, default=4)
     parser.add_argument("--answer-concurrency", type=int, default=16)
@@ -903,6 +1001,7 @@ def main() -> None:
     parser.add_argument("--cost-qa-output-price", type=float, default=None)
     parser.add_argument("--efficiency-config", default="configs/model_efficiency.json")
     parser.add_argument("--request-timeout", type=int, default=180)
+    parser.add_argument("--qa-request-timeout", type=int, default=90)
     parser.add_argument("--retries", type=int, default=2)
     parser.add_argument("--think", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--reasoning-effort", default="")
@@ -910,6 +1009,7 @@ def main() -> None:
     parser.add_argument("--executor-base-url", default="http://127.0.0.1:18000/v1")
     parser.add_argument("--executor-temperature", type=float, default=0.0)
     parser.add_argument("--executor-max-tokens", type=int, default=512)
+    parser.add_argument("--executor-hard-max-tokens", type=int, default=0)
     parser.add_argument("--mma-native-batch-size", type=int, default=20)
     parser.add_argument(
         "--mirix-skip-failed-build-points",
@@ -938,6 +1038,11 @@ def main() -> None:
         "--m2a-max-consecutive-failed-build-points",
         type=int,
         default=10,
+    )
+    parser.add_argument(
+        "--m2a-salvage-truncated-updates",
+        action=argparse.BooleanOptionalAction,
+        default=False,
     )
     parser.add_argument("--executor-visual-input", choices=("image", "caption"), default="image")
     parser.add_argument(
@@ -1052,6 +1157,8 @@ def main() -> None:
     if (
         args.retries < 0
         or args.request_timeout <= 0
+        or args.qa_request_timeout <= 0
+        or args.executor_hard_max_tokens < 0
         or args.num_predict < 1
         or args.mirix_max_consecutive_failed_build_points < 1
         or args.m2a_max_consecutive_failed_build_points < 1
@@ -1151,7 +1258,31 @@ def main() -> None:
     checkpoint_traces = checkpoint_dir / "retrieval_trace.jsonl"
     checkpoint_manifest = checkpoint_dir / "manifest.json"
     signature = _checkpoint_signature(args, paths)
-    sample_signature = signature_digest(signature)
+    computed_sample_signature = signature_digest(signature)
+    qa_only_reuse = os.getenv("MMA_QA_ONLY_REUSE", "").strip().lower() in {
+        "1", "true", "yes", "on",
+    }
+    stored_sample_signatures = (
+        (validated_qa_only_resume_signatures if qa_only_reuse else validated_paired_resume_signatures)(
+            (
+                path.stem,
+                baseline_state_root / path.stem / (
+                    ".mma_reuse_provenance.json"
+                    if qa_only_reuse else ".offline_mma_resume.json"
+                ),
+                checkpoint_dir
+                / "native_samples"
+                / Path(trace_filename(path.stem)).with_suffix(".json"),
+            )
+            for path in paths
+        )
+        if args.baseline == "MMA" and args.resume
+        else ()
+    )
+    compatible_sample_signatures = tuple(
+        dict.fromkeys((*stored_sample_signatures, computed_sample_signature))
+    )
+    sample_signature = compatible_sample_signatures[0]
 
     def prepare(path: Path) -> dict[str, Any]:
         if args.resume:
@@ -1180,7 +1311,8 @@ def main() -> None:
             if (
                 native_progress.get("version") == 1
                 and native_progress.get("sample_id") == path.stem
-                and native_progress.get("signature") == sample_signature
+                and native_progress.get("signature")
+                in compatible_sample_signatures
             ):
                 loaded_jobs = list(native_progress.get("jobs") or [])
                 invalidated_hard_stop_jobs = [
@@ -1194,7 +1326,7 @@ def main() -> None:
                 native_progress_jobs = [
                     row
                     for row in loaded_jobs
-                    if not _is_hard_stop_native_qa_job(row)
+                    if not _is_failed_native_qa_job(row)
                 ]
 
         def checkpoint_native_qa(job: dict[str, Any]) -> None:
@@ -1213,7 +1345,7 @@ def main() -> None:
                 except (OSError, json.JSONDecodeError):
                     existing = {}
                 existing_count = sum(
-                    not _is_hard_stop_native_qa_job(row)
+                    not _is_failed_native_qa_job(row)
                     for row in (existing.get("jobs") or [])
                 )
                 if existing_count > len(native_progress_jobs):
@@ -1244,6 +1376,9 @@ def main() -> None:
                 "executor_base_url": args.executor_base_url,
                 "executor_temperature": args.executor_temperature,
                 "executor_max_tokens": args.executor_max_tokens,
+                "mirix_executor_retry_max_tokens": (
+                    args.executor_hard_max_tokens or args.executor_max_tokens
+                ),
                 "mma_native_batch_size": args.mma_native_batch_size,
                 "mirix_skip_failed_build_points": args.mirix_skip_failed_build_points,
                 "mirix_max_consecutive_failed_build_points": (
@@ -1253,6 +1388,9 @@ def main() -> None:
                 "m2a_max_consecutive_failed_build_points": (
                     args.m2a_max_consecutive_failed_build_points
                 ),
+                "m2a_salvage_truncated_updates": (
+                    args.m2a_salvage_truncated_updates
+                ),
                 "executor_visual_input": args.executor_visual_input,
                 "executor_native_tool_calls": args.baseline in {"MIRIX", "MMA"},
                 "integration_chunk_limit": args.integration_chunk_limit,
@@ -1260,6 +1398,7 @@ def main() -> None:
                 "embedding_model": args.embedding_model,
                 "embedding_base_url": args.embedding_base_url,
                 "embedding_dim": args.embedding_dim,
+                "mirix_multimodal_embedding": args.mirix_multimodal_embedding,
                 "top_k": args.top_k,
                 "request_timeout": args.request_timeout,
                 "retries": args.retries,
@@ -1267,6 +1406,9 @@ def main() -> None:
             "m3_reuse_state_root": args.m3_reuse_state_root,
             "mma_resume_enabled": args.resume,
             "mma_resume_signature": sample_signature,
+            "mma_resume_compatible_signatures": list(
+                compatible_sample_signatures
+            ),
             "mirix_resume_enabled": args.resume,
             "mirix_resume_signature": sample_signature,
             }
@@ -1279,29 +1421,21 @@ def main() -> None:
                 baseline=args.baseline,
                 benchmark="Mem-Gallery",
                 sample_id=path.stem,
-                reset=not (
-                    args.baseline in {"MMA", "MIRIX"}
-                    and
-                    args.resume
-                    and (
-                        baseline_state_root
-                        / path.stem
-                        / (
-                            ".offline_mma_resume.json"
-                            if args.baseline == "MMA"
-                            else ".offline_mirix_resume.json"
-                        )
-                    ).is_file()
-                ),
+                # Preserve billable retry calls even when native state must be
+                # rebuilt from the sample checkpoint during a resumed run.
+                reset=not args.resume,
             )
             proxy_context = CountingProxy(
                 args.executor_base_url,
                 recorder,
                 args.request_timeout,
-                max_output_tokens=args.executor_max_tokens,
+                max_output_tokens=(
+                    args.executor_hard_max_tokens or args.executor_max_tokens
+                ),
                 temperature=args.executor_temperature,
                 qa_max_output_tokens=args.num_predict,
                 reasoning_effort=args.reasoning_effort,
+                qa_upstream_timeout=args.qa_request_timeout,
             )
         with proxy_context as proxy:
             if proxy is not None:
@@ -1548,7 +1682,9 @@ def main() -> None:
         manifest["omni_conformance"] = omni_conformance_manifest("memgallery")
     if args.baseline == "M3-Agent-caption":
         manifest["m3_conformance"] = m3_conformance_manifest(
-            "memgallery", answer_prompt_sha256=prompt_sha256()
+            "memgallery",
+            answer_prompt_sha256=prompt_sha256(),
+            handoff_top_k=args.top_k,
         )
     write_json_atomic(result_dir / "run_manifest.json", manifest)
     if answer_errors and not args.allow_answer_errors:
@@ -1558,7 +1694,9 @@ def main() -> None:
             f"partial results were saved under {result_dir}, but metrics were not written"
         )
     effective_top_k = (
-        args.top_k + args.append_k
+        args.top_k
+        if args.baseline == "M3-Agent-caption"
+        else args.top_k + args.append_k
         if args.graph_retrieval and args.graph_mode == "append"
         else args.top_k
     )
@@ -1629,6 +1767,17 @@ def main() -> None:
         sample_ids=evaluated_sample_ids,
         model=args.answer_model,
         config_path=args.efficiency_config,
+        memory_build_model=(
+            args.executor_model
+            if args.baseline == "M3-Agent-caption"
+            else args.answer_model
+        ),
+        retrieval_model=(
+            args.executor_model
+            if args.baseline == "M3-Agent-caption"
+            else args.answer_model
+        ),
+        answer_model=args.answer_model,
         hivemem_index_root=(
             Path(args.index_root) if args.baseline == "HiveMem" else None
         ),

@@ -103,6 +103,10 @@ def create_local_adapter(
         from benchmarks.baseline_runtime.adapters.m3_agent import M3AgentAdapter
 
         return M3AgentAdapter(**common)
+    if adapter_name == "rag_family":
+        from benchmarks.baseline_runtime.adapters.rag_family import RAGFamilyAdapter
+
+        return RAGFamilyAdapter(**common)
     raise KeyError(f"unknown adapter type: {adapter_name}")
 
 

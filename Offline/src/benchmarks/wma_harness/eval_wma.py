@@ -6,10 +6,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import nullcontext
 import inspect
 import json
+import multiprocessing
 import os
 from pathlib import Path
 import time
 from typing import Any, Callable
+import uuid
 
 from benchmarks.wma_harness.retrieval.query_embedding_cache import (
     QueryEmbeddingCache,
@@ -65,6 +67,8 @@ from benchmarks.baseline_runtime.parallel_runner import (
     parallel_map_ordered,
     save_sample_artifact,
     signature_digest,
+    validated_paired_resume_signatures,
+    validated_qa_only_resume_signatures,
 )
 from benchmarks.baseline_runtime.output_layout import (
     BaselineOutputLayout,
@@ -100,6 +104,7 @@ from embedding.chunk_builder import (
     iter_wma_sample_files,
 )
 from evidence_policy.split_manifest import SplitManifestIndex, normalize_split_name
+from benchmarks.zero_hit import evidence_with_zero_hit_marker
 from hive_mem.prefix_graph import (
     PREFIX_GRAPH_SCHEMA_VERSION,
     materialize_prefix_graph,
@@ -143,10 +148,25 @@ def run_sample_retry_queue(
     *,
     max_attempts: int,
     status_path: Path,
+    max_workers: int = 1,
+    on_skipped: Callable[[Path, str], dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
-    """Run isolated samples once, then append failures to a bounded retry queue."""
+    """Run isolated samples in forked processes with a bounded retry queue.
+
+    MIRIX v0.1.1 selects its SQLite database, image directory, and temporary
+    directory through process-wide environment variables.  Thread-level sample
+    concurrency would therefore let one sample redirect another sample's
+    native stores.  Each active sample gets a forked process instead, while the
+    parent remains the sole writer of ``sample_status.json``.
+    """
     if max_attempts < 1:
         raise ValueError("max_attempts must be positive")
+    if max_workers < 1:
+        raise ValueError("max_workers must be positive")
+    if max_workers > 1 and "fork" not in multiprocessing.get_all_start_methods():
+        raise RuntimeError(
+            "parallel WMA native samples require the multiprocessing fork start method"
+        )
     status: dict[str, Any] = {"version": 1, "samples": {}}
     if status_path.is_file():
         try:
@@ -179,6 +199,9 @@ def run_sample_retry_queue(
                 "attempts": max(0, interrupted_attempt - 1),
                 "errors": errors,
             }
+    paths_by_key = {path.stem: path for path in paths}
+    if len(paths_by_key) != len(paths):
+        raise ValueError("WMA sample paths contain duplicate stems")
     pending = deque(paths)
     completed: dict[str, dict[str, Any]] = {}
     skipped: list[str] = []
@@ -201,70 +224,218 @@ def run_sample_retry_queue(
         )
         write_json_atomic(status_path, status)
 
+    # Completed samples are cheap resume loads and must not consume process
+    # slots.  If their artifact is missing, put them back through the normal
+    # retry path.
+    resumable = deque()
     while pending:
         path = pending.popleft()
-        key = path.stem
-        row = dict(samples.get(key) or {})
+        row = dict(samples.get(path.stem) or {})
         attempts = int(row.get("attempts") or 0)
         if row.get("state") == "skipped" and attempts >= max_attempts:
-            skipped.append(key)
+            error = str((row.get("errors") or [{}])[-1].get("error") or "")
+            if on_skipped is not None:
+                completed[path.stem] = on_skipped(path, error)
+            skipped.append(path.stem)
             continue
         if row.get("state") == "completed":
-            # The worker's resume path loads the already-written sample artifact.
             try:
-                completed[key] = worker(path)
+                completed[path.stem] = worker(path)
                 continue
             except Exception:
                 row["state"] = "pending_retry"
-        attempts += 1
-        errors = list(row.get("errors") or [])
-        samples[key] = {
-            **row,
-            "state": "running",
-            "attempts": attempts,
-            "started_at": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "errors": errors,
-        }
-        save_status()
-        try:
-            artifact = worker(path)
-        except Exception as exc:
-            errors.append(
-                {
-                    "attempt": attempts,
-                    "error_type": type(exc).__name__,
-                    "error": str(exc)[:4000],
-                    "at": time.strftime("%Y-%m-%d %H:%M:%S"),
-                }
-            )
-            if _is_global_sample_failure(exc):
-                samples[key].update(state="blocked_global", errors=errors)
-                save_status()
-                raise
-            state = "pending_retry" if attempts < max_attempts else "skipped"
-            samples[key].update(state=state, errors=errors)
-            save_status()
-            print(
-                f"[sample-{state}] {key} attempt={attempts}/{max_attempts}: {exc}",
-                flush=True,
-            )
-            if state == "pending_retry":
-                pending.append(path)
-            else:
-                skipped.append(key)
-        else:
-            completed[key] = artifact
-            samples[key].update(
-                state="completed",
-                completed_at=time.strftime("%Y-%m-%d %H:%M:%S"),
-            )
-            save_status()
+                samples[path.stem] = row
+        resumable.append(path)
+    pending = resumable
 
-    if skipped:
+    # One worker preserves the historical in-process execution path.  Native
+    # parallelism always uses forked processes so MIRIX globals stay isolated.
+    if max_workers == 1:
+        while pending:
+            path = pending.popleft()
+            key = path.stem
+            row = dict(samples.get(key) or {})
+            attempts = int(row.get("attempts") or 0) + 1
+            errors = list(row.get("errors") or [])
+            samples[key] = {
+                **row,
+                "state": "running",
+                "attempts": attempts,
+                "started_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "errors": errors,
+            }
+            save_status()
+            try:
+                artifact = worker(path)
+            except Exception as exc:
+                errors.append(
+                    {
+                        "attempt": attempts,
+                        "error_type": type(exc).__name__,
+                        "error": str(exc)[:4000],
+                        "at": time.strftime("%Y-%m-%d %H:%M:%S"),
+                    }
+                )
+                if _is_global_sample_failure(exc):
+                    samples[key].update(state="blocked_global", errors=errors)
+                    save_status()
+                    raise
+                state = "pending_retry" if attempts < max_attempts else "skipped"
+                samples[key].update(state=state, errors=errors)
+                save_status()
+                print(
+                    f"[sample-{state}] {key} attempt={attempts}/{max_attempts}: {exc}",
+                    flush=True,
+                )
+                if state == "pending_retry":
+                    pending.append(path)
+                else:
+                    skipped.append(key)
+                    if on_skipped is not None:
+                        completed[key] = on_skipped(path, str(exc))
+            else:
+                completed[key] = artifact
+                samples[key].update(
+                    state="completed",
+                    completed_at=time.strftime("%Y-%m-%d %H:%M:%S"),
+                )
+                save_status()
+    else:
+        context = multiprocessing.get_context("fork")
+        worker_result_dir = status_path.parent / ".sample_worker_results"
+        worker_result_dir.mkdir(parents=True, exist_ok=True)
+        running: dict[int, tuple[Any, Path, int, Path]] = {}
+
+        def start_worker(path: Path, attempt: int) -> None:
+            key = path.stem
+            result_path = worker_result_dir / (
+                f"{key[:80]}-attempt-{attempt}-{uuid.uuid4().hex}.json"
+            )
+
+            def child_main() -> None:
+                try:
+                    artifact = worker(path)
+                except BaseException as exc:
+                    payload = {
+                        "ok": False,
+                        "error_type": type(exc).__name__,
+                        "error": str(exc)[:4000],
+                        "global_failure": _is_global_sample_failure(exc),
+                    }
+                else:
+                    payload = {"ok": True, "artifact": artifact}
+                write_json_atomic(result_path, payload)
+
+            process = context.Process(
+                target=child_main,
+                name=f"wma-{key[:32]}-attempt-{attempt}",
+            )
+            process.start()
+            running[process.pid] = (process, path, attempt, result_path)
+
+        try:
+            while pending or running:
+                while pending and len(running) < max_workers:
+                    path = pending.popleft()
+                    key = path.stem
+                    row = dict(samples.get(key) or {})
+                    attempts = int(row.get("attempts") or 0) + 1
+                    samples[key] = {
+                        **row,
+                        "state": "running",
+                        "attempts": attempts,
+                        "started_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+                        "errors": list(row.get("errors") or []),
+                    }
+                    save_status()
+                    start_worker(path, attempts)
+
+                finished = [
+                    pid for pid, (process, _, _, _) in running.items()
+                    if not process.is_alive()
+                ]
+                if not finished:
+                    time.sleep(0.25)
+                    continue
+                for pid in finished:
+                    process, path, attempts, result_path = running.pop(pid)
+                    process.join()
+                    try:
+                        payload = json.loads(result_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError) as exc:
+                        payload = {
+                            "ok": False,
+                            "error_type": "WorkerProcessError",
+                            "error": (
+                                f"sample worker exit={process.exitcode} produced no valid "
+                                f"result payload: {exc}"
+                            ),
+                            "global_failure": False,
+                        }
+                    finally:
+                        result_path.unlink(missing_ok=True)
+                    key = path.stem
+                    if payload.get("ok") and isinstance(payload.get("artifact"), dict):
+                        completed[key] = payload["artifact"]
+                        samples[key].update(
+                            state="completed",
+                            completed_at=time.strftime("%Y-%m-%d %H:%M:%S"),
+                            worker_exitcode=process.exitcode,
+                        )
+                        save_status()
+                        continue
+
+                    error = str(payload.get("error") or "sample worker failed")
+                    errors = list(samples[key].get("errors") or [])
+                    errors.append(
+                        {
+                            "attempt": attempts,
+                            "error_type": str(
+                                payload.get("error_type") or "WorkerProcessError"
+                            ),
+                            "error": error[:4000],
+                            "at": time.strftime("%Y-%m-%d %H:%M:%S"),
+                            "worker_exitcode": process.exitcode,
+                        }
+                    )
+                    if bool(payload.get("global_failure")):
+                        samples[key].update(state="blocked_global", errors=errors)
+                        save_status()
+                        raise RuntimeError(error)
+                    state = (
+                        "pending_retry" if attempts < max_attempts else "skipped"
+                    )
+                    samples[key].update(state=state, errors=errors)
+                    save_status()
+                    print(
+                        f"[sample-{state}] {key} attempt={attempts}/{max_attempts}: "
+                        f"{error}",
+                        flush=True,
+                    )
+                    if state == "pending_retry":
+                        pending.append(path)
+                    else:
+                        skipped.append(key)
+                        if on_skipped is not None:
+                            completed[key] = on_skipped(path, error)
+        finally:
+            for process, _, _, result_path in running.values():
+                if process.is_alive():
+                    process.terminate()
+                process.join(timeout=10)
+                if process.is_alive():
+                    process.kill()
+                    process.join()
+                result_path.unlink(missing_ok=True)
+
+    if skipped and on_skipped is None:
         raise RuntimeError(
             f"WMA skipped {len(skipped)} sample(s) after {max_attempts} attempts: "
             f"{', '.join(skipped)}; see {status_path}"
         )
+    missing = [path.stem for path in paths if path.stem not in completed]
+    if missing:
+        raise RuntimeError(f"WMA sample scheduler lost artifacts: {', '.join(missing)}")
     return [completed[path.stem] for path in paths]
 
 
@@ -473,6 +644,7 @@ def prepare_sample_jobs(
                         ),
                         "memory_items": memory_items,
                         "retrieval_top_k": trace,
+                        "retrieval_method_trace": dict(retrieval.trace),
                     }
                 )
                 if remaining_question_ids is not None:
@@ -595,6 +767,7 @@ def prepare_native_sample_jobs(
             or 10
         ),
         recorder=call_recorder,
+        fail_open=(baseline == "M2A"),
     )
     completed_jobs = dict(completed_jobs or {})
     jobs: list[dict[str, Any]] = []
@@ -621,10 +794,16 @@ def prepare_native_sample_jobs(
             chunks_by_session.setdefault(
                 str(chunk.metadata.get("session_id") or ""), []
             ).append(chunk)
+        terminal_sample_error = ""
         for last_index, _, checkpoint, covered_sessions, visible_sessions in checkpoints:
             checkpoint_jobs: list[dict[str, Any]] = []
             checkpoint_last_session = ""
-            for session_index in range(ingested_through + 1, last_index + 1):
+            session_range = (
+                range(ingested_through + 1, last_index + 1)
+                if not terminal_sample_error
+                else ()
+            )
+            for session_index in session_range:
                 session_id = ordered_sessions[session_index]
                 checkpoint_last_session = session_id
                 with (
@@ -656,7 +835,11 @@ def prepare_native_sample_jobs(
                             )
                         else:
                             build_fault_policy.success()
-            if baseline == "MIRIX" and checkpoint_last_session:
+            if (
+                baseline == "MIRIX"
+                and checkpoint_last_session
+                and not terminal_sample_error
+            ):
                 with (
                     call_recorder.phase("memory_build")
                     if call_recorder is not None
@@ -693,7 +876,20 @@ def prepare_native_sample_jobs(
                 ):
                     continue
                 if manifest_question_id in completed_jobs:
-                    jobs.append(completed_jobs[manifest_question_id])
+                    completed_job = completed_jobs[manifest_question_id]
+                    jobs.append(completed_job)
+                    completed_error = str(
+                        (completed_job.get("native_answer") or {}).get("error")
+                        or ""
+                    )
+                    if (
+                        baseline == "MMA"
+                        and completed_error
+                        and is_mma_consecutive_bad_point_error(
+                            RuntimeError(completed_error)
+                        )
+                    ):
+                        terminal_sample_error = completed_error
                     if remaining_question_ids is not None:
                         remaining_question_ids.discard(manifest_question_id)
                     continue
@@ -705,40 +901,78 @@ def prepare_native_sample_jobs(
                     category=category,
                     question=question,
                 )
-                vector = query_cache.get_by_id(query_id) if query_cache is not None else None
+                skipped_after_terminal = bool(terminal_sample_error)
+                vector = (
+                    query_cache.get_by_id(query_id)
+                    if query_cache is not None and not skipped_after_terminal
+                    else None
+                )
                 retrieval_error = ""
-                try:
-                    with (
-                        call_recorder.phase("retrieval")
-                        if call_recorder is not None
-                        else nullcontext()
-                    ):
-                        retrieval = adapter.retrieve(
-                            RetrievalRequest(
-                                query_id=query_id,
-                                text=question,
-                                category=category,
-                                top_k=top_k,
-                                visible_session_ids=tuple(visible_sessions),
-                                query_vector=vector,
-                            )
-                        )
-                except Exception as exc:
-                    if not (allow_native_qa_errors and baseline == "MIRIX"):
-                        raise
-                    retrieval_error = str(exc)
+                if skipped_after_terminal:
+                    retrieval_error = terminal_sample_error
                     retrieval = RetrievalResult(
                         trace={
                             "failed": True,
-                            "stage": "retrieval",
+                            "stage": "sample_terminal_skip",
                             "error": retrieval_error,
+                            "skipped_after_consecutive_bad_points": True,
                         }
                     )
+                else:
+                    try:
+                        with (
+                            call_recorder.scope(
+                                query_id=query_id,
+                                chain_id=query_id,
+                                operation="native_retrieve",
+                                attempt=1,
+                            )
+                            if call_recorder is not None
+                            else nullcontext()
+                        ), (
+                            call_recorder.phase("retrieval")
+                            if call_recorder is not None
+                            else nullcontext()
+                        ):
+                            retrieval = adapter.retrieve(
+                                RetrievalRequest(
+                                    query_id=query_id,
+                                    text=question,
+                                    category=category,
+                                    top_k=top_k,
+                                    visible_session_ids=tuple(visible_sessions),
+                                    query_vector=vector,
+                                )
+                            )
+                    except Exception as exc:
+                        terminal_retrieval = (
+                            allow_native_qa_errors
+                            and baseline == "MMA"
+                            and is_mma_consecutive_bad_point_error(exc)
+                        )
+                        if not (
+                            allow_native_qa_errors
+                            and (baseline == "MIRIX" or terminal_retrieval)
+                        ):
+                            raise
+                        retrieval_error = str(exc)
+                        if terminal_retrieval:
+                            terminal_sample_error = retrieval_error
+                        retrieval = RetrievalResult(
+                            trace={
+                                "failed": True,
+                                "stage": "retrieval",
+                                "error": retrieval_error,
+                                "sample_terminal": terminal_retrieval,
+                            }
+                        )
                 trace = result_trace_rows(retrieval)
                 memory_items = result_context_items(retrieval)
                 native_answer = None
                 terminal_native_error: Exception | None = None
-                if baseline == "MIRIX" and retrieval_error:
+                if retrieval_error and (
+                    baseline == "MIRIX" or bool(terminal_sample_error)
+                ):
                     native_answer = {
                         "text": "",
                         "error": retrieval_error,
@@ -763,6 +997,15 @@ def prepare_native_sample_jobs(
                         allow_empty_evidence=True,
                     )
                     with (
+                        call_recorder.scope(
+                            query_id=query_id,
+                            chain_id=query_id,
+                            operation="native_answer",
+                            attempt=1,
+                        )
+                        if call_recorder is not None
+                        else nullcontext()
+                    ), (
                         call_recorder.phase("qa")
                         if call_recorder is not None
                         else nullcontext()
@@ -781,6 +1024,7 @@ def prepare_native_sample_jobs(
                                 raise
                             if baseline == "MMA" and is_mma_consecutive_bad_point_error(exc):
                                 terminal_native_error = exc
+                                terminal_sample_error = str(exc)
                             error = str(exc)
                             native_answer = {
                                 "text": "",
@@ -845,6 +1089,8 @@ def prepare_native_sample_jobs(
                         "retrieval_top_k": trace,
                         "retrieval_method_trace": dict(retrieval.trace),
                         "native_answer": native_answer,
+                        "sample_terminal_error": terminal_sample_error,
+                        "skipped_after_consecutive_bad_points": skipped_after_terminal,
                     }
                 jobs.append(job)
                 checkpoint_jobs.append(job)
@@ -861,8 +1107,6 @@ def prepare_native_sample_jobs(
                             f"native QA checkpoint failed: {result['error']}"
                         )
                     on_qa_completed(job, result, answer_trace)
-                if terminal_native_error is not None:
-                    raise terminal_native_error
                 if remaining_question_ids is not None:
                     remaining_question_ids.discard(manifest_question_id)
             if (
@@ -918,6 +1162,173 @@ def prepare_native_sample_jobs(
     )
 
 
+def materialize_skipped_native_sample(
+    sample_path: Path,
+    *,
+    error: str,
+    ordered_question_ids: tuple[str, ...] | None,
+    existing_progress: dict[str, Any],
+    client: VLMAnswerClient,
+    call_trace_path: Path,
+) -> dict[str, Any]:
+    """Preserve completed QA and emit explicit empty rows for a skipped sample."""
+    payload = json.loads(sample_path.read_text(encoding="utf-8"))
+    sample_id = str(payload["sample_id"])
+    ordered_sessions = session_ids(payload)
+    session_order = {
+        session_id: index for index, session_id in enumerate(ordered_sessions)
+    }
+    checkpoints = []
+    for position, checkpoint in enumerate(payload.get("qa_checkpoints", []) or []):
+        covered = [str(value) for value in checkpoint.get("covered_sessions", [])]
+        visible = visible_sessions_for_checkpoint(ordered_sessions, covered)
+        last_index = max((session_order[value] for value in visible), default=-1)
+        checkpoints.append((last_index, position, checkpoint, covered, visible))
+    checkpoints.sort(key=lambda row: (row[0], row[1]))
+
+    selected = set(ordered_question_ids) if ordered_question_ids is not None else None
+    gold_points = build_gold_evidence_map(payload)
+    existing_jobs = {
+        str(row.get("manifest_question_id") or ""): row
+        for row in existing_progress.get("jobs", []) or []
+        if row.get("manifest_question_id")
+    }
+    existing_results = {
+        str(row.get("query_id") or ""): row
+        for row in existing_progress.get("results", []) or []
+        if row.get("query_id")
+    }
+    existing_traces = {
+        str(row.get("query_id") or ""): row
+        for row in existing_progress.get("traces", []) or []
+        if row.get("query_id")
+    }
+    skip_error = f"WMA sample skipped after bounded retries: {error}"[:4000]
+    jobs: list[dict[str, Any]] = []
+
+    for _, _, checkpoint, covered_sessions, visible_sessions in checkpoints:
+        checkpoint_id = str(checkpoint.get("checkpoint_id", ""))
+        visible_session_set = set(visible_sessions)
+        for qa_index, qa in enumerate(
+            checkpoint.get("questions", []) or [], start=1
+        ):
+            manifest_question_id = wma_manifest_question_id(
+                sample_id, checkpoint_id, qa_index
+            )
+            if selected is not None and manifest_question_id not in selected:
+                continue
+            existing_job = existing_jobs.get(manifest_question_id)
+            if existing_job is not None:
+                jobs.append(existing_job)
+                continue
+            category = str(qa.get("question_type_abbrev", ""))
+            question = str(qa.get("question", ""))
+            query_id = make_query_id(
+                sample_id=sample_id,
+                checkpoint_id=checkpoint_id,
+                qa_index=qa_index,
+                category=category,
+                question=question,
+            )
+            evidence = qa.get("evidence", []) or []
+            evidence_ids = [
+                str(row.get("memory_id") or row.get("image_id") or "")
+                for row in evidence
+                if isinstance(row, dict)
+                and (row.get("memory_id") or row.get("image_id"))
+            ]
+            jobs.append(
+                {
+                    "query_id": query_id,
+                    "manifest_question_id": manifest_question_id,
+                    "sample_id": sample_id,
+                    "dataset": sample_id,
+                    "checkpoint_id": checkpoint_id,
+                    "covered_sessions": covered_sessions,
+                    "visible_sessions": visible_sessions,
+                    "qa_index": qa_index,
+                    "question": question,
+                    "category": category,
+                    "question_type": qa.get("question_type", ""),
+                    "difficulty": qa.get("difficulty", ""),
+                    "original_answer": qa.get("answer", ""),
+                    "evidence": evidence,
+                    "gold_evidence_memory_ids": evidence_ids,
+                    "gold_future_evidence_ids": [
+                        value for value in evidence_ids
+                        if value in gold_points
+                        and gold_points[value]["session_id"]
+                        not in visible_session_set
+                    ],
+                    "gold_unmapped_evidence_ids": [
+                        value for value in evidence_ids if value not in gold_points
+                    ],
+                    "gold_evidence_contents": [
+                        gold_points[value]["content"]
+                        for value in evidence_ids if value in gold_points
+                    ],
+                    "gold_sessions": list(dict.fromkeys(
+                        gold_points[value]["session_id"]
+                        for value in evidence_ids if value in gold_points
+                    )),
+                    "gold_visible_sessions": list(dict.fromkeys(
+                        gold_points[value]["session_id"]
+                        for value in evidence_ids
+                        if value in gold_points
+                        and gold_points[value]["session_id"]
+                        in visible_session_set
+                    )),
+                    "memory_items": [],
+                    "retrieval_top_k": [],
+                    "retrieval_method_trace": {
+                        "failed": True,
+                        "stage": "sample_skipped",
+                        "error": skip_error,
+                    },
+                    "native_answer": {
+                        "text": "",
+                        "error": skip_error,
+                        "usage": None,
+                        "attempts": 0,
+                        "failed_attempts": 0,
+                        "image_count": 0,
+                        "trace": {
+                            "failed": True,
+                            "stage": "sample_skipped",
+                            "error": skip_error,
+                        },
+                    },
+                    "sample_terminal_error": skip_error,
+                    "sample_skipped": True,
+                    "sample_skip_error": skip_error,
+                    "skipped_after_consecutive_bad_points": True,
+                }
+            )
+
+    jobs = _order_wma_jobs(jobs, ordered_question_ids, sample_id=sample_id)
+    results: list[dict[str, Any]] = []
+    traces: list[dict[str, Any]] = []
+    for job in jobs:
+        query_id = str(job["query_id"])
+        if query_id in existing_results and query_id in existing_traces:
+            results.append(existing_results[query_id])
+            traces.append(existing_traces[query_id])
+            continue
+        result, trace = answer_job(client, job)
+        results.append(result)
+        traces.append(trace)
+    return {
+        "sample_id": sample_id,
+        "jobs": jobs,
+        "snapshots": list(existing_progress.get("snapshots") or []),
+        "results": results,
+        "traces": traces,
+        "call_trace_path": str(call_trace_path),
+        "skipped": True,
+        "skip_error": skip_error,
+    }
+
+
 def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
     job = _with_manifest_question_id(job)
     started = time.time()
@@ -927,10 +1338,13 @@ def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, 
     evidence, _ = build_retrieved_memory_evidence(
         job["memory_items"], job["category"]
     )
+    prompt_evidence, zero_hit_prompt_marker_used = evidence_with_zero_hit_marker(
+        evidence
+    )
     messages = build_answer_messages(
         question=job["question"],
         question_type=job["category"],
-        memory_evidence=evidence,
+        memory_evidence=prompt_evidence,
         allow_empty_evidence=True,
     )
     raw_answer = ""
@@ -995,6 +1409,7 @@ def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, 
             "retrieved_source_groups": [row["source_dialogue_ids"] for row in top_k],
             "retrieved_sessions": [row["session_id"] for row in top_k],
             "empty_retrieval": not bool(top_k),
+            "zero_hit_prompt_marker_used": zero_hit_prompt_marker_used,
             "error": error,
             "answer_token_usage": answer_token_usage,
             "answer_attempts": answer_attempts,
@@ -1018,6 +1433,7 @@ def answer_job(client: VLMAnswerClient, job: dict[str, Any]) -> tuple[dict[str, 
         "visible_sessions": job["visible_sessions"],
         "top_k": top_k,
         "empty_retrieval": not bool(top_k),
+        "zero_hit_prompt_marker_used": zero_hit_prompt_marker_used,
         "memory_context": memory_context,
         "answer_prompt_messages": messages,
         "retrieval_method_trace": dict(job.get("retrieval_method_trace") or {}),
@@ -1096,6 +1512,10 @@ def _run_signature(
         # These switches are consumed only by M2A and cannot affect MMA state.
         "m2a_skip_failed_build_points",
         "m2a_max_consecutive_failed_build_points",
+        "m2a_fail_open_retrieval",
+        # Cost/latency coefficients are post-hoc reporting inputs. Changing
+        # their file must not invalidate completed retrieval or QA work.
+        "efficiency_config",
     }
     input_paths: list[Path] = list(sample_paths)
     if args.split_manifest:
@@ -1144,6 +1564,21 @@ def _run_signature(
             rounds_per_batch=args.m2a_wma_rounds_per_ingest,
         )
     return signature
+
+
+def _checkpoint_signatures_match(
+    saved: dict[str, Any], current: dict[str, Any]
+) -> bool:
+    """Accept legacy checkpoints that embedded the reporting-config path."""
+    normalized_saved = dict(saved)
+    saved_arguments = dict(normalized_saved.get("arguments") or {})
+    saved_arguments.pop("efficiency_config", None)
+    normalized_saved["arguments"] = saved_arguments
+    normalized_current = dict(current)
+    current_arguments = dict(normalized_current.get("arguments") or {})
+    current_arguments.pop("efficiency_config", None)
+    normalized_current["arguments"] = current_arguments
+    return normalized_saved == normalized_current
 
 
 def _mma_resume_signature_digests(
@@ -1249,6 +1684,7 @@ def main() -> None:
     parser.add_argument("--cost-qa-output-price", type=float, default=None)
     parser.add_argument("--efficiency-config", default="configs/model_efficiency.json")
     parser.add_argument("--request-timeout", type=int, default=180)
+    parser.add_argument("--qa-request-timeout", type=int, default=90)
     parser.add_argument("--retries", type=int, default=2)
     parser.add_argument("--think", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--reasoning-effort", default="")
@@ -1256,6 +1692,7 @@ def main() -> None:
     parser.add_argument("--executor-base-url", default="http://127.0.0.1:18000/v1")
     parser.add_argument("--executor-temperature", type=float, default=0.0)
     parser.add_argument("--executor-max-tokens", type=int, default=512)
+    parser.add_argument("--executor-hard-max-tokens", type=int, default=0)
     parser.add_argument("--m2a-wma-rounds-per-ingest", type=int, default=1)
     parser.add_argument(
         "--mirix-skip-failed-build-points",
@@ -1276,6 +1713,20 @@ def main() -> None:
         "--m2a-max-consecutive-failed-build-points",
         type=int,
         default=10,
+    )
+    parser.add_argument(
+        "--m2a-salvage-truncated-updates",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+    )
+    parser.add_argument(
+        "--m2a-fail-open-retrieval",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help=(
+            "Keep WMA QA running after M2A retrieval errors; preserve completed "
+            "semantic hits and filter candidates with invalid session provenance."
+        ),
     )
     parser.add_argument("--mma-native-batch-size", type=int, default=20)
     parser.add_argument("--executor-visual-input", choices=("image", "caption"), default="image")
@@ -1312,6 +1763,7 @@ def main() -> None:
             "cost_qa_input_price",
             "cost_qa_output_price",
             "request_timeout",
+            "qa_request_timeout",
             "retries",
             "think",
             "reasoning_effort",
@@ -1323,6 +1775,7 @@ def main() -> None:
             "executor_base_url",
             "executor_temperature",
             "executor_max_tokens",
+            "executor_hard_max_tokens",
             "m2a_wma_rounds_per_ingest",
             "mirix_skip_failed_build_points",
             "mirix_max_consecutive_failed_build_points",
@@ -1373,7 +1826,13 @@ def main() -> None:
         or args.sample_attempts < 1
     ):
         parser.error("Sample/answer concurrency, top-k, and checkpoint interval must be positive")
-    if args.max_qa < 0 or args.retries < 0 or args.request_timeout <= 0:
+    if (
+        args.max_qa < 0
+        or args.retries < 0
+        or args.request_timeout <= 0
+        or args.qa_request_timeout <= 0
+        or args.executor_hard_max_tokens < 0
+    ):
         parser.error("Invalid QA limit, retry count, or request timeout")
 
     data_dir = Path(args.data_dir)
@@ -1448,7 +1907,30 @@ def main() -> None:
     checkpoint_dir = output_layout.checkpoint_dir
     baseline_state_root = output_layout.state_root(args.baseline_state_dir)
     signature = _run_signature(args, paths)
-    compatible_sample_signatures = _mma_resume_signature_digests(args, signature)
+    computed_sample_signatures = _mma_resume_signature_digests(args, signature)
+    qa_only_reuse = os.getenv("MMA_QA_ONLY_REUSE", "").strip().lower() in {
+        "1", "true", "yes", "on",
+    }
+    stored_sample_signatures = (
+        (validated_qa_only_resume_signatures if qa_only_reuse else validated_paired_resume_signatures)(
+            (
+                path.stem,
+                baseline_state_root / path.stem / (
+                    ".mma_reuse_provenance.json"
+                    if qa_only_reuse else ".offline_mma_resume.json"
+                ),
+                checkpoint_dir
+                / "native_samples"
+                / Path(trace_filename(path.stem)).with_suffix(".json"),
+            )
+            for path in paths
+        )
+        if args.baseline == "MMA" and args.resume
+        else ()
+    )
+    compatible_sample_signatures = tuple(
+        dict.fromkeys((*stored_sample_signatures, *computed_sample_signatures))
+    )
     sample_signature = compatible_sample_signatures[0]
 
     checkpoint_answer_pool = (
@@ -1474,9 +1956,32 @@ def main() -> None:
                 ),
                 None,
             )
-            if cached is not None:
+            cached_answer_errors = sum(
+                bool(row.get("error"))
+                for row in (cached or {}).get("results", [])
+                if isinstance(row, dict)
+            )
+            # A sample that exhausted its bounded retries is materialized as a
+            # complete-shaped artifact so the failed run can still preserve
+            # question order and partial native QA.  That placeholder must not
+            # become a terminal resume cache when a later invocation raises
+            # ``--sample-attempts``: it contains explicit error rows and the
+            # native checkpoint is still resumable.  Re-enter ``prepare`` so
+            # MIRIX can continue from that checkpoint and replace the artifact.
+            retry_cached_native_sample = (
+                args.baseline in {"MIRIX", "MMA"}
+                and not args.allow_answer_errors
+                and cached_answer_errors > 0
+            )
+            if cached is not None and not retry_cached_native_sample:
                 print(f"[resume] skip prepared WMA sample: {path.stem}", flush=True)
                 return cached
+            if retry_cached_native_sample:
+                print(
+                    f"[resume] retry prepared WMA sample: {path.stem} "
+                    f"({cached_answer_errors} cached answer error(s))",
+                    flush=True,
+                )
         sample_snapshots: list[dict[str, Any]] = []
         native_progress_path = (
             checkpoint_dir
@@ -1575,6 +2080,9 @@ def main() -> None:
                     "executor_base_url": args.executor_base_url,
                     "executor_temperature": args.executor_temperature,
                     "executor_max_tokens": args.executor_max_tokens,
+                    "mirix_executor_retry_max_tokens": (
+                        args.executor_hard_max_tokens or args.executor_max_tokens
+                    ),
                     "m2a_wma_rounds_per_ingest": args.m2a_wma_rounds_per_ingest,
                     "mirix_skip_failed_build_points": (
                         args.mirix_skip_failed_build_points
@@ -1588,6 +2096,10 @@ def main() -> None:
                     "m2a_max_consecutive_failed_build_points": (
                         args.m2a_max_consecutive_failed_build_points
                     ),
+                    "m2a_salvage_truncated_updates": (
+                        args.m2a_salvage_truncated_updates
+                    ),
+                    "m2a_fail_open_retrieval": args.m2a_fail_open_retrieval,
                     "mma_native_batch_size": args.mma_native_batch_size,
                     "executor_visual_input": args.executor_visual_input,
                     "executor_native_tool_calls": args.baseline in {"MIRIX", "MMA"},
@@ -1613,29 +2125,22 @@ def main() -> None:
                 baseline=args.baseline,
                 benchmark="WorldMemArena",
                 sample_id=path.stem,
-                reset=not (
-                    args.baseline in {"MMA", "MIRIX"}
-                    and
-                    args.resume
-                    and (
-                        baseline_state_root
-                        / path.stem
-                        / (
-                            ".offline_mma_resume.json"
-                            if args.baseline == "MMA"
-                            else ".offline_mirix_resume.json"
-                        )
-                    ).is_file()
-                ),
+                # A resume may intentionally rebuild a missing/corrupt native state,
+                # but those retry calls are still billable experiment calls.  Keep
+                # trace accounting independent from native-state availability.
+                reset=not args.resume,
             )
             with CountingProxy(
                 args.executor_base_url,
                 recorder,
                 args.request_timeout,
-                max_output_tokens=args.executor_max_tokens,
+                max_output_tokens=(
+                    args.executor_hard_max_tokens or args.executor_max_tokens
+                ),
                 temperature=args.executor_temperature,
                 qa_max_output_tokens=args.num_predict,
                 reasoning_effort=args.reasoning_effort,
+                qa_upstream_timeout=args.qa_request_timeout,
             ) as proxy:
                 config_overrides["executor_base_url"] = proxy.endpoint
                 try:
@@ -1702,6 +2207,36 @@ def main() -> None:
         print(f"[prepared] {path.stem}: {len(sample_jobs)} question(s)", flush=True)
         return artifact
 
+    def materialize_skipped(path: Path, error: str) -> dict[str, Any]:
+        native_progress_path = (
+            checkpoint_dir
+            / "native_samples"
+            / Path(trace_filename(path.stem)).with_suffix(".json")
+        )
+        try:
+            existing_progress = json.loads(
+                native_progress_path.read_text(encoding="utf-8")
+            )
+        except (OSError, json.JSONDecodeError):
+            existing_progress = {}
+        artifact = materialize_skipped_native_sample(
+            path,
+            error=error,
+            ordered_question_ids=ordered_ids_by_sample.get(path.stem),
+            existing_progress=existing_progress,
+            client=client,
+            call_trace_path=(
+                result_dir / "call_traces" / trace_filename(path.stem)
+            ),
+        )
+        save_sample_artifact(
+            output_layout.sample_checkpoint_dir,
+            path.stem,
+            signature=sample_signature,
+            artifact=artifact,
+        )
+        return artifact
+
     if args.baseline == "M2A" and not args.skip_model_check:
         client.assert_model_available()
     try:
@@ -1711,6 +2246,8 @@ def main() -> None:
                 prepare,
                 max_attempts=args.sample_attempts,
                 status_path=checkpoint_dir / "sample_status.json",
+                max_workers=args.sample_concurrency,
+                on_skipped=materialize_skipped,
             )
         else:
             artifacts = parallel_map_ordered(
@@ -1776,7 +2313,9 @@ def main() -> None:
         raise RuntimeError("M2A inline checkpoint answers and traces do not match")
     if args.resume and checkpoint_manifest.exists():
         saved_manifest = json.loads(checkpoint_manifest.read_text(encoding="utf-8"))
-        if saved_manifest.get("signature") != signature:
+        if not _checkpoint_signatures_match(
+            dict(saved_manifest.get("signature") or {}), signature
+        ):
             raise RuntimeError(
                 f"Checkpoint settings or input files changed: {checkpoint_manifest}; "
                 "rerun with --no-resume"
@@ -1942,7 +2481,9 @@ def main() -> None:
         manifest["omni_conformance"] = omni_conformance_manifest("worldmemarena")
     if args.baseline == "M3-Agent-caption":
         manifest["m3_conformance"] = m3_conformance_manifest(
-            "worldmemarena", answer_prompt_sha256=prompt_sha256()
+            "worldmemarena",
+            answer_prompt_sha256=prompt_sha256(),
+            handoff_top_k=args.top_k,
         )
     write_json_atomic(result_dir / "run_manifest.json", manifest | {"run_signature": signature})
     pipeline_path = result_dir / "pipeline_qa.jsonl"
@@ -1954,7 +2495,9 @@ def main() -> None:
             f"partial results were saved under {result_dir}, but metrics were not written"
         )
     effective_top_k = (
-        args.top_k + args.append_k
+        args.top_k
+        if args.baseline == "M3-Agent-caption"
+        else args.top_k + args.append_k
         if args.graph_retrieval and args.graph_mode == "append"
         else args.top_k
     )
@@ -2015,6 +2558,17 @@ def main() -> None:
         sample_ids=evaluated_sample_ids,
         model=args.answer_model,
         config_path=args.efficiency_config,
+        memory_build_model=(
+            args.executor_model
+            if args.baseline == "M3-Agent-caption"
+            else args.answer_model
+        ),
+        retrieval_model=(
+            args.executor_model
+            if args.baseline == "M3-Agent-caption"
+            else args.answer_model
+        ),
+        answer_model=args.answer_model,
         hivemem_index_root=(
             Path(args.index_root) if args.baseline == "HiveMem" else None
         ),

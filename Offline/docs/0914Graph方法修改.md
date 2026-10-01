@@ -83,6 +83,30 @@ V_j=\{(\text{color},\text{blue})\}
 
 两者的区别只在信息来源：\(T_i\) 仍然只能从 chunk 文本提取，\(V_i\) 仍然只能从 chunk 原图提取。
 
+第一版文本属性 key 集合定义为当前文本属性与上述视觉属性的并集：
+
+\[
+\mathcal A_T=\mathcal A_{\text{current}}\cup\mathcal A_V
+\]
+
+其中：
+
+```text
+A_current = {
+  relation, preference, occupation, trait, age,
+  species, breed, owner, appearance, skill, status,
+  category, color, style, material, use,
+  kind, location, feature, role, date, participants
+}
+
+A_V = {
+  color, appearance, shape, material, texture, pattern, count,
+  visible_state, action, pose, position, spatial_relation, ocr_text
+}
+```
+
+\(\mathcal A_T\) 和 \(\mathcal A_V\) 都是封闭属性 key 集合，VLM 不得创造集合之外的新 key。第一版先使用上述范围，后续根据真实运行结果再考虑扩展。
+
 {
   "chunk_id": "chunk_001",
   "summary": "...",
@@ -171,6 +195,119 @@ VLM 对每个 chunk 必须输出且只输出一个 JSON object，不输出 JSON 
 
 VLM 输出的常见 JSON 语法错误继续使用 `json_repair` 修复，并保留现有 fallback 能力。解析异常暂不作为本次新图方法的单独设计项。
 
+3.3 第一版 VLM Prompt（暂定）
+
+第一版先使用以下 Prompt，后续根据真实建库输出再迭代：
+
+```text
+### Role
+You convert one conversation chunk and its attached images into exactly
+one structured memory record.
+
+### Task
+Produce exactly one complete summary for the entire chunk, together with:
+
+- Ti: attributes explicitly stated in the chunk text.
+- Vi: attributes directly observable in the attached original images.
+
+The summary may use relevant information from both the chunk text and the
+attached images. Ti and Vi must strictly follow their respective sources.
+
+[Optional User Profile]
+### User Profile
+Use the profile only to resolve references and names. Do not copy profile
+facts into the summary or Ti unless the current chunk explicitly states them.
+
+### Current Chunk
+{chunk_text}
+
+[When images are attached]
+### Attached Images
+The original images associated with this chunk are attached. Inspect the
+images directly. Do not guess information that is not visibly supported.
+
+### Output Format
+Output exactly one JSON object and nothing else:
+
+{
+  "summary": "<one complete summary of the entire chunk>",
+  "Ti": [
+    {
+      "entity": "<optional entity name>",
+      "attribute": "<allowed textual attribute>",
+      "value": ["<one or more values>"]
+    }
+  ],
+  "Vi": [
+    {
+      "entity": "<optional visible entity>",
+      "attribute": "<allowed visual attribute>",
+      "value": ["<one or more values>"]
+    }
+  ]
+}
+
+Do not output a JSON array.
+Do not output multiple JSON objects.
+Do not output multiple summaries.
+Do not add Markdown or explanatory text.
+
+### Summary Rules
+- Write exactly one non-empty summary for the entire chunk.
+- Combine all useful facts into this single summary, even when the chunk
+  contains multiple facts or topics.
+- Never split the chunk into multiple memory items or summaries.
+- Preserve names, numbers, dates, decisions, reasons, and image details
+  needed to answer future questions.
+- Do not add unsupported information.
+- When the chunk has a non-empty date, begin the summary with
+  "On <session date>, ".
+- Resolve relative dates when the chunk provides enough information.
+- Do not copy unrelated profile details.
+
+### Ti Rules
+- Ti may use only information explicitly stated in the chunk text.
+- Do not use an attached image to add or complete a Ti attribute.
+- Each attribute must use a key from the closed Ti attribute set.
+- The entity field is optional metadata and does not participate in graph
+  matching.
+- Always return value as a JSON array of strings, including for one value.
+- Do not infer attributes that the text does not state.
+
+Allowed Ti attributes:
+relation, preference, occupation, trait, age,
+species, breed, owner, appearance, skill, status,
+category, color, style, material, use,
+kind, location, feature, role, date, participants,
+shape, texture, pattern, count, visible_state,
+action, pose, position, spatial_relation, ocr_text
+
+### Vi Rules
+- Vi may use only information directly observable in the attached images.
+- Do not use the chunk text, image caption, or profile to add or complete
+  a Vi attribute.
+- If no image is attached, output "Vi": [].
+- Each attribute must use a key from the closed Vi attribute set.
+- The entity field is optional metadata and does not participate in graph
+  matching.
+- Always return value as a JSON array of strings, including for one value.
+- Do not infer occupation, ownership, preference, causality, identity, date,
+  or other facts that cannot be determined visually.
+
+Allowed Vi attributes:
+color, appearance, shape, material, texture, pattern, count,
+visible_state, action, pose, position, spatial_relation, ocr_text
+
+### Cross-source Rule
+If the same attribute is independently supported by both the text and the
+image, include it once in Ti and once in Vi. Do not copy an attribute from
+one source into the other.
+
+### Final Requirement
+Return exactly one valid JSON object containing exactly one summary, Ti,
+and Vi.
+```
+
 4.候选边生成规则
 
 对于两个 chunk 节点 \(i,j\)，定义文本—文本共享属性集合：
@@ -225,6 +362,8 @@ w_{ij}
 \]
 
 其中，\(S^{text}_{ij}\) 和 \(S^{cross}_{ij}\) 按第 4 节定义。
+
+如果同一属性 \(a\) 同时属于 \(S^{text}_{ij}\) 和 \(S^{cross}_{ij}\)，则在 \(w_{ij}\) 中有意计算两次：一次作为文本—文本共享属性，一次作为文本—视觉跨模态共享属性，用于奖励多模态共同支持。在各自集合内部，同一属性仍然只计算一次。
 
 6.全局度约束剪枝
 

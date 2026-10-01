@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from argparse import Namespace
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -15,10 +16,12 @@ from benchmarks.wma_harness.retrieval.query_embedding_cache import (
     visible_sessions_for_checkpoint,
 )
 from benchmarks.wma_harness.eval_wma import (
+    _checkpoint_signatures_match,
     _mma_resume_signature_digests,
     _run_signature,
     m2a_wma_input_manifest,
     prepare_sample_jobs,
+    run_sample_retry_queue,
 )
 from benchmarks.wma_harness.runner.answer_client import build_retrieved_memory_context
 from benchmarks.wma_harness.runner.metrics import (
@@ -110,6 +113,71 @@ def sample_payload() -> dict:
 
 
 class WMAChunkTest(unittest.TestCase):
+    def test_parallel_sample_retry_queue_uses_processes_and_retries(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = [root / f"sample_{index}.json" for index in range(3)]
+            for path in paths:
+                path.write_text("{}", encoding="utf-8")
+            retry_marker = root / "sample_1.failed_once"
+
+            def worker(path: Path) -> dict:
+                if path.stem == "sample_1" and not retry_marker.exists():
+                    retry_marker.write_text("failed", encoding="utf-8")
+                    raise RuntimeError("transient sample failure")
+                return {"sample_id": path.stem, "worker_pid": os.getpid()}
+
+            artifacts = run_sample_retry_queue(
+                paths,
+                worker,
+                max_attempts=2,
+                status_path=root / "sample_status.json",
+                max_workers=2,
+            )
+            status = json.loads(
+                (root / "sample_status.json").read_text(encoding="utf-8")
+            )
+
+        self.assertEqual([row["sample_id"] for row in artifacts], [
+            "sample_0", "sample_1", "sample_2"
+        ])
+        self.assertEqual(status["counts"]["completed"], 3)
+        self.assertEqual(status["samples"]["sample_1"]["attempts"], 2)
+        self.assertGreaterEqual(
+            len({int(row["worker_pid"]) for row in artifacts}), 2
+        )
+
+    def test_parallel_sample_retry_queue_materializes_skipped_sample(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "bad_sample.json"
+            path.write_text("{}", encoding="utf-8")
+
+            def worker(_path: Path) -> dict:
+                raise RuntimeError("permanent sample failure")
+
+            def on_skipped(skipped_path: Path, error: str) -> dict:
+                return {
+                    "sample_id": skipped_path.stem,
+                    "skipped": True,
+                    "error": error,
+                }
+
+            artifacts = run_sample_retry_queue(
+                [path],
+                worker,
+                max_attempts=1,
+                status_path=root / "sample_status.json",
+                max_workers=2,
+                on_skipped=on_skipped,
+            )
+            status = json.loads(
+                (root / "sample_status.json").read_text(encoding="utf-8")
+            )
+
+        self.assertTrue(artifacts[0]["skipped"])
+        self.assertEqual(status["counts"]["skipped"], 1)
+
     def test_mma_signature_ignores_retry_and_m2a_only_switches(self):
         with tempfile.TemporaryDirectory() as directory:
             sample_path = Path(directory) / "sample.json"
@@ -131,6 +199,7 @@ class WMAChunkTest(unittest.TestCase):
                 "m2a_skip_failed_build_points": False,
                 "m2a_max_consecutive_failed_build_points": 10,
                 "top_k": 7,
+                "efficiency_config": "old-efficiency.json",
             }
             first = _run_signature(Namespace(**common), [sample_path])
             changed = dict(common)
@@ -138,6 +207,7 @@ class WMAChunkTest(unittest.TestCase):
                 sample_attempts=99,
                 m2a_skip_failed_build_points=True,
                 m2a_max_consecutive_failed_build_points=2,
+                efficiency_config="new-efficiency.json",
             )
             second = _run_signature(Namespace(**changed), [sample_path])
 
@@ -149,6 +219,13 @@ class WMAChunkTest(unittest.TestCase):
             self.assertEqual(digests[0], _mma_resume_signature_digests(
                 Namespace(**common), first
             )[0])
+
+            legacy = dict(first)
+            legacy["arguments"] = {
+                **legacy["arguments"],
+                "efficiency_config": "old-efficiency.json",
+            }
+            self.assertTrue(_checkpoint_signatures_match(legacy, second))
 
     def test_m2a_input_manifest_records_native_builder_and_raw_files(self):
         payload = sample_payload()
@@ -383,9 +460,17 @@ class WMARetrievalTest(unittest.TestCase):
                 [row.metadata["session_id"] for row in prefix.memories],
                 ["S00", "S01"],
             )
-            self.assertEqual(prefix.memories[0].links["next"], prefix.memories[1].id)
-            self.assertEqual(prefix.memories[1].links["prev"], prefix.memories[0].id)
-            self.assertTrue(all(not row.links["related"] for row in prefix.memories))
+            self.assertTrue(
+                all(
+                    row.links == {"prev": None, "next": None, "related": []}
+                    for row in prefix.memories
+                )
+            )
+            edge_report = json.loads(
+                (prefix_dir / "reports" / "edges.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(edge_report["schema_version"], 2)
+            self.assertEqual(edge_report["nodes"], 2)
             self.assertEqual(np.load(prefix_dir / "vectors" / "image.npy").shape, (2, 2))
             self.assertEqual(
                 np.load(prefix_dir / "vectors" / "image_mask.npy").tolist(),
@@ -488,6 +573,9 @@ class WMARetrievalTest(unittest.TestCase):
                 {row["session_id"] for row in jobs[0]["retrieval_top_k"]},
                 {"S00"},
             )
+            self.assertEqual(jobs[0]["retrieval_method_trace"]["vector_k"], 5)
+            self.assertEqual(jobs[0]["retrieval_method_trace"]["vector_count"], 1)
+            self.assertEqual(jobs[0]["retrieval_method_trace"]["graph_count"], 0)
 
     def test_graph_constructor_scope_excludes_future_from_adjacency(self):
         with tempfile.TemporaryDirectory() as directory:

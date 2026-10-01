@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "split": "test",
+  "split_manifest": "multimodal_split_manifest.json",
+  "top_k": 7,
+  "embedding": {
+    "model": "Qwen/Qwen3-VL-Embedding-2B",
+    "base_url": "http://127.0.0.1:8001/v1",
+    "dimension": 2048
+  },
+  "baselines": ["NaiveRAG", "MuRAG", "UniversalRAG"],
+  "benchmarks": ["Mem-Gallery", "H2HMEM", "WorldMemArena"],
+  "expected_qa_counts": {
+    "Mem-Gallery": 275,
+    "H2HMEM": 360,
+    "WorldMemArena": 440
+  },
+  "answer_profiles": {
+    "qwen3vl4b_local": {
+      "model": "Qwen/Qwen3-VL-4B-Instruct",
+      "endpoints": [
+        "http://127.0.0.1:8013/v1",
+        "http://127.0.0.1:8014/v1",
+        "http://127.0.0.1:8015/v1"
+      ],
+      "workers": 3,
+      "defaults": "configs/defaults.json",
+      "efficiency_config": "configs/model_efficiency.json",
+      "api_key_file": "",
+      "reasoning_effort": ""
+    },
+    "gpt5mini_api": {
+      "model": "openai/gpt-5-mini",
+      "endpoints": ["https://openrouter.ai/api/v1"],
+      "workers": 3,
+      "defaults": "../Nvida_api/defaults_gpt-5-mini.json",
+      "efficiency_config": "../Nvida_api/config_gpt-5-mini",
+      "api_key_file": "../Nvida_api/Openrouter_api",
+      "reasoning_effort": "minimal"
+    }
+  }
+}

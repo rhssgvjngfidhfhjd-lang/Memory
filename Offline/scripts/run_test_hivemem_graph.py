@@ -259,6 +259,7 @@ def main() -> None:
                 "--executor-timeout", str(config["request_timeout"]),
                 "--executor-retries", str(config["retries"]),
                 "--executor-concurrency", str(config["executor_concurrency"]),
+                "--executor-max-tokens", str(config["executor_max_tokens"]),
                 "--executor-visual-input", "image",
                 "--embedding-model", str(config["embedding_model"]),
                 "--embedding-base-url", args.embedding_url,

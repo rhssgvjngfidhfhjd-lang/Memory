@@ -11,6 +11,8 @@ from benchmarks.baseline_runtime.parallel_runner import (
     parallel_map_ordered,
     save_sample_artifact,
     signature_digest,
+    validated_paired_resume_signatures,
+    validated_qa_only_resume_signatures,
 )
 
 
@@ -81,3 +83,48 @@ def test_output_layout_standardizes_pipeline_and_sample_checkpoints() -> None:
     assert layout.sample_checkpoint_dir == Path(
         "outputs/H2HMEM/MemVerse/.checkpoint/samples"
     )
+
+
+def test_historical_resume_signature_requires_matching_state_and_qa_pair() -> None:
+    with tempfile.TemporaryDirectory() as directory:
+        root = Path(directory)
+        state = root / "state.json"
+        qa = root / "qa.json"
+        state.write_text('{"signature":"old"}', encoding="utf-8")
+        qa.write_text('{"signature":"old"}', encoding="utf-8")
+        assert validated_paired_resume_signatures(
+            [("sample", state, qa)]
+        ) == ("old",)
+
+        qa.write_text('{"signature":"other"}', encoding="utf-8")
+        try:
+            validated_paired_resume_signatures([("sample", state, qa)])
+        except RuntimeError as exc:
+            assert "signature mismatch" in str(exc)
+        else:
+            raise AssertionError("mismatched durable checkpoints must be rejected")
+
+
+def test_qa_only_resume_uses_audited_provenance_not_build_signature() -> None:
+    with tempfile.TemporaryDirectory() as directory:
+        root = Path(directory)
+        provenance = root / ".mma_reuse_provenance.json"
+        qa = root / "qa.json"
+        provenance.write_text(
+            '{"mode":"qa_only_isolated_memory_reuse"}', encoding="utf-8"
+        )
+        qa.write_text(
+            '{"version":1,"sample_id":"sample","signature":"qa-run"}',
+            encoding="utf-8",
+        )
+        assert validated_qa_only_resume_signatures(
+            [("sample", provenance, qa)]
+        ) == ("qa-run",)
+
+        provenance.write_text('{"mode":"other"}', encoding="utf-8")
+        try:
+            validated_qa_only_resume_signatures([("sample", provenance, qa)])
+        except RuntimeError as exc:
+            assert "provenance mode" in str(exc)
+        else:
+            raise AssertionError("unaudited memory reuse must be rejected")

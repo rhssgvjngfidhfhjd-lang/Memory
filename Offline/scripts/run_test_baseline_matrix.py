@@ -30,6 +30,9 @@ WORKSPACE = ROOT.parent
 sys.path.insert(0, str(ROOT / "src"))
 
 from evidence_policy.split_manifest import SplitManifestIndex  # noqa: E402
+from benchmarks.baseline_runtime.call_contract import (  # noqa: E402
+    audit_baseline_call_flow,
+)
 from benchmarks.h2hmem_harness.prompts import (  # noqa: E402
     prompt_sha256 as h2hmem_prompt_sha256,
 )
@@ -51,6 +54,15 @@ BENCHMARK_ARGUMENT = {
 # Confirmed shortest-job-first order from docs/plan_baseline.md. MemVerse is
 # deliberately last because its memory construction is substantially slower.
 JOB_ORDER = (
+    ("NaiveRAG", "Mem-Gallery"),
+    ("NaiveRAG", "H2HMEM"),
+    ("NaiveRAG", "WorldMemArena"),
+    ("MuRAG", "Mem-Gallery"),
+    ("MuRAG", "H2HMEM"),
+    ("MuRAG", "WorldMemArena"),
+    ("UniversalRAG", "Mem-Gallery"),
+    ("UniversalRAG", "H2HMEM"),
+    ("UniversalRAG", "WorldMemArena"),
     ("M3-Agent-caption", "H2HMEM"),
     ("M3-Agent-caption", "Mem-Gallery"),
     ("M3-Agent-caption", "WorldMemArena"),
@@ -74,6 +86,15 @@ JOB_ORDER = (
     ("MemVerse", "WorldMemArena"),
 )
 SMOKE_JOB_ORDER = (
+    ("NaiveRAG", "Mem-Gallery"),
+    ("NaiveRAG", "H2HMEM"),
+    ("NaiveRAG", "WorldMemArena"),
+    ("MuRAG", "Mem-Gallery"),
+    ("MuRAG", "H2HMEM"),
+    ("MuRAG", "WorldMemArena"),
+    ("UniversalRAG", "Mem-Gallery"),
+    ("UniversalRAG", "H2HMEM"),
+    ("UniversalRAG", "WorldMemArena"),
     ("M3-Agent-caption", "H2HMEM"),
     ("M3-Agent-caption", "Mem-Gallery"),
     ("M3-Agent-caption", "WorldMemArena"),
@@ -83,6 +104,8 @@ SMOKE_JOB_ORDER = (
     ("AUGUSTUSMemory", "Mem-Gallery"),
     ("MMA", "Mem-Gallery"),
     ("MIRIX", "Mem-Gallery"),
+    ("MIRIX", "H2HMEM"),
+    ("MIRIX", "WorldMemArena"),
     ("OmniSimpleMem", "Mem-Gallery"),
 )
 def now() -> str:
@@ -455,7 +478,10 @@ def check_services(endpoints: list[str], embedding_url: str, config: dict[str, A
             )
     payload = request_json(
         embedding_url.rstrip("/") + "/embeddings",
-        {"model": EMBEDDING_MODEL, "input": ["test-only matrix preflight"]},
+        {
+            "model": str(config["embedding_model"]),
+            "input": ["test-only matrix preflight"],
+        },
     )
     rows = payload.get("data") or []
     dimension = len(rows[0].get("embedding") or []) if rows else 0
@@ -510,14 +536,36 @@ def common_args(
         )
     elif job.method == "MIRIX":
         executor_max_tokens = int(
-            config.get("mirix_executor_max_tokens") or 8192
+            config.get("mirix_executor_max_tokens") or 2048
+        )
+    executor_hard_max_tokens = executor_max_tokens
+    if job.method == "MIRIX":
+        executor_hard_max_tokens = int(
+            config.get("mirix_executor_retry_max_tokens") or 4096
+        )
+        if executor_hard_max_tokens < executor_max_tokens:
+            raise ValueError(
+                "mirix_executor_retry_max_tokens cannot be below the initial cap"
+            )
+    sample_concurrency = int(
+        config.get("smoke_sample_concurrency", 4)
+        if smoke
+        else config["sample_concurrency"]
+    )
+    if not smoke and job.method == "MIRIX" and job.benchmark == "WorldMemArena":
+        sample_concurrency = int(
+            config.get("mirix_wma_sample_concurrency") or sample_concurrency
         )
     arguments = [
         "--baseline", job.method,
         "--result-dir", str(result_dir),
         "--baseline-state-dir", str(result_dir / "memory" / "datasets"),
-        "--sample-concurrency", "1" if smoke else str(config["sample_concurrency"]),
-        "--answer-concurrency", "1" if smoke else str(config["answer_concurrency"]),
+        "--sample-concurrency", str(sample_concurrency),
+        "--answer-concurrency", str(
+            config.get("smoke_answer_concurrency", 4)
+            if smoke
+            else config["answer_concurrency"]
+        ),
         "--checkpoint-every", str(config["checkpoint_every"]),
         "--answer-model", str(config["answer_model"]),
         "--answer-base-url", endpoint,
@@ -527,16 +575,22 @@ def common_args(
         "--executor-base-url", endpoint,
         "--executor-temperature", str(config["executor_temperature"]),
         "--executor-max-tokens", str(executor_max_tokens),
+        "--executor-hard-max-tokens", str(executor_hard_max_tokens),
         "--executor-visual-input", str(config["executor_visual_input"]),
         "--embedding-model", str(config["embedding_model"]),
         "--embedding-base-url", embedding_url,
         "--embedding-dim", str(config["embedding_dim"]),
         "--top-k", str(config["top_k"]),
         "--request-timeout", str(config["request_timeout"]),
+        "--qa-request-timeout", str(config.get("qa_request_timeout") or 90),
         "--retries", str(config["retries"]),
         "--efficiency-config", str(config["efficiency_config"]),
         "--resume",
     ]
+    if job.method in {"NaiveRAG", "MuRAG", "UniversalRAG"}:
+        # These baselines are pure Top-K retrievers.  The graph append default
+        # belongs to HiveMem and would otherwise relabel evaluation as @K+2.
+        arguments.append("--no-graph-retrieval")
     reasoning_effort = str(config.get("reasoning_effort") or "").strip()
     if reasoning_effort:
         arguments.extend(["--reasoning-effort", reasoning_effort])
@@ -545,14 +599,26 @@ def common_args(
             [
                 "--m2a-wma-rounds-per-ingest",
                 str(int(config.get("m2a_wma_rounds_per_ingest") or 1)),
+                (
+                    "--m2a-fail-open-retrieval"
+                    if bool(config.get("m2a_fail_open_retrieval", False))
+                    else "--no-m2a-fail-open-retrieval"
+                ),
             ]
         )
-    if job.method == "M2A" and bool(
-        config.get("m2a_skip_failed_build_points", False)
-    ):
+    if job.method == "M2A":
         arguments.extend(
             [
-                "--m2a-skip-failed-build-points",
+                (
+                    "--m2a-salvage-truncated-updates"
+                    if bool(config.get("m2a_salvage_truncated_updates", False))
+                    else "--no-m2a-salvage-truncated-updates"
+                ),
+                (
+                    "--m2a-skip-failed-build-points"
+                    if bool(config.get("m2a_skip_failed_build_points", False))
+                    else "--no-m2a-skip-failed-build-points"
+                ),
                 "--m2a-max-consecutive-failed-build-points",
                 str(
                     int(
@@ -849,6 +915,18 @@ def validate_output(
         }
     )
     write_json_atomic(manifest_path, manifest)
+    if job.method in {"MIRIX", "NaiveRAG", "MuRAG", "UniversalRAG"}:
+        audit = audit_baseline_call_flow(
+            result_dir,
+            baseline=job.method,
+            benchmark=job.benchmark,
+            expected_qa=expected_count,
+            expected_top_k=int(config["top_k"]),
+        )
+        write_json_atomic(result_dir / "call_flow_audit.json", audit)
+        if not audit["passed"]:
+            preview = "; ".join(audit["errors"][:5])
+            raise RuntimeError(f"{job.name}: call-flow audit failed: {preview}")
 
 
 def run_process(
@@ -1208,6 +1286,16 @@ def main() -> None:
         help="Override the protocol Run-ID without changing the fixed split protocol.",
     )
     parser.add_argument(
+        "--top-k",
+        type=int,
+        help="Override the protocol retrieval budget for an isolated experiment.",
+    )
+    parser.add_argument(
+        "--status-file-name",
+        default="status.json",
+        help="Status filename within the Run-ID directory.",
+    )
+    parser.add_argument(
         "--m3-reuse-run-id",
         default="",
         help=(
@@ -1237,11 +1325,18 @@ def main() -> None:
 
     if args.skip_smoke and args.smoke_only:
         parser.error("--skip-smoke and --smoke-only cannot be used together")
+    if args.top_k is not None and args.top_k < 1:
+        parser.error("--top-k must be positive")
 
     if args.run_id:
         if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", args.run_id):
             raise ValueError("--run-id must be a safe path component")
         RUN_ID = args.run_id
+    if (
+        Path(args.status_file_name).name != args.status_file_name
+        or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", args.status_file_name)
+    ):
+        raise ValueError("--status-file-name must be a safe filename")
     if args.m3_reuse_run_id:
         if not re.fullmatch(
             r"[A-Za-z0-9][A-Za-z0-9._-]*", args.m3_reuse_run_id
@@ -1297,14 +1392,16 @@ def main() -> None:
         config["m3_reuse_state_roots"] = {
             benchmark: str(path) for benchmark, path in reuse_roots.items()
         }
-    config["top_k"] = int(PROTOCOL["top_k"])
+    config["top_k"] = int(
+        args.top_k if args.top_k is not None else PROTOCOL["top_k"]
+    )
     config["efficiency_config"] = str(
         args.efficiency_config.expanduser().resolve()
     )
     if str(config.get("judge_model")) != "openai/gpt-4o-mini":
         raise ValueError("This planned run requires judge_model=openai/gpt-4o-mini")
     selection = load_selection(args.split_manifest)
-    status = Status(run_root / "status.json", endpoints, output_root)
+    status = Status(run_root / args.status_file_name, endpoints, output_root)
     try:
         check_services(endpoints, args.embedding_base_url, config)
         data_dirs = stage_inputs(run_root / "_test_inputs", selection)

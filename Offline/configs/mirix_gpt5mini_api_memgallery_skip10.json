@@ -18,7 +18,7 @@
   "executor_base_url": "https://openrouter.ai/api/v1",
   "executor_temperature": 0.0,
   "executor_max_tokens": 512,
-  "mirix_executor_max_tokens": 1024,
+  "mirix_executor_max_tokens": 2048,
   "mirix_skip_failed_build_points": true,
   "mirix_max_consecutive_failed_build_points": 10,
   "mma_executor_max_tokens": 4096,

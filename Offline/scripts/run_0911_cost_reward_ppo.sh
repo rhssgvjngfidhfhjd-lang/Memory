@@ -6,7 +6,10 @@ RUN_NAME=${2:?usage: run_0911_cost_reward_ppo.sh memgallery|h2hmem|wma RUN_NAME}
 COST_LAMBDA=${3:-0.1}
 WORKSPACE=/data/haozhen/Memory-clean
 OFFLINE_ROOT="$WORKSPACE/Offline"
-OUTPUT_DIR="$OFFLINE_ROOT/outputs/PPO/$RUN_NAME"
+OUTPUT_ROOT=${EVIDENCE_POLICY_OUTPUT_ROOT:-$OFFLINE_ROOT/outputs/PPO}
+OUTPUT_DIR="$OUTPUT_ROOT/$RUN_NAME"
+DISABLED_EVIDENCE_TYPE=${EVIDENCE_POLICY_DISABLED_TYPE:-}
+SKIP_INVALID_RESPONSE=${EVIDENCE_POLICY_SKIP_INVALID_RESPONSE:-false}
 PYTHON=/data/haozhen/miniconda3/envs/pipeline_repro/bin/python
 JUDGE_KEY_FILE="$WORKSPACE/Nvida_api/Openrouter_api"
 WANDB_PROJECT=hivemem-evidence-policy-v2
@@ -54,11 +57,22 @@ if [[ ! "$COST_LAMBDA" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
   exit 2
 fi
 
+if [[ -n "$DISABLED_EVIDENCE_TYPE" && ! "$DISABLED_EVIDENCE_TYPE" =~ ^(summary|dialogue|caption|image|vp)$ ]]; then
+  echo "unsupported disabled evidence type: $DISABLED_EVIDENCE_TYPE" >&2
+  exit 2
+fi
+
+if [[ "$SKIP_INVALID_RESPONSE" != true && "$SKIP_INVALID_RESPONSE" != false ]]; then
+  echo "EVIDENCE_POLICY_SKIP_INVALID_RESPONSE must be true or false" >&2
+  exit 2
+fi
+
 if [[ ! "$RUN_NAME" =~ ^${PREFIX}_[0-9]{4}PPO_ ]]; then
   echo "run name $RUN_NAME does not match benchmark/date prefix ${PREFIX}_MMDDPPO_" >&2
   exit 2
 fi
 
+CONFIG=${EVIDENCE_POLICY_BASE_CONFIG:-$CONFIG}
 BASE_CONFIG="$CONFIG"
 CONFIG="$OUTPUT_DIR/run_control/effective_config.json"
 
@@ -100,7 +114,7 @@ wait_for_endpoint() {
 }
 
 validate_preflight() {
-  "$PYTHON" - "$CONFIG" "$BENCHMARK" "$EXPECTED_TRAIN" "$EXPECTED_VALIDATION" "$EXPECTED_TEST" "$COST_LAMBDA" "$OFFLINE_ROOT" <<'PY'
+  "$PYTHON" - "$CONFIG" "$BENCHMARK" "$EXPECTED_TRAIN" "$EXPECTED_VALIDATION" "$EXPECTED_TEST" "$COST_LAMBDA" "$OFFLINE_ROOT" "$DISABLED_EVIDENCE_TYPE" "$SKIP_INVALID_RESPONSE" <<'PY'
 import json, sys
 from pathlib import Path
 
@@ -109,6 +123,8 @@ benchmark = sys.argv[2]
 expected = tuple(map(int, sys.argv[3:6]))
 expected_lambda = float(sys.argv[6])
 root = Path(sys.argv[7])
+disabled_evidence_type = sys.argv[8]
+skip_invalid_response = sys.argv[9] == "true"
 config = json.loads(config_path.read_text())
 assert config["top_k"] == 5
 assert config["graph_options"]["mode"] == "append"
@@ -129,6 +145,10 @@ assert reward["upper_quantile"] == 0.95
 assert reward["initial_range_floor_ratio"] == 0.25
 assert reward["range_epsilon"] == 1e-12
 assert reward["std_epsilon"] == 1e-8
+assert config["evidence"].get("disabled_types", []) == (
+    [disabled_evidence_type] if disabled_evidence_type else []
+)
+assert config["ppo"].get("skip_invalid_response", False) is skip_invalid_response
 if benchmark == "wma":
     assert config["excluded_categories"] == []
 
@@ -147,14 +167,17 @@ for split in ("train", "val", "test"):
     ))
 assert tuple(counts) == expected, (counts, expected)
 PY
+  [[ $? -eq 0 ]] || return 1
   "$PYTHON" "$OFFLINE_ROOT/scripts/evidence_policy.py" \
     --config "$CONFIG" audit-vp > "$OUTPUT_DIR/run_control/vp_audit.json"
+  [[ $? -eq 0 ]] || return 1
   "$PYTHON" - "$OUTPUT_DIR/run_control/vp_audit.json" <<'PY'
 import json, sys
 report = json.load(open(sys.argv[1]))
 assert report["missing_records"] == 0, report
 assert report["missing_crop_files"] == 0, report
 PY
+  [[ $? -eq 0 ]] || return 1
   if [[ "$BENCHMARK" == "h2hmem" ]]; then
     "$PYTHON" - "$CONFIG" "$OFFLINE_ROOT" <<'PY'
 import json, sys
@@ -179,6 +202,7 @@ for memories in bank.glob("datasets/*/memories.jsonl"):
 assert image_rows > 0, "H2HMEM captioned bank has no image memories"
 assert missing_captions == 0, (image_rows, missing_captions)
 PY
+    [[ $? -eq 0 ]] || return 1
   fi
 }
 
@@ -357,13 +381,15 @@ upload_wandb() {
 }
 
 cp "$BASE_CONFIG" "$OUTPUT_DIR/run_control/input_config.json"
-"$PYTHON" - "$BASE_CONFIG" "$CONFIG" "$COST_LAMBDA" <<'PY'
+"$PYTHON" - "$BASE_CONFIG" "$CONFIG" "$COST_LAMBDA" "$DISABLED_EVIDENCE_TYPE" "$SKIP_INVALID_RESPONSE" <<'PY'
 import json, sys
 from pathlib import Path
 
 source, destination = map(Path, sys.argv[1:3])
 config = json.loads(source.read_text(encoding="utf-8"))
 config["reward"]["cost_tradeoff_lambda"] = float(sys.argv[3])
+config["evidence"]["disabled_types"] = [sys.argv[4]] if sys.argv[4] else []
+config["ppo"]["skip_invalid_response"] = sys.argv[5] == "true"
 split_manifest_value = config.get("split_manifest")
 if split_manifest_value:
     split_manifest = Path(split_manifest_value)
@@ -384,6 +410,7 @@ sha256sum \
   "$OFFLINE_ROOT/src/benchmarks/memgallery_harness/runner/answer_client.py" \
   "$OFFLINE_ROOT/scripts/evidence_policy.py" \
   "$OFFLINE_ROOT/src/evidence_policy/ppo.py" \
+  "$OFFLINE_ROOT/src/evidence_policy/rollout.py" \
   "$OFFLINE_ROOT/src/evidence_policy/rollout.py" \
   > "$OUTPUT_DIR/run_control/source_sha256.txt"
 

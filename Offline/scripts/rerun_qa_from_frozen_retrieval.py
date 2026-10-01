@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -27,13 +28,23 @@ from benchmarks.memgallery_harness.runner.answer_client import (
     VLMAnswerClient as MemGalleryAnswerClient,
 )
 from benchmarks.memgallery_harness.runner.metrics import (
+    _cost_from_inference_aggregate,
+    _latency_from_inference_aggregate,
+    _sum_modeled_latencies,
+    _sum_priced_costs,
     add_memory_metrics,
     add_retrieval_memory_tokens,
+    merge_existing_llm_judge_metrics,
     summarize_results as summarize_memory_results,
     write_efficiency_metrics,
     write_runtime_call_metrics,
 )
 from benchmarks.memgallery_harness.runner.prompts import prompt_manifest
+from benchmarks.memeye_harness.prompts import prompt_manifest as memeye_prompt_manifest
+from benchmarks.memlens_harness.prompts import prompt_manifest as memlens_prompt_manifest
+from benchmarks.multimodal_dataset_harness.runner import (
+    _answer_job as answer_multimodal_job,
+)
 from benchmarks.wma_harness.eval_wma import (
     answer_job as answer_wma_job,
     to_pipeline_qa_record,
@@ -49,13 +60,27 @@ from benchmarks.wma_harness.runner.prompts import (
 )
 
 
-BENCHMARKS = ("Mem-Gallery", "H2HMEM", "WorldMemArena")
-EXPECTED_QA = {"Mem-Gallery": 275, "H2HMEM": 360, "WorldMemArena": 440}
+BENCHMARKS = ("Mem-Gallery", "H2HMEM", "WorldMemArena", "MemEye", "MEMLENS")
+EXPECTED_QA = {
+    "Mem-Gallery": 275,
+    "H2HMEM": 360,
+    "WorldMemArena": 440,
+    "MemEye": 371,
+    "MEMLENS": 173,
+}
 BENCHMARK_SLUG = {
     "Mem-Gallery": "memgallery",
     "H2HMEM": "h2hmem",
     "WorldMemArena": "worldmemarena",
+    "MemEye": "memeye",
+    "MEMLENS": "memlens",
 }
+ISOLATED_QA_VERSION = "isolated-final-answer-v1"
+STRICT_SHORT_ANSWER_INSTRUCTION = """Return the shortest direct answer only.
+Do not explain or provide supporting context.
+For every yes/no question, output exactly "Yes." or "No."
+For entity, date, number, location, or image-ID questions,
+return only the requested value."""
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -66,7 +91,13 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
     ]
 
 
-def prompt_metadata(benchmark: str) -> dict[str, Any]:
+def prompt_metadata(
+    benchmark: str, *, strict_short_answer: bool = False
+) -> dict[str, Any]:
+    if benchmark == "MemEye":
+        return memeye_prompt_manifest()
+    if benchmark == "MEMLENS":
+        return memlens_prompt_manifest()
     if benchmark == "H2HMEM":
         return {
             "prompt_version": H2_PROMPT_VERSION,
@@ -79,7 +110,52 @@ def prompt_metadata(benchmark: str) -> dict[str, Any]:
             "prompt_source": WMA_PROMPT_SOURCE,
             "prompt_sha256": wma_prompt_sha256(),
         }
-    return prompt_manifest()
+    metadata = prompt_manifest()
+    if not strict_short_answer:
+        return metadata
+    payload = {
+        "base_prompt_sha256": metadata["prompt_sha256"],
+        "strict_instruction": STRICT_SHORT_ANSWER_INSTRUCTION,
+        "answer_tag_scope": "text_inside_required_answer_block",
+    }
+    return {
+        "prompt_version": f"{metadata['prompt_version']}+strict-short-answer-v1",
+        "prompt_source": f"{metadata['prompt_source']}+{Path(__file__).name}",
+        "prompt_sha256": hashlib.sha256(
+            json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
+        ).hexdigest(),
+        "base_prompt_sha256": metadata["prompt_sha256"],
+        "strict_answer_instruction": STRICT_SHORT_ANSWER_INSTRUCTION,
+    }
+
+
+def transform_answer_messages(
+    messages: list[dict[str, Any]], *, strict_short_answer: bool
+) -> list[dict[str, Any]]:
+    transformed = [dict(message) for message in messages]
+    if not strict_short_answer:
+        return transformed
+    instruction = (
+        "For the text inside the required <answer>...</answer> block:\n"
+        + STRICT_SHORT_ANSWER_INSTRUCTION
+    )
+    if transformed and transformed[0].get("role") == "system":
+        transformed[0]["content"] = (
+            f"{transformed[0].get('content', '')}\n\n{instruction}"
+        )
+    user_indices = [
+        index
+        for index, message in enumerate(transformed)
+        if message.get("role") == "user"
+    ]
+    if not user_indices:
+        raise ValueError("Isolated QA prompt has no user message")
+    user_index = user_indices[-1]
+    transformed[user_index]["content"] = (
+        f"{transformed[user_index].get('content', '')}"
+        f"\n\nAnswer-style requirement:\n{instruction}"
+    )
+    return transformed
 
 
 def prepared_jobs_path(source_dir: Path, benchmark: str) -> Path:
@@ -94,16 +170,55 @@ def prepared_jobs_path(source_dir: Path, benchmark: str) -> Path:
 
 def answer_components(
     benchmark: str,
+    *,
+    isolate_final_answer: bool = False,
+    strict_short_answer: bool = False,
+    attach_retrieved_images: bool = False,
 ) -> tuple[type[MemGalleryAnswerClient], Callable[..., tuple[dict, dict]]]:
     if benchmark == "WorldMemArena":
-        return WMAAnswerClient, answer_wma_job
-    if benchmark == "H2HMEM":
-        return MemGalleryAnswerClient, answer_conversation_job
+        client_cls = WMAAnswerClient
+        answer_function = answer_wma_job
+    elif benchmark == "H2HMEM":
+        client_cls = MemGalleryAnswerClient
+        answer_function = answer_conversation_job
+    elif benchmark in {"MemEye", "MEMLENS"}:
+        client_cls = MemGalleryAnswerClient
 
-    def answer_memgallery(client, job):
-        return answer_dataset_job(client, job, allow_answer_errors=False)
+        def answer_multimodal(client, job):
+            return answer_multimodal_job(
+                client,
+                job,
+                benchmark=benchmark,
+                allow_answer_errors=False,
+                attach_retrieved_images=attach_retrieved_images,
+            )
 
-    return MemGalleryAnswerClient, answer_memgallery
+        answer_function = answer_multimodal
+    else:
+        client_cls = MemGalleryAnswerClient
+
+        def answer_memgallery(client, job):
+            return answer_dataset_job(client, job, allow_answer_errors=False)
+
+        answer_function = answer_memgallery
+
+    if not isolate_final_answer and not strict_short_answer:
+        return client_cls, answer_function
+
+    def answer_isolated(client, job):
+        isolated_job = dict(job)
+        if isolate_final_answer:
+            isolated_job.pop("native_answer", None)
+        result, trace = answer_function(client, isolated_job)
+        if strict_short_answer and trace.get("answer_prompt_messages"):
+            trace["answer_prompt_messages"] = transform_answer_messages(
+                trace["answer_prompt_messages"], strict_short_answer=True
+            )
+        if isolate_final_answer:
+            result["native_answer_trace"] = {}
+        return result, trace
+
+    return client_cls, answer_isolated
 
 
 def metric_rows(
@@ -118,7 +233,7 @@ def metric_rows(
             )
             normalized.append(item)
         sample_field = "_metric_sample_id"
-    elif benchmark == "WorldMemArena":
+    elif benchmark in {"WorldMemArena", "MemEye", "MEMLENS"}:
         normalized = results
         sample_field = "sample_id"
     else:
@@ -140,16 +255,172 @@ def copy_if_present(source: Path, destination: Path) -> None:
         shutil.copy2(source, destination)
 
 
+def preserve_frozen_memory_efficiency(
+    source_dir: Path,
+    efficiency: dict[str, Any],
+) -> dict[str, Any]:
+    """Keep build cost/latency on the model profile that built the bank.
+
+    A frozen-memory replay may use a different final-answer model.  Repricing
+    the copied memory-build trace with that answer model's profile makes mixed
+    runs (for example, Qwen3.5-9B build + Qwen3-VL-4B answer) incorrect.
+    """
+    source_path = source_dir / "efficiency_metrics.json"
+    if not source_path.is_file():
+        source_path = source_dir / "metrics.json"
+    if not source_path.is_file():
+        return efficiency
+
+    source = json.loads(source_path.read_text(encoding="utf-8"))
+    if not all(isinstance(source.get(key), dict) for key in ("cost_mb", "latency_mb")):
+        return efficiency
+
+    combined = dict(efficiency)
+    combined["cost_mb"] = dict(source["cost_mb"])
+    combined["latency_mb"] = dict(source["latency_mb"])
+
+    source_components = source.get("components") or {}
+    source_profiles = source.get("profiles") or {}
+    source_profile = source.get("profile") or {}
+    source_component_efficiency = source.get("component_efficiency") or {}
+    current_component_efficiency = efficiency.get("component_efficiency") or {}
+    source_retrieval = source_component_efficiency.get("retrieval") or {}
+    if not source_retrieval and isinstance(source_components.get("retrieval"), dict):
+        retrieval_profile = source_profiles.get("retrieval") or source_profile
+        if retrieval_profile:
+            source_retrieval = {
+                "model": retrieval_profile.get("model"),
+                "cost": _cost_from_inference_aggregate(
+                    source_components["retrieval"],
+                    retrieval_profile,
+                    aggregation="sum_retrieval_cost_divided_by_samples",
+                ),
+                "latency": _latency_from_inference_aggregate(
+                    source_components["retrieval"],
+                    retrieval_profile,
+                    aggregation="sum_retrieval_latency_divided_by_samples",
+                ),
+            }
+    current_answer = current_component_efficiency.get("answer") or {}
+    if source_retrieval and current_answer:
+        component_efficiency = dict(current_component_efficiency)
+        component_efficiency["retrieval"] = source_retrieval
+        combined["component_efficiency"] = component_efficiency
+
+        current_profiles = dict(efficiency.get("profiles") or {})
+        if source_profiles.get("retrieval"):
+            current_profiles["retrieval"] = source_profiles["retrieval"]
+        elif source_profile:
+            current_profiles["retrieval"] = source_profile
+        combined["profiles"] = current_profiles
+
+        combined["cost_qa"] = _sum_priced_costs(
+            [source_retrieval["cost"], current_answer["cost"]],
+            num_samples=int(efficiency["cost_qa"].get("num_samples") or 0),
+            aggregation="sum_retrieval_answer_cost_divided_by_samples",
+            source="frozen_retrieval_plus_replayed_answer",
+        )
+        combined["latency_qa"] = _sum_modeled_latencies(
+            [source_retrieval["latency"], current_answer["latency"]],
+            num_samples=int(efficiency["latency_qa"].get("num_samples") or 0),
+            denominator_unit=str(
+                efficiency["latency_qa"].get("denominator_unit") or "QA"
+            ),
+            aggregation="sum_retrieval_answer_latency_divided_by_queries",
+            source="frozen_retrieval_plus_replayed_answer",
+        )
+
+    cost_mb = combined["cost_mb"]
+    cost_qa = combined["cost_qa"]
+    if cost_mb.get("available") and cost_qa.get("available"):
+        cost_sum = float(cost_mb["cost_sum_usd"]) + float(cost_qa["cost_sum_usd"])
+        num_samples = int(cost_mb["num_samples"])
+        mean = cost_sum / num_samples
+        combined["cost_total"] = {
+            "input_tokens": int(cost_mb["input_tokens"]) + int(cost_qa["input_tokens"]),
+            "output_tokens": int(cost_mb["output_tokens"]) + int(cost_qa["output_tokens"]),
+            "cost_sum_usd": cost_sum,
+            "cost_sum": cost_sum,
+            "num_samples": num_samples,
+            "mean_per_sample_usd": mean,
+            "mean_per_sample": mean,
+            "formula": (
+                f"({cost_mb['cost_sum_usd']:.12g} + {cost_qa['cost_sum_usd']:.12g}) "
+                f"/ {num_samples} = {mean:.12g} USD/sample"
+            ),
+            "aggregation": "sum_phase_priced_total_cost_divided_by_samples",
+            "pricing": "per_phase_model_profiles",
+            "available": True,
+        }
+
+    latency_mb = combined["latency_mb"]
+    latency_qa = combined["latency_qa"]
+    if latency_mb.get("available") and latency_qa.get("available"):
+        latency_sum = float(latency_mb["latency_sum_seconds"]) + float(
+            latency_qa["latency_sum_seconds"]
+        )
+        num_samples = int(latency_mb["num_samples"])
+        mean = latency_sum / num_samples
+        combined["latency_total"] = {
+            "latency_sum_seconds": latency_sum,
+            "num_samples": num_samples,
+            "denominator_unit": "sample",
+            "mean_per_sample_seconds": mean,
+            "formula": (
+                f"({latency_mb['latency_sum_seconds']:.12g} + "
+                f"{latency_qa['latency_sum_seconds']:.12g}) / {num_samples} "
+                f"= {mean:.12g} seconds/sample"
+            ),
+            "aggregation": "sum_phase_modeled_latency_divided_by_samples",
+            "profiles": "per_phase_model_profiles",
+            "available": True,
+        }
+    return combined
+
+
 def write_frozen_nonanswer_trace(source_dir: Path, result_dir: Path) -> Path:
     source = source_dir / "call_trace.jsonl"
     target = result_dir / ".checkpoint" / "frozen_mb_retrieval_call_trace.jsonl"
     rows = []
     if source.is_file():
+        source_rows = read_jsonl(source)
         rows = [
             row
-            for row in read_jsonl(source)
+            for row in source_rows
             if str(row.get("phase") or "") in {"memory_build", "retrieval"}
         ]
+        manifest_path = source_dir / "run_manifest.json"
+        manifest = (
+            json.loads(manifest_path.read_text(encoding="utf-8"))
+            if manifest_path.is_file()
+            else {}
+        )
+        if str(manifest.get("baseline") or "") == "M3-Agent-caption":
+            retrieval_rows = [
+                row for row in source_rows
+                if str(row.get("phase") or "") == "retrieval"
+            ]
+            if not retrieval_rows:
+                raise RuntimeError(
+                    "M3 frozen replay has no phase=retrieval calls; refusing to "
+                    "silently discard potentially mislabelled Control-Agent calls."
+                )
+            results_path = source_dir / "results.json"
+            if results_path.is_file():
+                results = json.loads(results_path.read_text(encoding="utf-8"))
+                expected_answer_calls = sum(
+                    int(row.get("answer_attempts") or 0) for row in results
+                )
+                traced_answer_calls = sum(
+                    str(row.get("phase") or "") == "qa" for row in source_rows
+                )
+                if traced_answer_calls != expected_answer_calls:
+                    raise RuntimeError(
+                        "M3 phase audit failed before isolated replay: "
+                        f"phase=qa calls={traced_answer_calls}, "
+                        f"final-answer attempts={expected_answer_calls}. "
+                        "Retrieval/Control calls may be mislabelled as qa."
+                    )
     write_jsonl_atomic(target, rows)
     return target
 
@@ -159,20 +430,30 @@ def build_pipeline_rows(
     jobs: list[dict[str, Any]],
     results: list[dict[str, Any]],
     traces: list[dict[str, Any]],
+    *,
+    isolate_final_answer: bool = False,
+    prompt_info: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
+    prompt_info = prompt_info or prompt_metadata(benchmark)
     if benchmark == "WorldMemArena":
-        return [
+        output = [
             to_pipeline_qa_record(result, trace)
             for result, trace in zip(results, traces)
         ]
-    if benchmark == "H2HMEM":
+        if isolate_final_answer:
+            for row in output:
+                row.pop("native_answer", None)
+        return output
+    if benchmark in {"H2HMEM", "MemEye", "MEMLENS"}:
         output = []
         for job in jobs:
             row = dict(job)
             # This field in the reused 0907a artifact contains the retired
             # generic prompt and is not used by the new answer path.
             row.pop("question_prompt", None)
-            row.update(prompt_metadata(benchmark))
+            if isolate_final_answer:
+                row.pop("native_answer", None)
+            row.update(prompt_info)
             output.append(row)
         return output
     if benchmark == "Mem-Gallery":
@@ -181,7 +462,9 @@ def build_pipeline_rows(
             row = dict(job)
             row.pop("question_prompt", None)
             row.pop("system_prompt", None)
-            row.update(prompt_metadata(benchmark))
+            if isolate_final_answer:
+                row.pop("native_answer", None)
+            row.update(prompt_info)
             output.append(row)
         return output
     return jobs
@@ -197,8 +480,10 @@ def main() -> None:
     parser.add_argument("--result-dir", type=Path, required=True)
     parser.add_argument("--answer-base-url", required=True)
     parser.add_argument("--answer-model", default="Qwen/Qwen3-VL-4B-Instruct")
+    parser.add_argument("--answer-api-key-file", type=Path)
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max-tokens", type=int, default=512)
+    parser.add_argument("--reasoning-effort", default="")
     parser.add_argument("--timeout", type=int, default=180)
     parser.add_argument("--retries", type=int, default=2)
     parser.add_argument("--concurrency", type=int, default=16)
@@ -210,8 +495,34 @@ def main() -> None:
         default=Path(__file__).resolve().parents[1] / "configs" / "model_efficiency.json",
     )
     parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument(
+        "--isolate-final-answer",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help=(
+            "Discard any baseline-native answer and answer only from the frozen "
+            "retrieved memories with the shared benchmark answer client."
+        ),
+    )
+    parser.add_argument(
+        "--strict-short-answer",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Append the benchmark-independent shortest-direct-answer contract.",
+    )
+    parser.add_argument(
+        "--openrouter-json-first",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Use OpenRouter JSON Schema output from the first attempt.",
+    )
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
+
+    if args.strict_short_answer and args.benchmark != "Mem-Gallery":
+        parser.error("--strict-short-answer is currently validated for Mem-Gallery only")
+    if args.strict_short_answer and not args.isolate_final_answer:
+        parser.error("--strict-short-answer requires --isolate-final-answer")
 
     source_dir = args.source_dir.expanduser().resolve()
     result_dir = args.result_dir.expanduser().resolve()
@@ -223,6 +534,8 @@ def main() -> None:
     for path in (source_results, source_trace, source_manifest_path):
         if not path.is_file():
             raise FileNotFoundError(f"Required source artifact not found: {path}")
+    source_manifest = json.loads(source_manifest_path.read_text(encoding="utf-8"))
+    attach_retrieved_images = bool(source_manifest.get("attach_retrieved_images", False))
     jobs_path = prepared_jobs_path(source_dir, args.benchmark)
     jobs = read_jsonl(jobs_path)
     frozen_traces = read_jsonl(source_trace)
@@ -253,17 +566,29 @@ def main() -> None:
     result_dir.mkdir(parents=True, exist_ok=True)
     checkpoint_dir = result_dir / ".checkpoint"
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
+    effective_prompt = prompt_metadata(
+        args.benchmark, strict_short_answer=args.strict_short_answer
+    )
     signature = {
-        "mode": "qa_from_frozen_retrieval_v1",
+        "mode": (
+            ISOLATED_QA_VERSION
+            if args.isolate_final_answer
+            else "qa_from_frozen_retrieval_v1"
+        ),
         "benchmark": args.benchmark,
         "baseline": args.baseline,
         "source_dir": str(source_dir),
         "jobs_sha256": sha256_file(jobs_path),
         "retrieval_trace_sha256": sha256_file(source_trace),
-        "prompt": prompt_metadata(args.benchmark),
+        "prompt": effective_prompt,
         "answer_model": args.answer_model,
         "temperature": args.temperature,
         "max_tokens": args.max_tokens,
+        "reasoning_effort": args.reasoning_effort,
+        "isolate_final_answer": args.isolate_final_answer,
+        "strict_short_answer": args.strict_short_answer,
+        "openrouter_json_first": args.openrouter_json_first,
+        "attach_retrieved_images": attach_retrieved_images,
         "top_k": args.top_k,
         "limit": args.limit,
     }
@@ -308,16 +633,48 @@ def main() -> None:
             },
         )
 
-    client_cls, answer_function = answer_components(args.benchmark)
+    client_cls, answer_function = answer_components(
+        args.benchmark,
+        isolate_final_answer=args.isolate_final_answer,
+        strict_short_answer=args.strict_short_answer,
+        attach_retrieved_images=attach_retrieved_images,
+    )
+    answer_api_key = "EMPTY"
+    if args.answer_api_key_file:
+        answer_api_key = (
+            args.answer_api_key_file.expanduser().resolve().read_text(encoding="utf-8").strip()
+        )
+        if not answer_api_key:
+            raise RuntimeError(f"Empty answer API key file: {args.answer_api_key_file}")
     client = client_cls(
         model=args.answer_model,
         base_url=args.answer_base_url,
+        api_key=answer_api_key,
         temperature=args.temperature,
         num_predict=args.max_tokens,
         timeout=args.timeout,
         retries=args.retries,
         think=False,
+        reasoning_effort=args.reasoning_effort,
     )
+    if args.strict_short_answer:
+        original_answer_messages = client.answer_messages_with_usage
+
+        def answer_messages_with_strict_prompt(**kwargs):
+            kwargs["messages"] = transform_answer_messages(
+                kwargs["messages"], strict_short_answer=True
+            )
+            return original_answer_messages(**kwargs)
+
+        client.answer_messages_with_usage = answer_messages_with_strict_prompt
+    if args.openrouter_json_first:
+        original_prebuilt_transport = client._answer_prebuilt_openai_compatible
+
+        def answer_prebuilt_with_json_schema(**kwargs):
+            kwargs["structured_json"] = True
+            return original_prebuilt_transport(**kwargs)
+
+        client._answer_prebuilt_openai_compatible = answer_prebuilt_with_json_schema
     pending = [
         job
         for job in jobs
@@ -371,7 +728,14 @@ def main() -> None:
     write_jsonl_atomic(result_dir / "retrieval_trace.jsonl", traces)
     write_jsonl_atomic(
         result_dir / "pipeline_qa.jsonl",
-        build_pipeline_rows(args.benchmark, jobs, results, traces),
+        build_pipeline_rows(
+            args.benchmark,
+            jobs,
+            results,
+            traces,
+            isolate_final_answer=args.isolate_final_answer,
+            prompt_info=effective_prompt,
+        ),
     )
     copy_if_present(
         source_dir / "memory" / "memory_snapshot.jsonl",
@@ -415,6 +779,8 @@ def main() -> None:
         model=args.answer_model,
         config_path=args.efficiency_config,
     )
+    efficiency = preserve_frozen_memory_efficiency(source_dir, efficiency)
+    write_json_atomic(result_dir / "efficiency_metrics.json", efficiency)
     for key in (
         "cost_mb",
         "cost_qa",
@@ -424,9 +790,9 @@ def main() -> None:
         "latency_total",
     ):
         summary[key] = efficiency[key]
+    summary = merge_existing_llm_judge_metrics(summary, result_dir)
     write_json_atomic(result_dir / "metrics.json", summary)
 
-    source_manifest = json.loads(source_manifest_path.read_text(encoding="utf-8"))
     manifest = {
         **source_manifest,
         "benchmark": args.benchmark,
@@ -435,17 +801,26 @@ def main() -> None:
         "answer_base_url": args.answer_base_url,
         "answer_temperature": args.temperature,
         "num_predict": args.max_tokens,
+        "reasoning_effort": args.reasoning_effort,
         "top_k": args.top_k,
         "questions": len(results),
         "completed": len(results),
         "answer_errors": 0,
         "memory_snapshot": str(result_dir / "memory" / "memory_snapshot.jsonl"),
-        "execution_mode": "qa_from_frozen_memory_and_retrieval",
+        "execution_mode": (
+            "isolated_qa_from_frozen_memory_and_retrieval"
+            if args.isolate_final_answer
+            else "qa_from_frozen_memory_and_retrieval"
+        ),
+        "final_answer_isolated_from_baseline_agent": args.isolate_final_answer,
+        "native_answer_reused": not args.isolate_final_answer,
+        "strict_short_answer": args.strict_short_answer,
+        "openrouter_json_first": args.openrouter_json_first,
         "reused_memory_bank_from": str(source_dir),
         "reused_retrieval_trace_from": str(source_trace),
         "frozen_retrieval_trace_sha256": sha256_file(source_trace),
         "run_signature": signature,
-        **prompt_metadata(args.benchmark),
+        **effective_prompt,
     }
     write_json_atomic(result_dir / "run_manifest.json", manifest)
     print(

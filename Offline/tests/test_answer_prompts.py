@@ -15,11 +15,14 @@ from benchmarks.answer_response import (
 )
 from benchmarks.h2hmem_harness.eval_h2hmem import answer_conversation_job
 from benchmarks.h2hmem_harness import prompts as h2_prompts
+from benchmarks.memeye_harness import prompts as memeye_prompts
+from benchmarks.memlens_harness import prompts as memlens_prompts
 from benchmarks.memgallery_harness.eval_memgallery import answer_dataset_job
 from benchmarks.memgallery_harness.runner.answer_client import VLMAnswerClient
 from benchmarks.memgallery_harness.runner import prompts as memgallery_prompts
 from benchmarks.wma_harness.eval_wma import answer_job as answer_wma_job
 from benchmarks.wma_harness.runner import prompts as wma_prompts
+from benchmarks.zero_hit import ZERO_HIT_PROMPT_MARKER
 
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[2]
@@ -50,8 +53,42 @@ class CustomPromptParityTest(unittest.TestCase):
             question_type=metadata.get("question_type", ""),
             query_images=metadata.get("query_images"),
             memory_evidence=evidence,
+            **(
+                {"question_date": metadata.get("question_date", "")}
+                if module in (memeye_prompts, memlens_prompts)
+                else {}
+            ),
         )
         self.assertEqual(actual, expected)
+
+    def test_memeye_messages_match_reference(self):
+        self.assert_prompt_parity(
+            "memeye",
+            memeye_prompts,
+            {
+                "question": "Who is shown in the question image?",
+                "question_type": "X3/Y2",
+                "query_images": [
+                    {"id": "avatars/P01_marcus.png", "caption": "Marcus"}
+                ],
+            },
+            ["first memory", "second memory"],
+        )
+
+    def test_memlens_messages_match_reference_and_include_question_date(self):
+        self.assert_prompt_parity(
+            "memlens",
+            memlens_prompts,
+            {
+                "question": "What happened before this question?",
+                "question_type": "temporal_reasoning",
+                "question_date": "2024/05/31 (Fri) 07:58",
+                "query_images": [
+                    {"id": "needle/image.jpg", "caption": "A calendar"}
+                ],
+            },
+            ["first memory", "second memory"],
+        )
 
     def test_memgallery_messages_match_reference_for_all_special_types(self):
         for question_type in ("FR", "CD", "VS", "AR"):
@@ -179,6 +216,26 @@ class AnswerContractTest(unittest.TestCase):
 
 
 class PrebuiltMessageClientTest(unittest.TestCase):
+    def test_final_answer_rejects_internal_agent_history(self):
+        client = VLMAnswerClient(retries=0)
+        invalid_cases = (
+            [{"role": "user", "content": "Question only"}],
+            [
+                {"role": "system", "content": "QA prompt"},
+                {"role": "assistant", "content": "Internal agent answer"},
+                {"role": "user", "content": "Question"},
+            ],
+            [
+                {"role": "system", "content": "Internal memory-agent prompt"},
+                {"role": "system", "content": "QA prompt"},
+            ],
+        )
+        for messages in invalid_cases:
+            with self.subTest(messages=messages), self.assertRaisesRegex(
+                ValueError, "Final answer isolation"
+            ):
+                client.answer_messages_with_usage(messages=messages, memory_items=[])
+
     def test_context_capacity_truncation_retries_with_smaller_images(self):
         class ContextLimitedClient(VLMAnswerClient):
             def __init__(self):
@@ -429,6 +486,33 @@ class HarnessAnswerJobTest(unittest.TestCase):
         self.assertNotIn("RETIRED", str(client.request["messages"]))
         self.assertEqual(trace["answer_prompt_messages"], client.request["messages"])
 
+    def test_memgallery_zero_hit_uses_prompt_marker_without_memory(self):
+        client = self.FakeClient("Unknown")
+        result, trace = answer_dataset_job(
+            client,
+            {
+                "query_id": "q-empty",
+                "manifest_question_id": "travel_q0001",
+                "dataset": "travel",
+                "sample_id": "Alice",
+                "qa_index": 2,
+                "question": "Where did she go?",
+                "category": "FR",
+                "query_image": None,
+                "original_answer": "",
+                "retrieved_ids": [],
+                "retrieved_source_groups": [],
+                "clue": [],
+                "memory_items": [],
+                "retrieval_top_k": [],
+            },
+            allow_answer_errors=False,
+        )
+        self.assertTrue(result["zero_hit_prompt_marker_used"])
+        self.assertTrue(trace["zero_hit_prompt_marker_used"])
+        self.assertEqual(client.request["memory_items"], [])
+        self.assertIn(ZERO_HIT_PROMPT_MARKER, str(client.request["messages"]))
+
     def test_h2hmem_job_uses_custom_messages_and_parses_tags(self):
         client = self.FakeClient("Almond")
         result, trace = answer_conversation_job(
@@ -450,6 +534,28 @@ class HarnessAnswerJobTest(unittest.TestCase):
         )
         self.assertEqual(result["system_answer"], "Almond")
         self.assertEqual(trace["answer_prompt_messages"], client.request["messages"])
+
+    def test_h2hmem_zero_hit_uses_prompt_marker_without_memory(self):
+        client = self.FakeClient("Not mentioned")
+        result, trace = answer_conversation_job(
+            client,
+            {
+                "uid": "q-empty",
+                "query_id": "q-empty",
+                "manifest_question_id": "manifest-empty",
+                "conversation_id": "dialogue1",
+                "session_id": "session2",
+                "question": "What was mentioned?",
+                "category": "Unimodal Precise Recall",
+                "memory_items": [],
+                "retrieval_top_k": [],
+                "query_image_payload": None,
+            },
+        )
+        self.assertTrue(result["zero_hit_prompt_marker_used"])
+        self.assertTrue(trace["zero_hit_prompt_marker_used"])
+        self.assertEqual(client.request["memory_items"], [])
+        self.assertIn(ZERO_HIT_PROMPT_MARKER, str(client.request["messages"]))
 
     def test_wma_job_uses_custom_messages_and_parses_tags(self):
         client = self.FakeClient("2024")
@@ -474,6 +580,28 @@ class HarnessAnswerJobTest(unittest.TestCase):
         )
         self.assertEqual(result["system_answer"], "2024")
         self.assertEqual(trace["answer_prompt_messages"], client.request["messages"])
+
+    def test_wma_zero_hit_uses_prompt_marker_without_memory(self):
+        client = self.FakeClient("Unknown")
+        result, trace = answer_wma_job(
+            client,
+            {
+                "query_id": "sample::QA00::2",
+                "manifest_question_id": "sample:QA00:Q002",
+                "sample_id": "sample",
+                "checkpoint_id": "QA00",
+                "covered_sessions": ["S00"],
+                "visible_sessions": ["S00"],
+                "question": "What happened?",
+                "category": "TR",
+                "memory_items": [],
+                "retrieval_top_k": [],
+            },
+        )
+        self.assertTrue(result["zero_hit_prompt_marker_used"])
+        self.assertTrue(trace["zero_hit_prompt_marker_used"])
+        self.assertEqual(client.request["memory_items"], [])
+        self.assertIn(ZERO_HIT_PROMPT_MARKER, str(client.request["messages"]))
 
 
 if __name__ == "__main__":

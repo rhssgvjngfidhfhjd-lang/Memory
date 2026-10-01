@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from copy import deepcopy
+import hashlib
 import json
 import re
 from langgraph.graph import END
@@ -15,7 +16,11 @@ from langgraph.types import Command
 from ..stores import RawMessage, RawMessageStore, SemanticStore, SemanticMemory, ImageManager
 from ..config import TIME_FMT, MemoryManagerConfig
 from ..utils.evidence import normalize_evidence_ranges
-from ..utils.message import deduplicate_message_images, raise_for_truncated_completion
+from ..utils.message import (
+    deduplicate_message_images,
+    is_truncated_completion,
+    raise_for_truncated_completion,
+)
 from .tool_call_normalizer import (
     cap_tool_calls_to_budget,
     normalize_qwen_tool_calls,
@@ -497,6 +502,331 @@ class MemoryManager:
             )
         return False
 
+    @staticmethod
+    def _response_text(response: AIMessage) -> str:
+        content = response.content
+        if isinstance(content, str):
+            return content
+        if not isinstance(content, list):
+            return str(content or "")
+        parts: list[str] = []
+        for block in content:
+            if isinstance(block, str):
+                parts.append(block)
+            elif isinstance(block, dict):
+                value = block.get("text") or block.get("content")
+                if value:
+                    parts.append(str(value))
+        return "\n".join(parts)
+
+    @staticmethod
+    def _complete_json_objects(text: str) -> list[tuple[dict[str, Any], int, int]]:
+        """Find complete top-level JSON objects embedded in rendered prose."""
+        decoder = json.JSONDecoder()
+        objects: list[tuple[dict[str, Any], int, int]] = []
+        cursor = 0
+        while cursor < len(text):
+            start = text.find("{", cursor)
+            if start < 0:
+                break
+            try:
+                value, consumed = decoder.raw_decode(text[start:])
+            except json.JSONDecodeError:
+                cursor = start + 1
+                continue
+            end = start + consumed
+            if isinstance(value, dict):
+                objects.append((value, start, end))
+            cursor = max(end, start + 1)
+        return objects
+
+    @staticmethod
+    def _decode_json_string_prefix(value: str) -> str:
+        """Decode the recoverable prefix of an unterminated JSON string."""
+        output: list[str] = []
+        index = 0
+        escapes = {
+            '"': '"',
+            "\\": "\\",
+            "/": "/",
+            "b": "\b",
+            "f": "\f",
+            "n": "\n",
+            "r": "\r",
+            "t": "\t",
+        }
+        while index < len(value):
+            char = value[index]
+            if char != "\\":
+                output.append(char)
+                index += 1
+                continue
+            if index + 1 >= len(value):
+                break
+            escaped = value[index + 1]
+            if escaped == "u" and index + 5 < len(value):
+                codepoint = value[index + 2 : index + 6]
+                if re.fullmatch(r"[0-9a-fA-F]{4}", codepoint):
+                    output.append(chr(int(codepoint, 16)))
+                    index += 6
+                    continue
+            output.append(escapes.get(escaped, escaped))
+            index += 2
+        return "".join(output).strip()
+
+    @classmethod
+    def _unfinished_create_text(
+        cls,
+        text: str,
+        complete_objects: list[tuple[dict[str, Any], int, int]],
+    ) -> str:
+        """Recover only an unterminated text field from a trailing CREATE."""
+        tail_start = max((end for _value, _start, end in complete_objects), default=0)
+        tail = text[tail_start:]
+        markers = list(re.finditer(r'"text"\s*:\s*"', tail, re.IGNORECASE))
+        for marker in reversed(markers):
+            preceding = tail[: marker.start()]
+            create_positions = [
+                match.start()
+                for pattern in (
+                    r'"operation"\s*:\s*"(?:CREATE|ADD)"',
+                    r'"name"\s*:\s*"add_memory"',
+                )
+                for match in re.finditer(pattern, preceding, re.IGNORECASE)
+            ]
+            delete_positions = [
+                match.start()
+                for pattern in (
+                    r'"operation"\s*:\s*"DELETE"',
+                    r'"name"\s*:\s*"delete_memory"',
+                )
+                for match in re.finditer(pattern, preceding, re.IGNORECASE)
+            ]
+            if not create_positions or (
+                delete_positions and max(delete_positions) > max(create_positions)
+            ):
+                continue
+
+            raw_start = marker.end()
+            escaped = False
+            raw_end = len(tail)
+            for offset, char in enumerate(tail[raw_start:]):
+                if escaped:
+                    escaped = False
+                elif char == "\\":
+                    escaped = True
+                elif char == '"':
+                    raw_end = raw_start + offset
+                    break
+            return cls._decode_json_string_prefix(tail[raw_start:raw_end])
+        return ""
+
+    @staticmethod
+    def _fallback_evidence(context: list[RawMessage]) -> list[list[int]]:
+        ids = sorted(
+            {
+                int(message.msg_id)
+                for message in context
+                if isinstance(message.msg_id, int) and message.msg_id > 0
+            }
+        )
+        return normalize_evidence_ranges(ids)
+
+    @staticmethod
+    def _salvaged_create_args(
+        memory: dict[str, Any], fallback_evidence: list[list[int]]
+    ) -> dict[str, Any] | None:
+        text = memory.get("text")
+        if not isinstance(text, str) or not text.strip():
+            return None
+
+        raw_evidence = memory.get("evidence_ids")
+        if raw_evidence is None:
+            raw_evidence = memory.get("Evidence IDs")
+        try:
+            evidence = normalize_evidence_ranges(raw_evidence)
+            if not evidence:
+                evidence = fallback_evidence
+        except (TypeError, ValueError, json.JSONDecodeError):
+            evidence = fallback_evidence
+
+        image = memory.get("image")
+        image_caption = memory.get("image_caption")
+        if isinstance(image, dict):
+            image_caption = image_caption or image.get("caption") or image.get(
+                "image_caption"
+            )
+            image = image.get("image_token") or image.get("token")
+        if not isinstance(image, str) or not re.fullmatch(r"<image\d+>", image):
+            image = None
+        if not isinstance(image_caption, str) or not image_caption.strip():
+            image_caption = None
+
+        return {
+            "text": text.strip(),
+            "image": image,
+            "image_caption": image_caption,
+            "evidence_ids": json.dumps(evidence),
+        }
+
+    @classmethod
+    def _salvaged_json_actions(
+        cls,
+        payload: dict[str, Any],
+        fallback_evidence: list[list[int]],
+    ) -> list[dict[str, Any]]:
+        name = str(payload.get("name") or "").strip()
+        arguments = payload.get("arguments")
+        if name and isinstance(arguments, dict):
+            if name == "add_memory":
+                args = cls._salvaged_create_args(arguments, fallback_evidence)
+                return [{"name": "add_memory", "args": args}] if args else []
+            if name == "delete_memory" and arguments.get("memory_id") is not None:
+                return [
+                    {
+                        "name": "delete_memory",
+                        "args": {"memory_id": str(arguments["memory_id"])},
+                    }
+                ]
+            return []
+
+        operation = str(payload.get("operation") or payload.get("op") or "").upper()
+        if operation in {"CREATE", "ADD"}:
+            memory = payload.get("memory")
+            if not isinstance(memory, dict):
+                memory = payload
+            args = cls._salvaged_create_args(memory, fallback_evidence)
+            return [{"name": "add_memory", "args": args}] if args else []
+        if operation == "DELETE":
+            memory_ids = payload.get("memory_ids")
+            if memory_ids is None:
+                memory_ids = [payload.get("memory_id")]
+            elif not isinstance(memory_ids, list):
+                memory_ids = [memory_ids]
+            return [
+                {
+                    "name": "delete_memory",
+                    "args": {"memory_id": str(memory_id)},
+                }
+                for memory_id in memory_ids
+                if memory_id is not None and str(memory_id).strip()
+            ]
+        return []
+
+    def _salvage_truncated_update(
+        self, response: AIMessage, state: MemoryManagerState
+    ) -> str:
+        """Execute the explicitly enabled best-effort truncated-update policy."""
+        normalized = response
+        try:
+            normalized = normalize_qwen_tool_calls(response)
+        except ValueError:
+            # The trailing textual tool envelope may itself be the truncated part.
+            normalized = response
+
+        content = self._response_text(normalized)
+        fallback_evidence = self._fallback_evidence(state.context)
+        actions: list[dict[str, Any]] = []
+        recovered_memory_text = False
+
+        for tool_call in normalized.tool_calls:
+            name = str(tool_call.get("name") or "")
+            args = tool_call.get("args")
+            if name == "add_memory" and isinstance(args, dict):
+                create_args = self._salvaged_create_args(args, fallback_evidence)
+                if create_args:
+                    actions.append({"name": "add_memory", "args": create_args})
+                    recovered_memory_text = True
+            elif (
+                name == "delete_memory"
+                and isinstance(args, dict)
+                and args.get("memory_id") is not None
+            ):
+                actions.append(
+                    {
+                        "name": "delete_memory",
+                        "args": {"memory_id": str(args["memory_id"])},
+                    }
+                )
+
+        complete_objects = self._complete_json_objects(content)
+        for payload, _start, _end in complete_objects:
+            recovered = self._salvaged_json_actions(payload, fallback_evidence)
+            actions.extend(recovered)
+            recovered_memory_text = recovered_memory_text or any(
+                action["name"] == "add_memory" for action in recovered
+            )
+
+        partial_text = self._unfinished_create_text(content, complete_objects)
+        if partial_text:
+            suffix = "" if partial_text.endswith((" ", "\n")) else " "
+            actions.append(
+                {
+                    "name": "add_memory",
+                    "args": {
+                        "text": f"{partial_text}{suffix}[TRUNCATED]",
+                        "image": None,
+                        "image_caption": None,
+                        "evidence_ids": json.dumps(fallback_evidence),
+                    },
+                }
+            )
+            recovered_memory_text = True
+
+        raw_fallback = False
+        if not recovered_memory_text and content.strip():
+            actions.append(
+                {
+                    "name": "add_memory",
+                    "args": {
+                        "text": f"[TRUNCATED MODEL OUTPUT]\n{content.strip()}",
+                        "image": None,
+                        "image_caption": None,
+                        "evidence_ids": json.dumps(fallback_evidence),
+                    },
+                }
+            )
+            raw_fallback = True
+
+        deduplicated: list[dict[str, Any]] = []
+        seen: set[str] = set()
+        for action in actions:
+            signature = json.dumps(action, ensure_ascii=False, sort_keys=True)
+            if signature not in seen:
+                seen.add(signature)
+                deduplicated.append(action)
+
+        results: list[dict[str, str]] = []
+        for action in deduplicated:
+            result = self.tools[action["name"]].invoke(action["args"])
+            results.append(
+                {
+                    "name": action["name"],
+                    "result": str(result),
+                }
+            )
+
+        audit = {
+            "op": "salvage_truncated_update",
+            "raw_response_sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(),
+            "complete_json_objects": len(complete_objects),
+            "actions_executed": len(deduplicated),
+            "creates_executed": sum(
+                action["name"] == "add_memory" for action in deduplicated
+            ),
+            "deletes_executed": sum(
+                action["name"] == "delete_memory" for action in deduplicated
+            ),
+            "partial_text_saved": bool(partial_text),
+            "raw_fallback_saved": raw_fallback,
+            "fallback_evidence_ids": fallback_evidence,
+            "results": results,
+        }
+        log = getattr(self.semantic_store, "log", None)
+        if isinstance(log, list):
+            log.append(audit)
+        return json.dumps(audit, ensure_ascii=False)
+
     def reset_retrieval_trace(self) -> None:
         self.tool_cls.reset_retrieval_trace()
 
@@ -837,6 +1167,15 @@ ChatAgent suggests: <query>
             # Do not expose tools in the terminal request.  The hard tool budget
             # remains unchanged and the response cannot enter exec_tool.
             response = self.llm.invoke(request_messages)
+            if is_truncated_completion(response) and bool(
+                getattr(self.config, "salvage_truncated_updates", False)
+            ):
+                messages.append(response)
+                salvaged = self._salvage_truncated_update(response, state)
+                return Command(
+                    update={"messages": messages, "response": salvaged},
+                    goto=END,
+                )
             raise_for_truncated_completion(response)
             messages.append(response)
             return Command(
@@ -848,6 +1187,15 @@ ChatAgent suggests: <query>
             update_tools,
             parallel_tool_calls=False,
         ).invoke(request_messages)
+        if is_truncated_completion(response) and bool(
+            getattr(self.config, "salvage_truncated_updates", False)
+        ):
+            messages.append(response)
+            salvaged = self._salvage_truncated_update(response, state)
+            return Command(
+                update={"messages": messages, "response": salvaged},
+                goto=END,
+            )
         raise_for_truncated_completion(response)
         response = normalize_qwen_tool_calls(response)
         response = self._cap_response_tool_calls(

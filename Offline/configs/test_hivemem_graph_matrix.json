@@ -17,13 +17,14 @@
   "embedding_dim": 2048,
   "answer_concurrency": 16,
   "sample_concurrency": 4,
-  "executor_concurrency": 16,
+  "executor_concurrency": 4,
+  "executor_max_tokens": 1536,
   "request_timeout": 180,
   "retries": 2,
   "judge_model": "openai/gpt-4o-mini",
   "judge_workers": 32,
   "judge_timeout": 60,
   "judge_max_tokens": 512,
-  "judge_key_file": "../../Nvida_api/gpt-4o-mini",
+  "judge_key_file": "../../Nvida_api/Openrouter_api",
   "efficiency_config": "model_efficiency.json"
 }

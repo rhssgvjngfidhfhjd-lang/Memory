@@ -461,6 +461,10 @@ class M3AgentAdapter(BaselineAdapter):
         self, chunk: Chunk, observation: dict[str, Any], clip_id: int
     ) -> dict[str, Any]:
         images = [row for row in observation.get("images") or [] if isinstance(row, dict)]
+        # Keep ID/caption slots aligned with the exact image path they annotate.
+        # Some dialogue datasets provide captions but no image IDs; independently
+        # filtering each field shifts later annotations onto the wrong image.
+        source_images = [row for row in images if row.get("path")]
         source_ids = [
             str(value)
             for value in observation.get("source_dialogue_ids") or []
@@ -480,9 +484,9 @@ class M3AgentAdapter(BaselineAdapter):
             "source_dialogue_ids": source_ids,
             "timestamp": str(observation.get("timestamp") or ""),
             "turns": list(observation.get("turns") or []),
-            "image_ids": [str(row.get("image_id") or "") for row in images if row.get("image_id")],
-            "image_paths": [str(row.get("path") or "") for row in images if row.get("path")],
-            "image_captions": [str(row.get("caption") or "") for row in images if row.get("caption")],
+            "image_ids": [str(row.get("image_id") or "") for row in source_images],
+            "image_paths": [str(row.get("path") or "") for row in source_images],
+            "image_captions": [str(row.get("caption") or "") for row in source_images],
             "input_mode": "dialogue_round_as_clip",
             "face_nodes_applicable": False,
             "voice_nodes_applicable": False,
@@ -724,14 +728,22 @@ class M3AgentAdapter(BaselineAdapter):
         discovered_ids: set[int] = set()
         rounds: list[dict[str, Any]] = []
         agent_answer = ""
+        runtime_config = getattr(self, "config", {})
+        round_limit = int(runtime_config.get("m3_control_rounds", M3_TOTAL_ROUNDS))
+        native_search_top_k = int(
+            runtime_config.get("m3_search_top_k", M3_NATIVE_SEARCH_TOP_K)
+        )
+        retrieval_threshold = float(
+            runtime_config.get("m3_retrieval_threshold", M3_RETRIEVAL_THRESHOLD)
+        )
 
-        for round_index in range(M3_TOTAL_ROUNDS):
+        for round_index in range(round_limit):
             conversations[-1]["content"] += self._control_instruction
             if not discovered:
                 conversations[-1]["content"] += (
                     "\n" + M3_EMPTY_KNOWLEDGE_SEARCH_RULE
                 )
-            if round_index == M3_TOTAL_ROUNDS - 1 and discovered:
+            if round_index == round_limit - 1 and discovered:
                 conversations[-1]["content"] += (
                     "\n(The Action of this round must be [Answer]. If there is "
                     "insufficient information, you can make reasonable guesses.)"
@@ -789,13 +801,13 @@ class M3AgentAdapter(BaselineAdapter):
                     )
                     ranked_clip_ids = [_clip_number(value) for value in new_memories]
                 else:
-                    round_trace["native_search_top_k"] = M3_NATIVE_SEARCH_TOP_K
+                    round_trace["native_search_top_k"] = native_search_top_k
                     new_memories, current_clips, clip_scores = self._retrieve.search(
                         self.graph,
                         content,
                         current_clips,
-                        threshold=M3_RETRIEVAL_THRESHOLD,
-                        topk=M3_NATIVE_SEARCH_TOP_K,
+                        threshold=retrieval_threshold,
+                        topk=native_search_top_k,
                     )
                     ranked_clip_ids = current_clips[len(before) :]
                 visible = set(request.visible_session_ids)
@@ -842,10 +854,10 @@ class M3AgentAdapter(BaselineAdapter):
                 "system": self._runtime_prompt_hashes()["control_system_prompt"],
                 "instruction": self._runtime_prompt_hashes()["control_instruction"],
             },
-            "native_round_limit": M3_TOTAL_ROUNDS,
-            "native_search_top_k": M3_NATIVE_SEARCH_TOP_K,
+            "native_round_limit": round_limit,
+            "native_search_top_k": native_search_top_k,
             "character_search_top_k": M3_CHARACTER_SEARCH_TOP_K,
-            "threshold": M3_RETRIEVAL_THRESHOLD,
+            "threshold": retrieval_threshold,
             "rounds": rounds,
             "agent_answer": agent_answer,
             "candidate_clip_ids": [row["clip_id"] for row in discovered],
@@ -1037,6 +1049,18 @@ class M3AgentAdapter(BaselineAdapter):
             benchmark="",
             answer_prompt_sha256="",
             source_root=self.source_root,
+            handoff_top_k=int(self.config.get("top_k") or 7),
+            native_search_top_k=int(
+                self.config.get("m3_search_top_k", M3_NATIVE_SEARCH_TOP_K)
+            ),
+            native_round_limit=int(
+                self.config.get("m3_control_rounds", M3_TOTAL_ROUNDS)
+            ),
+            retrieval_threshold=float(
+                self.config.get(
+                    "m3_retrieval_threshold", M3_RETRIEVAL_THRESHOLD
+                )
+            ),
         )
         payload.update(
             {
@@ -1132,6 +1156,7 @@ class M3AgentAdapter(BaselineAdapter):
         self._requests.close()
 
     def capabilities(self) -> dict[str, Any]:
+        runtime_config = getattr(self, "config", {})
         return {
             "backend": "m3_agent",
             "baseline": self.baseline,
@@ -1143,7 +1168,17 @@ class M3AgentAdapter(BaselineAdapter):
             "audio_enabled": False,
             "supports_images": True,
             "supports_session_filter": True,
-            "native_search_top_k": M3_NATIVE_SEARCH_TOP_K,
+            "native_search_top_k": int(
+                runtime_config.get("m3_search_top_k", M3_NATIVE_SEARCH_TOP_K)
+            ),
+            "native_round_limit": int(
+                runtime_config.get("m3_control_rounds", M3_TOTAL_ROUNDS)
+            ),
+            "retrieval_threshold": float(
+                runtime_config.get(
+                    "m3_retrieval_threshold", M3_RETRIEVAL_THRESHOLD
+                )
+            ),
             "handoff_top_k": int(self.config.get("top_k") or 7),
             "adapter_silent_fallback": False,
         }
@@ -1154,6 +1189,10 @@ def m3_conformance_manifest(
     *,
     answer_prompt_sha256: str,
     source_root: Path | None = None,
+    handoff_top_k: int = 7,
+    native_search_top_k: int = M3_NATIVE_SEARCH_TOP_K,
+    native_round_limit: int = M3_TOTAL_ROUNDS,
+    retrieval_threshold: float = M3_RETRIEVAL_THRESHOLD,
 ) -> dict[str, Any]:
     root = source_root or Path(__file__).resolve().parents[4] / "baselines" / "m3-agent-master"
     prompt_hashes = _prompt_hashes_from_source(root)
@@ -1176,10 +1215,21 @@ def m3_conformance_manifest(
         "protocol_bridge": "benchmark dialogue round to M3 clip observation",
         "shared_fixed_chunks": False,
         "deviations": list(M3_DEVIATIONS),
-        "native_search_top_k": M3_NATIVE_SEARCH_TOP_K,
+        "native_search_top_k": int(native_search_top_k),
         "character_search_top_k": M3_CHARACTER_SEARCH_TOP_K,
-        "native_round_limit": M3_TOTAL_ROUNDS,
-        "handoff_top_k": 7,
+        "native_round_limit": int(native_round_limit),
+        "retrieval_threshold": float(retrieval_threshold),
+        "handoff_top_k": int(handoff_top_k),
+        "control_ablation": {
+            "active": (
+                int(native_search_top_k) != M3_NATIVE_SEARCH_TOP_K
+                or int(native_round_limit) != M3_TOTAL_ROUNDS
+                or float(retrieval_threshold) != M3_RETRIEVAL_THRESHOLD
+            ),
+            "official_native_search_top_k": M3_NATIVE_SEARCH_TOP_K,
+            "official_native_round_limit": M3_TOTAL_ROUNDS,
+            "official_retrieval_threshold": M3_RETRIEVAL_THRESHOLD,
+        },
         "handoff_top_up_used": False,
         "empty_knowledge_search_rule": {
             "text": M3_EMPTY_KNOWLEDGE_SEARCH_RULE,

@@ -58,6 +58,10 @@ class LLMConfig:
     temperature: float = 0
     max_tokens: int = 1200
     timeout: int = 20
+    # Number of transport-level retries after the initial request. The OpenAI
+    # client retries transient connection, rate-limit, and 5xx failures, while
+    # deterministic 4xx failures (for example context overflow) fail fast.
+    max_retries: int = 2
 
 
 @dataclass
@@ -80,6 +84,7 @@ class MultimodalEmbeddingConfig:
 class MemoryManagerConfig:
     context_window: int = 5
     max_iteration: int = 5
+    salvage_truncated_updates: bool = False
 
 
 @dataclass

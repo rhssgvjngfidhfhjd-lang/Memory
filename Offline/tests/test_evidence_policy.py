@@ -23,6 +23,7 @@ from benchmarks.memgallery_harness.retrieval.query_embedding_cache import (
     make_query_id,
 )
 from evidence_policy.evidence import (
+    EVIDENCE_ORDER,
     DialogueStore,
     EvidenceChainBuilder,
     EvidenceStrategy,
@@ -62,6 +63,7 @@ from scripts.evidence_policy import (
     resume_configs_match,
     rollout_record,
     rollout_with_endpoint_recovery,
+    summarize_cost_rewards,
     validation_checkpoints,
 )
 
@@ -183,6 +185,11 @@ class CostRewardTest(unittest.TestCase):
             return SimpleNamespace(
                 reward=0.8,
                 quality_reward=0.8,
+                actions=(
+                    MAUEvidenceAction.from_mask(
+                        "m1", [True, False, False, False, False]
+                    ),
+                ),
                 error="",
                 answer_usage={
                     "prompt_tokens": 300,
@@ -196,8 +203,19 @@ class CostRewardTest(unittest.TestCase):
         counter = MagicMock()
         counter.count.return_value = 100
         runtime = CostRewardRuntime(config(0.1), token_counter=counter)
-        first = rollout()
+        all_zero_warmup = rollout()
+        all_zero_warmup.actions = (
+            MAUEvidenceAction.from_mask("m1", [False] * 5),
+        )
         warmup_snapshot = runtime.snapshot()
+        self.assertTrue(
+            runtime.apply(all_zero_warmup, episode, snapshot=warmup_snapshot)
+        )
+        self.assertEqual(all_zero_warmup.reward, -1.0)
+        self.assertEqual(all_zero_warmup.quality_reward, 0.8)
+        self.assertIsNotNone(all_zero_warmup.incremental_cost)
+
+        first = rollout()
         self.assertTrue(runtime.apply(first, episode, snapshot=warmup_snapshot))
         self.assertNotIn(
             "Conversation memory:", counter.count.call_args.args[0][1]["content"]
@@ -238,6 +256,30 @@ class CostRewardTest(unittest.TestCase):
         )
         self.assertGreater(second.cost_max, second.cost_min)
 
+        all_zero_active = rollout()
+        all_zero_active.actions = (
+            MAUEvidenceAction.from_mask("m1", [False] * 5),
+        )
+        all_zero_active.answer_usage = second.answer_usage
+        self.assertTrue(
+            runtime.apply(all_zero_active, episode, snapshot=active_snapshot)
+        )
+        self.assertEqual(all_zero_active.reward, -1.0)
+        self.assertEqual(all_zero_active.quality_reward, 0.8)
+        self.assertEqual(all_zero_active.normalized_cost, 1.0)
+        shaped_metrics = summarize_cost_rewards([second, all_zero_active])
+        self.assertEqual(shaped_metrics["all_zero_rollout_rate"], 0.5)
+        self.assertAlmostEqual(
+            shaped_metrics["cost_penalty_mean"],
+            np.mean(
+                [
+                    second.effective_cost_weight * second.normalized_cost,
+                    all_zero_active.effective_cost_weight
+                    * all_zero_active.normalized_cost,
+                ]
+            ),
+        )
+
         no_penalty = CostRewardRuntime(config(0.0), token_counter=counter)
         no_penalty.commit(
             [first.incremental_cost, 0.000035],
@@ -247,6 +289,19 @@ class CostRewardTest(unittest.TestCase):
         third.answer_usage = second.answer_usage
         self.assertTrue(no_penalty.apply(third, episode, snapshot=no_penalty.snapshot()))
         self.assertEqual(third.reward, third.quality_reward)
+
+        all_zero_lambda_zero = rollout()
+        all_zero_lambda_zero.actions = ()
+        all_zero_lambda_zero.answer_usage = second.answer_usage
+        self.assertTrue(
+            no_penalty.apply(
+                all_zero_lambda_zero,
+                episode,
+                snapshot=no_penalty.snapshot(),
+            )
+        )
+        self.assertEqual(all_zero_lambda_zero.reward, -1.0)
+        self.assertEqual(all_zero_lambda_zero.quality_reward, 0.8)
 
         missing = rollout()
         missing.answer_usage = None
@@ -393,11 +448,26 @@ class ValidationScheduleTest(unittest.TestCase):
             self.assertEqual(errors[0]["stage"], "init")
             self.assertIn("network unavailable", errors[0]["message"])
 
-    def test_resume_allows_only_output_directory_to_change(self):
-        stored = {"seed": 42, "output_dir": "/old", "ppo": {"epochs": 6}}
-        current = {"seed": 42, "output_dir": "/new", "ppo": {"epochs": 6}}
+    def test_resume_allows_output_directory_and_model_endpoint_to_change(self):
+        stored = {
+            "seed": 42,
+            "output_dir": "/old",
+            "model": {"base_url": "http://127.0.0.1:8015/v1", "max_tokens": 512},
+            "ppo": {"epochs": 6},
+        }
+        current = {
+            "seed": 42,
+            "output_dir": "/new",
+            "model": {"base_url": "http://127.0.0.1:8013/v1", "max_tokens": 512},
+            "ppo": {"epochs": 6},
+        }
 
         self.assertTrue(resume_configs_match(stored, current))
+        current["ppo"]["skip_invalid_response"] = True
+        self.assertTrue(resume_configs_match(stored, current))
+        current["model"]["max_tokens"] = 1024
+        self.assertFalse(resume_configs_match(stored, current))
+        current["model"]["max_tokens"] = 512
         current["seed"] = 43
         self.assertFalse(resume_configs_match(stored, current))
 
@@ -450,6 +520,53 @@ class ValidationScheduleTest(unittest.TestCase):
         self.assertIs(result, successful)
         self.assertEqual(env.rollout.call_count, 2)
         sleep.assert_called_once_with(0.01)
+
+    def test_training_can_explicitly_skip_invalid_answer_format(self):
+        failed = SimpleNamespace(
+            error="Response must contain only one <answer>...</answer> block",
+            reward=0.0,
+            quality_reward=0.0,
+            actions=(MAUEvidenceAction.from_mask("m1", [1, 0, 0, 0, 0]),),
+            skipped_invalid_response=False,
+            skipped_error="",
+        )
+        env = MagicMock()
+        env.rollout.return_value = failed
+        episode = MagicMock(query_id="q-invalid")
+
+        result = rollout_with_endpoint_recovery(
+            env,
+            episode,
+            EvidenceStrategy.PPO,
+            policy=MagicMock(),
+            deterministic=False,
+            allow_skip_invalid_response=True,
+        )
+
+        self.assertIs(result, failed)
+        self.assertEqual(result.error, "")
+        self.assertTrue(result.skipped_invalid_response)
+        self.assertIn("only one <answer>", result.skipped_error)
+        self.assertEqual(result.reward, -1.0)
+        self.assertEqual(result.quality_reward, -1.0)
+
+    def test_invalid_answer_format_remains_strict_by_default(self):
+        failed = SimpleNamespace(
+            error="Response must contain only one <answer>...</answer> block",
+            reward=0.0,
+            actions=(MAUEvidenceAction.from_mask("m1", [1, 0, 0, 0, 0]),),
+        )
+        env = MagicMock()
+        env.rollout.return_value = failed
+
+        with self.assertRaisesRegex(RuntimeError, "Rollout failed"):
+            rollout_with_endpoint_recovery(
+                env,
+                MagicMock(query_id="q-invalid"),
+                EvidenceStrategy.PPO,
+                policy=MagicMock(),
+                deterministic=False,
+            )
 
     def test_half_epoch_aligns_to_completed_rollout_batch(self):
         self.assertEqual(
@@ -541,11 +658,21 @@ class GraphRetrievalConfigTest(unittest.TestCase):
         self.assertEqual(options["seed_k"], 0)
         validate_graph_config({"top_k": 5})
 
-    def test_graph_five_plus_two_contract_is_validated(self):
-        with self.assertRaisesRegex(ValueError, "top_k=5"):
-            validate_graph_config({"top_k": 4})
-        with self.assertRaisesRegex(ValueError, "append_k=2"):
-            resolve_graph_options({"top_k": 5, "graph_options": {"append_k": 1}})
+    def test_graph_vector_append_ablation_contract_is_validated(self):
+        for vector_k, append_k in ((6, 1), (4, 3), (3, 4)):
+            settings = resolve_retrieval_settings(
+                {
+                    "retrieval_mode": "graph_append",
+                    "top_k": vector_k,
+                    "graph_options": {"append_k": append_k},
+                }
+            )
+            self.assertEqual(settings["vector_k"], vector_k)
+            self.assertEqual(settings["append_k"], append_k)
+        with self.assertRaisesRegex(ValueError, "append_k>=0"):
+            resolve_graph_options(
+                {"top_k": 5, "graph_options": {"append_k": -1}}
+            )
 
     def test_ablation_modes_resolve_without_changing_legacy_defaults(self):
         self.assertEqual(
@@ -962,6 +1089,22 @@ class RolloutTest(unittest.TestCase):
             self.calls += 1
             return "fruit tart"
 
+    def test_add_available_visual_evidence_preserves_policy_selections(self):
+        from evidence_policy.evidence import (
+            EvidenceType,
+            MAUEvidenceAction,
+            add_available_evidence,
+        )
+
+        actions = (MAUEvidenceAction.from_mask("m1", [1, 1, 0, 0, 0]),)
+        augmented = add_available_evidence(
+            actions,
+            [[True, True, False, True, True]],
+            (EvidenceType.IMAGE, EvidenceType.VP),
+        )
+
+        self.assertEqual(augmented[0].bitmask, "11011")
+
     def test_rollout_cache_avoids_duplicate_vlm_call(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -993,6 +1136,51 @@ class RolloutTest(unittest.TestCase):
         self.assertEqual(first.answer_failed_attempts, 0)
         self.assertEqual(second.answer_attempts, 1)
         self.assertEqual(second.answer_failed_attempts, 0)
+
+    def test_disabled_evidence_type_is_masked_from_ppo_action_and_objective(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dialogue_dataset(root)
+            env = EvidenceSelectionEnv(
+                self.FakeClient(),
+                EvidenceChainBuilder(DialogueStore(root)),
+                disabled_evidence_types=(EvidenceType.SUMMARY,),
+            )
+            episode = EvidenceEpisode(
+                query_id="q1",
+                dataset="toy",
+                category="FR",
+                question_prompt="What was baked?",
+                system_prompt="Answer briefly.",
+                ground_truth="fruit tart",
+                query_embedding=np.ones(EMBEDDING_DIM, dtype=np.float32),
+                memory_hits=(make_hit("m1"),),
+            )
+            policy = EvidenceSelectionPolicy(
+                embedding_dim=EMBEDDING_DIM, hidden_dim=16, hidden_layers=1
+            )
+            with torch.no_grad():
+                policy.evidence_head.bias.fill_(100.0)
+
+            rollout = env.rollout(
+                episode,
+                EvidenceStrategy.PPO,
+                policy=policy,
+                deterministic=True,
+            )
+
+        summary_index = EVIDENCE_ORDER.index(EvidenceType.SUMMARY)
+        self.assertFalse(
+            bool(rollout.observation.evidence_availability_mask[0, summary_index])
+        )
+        self.assertFalse(rollout.actions[0].mask[summary_index])
+        expected_active_heads = int(
+            rollout.observation.evidence_availability_mask.sum().item()
+        )
+        expected_log_prob = expected_active_heads * torch.log(
+            torch.sigmoid(torch.tensor(100.0))
+        )
+        self.assertTrue(torch.isclose(rollout.policy_step.joint_log_prob, expected_log_prob))
 
     def test_retrieval_signature_separates_rollout_cache_entries(self):
         with tempfile.TemporaryDirectory() as directory:

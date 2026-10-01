@@ -1,35 +1,14 @@
-"""Build memory-graph edges over a built memory bank directory.
+"""Build the degree-constrained Ti/Vi chunk graph.
 
-Operates on ``memories.jsonl`` + ``vectors/text.npy`` produced by HiveMem
-builder and writes the edges back into each MAU's ``links`` field:
-
-1. Temporal chain (deterministic, no LLM): ACTIVE memories are ordered by
-   (date, session, round) from their metadata and linked via
-   ``links.prev`` / ``links.next``.
-2. Entity-commonality pairs (deterministic, no LLM): derived from each
-   MAU's ``entities`` field (see extract_entities.py) — shared rare entity
-   (df <= --df-max) or >= --min-shared shared entities, with per-memory
-   degree caps. These pairs are NOT stored as edges (they are recomputable
-   in milliseconds); they feed stage 3 as cross-session candidates and a
-   ``reports/conflicts.json`` report (same entity + same attribute,
-   different value).
-3. EVENT_RELATION edges (LLM-confirmed, optional): candidate pairs are the
-   union of temporally-close memories (session distance <=
-   --session-window) and the entity-commonality pairs.  An LLM classifies
-   each pair as CAUSES / CAUSED_BY / SUBEVENT_OF / SAME_EPISODE / NONE and
-   only relations at or above --min-confidence are stored in
-   ``links.related`` as {"target", "type", "confidence"}.
-   Vector similarity is intentionally not used anywhere in edge building.
-
-Usage:
-    python -m hive_mem.build_memory_edges DATASET_DIR [DATASET_DIR ...]
-    # temporal chain only (default), add --event-relations for stage 2.
+New graph data is written once to ``reports/edges.json``.  Per-node legacy
+temporal/event links are cleared and are not part of the new graph.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 
@@ -37,9 +16,11 @@ from .llm_client import BaseLLMClient, LLMClient
 from .mau import MAUBank, MAU
 from .builder import _session_key
 from .output_layout import DatasetLayout
+from .entity_schema import iter_node_attributes, serialize_attribute
 
 
 EVENT_RELATION_TYPES = ("CAUSES", "CAUSED_BY", "SUBEVENT_OF", "SAME_EPISODE")
+ATTRIBUTE_WEIGHTING_MODES = ("idf", "uniform")
 
 EVENT_RELATION_PROMPT = """You are annotating an agent's long-term memory graph.
 Below are two memory items summarised from the same user's conversation history.
@@ -60,6 +41,135 @@ memories clearly describe connected events, not merely a shared topic.
 
 Answer with a single JSON object and nothing else:
 {{"relation": "<one of CAUSES|CAUSED_BY|SUBEVENT_OF|SAME_EPISODE|NONE>", "confidence": <0.0-1.0>}}"""
+
+
+def _attribute_record(attribute: tuple[str, str]) -> Dict[str, str]:
+    return {"attribute": attribute[0], "value": attribute[1]}
+
+
+def build_attribute_graph(
+    bank: MAUBank,
+    *,
+    degree_cap: int = 4,
+    attribute_weighting: str = "idf",
+) -> Dict[str, object]:
+    """Build and globally prune the agreed undirected Ti/Vi graph."""
+    if degree_cap < 0:
+        raise ValueError("degree_cap cannot be negative")
+    if attribute_weighting not in ATTRIBUTE_WEIGHTING_MODES:
+        raise ValueError(
+            f"attribute_weighting must be one of {ATTRIBUTE_WEIGHTING_MODES}, "
+            f"got {attribute_weighting!r}"
+        )
+    node_count = len(bank.memories)
+    text_by_node = [set(iter_node_attributes(item.text_attributes)) for item in bank.memories]
+    visual_by_node = [set(iter_node_attributes(item.visual_attributes)) for item in bank.memories]
+
+    members: Dict[tuple[str, str], set[int]] = {}
+    text_members: Dict[tuple[str, str], list[int]] = {}
+    visual_members: Dict[tuple[str, str], list[int]] = {}
+    for position, (text_attributes, visual_attributes) in enumerate(
+        zip(text_by_node, visual_by_node)
+    ):
+        for attribute in text_attributes | visual_attributes:
+            members.setdefault(attribute, set()).add(position)
+        for attribute in text_attributes:
+            text_members.setdefault(attribute, []).append(position)
+        for attribute in visual_attributes:
+            visual_members.setdefault(attribute, []).append(position)
+
+    idf = {
+        attribute: math.log((node_count + 1) / (len(positions) + 1))
+        for attribute, positions in members.items()
+        if node_count and positions
+    }
+    attribute_weights = {
+        attribute: (idf[attribute] if attribute_weighting == "idf" else 1.0)
+        for attribute in idf
+    }
+    shared_text: Dict[tuple[int, int], set[tuple[str, str]]] = {}
+    shared_cross: Dict[tuple[int, int], set[tuple[str, str]]] = {}
+    for attribute in sorted(members):
+        textual = text_members.get(attribute, [])
+        visual = visual_members.get(attribute, [])
+        for left_index, left in enumerate(textual):
+            for right in textual[left_index + 1:]:
+                pair = (left, right) if left < right else (right, left)
+                shared_text.setdefault(pair, set()).add(attribute)
+        for left in textual:
+            for right in visual:
+                if left == right:
+                    continue
+                pair = (left, right) if left < right else (right, left)
+                shared_cross.setdefault(pair, set()).add(attribute)
+
+    candidate_pairs = list(dict.fromkeys([*shared_text, *shared_cross]))
+    candidates = []
+    for pair in candidate_pairs:
+        text_attributes = shared_text.get(pair, set())
+        cross_attributes = shared_cross.get(pair, set())
+        weight = sum(attribute_weights[value] for value in text_attributes) + sum(
+            attribute_weights[value] for value in cross_attributes
+        )
+        candidates.append((weight, pair, text_attributes, cross_attributes))
+    candidates.sort(key=lambda row: -row[0])
+
+    degree = [0] * node_count
+    edges = []
+    for weight, (left, right), text_attributes, cross_attributes in candidates:
+        if degree[left] >= degree_cap or degree[right] >= degree_cap:
+            continue
+        degree[left] += 1
+        degree[right] += 1
+        edges.append(
+            {
+                "source": bank.memories[left].id,
+                "target": bank.memories[right].id,
+                "weight": float(weight),
+                "shared_text": [
+                    _attribute_record(value) for value in sorted(text_attributes)
+                ],
+                "shared_cross": [
+                    _attribute_record(value) for value in sorted(cross_attributes)
+                ],
+            }
+        )
+
+    # New indexes contain no temporal or event-relation graph state.
+    for item in bank.memories:
+        item.links = {"prev": None, "next": None, "related": []}
+    return {
+        "schema_version": 2,
+        "attribute_weighting": attribute_weighting,
+        "nodes": node_count,
+        "degree_cap": degree_cap,
+        "candidate_edges": len(candidates),
+        "edges_kept": len(edges),
+        "attribute_weights": [
+            {
+                **_attribute_record(attribute),
+                "text": serialize_attribute(attribute),
+                "df": len(members[attribute]),
+                "weight": float(attribute_weights[attribute]),
+            }
+            for attribute in sorted(idf)
+        ],
+        # Preserve the established schema for existing IDF graph consumers.
+        "idf": (
+            [
+                {
+                    **_attribute_record(attribute),
+                    "text": serialize_attribute(attribute),
+                    "df": len(members[attribute]),
+                    "idf": float(idf[attribute]),
+                }
+                for attribute in sorted(idf)
+            ]
+            if attribute_weighting == "idf"
+            else []
+        ),
+        "edges": edges,
+    }
 
 
 def _temporal_sort_key(item: MAU, position: int) -> tuple:
@@ -419,62 +529,31 @@ def process_dataset_dir(
     df_max: float = 0.3,
     df_stop: float = 0.5,
     min_shared: int = 2,
-    degree_cap: int = 10,
+    degree_cap: int = 4,
+    attribute_weighting: str = "idf",
 ) -> Dict[str, object]:
+    del (
+        llm_client,
+        event_relations,
+        session_window,
+        min_confidence,
+        max_pairs,
+        df_max,
+        df_stop,
+        min_shared,
+    )
     layout = DatasetLayout(dataset_dir)
     layout.reports_dir.mkdir(parents=True, exist_ok=True)
     layout.traces_dir.mkdir(parents=True, exist_ok=True)
     bank = MAUBank.load(dataset_dir)
-    chained = build_temporal_chain(bank)
-    # Every invocation is a complete edge rebuild. Keeping relation edges from
-    # a previous model/threshold silently contaminates the new graph.
-    for item in bank.memories:
-        item.links["related"] = []
-    alias_map = load_alias_map(dataset_dir)
-    entity_pairs = derive_entity_pairs(
-        bank,
-        alias_map=alias_map,
-        df_max=df_max,
-        df_stop=df_stop,
-        min_shared=min_shared,
-        degree_cap=degree_cap,
-    )
-    attribute_pairs = derive_attribute_pairs(
-        bank,
-        df_max=df_max,
-        df_stop=df_stop,
-        min_shared=min_shared,
-        degree_cap=degree_cap,
-    )
-    entity_pairs = sorted(set(entity_pairs) | set(attribute_pairs))
-    conflicts = find_conflict_candidates(bank, alias_map=alias_map)
-    layout.conflict_candidates.write_text(
-        json.dumps(conflicts, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    summary: Dict[str, object] = {
+    summary = {
         "dataset_dir": str(dataset_dir),
-        "memories": len(bank),
-        "temporal_chained": chained,
-        "memories_with_entities": sum(
-            1 for item in bank.memories if item.status == "ACTIVE" and item.entities
-        ),
-        "entity_pairs_derived": len(entity_pairs),
-        "attribute_pairs_derived": len(attribute_pairs),
-        "conflict_candidates": len(conflicts),
-    }
-    if event_relations:
-        pairs = generate_candidate_pairs(
-            bank, session_window=session_window, entity_pairs=entity_pairs
-        )
-        summary["event_relation_candidates"] = len(pairs)
-        summary["event_relation_stats"] = classify_event_relations(
+        **build_attribute_graph(
             bank,
-            pairs,
-            llm_client,
-            min_confidence=min_confidence,
-            max_pairs=max_pairs,
-            progress_path=layout.edge_progress,
-        )
+            degree_cap=degree_cap,
+            attribute_weighting=attribute_weighting,
+        ),
+    }
     bank.save(dataset_dir)
     layout.edges_manifest.write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
@@ -483,7 +562,7 @@ def process_dataset_dir(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build memory-graph edges (temporal chain + event relations).")
+    parser = argparse.ArgumentParser(description="Build the weighted Ti/Vi chunk graph.")
     parser.add_argument("dataset_dirs", nargs="+", help="Dataset dirs containing memories.jsonl + vectors/text.npy")
     parser.add_argument("--event-relations", action="store_true", help="Also run the LLM EVENT_RELATION stage")
     parser.add_argument("--session-window", type=int, default=1)
@@ -492,7 +571,13 @@ def main() -> None:
     parser.add_argument("--df-max", type=float, default=0.3, help="Max document frequency for a 'rare' shared entity")
     parser.add_argument("--df-stop", type=float, default=0.5, help="Entities above this df are stop-listed entirely")
     parser.add_argument("--min-shared", type=int, default=2, help="Shared-entity count that qualifies a pair without a rare entity")
-    parser.add_argument("--degree-cap", type=int, default=10, help="Max entity-derived pairs per memory")
+    parser.add_argument("--degree-cap", type=int, default=4, help="Maximum final undirected degree per chunk")
+    parser.add_argument(
+        "--attribute-weighting",
+        choices=ATTRIBUTE_WEIGHTING_MODES,
+        default="idf",
+        help="Attribute weighting for edge pruning and graph retrieval",
+    )
     parser.add_argument("--model", default="")
     parser.add_argument("--base-url", default="")
     parser.add_argument("--api-key", default="EMPTY")
@@ -525,8 +610,14 @@ def main() -> None:
             df_stop=args.df_stop,
             min_shared=args.min_shared,
             degree_cap=args.degree_cap,
+            attribute_weighting=args.attribute_weighting,
         )
-        print(json.dumps(summary, ensure_ascii=False))
+        compact = {
+            key: value
+            for key, value in summary.items()
+            if key not in {"idf", "edges"}
+        }
+        print(json.dumps(compact, ensure_ascii=False))
 
 
 if __name__ == "__main__":
