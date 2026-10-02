@@ -94,6 +94,22 @@ class BuildFaultPolicyTests(unittest.TestCase):
             )
         self.assertEqual(policy.failures, [])
 
+    def test_fail_open_audits_and_skips_normally_global_failure(self) -> None:
+        policy = ConsecutiveBuildFaultPolicy(
+            baseline="M2A",
+            benchmark="H2HMEM",
+            enabled=True,
+            fail_open=True,
+        )
+        policy.handle(
+            RuntimeError("No space left on device"),
+            chunk=None,
+            point_kind="ingest",
+            session_id="session1",
+        )
+        self.assertEqual(policy.consecutive, 1)
+        self.assertEqual(len(policy.failures), 1)
+
     def test_database_lifecycle_failures_are_never_skipped(self) -> None:
         for name in (
             "DetachedInstanceError",

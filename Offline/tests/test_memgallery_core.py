@@ -32,6 +32,7 @@ from benchmarks.memgallery_harness.runner.metrics import (
     provenance_hit,
     write_retrieval_memory_token,
     write_efficiency_metrics,
+    _result_attempt_rows,
 )
 from benchmarks.memgallery_harness.runner.answer_client import (
     VLMAnswerClient,
@@ -70,6 +71,23 @@ class FakeEmbedder:
 
 
 class OfficialMetricAndAnswerRetryTest(unittest.TestCase):
+    def test_explicit_sample_skip_does_not_create_phantom_qa_call(self):
+        rows = _result_attempt_rows(
+            [
+                {
+                    "sample_id": "skipped",
+                    "query_id": "q1",
+                    "sample_skipped": True,
+                    "answer_attempts": 1,
+                    "answer_failed_attempts": 0,
+                    "answer_token_usage": None,
+                }
+            ],
+            sample_id_field="sample_id",
+        )
+
+        self.assertEqual(rows, [])
+
     def test_f1_matches_memgallery_decimal_id_and_stemming_rules(self):
         self.assertEqual(
             normalize_answer("The cats and 3.14 IMG_001"),
@@ -738,6 +756,11 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         self.assertAlmostEqual(metrics["cost_mb"]["cost_sum_usd"], 0.0000075)
         self.assertAlmostEqual(metrics["cost_qa"]["cost_sum_usd"], 0.00000475)
         self.assertAlmostEqual(
+            metrics["cost_total"]["cost_sum_usd"],
+            metrics["cost_mb"]["cost_sum_usd"]
+            + metrics["cost_qa"]["cost_sum_usd"],
+        )
+        self.assertAlmostEqual(
             metrics["latency_mb"]["latency_sum_seconds"], 0.6987
         )
         self.assertAlmostEqual(
@@ -745,6 +768,101 @@ class ProvenanceMemoryBankTest(unittest.TestCase):
         )
         self.assertEqual(metrics["latency_qa"]["calls"], 3)
         self.assertEqual(metrics["latency_qa"]["image_count"], 7)
+        self.assertEqual(metrics["latency_qa"]["denominator_unit"], "QA")
+        self.assertEqual(
+            metrics["latency_qa"]["aggregation"],
+            "sum_retrieval_answer_latency_divided_by_queries",
+        )
+
+    def test_efficiency_metrics_price_each_phase_with_its_own_model(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            config = root / "efficiency.json"
+            config.write_text(
+                json.dumps(
+                    {
+                        "models": {
+                            "executor": {
+                                "pricing": {
+                                    "input_per_million_usd": 1.0,
+                                    "output_per_million_usd": 2.0,
+                                },
+                                "latency": {
+                                    "base_seconds": 1.0,
+                                    "input_seconds_per_token": 0.0,
+                                    "output_seconds_per_token": 0.0,
+                                    "image_seconds": 0.0,
+                                },
+                            },
+                            "answer": {
+                                "pricing": {
+                                    "input_per_million_usd": 10.0,
+                                    "output_per_million_usd": 20.0,
+                                },
+                                "latency": {
+                                    "base_seconds": 10.0,
+                                    "input_seconds_per_token": 0.0,
+                                    "output_seconds_per_token": 0.0,
+                                    "image_seconds": 0.0,
+                                },
+                            },
+                        }
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "call_trace.jsonl").write_text(
+                "\n".join(
+                    json.dumps(row)
+                    for row in (
+                        {
+                            "phase": "memory_build",
+                            "prompt_tokens": 100,
+                            "completion_tokens": 10,
+                            "total_tokens": 110,
+                            "image_count": 0,
+                        },
+                        {
+                            "phase": "retrieval",
+                            "prompt_tokens": 20,
+                            "completion_tokens": 5,
+                            "total_tokens": 25,
+                            "image_count": 0,
+                        },
+                        {
+                            "phase": "qa",
+                            "prompt_tokens": 30,
+                            "completion_tokens": 4,
+                            "total_tokens": 34,
+                            "image_count": 0,
+                        },
+                    )
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            metrics = write_efficiency_metrics(
+                root,
+                [{"dataset": "sample"}],
+                sample_id_field="dataset",
+                sample_ids=["sample"],
+                model="answer",
+                config_path=config,
+                memory_build_model="executor",
+                retrieval_model="executor",
+                answer_model="answer",
+            )
+
+        self.assertAlmostEqual(metrics["cost_mb"]["cost_sum_usd"], 0.00012)
+        self.assertAlmostEqual(metrics["cost_qa"]["cost_sum_usd"], 0.00003 + 0.00038)
+        self.assertAlmostEqual(metrics["cost_total"]["cost_sum_usd"], 0.00053)
+        self.assertEqual(metrics["latency_qa"]["latency_sum_seconds"], 11.0)
+        self.assertEqual(
+            metrics["component_efficiency"]["retrieval"]["model"], "executor"
+        )
+        self.assertEqual(
+            metrics["component_efficiency"]["answer"]["model"], "answer"
+        )
 
     def test_cost_qa_is_strict_about_prices_usage_and_answer_failures(self):
         valid = {
@@ -1248,11 +1366,12 @@ class OperationTogglesTest(unittest.TestCase):
         prompt = executor._build_prompt("chunk")
         self.assertIn("MEMORY_ITEM:", prompt)
         self.assertNotIn("ACTION:", prompt)
-        self.assertIn("### Memory Item Rules", prompt)
-        self.assertIn("### Entities Rules", prompt)
+        self.assertIn("### Summary Rules", prompt)
+        self.assertIn("### Ti Rules", prompt)
+        self.assertIn("### Vi Rules", prompt)
         self.assertNotIn("UPDATE", prompt)
         self.assertNotIn("NOOP", prompt)
-        self.assertIn("MUST output at least one memory item", prompt)
+        self.assertIn("exactly one valid JSON object", prompt)
 
     def test_image_visual_input_replaces_current_and_previous_captions(self):
         llm_client = MultimodalScriptedLLMClient("MEMORY_ITEM: visual fact")
@@ -1419,7 +1538,7 @@ class OperationTogglesTest(unittest.TestCase):
         _, actions = executor.execute(chunk_text="chunk")
         self.assertEqual(len(actions), 1)
         self.assertFalse(actions[0].success)
-        self.assertIn("No MEMORY_ITEM block", actions[0].reasoning)
+        self.assertIn("No valid summary/Ti/Vi JSON object", actions[0].reasoning)
 
     def test_insert_only_builder_falls_back_to_raw_chunk_on_unusable_response(self):
         events = [
@@ -1645,7 +1764,8 @@ class EntityExtractionTest(unittest.TestCase):
         executor = MemoryExecutor(llm_client=None, embedder=FakeEmbedder())
         prompt = executor._build_prompt("chunk")
         self.assertIn("ENTITIES", prompt)
-        self.assertIn("ANIMAL: species, breed", prompt)
+        self.assertIn("Allowed Ti attributes", prompt)
+        self.assertIn("Allowed Vi attributes", prompt)
 
     def test_parse_entities_rejects_garbage(self):
         from hive_mem.entity_schema import parse_entities_payload as parse_entities
@@ -1663,6 +1783,257 @@ class EntityExtractionTest(unittest.TestCase):
             loaded = MAUBank.load(directory)
         self.assertEqual(row["entities"], [{"name": "Alice", "type": "PERSON"}])
         self.assertEqual(loaded.memories[0].entities, [{"name": "Alice", "type": "PERSON"}])
+
+
+class ChunkAttributeGraphTest(unittest.TestCase):
+    def test_json_response_produces_one_summary_and_closed_normalized_attributes(self):
+        executor = MemoryExecutor(llm_client=None, embedder=FakeEmbedder())
+        response = json.dumps(
+            {
+                "summary": "Lumi is a white Maltese.",
+                "Ti": [
+                    {"entity": "Lumi", "attribute": "breed", "value": ["Maltese"]},
+                    {"entity": "Lumi", "attribute": "unknown", "value": ["ignored"]},
+                ],
+                "Vi": [
+                    {"entity": "Lumi", "attribute": "coat_color", "value": ["White"]},
+                    {"entity": "Lumi", "attribute": "owner", "value": ["Lena"]},
+                ],
+            }
+        )
+
+        results = executor._parse_response(response)
+
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].memory_content, "Lumi is a white Maltese.")
+        self.assertEqual(
+            results[0].text_attributes,
+            [{"entity": "Lumi", "attribute": "breed", "value": ["maltese"]}],
+        )
+        self.assertEqual(
+            results[0].visual_attributes,
+            [{"entity": "Lumi", "attribute": "color", "value": ["white"]}],
+        )
+
+    def test_no_attached_image_forces_empty_visual_attributes(self):
+        response = json.dumps(
+            {
+                "summary": "A blue notebook is discussed.",
+                "Ti": [{"attribute": "color", "value": ["blue"]}],
+                "Vi": [{"attribute": "color", "value": ["blue"]}],
+            }
+        )
+        executor = MemoryExecutor(ScriptedLLMClient(response), FakeEmbedder())
+
+        _, results = executor.execute("A blue notebook is discussed.")
+
+        self.assertEqual(results[0].visual_attributes, [])
+
+    def test_attribute_value_arrays_are_bounded_and_deduplicated(self):
+        executor = MemoryExecutor(llm_client=None, embedder=FakeEmbedder())
+        response = json.dumps(
+            {
+                "summary": "A bounded list.",
+                "Ti": [
+                    {
+                        "attribute": "date",
+                        "value": [str(year) for year in range(2000, 2020)]
+                        + ["2000"],
+                    }
+                ],
+                "Vi": [],
+            }
+        )
+
+        values = executor._parse_response(response)[0].text_attributes[0]["value"]
+
+        self.assertEqual(values, [str(year) for year in range(2000, 2008)])
+
+    def test_builder_keeps_one_raw_chunk_node_and_caches_attribute_vectors(self):
+        response = json.dumps(
+            {
+                "summary": "One complete summary.",
+                "Ti": [{"entity": "notebook", "attribute": "color", "value": ["blue"]}],
+                "Vi": [],
+            }
+        )
+        event = MemoryEvent(
+            text="the complete original chunk",
+            dataset="d",
+            dialogue_id="D1:0",
+            session_id="D1",
+            round_id=0,
+            source_chunk_id="chunk_001",
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "out"
+            MAUBuilder(ScriptedLLMClient(response), FakeEmbedder()).build(
+                [event], root, resume=False
+            )
+            bank = MAUBank.load(root)
+            attributes = json.loads((root / "attributes.json").read_text())
+            attribute_vectors = np.load(root / "vectors" / "attributes.npy")
+
+        self.assertEqual(len(bank), 1)
+        self.assertEqual(bank.memories[0].id, "chunk_001")
+        self.assertEqual(bank.memories[0].summary, "One complete summary.")
+        self.assertEqual(bank.memories[0].evidence_text, "the complete original chunk")
+        self.assertEqual(attributes[0]["text"], "color: blue")
+        self.assertEqual(attribute_vectors.shape, (1, 2))
+
+    def test_graph_uses_text_and_cross_sets_but_not_visual_visual(self):
+        from hive_mem.build_memory_edges import build_attribute_graph
+
+        bank = MAUBank()
+        rows = [
+            (
+                [{"attribute": "shape", "value": ["circles"]}],
+                [{"attribute": "shape", "value": ["circle"]}],
+            ),
+            ([{"attribute": "shape", "value": ["circle"]}], []),
+            ([], [{"attribute": "color", "value": ["blue"]}]),
+            ([], [{"attribute": "color", "value": ["blue"]}]),
+        ]
+        for index, (text_attributes, visual_attributes) in enumerate(rows):
+            bank.add_memory(
+                f"summary {index}",
+                np.asarray([1.0, 0.0]),
+                memory_id=f"chunk_{index}",
+                text_attributes=text_attributes,
+                visual_attributes=visual_attributes,
+            )
+
+        report = build_attribute_graph(bank, degree_cap=4)
+        edge = next(
+            row
+            for row in report["edges"]
+            if {row["source"], row["target"]} == {"chunk_0", "chunk_1"}
+        )
+
+        self.assertAlmostEqual(edge["weight"], 2 * np.log((4 + 1) / (2 + 1)))
+        self.assertEqual(edge["shared_text"], [{"attribute": "shape", "value": "circle"}])
+        self.assertEqual(edge["shared_cross"], [{"attribute": "shape", "value": "circle"}])
+        self.assertFalse(
+            any(
+                {row["source"], row["target"]} == {"chunk_2", "chunk_3"}
+                for row in report["edges"]
+            )
+        )
+
+    def test_global_pruning_caps_both_ends_of_every_edge(self):
+        from hive_mem.build_memory_edges import build_attribute_graph
+
+        bank = MAUBank()
+        for index in range(5):
+            bank.add_memory(
+                f"summary {index}",
+                np.asarray([1.0, 0.0]),
+                memory_id=f"chunk_{index}",
+                text_attributes=[{"attribute": "trait", "value": ["friendly"]}],
+            )
+
+        report = build_attribute_graph(bank, degree_cap=1)
+        degree = {}
+        for edge in report["edges"]:
+            degree[edge["source"]] = degree.get(edge["source"], 0) + 1
+            degree[edge["target"]] = degree.get(edge["target"], 0) + 1
+        self.assertTrue(all(value <= 1 for value in degree.values()))
+
+    def test_uniform_attribute_weighting_counts_shared_occurrences(self):
+        from hive_mem.build_memory_edges import build_attribute_graph
+
+        bank = MAUBank()
+        bank.add_memory(
+            "summary 0",
+            np.asarray([1.0, 0.0]),
+            memory_id="chunk_0",
+            text_attributes=[{"attribute": "shape", "value": ["circle"]}],
+            visual_attributes=[{"attribute": "shape", "value": ["circle"]}],
+        )
+        bank.add_memory(
+            "summary 1",
+            np.asarray([0.0, 1.0]),
+            memory_id="chunk_1",
+            text_attributes=[{"attribute": "shape", "value": ["circle"]}],
+        )
+
+        report = build_attribute_graph(
+            bank,
+            degree_cap=4,
+            attribute_weighting="uniform",
+        )
+
+        self.assertEqual(report["attribute_weighting"], "uniform")
+        self.assertEqual(report["idf"], [])
+        self.assertEqual(report["attribute_weights"][0]["weight"], 1.0)
+        self.assertEqual(report["edges"][0]["weight"], 2.0)
+
+    def test_retrieval_aggregates_shared_properties_across_all_five_seeds(self):
+        from benchmarks.io_utils import write_json_atomic
+        from hive_mem.retriever import GraphExpandedIndex
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bank = MAUBank()
+            vectors = [
+                [1.0, 0.0], [0.99, 0.01], [0.98, 0.02], [0.97, 0.03],
+                [0.96, 0.04], [0.0, 1.0], [0.0, 1.0],
+            ]
+            for index, vector in enumerate(vectors):
+                bank.add_memory(
+                    f"summary {index}",
+                    np.asarray(vector, dtype=np.float32),
+                    raw_chunk=f"raw chunk {index}",
+                    memory_id=f"chunk_{index}",
+                )
+            bank.save(root)
+            write_json_atomic(
+                root / "attributes.json",
+                [
+                    {"attribute": "color", "value": "blue", "text": "color: blue"},
+                    {"attribute": "shape", "value": "circle", "text": "shape: circle"},
+                ],
+            )
+            np.save(
+                root / "vectors" / "attributes.npy",
+                np.asarray([[1.0, 0.0], [0.8, 0.6]], dtype=np.float32),
+            )
+            write_json_atomic(
+                root / "reports" / "edges.json",
+                {
+                    "schema_version": 2,
+                    "idf": [
+                        {"attribute": "color", "value": "blue", "idf": 1.0},
+                        {"attribute": "shape", "value": "circle", "idf": 1.0},
+                    ],
+                    "edges": [
+                        {
+                            "source": "chunk_0", "target": "chunk_5", "weight": 1.0,
+                            "shared_text": [{"attribute": "color", "value": "blue"}],
+                            "shared_cross": [],
+                        },
+                        {
+                            "source": "chunk_1", "target": "chunk_5", "weight": 1.0,
+                            "shared_text": [],
+                            "shared_cross": [{"attribute": "color", "value": "blue"}],
+                        },
+                        {
+                            "source": "chunk_0", "target": "chunk_6", "weight": 1.0,
+                            "shared_text": [{"attribute": "shape", "value": "circle"}],
+                            "shared_cross": [],
+                        },
+                    ],
+                },
+            )
+
+            hits = GraphExpandedIndex(root, mode="append", append_k=2).search(
+                [1.0, 0.0], top_k=5
+            )
+
+        self.assertEqual([hit.item.id for hit in hits[:5]], [f"chunk_{i}" for i in range(5)])
+        self.assertEqual([hit.item.id for hit in hits[5:]], ["chunk_5", "chunk_6"])
+        self.assertAlmostEqual(hits[5].score, 1.0)
+        self.assertEqual(hits[5].item.evidence_text, "raw chunk 5")
 
 
 class EntityEdgeDerivationTest(unittest.TestCase):

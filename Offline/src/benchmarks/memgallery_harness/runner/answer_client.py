@@ -820,21 +820,27 @@ def _is_context_capacity_truncation(
 def _validate_prebuilt_messages(
     messages: list[dict[str, str]],
 ) -> list[dict[str, str]]:
-    if not isinstance(messages, list) or not messages:
-        raise ValueError("messages must be a non-empty list")
+    """Enforce a fresh QA-only conversation for final benchmark answering."""
+    if not isinstance(messages, list) or len(messages) != 2:
+        raise ValueError(
+            "Final answer isolation requires exactly one system QA message and "
+            "one user QA message"
+        )
     normalized: list[dict[str, str]] = []
-    for message in messages:
+    expected_roles = ("system", "user")
+    for index, message in enumerate(messages):
         if not isinstance(message, dict):
             raise TypeError("Each prompt message must be a mapping")
         role = str(message.get("role") or "")
         content = message.get("content")
-        if role not in {"system", "user", "assistant"}:
-            raise ValueError(f"Unsupported prompt role: {role!r}")
+        if role != expected_roles[index]:
+            raise ValueError(
+                "Final answer isolation requires message roles ['system', 'user']; "
+                f"got {role!r} at index {index}"
+            )
         if not isinstance(content, str) or not content:
             raise ValueError("Each prompt message must have non-empty string content")
         normalized.append({"role": role, "content": content})
-    if not any(message["role"] == "user" for message in normalized):
-        raise ValueError("Prebuilt prompt messages require a user message")
     return normalized
 
 

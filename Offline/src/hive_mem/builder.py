@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 
 import numpy as np
 
-from benchmarks.io_utils import write_json_atomic
+from benchmarks.io_utils import atomic_binary_writer, write_json_atomic
 from hive_mem.executor import (
     MemoryExecutor,
     normalize_visual_input,
@@ -18,6 +18,7 @@ from hive_mem.executor import (
 )
 from hive_mem.mau import MAUBank
 from hive_mem.output_layout import DatasetLayout
+from hive_mem.entity_schema import iter_node_attributes, serialize_attribute
 from dataclasses import asdict, dataclass, field
 
 
@@ -216,6 +217,8 @@ class MAUBuilder:
                     actions,
                     bank,
                     event_metadata=event.metadata,
+                    raw_chunk=event.text,
+                    node_id=event.source_chunk_id,
                 )
                 used_fallback = False
                 if not any(action.success for action in actions):
@@ -228,6 +231,8 @@ class MAUBuilder:
                         fallback_text,
                         embedding,
                         metadata={**event.metadata, "source": "fallback_insert"},
+                        raw_chunk=event.text,
+                        memory_id=event.source_chunk_id or None,
                     )
                     fallback_inserts += 1
                     used_fallback = True
@@ -271,6 +276,41 @@ class MAUBuilder:
                 pool.shutdown(wait=True, cancel_futures=True)
 
         bank.save(output_dir)
+        attributes = sorted(
+            {
+                attribute
+                for memory in bank.memories
+                for values in (memory.text_attributes, memory.visual_attributes)
+                for attribute in iter_node_attributes(values)
+            }
+        )
+        attribute_texts = [serialize_attribute(attribute) for attribute in attributes]
+        if attribute_texts:
+            attribute_vectors = np.asarray(
+                self.embedder.embed_texts(attribute_texts, mode="context"),
+                dtype=np.float32,
+            )
+            if attribute_vectors.ndim == 1:
+                attribute_vectors = attribute_vectors.reshape(1, -1)
+        else:
+            embedding_dim = (
+                int(bank.memories[0].embedding.size) if bank.memories else 0
+            )
+            attribute_vectors = np.zeros((0, embedding_dim), dtype=np.float32)
+        if attribute_vectors.shape[0] != len(attributes):
+            raise ValueError(
+                "Attribute/vector count mismatch: "
+                f"{len(attributes)} vs {attribute_vectors.shape[0]}"
+            )
+        write_json_atomic(
+            output_layout.attributes,
+            [
+                {"attribute": key, "value": value, "text": text}
+                for (key, value), text in zip(attributes, attribute_texts)
+            ],
+        )
+        with atomic_binary_writer(output_layout.attribute_vectors) as handle:
+            np.save(handle, attribute_vectors)
         image_vector_count = 0
         if build_image_vectors:
             output_layout.vectors_dir.mkdir(parents=True, exist_ok=True)
@@ -311,6 +351,7 @@ class MAUBuilder:
             "executor_image_requests_this_run": executor_image_requests,
             "elapsed_seconds_this_run": time.time() - started,
             "image_vector_memories": image_vector_count,
+            "unique_attributes": len(attributes),
             "build_signature": checkpoint_signature,
         }
         write_json_atomic(output_layout.build_stats, stats)

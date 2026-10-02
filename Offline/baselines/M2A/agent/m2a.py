@@ -38,6 +38,7 @@ class M2ASystem:
             temperature=self.config.llm.temperature,
             max_tokens=self.config.llm.max_tokens,
             timeout=self.config.llm.timeout,
+            max_retries=self.config.llm.max_retries,
         )
 
         # Initialize ImageManager with format configuration

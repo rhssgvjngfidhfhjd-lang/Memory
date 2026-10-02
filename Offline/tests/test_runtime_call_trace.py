@@ -6,6 +6,8 @@ from pathlib import Path
 import threading
 import urllib.request
 
+import pytest
+
 from benchmarks.baseline_runtime.call_trace import (
     CallRecorder,
     CountingProxy,
@@ -15,6 +17,7 @@ from benchmarks.baseline_runtime.call_trace import (
 from benchmarks.memgallery_harness.runner.metrics import write_runtime_call_metrics
 from benchmarks.memgallery_harness.runner.metrics import merge_llm_judge_metrics
 from scripts.judge_results_llm_parallel import summarize as summarize_judge
+from scripts.rerun_qa_from_frozen_retrieval import write_frozen_nonanswer_trace
 
 
 class _UpstreamHandler(BaseHTTPRequestHandler):
@@ -227,8 +230,11 @@ def test_runtime_proxy_records_build_and_retrieval_calls(tmp_path: Path):
     )
     assert calls["memory_bank"]["total_calls"] == 1
     assert calls["retrieval"]["total_calls"] == 1
-    assert calls["qa"]["total_calls"] == 2
-    assert calls["total"]["total_calls"] == 3
+    assert calls["answer"]["total_calls"] == 2
+    assert calls["qa"]["retrieval_calls"] == 1
+    assert calls["qa"]["answer_calls"] == 2
+    assert calls["qa"]["total_calls"] == 3
+    assert calls["total"]["total_calls"] == 4
     rows = [
         json.loads(line)
         for line in (tmp_path / "result" / "call_trace.jsonl").read_text().splitlines()
@@ -254,6 +260,38 @@ def test_runtime_proxy_records_build_and_retrieval_calls(tmp_path: Path):
     ] == [2, 1]
 
 
+def test_m3_frozen_replay_keeps_retrieval_and_rejects_qa_phase_contamination(
+    tmp_path: Path,
+):
+    source = tmp_path / "source"
+    source.mkdir()
+    (source / "run_manifest.json").write_text(
+        json.dumps({"baseline": "M3-Agent-caption"}), encoding="utf-8"
+    )
+    (source / "results.json").write_text(
+        json.dumps([{"answer_attempts": 1}]), encoding="utf-8"
+    )
+    rows = [
+        {"phase": "memory_build"},
+        {"phase": "retrieval"},
+        {"phase": "qa"},
+        {"phase": "judge"},
+    ]
+    (source / "call_trace.jsonl").write_text(
+        "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8"
+    )
+    target = write_frozen_nonanswer_trace(source, tmp_path / "valid")
+    retained = [json.loads(line) for line in target.read_text().splitlines()]
+    assert [row["phase"] for row in retained] == ["memory_build", "retrieval"]
+
+    rows.append({"phase": "qa"})
+    (source / "call_trace.jsonl").write_text(
+        "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8"
+    )
+    with pytest.raises(RuntimeError, match="Retrieval/Control calls may be mislabelled"):
+        write_frozen_nonanswer_trace(source, tmp_path / "invalid")
+
+
 def test_runtime_proxy_enforces_configured_output_cap(tmp_path: Path):
     upstream = ThreadingHTTPServer(("127.0.0.1", 0), _UpstreamHandler)
     thread = threading.Thread(target=upstream.serve_forever, daemon=True)
@@ -275,6 +313,7 @@ def test_runtime_proxy_enforces_configured_output_cap(tmp_path: Path):
             max_output_tokens=8192,
             temperature=0.0,
             qa_max_output_tokens=512,
+            qa_upstream_timeout=2,
         ) as proxy:
             with recorder.phase("memory_build"):
                 _post(f"{proxy.endpoint}/chat/completions")
@@ -292,6 +331,7 @@ def test_runtime_proxy_enforces_configured_output_cap(tmp_path: Path):
     rows = [json.loads(line) for line in trace_path.read_text().splitlines()]
     assert [row["phase"] for row in rows] == ["memory_build", "retrieval", "qa"]
     assert [row["max_output_tokens"] for row in rows] == [8192, 8192, 512]
+    assert [row["upstream_timeout_seconds"] for row in rows] == [5, 5, 2]
     assert all(row["temperature"] == 0.0 for row in rows)
 
 

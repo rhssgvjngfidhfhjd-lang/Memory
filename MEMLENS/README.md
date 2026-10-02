@@ -13,16 +13,6 @@ tags:
   - vision-language-models
   - benchmark
   - VLM-evaluation
-configs:
-  - config_name: 32k
-    data_files: dataset_32k.parquet
-  - config_name: 64k
-    data_files: dataset_64k.parquet
-  - config_name: 128k
-    data_files: dataset_128k.parquet
-  - config_name: 256k
-    data_files: dataset_256k.parquet
-    default: true
 ---
 
 # MemLens: Benchmarking Multimodal Long-Context Conversational Memory in Vision-Language Models
@@ -39,56 +29,48 @@ configs:
     </a>
 </p>
 
-> **This repository hosts the MemLens dataset only.** Evaluation code, model wrappers, and scoring scripts live at **[github.com/xrenaf/MEMLENS](https://github.com/xrenaf/MEMLENS)**.
+> **Local experimental subset.** This directory contains only the experiment-required MEMLENS-32K-Agent answerable subset. Evaluation code, model wrappers, and scoring scripts live separately at **[github.com/xrenaf/MEMLENS](https://github.com/xrenaf/MEMLENS)**.
 
 ## Overview
 
-MemLens is a benchmark for evaluating long-horizon conversational memory in vision-language models. It tests whether models can retrieve, recall, update, and reason over visual and textual information embedded across multi-session dialogues at 32K / 64K / 128K / 256K context windows.
+MemLens is a benchmark for evaluating long-horizon conversational memory in vision-language models. This local experiment uses only the **32K** version and only the answerable portion of the canonical Agent subset.
 
-**789 questions** across 5 types: Information Extraction, Knowledge Update, Temporal Reasoning, Multi-Session Reasoning, and Answer Refusal (Abstention).
+The retained test set has **173 instances / 173 questions** across 4 types: Information Extraction (61), Multi-Session Reasoning (35), Temporal Reasoning (48), and Knowledge Update (29). It references **1,851 unique images**.
+
+The upstream canonical Agent subset contains 195 questions. The 22 Answer Refusal questions were removed for this experiment, so `195 - 22 = 173`. The remaining upstream questions, context versions, serializations, and unreferenced images were also deleted from this local copy.
 
 ## Repository Structure
 
 ```
-xiyuRenBill/MEMLENS/
-  dataset_32k.json        # 789 items, 32K context  (~98 MB)
-  dataset_64k.json        # 789 items, 64K context  (~191 MB)
-  dataset_128k.json       # 789 items, 128K context (~369 MB)
-  dataset_256k.json       # 789 items, 256K context (~732 MB)
-  dataset_32k.parquet     # Parquet equivalent of dataset_32k.json
-  dataset_64k.parquet
-  dataset_128k.parquet
-  dataset_256k.parquet
-  agent_subset_195.json   # Indexing file: 195 question_ids used for memory-agent evaluation
+MEMLENS/
+  dataset_32k.json        # 173 answerable Agent-subset items, 32K context
+  agent_subset_173.json   # Exact question_id index for this experiment
   release_images/
-    haystack_images/      # images referenced by haystack sessions
-    needle_images/        # images referenced by needle (evidence) sessions
+    haystack_images/      # retained images referenced by haystack sessions
+    needle_images/        # retained images referenced by needle sessions
   metadata/
-    croissant.json        # Croissant 1.0 + RAI metadata
-  DATASHEET.md            # RAI datasheet
+    croissant.json        # unmodified upstream provenance metadata
+  DATASHEET.md            # local scope plus upstream provenance datasheet
   CITATION.cff
   LICENSE-DATA            # CC-BY-4.0
 ```
 
-The same 789 question_ids appear in all four `dataset_*` splits — only the surrounding haystack length differs. The Parquet files are byte-equivalent records to the JSON files, provided for the HuggingFace Dataset Viewer / Data Studio and for fast columnar loading.
+Only files required by the local experiment are retained. The Croissant metadata is preserved unchanged for upstream provenance and therefore describes the complete upstream release rather than this pruned directory.
 
 ## Splits
 
-| Config | Context | Records | JSON | Parquet |
-|---|---|---|---|---|
-| `32k`  | 32 768 tokens  | 789 | `dataset_32k.json`  (~98 MB)  | `dataset_32k.parquet`  (~52 MB)  |
-| `64k`  | 65 536 tokens  | 789 | `dataset_64k.json`  (~191 MB) | `dataset_64k.parquet`  (~101 MB) |
-| `128k` | 131 072 tokens | 789 | `dataset_128k.json` (~369 MB) | `dataset_128k.parquet` (~195 MB) |
-| `256k` | 262 144 tokens | 789 | `dataset_256k.json` (~732 MB) | `dataset_256k.parquet` (~387 MB) |
+| Config | Setting | Context | Records | QA | Images | File |
+|---|---|---:|---:|---:|---:|---|
+| `32k-agent-answerable` | OOD test only | 32,768 tokens | 173 | 173 | 1,851 | `dataset_32k.json` |
 
 ## Per-Question Schema
 
-Each record in `dataset_*k.json` / `dataset_*k.parquet` has these top-level fields:
+Each record in `dataset_32k.json` has these top-level fields:
 
 | Field | Type | Description |
 |---|---|---|
 | `question_id` | string | Stable across splits; e.g. `q_4106e113` |
-| `question_type` | string | One of `information_extraction`, `knowledge_update`, `temporal_reasoning`, `multi_session_reasoning`, `answer_refusal` |
+| `question_type` | string | One of `information_extraction`, `knowledge_update`, `temporal_reasoning`, `multi_session_reasoning`; `answer_refusal` was excluded by the experiment protocol |
 | `question` | string | Natural-language question + answer-format hint |
 | `answer` | string | Gold answer |
 | `question_date` | string | Timestamp of the question turn (e.g. `2024/05/31 (Fri) 07:58`) |
@@ -116,21 +98,12 @@ A single **image_ref** has:
 
 ## Loading
 
-### Via the `datasets` library (uses Parquet, viewer-aligned)
-
-```python
-from datasets import load_dataset
-
-ds = load_dataset("xiyuRenBill/MEMLENS", "256k")   # also: "32k", "64k", "128k"
-print(ds)
-print(ds["train"][0]["question_id"])
-```
-
-### Direct `json.load` (legacy)
+### Direct `json.load`
 
 ```python
 import json
-data = json.load(open("dataset_256k.json"))
+data = json.load(open("dataset_32k.json"))
+assert len(data) == 173
 print(len(data), data[0]["question_id"])
 ```
 
@@ -146,9 +119,11 @@ local_path = REPO / "release_images" / img["file"]   # e.g. release_images/needl
 
 Image filenames are 12-character random hex (e.g. `a3b2c891f04e.jpg`), globally unique across both `haystack_images/` and `needle_images/`.
 
-## Agent Subset (n = 195)
+## Experiment Agent Subset (n = 173)
 
-Memory-augmented agent pipelines (M3-Agent, M2A, M3C, Memory-T1, Mem0, MemOS, MemAgent-7B) are evaluated on a fixed stratified 195-question subset of the full 789-question benchmark, because per-question agent inference is roughly 60× slower than direct VLM inference. The exact `question_id` list lives in `agent_subset_195.json` (an *indexing* file with no QA payload), together with the per-type breakdown (61 IE / 35 MSR / 48 TR / 29 KU / 22 AR), stratification details (seed = 42, derived from a 200-sample then intersected with available agent runs to drop 5 incomplete questions), and a Python snippet for filtering each `dataset_*.json` to the subset. See paper Appendix G.2 for full derivation.
+The experiment starts from the upstream canonical 195-question Agent subset and removes its 22 `answer_refusal` records. The resulting OOD test set contains 173 answerable questions: 61 IE / 35 MSR / 48 TR / 29 KU. The exact retained IDs are recorded in `agent_subset_173.json`.
+
+This local subset is an experiment-specific derivative and must not be described as the complete upstream MEMLENS release.
 
 ## Supported Models (via the GitHub eval code)
 

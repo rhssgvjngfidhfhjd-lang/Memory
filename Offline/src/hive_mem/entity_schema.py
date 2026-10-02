@@ -1,20 +1,9 @@
-"""Shared entity/attribute ontology for MAU extraction and edge building.
-
-Agreed design (2026-08-03): every MAU carries ``entities`` produced by the
-SAME LLM call that writes the summary. Each entity is
-
-    {"name": str, "type": <ENTITY_TYPES>, "aliases": [str, ...]?,
-     "attributes": {<type-specific key>: str | [str, ...], ...}}
-
-Attribute keys form a CLOSED, human-defined ontology (derived from the
-Mem-Gallery QA patterns); the LLM chooses values, code enforces the keys.
-Cross-memory judgments (edges) are never made by the LLM: shared-attribute
-edges are set intersections over these fields.
-"""
+"""Closed attribute schemas and normalization for HiveMem chunk nodes."""
 
 from __future__ import annotations
 
 import json
+import re
 from typing import Any, Dict, List, Optional
 
 ENTITY_TYPES = ("PERSON", "ANIMAL", "OBJECT", "PLACE", "ORGANIZATION", "EVENT")
@@ -27,6 +16,60 @@ ATTRIBUTE_KEYS: Dict[str, tuple] = {
     "PLACE": ("kind", "location", "feature"),
     "ORGANIZATION": ("kind", "location", "role"),
     "EVENT": ("date", "location", "participants", "status"),
+}
+
+VISUAL_ATTRIBUTE_KEYS = (
+    "color",
+    "appearance",
+    "shape",
+    "material",
+    "texture",
+    "pattern",
+    "count",
+    "visible_state",
+    "action",
+    "pose",
+    "position",
+    "spatial_relation",
+    "ocr_text",
+)
+
+MAX_ATTRIBUTE_RECORDS = 16
+MAX_ATTRIBUTE_VALUES = 8
+
+TEXT_ATTRIBUTE_KEYS = tuple(
+    dict.fromkeys(
+        key
+        for keys in ATTRIBUTE_KEYS.values()
+        for key in keys
+    )
+) + tuple(
+    key
+    for key in VISUAL_ATTRIBUTE_KEYS
+    if key not in {item for keys in ATTRIBUTE_KEYS.values() for item in keys}
+)
+
+ATTRIBUTE_KEY_ALIASES = {
+    "coat color": "color",
+    "coat-color": "color",
+    "coat_color": "color",
+}
+
+ATTRIBUTE_VALUE_ALIASES = {
+    "seated": "sitting",
+}
+
+EMPTY_ATTRIBUTE_VALUES = {"n/a", "none", "not applicable", "not specified", "unknown"}
+
+_IRREGULAR_SINGULARS = {
+    "children": "child",
+    "feet": "foot",
+    "geese": "goose",
+    "men": "man",
+    "mice": "mouse",
+    "people": "person",
+    "teeth": "tooth",
+    "women": "woman",
 }
 
 PRONOUN_NAMES = {
@@ -47,6 +90,106 @@ def ontology_prompt_block() -> str:
         keys = ", ".join(ATTRIBUTE_KEYS[entity_type])
         lines.append(f"- {entity_type}: {keys}")
     return "\n".join(lines)
+
+
+def attribute_prompt_block() -> str:
+    """Closed Ti/Vi key lists used verbatim by the executor prompt."""
+    return (
+        "Allowed Ti attributes:\n"
+        + ", ".join(TEXT_ATTRIBUTE_KEYS)
+        + "\n\nAllowed Vi attributes:\n"
+        + ", ".join(VISUAL_ATTRIBUTE_KEYS)
+    )
+
+
+def _normalize_text(value: Any) -> str:
+    return re.sub(r"\s+", " ", str(value or "").strip().lower())
+
+
+def _singularize_last_word(value: str) -> str:
+    """Apply a small deterministic English singularization rule set.
+
+    Attribute equality must not depend on model calls or optional corpora.  The
+    rules intentionally target ordinary concrete nouns and leave ambiguous
+    endings such as ``glass``, ``status`` and ``analysis`` unchanged.
+    """
+    match = re.search(r"([a-z]+)$", value)
+    if not match:
+        return value
+    word = match.group(1)
+    singular = _IRREGULAR_SINGULARS.get(word)
+    if singular is None:
+        if len(word) > 3 and word.endswith("ies"):
+            singular = word[:-3] + "y"
+        elif len(word) > 4 and word.endswith(("sses", "shes", "ches", "xes", "zes")):
+            singular = word[:-2]
+        elif len(word) > 3 and word.endswith("s") and not word.endswith(("ss", "us", "is")):
+            singular = word[:-1]
+        else:
+            singular = word
+    return value[: match.start(1)] + singular
+
+
+def normalize_attribute_pair(attribute: Any, value: Any) -> tuple[str, str] | None:
+    """Return the canonical graph property ``(attribute, value)``."""
+    key = _normalize_text(attribute).replace(" ", "_")
+    key = ATTRIBUTE_KEY_ALIASES.get(key, key)
+    normalized_value = _normalize_text(value)
+    normalized_value = ATTRIBUTE_VALUE_ALIASES.get(normalized_value, normalized_value)
+    normalized_value = _singularize_last_word(normalized_value)
+    if not key or not normalized_value or normalized_value in EMPTY_ATTRIBUTE_VALUES:
+        return None
+    return key, normalized_value
+
+
+def normalize_attributes(raw: Any, *, visual: bool) -> List[Dict[str, Any]]:
+    """Validate VLM attributes and keep grouped list-valued JSON records.
+
+    ``entity`` is provenance only.  It is deliberately excluded from the
+    canonical pair used by intersections, document frequency and embeddings.
+    """
+    if not isinstance(raw, list):
+        return []
+    allowed = set(VISUAL_ATTRIBUTE_KEYS if visual else TEXT_ATTRIBUTE_KEYS)
+    grouped: Dict[tuple[str, str], list[str]] = {}
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        entity = str(item.get("entity") or "").strip()
+        values = item.get("value")
+        if not isinstance(values, (list, tuple, set)):
+            values = [values]
+        for value in values:
+            pair = normalize_attribute_pair(item.get("attribute"), value)
+            if pair is None or pair[0] not in allowed:
+                continue
+            bucket = grouped.setdefault((entity, pair[0]), [])
+            if pair[1] not in bucket and len(bucket) < MAX_ATTRIBUTE_VALUES:
+                bucket.append(pair[1])
+    return [
+        {**({"entity": entity} if entity else {}), "attribute": key, "value": values}
+        for (entity, key), values in grouped.items()
+    ][:MAX_ATTRIBUTE_RECORDS]
+
+
+def iter_node_attributes(raw: Any):
+    """Yield unique canonical pairs from a node's grouped Ti or Vi list."""
+    seen: set[tuple[str, str]] = set()
+    for item in raw if isinstance(raw, list) else []:
+        if not isinstance(item, dict):
+            continue
+        values = item.get("value")
+        if not isinstance(values, (list, tuple, set)):
+            values = [values]
+        for value in values:
+            pair = normalize_attribute_pair(item.get("attribute"), value)
+            if pair is not None and pair not in seen:
+                seen.add(pair)
+                yield pair
+
+
+def serialize_attribute(attribute: tuple[str, str]) -> str:
+    return f"{attribute[0]}: {attribute[1]}"
 
 
 def _normalize_value(value: Any) -> Optional[Any]:

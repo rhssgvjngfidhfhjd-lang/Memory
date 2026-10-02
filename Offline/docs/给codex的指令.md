@@ -29,3 +29,23 @@
 当前可以按照/data/haozhen/Memory-clean/Offline/docs/baselines.md来跑我们修复的miyix吗，不用真的做，直接回答
 ### 用api来跑baseline
 /data/haozhen/Memory-clean/Nvida_api/defaults_gpt-5-mini.json这是api，/data/haozhen/Memory-clean/Nvida_api/defaults_gpt-5-mini.json和/data/haozhen/Memory-clean/Nvida_api/config_gpt-5-mini是配置，尝试遵循/data/haozhen/Memory-clean/Offline/docs/baselines.md里的配置来跑三个benchmark的test部分，注意三个benchmark可以用api并行跑
+
+
+当前的三个gpu是空的，请按照本地两个md文件来跑一遍试试，有什么问题先和我汇报
+
+我需要你确认1.是否遵循wma的checkpoint不泄露原则
+2.最后给回答agent的信息是topk=7，中途你建库检索agent是top几我不管
+3.使用的是/data/haozhen/Memory-clean/Offline/src/benchmarks/.../runner/prompts.py里的prompt在最后回答时
+
+持续监控，防止出现超过512超过1024这种问题，连续出现则及时叫停实验
+
+我又加了两个新的benchmark/data/haozhen/Memory-clean/MemEye和/data/haozhen/Memory-clean/MEMLENS，你去看一下，然后在/data/haozhen/Memory-clean/Offline/src/benchmarks/memeye_harness和/data/haozhen/Memory-clean/Offline/src/benchmarks/memlens_harness新增m3agent的接口（尽量复用原有的文件）
+
+我需要你把cost和call写成这样的公式
+
+我又要跑两个新的benchmark，写了新的/data/haozhen/Memory-clean/Offline/src/benchmarks/memeye_harness，/data/haozhen/Memory-clean/Offline/src/benchmarks/memlens_harness，你用/data/haozhen/Memory-clean/Nvida_api/Openrouter_api这个api来看看，模型选取qwen3.5-9b,其他参数保持不变（Embedding-0.6B → 2048维、Top‑5，其余默认），分别测试memverse能否在这3+2个benchmark上跑出结果，
+重新整理一下这个任务，发个prompt给我
+
+
+base second + 输入token数量*输入系数 + 输出token数量*输出系数 + 输入图片数量*图片系数
+

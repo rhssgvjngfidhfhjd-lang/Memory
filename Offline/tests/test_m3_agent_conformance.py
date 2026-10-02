@@ -153,6 +153,33 @@ class M3AgentConformanceTest(unittest.TestCase):
         for name, expected in M3_PROMPT_SHA256.items():
             self.assertEqual(manifest["internal_prompt_sha256"][name]["actual"], expected)
 
+    def test_conformance_records_configurable_handoff_without_changing_native_search(self) -> None:
+        manifest = m3_conformance_manifest(
+            "memeye",
+            answer_prompt_sha256="answer-prompt",
+            source_root=M3_ROOT,
+            handoff_top_k=5,
+        )
+        self.assertEqual(manifest["native_search_top_k"], 2)
+        self.assertEqual(manifest["native_round_limit"], 5)
+        self.assertEqual(manifest["handoff_top_k"], 5)
+        self.assertFalse(manifest["control_ablation"]["active"])
+
+    def test_conformance_records_control_ablation(self) -> None:
+        manifest = m3_conformance_manifest(
+            "memeye",
+            answer_prompt_sha256="answer-prompt",
+            source_root=M3_ROOT,
+            handoff_top_k=5,
+            native_search_top_k=1,
+            native_round_limit=1,
+            retrieval_threshold=0.8,
+        )
+        self.assertEqual(manifest["native_search_top_k"], 1)
+        self.assertEqual(manifest["native_round_limit"], 1)
+        self.assertEqual(manifest["retrieval_threshold"], 0.8)
+        self.assertTrue(manifest["control_ablation"]["active"])
+
     def test_qwen_prompt_precedes_dialogue_observation_without_system_prompt(self) -> None:
         prompt = "OFFICIAL_QWEN_MEMORY_PROMPT"
         adapter = object.__new__(M3AgentAdapter)
@@ -167,6 +194,24 @@ class M3AgentConformanceTest(unittest.TestCase):
             messages[0]["content"][1]["text"], M3_MEMORY_OUTPUT_CONSTRAINT
         )
         self.assertIn("user: hello", messages[0]["content"][2]["text"])
+
+    def test_source_image_annotations_remain_aligned_without_image_ids(self) -> None:
+        adapter = object.__new__(M3AgentAdapter)
+        adapter.sample_id = "sample"
+        source = adapter._source_record(
+            Chunk(chunk_id="d1", text="user: look"),
+            {
+                "dialogue_id": "d1",
+                "images": [
+                    {"path": "/tmp/one.jpg", "image_id": "", "caption": "first"},
+                    {"path": "/tmp/two.jpg", "image_id": "two", "caption": "second"},
+                ],
+            },
+            1,
+        )
+        self.assertEqual(source["image_paths"], ["/tmp/one.jpg", "/tmp/two.jpg"])
+        self.assertEqual(source["image_ids"], ["", "two"])
+        self.assertEqual(source["image_captions"], ["first", "second"])
 
     def test_memory_generation_retries_a_length_truncated_response(self) -> None:
         adapter = object.__new__(M3AgentAdapter)

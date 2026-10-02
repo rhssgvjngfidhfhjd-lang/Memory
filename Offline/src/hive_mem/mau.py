@@ -30,6 +30,7 @@ class MAU:
 
     summary: str
     embedding: np.ndarray
+    raw_chunk: str = ""
     metadata: Dict[str, Any] = field(default_factory=dict)
     # LLM-extracted, normalized entity annotations of ``summary``:
     # {"name", "type", "aliases"?: [...], "attribute"?, "value"?}.
@@ -37,6 +38,8 @@ class MAU:
     # commonality edges are derived from this field at load time and are
     # deliberately not materialized.
     entities: List[Dict[str, Any]] = field(default_factory=list)
+    text_attributes: List[Dict[str, Any]] = field(default_factory=list)
+    visual_attributes: List[Dict[str, Any]] = field(default_factory=list)
     id: str = field(default_factory=lambda: f"mau_{int(time.time() * 1000)}_{uuid4().hex[:8]}")
     modality_type: ModalityType = ModalityType.TEXT
     # Memory-graph edges. ``prev``/``next`` hold the ids of temporal-chain
@@ -61,6 +64,11 @@ class MAU:
         """Legacy AgentMem alias for the MAU id."""
         return self.id
 
+    @property
+    def evidence_text(self) -> str:
+        """The original chunk returned to the answer model."""
+        return self.raw_chunk or self.summary
+
 #数据准成json格式的字典
     def to_dict(self) -> Dict[str, Any]:
         """Serialize using OmniSimpleMem's MAU field names.
@@ -72,6 +80,9 @@ class MAU:
             "id": self.id,
             "modality_type": self.modality_type.value,
             "summary": self.summary,
+            "chunk": self.raw_chunk,
+            "Ti": self.text_attributes,
+            "Vi": self.visual_attributes,
             "entities": self.entities,
             "status": self.status,
             "metadata": self.metadata,
@@ -89,6 +100,10 @@ class MAUBank:
         embedding: np.ndarray,
         metadata: Optional[Dict[str, Any]] = None,
         entities: Optional[List[Dict[str, Any]]] = None,
+        text_attributes: Optional[List[Dict[str, Any]]] = None,
+        visual_attributes: Optional[List[Dict[str, Any]]] = None,
+        raw_chunk: str = "",
+        memory_id: str | None = None,
     ):
         normalized_metadata = _normalize_metadata(metadata)
         image_paths = normalized_metadata.get("image_paths", [])
@@ -99,8 +114,12 @@ class MAUBank:
             MAU(
                 summary=str(content).strip(),
                 embedding=np.asarray(embedding, dtype=np.float32),
+                raw_chunk=str(raw_chunk),
                 metadata=normalized_metadata,
                 entities=[e for e in (entities or []) if isinstance(e, dict)],#只保留字典类型的实体
+                text_attributes=[e for e in (text_attributes or []) if isinstance(e, dict)],
+                visual_attributes=[e for e in (visual_attributes or []) if isinstance(e, dict)],
+                **({"id": str(memory_id)} if memory_id else {}),
                 modality_type=modality_type,
             )
         )
@@ -165,7 +184,10 @@ class MAUBank:
                 ),
                 summary=str(summary).strip(),
                 embedding=np.asarray(vector, dtype=np.float32),
+                raw_chunk=str(row.get("chunk") or row.get("raw_chunk") or ""),
                 entities=[e for e in (row.get("entities") or []) if isinstance(e, dict)],
+                text_attributes=[e for e in (row.get("Ti") or []) if isinstance(e, dict)],
+                visual_attributes=[e for e in (row.get("Vi") or []) if isinstance(e, dict)],
                 metadata=metadata,
                 links=_normalize_links(row.get("links")),
                 status=row.get("status", "ACTIVE"),

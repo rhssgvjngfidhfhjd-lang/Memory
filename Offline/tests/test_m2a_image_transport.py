@@ -124,6 +124,16 @@ class M2AImageTransportTest(unittest.TestCase):
                 SimpleNamespace(response_metadata={"finish_reason": "length"})
             )
 
+        with self.assertRaisesRegex(RuntimeError, "truncated"):
+            raise_for_truncated_completion(
+                SimpleNamespace(
+                    response_metadata={
+                        "finish_reason": "tool_calls",
+                        "native_finish_reason": "max_output_tokens",
+                    }
+                )
+            )
+
         raise_for_truncated_completion(
             SimpleNamespace(response_metadata={"finish_reason": "stop"})
         )
@@ -340,6 +350,72 @@ class M2AImageTransportTest(unittest.TestCase):
         self.assertEqual(len(llm.invoke_messages), 1)
         self.assertEqual(result.goto, "__end__")
 
+    def test_chat_agent_salvages_truncated_update_text_through_memory_manager(self) -> None:
+        updates = []
+        llm = self._FakeLLM(
+            AIMessage(
+                content=(
+                    '<tool_call>{"name":"update_memory","arguments":'
+                    '{"text":"Evelyn admires springer spaniels'
+                ),
+                response_metadata={"finish_reason": "length"},
+            )
+        )
+
+        class FakeMemoryManager:
+            config = SimpleNamespace(context_window=5, salvage_truncated_updates=True)
+            semantic_store = SimpleNamespace(log=[])
+
+            @staticmethod
+            def update(**kwargs):
+                updates.append(kwargs)
+                return "Created memory, id: 7"
+
+        class FakeImageManager:
+            @staticmethod
+            def image_token_to_image(_value):
+                return None
+
+        agent = object.__new__(ChatAgent)
+        agent.llm = llm
+        agent.tools = {"query": object(), "update": object()}
+        agent.config = SimpleNamespace(max_update_iteration=5)
+        agent.memory_manager = FakeMemoryManager()
+        agent.image_manager = FakeImageManager()
+        agent.raw_messages = [SimpleNamespace(msg_id=41)]
+        agent._tool_budget_events = []
+        state = ChatAgentState(messages=[HumanMessage(content="remember this")])
+
+        result = agent._update_stage(state)
+
+        self.assertEqual(result.goto, "__end__")
+        self.assertEqual(len(updates), 1)
+        self.assertEqual(
+            updates[0]["query_text"],
+            "Evelyn admires springer spaniels [TRUNCATED]",
+        )
+        audit = agent.memory_manager.semantic_store.log[-1]
+        self.assertTrue(audit["chat_agent_truncation_salvaged"])
+        self.assertTrue(audit["partial_text_forwarded"])
+
+    def test_chat_agent_salvage_is_opt_in(self) -> None:
+        llm = self._FakeLLM(
+            AIMessage(content="partial", response_metadata={"finish_reason": "length"})
+        )
+        agent = object.__new__(ChatAgent)
+        agent.llm = llm
+        agent.tools = {"query": object(), "update": object()}
+        agent.config = SimpleNamespace(max_update_iteration=5)
+        agent.memory_manager = SimpleNamespace(
+            config=SimpleNamespace(context_window=5, salvage_truncated_updates=False)
+        )
+        agent._tool_budget_events = []
+
+        with self.assertRaisesRegex(RuntimeError, "truncated"):
+            agent._update_stage(
+                ChatAgentState(messages=[HumanMessage(content="remember this")])
+            )
+
     def test_memory_manager_forces_query_finalization_without_tools(self) -> None:
         llm = self._FakeLLM(
             AIMessage(content="memory answer", response_metadata={"finish_reason": "stop"})
@@ -477,6 +553,139 @@ class M2AImageTransportTest(unittest.TestCase):
         self.assertEqual(state.iteration_count, manager.max_iteration)
         self.assertEqual(result.goto, "handle_update")
         self.assertEqual(state.messages[-1].content, "Created memory, id: 15")
+
+    def test_memory_manager_salvages_complete_and_partial_truncated_updates(self) -> None:
+        calls = []
+
+        class FakeTool:
+            def __init__(self, name):
+                self.name = name
+
+            def invoke(self, args):
+                calls.append((self.name, args))
+                if self.name == "add_memory":
+                    return "Created memory, id: 99"
+                return f"Deleted memory {args['memory_id']}"
+
+        content = """I will update memory.
+```json
+{"operation":"DELETE","memory_ids":[17,18]}
+```
+```json
+{"operation":"CREATE","memory":{"text":"complete memory","evidence_ids":[[7,9]]}}
+```
+```json
+{"operation":"CREATE","memory":{"text":"unfinished memory prefix
+"""
+        manager = object.__new__(MemoryManager)
+        manager.llm = self._FakeLLM(
+            AIMessage(
+                content=content,
+                response_metadata={"finish_reason": "length"},
+            )
+        )
+        manager.config = SimpleNamespace(salvage_truncated_updates=True)
+        manager.semantic_store = SimpleNamespace(log=[])
+        manager.tools = {
+            "search_semantic_memories": object(),
+            "fetch_raw_messages": object(),
+            "fetch_raw_messages_by_time": object(),
+            "add_memory": FakeTool("add_memory"),
+            "delete_memory": FakeTool("delete_memory"),
+        }
+        state = MemoryManagerState(
+            messages=[HumanMessage(content="update memory")],
+            operation="update",
+            context=[SimpleNamespace(msg_id=41), SimpleNamespace(msg_id=42)],
+        )
+
+        result = manager._handle_update(state)
+
+        self.assertEqual(result.goto, "__end__")
+        self.assertEqual(
+            calls[:2],
+            [
+                ("delete_memory", {"memory_id": "17"}),
+                ("delete_memory", {"memory_id": "18"}),
+            ],
+        )
+        self.assertEqual(calls[2][0], "add_memory")
+        self.assertEqual(calls[2][1]["text"], "complete memory")
+        self.assertEqual(calls[2][1]["evidence_ids"], "[[7, 9]]")
+        self.assertEqual(calls[3][0], "add_memory")
+        self.assertEqual(
+            calls[3][1]["text"], "unfinished memory prefix [TRUNCATED]"
+        )
+        self.assertEqual(calls[3][1]["evidence_ids"], "[[41, 42]]")
+        audit = manager.semantic_store.log[-1]
+        self.assertEqual(audit["op"], "salvage_truncated_update")
+        self.assertEqual(audit["creates_executed"], 2)
+        self.assertEqual(audit["deletes_executed"], 2)
+        self.assertTrue(audit["partial_text_saved"])
+        self.assertFalse(audit["raw_fallback_saved"])
+
+    def test_memory_manager_saves_raw_truncation_when_no_text_is_recoverable(self) -> None:
+        calls = []
+
+        class FakeAddTool:
+            @staticmethod
+            def invoke(args):
+                calls.append(args)
+                return "Created memory, id: 100"
+
+        manager = object.__new__(MemoryManager)
+        manager.llm = self._FakeLLM(
+            AIMessage(
+                content='{"operation":"DELETE","memory_ids":[17,',
+                response_metadata={"finish_reason": "length"},
+            )
+        )
+        manager.config = SimpleNamespace(salvage_truncated_updates=True)
+        manager.semantic_store = SimpleNamespace(log=[])
+        manager.tools = {
+            "search_semantic_memories": object(),
+            "fetch_raw_messages": object(),
+            "fetch_raw_messages_by_time": object(),
+            "add_memory": FakeAddTool(),
+            "delete_memory": object(),
+        }
+        state = MemoryManagerState(
+            messages=[HumanMessage(content="update memory")],
+            operation="update",
+            context=[SimpleNamespace(msg_id=51), SimpleNamespace(msg_id=53)],
+        )
+
+        result = manager._handle_update(state)
+
+        self.assertEqual(result.goto, "__end__")
+        self.assertEqual(len(calls), 1)
+        self.assertTrue(calls[0]["text"].startswith("[TRUNCATED MODEL OUTPUT]"))
+        self.assertEqual(calls[0]["evidence_ids"], "[[51, 51], [53, 53]]")
+        self.assertTrue(manager.semantic_store.log[-1]["raw_fallback_saved"])
+
+    def test_memory_manager_still_rejects_truncation_when_salvage_is_disabled(self) -> None:
+        manager = object.__new__(MemoryManager)
+        manager.llm = self._FakeLLM(
+            AIMessage(
+                content='{"operation":"CREATE","memory":{"text":"partial',
+                response_metadata={"finish_reason": "length"},
+            )
+        )
+        manager.config = SimpleNamespace(salvage_truncated_updates=False)
+        manager.tools = {
+            "search_semantic_memories": object(),
+            "fetch_raw_messages": object(),
+            "fetch_raw_messages_by_time": object(),
+            "add_memory": object(),
+            "delete_memory": object(),
+        }
+        state = MemoryManagerState(
+            messages=[HumanMessage(content="update memory")],
+            operation="update",
+        )
+
+        with self.assertRaisesRegex(RuntimeError, "truncated"):
+            manager._handle_update(state)
 
 
 if __name__ == "__main__":

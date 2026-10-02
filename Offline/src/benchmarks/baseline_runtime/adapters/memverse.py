@@ -358,10 +358,18 @@ class MemVerseAdapter(BaselineAdapter):
         from MemoryKB.Long_Term_Memory.Graph_Construction.lightrag import QueryParam
 
         visible = set(request.visible_session_ids)
+        core_only = os.getenv("MEMVERSE_CORE_ONLY", "0") == "1"
+        drop_untraced_media = (
+            os.getenv("MEMVERSE_DROP_UNTRACED_MEDIA", "0") == "1"
+        )
         stores = (
-            ("core", self.module.mem_core),
-            ("episodic", self.module.mem_epi),
-            ("semantic", self.module.mem_sem),
+            (("core", self.module.mem_core),)
+            if core_only
+            else (
+                ("core", self.module.mem_core),
+                ("episodic", self.module.mem_epi),
+                ("semantic", self.module.mem_sem),
+            )
         )
         async def query_stores() -> list[Any]:
             return await asyncio.gather(
@@ -380,12 +388,21 @@ class MemVerseAdapter(BaselineAdapter):
             text = str(value or "").strip()
             if not text:
                 continue
-            related = [
-                row
-                for row in self._records.values()
-                if row.metadata.get("memory_type") == memory_type
-                and (not visible or row.session_id in visible)
-            ]
+            # LightRAG's public ``aquery`` result is generated text and does
+            # not expose the source chunk IDs that produced it.  The legacy
+            # adapter treated every visible record as a hit, which attached
+            # the entire visible image library to one aggregate evidence
+            # item.  Strict experiments must not invent that provenance.
+            related = (
+                []
+                if drop_untraced_media
+                else [
+                    row
+                    for row in self._records.values()
+                    if row.metadata.get("memory_type") == memory_type
+                    and (not visible or row.session_id in visible)
+                ]
+            )
             source_ids = list(
                 dict.fromkeys(
                     source
@@ -402,12 +419,21 @@ class MemVerseAdapter(BaselineAdapter):
                     source_dialogue_ids=source_ids,
                     image_ids=list(dict.fromkeys(x for row in related for x in row.image_ids)),
                     image_paths=list(dict.fromkeys(x for row in related for x in row.image_paths)),
-                    metadata={"memory_type": memory_type, "aggregated_context": True},
+                    metadata={
+                        "memory_type": memory_type,
+                        "aggregated_context": True,
+                        "provenance_exposed": not drop_untraced_media,
+                    },
                 )
             )
         return RetrievalResult(
             items=items[: request.top_k],
-            trace={"baseline": self.baseline, "via": "lightrag_hybrid"},
+            trace={
+                "baseline": self.baseline,
+                "via": "lightrag_hybrid",
+                "stores": [memory_type for memory_type, _ in stores],
+                "untraced_media_dropped": drop_untraced_media,
+            },
         )
 
     def snapshot(self) -> list[MemoryRecord]:
@@ -466,6 +492,7 @@ class MemVerseAdapter(BaselineAdapter):
                 raw_id = str(row.get("id") or "")
                 if raw_id:
                     self._memory_rows[memory_type][raw_id] = row
+
 
     def _refresh_memory_rows(self, dialogue_id: str) -> None:
         for memory_type, path in self._memory_paths().items():

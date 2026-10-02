@@ -138,7 +138,16 @@ def build_m3_memgallery_chunks(
     return chunks
 
 
-def _from_round_chunks(parent_chunks: Iterable[Chunk], *, benchmark: str) -> list[Chunk]:
+def build_m3_chunks_from_round_chunks(
+    parent_chunks: Iterable[Chunk], *, benchmark: str
+) -> list[Chunk]:
+    """Adapt round-level ``Chunk`` objects to M3's clip-observation protocol.
+
+    This is the shared entry point for datasets whose loaders already preserve
+    the original dialogue turns in ``metadata.m2a_turns``.  It deliberately
+    rebuilds ``Chunk.text`` from those turns so baseline-specific expanded text
+    (for example a previous-round summary) cannot leak into M3's observation.
+    """
     chunks: list[Chunk] = []
     for parent in parent_chunks:
         turns = [
@@ -189,7 +198,7 @@ def build_m3_h2h_chunks_from_directory(
         conversation_ids={conversation_id},
         include_previous_summary=False,
     )
-    return _from_round_chunks(parents, benchmark="h2hmem")
+    return build_m3_chunks_from_round_chunks(parents, benchmark="h2hmem")
 
 
 def build_m3_wma_chunks_from_data(
@@ -201,7 +210,7 @@ def build_m3_wma_chunks_from_data(
         sample_path=sample_path,
         include_previous_summary=False,
     )
-    return _from_round_chunks(parents, benchmark="worldmemarena")
+    return build_m3_chunks_from_round_chunks(parents, benchmark="worldmemarena")
 
 
 def m3_input_manifest(source: str) -> dict[str, Any]:
@@ -209,9 +218,21 @@ def m3_input_manifest(source: str) -> dict[str, Any]:
     functions = (
         (_values, _resolve_memgallery_image, _observation_text, _make_chunk, build_m3_memgallery_chunks)
         if normalized == "memgallery"
-        else (_observation_text, _make_chunk, _from_round_chunks, build_m3_h2h_chunks_from_directory)
+        else (
+            _observation_text,
+            _make_chunk,
+            build_m3_chunks_from_round_chunks,
+            build_m3_h2h_chunks_from_directory,
+        )
         if normalized.startswith("h2hmem_")
-        else (_observation_text, _make_chunk, _from_round_chunks, build_m3_wma_chunks_from_data)
+        else (_observation_text, _make_chunk, build_m3_chunks_from_round_chunks)
+        if normalized in {"memeye", "memlens"}
+        else (
+            _observation_text,
+            _make_chunk,
+            build_m3_chunks_from_round_chunks,
+            build_m3_wma_chunks_from_data,
+        )
     )
     mapping_source = "\n".join(inspect.getsource(function) for function in functions)
     return {

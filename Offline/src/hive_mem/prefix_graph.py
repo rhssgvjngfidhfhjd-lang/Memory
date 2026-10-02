@@ -17,7 +17,7 @@ from hive_mem.mau import MAUBank
 from hive_mem.output_layout import DatasetLayout
 
 
-PREFIX_GRAPH_SCHEMA_VERSION = 1
+PREFIX_GRAPH_SCHEMA_VERSION = 2
 
 
 def materialize_prefix_graph(
@@ -46,6 +46,12 @@ def materialize_prefix_graph(
     image_path = source_layout.existing_vector_path("image.npy", "image_vectors.npy")
     image_mask_path = source_layout.existing_vector_path("image_mask.npy", "image_mask.npy")
     source_paths = [source_dataset_dir / "memories.jsonl", text_path]
+    if source_layout.attributes.exists() or source_layout.attribute_vectors.exists():
+        if not source_layout.attributes.is_file() or not source_layout.attribute_vectors.is_file():
+            raise ValueError(
+                "Attribute metadata and vectors must both exist in the source index"
+            )
+        source_paths.extend((source_layout.attributes, source_layout.attribute_vectors))
     if image_path.exists() or image_mask_path.exists():
         if image_path.exists() != image_mask_path.exists():
             raise ValueError(
@@ -76,6 +82,13 @@ def materialize_prefix_graph(
         prefix_dataset_dir / "memories.jsonl",
         DatasetLayout(prefix_dataset_dir).text_vectors,
     ]
+    if source_layout.attributes.is_file():
+        cached_paths.extend(
+            (
+                DatasetLayout(prefix_dataset_dir).attributes,
+                DatasetLayout(prefix_dataset_dir).attribute_vectors,
+            )
+        )
     if image_path.exists():
         cached_paths.extend(
             (
@@ -120,6 +133,13 @@ def materialize_prefix_graph(
         for item in prefix_bank.memories:
             item.links = {"prev": None, "next": None, "related": []}
         prefix_bank.save(temporary_dataset_dir)
+        if source_layout.attributes.is_file():
+            destination_layout = DatasetLayout(temporary_dataset_dir)
+            shutil.copy2(source_layout.attributes, destination_layout.attributes)
+            shutil.copy2(
+                source_layout.attribute_vectors,
+                destination_layout.attribute_vectors,
+            )
         _slice_image_vectors(
             source_layout,
             DatasetLayout(temporary_dataset_dir),
@@ -136,7 +156,8 @@ def materialize_prefix_graph(
             df_max=float(options.get("df_max", 0.3)),
             df_stop=float(options.get("df_stop", 0.5)),
             min_shared=int(options.get("min_shared", 2)),
-            degree_cap=int(options.get("degree_cap", 10)),
+            degree_cap=int(options.get("degree_cap", 4)),
+            attribute_weighting=str(options.get("attribute_weighting", "idf")),
         )
         edge_report["dataset_dir"] = str(prefix_dataset_dir.resolve())
         write_json_atomic(

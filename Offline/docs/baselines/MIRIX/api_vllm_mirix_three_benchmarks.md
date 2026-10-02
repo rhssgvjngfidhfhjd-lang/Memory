@@ -42,7 +42,7 @@
 - Judge max tokens：`512`
 - Judge 调用不计入 MB/QA calls、cost 或 latency
 
-`defaults_gpt-5-mini.json` 中通用的 `executor_max_tokens` 为 512；MIRIX 正式建库由 runner 使用独立的 `mirix_executor_max_tokens=8192` 兼容上限。实际值必须写入 `run_manifest.json`，不得把 QA 的 512 上限同时误用于 MIRIX memory-build tool JSON。
+`defaults_gpt-5-mini.json` 中通用的 `executor_max_tokens` 为 512；MIRIX 正式建库由 runner 使用独立的 `mirix_executor_max_tokens=2048` 上限。实际值必须写入 `run_manifest.json`，QA 仍保持 512。MIRIX 建库触及 2048、工具 JSON 不完整或没有产生有效原生工具调用时，必须拒绝不完整内容并记为 baseline 自身的失败建库点；跳过后继续，只有连续 10 个建库点失败才隔离当前样本。
 
 除上述 API 替换外，其余配置仍以 `configs/baselines.json`、`configs/test_baseline_matrix.json` 和 API defaults 为准。运行时不得静默修改固定配置。
 

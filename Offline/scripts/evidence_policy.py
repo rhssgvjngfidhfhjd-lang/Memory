@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 import math
+import os
 import random
 import secrets
 import sys
@@ -237,6 +238,13 @@ class RealtimeWandbLogger:
                 flush=True,
             )
 
+ALL_ZERO_REWARD = -1.0
+
+
+def actions_are_all_zero(actions: Sequence[Any]) -> bool:
+    return not actions or all(action.bitmask == "00000" for action in actions)
+
+
 class CostRewardRuntime:
     """Compute shaped rewards while owning one benchmark's normalizer state."""
 
@@ -313,7 +321,11 @@ class CostRewardRuntime:
             self.cost_tradeoff_lambda if self.enabled else 0.0
         )
         if not self.enabled:
-            rollout.reward = quality
+            rollout.reward = (
+                ALL_ZERO_REWARD
+                if actions_are_all_zero(rollout.actions)
+                else quality
+            )
             return not bool(rollout.error)
         if rollout.error:
             rollout.cost_error = "answer rollout failed"
@@ -386,7 +398,11 @@ class CostRewardRuntime:
         )
         rollout.cost_window_count = int(state["window_count"])
         rollout.cost_normalizer_active = bool(state["active"])
-        rollout.reward = quality - effective_weight * normalized
+        rollout.reward = (
+            ALL_ZERO_REWARD
+            if actions_are_all_zero(rollout.actions)
+            else quality - effective_weight * normalized
+        )
         rollout.cost_error = ""
         return True
 
@@ -452,7 +468,7 @@ def summarize_cost_rewards(rollouts: Sequence[EvidenceRollout]) -> dict[str, flo
         "all_zero_rollout_rate": float(
             np.mean(
                 [
-                    all(action.bitmask == "00000" for action in rollout.actions)
+                    actions_are_all_zero(rollout.actions)
                     for rollout in rollouts
                 ]
             )
@@ -476,7 +492,8 @@ def summarize_cost_rewards(rollouts: Sequence[EvidenceRollout]) -> dict[str, flo
             "cost_penalty_mean": float(
                 np.mean(
                     [
-                        float(row.quality_reward) - float(row.reward)
+                        float(row.effective_cost_weight or 0.0)
+                        * float(row.normalized_cost or 0.0)
                         for row in valid
                     ]
                 )
@@ -569,6 +586,11 @@ def main() -> None:
         help="Override the configured VLM endpoint for this run",
     )
     parser.add_argument(
+        "--memory-bank",
+        default="",
+        help="Override the configured memory bank for an isolated graph ablation",
+    )
+    parser.add_argument(
         "--retrieval-mode",
         choices=("vector", "random_append", "graph_append"),
         default="",
@@ -581,10 +603,27 @@ def main() -> None:
         help="Override vector top-k for a controlled ablation",
     )
     parser.add_argument(
+        "--append-k",
+        type=int,
+        default=None,
+        help="Override graph/random append count for a controlled ablation",
+    )
+    parser.add_argument(
+        "--degree-cap",
+        type=int,
+        default=None,
+        help="Record the graph degree cap used by an isolated graph ablation",
+    )
+    parser.add_argument(
         "--retrieval-seed",
         type=int,
         default=None,
         help="Global random-append seed; per-question seeds are derived by SHA256",
+    )
+    parser.add_argument(
+        "--ppo-force-visual-evidence",
+        action="store_true",
+        help="During deterministic PPO evaluation, add every available image and VP",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -623,12 +662,38 @@ def main() -> None:
         )
     if args.model_base_url:
         config["model"]["base_url"] = str(args.model_base_url).rstrip("/")
+    if args.memory_bank:
+        config["memory_bank"] = str(Path(args.memory_bank).expanduser().resolve())
     if args.retrieval_mode:
         config["retrieval_mode"] = args.retrieval_mode
     if args.top_k:
         config["top_k"] = int(args.top_k)
+    if args.append_k is not None:
+        retrieval_mode = str(
+            args.retrieval_mode or config.get("retrieval_mode") or "graph_append"
+        )
+        if retrieval_mode == "graph_append":
+            graph_options = config.get("graph_options")
+            if graph_options is False:
+                raise ValueError("--append-k cannot enable disabled graph_options")
+            config["graph_options"] = dict(graph_options or {})
+            config["graph_options"]["append_k"] = int(args.append_k)
+        elif retrieval_mode == "random_append":
+            config["random_append_k"] = int(args.append_k)
+        else:
+            raise ValueError("--append-k requires graph_append or random_append mode")
+    if args.degree_cap is not None:
+        if args.degree_cap < 0:
+            raise ValueError("--degree-cap cannot be negative")
+        graph_options = config.get("graph_options")
+        if graph_options is False:
+            raise ValueError("--degree-cap cannot override disabled graph_options")
+        config["graph_options"] = dict(graph_options or {})
+        config["graph_options"]["degree_cap"] = int(args.degree_cap)
     if args.retrieval_seed is not None:
         config["retrieval_seed"] = int(args.retrieval_seed)
+    if args.ppo_force_visual_evidence:
+        config.setdefault("evidence", {})["ppo_force_visual_evidence"] = True
     config["qa_latency_denominator"] = str(
         config.get("qa_latency_denominator", "queries")
     )
@@ -876,7 +941,8 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
         if not resume_configs_match(state.get("config"), config):
             raise ValueError(
                 "Checkpoint configuration does not match the current evidence-policy "
-                "config (only output_dir may differ for a clean recovery run)"
+                "config (only output_dir, model.base_url, and the training-only "
+                "ppo.skip_invalid_response flag may differ for recovery)"
             )
         start_epoch = int(state["epoch"]) + 1
         train_question_count = int(
@@ -947,6 +1013,7 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
             else []
         )
         failed_rollouts = 0
+        skipped_invalid_responses = 0
         for episode_index, episode in enumerate(episodes, start=1):
             train_question_count += 1
             with torch.no_grad():
@@ -956,6 +1023,9 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                     EvidenceStrategy.PPO,
                     policy=policy,
                     deterministic=False,
+                    allow_skip_invalid_response=bool(
+                        config["ppo"].get("skip_invalid_response", False)
+                    ),
                 )
             step = rollout.policy_step
             assert step is not None
@@ -963,6 +1033,7 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
                 rollout, episode, snapshot=cost_snapshot
             )
             train_rollouts.append(rollout_record(rollout, episode))
+            skipped_invalid_responses += int(rollout.skipped_invalid_response)
             if rollout.error or not cost_eligible:
                 failed_rollouts += 1
             else:
@@ -1065,6 +1136,7 @@ def train(config: dict[str, Any], args: argparse.Namespace) -> None:
             "train_episodes": len(episodes),
             "successful_rollouts": len(rewards),
             "failed_rollouts": failed_rollouts,
+            "skipped_invalid_responses": skipped_invalid_responses,
             "mean_reward": float(np.mean(rewards)) if rewards else 0.0,
             "updates": mean_dicts(updates),
             "validation": end_validation["metrics"],
@@ -1347,7 +1419,7 @@ def evaluate_command(config: dict[str, Any], args: argparse.Namespace) -> None:
         config_path=efficiency_config,
         hivemem_index_root=config["memory_bank"],
         qa_latency_denominator=str(
-            config.get("qa_latency_denominator", "samples")
+            config.get("qa_latency_denominator", "queries")
         ),
     )
     result["metrics"] = add_efficiency_metrics(result["metrics"], efficiency)
@@ -1474,10 +1546,16 @@ def evaluate(
 def resume_configs_match(stored: Any, current: dict[str, Any]) -> bool:
     if not isinstance(stored, dict):
         return False
-    stored_copy = dict(stored)
-    current_copy = dict(current)
-    stored_copy.pop("output_dir", None)
-    current_copy.pop("output_dir", None)
+    stored_copy = json.loads(json.dumps(stored))
+    current_copy = json.loads(json.dumps(current))
+    for config in (stored_copy, current_copy):
+        config.pop("output_dir", None)
+        model = config.get("model")
+        if isinstance(model, dict):
+            model.pop("base_url", None)
+        ppo = config.get("ppo")
+        if isinstance(ppo, dict):
+            ppo.pop("skip_invalid_response", None)
     return stored_copy == current_copy
 
 
@@ -1569,6 +1647,7 @@ def rollout_with_endpoint_recovery(
     deterministic: bool,
     attempts: int = ROLLOUT_RETRY_ATTEMPTS,
     delay_seconds: float = ROLLOUT_RETRY_DELAY_SECONDS,
+    allow_skip_invalid_response: bool = False,
 ) -> EvidenceRollout:
     """Pause on endpoint outages instead of turning them into zero rewards."""
     if attempts <= 0:
@@ -1583,6 +1662,22 @@ def rollout_with_endpoint_recovery(
         if not rollout.error:
             return rollout
         if not is_transient_endpoint_error(rollout.error):
+            if allow_skip_invalid_response and (
+                "Response must contain only one <answer>...</answer> block"
+                in rollout.error
+            ):
+                rollout.skipped_invalid_response = True
+                rollout.skipped_error = rollout.error
+                rollout.error = ""
+                rollout.reward = ALL_ZERO_REWARD
+                rollout.quality_reward = ALL_ZERO_REWARD
+                print(
+                    f"Skipping invalid training response for {episode.query_id}; "
+                    "reward=-1",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                return rollout
             action_masks = [action.bitmask for action in rollout.actions]
             raise RuntimeError(
                 f"Rollout failed for {episode.query_id} with actions "
@@ -2174,6 +2269,12 @@ def build_environment(
     config: dict[str, Any],
 ) -> tuple[VLMAnswerClient, EvidenceSelectionEnv]:
     model = config["model"]
+    api_key = str(model.get("api_key", "")).strip()
+    api_key_env = str(model.get("api_key_env", "")).strip()
+    if api_key_env:
+        api_key = os.environ.get(api_key_env, "").strip()
+        if not api_key:
+            raise ValueError(f"Environment variable {api_key_env!r} is empty")
     benchmark = str(config.get("benchmark", "memgallery")).lower()
     client_class = VLMAnswerClient
     if benchmark == "wma":
@@ -2183,11 +2284,12 @@ def build_environment(
     client = client_class(
         model=model["name"],
         base_url=model["base_url"],
-        api_key=model["api_key"],
+        api_key=api_key,
         num_predict=int(model["max_tokens"]),
         timeout=int(model["timeout"]),
         retries=int(model["retries"]),
         think=bool(model["think"]),
+        reasoning_effort=str(model.get("reasoning_effort", "")),
     )
     cache = RolloutCache(Path(config["output_dir"]) / "rollout_cache.jsonl")
     visual_categories = {
@@ -2217,6 +2319,10 @@ def build_environment(
         cache=cache,
         rng=random.Random(int(config["seed"])),
         visual_categories=visual_categories,
+        ppo_force_visual_evidence=bool(
+            evidence.get("ppo_force_visual_evidence", False)
+        ),
+        disabled_evidence_types=evidence.get("disabled_types", ()),
     )
 
 
@@ -2232,6 +2338,17 @@ def validate_runtime(config: dict[str, Any], *, require_split: bool) -> None:
         raise ValueError(
             f"Evidence schema must be version 2 with order {expected_order}, "
             f"got version={evidence.get('schema_version')}, order={configured_order!r}"
+        )
+    disabled_types = evidence.get("disabled_types", [])
+    if not isinstance(disabled_types, list):
+        raise ValueError("evidence.disabled_types must be a list")
+    if len(disabled_types) != len(set(disabled_types)):
+        raise ValueError("evidence.disabled_types must not contain duplicates")
+    unknown_disabled = sorted(set(disabled_types) - set(expected_order))
+    if unknown_disabled:
+        raise ValueError(
+            f"Unknown evidence.disabled_types values: {unknown_disabled}; "
+            f"expected a subset of {expected_order}"
         )
     if evidence.get("vp_run_dir"):
         vp_index = VPArtifactIndex(
@@ -2374,9 +2491,7 @@ def rollout_record(
     )
     empty_prompt_version = row.pop("ppo_empty_prompt_version", "")
     empty_prompt_sha256 = row.pop("ppo_empty_prompt_sha256", "")
-    is_all_zero = not rollout.actions or all(
-        action.bitmask == "00000" for action in rollout.actions
-    )
+    is_all_zero = actions_are_all_zero(rollout.actions)
     if is_all_zero and empty_prompt_version and empty_prompt_sha256:
         row.update(
             {

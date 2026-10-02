@@ -907,6 +907,215 @@ class MMAOriginalReproductionTest(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "textual parsing and repair"):
             _reject_unstructured_native_tool_calls(response)
 
+    def test_local_vllm_retries_only_unstructured_tool_markup(self) -> None:
+        class FakeOpenAIClient:
+            def __init__(self, responses):
+                self.responses = list(responses)
+                self.requests = []
+                self.llm_config = SimpleNamespace(
+                    model_endpoint="http://127.0.0.1:8015/v1"
+                )
+
+            def request(self, request_data):
+                self.requests.append(dict(request_data))
+                return self.responses.pop(0)
+
+        module = SimpleNamespace(OpenAIClient=FakeOpenAIClient)
+        adapter = object.__new__(MMAOriginalAdapter)
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mma_original.importlib.import_module",
+            return_value=module,
+        ):
+            adapter._install_vllm_native_tool_retry()
+
+        malformed = {
+            "choices": [
+                {
+                    "message": {
+                        "content": '<tool_call>{"name":"insert"}</tool_call>',
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        }
+        structured = {
+            "choices": [
+                {
+                    "message": {
+                        "content": None,
+                        "tool_calls": [{"function": {"name": "insert"}}],
+                    }
+                }
+            ]
+        }
+        client = FakeOpenAIClient([malformed, structured])
+        tools = [
+            {
+                "type": "function",
+                "function": {
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "inner_thoughts": {"type": "string"},
+                            "memory": {"type": "string"},
+                        },
+                    }
+                },
+            }
+        ]
+        result = client.request(
+            {"tools": tools, "tool_choice": "auto"}
+        )
+        self.assertIs(result, structured)
+        self.assertEqual(len(client.requests), 2)
+        self.assertEqual(client.requests[0]["tool_choice"], "auto")
+        self.assertFalse(client.requests[0]["parallel_tool_calls"])
+        self.assertEqual(client.requests[0]["stop"], ["</tool_call>"])
+        self.assertEqual(client.requests[1]["tool_choice"], "required")
+        self.assertFalse(client.requests[1]["parallel_tool_calls"])
+        self.assertEqual(client.requests[1]["stop"], ["</tool_call>"])
+        retry_properties = client.requests[1]["tools"][0]["function"][
+            "parameters"
+        ]["properties"]
+        self.assertEqual(retry_properties["inner_thoughts"]["maxLength"], 1024)
+        self.assertEqual(retry_properties["memory"]["maxLength"], 4096)
+        initial_properties = client.requests[0]["tools"][0]["function"][
+            "parameters"
+        ]["properties"]
+        self.assertNotIn("maxLength", initial_properties["inner_thoughts"])
+
+        normal = FakeOpenAIClient([structured])
+        self.assertIs(
+            normal.request(
+                {"tools": tools, "tool_choice": "auto"}
+            ),
+            structured,
+        )
+        self.assertEqual(len(normal.requests), 1)
+        self.assertFalse(normal.requests[0]["parallel_tool_calls"])
+        self.assertEqual(normal.requests[0]["stop"], ["</tool_call>"])
+
+        named = FakeOpenAIClient([structured])
+        named.request(
+            {
+                "tools": tools,
+                "tool_choice": {
+                    "type": "function",
+                    "function": {"name": "insert"},
+                },
+            }
+        )
+        named_properties = named.requests[0]["tools"][0]["function"][
+            "parameters"
+        ]["properties"]
+        self.assertEqual(named_properties["inner_thoughts"]["maxLength"], 1024)
+        self.assertEqual(named_properties["memory"]["maxLength"], 4096)
+
+    def test_local_vllm_retries_plain_chat_answer_with_send_message(self) -> None:
+        class FakeOpenAIClient:
+            def __init__(self, responses):
+                self.responses = list(responses)
+                self.requests = []
+                self.llm_config = SimpleNamespace(
+                    model_endpoint="http://127.0.0.1:8015/v1"
+                )
+
+            def request(self, request_data):
+                self.requests.append(dict(request_data))
+                return self.responses.pop(0)
+
+        module = SimpleNamespace(OpenAIClient=FakeOpenAIClient)
+        adapter = object.__new__(MMAOriginalAdapter)
+        with patch(
+            "benchmarks.baseline_runtime.adapters.mma_original.importlib.import_module",
+            return_value=module,
+        ):
+            adapter._install_vllm_native_tool_retry()
+
+        plain = {
+            "choices": [
+                {
+                    "message": {
+                        "content": "<answer>Cocker Spaniel</answer>",
+                        "tool_calls": [],
+                    }
+                }
+            ]
+        }
+        structured = {
+            "choices": [
+                {
+                    "message": {
+                        "content": None,
+                        "tool_calls": [
+                            {"function": {"name": "send_message"}}
+                        ],
+                    }
+                }
+            ]
+        }
+        tools = [
+            {
+                "type": "function",
+                "function": {
+                    "name": "send_message",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "inner_thoughts": {"type": "string"},
+                            "message": {"type": "string"},
+                        },
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "search_in_memory",
+                    "parameters": {"type": "object", "properties": {}},
+                },
+            },
+        ]
+        client = FakeOpenAIClient([plain, structured])
+        self.assertIs(
+            client.request({"tools": tools, "tool_choice": "auto"}),
+            structured,
+        )
+        self.assertEqual(len(client.requests), 2)
+        self.assertEqual(client.requests[0]["tool_choice"], "auto")
+        self.assertEqual(
+            client.requests[1]["tool_choice"],
+            {
+                "type": "function",
+                "function": {"name": "send_message"},
+            },
+        )
+        retry_properties = client.requests[1]["tools"][0]["function"][
+            "parameters"
+        ]["properties"]
+        self.assertEqual(retry_properties["inner_thoughts"]["maxLength"], 1024)
+        self.assertEqual(retry_properties["message"]["maxLength"], 4096)
+        self.assertEqual(
+            retry_properties["message"]["pattern"],
+            r"^<answer>[\s\S]*</answer>$",
+        )
+
+        no_terminal_tool = [
+            {
+                "type": "function",
+                "function": {
+                    "name": "search_in_memory",
+                    "parameters": {"type": "object", "properties": {}},
+                },
+            }
+        ]
+        normal = FakeOpenAIClient([plain])
+        self.assertIs(
+            normal.request({"tools": no_terminal_tool, "tool_choice": "auto"}),
+            plain,
+        )
+        self.assertEqual(len(normal.requests), 1)
+
     def test_structured_native_tool_call_is_accepted(self) -> None:
         response = {
             "choices": [
@@ -986,6 +1195,15 @@ class MMAOriginalReproductionTest(unittest.TestCase):
         adapter.end_session("D1")
 
         adapter.backend.send_message.assert_not_called()
+
+    def test_qa_only_end_session_does_not_write_build_checkpoint(self) -> None:
+        adapter = _adapter()
+        adapter._qa_only_reuse = True
+        adapter._checkpoint_completed_session = Mock()
+
+        adapter.end_session("D1")
+
+        adapter._checkpoint_completed_session.assert_not_called()
 
     def test_retrieval_returns_global_top7_with_structured_provenance(self) -> None:
         adapter = _adapter()
@@ -1374,6 +1592,128 @@ class MMAOriginalReproductionTest(unittest.TestCase):
         self.assertIn('"id":"s1"', context["semantic"])
         self.assertIn('"id":"e1"', context["episodic"][1])
         self.assertEqual(context["key_words"], "benchmark question")
+
+    def test_isolated_final_answer_never_receives_mma_prompt_or_tools(self) -> None:
+        adapter = _adapter()
+        adapter.config = {
+            "mma_isolated_final_answer": True,
+            "executor_model": "answer-model",
+            "answer_model": "answer-model",
+            "executor_base_url": "http://127.0.0.1:9999/v1",
+            "num_predict": 512,
+            "request_timeout": 30,
+            "retries": 0,
+        }
+        item = RetrievedMemory(
+            memory_id="semantic_memory_manager:s1",
+            text='{"id":"s1","details":"frozen fact"}',
+            metadata={"partition": "semantic_memory"},
+        )
+        retrieval = RetrievalResult(
+            items=[item],
+            trace={
+                "category": "FR",
+                "native_retrieval_agent_synthesis": "frozen synthesis",
+            },
+        )
+        adapter._retrievals["q-isolated"] = retrieval
+        captured: dict[str, object] = {}
+
+        class FakeAnswerClient:
+            def __init__(self, **kwargs):
+                captured["client"] = kwargs
+
+            def answer_messages_with_usage(self, **kwargs):
+                captured["request"] = kwargs
+                return SimpleNamespace(
+                    text="<answer>clean</answer>",
+                    usage={"prompt_tokens": 10, "completion_tokens": 2},
+                    attempts=1,
+                    failed_attempts=0,
+                    image_count=0,
+                )
+
+        request = NativeAnswerRequest(
+            query_id="q-isolated",
+            messages=[
+                {"role": "system", "content": "BENCHMARK_QA_SYSTEM"},
+                {"role": "user", "content": "Question with frozen Top-7"},
+            ],
+            retrieval=retrieval,
+            top_k=7,
+        )
+        with patch(
+            "benchmarks.memgallery_harness.runner.answer_client.VLMAnswerClient",
+            FakeAnswerClient,
+        ):
+            result = adapter.answer_with_memory(request)
+
+        final_request = captured["request"]
+        final_messages = final_request["messages"]
+        rendered = "\n".join(str(row["content"]) for row in final_messages)
+        self.assertIn("BENCHMARK_QA_SYSTEM", rendered)
+        self.assertIn("frozen synthesis", rendered)
+        self.assertNotIn("search_in_memory", rendered)
+        self.assertNotIn("Retrieve and synthesize", rendered)
+        self.assertEqual(result.text, "<answer>clean</answer>")
+        self.assertFalse(result.trace["tools_present"])
+        self.assertFalse(result.trace["original_chat_system_prompt"])
+
+    def test_isolated_retrieval_agent_does_not_receive_benchmark_qa_prompt(self) -> None:
+        adapter = _adapter()
+        adapter.backend = SimpleNamespace(
+            client=SimpleNamespace(),
+            agent_states=SimpleNamespace(agent_state=SimpleNamespace(id="chat")),
+        )
+        item = RetrievedMemory(
+            memory_id="semantic_memory_manager:s1",
+            text='{"id":"s1","details":"fact"}',
+            metadata={"partition": "semantic_memory"},
+        )
+        retrieval = RetrievalResult(items=[item])
+        response = SimpleNamespace(usage={"prompt_tokens": 4})
+        sent: dict[str, object] = {}
+
+        def fake_send(_client, _agent_id, messages, query_image, memories):
+            sent["messages"] = messages
+            sent["query_image"] = query_image
+            sent["memories"] = memories
+            return response, 0
+
+        with (
+            patch(
+                "benchmarks.baseline_runtime.adapters.mma_original._capture_chat_state",
+                return_value={},
+            ),
+            patch(
+                "benchmarks.baseline_runtime.adapters.mma_original._restore_chat_state"
+            ),
+            patch(
+                "benchmarks.baseline_runtime.adapters.mma_original._fixed_chat_memory_prompt",
+                return_value=__import__("contextlib").nullcontext(),
+            ),
+            patch(
+                "benchmarks.baseline_runtime.adapters.mma_original._fixed_chat_topk_tools",
+                return_value=__import__("contextlib").nullcontext(),
+            ),
+            patch(
+                "benchmarks.baseline_runtime.adapters.mma_original._send_native_benchmark_messages",
+                side_effect=fake_send,
+            ),
+            patch(
+                "benchmarks.baseline_runtime.adapters.mma_original._extract_chat_answer",
+                return_value="evidence only",
+            ),
+        ):
+            trace = adapter._run_isolated_retrieval_agent(
+                RetrievalRequest(query_id="q", text="RAW QUESTION"), retrieval
+            )
+
+        rendered = "\n".join(str(row["content"]) for row in sent["messages"])
+        self.assertIn("RAW QUESTION", rendered)
+        self.assertNotIn("BENCHMARK_QA_SYSTEM", rendered)
+        self.assertFalse(trace["benchmark_qa_prompt_visible"])
+        self.assertEqual(trace["native_retrieval_agent_synthesis"], "evidence only")
 
     def test_snapshot_schema_records_embedding_presence_without_vectors(self) -> None:
         structured = _structured_memory(

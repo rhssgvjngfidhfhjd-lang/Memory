@@ -12,6 +12,7 @@ class OpenAIMemoryEmbedder:
     """Memory-pipeline embedder backed by an OpenAI-compatible endpoint."""
 
     supports_images = True
+    text_batch_size = 128
 
     def __init__(
         self,
@@ -35,28 +36,59 @@ class OpenAIMemoryEmbedder:
     ) -> np.ndarray:
         single = isinstance(texts, str)
         values = [str(texts)] if single else [str(text) for text in texts]
-        vectors = self._request({"input": values, "mode": mode})
+        batches = [
+            self._request(
+                {"input": values[start : start + self.text_batch_size], "mode": mode}
+            )
+            for start in range(0, len(values), self.text_batch_size)
+        ]
+        vectors = (
+            np.concatenate(batches, axis=0)
+            if batches
+            else np.zeros((0, self.expected_dim), dtype=np.float32)
+        )
         return vectors[0] if single else vectors
 
     def embed_images(self, image_paths: Sequence[str]) -> np.ndarray:
         vectors = []
         for path in image_paths:
-            payload = {
-                "mode": "context",
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": [
-                            {"type": "text", "text": "Represent this memory image."},
-                            {"type": "image_url", "image_url": {"url": str(Path(path))}},
-                        ],
-                    }
-                ],
-            }
-            vectors.append(self._request(payload)[0])
+            vectors.append(
+                self.embed_multimodal(
+                    "Represent this memory image.", [path], mode="context"
+                )
+            )
         if not vectors:
             return np.zeros((0, self.expected_dim), dtype=np.float32)
         return np.asarray(vectors, dtype=np.float32)
+
+    def embed_multimodal(
+        self,
+        text: str,
+        image_paths: Sequence[str] = (),
+        *,
+        mode: str = "context",
+    ) -> np.ndarray:
+        """Embed one text/image item through the shared Qwen3-VL service."""
+        content: list[dict[str, Any]] = []
+        for raw_path in image_paths:
+            path = Path(raw_path).expanduser().resolve()
+            if not path.is_file():
+                raise FileNotFoundError(f"embedding image does not exist: {path}")
+            content.append(
+                {"type": "image_url", "image_url": {"url": str(path)}}
+            )
+        content.append({"type": "text", "text": str(text or " ")})
+        vectors = self._request(
+            {
+                "mode": mode,
+                "messages": [{"role": "user", "content": content}],
+            }
+        )
+        if len(vectors) != 1:
+            raise ValueError(
+                f"multimodal embedding expected one vector, received {len(vectors)}"
+            )
+        return vectors[0]
 
     def _request(self, payload: dict[str, Any]) -> np.ndarray:
         body = json.dumps(

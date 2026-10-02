@@ -1,0 +1,669 @@
+{
+  "schema_version": 1,
+  "experiment": "C_kedge_sweep_lambda0_gpt5mini",
+  "benchmark": "MemGallery",
+  "qa_count": 275,
+  "settings": {
+    "graph": "original_full_TiVi_graph",
+    "vector_top_k": 5,
+    "graph_append_k": 2,
+    "lambda": 0.0,
+    "ppo_retrained": false,
+    "ppo_checkpoint": "/data/haozhen/Memory-clean/Offline/outputs/PPO/MemGallery_0918PPO_k4_lambda000_a/checkpoints/epoch_005.pt",
+    "answer_model": "openai/gpt-5-mini",
+    "judge_model": "openai/gpt-4o-mini"
+  },
+  "pricing": {
+    "input_usd_per_million_tokens": 0.25,
+    "output_usd_per_million_tokens": 2.0
+  },
+  "latency_model": {
+    "seconds_per_call": 3.47,
+    "seconds_per_input_token": 3e-06,
+    "seconds_per_output_token": 0.01754386,
+    "seconds_per_image": 0.3
+  },
+  "results": [
+    {
+      "k_edge": 1,
+      "is_original_control": false,
+      "f1": 0.518829,
+      "em": 0.28,
+      "judge": 0.711818,
+      "raw_cost_per_qa_usd": 0.000663983,
+      "all_zero_rate": 0.0,
+      "retrieval_hitrate": 0.883636,
+      "average_retrieval_count": 6.843636,
+      "graph_count_below_2": 38,
+      "qa_errors": 0,
+      "judge_errors": 0,
+      "cost_mb": {
+        "input_tokens": 1134199,
+        "output_tokens": 266333,
+        "num_samples": 4,
+        "usd_per_sample": 0.204054,
+        "formula": "(1134199 * 0.25 + 266333 * 2) / 1000000 / 4 = 0.204054"
+      },
+      "cost_qa": {
+        "input_tokens": 603877,
+        "output_tokens": 15813,
+        "num_samples": 4,
+        "usd_per_sample": 0.045649,
+        "formula": "(603877 * 0.25 + 15813 * 2) / 1000000 / 4 = 0.045649"
+      },
+      "calls": {
+        "memory_bank": 668,
+        "answer": 317,
+        "calls_per_sample": 246.25,
+        "formula": "(668 + 317) / 4 = 246.250000"
+      },
+      "latency_qa": {
+        "answer_calls": 317,
+        "input_tokens": 603877,
+        "output_tokens": 15813,
+        "image_count": 770,
+        "seconds_per_qa": 5.855355,
+        "formula": "(317 * 3.47 + 603877 * 3e-06 + 15813 * 0.0175439 + 770 * 0.3) / 275 = 5.855355"
+      },
+      "qa_input_tokens_mean_per_qa": 2195.916364,
+      "qa_output_tokens_mean_per_qa": 57.501818
+    },
+    {
+      "k_edge": 2,
+      "is_original_control": false,
+      "f1": 0.540512,
+      "em": 0.290909,
+      "judge": 0.727273,
+      "raw_cost_per_qa_usd": 0.00067973,
+      "all_zero_rate": 0.0,
+      "retrieval_hitrate": 0.883636,
+      "average_retrieval_count": 7.0,
+      "graph_count_below_2": 0,
+      "qa_errors": 0,
+      "judge_errors": 0,
+      "cost_mb": {
+        "input_tokens": 1134199,
+        "output_tokens": 266333,
+        "num_samples": 4,
+        "usd_per_sample": 0.204054,
+        "formula": "(1134199 * 0.25 + 266333 * 2) / 1000000 / 4 = 0.204054"
+      },
+      "cost_qa": {
+        "input_tokens": 627239,
+        "output_tokens": 15058,
+        "num_samples": 4,
+        "usd_per_sample": 0.046731,
+        "formula": "(627239 * 0.25 + 15058 * 2) / 1000000 / 4 = 0.046731"
+      },
+      "calls": {
+        "memory_bank": 668,
+        "answer": 311,
+        "calls_per_sample": 244.75,
+        "formula": "(668 + 311) / 4 = 244.750000"
+      },
+      "latency_qa": {
+        "answer_calls": 311,
+        "input_tokens": 627239,
+        "output_tokens": 15058,
+        "image_count": 820,
+        "seconds_per_qa": 5.786281,
+        "formula": "(311 * 3.47 + 627239 * 3e-06 + 15058 * 0.0175439 + 820 * 0.3) / 275 = 5.786281"
+      },
+      "qa_input_tokens_mean_per_qa": 2280.869091,
+      "qa_output_tokens_mean_per_qa": 54.756364
+    },
+    {
+      "k_edge": 4,
+      "is_original_control": true,
+      "f1": 0.533081,
+      "em": 0.287273,
+      "judge": 0.724545,
+      "raw_cost_per_qa_usd": 0.000691841,
+      "all_zero_rate": 0.0,
+      "retrieval_hitrate": 0.865455,
+      "average_retrieval_count": 6.949091,
+      "graph_count_below_2": 8,
+      "qa_errors": 0,
+      "judge_errors": 0,
+      "cost_mb": {
+        "input_tokens": 1030052,
+        "output_tokens": 143475,
+        "num_samples": 4,
+        "usd_per_sample": 0.136116,
+        "formula": "(1030052 * 0.25 + 143475 * 2) / 1000000 / 4 = 0.136116"
+      },
+      "cost_qa": {
+        "input_tokens": 636769,
+        "output_tokens": 15532,
+        "num_samples": 4,
+        "usd_per_sample": 0.047564,
+        "formula": "(636769 * 0.25 + 15532 * 2) / 1000000 / 4 = 0.047564"
+      },
+      "calls": {
+        "memory_bank": 668,
+        "answer": 320,
+        "calls_per_sample": 247.0,
+        "formula": "(668 + 320) / 4 = 247.000000"
+      },
+      "latency_qa": {
+        "answer_calls": 320,
+        "input_tokens": 636769,
+        "output_tokens": 15532,
+        "image_count": 845,
+        "seconds_per_qa": 5.95746,
+        "formula": "(320 * 3.47 + 636769 * 3e-06 + 15532 * 0.0175439 + 845 * 0.3) / 275 = 5.957460"
+      },
+      "qa_input_tokens_mean_per_qa": 2315.523636,
+      "qa_output_tokens_mean_per_qa": 56.48
+    },
+    {
+      "k_edge": 6,
+      "is_original_control": false,
+      "f1": 0.532811,
+      "em": 0.287273,
+      "judge": 0.732727,
+      "raw_cost_per_qa_usd": 0.000697842,
+      "all_zero_rate": 0.0,
+      "retrieval_hitrate": 0.883636,
+      "average_retrieval_count": 7.0,
+      "graph_count_below_2": 0,
+      "qa_errors": 0,
+      "judge_errors": 0,
+      "cost_mb": {
+        "input_tokens": 1134199,
+        "output_tokens": 266333,
+        "num_samples": 4,
+        "usd_per_sample": 0.204054,
+        "formula": "(1134199 * 0.25 + 266333 * 2) / 1000000 / 4 = 0.204054"
+      },
+      "cost_qa": {
+        "input_tokens": 643978,
+        "output_tokens": 15456,
+        "num_samples": 4,
+        "usd_per_sample": 0.047977,
+        "formula": "(643978 * 0.25 + 15456 * 2) / 1000000 / 4 = 0.047977"
+      },
+      "calls": {
+        "memory_bank": 668,
+        "answer": 317,
+        "calls_per_sample": 246.25,
+        "formula": "(668 + 317) / 4 = 246.250000"
+      },
+      "latency_qa": {
+        "answer_calls": 317,
+        "input_tokens": 643978,
+        "output_tokens": 15456,
+        "image_count": 833,
+        "seconds_per_qa": 5.901745,
+        "formula": "(317 * 3.47 + 643978 * 3e-06 + 15456 * 0.0175439 + 833 * 0.3) / 275 = 5.901745"
+      },
+      "qa_input_tokens_mean_per_qa": 2341.738182,
+      "qa_output_tokens_mean_per_qa": 56.203636
+    },
+    {
+      "k_edge": 8,
+      "is_original_control": false,
+      "f1": 0.522302,
+      "em": 0.261818,
+      "judge": 0.715455,
+      "raw_cost_per_qa_usd": 0.000697378,
+      "all_zero_rate": 0.0,
+      "retrieval_hitrate": 0.883636,
+      "average_retrieval_count": 7.0,
+      "graph_count_below_2": 0,
+      "qa_errors": 0,
+      "judge_errors": 0,
+      "cost_mb": {
+        "input_tokens": 1134199,
+        "output_tokens": 266333,
+        "num_samples": 4,
+        "usd_per_sample": 0.204054,
+        "formula": "(1134199 * 0.25 + 266333 * 2) / 1000000 / 4 = 0.204054"
+      },
+      "cost_qa": {
+        "input_tokens": 642884,
+        "output_tokens": 15529,
+        "num_samples": 4,
+        "usd_per_sample": 0.047945,
+        "formula": "(642884 * 0.25 + 15529 * 2) / 1000000 / 4 = 0.047945"
+      },
+      "calls": {
+        "memory_bank": 668,
+        "answer": 317,
+        "calls_per_sample": 246.25,
+        "formula": "(668 + 317) / 4 = 246.250000"
+      },
+      "latency_qa": {
+        "answer_calls": 317,
+        "input_tokens": 642884,
+        "output_tokens": 15529,
+        "image_count": 860,
+        "seconds_per_qa": 5.935845,
+        "formula": "(317 * 3.47 + 642884 * 3e-06 + 15529 * 0.0175439 + 860 * 0.3) / 275 = 5.935845"
+      },
+      "qa_input_tokens_mean_per_qa": 2337.76,
+      "qa_output_tokens_mean_per_qa": 56.469091
+    },
+    {
+      "k_edge": 10,
+      "is_original_control": false,
+      "f1": 0.528123,
+      "em": 0.272727,
+      "judge": 0.739091,
+      "raw_cost_per_qa_usd": 0.000680583,
+      "all_zero_rate": 0.0,
+      "retrieval_hitrate": 0.883636,
+      "average_retrieval_count": 7.0,
+      "graph_count_below_2": 0,
+      "qa_errors": 0,
+      "judge_errors": 0,
+      "cost_mb": {
+        "input_tokens": 1134199,
+        "output_tokens": 266333,
+        "num_samples": 4,
+        "usd_per_sample": 0.204054,
+        "formula": "(1134199 * 0.25 + 266333 * 2) / 1000000 / 4 = 0.204054"
+      },
+      "cost_qa": {
+        "input_tokens": 629905,
+        "output_tokens": 14842,
+        "num_samples": 4,
+        "usd_per_sample": 0.04679,
+        "formula": "(629905 * 0.25 + 14842 * 2) / 1000000 / 4 = 0.046790"
+      },
+      "calls": {
+        "memory_bank": 668,
+        "answer": 308,
+        "calls_per_sample": 244.0,
+        "formula": "(668 + 308) / 4 = 244.000000"
+      },
+      "latency_qa": {
+        "answer_calls": 308,
+        "input_tokens": 629905,
+        "output_tokens": 14842,
+        "image_count": 805,
+        "seconds_per_qa": 5.718312,
+        "formula": "(308 * 3.47 + 629905 * 3e-06 + 14842 * 0.0175439 + 805 * 0.3) / 275 = 5.718312"
+      },
+      "qa_input_tokens_mean_per_qa": 2290.563636,
+      "qa_output_tokens_mean_per_qa": 53.970909
+    }
+  ],
+  "complete_reference_figure": {
+    "status": "complete_from_gpt5mini_runs",
+    "panel_a_graph_degree": {
+      "x": "k_edge",
+      "series": [
+        "f1",
+        "llm_judge",
+        "qa_input_tokens_mean_per_qa"
+      ],
+      "points": [
+        {
+          "k_edge": 1,
+          "is_original_control": false,
+          "f1": 0.518829,
+          "em": 0.28,
+          "judge": 0.711818,
+          "raw_cost_per_qa_usd": 0.000663983,
+          "all_zero_rate": 0.0,
+          "retrieval_hitrate": 0.883636,
+          "average_retrieval_count": 6.843636,
+          "graph_count_below_2": 38,
+          "qa_errors": 0,
+          "judge_errors": 0,
+          "cost_mb": {
+            "input_tokens": 1134199,
+            "output_tokens": 266333,
+            "num_samples": 4,
+            "usd_per_sample": 0.204054,
+            "formula": "(1134199 * 0.25 + 266333 * 2) / 1000000 / 4 = 0.204054"
+          },
+          "cost_qa": {
+            "input_tokens": 603877,
+            "output_tokens": 15813,
+            "num_samples": 4,
+            "usd_per_sample": 0.045649,
+            "formula": "(603877 * 0.25 + 15813 * 2) / 1000000 / 4 = 0.045649"
+          },
+          "calls": {
+            "memory_bank": 668,
+            "answer": 317,
+            "calls_per_sample": 246.25,
+            "formula": "(668 + 317) / 4 = 246.250000"
+          },
+          "latency_qa": {
+            "answer_calls": 317,
+            "input_tokens": 603877,
+            "output_tokens": 15813,
+            "image_count": 770,
+            "seconds_per_qa": 5.855355,
+            "formula": "(317 * 3.47 + 603877 * 3e-06 + 15813 * 0.0175439 + 770 * 0.3) / 275 = 5.855355"
+          },
+          "qa_input_tokens_mean_per_qa": 2195.916364,
+          "qa_output_tokens_mean_per_qa": 57.501818
+        },
+        {
+          "k_edge": 2,
+          "is_original_control": false,
+          "f1": 0.540512,
+          "em": 0.290909,
+          "judge": 0.727273,
+          "raw_cost_per_qa_usd": 0.00067973,
+          "all_zero_rate": 0.0,
+          "retrieval_hitrate": 0.883636,
+          "average_retrieval_count": 7.0,
+          "graph_count_below_2": 0,
+          "qa_errors": 0,
+          "judge_errors": 0,
+          "cost_mb": {
+            "input_tokens": 1134199,
+            "output_tokens": 266333,
+            "num_samples": 4,
+            "usd_per_sample": 0.204054,
+            "formula": "(1134199 * 0.25 + 266333 * 2) / 1000000 / 4 = 0.204054"
+          },
+          "cost_qa": {
+            "input_tokens": 627239,
+            "output_tokens": 15058,
+            "num_samples": 4,
+            "usd_per_sample": 0.046731,
+            "formula": "(627239 * 0.25 + 15058 * 2) / 1000000 / 4 = 0.046731"
+          },
+          "calls": {
+            "memory_bank": 668,
+            "answer": 311,
+            "calls_per_sample": 244.75,
+            "formula": "(668 + 311) / 4 = 244.750000"
+          },
+          "latency_qa": {
+            "answer_calls": 311,
+            "input_tokens": 627239,
+            "output_tokens": 15058,
+            "image_count": 820,
+            "seconds_per_qa": 5.786281,
+            "formula": "(311 * 3.47 + 627239 * 3e-06 + 15058 * 0.0175439 + 820 * 0.3) / 275 = 5.786281"
+          },
+          "qa_input_tokens_mean_per_qa": 2280.869091,
+          "qa_output_tokens_mean_per_qa": 54.756364
+        },
+        {
+          "k_edge": 4,
+          "is_original_control": true,
+          "f1": 0.533081,
+          "em": 0.287273,
+          "judge": 0.724545,
+          "raw_cost_per_qa_usd": 0.000691841,
+          "all_zero_rate": 0.0,
+          "retrieval_hitrate": 0.865455,
+          "average_retrieval_count": 6.949091,
+          "graph_count_below_2": 8,
+          "qa_errors": 0,
+          "judge_errors": 0,
+          "cost_mb": {
+            "input_tokens": 1030052,
+            "output_tokens": 143475,
+            "num_samples": 4,
+            "usd_per_sample": 0.136116,
+            "formula": "(1030052 * 0.25 + 143475 * 2) / 1000000 / 4 = 0.136116"
+          },
+          "cost_qa": {
+            "input_tokens": 636769,
+            "output_tokens": 15532,
+            "num_samples": 4,
+            "usd_per_sample": 0.047564,
+            "formula": "(636769 * 0.25 + 15532 * 2) / 1000000 / 4 = 0.047564"
+          },
+          "calls": {
+            "memory_bank": 668,
+            "answer": 320,
+            "calls_per_sample": 247.0,
+            "formula": "(668 + 320) / 4 = 247.000000"
+          },
+          "latency_qa": {
+            "answer_calls": 320,
+            "input_tokens": 636769,
+            "output_tokens": 15532,
+            "image_count": 845,
+            "seconds_per_qa": 5.95746,
+            "formula": "(320 * 3.47 + 636769 * 3e-06 + 15532 * 0.0175439 + 845 * 0.3) / 275 = 5.957460"
+          },
+          "qa_input_tokens_mean_per_qa": 2315.523636,
+          "qa_output_tokens_mean_per_qa": 56.48
+        },
+        {
+          "k_edge": 6,
+          "is_original_control": false,
+          "f1": 0.532811,
+          "em": 0.287273,
+          "judge": 0.732727,
+          "raw_cost_per_qa_usd": 0.000697842,
+          "all_zero_rate": 0.0,
+          "retrieval_hitrate": 0.883636,
+          "average_retrieval_count": 7.0,
+          "graph_count_below_2": 0,
+          "qa_errors": 0,
+          "judge_errors": 0,
+          "cost_mb": {
+            "input_tokens": 1134199,
+            "output_tokens": 266333,
+            "num_samples": 4,
+            "usd_per_sample": 0.204054,
+            "formula": "(1134199 * 0.25 + 266333 * 2) / 1000000 / 4 = 0.204054"
+          },
+          "cost_qa": {
+            "input_tokens": 643978,
+            "output_tokens": 15456,
+            "num_samples": 4,
+            "usd_per_sample": 0.047977,
+            "formula": "(643978 * 0.25 + 15456 * 2) / 1000000 / 4 = 0.047977"
+          },
+          "calls": {
+            "memory_bank": 668,
+            "answer": 317,
+            "calls_per_sample": 246.25,
+            "formula": "(668 + 317) / 4 = 246.250000"
+          },
+          "latency_qa": {
+            "answer_calls": 317,
+            "input_tokens": 643978,
+            "output_tokens": 15456,
+            "image_count": 833,
+            "seconds_per_qa": 5.901745,
+            "formula": "(317 * 3.47 + 643978 * 3e-06 + 15456 * 0.0175439 + 833 * 0.3) / 275 = 5.901745"
+          },
+          "qa_input_tokens_mean_per_qa": 2341.738182,
+          "qa_output_tokens_mean_per_qa": 56.203636
+        },
+        {
+          "k_edge": 8,
+          "is_original_control": false,
+          "f1": 0.522302,
+          "em": 0.261818,
+          "judge": 0.715455,
+          "raw_cost_per_qa_usd": 0.000697378,
+          "all_zero_rate": 0.0,
+          "retrieval_hitrate": 0.883636,
+          "average_retrieval_count": 7.0,
+          "graph_count_below_2": 0,
+          "qa_errors": 0,
+          "judge_errors": 0,
+          "cost_mb": {
+            "input_tokens": 1134199,
+            "output_tokens": 266333,
+            "num_samples": 4,
+            "usd_per_sample": 0.204054,
+            "formula": "(1134199 * 0.25 + 266333 * 2) / 1000000 / 4 = 0.204054"
+          },
+          "cost_qa": {
+            "input_tokens": 642884,
+            "output_tokens": 15529,
+            "num_samples": 4,
+            "usd_per_sample": 0.047945,
+            "formula": "(642884 * 0.25 + 15529 * 2) / 1000000 / 4 = 0.047945"
+          },
+          "calls": {
+            "memory_bank": 668,
+            "answer": 317,
+            "calls_per_sample": 246.25,
+            "formula": "(668 + 317) / 4 = 246.250000"
+          },
+          "latency_qa": {
+            "answer_calls": 317,
+            "input_tokens": 642884,
+            "output_tokens": 15529,
+            "image_count": 860,
+            "seconds_per_qa": 5.935845,
+            "formula": "(317 * 3.47 + 642884 * 3e-06 + 15529 * 0.0175439 + 860 * 0.3) / 275 = 5.935845"
+          },
+          "qa_input_tokens_mean_per_qa": 2337.76,
+          "qa_output_tokens_mean_per_qa": 56.469091
+        },
+        {
+          "k_edge": 10,
+          "is_original_control": false,
+          "f1": 0.528123,
+          "em": 0.272727,
+          "judge": 0.739091,
+          "raw_cost_per_qa_usd": 0.000680583,
+          "all_zero_rate": 0.0,
+          "retrieval_hitrate": 0.883636,
+          "average_retrieval_count": 7.0,
+          "graph_count_below_2": 0,
+          "qa_errors": 0,
+          "judge_errors": 0,
+          "cost_mb": {
+            "input_tokens": 1134199,
+            "output_tokens": 266333,
+            "num_samples": 4,
+            "usd_per_sample": 0.204054,
+            "formula": "(1134199 * 0.25 + 266333 * 2) / 1000000 / 4 = 0.204054"
+          },
+          "cost_qa": {
+            "input_tokens": 629905,
+            "output_tokens": 14842,
+            "num_samples": 4,
+            "usd_per_sample": 0.04679,
+            "formula": "(629905 * 0.25 + 14842 * 2) / 1000000 / 4 = 0.046790"
+          },
+          "calls": {
+            "memory_bank": 668,
+            "answer": 308,
+            "calls_per_sample": 244.0,
+            "formula": "(668 + 308) / 4 = 244.000000"
+          },
+          "latency_qa": {
+            "answer_calls": 308,
+            "input_tokens": 629905,
+            "output_tokens": 14842,
+            "image_count": 805,
+            "seconds_per_qa": 5.718312,
+            "formula": "(308 * 3.47 + 629905 * 3e-06 + 14842 * 0.0175439 + 805 * 0.3) / 275 = 5.718312"
+          },
+          "qa_input_tokens_mean_per_qa": 2290.563636,
+          "qa_output_tokens_mean_per_qa": 53.970909
+        }
+      ]
+    },
+    "panel_b_retrieval_allocation": {
+      "x": "allocation",
+      "series": [
+        "f1",
+        "llm_judge",
+        "latency_qa_seconds_per_qa"
+      ],
+      "points": [
+        {
+          "allocation": "7:0",
+          "vector_top_k": 7,
+          "graph_append_k": 0,
+          "source_result_dir": "/data/haozhen/Memory-clean/Offline/outputs/_runs/hivemem_gpt5mini_sensitivity_20260925_b/allocation/memgallery/7plus0/Mem-Gallery/eval/test_ppo",
+          "f1": 0.5406707835395992,
+          "em": 0.2872727272727273,
+          "llm_judge": 0.7572727272727273,
+          "judge_valid_count": 275,
+          "judge_errors": 0,
+          "qa_count": 275,
+          "qa_input_tokens_total": 631892,
+          "qa_input_tokens_mean_per_qa": 2297.789091,
+          "qa_output_tokens_total": 16006,
+          "qa_output_tokens_mean_per_qa": 58.203636,
+          "latency_qa_seconds_per_qa": 5.9879370878545455,
+          "qa_errors": 0
+        },
+        {
+          "allocation": "6:1",
+          "vector_top_k": 6,
+          "graph_append_k": 1,
+          "source_result_dir": "/data/haozhen/Memory-clean/Offline/outputs/_runs/hivemem_gpt5mini_sensitivity_20260925_b/allocation/memgallery/6plus1/Mem-Gallery/eval/test_ppo",
+          "f1": 0.5296572309957375,
+          "em": 0.28,
+          "llm_judge": 0.7418181818181818,
+          "judge_valid_count": 275,
+          "judge_errors": 0,
+          "qa_count": 275,
+          "qa_input_tokens_total": 656188,
+          "qa_input_tokens_mean_per_qa": 2386.138182,
+          "qa_output_tokens_total": 16165,
+          "qa_output_tokens_mean_per_qa": 58.781818,
+          "latency_qa_seconds_per_qa": 6.06783658509091,
+          "qa_errors": 0
+        },
+        {
+          "allocation": "5:2",
+          "vector_top_k": 5,
+          "graph_append_k": 2,
+          "source_result_dir": "/data/haozhen/Memory-clean/Offline/outputs/_runs/hivemem_gpt5mini_lambda0_k4_20260921_c/Mem-Gallery/eval/test_ppo",
+          "f1": 0.533081375467878,
+          "em": 0.2872727272727273,
+          "llm_judge": 0.7245454545454545,
+          "judge_valid_count": 275,
+          "judge_errors": 0,
+          "qa_count": 275,
+          "qa_input_tokens_total": 636769,
+          "qa_input_tokens_mean_per_qa": 2315.523636,
+          "qa_output_tokens_total": 15532,
+          "qa_output_tokens_mean_per_qa": 56.48,
+          "latency_qa_seconds_per_qa": 5.957460147345456,
+          "qa_errors": 0
+        },
+        {
+          "allocation": "4:3",
+          "vector_top_k": 4,
+          "graph_append_k": 3,
+          "source_result_dir": "/data/haozhen/Memory-clean/Offline/outputs/_runs/hivemem_gpt5mini_sensitivity_20260925_b/allocation/memgallery/4plus3/Mem-Gallery/eval/test_ppo",
+          "f1": 0.5283820418882252,
+          "em": 0.2727272727272727,
+          "llm_judge": 0.7290909090909091,
+          "judge_valid_count": 275,
+          "judge_errors": 0,
+          "qa_count": 275,
+          "qa_input_tokens_total": 646598,
+          "qa_input_tokens_mean_per_qa": 2351.265455,
+          "qa_output_tokens_total": 15520,
+          "qa_output_tokens_mean_per_qa": 56.436364,
+          "latency_qa_seconds_per_qa": 5.875783640727272,
+          "qa_errors": 0
+        },
+        {
+          "allocation": "3:4",
+          "vector_top_k": 3,
+          "graph_append_k": 4,
+          "source_result_dir": "/data/haozhen/Memory-clean/Offline/outputs/_runs/hivemem_gpt5mini_sensitivity_20260925_b/allocation/memgallery/3plus4/Mem-Gallery/eval/test_ppo",
+          "f1": 0.5334768396759144,
+          "em": 0.27636363636363637,
+          "llm_judge": 0.7281818181818182,
+          "judge_valid_count": 275,
+          "judge_errors": 0,
+          "qa_count": 275,
+          "qa_input_tokens_total": 672371,
+          "qa_input_tokens_mean_per_qa": 2444.985455,
+          "qa_output_tokens_total": 15781,
+          "qa_output_tokens_mean_per_qa": 57.385455,
+          "latency_qa_seconds_per_qa": 6.04104279149091,
+          "qa_errors": 0
+        }
+      ]
+    }
+  }
+}

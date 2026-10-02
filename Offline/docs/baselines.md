@@ -40,7 +40,8 @@
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 
 - `Cost-MB`、`Lat-MB`：memory 构建阶段的平均成本（USD/sample）与平均估算延迟（seconds/sample）。
-- `Cost-QA`、`Lat-QA`：检索及回答阶段合计的平均成本（USD/sample）与平均估算延迟（seconds/sample）。
+- `Cost-QA`：检索及回答阶段合计的平均成本（USD/sample）。
+- `Lat-QA`：检索及回答阶段合计的平均估算延迟（seconds/QA）；分子汇总 retrieval+answer 的调用、输入/输出 token 和输入图片延迟，分母固定为 QA 总数，不能使用 sample 数。
 - `#Calls (MB+QA)`：沿用统一报表口径，按 `(MB calls + answer calls) / sample 数` 汇报；retrieval calls 单独保存在调用追踪中，不计入该列。
 
 ## 6. Outputs 文件保存规范

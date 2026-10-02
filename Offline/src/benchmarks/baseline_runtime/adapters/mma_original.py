@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import base64
+import binascii
 import copy
+import functools
 import hashlib
 import importlib
 import importlib.util
@@ -9,6 +12,7 @@ import math
 import os
 import shutil
 import sqlite3
+import struct
 import subprocess
 import sys
 import time
@@ -38,6 +42,10 @@ UPSTREAM_TREE = "4bb8b33535cb9d14b39277d953bcc80b5aec2e4c"
 MAX_NATIVE_CANDIDATES_PER_PARTITION = 10
 MAX_CONSECUTIVE_BAD_MEMORY_POINTS = 10
 MAX_CONSECUTIVE_BAD_QA_POINTS = 10
+ISOLATED_FINAL_ANSWER_ENV = "MMA_ISOLATED_FINAL_ANSWER"
+QA_ONLY_REUSE_ENV = "MMA_QA_ONLY_REUSE"
+QA_ONLY_PROVENANCE_FILE = ".mma_reuse_provenance.json"
+STORAGE_EMBEDDING_DIM_ENV = "MMA_STORAGE_EMBEDDING_DIM"
 
 _MMA_MEMORY_TABLES = (
     "episodic_memory",
@@ -257,11 +265,28 @@ class MMAOriginalAdapter(BaselineAdapter):
         self._consecutive_bad_memory_points = 0
         self._bad_qa_points: dict[str, str] = {}
         self._consecutive_bad_qa_points = 0
+        self._retrieval_embedding_cache: dict[str, Any] = {}
+        self._qa_only_reuse = False
 
     def reset(self, sample_id: str, state_dir: Path) -> None:
         self._verify_official_source()
+        self._qa_only_reuse = self._qa_only_reuse_enabled()
         resume_payload = self._load_resume_checkpoint(sample_id, state_dir)
-        if resume_payload is None and state_dir.exists():
+        if self._qa_only_reuse:
+            if not (state_dir / "sqlite.db").is_file():
+                raise RuntimeError(
+                    "MMA QA-only reuse requires a prepared isolated SQLite copy: "
+                    f"{state_dir / 'sqlite.db'}"
+                )
+            if not (state_dir / QA_ONLY_PROVENANCE_FILE).is_file():
+                raise RuntimeError(
+                    "MMA QA-only reuse requires audited provenance: "
+                    f"{state_dir / QA_ONLY_PROVENANCE_FILE}"
+                )
+            # A prepared replay copy is already the authoritative database.
+            # Never restore an older session snapshot over it.
+            resume_payload = None
+        elif resume_payload is None and state_dir.exists():
             if bool(self.config.get("mma_resume_enabled", False)) and any(
                 state_dir.iterdir()
             ):
@@ -329,6 +354,7 @@ class MMAOriginalAdapter(BaselineAdapter):
 
         self._install_configured_embedding_transport()
         self._install_local_image_transport()
+        self._install_vllm_native_tool_retry()
         self._install_native_tool_call_validation()
         self._install_output_length_classification()
         self._install_strict_message_queue()
@@ -373,9 +399,27 @@ class MMAOriginalAdapter(BaselineAdapter):
         self._consecutive_bad_memory_points = 0
         self._bad_qa_points.clear()
         self._consecutive_bad_qa_points = 0
+        self._retrieval_embedding_cache.clear()
         self._sample_id = str(sample_id)
         self._state_dir = state_dir
-        if resume_payload is None:
+        if self._qa_only_reuse:
+            reuse_payload = json.loads(
+                (state_dir / QA_ONLY_PROVENANCE_FILE).read_text(encoding="utf-8")
+            )
+            if reuse_payload.get("version") != 1:
+                raise RuntimeError("unsupported MMA QA-only provenance version")
+            self.provenance.restore_rows(dict(reuse_payload.get("provenance") or {}))
+            self._absorption_batches = int(
+                reuse_payload.get("historical_absorption_batches") or 0
+            )
+            self._ingested_chunks = int(
+                reuse_payload.get("historical_ingested_chunks") or 0
+            )
+            self._completed_session_ids = [
+                str(value)
+                for value in reuse_payload.get("completed_session_ids") or []
+            ]
+        elif resume_payload is None:
             self._absorption_batches = 0
             self._completed_session_ids = []
         else:
@@ -397,6 +441,8 @@ class MMAOriginalAdapter(BaselineAdapter):
 
     def filter_completed_session_chunks(self, chunks: list[Chunk]) -> list[Chunk]:
         """Drop only the contiguous session prefix restored by ``reset``."""
+        if bool(getattr(self, "_qa_only_reuse", False)):
+            return []
         completed = self.completed_session_ids()
         if not completed:
             return chunks
@@ -764,7 +810,11 @@ class MMAOriginalAdapter(BaselineAdapter):
         its ORM, schema, query, and SQLite-distance modules. Every formal sample
         starts with a fresh database, as required when changing this constant.
         """
-        configured = int(self.config["embedding_dim"])
+        configured = int(
+            self.config.get("mma_storage_embedding_dim")
+            or os.getenv(STORAGE_EMBEDDING_DIM_ENV)
+            or self.config["embedding_dim"]
+        )
         constants = importlib.import_module("mma.constants")
         upstream_max = int(
             getattr(constants, "_offline_mma_upstream_max_embedding_dim", 4096)
@@ -1019,6 +1069,80 @@ class MMAOriginalAdapter(BaselineAdapter):
         )
         client_class._offline_mma_native_tool_validation = True
 
+    def _install_vllm_native_tool_retry(self) -> None:
+        """Retry incompatible vLLM responses with native schema enforcement.
+
+        MMA v0.1.1 intentionally uses ``tool_choice=auto`` for vLLM.  Keep
+        that behavior because some MMA agents legitimately return plain text.
+        When auto mode emits ``<tool_call>`` markup without a native
+        ``tool_calls`` object, retry the same provider request once with
+        ``tool_choice=required``.  The Chat Agent has a stricter contract: a
+        plain-text response is not user-visible and makes upstream chain until
+        its step limit.  If that tool set contains ``send_message``, retry a
+        plain response once with that terminal tool explicitly selected.  The
+        failed text is never parsed, wrapped, or repaired.
+        """
+        module = importlib.import_module("mma.llm_api.openai_client")
+        client_class = module.OpenAIClient
+        if getattr(client_class, "_offline_mma_vllm_native_tool_retry", False):
+            return
+        original = client_class.request
+
+        def request(client: Any, request_data: dict[str, Any]) -> dict[str, Any]:
+            endpoint = str(getattr(client.llm_config, "model_endpoint", ""))
+            local_vllm_tools = bool(request_data.get("tools")) and (
+                _provider_name(endpoint) == "vllm"
+            )
+            effective_data = request_data
+            if local_vllm_tools:
+                effective_data = dict(request_data)
+                effective_data["parallel_tool_calls"] = False
+                existing_stops = effective_data.get("stop")
+                if existing_stops is None:
+                    stops: list[str] = []
+                elif isinstance(existing_stops, str):
+                    stops = [existing_stops]
+                else:
+                    stops = [str(value) for value in existing_stops]
+                if "</tool_call>" not in stops:
+                    stops.append("</tool_call>")
+                effective_data["stop"] = stops
+                if effective_data.get("tool_choice") != "auto":
+                    effective_data["tools"] = _bound_native_tool_schema(
+                        effective_data["tools"]
+                    )
+            response = original(client, effective_data)
+            if (
+                local_vllm_tools
+                and effective_data.get("tool_choice") == "auto"
+                and _has_unstructured_native_tool_call(response)
+            ):
+                retry_data = dict(effective_data)
+                retry_data["tool_choice"] = "required"
+                retry_data["tools"] = _bound_native_tool_schema(
+                    retry_data["tools"]
+                )
+                response = original(client, retry_data)
+            elif (
+                local_vllm_tools
+                and effective_data.get("tool_choice") == "auto"
+                and "send_message" in _native_tool_names(effective_data["tools"])
+                and _has_plain_native_response(response)
+            ):
+                retry_data = dict(effective_data)
+                retry_data["tool_choice"] = {
+                    "type": "function",
+                    "function": {"name": "send_message"},
+                }
+                retry_data["tools"] = _require_send_message_answer_block(
+                    _bound_native_tool_schema(retry_data["tools"])
+                )
+                response = original(client, retry_data)
+            return response
+
+        client_class.request = request
+        client_class._offline_mma_vllm_native_tool_retry = True
+
     def _install_output_length_classification(self) -> None:
         """Do not send output-budget exhaustion through context summarization."""
         module = importlib.import_module("mma.agent.agent")
@@ -1035,6 +1159,8 @@ class MMAOriginalAdapter(BaselineAdapter):
         module._offline_mma_output_length_classification = True
 
     def ingest(self, chunk: Chunk) -> None:
+        if bool(getattr(self, "_qa_only_reuse", False)):
+            raise RuntimeError("MMA QA-only replay forbids memory ingestion")
         for raw_path in chunk.images:
             path = Path(raw_path).resolve()
             if not path.is_file():
@@ -1082,6 +1208,12 @@ class MMAOriginalAdapter(BaselineAdapter):
         self._ingested_chunks += 1
 
     def end_session(self, session_id: str) -> None:
+        if bool(getattr(self, "_qa_only_reuse", False)):
+            # Some harnesses enumerate source-session boundaries even after
+            # ``filter_completed_session_chunks`` has removed every build
+            # chunk.  QA-only replay must not manufacture new build
+            # checkpoints for those empty boundaries.
+            return
         accumulator = self.backend.temp_message_accumulator
         queued_count = len(accumulator.temporary_messages)
         if queued_count != len(self._pending_chunks):
@@ -1162,6 +1294,35 @@ class MMAOriginalAdapter(BaselineAdapter):
                 )
         return rows
 
+    def _embedding_value_for_hit(
+        self,
+        *,
+        server: Any,
+        manager: Any,
+        spec: dict[str, Any],
+        hit: Any,
+        raw_id: str,
+        memory_id: str,
+        timezone_str: str,
+    ) -> Any:
+        embedding_value = getattr(hit, spec["embedding_field"], None)
+        if (
+            embedding_value is not None
+            or spec["manager"] != "knowledge_vault_manager"
+        ):
+            return embedding_value
+        if memory_id not in self._retrieval_embedding_cache:
+            actor = server.user_manager.get_user_by_id(self.backend.client.user.id)
+            complete_hit = manager.get_item_by_id(
+                knowledge_vault_item_id=raw_id,
+                actor=actor,
+                timezone_str=timezone_str,
+            )
+            self._retrieval_embedding_cache[memory_id] = getattr(
+                complete_hit, spec["embedding_field"], None
+            )
+        return self._retrieval_embedding_cache[memory_id]
+
     def retrieve(self, request: RetrievalRequest) -> RetrievalResult:
         if self._pending_chunks:
             raise RuntimeError(
@@ -1226,8 +1387,17 @@ class MMAOriginalAdapter(BaselineAdapter):
                 memory_id = f"{spec['manager']}:{raw_id}"
                 if not self.provenance.visible(memory_id, request.visible_session_ids):
                     continue
+                embedding_value = self._embedding_value_for_hit(
+                    server=server,
+                    manager=manager,
+                    spec=spec,
+                    hit=hit,
+                    raw_id=raw_id,
+                    memory_id=memory_id,
+                    timezone_str=timezone_str,
+                )
                 score = _cosine_similarity(
-                    query_embedding, getattr(hit, spec["embedding_field"], None)
+                    query_embedding, embedding_value
                 )
                 if score is None:
                     reason = f"invalid {spec['embedding_field']}"
@@ -1311,8 +1481,117 @@ class MMAOriginalAdapter(BaselineAdapter):
                 "provenance_required": True,
             },
         )
+        if self._isolated_final_answer_enabled():
+            try:
+                agent_trace = self._run_isolated_retrieval_agent(request, result)
+            except Exception as exc:
+                if _is_hard_api_stop_error(exc):
+                    raise
+                consecutive = self._record_bad_retrieval_agent_point(
+                    request.query_id, exc
+                )
+                if consecutive >= MAX_CONSECUTIVE_BAD_MEMORY_POINTS:
+                    raise MMAConsecutiveBadPointError(
+                        "MMA produced "
+                        f"{consecutive} consecutive failed retrieval-Agent requests; "
+                        "stopping this sample without repairing baseline output"
+                    ) from exc
+                agent_trace = {
+                    "native_retrieval_agent": True,
+                    "native_retrieval_agent_failed": True,
+                    "native_retrieval_agent_error": f"{type(exc).__name__}: {exc}",
+                    "native_retrieval_agent_synthesis": "",
+                    "native_retrieval_agent_tool_scope": "frozen_global_top7",
+                    "benchmark_qa_prompt_visible": False,
+                    "action": "record_bad_retrieval_agent_point_and_use_frozen_top7",
+                    "consecutive_bad_retrieval_points": consecutive,
+                }
+            else:
+                self._consecutive_bad_memory_points = 0
+            result.trace.update(agent_trace)
         self._retrievals[request.query_id] = result
         return result
+
+    def _isolated_final_answer_enabled(self) -> bool:
+        configured = self.config.get("mma_isolated_final_answer")
+        if configured is not None:
+            return bool(configured)
+        return os.getenv(ISOLATED_FINAL_ANSWER_ENV, "").strip().lower() in {
+            "1",
+            "true",
+            "yes",
+            "on",
+        }
+
+    def _qa_only_reuse_enabled(self) -> bool:
+        configured = self.config.get("mma_qa_only_reuse")
+        if configured is not None:
+            return bool(configured)
+        return os.getenv(QA_ONLY_REUSE_ENV, "").strip().lower() in {
+            "1",
+            "true",
+            "yes",
+            "on",
+        }
+
+    def _run_isolated_retrieval_agent(
+        self,
+        request: RetrievalRequest,
+        selected: RetrievalResult,
+    ) -> dict[str, Any]:
+        """Run MMA's native search loop without exposing the benchmark QA prompt.
+
+        The native Chat Agent sees only the raw question and may use its original
+        search tools.  During this call both search tools are constrained to the
+        already selected global Top-7, so the later handoff cannot silently
+        exceed the retrieval budget.  Only the resulting evidence synthesis is
+        frozen; the native system/search prompt and tool history are never sent
+        to the final-answer model.
+        """
+        client = self.backend.client
+        chat_state = self.backend.agent_states.agent_state
+        saved = _capture_chat_state(client, chat_state.id)
+        prompt = (
+            "Retrieve and synthesize the memory evidence needed for the following "
+            "question. Use the available memory-search tools when useful. Do not "
+            "apply any benchmark answer-format instructions. Return only a concise "
+            "factual evidence synthesis via send_message.\n\n"
+            f"Question: {request.text}"
+        )
+        messages = [{"role": "user", "content": prompt}]
+        try:
+            with (
+                _fixed_chat_memory_prompt(
+                    _selected_memory_context(selected.items, messages)
+                ),
+                _fixed_chat_topk_tools(selected.items),
+            ):
+                response, attached_images = _send_native_benchmark_messages(
+                    client,
+                    chat_state.id,
+                    messages,
+                    request.query_image,
+                    selected.items,
+                )
+            synthesis = _extract_chat_answer(response).strip()
+            if not synthesis:
+                raise MMAAnswerContractError(
+                    "MMA retrieval Agent did not return an evidence synthesis"
+                )
+            return {
+                "native_retrieval_agent": True,
+                "native_retrieval_agent_via": "mma_original_chat_agent",
+                "native_retrieval_agent_tool_scope": "frozen_global_top7",
+                "native_retrieval_agent_tool_calls": _response_tool_names(response),
+                "native_retrieval_agent_synthesis": synthesis,
+                "native_retrieval_agent_usage": (
+                    _model_dump(getattr(response, "usage", None)) or {}
+                ),
+                "native_retrieval_agent_image_count": attached_images,
+                "benchmark_qa_prompt_visible": False,
+            }
+        finally:
+            _restore_chat_state(client, chat_state.id, saved)
 
     def _record_bad_memory_row(
         self,
@@ -1392,6 +1671,36 @@ class MMAOriginalAdapter(BaselineAdapter):
             )
         return consecutive
 
+    def _record_bad_retrieval_agent_point(
+        self, query_id: str, exc: Exception
+    ) -> int:
+        """Count one failed native retrieval-Agent request, never its substeps."""
+        if query_id in self._bad_retrieval_points:
+            return int(getattr(self, "_consecutive_bad_memory_points", 0))
+        self._bad_retrieval_points[query_id] = [
+            f"retrieval_agent:{type(exc).__name__}:{exc}"
+        ]
+        consecutive = int(getattr(self, "_consecutive_bad_memory_points", 0)) + 1
+        self._consecutive_bad_memory_points = consecutive
+        print(
+            "[mma-retrieval-agent-bad-point] "
+            + json.dumps(
+                {
+                    "sample_id": str(getattr(self, "_sample_id", "")),
+                    "query_id": query_id,
+                    "reason": f"{type(exc).__name__}: {exc}",
+                    "consecutive": consecutive,
+                    "limit": MAX_CONSECUTIVE_BAD_MEMORY_POINTS,
+                    "counting_unit": "independent_retrieval_agent_request",
+                    "action": "use_already_frozen_top7_without_synthesis",
+                },
+                ensure_ascii=False,
+                sort_keys=True,
+            ),
+            flush=True,
+        )
+        return consecutive
+
     def _query_embedding(self, request: RetrievalRequest) -> list[float]:
         if request.query_vector is not None:
             values = [float(value) for value in request.query_vector]
@@ -1423,6 +1732,9 @@ class MMAOriginalAdapter(BaselineAdapter):
                 "MMA final answer evidence differs from the retrieval handoff: "
                 f"expected={expected_ids}, actual={actual_ids}"
             )
+
+        if self._isolated_final_answer_enabled():
+            return self._answer_with_isolated_tool_free_call(request, selected)
 
         client = self.backend.client
         chat_state = self.backend.agent_states.agent_state
@@ -1522,6 +1834,101 @@ class MMAOriginalAdapter(BaselineAdapter):
             finally:
                 _restore_chat_state(client, chat_state.id, saved)
         raise RuntimeError("MMA Chat Agent retry loop ended unexpectedly") from last_error
+
+    def _answer_with_isolated_tool_free_call(
+        self,
+        request: NativeAnswerRequest,
+        selected: RetrievalResult,
+    ) -> NativeAnswerResult:
+        """Answer in a clean conversation containing no MMA prompt or tools."""
+        from benchmarks.memgallery_harness.runner.answer_client import (
+            VLMAnswerClient,
+        )
+
+        synthesis = str(
+            selected.trace.get("native_retrieval_agent_synthesis") or ""
+        ).strip()
+        messages = [dict(row) for row in request.messages]
+        if synthesis:
+            messages = _append_frozen_retrieval_synthesis(messages, synthesis)
+        category = str(selected.trace.get("category") or "")
+        memory_items = _answer_memory_items(selected.items)
+        query_image = (
+            {"path": str(request.query_image)} if request.query_image else None
+        )
+        client = VLMAnswerClient(
+            model=str(self.config.get("answer_model") or self.config["executor_model"]),
+            # The executor URL is the sample-local counting proxy while a formal
+            # run is active, so both retrieval and final-answer calls are traced.
+            base_url=str(self.config["executor_base_url"]),
+            api_key=str(
+                self.config.get("executor_api_key")
+                or os.getenv("OPENAI_API_KEY")
+                or "EMPTY"
+            ),
+            temperature=float(self.config.get("answer_temperature") or 0.0),
+            num_predict=int(self.config.get("num_predict") or 512),
+            timeout=int(self.config.get("request_timeout") or 180),
+            retries=int(self.config.get("retries") or 0),
+            think=self.config.get("think"),
+            reasoning_effort=str(self.config.get("reasoning_effort") or ""),
+            backend="openai",
+        )
+        try:
+            response = client.answer_messages_with_usage(
+                messages=messages,
+                memory_items=memory_items,
+                query_image=query_image,
+                category=category,
+            )
+            text = _require_answer_block(response.text)
+        except Exception as exc:
+            consecutive = self._record_bad_qa_point(request.query_id, exc)
+            if consecutive >= MAX_CONSECUTIVE_BAD_QA_POINTS:
+                raise MMAConsecutiveBadPointError(
+                    "MMA produced "
+                    f"{consecutive} consecutive failed QA points; "
+                    "stopping this sample without repairing baseline output"
+                ) from exc
+            return NativeAnswerResult(
+                text="",
+                attempts=int(getattr(exc, "attempts", 1) or 1),
+                failed_attempts=int(getattr(exc, "attempts", 1) or 1),
+                image_count=0,
+                usage=getattr(exc, "usage", None),
+                trace={
+                    "via": "mma_isolated_tool_free_final_answer",
+                    "bad_qa_point": True,
+                    "bad_qa_reason": str(exc),
+                    "consecutive_bad_qa_points": consecutive,
+                    "action": "record_empty_answer_and_continue",
+                },
+                retrieval=selected,
+            )
+        self._consecutive_bad_qa_points = 0
+        return NativeAnswerResult(
+            text=text,
+            attempts=response.attempts,
+            failed_attempts=response.failed_attempts,
+            image_count=response.image_count,
+            usage=response.usage,
+            trace={
+                "via": "mma_isolated_tool_free_final_answer",
+                "global_top_k": request.top_k,
+                "retrieved_count": len(selected.items),
+                "retrieved_memory_ids": [item.memory_id for item in selected.items],
+                "structured_evidence": True,
+                "provenance_preserved": True,
+                "qa_prompt_applied_stage": "isolated_final_answer_only",
+                "original_chat_system_prompt": False,
+                "memory_tool_scope": "none",
+                "tools_present": False,
+                "tool_choice_present": False,
+                "native_retrieval_agent_synthesis_included": bool(synthesis),
+                "format_retries": response.failed_attempts,
+            },
+            retrieval=selected,
+        )
 
     def _record_bad_qa_point(self, query_id: str, exc: Exception) -> int:
         bad_points = getattr(self, "_bad_qa_points", None)
@@ -1695,8 +2102,28 @@ def _is_output_length_exhaustion(exception: Exception) -> bool:
     )
 
 
-def _reject_unstructured_native_tool_calls(response: Any) -> None:
-    """Fail when a provider emits tool-call markup as ordinary assistant text."""
+def _is_hard_api_stop_error(exception: Exception) -> bool:
+    """Preserve the experiment's hard-stop rules for auth and exhausted credit."""
+    message = str(exception).lower()
+    return any(
+        marker in message
+        for marker in (
+            "http 401",
+            "status code 401",
+            "401 unauthorized",
+            "http 403",
+            "status code 403",
+            "403 forbidden",
+            "insufficient credit",
+            "insufficient funds",
+            "credit balance",
+            "invalid api key",
+            "api key is invalid",
+        )
+    )
+
+
+def _has_unstructured_native_tool_call(response: Any) -> bool:
     choices = getattr(response, "choices", None)
     if choices is None and isinstance(response, dict):
         choices = response.get("choices")
@@ -1712,10 +2139,105 @@ def _reject_unstructured_native_tool_calls(response: Any) -> None:
             content = message.get("content", content)
             tool_calls = message.get("tool_calls", tool_calls)
         if "<tool_call>" in str(content or "") and not tool_calls:
-            raise RuntimeError(
-                "MMA provider returned <tool_call> markup as assistant text "
-                "without native tool_calls; textual parsing and repair are forbidden"
-            )
+            return True
+    return False
+
+
+def _has_plain_native_response(response: Any) -> bool:
+    """Return true when the provider emitted visible text but no native tool."""
+    choices = getattr(response, "choices", None)
+    if choices is None and isinstance(response, dict):
+        choices = response.get("choices")
+    for choice in choices or []:
+        message = getattr(choice, "message", None)
+        if message is None and isinstance(choice, dict):
+            message = choice.get("message")
+        if message is None:
+            continue
+        content = getattr(message, "content", None)
+        tool_calls = getattr(message, "tool_calls", None)
+        if isinstance(message, dict):
+            content = message.get("content", content)
+            tool_calls = message.get("tool_calls", tool_calls)
+        if str(content or "").strip() and not tool_calls:
+            return True
+    return False
+
+
+def _native_tool_names(tools: Any) -> set[str]:
+    """Read function names from either OpenAI tool-schema representation."""
+    names: set[str] = set()
+    for tool in tools or []:
+        if not isinstance(tool, dict):
+            continue
+        function = tool.get("function")
+        if isinstance(function, dict):
+            name = function.get("name")
+        else:
+            name = tool.get("name")
+        if name:
+            names.add(str(name))
+    return names
+
+
+def _require_send_message_answer_block(tools: Any) -> Any:
+    """Constrain only the forced terminal retry to the benchmark contract."""
+    constrained = copy.deepcopy(tools)
+    for tool in constrained or []:
+        if not isinstance(tool, dict):
+            continue
+        function = tool.get("function")
+        if not isinstance(function, dict) or function.get("name") != "send_message":
+            continue
+        parameters = function.get("parameters")
+        if not isinstance(parameters, dict):
+            continue
+        properties = parameters.get("properties")
+        if not isinstance(properties, dict):
+            continue
+        message = properties.get("message")
+        if isinstance(message, dict) and message.get("type") == "string":
+            message["pattern"] = r"^<answer>[\s\S]*</answer>$"
+    return constrained
+
+
+def _bound_native_tool_schema(tools: Any) -> Any:
+    """Prevent unbounded local-vLLM tool fields from entering repetition loops."""
+    bounded = copy.deepcopy(tools)
+
+    def visit(value: Any, *, field_name: str = "") -> None:
+        if isinstance(value, dict):
+            value_type = value.get("type")
+            if value_type == "string":
+                limit = 1024 if field_name == "inner_thoughts" else 4096
+                configured = value.get("maxLength")
+                value["maxLength"] = min(
+                    int(configured) if configured is not None else limit,
+                    limit,
+                )
+            elif value_type == "array":
+                configured = value.get("maxItems")
+                value["maxItems"] = min(
+                    int(configured) if configured is not None else 32,
+                    32,
+                )
+            for key, child in value.items():
+                visit(child, field_name=key)
+        elif isinstance(value, list):
+            for child in value:
+                visit(child, field_name=field_name)
+
+    visit(bounded)
+    return bounded
+
+
+def _reject_unstructured_native_tool_calls(response: Any) -> None:
+    """Fail when a provider emits tool-call markup as ordinary assistant text."""
+    if _has_unstructured_native_tool_call(response):
+        raise RuntimeError(
+            "MMA provider returned <tool_call> markup as assistant text "
+            "without native tool_calls; textual parsing and repair are forbidden"
+        )
 
 
 def _structured_memory(value: Any, partition: str) -> dict[str, Any]:
@@ -1779,6 +2301,19 @@ def _sum_usage(left: dict[str, Any], right: dict[str, Any]) -> dict[str, Any]:
 def _vector_values(value: Any) -> list[float]:
     if value is None:
         return []
+    if isinstance(value, memoryview):
+        value = value.tobytes()
+    if isinstance(value, (bytes, bytearray)):
+        try:
+            decoded = base64.b64decode(bytes(value), validate=True)
+        except (binascii.Error, ValueError):
+            return []
+        if not decoded or len(decoded) % 4:
+            return []
+        try:
+            value = struct.unpack(f"<{len(decoded) // 4}f", decoded)
+        except struct.error:
+            return []
     if hasattr(value, "tolist"):
         value = value.tolist()
     if isinstance(value, str):
@@ -1789,9 +2324,10 @@ def _vector_values(value: Any) -> list[float]:
     if not isinstance(value, (list, tuple)):
         return []
     try:
-        return [float(item) for item in value]
+        values = [float(item) for item in value]
     except (TypeError, ValueError):
         return []
+    return values if all(math.isfinite(item) for item in values) else []
 
 
 def _cosine_similarity(left: Any, right: Any) -> float | None:
@@ -1841,6 +2377,90 @@ def _selected_memory_context(
         "resource": "\n".join(grouped["resource_memory"]),
         "knowledge_vault": "\n".join(knowledge),
     }
+
+
+def _answer_memory_items(items: list[RetrievedMemory]) -> list[dict[str, Any]]:
+    """Translate protocol memories to the answer client's image-aware shape."""
+    rows: list[dict[str, Any]] = []
+    for item in items:
+        metadata = dict(item.metadata)
+        metadata.setdefault("session_id", item.session_id)
+        rows.append(
+            {
+                "id": item.memory_id,
+                "text": item.text,
+                "metadata": metadata,
+                "images": [
+                    {"path": str(path), "kind": "image", "img_id": ""}
+                    for path in item.image_paths
+                ],
+            }
+        )
+    return rows
+
+
+def _append_frozen_retrieval_synthesis(
+    messages: list[dict[str, Any]], synthesis: str
+) -> list[dict[str, Any]]:
+    """Add frozen evidence without carrying the retrieval prompt or history."""
+    updated = [dict(row) for row in messages]
+    user_indices = [
+        index
+        for index, row in enumerate(updated)
+        if str(row.get("role") or "") == "user"
+    ]
+    if not user_indices:
+        raise ValueError("isolated final answer requires a benchmark user message")
+    index = user_indices[-1]
+    content = str(updated[index].get("content") or "")
+    updated[index]["content"] = (
+        content
+        + "\n\nFrozen MMA retrieval-agent evidence synthesis:\n"
+        + str(synthesis).strip()
+    )
+    return updated
+
+
+@contextmanager
+def _fixed_chat_topk_tools(items: list[RetrievedMemory]) -> Iterator[None]:
+    """Keep native Chat-Agent searches inside the frozen global Top-7 set."""
+    module = importlib.import_module("mma.functions.function_sets.base")
+    original_search = module.search_in_memory
+    original_timerange = module.list_memory_within_timerange
+    allowed_ids = {
+        str(item.memory_id).split(":", 1)[-1]
+        for item in items
+        if str(item.memory_id).strip()
+    }
+
+    def filter_result(value: Any) -> Any:
+        if not isinstance(value, tuple) or len(value) != 2:
+            return value
+        rows, _count = value
+        if not isinstance(rows, list):
+            return value
+        filtered = [
+            row
+            for row in rows
+            if isinstance(row, dict) and str(row.get("id") or "") in allowed_ids
+        ]
+        return filtered, len(filtered)
+
+    @functools.wraps(original_search)
+    def search_in_memory(*args: Any, **kwargs: Any) -> Any:
+        return filter_result(original_search(*args, **kwargs))
+
+    @functools.wraps(original_timerange)
+    def list_memory_within_timerange(*args: Any, **kwargs: Any) -> Any:
+        return filter_result(original_timerange(*args, **kwargs))
+
+    module.search_in_memory = search_in_memory
+    module.list_memory_within_timerange = list_memory_within_timerange
+    try:
+        yield
+    finally:
+        module.search_in_memory = original_search
+        module.list_memory_within_timerange = original_timerange
 
 
 def _prepare_embeddings_from_config_compat(

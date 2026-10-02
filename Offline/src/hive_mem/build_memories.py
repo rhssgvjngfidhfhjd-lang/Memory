@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import hashlib
+import os
 from pathlib import Path
 
 import numpy as np
@@ -10,7 +11,11 @@ import numpy as np
 from .llm_client import LLMClient
 from .builder import MAUBuilder
 from .builder import load_events
-from .executor import EXECUTOR_VISUAL_INPUTS
+from .executor import (
+    EXECUTOR_PROMPT_SCHEMA_VERSION,
+    EXECUTOR_VISUAL_INPUTS,
+    MEMORY_RESPONSE_FORMAT,
+)
 from .output_layout import RunLayout
 from .output_layout import DatasetLayout
 from embedding.qwen3_text_embedding import create_memory_embedder
@@ -83,6 +88,8 @@ def build_signature(args: argparse.Namespace, dataset: str, events, profile: str
         separators=(",", ":"),
     ).encode("utf-8")
     return {
+        "schema_version": 2,
+        "executor_prompt_schema_version": EXECUTOR_PROMPT_SCHEMA_VERSION,
         "dataset": dataset,
         "events_sha256": hashlib.sha256(event_payload).hexdigest(),
         "profile_sha256": hashlib.sha256(profile.encode("utf-8")).hexdigest(),
@@ -90,6 +97,7 @@ def build_signature(args: argparse.Namespace, dataset: str, events, profile: str
         "executor_model": args.executor_model,
         "executor_base_url": args.executor_base_url,
         "executor_max_tokens": args.executor_max_tokens,
+        "executor_reasoning_effort": args.executor_reasoning_effort,
         "executor_visual_input": args.executor_visual_input,
         "embedding_model": args.embedding_model,
         "embedding_base_url": args.embedding_base_url,
@@ -120,6 +128,8 @@ def main() -> None:
     parser.add_argument("--executor-model", default="")
     parser.add_argument("--executor-base-url", default="")
     parser.add_argument("--executor-api-key", default="EMPTY")
+    parser.add_argument("--executor-api-key-env", default="")
+    parser.add_argument("--executor-reasoning-effort", default="")
     parser.add_argument("--executor-max-tokens", type=int, default=512)
     parser.add_argument("--executor-timeout", type=int, default=180)
     parser.add_argument("--executor-retries", type=int, default=2)
@@ -167,14 +177,23 @@ def main() -> None:
     layout = RunLayout.from_path(args.output_root)
     all_events = load_events(chunks_path)
     datasets = sorted({event.dataset for event in all_events}) if args.all_datasets else [args.dataset]
+    executor_api_key = args.executor_api_key
+    if args.executor_api_key_env:
+        executor_api_key = os.environ.get(args.executor_api_key_env, "").strip()
+        if not executor_api_key:
+            parser.error(
+                f"Environment variable {args.executor_api_key_env!r} is empty"
+            )
     llm_client = LLMClient(
         model=args.executor_model,
         api_base=args.executor_base_url,
-        api_key=args.executor_api_key,
+        api_key=executor_api_key,
         temperature=0.0,
         max_new_tokens=args.executor_max_tokens,
         max_retries=args.executor_retries + 1,
         timeout=args.executor_timeout,
+        response_format=MEMORY_RESPONSE_FORMAT,
+        reasoning_effort=args.executor_reasoning_effort,
     )
     if args.embedding_base_url:
         embedder = OpenAIMemoryEmbedder(

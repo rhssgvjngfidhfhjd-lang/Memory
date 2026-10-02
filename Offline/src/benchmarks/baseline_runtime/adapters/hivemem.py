@@ -91,9 +91,13 @@ class HiveMemAdapter(BaselineAdapter):
             self.graph_categories is not None
             and request.category.upper() not in self.graph_categories
         )
-        # The shared benchmark budget is seven memories. HiveMem spends it as
-        # five vector hits plus up to two appended graph neighbours.
-        vector_k = min(int(request.top_k), DEFAULT_HIVEMEM_VECTOR_K)
+        # Graph retrieval spends the seven-memory budget as five vector hits
+        # plus appended neighbours. Pure-vector ablations honor the requested k.
+        vector_k = (
+            min(int(request.top_k), DEFAULT_HIVEMEM_VECTOR_K)
+            if self.graph_options
+            else int(request.top_k)
+        )
         if graph_gated_off:
             from hive_mem.retriever import SimpleMemoryIndex
 
@@ -115,7 +119,7 @@ class HiveMemAdapter(BaselineAdapter):
         items = []
         for hit in hits:
             meta = hit.item.metadata
-            text = str(hit.item.content)
+            text = str(hit.item.evidence_text)
             if append_mode and hit.via == "graph":
                 text = f"(related background memory) {text}"
             items.append(
@@ -157,7 +161,13 @@ class HiveMemAdapter(BaselineAdapter):
                 records.append(
                     MemoryRecord(
                         memory_id=str(row.get("memory_id") or row.get("id") or ""),
-                        text=str(row.get("content") or row.get("summary") or ""),
+                        text=str(
+                            row.get("chunk")
+                            or row.get("raw_chunk")
+                            or row.get("content")
+                            or row.get("summary")
+                            or ""
+                        ),
                         session_id=str(meta.get("session_id") or ""),
                         source_dialogue_ids=[str(x) for x in meta.get("source_dialogue_ids") or []],
                         image_ids=[str(x) for x in meta.get("image_ids") or []],

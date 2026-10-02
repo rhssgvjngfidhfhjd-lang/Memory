@@ -66,6 +66,14 @@ class DatasetLayout:
         return self.vectors_dir / "image_mask.npy"
 
     @property
+    def attribute_vectors(self) -> Path:
+        return self.vectors_dir / "attributes.npy"
+
+    @property
+    def attributes(self) -> Path:
+        return self.root / "attributes.json"
+
+    @property
     def reports_dir(self) -> Path:
         return self.root / "reports"
 

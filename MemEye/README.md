@@ -24,7 +24,18 @@ Long-term agent memory is increasingly multimodal, yet existing evaluations rare
   <img src="assets/xyaxis.png" width="100%">
 </p>
 
-The benchmark includes **371 mirrored MCQ + open-ended questions** across **8 life-scenario tasks**, with annotated clue rounds and validation gates for answerability, shortcut resistance, visual necessity, and reasoning structure.
+This checkout uses the **MemEye-Open experimental subset only**: **371 open-ended questions** across **8 life-scenario tasks**, with **442 referenced images**. The MCQ payloads, concatenated task payloads, and images not referenced by the Open subset were removed to satisfy the experiment protocol.
+
+## Local Experiment Scope
+
+| Split | Setting | Instances | QA | Images |
+|---|---|---:|---:|---:|
+| MemEye-Open | OOD test only | 8 | 371 | 442 |
+
+- Only the eight base `data/dialog/*_Open.json` files are retained.
+- There is no local train or validation split.
+- All 442 retained images are referenced by the eight Open payloads; there are no missing or extra image files.
+- Counts in this README describe the local experimental copy, not the complete upstream distribution.
 
 ## Key Findings
 
@@ -74,9 +85,9 @@ conda activate memeye
 pip install -r requirements.txt
 ```
 
-## Download Data
+## Local Data
 
-The benchmark data (dialogue JSONs + images) is hosted on HuggingFace:
+The complete upstream benchmark data is hosted on Hugging Face. This checkout has already been downloaded and pruned to the experiment-required MemEye-Open subset. Re-cloning the upstream dataset would restore the MCQ and concatenated payloads that are intentionally absent here.
 
 ```bash
 git lfs install
@@ -130,12 +141,12 @@ python score_locked_llm_judge.py \
 
 ## Evaluation Modes
 
-Each task ships two variants:
+The upstream benchmark supports two variants, but this local experiment retains only the Open variant:
 
 | Mode | File Pattern | Scoring |
 |------|-------------|---------|
-| MCQ | `Task_Name.json` | Exact match on extracted choice (A/B/C) |
-| Open | `Task_Name_Open.json` | F1, BLEU, BERTScore, LLM-as-a-judge |
+| MCQ | `Task_Name.json` | Removed from this local experiment |
+| Open | `Task_Name_Open.json` | Retained; F1, BLEU, BERTScore, LLM-as-a-judge |
 
 The runner auto-detects the variant. LLM-as-a-judge is the recommended primary metric for open-ended evaluation.
 
@@ -199,7 +210,7 @@ dataset:
   dialog_json: data/dialog/My_Task.json
   image_root: data/image
 eval:
-  mode: mcq  # or "open"
+  mode: open
   max_questions: 0
 ```
 

@@ -8,17 +8,21 @@ from functools import lru_cache
 from typing import Any, Iterable
 
 
-def raise_for_truncated_completion(response: Any) -> None:
-    """Fail the current M2A operation instead of consuming truncated output."""
+def is_truncated_completion(response: Any) -> bool:
+    """Return whether an OpenAI-compatible response hit its output limit."""
     metadata = getattr(response, "response_metadata", None)
     if not isinstance(metadata, dict):
-        return
-    finish_reason = str(
-        metadata.get("finish_reason")
-        or metadata.get("native_finish_reason")
-        or ""
-    ).lower()
-    if finish_reason in {"length", "max_tokens"}:
+        return False
+    finish_reasons = {
+        str(metadata.get(key) or "").lower()
+        for key in ("finish_reason", "native_finish_reason")
+    }
+    return bool(finish_reasons & {"length", "max_tokens", "max_output_tokens"})
+
+
+def raise_for_truncated_completion(response: Any) -> None:
+    """Fail the current M2A operation instead of consuming truncated output."""
+    if is_truncated_completion(response):
         raise RuntimeError(
             "M2A model response was truncated at the configured output-token limit"
         )

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -214,6 +215,39 @@ def write_status_atomic(path: Path, payload: dict[str, Any]) -> None:
         encoding="utf-8",
     )
     os.replace(temporary, path)
+
+
+def sample_error_fingerprint(line: str) -> str:
+    """Build a stable, non-secret restart key for one failed sample."""
+    marker = "[sample-error]"
+    if marker not in line:
+        return "unexpected_exit"
+    raw = line.split(marker, 1)[1].strip()
+    try:
+        payload = json.loads(raw)
+    except json.JSONDecodeError:
+        payload = {}
+    sample_id = str(payload.get("sample_id") or "unknown")
+    error_type = str(payload.get("error_type") or "unknown")
+    error = str(payload.get("error") or "").split("\n", 1)[0].strip()
+    digest = hashlib.sha256(error.encode("utf-8")).hexdigest()[:16]
+    return f"sample_error:{sample_id}:{error_type}:{digest}"
+
+
+def restart_count_for_reason(job: dict[str, Any], reason: str) -> int:
+    counts = job.get("automatic_restart_counts_by_reason") or {}
+    return int(counts.get(reason) or 0) if isinstance(counts, dict) else 0
+
+
+def record_restart_for_reason(job: dict[str, Any], reason: str) -> int:
+    counts = dict(job.get("automatic_restart_counts_by_reason") or {})
+    count = int(counts.get(reason) or 0) + 1
+    counts[reason] = count
+    job["automatic_restart_counts_by_reason"] = counts
+    job["automatic_restart_count"] = int(job.get("automatic_restart_count") or 0) + 1
+    job["last_restart_fingerprint"] = reason
+    job.pop("pending_failure_fingerprint", None)
+    return count
 
 
 def launch_environment(offline_root: Path) -> dict[str, str]:
@@ -436,6 +470,9 @@ def main() -> None:
                                 job["last_restart_reason"] = (
                                     f"{kind} repeated {count} times without recovery"
                                 )
+                                job["pending_failure_fingerprint"] = (
+                                    f"transient:{sample}:{phase}:{kind}"
+                                )
                                 consecutive_failures.pop(key, None)
                                 status_changed = True
                     elif bool(row.get("success")):
@@ -467,6 +504,8 @@ def main() -> None:
                             f"QA_BAD_POINT job={job_name} {line.split('[mma-qa-bad-point]', 1)[1].strip()}",
                         )
                     elif "[sample-error]" in line:
+                        job["pending_failure_fingerprint"] = sample_error_fingerprint(line)
+                        status_changed = True
                         append_log(
                             monitor_log,
                             f"SAMPLE_ERROR job={job_name} {line.split('[sample-error]', 1)[1].strip()}",
@@ -540,9 +579,15 @@ def main() -> None:
             first_seen_dead = dead_since.setdefault(job_name, time.monotonic())
             if time.monotonic() - first_seen_dead < args.restart_grace:
                 continue
-            restart_count = int(job.get("automatic_restart_count") or 0)
+            restart_reason = str(
+                job.get("pending_failure_fingerprint") or "unexpected_exit"
+            )
+            restart_count = restart_count_for_reason(job, restart_reason)
             if restart_count >= args.max_restarts:
-                reason = f"automatic restart limit reached: {restart_count}"
+                reason = (
+                    f"automatic restart limit reached for {restart_reason}: "
+                    f"{restart_count}"
+                )
                 job["status"] = "hard_stopped_restart_limit"
                 job["hard_stop_reason"] = reason
                 stopped_jobs.add(job_name)
@@ -572,12 +617,13 @@ def main() -> None:
             new_pid = launch_job(command, Path(str(job.get("log") or "")))
             job["child_pid"] = new_pid
             job["status"] = "running"
-            job["automatic_restart_count"] = restart_count + 1
+            reason_count = record_restart_for_reason(job, restart_reason)
             job["last_restarted_at"] = now()
             dead_since.pop(job_name, None)
             append_log(
                 monitor_log,
-                f"AUTO_RESUME job={job_name} pid={new_pid} attempt={restart_count + 1} "
+                f"AUTO_RESUME job={job_name} pid={new_pid} "
+                f"reason={restart_reason} reason_attempt={reason_count} "
                 f"checkpoint={checkpoint_message}",
             )
             status_changed = True

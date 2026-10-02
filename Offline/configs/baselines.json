@@ -61,5 +61,29 @@
     "upstream_tree": "af5aab0f5883ba4bf97209d10cc46b3837a9f94b",
     "compatibility_mode": "official-memory-graph-control-dialogue-observation",
     "audio_enabled": false
+  },
+  "NaiveRAG": {
+    "adapter": "rag_family",
+    "source_root": "baselines/NaiveRAG",
+    "in_process": true,
+    "upstream_url": "https://github.com/varib1/H2HMEM",
+    "upstream_commit": "301f93540775676fb2b312c1837baee2b49ee6d0",
+    "compatibility_mode": "official-fixed-chunk-text-caption-retrieval-shared-qa"
+  },
+  "MuRAG": {
+    "adapter": "rag_family",
+    "source_root": "baselines/MuRAG",
+    "in_process": true,
+    "upstream_url": "https://github.com/varib1/H2HMEM",
+    "upstream_commit": "301f93540775676fb2b312c1837baee2b49ee6d0",
+    "compatibility_mode": "official-fixed-chunk-multimodal-retrieval-shared-qa"
+  },
+  "UniversalRAG": {
+    "adapter": "rag_family",
+    "source_root": "baselines/UniversalRAG",
+    "in_process": true,
+    "upstream_url": "https://github.com/wgcyeo/UniversalRAG",
+    "upstream_commit": "d29ab3acaebfbaebdc7f095457076585bec88065",
+    "compatibility_mode": "official-modality-routing-fixed-chunk-corpora-shared-qa"
   }
 }

@@ -13,7 +13,7 @@ from typing import Any, Iterator
 from urllib.parse import urlsplit
 
 
-TRACE_VERSION = 2
+TRACE_VERSION = 3
 COUNTED_PATH_SUFFIXES = ("/chat/completions", "/completions", "/responses")
 HOP_BY_HOP_HEADERS = {
     "connection",
@@ -55,6 +55,7 @@ class CallRecorder:
         self._lock = threading.Lock()
         self._next_id = 0
         self._phase = "memory_build"
+        self._scope: dict[str, Any] = {}
         trace_path.parent.mkdir(parents=True, exist_ok=True)
         if reset:
             trace_path.unlink(missing_ok=True)
@@ -71,6 +72,11 @@ class CallRecorder:
         with self._lock:
             return self._phase
 
+    def context_snapshot(self) -> tuple[str, dict[str, Any]]:
+        """Snapshot the phase and logical QA ownership for one HTTP call."""
+        with self._lock:
+            return self._phase, dict(self._scope)
+
     @contextmanager
     def phase(self, value: str) -> Iterator[None]:
         with self._lock:
@@ -81,6 +87,18 @@ class CallRecorder:
         finally:
             with self._lock:
                 self._phase = previous
+
+    @contextmanager
+    def scope(self, **values: Any) -> Iterator[None]:
+        """Attach stable query/operation metadata to calls made in this block."""
+        with self._lock:
+            previous = self._scope
+            self._scope = {**previous, **values}
+        try:
+            yield
+        finally:
+            with self._lock:
+                self._scope = previous
 
     def next_id(self) -> int:
         with self._lock:
@@ -126,6 +144,7 @@ class _CountingProxyServer(ThreadingHTTPServer):
         temperature: float | None = None,
         qa_max_output_tokens: int | None = None,
         reasoning_effort: str = "",
+        qa_upstream_timeout: float | None = None,
     ) -> None:
         target = urlsplit(target_base_url)
         if target.scheme not in {"http", "https"} or not target.hostname:
@@ -141,6 +160,7 @@ class _CountingProxyServer(ThreadingHTTPServer):
         )
         self.recorder = recorder
         self.upstream_timeout = upstream_timeout
+        self.qa_upstream_timeout = qa_upstream_timeout
         self.max_output_tokens = max_output_tokens
         self.temperature = temperature
         self.qa_max_output_tokens = qa_max_output_tokens
@@ -170,7 +190,7 @@ class _CountingProxyHandler(BaseHTTPRequestHandler):
     def _forward(self, *, count_call: bool) -> None:
         started = time.time()
         request_id = self.server.recorder.next_id() if count_call else 0
-        phase = self.server.recorder.phase_name
+        phase, logical_scope = self.server.recorder.context_snapshot()
         length = int(self.headers.get("Content-Length") or 0)
         body = self.rfile.read(length) if length else b""
         request_path = urlsplit(self.path).path.rstrip("/")
@@ -209,10 +229,15 @@ class _CountingProxyHandler(BaseHTTPRequestHandler):
                 if self.server.target_scheme == "https"
                 else http.client.HTTPConnection
             )
+            upstream_timeout = (
+                self.server.qa_upstream_timeout
+                if phase == "qa" and self.server.qa_upstream_timeout is not None
+                else self.server.upstream_timeout
+            )
             connection = connection_cls(
                 self.server.target_host,
                 self.server.target_port,
-                timeout=self.server.upstream_timeout,
+                timeout=upstream_timeout,
             )
             connection.request(self.command, self.path, body=body, headers=headers)
             response = connection.getresponse()
@@ -270,6 +295,7 @@ class _CountingProxyHandler(BaseHTTPRequestHandler):
                 {
                     "request_id": request_id,
                     "phase": phase,
+                    **logical_scope,
                     "service": "llm",
                     "method": self.command,
                     "path": urlsplit(self.path).path,
@@ -289,6 +315,7 @@ class _CountingProxyHandler(BaseHTTPRequestHandler):
                     "started_at": started,
                     "finished_at": finished,
                     "duration_seconds": finished - started,
+                    "upstream_timeout_seconds": upstream_timeout,
                     "error": error,
                     **response_capture,
                 }
@@ -307,6 +334,7 @@ class CountingProxy:
         temperature: float | None = None,
         qa_max_output_tokens: int | None = None,
         reasoning_effort: str = "",
+        qa_upstream_timeout: float | None = None,
     ) -> None:
         self.server = _CountingProxyServer(
             target_base_url,
@@ -316,6 +344,7 @@ class CountingProxy:
             temperature,
             qa_max_output_tokens,
             reasoning_effort,
+            qa_upstream_timeout,
         )
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
 

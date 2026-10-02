@@ -933,6 +933,105 @@ def _latency_from_inference_aggregate(
     }
 
 
+def _sum_priced_costs(
+    parts: list[dict[str, Any]],
+    *,
+    num_samples: int,
+    aggregation: str,
+    source: str,
+) -> dict[str, Any]:
+    """Sum already-priced phase costs without pretending they share a model."""
+    unavailable = [part for part in parts if not part.get("available")]
+    input_tokens = sum(int(part.get("input_tokens") or 0) for part in parts)
+    output_tokens = sum(int(part.get("output_tokens") or 0) for part in parts)
+    base = {
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "input_price_per_million_usd": None,
+        "output_price_per_million_usd": None,
+        "cost_sum_usd": None,
+        "cost_sum": None,
+        "num_samples": num_samples,
+        "mean_per_sample_usd": None,
+        "mean_per_sample": None,
+        "formula": None,
+        "aggregation": aggregation,
+        "pricing": "per_phase_model_profiles",
+        "source": source,
+        "available": False,
+    }
+    if unavailable or not num_samples:
+        reasons = [str(part.get("reason") or "unavailable phase cost") for part in unavailable]
+        return {**base, "reason": "; ".join(reasons) or "No evaluated samples."}
+    cost_sum = sum(float(part["cost_sum_usd"]) for part in parts)
+    mean = cost_sum / num_samples
+    terms = " + ".join(
+        f"{float(part['cost_sum_usd']):.12g}" for part in parts
+    )
+    return {
+        **base,
+        "cost_sum_usd": cost_sum,
+        "cost_sum": cost_sum,
+        "mean_per_sample_usd": mean,
+        "mean_per_sample": mean,
+        "formula": (
+            f"({terms}) / {num_samples} = {mean:.12g} USD/sample"
+        ),
+        "available": True,
+    }
+
+
+def _sum_modeled_latencies(
+    parts: list[dict[str, Any]],
+    *,
+    num_samples: int,
+    denominator_unit: str,
+    aggregation: str,
+    source: str,
+) -> dict[str, Any]:
+    """Sum phase-modeled latency while retaining each phase's own profile."""
+    unavailable = [part for part in parts if not part.get("available")]
+    base = {
+        "calls": sum(int(part.get("calls") or 0) for part in parts),
+        "input_tokens": sum(int(part.get("input_tokens") or 0) for part in parts),
+        "output_tokens": sum(int(part.get("output_tokens") or 0) for part in parts),
+        "image_count": sum(int(part.get("image_count") or 0) for part in parts),
+        "base_seconds": None,
+        "input_seconds_per_token": None,
+        "output_seconds_per_token": None,
+        "image_seconds": None,
+        "latency_sum_seconds": None,
+        "num_samples": num_samples,
+        "denominator_unit": denominator_unit,
+        "mean_per_sample_seconds": None,
+        "formula": None,
+        "aggregation": aggregation,
+        "profiles": "per_phase_model_profiles",
+        "source": source,
+        "available": False,
+    }
+    if unavailable or not num_samples:
+        reasons = [
+            str(part.get("reason") or "unavailable phase latency")
+            for part in unavailable
+        ]
+        return {**base, "reason": "; ".join(reasons) or "No denominator rows."}
+    latency_sum = sum(float(part["latency_sum_seconds"]) for part in parts)
+    mean = latency_sum / num_samples
+    terms = " + ".join(
+        f"{float(part['latency_sum_seconds']):.12g}" for part in parts
+    )
+    return {
+        **base,
+        "latency_sum_seconds": latency_sum,
+        "mean_per_sample_seconds": mean,
+        "formula": (
+            f"({terms}) / {num_samples} = {mean:.12g} seconds/{denominator_unit}"
+        ),
+        "available": True,
+    }
+
+
 def write_efficiency_metrics(
     result_dir: str | Path,
     results: list[dict[str, Any]],
@@ -942,16 +1041,29 @@ def write_efficiency_metrics(
     model: str,
     config_path: str | Path,
     hivemem_index_root: str | Path | None = None,
-    qa_latency_denominator: str = "samples",
+    qa_latency_denominator: str = "queries",
+    memory_build_model: str | None = None,
+    retrieval_model: str | None = None,
+    answer_model: str | None = None,
 ) -> dict[str, Any]:
     """Write modeled LLM cost and latency for MB, query-time QA, and total.
 
     Query-time QA includes any LLM-backed retrieval calls plus the final answer
-    calls. Embedding, database, wall-clock, and Judge costs are intentionally
-    excluded because their coefficients are not part of this model profile.
+    calls and is averaged over evaluated QA queries. Embedding, database,
+    wall-clock, and Judge costs are intentionally excluded because their
+    coefficients are not part of this model profile.
     """
     samples = _normalize_sample_ids(sample_ids) or ()
-    profile = load_model_efficiency_profile(config_path, model)
+    memory_build_model = str(memory_build_model or model)
+    retrieval_model = str(retrieval_model or model)
+    answer_model = str(answer_model or model)
+    profiles = {
+        "memory_build": load_model_efficiency_profile(
+            config_path, memory_build_model
+        ),
+        "retrieval": load_model_efficiency_profile(config_path, retrieval_model),
+        "answer": load_model_efficiency_profile(config_path, answer_model),
+    }
     if hivemem_index_root is not None:
         memory_bank = _hivemem_build_inference_aggregate(
             hivemem_index_root, samples
@@ -1008,37 +1120,115 @@ def write_efficiency_metrics(
     total = _combine_inference_aggregates(
         memory_bank, qa, source="memory_build_plus_retrieval_plus_answer"
     )
+    component_costs = {
+        "memory_build": _cost_from_inference_aggregate(
+            memory_bank,
+            profiles["memory_build"],
+            aggregation="sum_mb_cost_divided_by_samples",
+        ),
+        "retrieval": _cost_from_inference_aggregate(
+            retrieval,
+            profiles["retrieval"],
+            aggregation="sum_retrieval_cost_divided_by_samples",
+        ),
+        "answer": _cost_from_inference_aggregate(
+            answer,
+            profiles["answer"],
+            aggregation="sum_answer_cost_divided_by_samples",
+        ),
+    }
+    cost_qa = _sum_priced_costs(
+        [component_costs["retrieval"], component_costs["answer"]],
+        num_samples=len(samples),
+        aggregation="sum_retrieval_answer_cost_divided_by_samples",
+        source="retrieval_plus_answer",
+    )
+    cost_total = _sum_priced_costs(
+        [component_costs["memory_build"], cost_qa],
+        num_samples=len(samples),
+        aggregation="sum_phase_priced_total_cost_divided_by_samples",
+        source="memory_build_plus_retrieval_plus_answer",
+    )
+
+    retrieval_latency_aggregate = dict(retrieval)
+    answer_latency_aggregate = dict(answer)
+    if qa_latency_denominator == "queries":
+        retrieval_latency_aggregate["num_samples"] = len(results)
+        answer_latency_aggregate["num_samples"] = len(results)
+    component_latencies = {
+        "memory_build": _latency_from_inference_aggregate(
+            memory_bank,
+            profiles["memory_build"],
+            aggregation="sum_mb_latency_divided_by_samples",
+        ),
+        "retrieval": _latency_from_inference_aggregate(
+            retrieval_latency_aggregate,
+            profiles["retrieval"],
+            aggregation="sum_retrieval_latency_divided_by_queries",
+            denominator_unit=qa_latency_unit,
+        ),
+        "answer": _latency_from_inference_aggregate(
+            answer_latency_aggregate,
+            profiles["answer"],
+            aggregation="sum_answer_latency_divided_by_queries",
+            denominator_unit=qa_latency_unit,
+        ),
+    }
+    latency_qa = _sum_modeled_latencies(
+        [component_latencies["retrieval"], component_latencies["answer"]],
+        num_samples=int(qa_latency.get("num_samples") or 0),
+        denominator_unit=qa_latency_unit,
+        aggregation=qa_latency_aggregation,
+        source="retrieval_plus_answer",
+    )
+    # Total latency is always normalized by benchmark samples, even when QA
+    # latency is displayed per question.
+    retrieval_latency_total = _latency_from_inference_aggregate(
+        retrieval,
+        profiles["retrieval"],
+        aggregation="sum_retrieval_latency_divided_by_samples",
+    )
+    answer_latency_total = _latency_from_inference_aggregate(
+        answer,
+        profiles["answer"],
+        aggregation="sum_answer_latency_divided_by_samples",
+    )
+    latency_total = _sum_modeled_latencies(
+        [
+            component_latencies["memory_build"],
+            retrieval_latency_total,
+            answer_latency_total,
+        ],
+        num_samples=len(samples),
+        denominator_unit="sample",
+        aggregation="sum_phase_modeled_latency_divided_by_samples",
+        source="memory_build_plus_retrieval_plus_answer",
+    )
     output = {
-        "profile": profile,
+        "profile": profiles["answer"],
+        "profiles": profiles,
         "scope": {
             "included": ["memory_build_llm", "retrieval_llm", "answer_llm"],
             "excluded": ["embedding", "database", "judge", "wall_clock"],
         },
-        "cost_mb": _cost_from_inference_aggregate(
-            memory_bank, profile, aggregation="sum_mb_cost_divided_by_samples"
-        ),
-        "cost_qa": _cost_from_inference_aggregate(
-            qa, profile, aggregation="sum_retrieval_answer_cost_divided_by_samples"
-        ),
-        "cost_total": _cost_from_inference_aggregate(
-            total, profile, aggregation="sum_total_cost_divided_by_samples"
-        ),
-        "latency_mb": _latency_from_inference_aggregate(
-            memory_bank, profile, aggregation="sum_mb_latency_divided_by_samples"
-        ),
-        "latency_qa": _latency_from_inference_aggregate(
-            qa_latency,
-            profile,
-            aggregation=qa_latency_aggregation,
-            denominator_unit=qa_latency_unit,
-        ),
-        "latency_total": _latency_from_inference_aggregate(
-            total, profile, aggregation="sum_total_latency_divided_by_samples"
-        ),
+        "cost_mb": component_costs["memory_build"],
+        "cost_qa": cost_qa,
+        "cost_total": cost_total,
+        "latency_mb": component_latencies["memory_build"],
+        "latency_qa": latency_qa,
+        "latency_total": latency_total,
         "components": {
             "memory_build": memory_bank,
             "retrieval": retrieval,
             "answer": answer,
+        },
+        "component_efficiency": {
+            phase: {
+                "model": profiles[phase]["model"],
+                "cost": component_costs[phase],
+                "latency": component_latencies[phase],
+            }
+            for phase in ("memory_build", "retrieval", "answer")
         },
     }
     path = Path(result_dir) / EFFICIENCY_METRICS_FILENAME
@@ -1184,8 +1374,63 @@ def calculate_calls_qa(
 def combine_call_metrics(
     memory_bank: dict[str, Any],
     qa: dict[str, Any],
+    retrieval: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Combine Calls-MB and Calls-QA into the requested sample-wise metric."""
+    """Combine build and query-time calls into the canonical call metric.
+
+    ``QA`` means every query-time LLM invocation: retrieval/control-agent
+    calls plus the final benchmark-answer call.  ``retrieval`` is optional so
+    legacy callers that only expose final-answer attempts remain supported.
+    """
+    answer = qa
+    if retrieval is not None:
+        num_samples = int(
+            answer.get("num_samples") or retrieval.get("num_samples") or 0
+        )
+        reasons = []
+        if not retrieval.get("available"):
+            reasons.append(
+                f"Calls-Retrieval unavailable: {retrieval.get('reason', 'unknown reason')}"
+            )
+        if not answer.get("available"):
+            reasons.append(
+                f"Calls-Answer unavailable: {answer.get('reason', 'unknown reason')}"
+            )
+        if retrieval.get("num_samples") != answer.get("num_samples"):
+            reasons.append("Calls-Retrieval and Calls-Answer sample counts differ.")
+        if reasons:
+            qa = {
+                **_call_metric_base(
+                    num_samples,
+                    "retrieval_plus_answer_calls_divided_by_samples",
+                ),
+                "reason": "; ".join(reasons),
+            }
+        else:
+            retrieval_calls = int(retrieval["total_calls"])
+            answer_calls = int(answer["total_calls"])
+            failed_calls = int(retrieval["failed_calls"]) + int(
+                answer["failed_calls"]
+            )
+            total_calls = retrieval_calls + answer_calls
+            mean = total_calls / num_samples if num_samples else None
+            qa = {
+                "retrieval_calls": retrieval_calls,
+                "answer_calls": answer_calls,
+                "total_calls": total_calls,
+                "failed_calls": failed_calls,
+                "successful_calls": total_calls - failed_calls,
+                "num_samples": num_samples,
+                "mean_per_sample": mean,
+                "formula": (
+                    f"({retrieval_calls} + {answer_calls}) / {num_samples} = "
+                    f"{mean:.12g}"
+                    if num_samples
+                    else None
+                ),
+                "aggregation": "retrieval_plus_answer_calls_divided_by_samples",
+                "available": bool(num_samples),
+            }
     num_samples = int(qa.get("num_samples") or memory_bank.get("num_samples") or 0)
     total = {
         "memory_bank_calls": memory_bank.get("total_calls"),
@@ -1210,7 +1455,10 @@ def combine_call_metrics(
         reasons.append("Calls-MB and Calls-QA sample counts differ.")
     if reasons:
         total["reason"] = "; ".join(reasons)
-        return {"memory_bank": memory_bank, "qa": qa, "total": total}
+        output = {"memory_bank": memory_bank, "qa": qa, "total": total}
+        if retrieval is not None:
+            output.update({"retrieval": retrieval, "answer": answer})
+        return output
 
     mb_calls = int(memory_bank["total_calls"])
     qa_calls = int(qa["total_calls"])
@@ -1230,7 +1478,10 @@ def combine_call_metrics(
             "available": True,
         }
     )
-    return {"memory_bank": memory_bank, "qa": qa, "total": total}
+    output = {"memory_bank": memory_bank, "qa": qa, "total": total}
+    if retrieval is not None:
+        output.update({"retrieval": retrieval, "answer": answer})
+    return output
 
 
 def write_runtime_call_metrics(
@@ -1241,13 +1492,7 @@ def write_runtime_call_metrics(
     sample_id_field: str,
     sample_ids: Iterable[str],
 ) -> dict[str, Any]:
-    """Merge sample-local executor traces and calculate exact run-time calls.
-
-    The primary ``total`` remains backward compatible: Memory-Bank LLM calls
-    plus answer-model calls.  Retrieval-time executor calls are retained as a
-    separate metric so they are visible without changing the historical
-    definition of ``#Calls``.
-    """
+    """Merge traces and count build, retrieval/agent, and final-answer calls."""
     paths = [Path(value) for value in trace_paths]
     rows = load_call_rows(paths)
     # For native Chat-Agent answers, sample-local proxy traces contain every
@@ -1291,13 +1536,12 @@ def write_runtime_call_metrics(
         phase="retrieval",
         num_samples=len(normalized_samples),
     )
-    qa = summarize_call_rows(
+    answer = summarize_call_rows(
         rows,
         phase="qa",
         num_samples=len(normalized_samples),
     )
-    calls = combine_call_metrics(memory_bank, qa)
-    calls["retrieval"] = retrieval
+    calls = combine_call_metrics(memory_bank, answer, retrieval)
     metrics_path = root / CALL_METRICS_FILENAME
     metrics_path.write_text(
         json.dumps(calls, ensure_ascii=False, indent=2) + "\n",
@@ -1352,6 +1596,10 @@ def _result_attempt_rows(
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for index, result in enumerate(results, start=1):
+        # A sample-skip placeholder is written locally and never reaches the
+        # answer provider, so it contributes neither a QA call nor token use.
+        if result.get("sample_skipped"):
+            continue
         rows.extend(
             _attempt_rows(
                 phase="qa",

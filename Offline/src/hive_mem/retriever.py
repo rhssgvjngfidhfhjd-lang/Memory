@@ -5,6 +5,7 @@ graph_index.py on 2026-08-06."""
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
 from pathlib import Path
 from typing import Any
 
@@ -17,14 +18,16 @@ from hive_mem.build_memory_edges import (
 )
 from hive_mem.mau import MAUBank, MAU
 from hive_mem.output_layout import DatasetLayout
+from hive_mem.entity_schema import normalize_attribute_pair, serialize_attribute
 
 
-DEFAULT_HIVEMEM_VECTOR_K = 7
+DEFAULT_HIVEMEM_VECTOR_K = 5
 DEFAULT_HIVEMEM_GRAPH_OPTIONS = {
     "seed_k": 0,
     "mode": "append",
     "append_k": 2,
     "expansion_bonus": 0.2,
+    "attribute_weighting": "idf",
 }
 
 
@@ -50,7 +53,7 @@ class MemoryHit:
                 "caption": captions[0] if captions else "",
             }
         return {
-            "text": self.item.content,
+            "text": self.item.evidence_text,
             "image": image,
             "chunk_id": self.item.memory_id,
             "score": self.score,
@@ -195,6 +198,7 @@ class GraphExpandedIndex(SimpleMemoryIndex):
         df_stop: float = 0.5,
         min_shared: int = 2,
         degree_cap: int = 10,
+        attribute_weighting: str = "idf",
         visual_categories: set[str] | None = None,
         allowed_session_ids: set[str] | None = None,
     ):
@@ -221,7 +225,13 @@ class GraphExpandedIndex(SimpleMemoryIndex):
             raise ValueError("Require 0 <= df_max <= df_stop <= 1")
         if min_shared < 1 or degree_cap < 0:
             raise ValueError("min_shared must be positive and degree_cap cannot be negative")
+        if attribute_weighting not in ("idf", "uniform"):
+            raise ValueError("attribute_weighting must be 'idf' or 'uniform'")
         self.adjacency: dict[int, set[int]] = {}
+        self.edge_attributes: dict[tuple[int, int], set[tuple[str, str]]] = {}
+        self.attribute_idf: dict[tuple[str, str], float] = {}
+        self.attribute_vectors: dict[tuple[str, str], np.ndarray] = {}
+        self.attribute_graph = False
         index_by_id = {item.id: position for position, item in enumerate(self.bank.memories)}
 
         def eligible(position: int) -> bool:
@@ -242,6 +252,59 @@ class GraphExpandedIndex(SimpleMemoryIndex):
                 return
             self.adjacency.setdefault(a, set()).add(b)
             self.adjacency.setdefault(b, set()).add(a)
+
+        layout = DatasetLayout(self.directory)
+        graph_payload: dict[str, Any] = {}
+        if layout.edges_manifest.is_file():
+            try:
+                graph_payload = json.loads(
+                    layout.edges_manifest.read_text(encoding="utf-8")
+                )
+            except (OSError, json.JSONDecodeError):
+                graph_payload = {}
+        self.attribute_graph = int(graph_payload.get("schema_version", 0)) >= 2
+        if self.attribute_graph:
+            if self.mode != "append":
+                raise ValueError("The Ti/Vi attribute graph supports append mode only")
+            stored_weighting = str(graph_payload.get("attribute_weighting") or "idf")
+            if stored_weighting != attribute_weighting:
+                raise ValueError(
+                    "Graph attribute weighting mismatch: "
+                    f"index={stored_weighting!r}, requested={attribute_weighting!r}"
+                )
+            weight_rows = graph_payload.get("attribute_weights")
+            if weight_rows is None:
+                weight_rows = graph_payload.get("idf") or []
+            for row in weight_rows:
+                if not isinstance(row, dict):
+                    continue
+                attribute = normalize_attribute_pair(row.get("attribute"), row.get("value"))
+                if attribute is not None:
+                    self.attribute_idf[attribute] = float(
+                        row.get("weight", row.get("idf", 0.0))
+                    )
+            for edge in graph_payload.get("edges") or []:
+                if not isinstance(edge, dict):
+                    continue
+                left = index_by_id.get(str(edge.get("source") or ""))
+                right = index_by_id.get(str(edge.get("target") or ""))
+                if left is None or right is None or left == right:
+                    continue
+                connect(left, right)
+                pair = (left, right) if left < right else (right, left)
+                attributes = set()
+                for field in ("shared_text", "shared_cross"):
+                    for value in edge.get(field) or []:
+                        if not isinstance(value, dict):
+                            continue
+                        attribute = normalize_attribute_pair(
+                            value.get("attribute"), value.get("value")
+                        )
+                        if attribute is not None:
+                            attributes.add(attribute)
+                self.edge_attributes[pair] = attributes
+            self._load_attribute_vectors(layout)
+            return
 
         for position, item in enumerate(self.bank.memories):
             if item.status != "ACTIVE":
@@ -283,6 +346,30 @@ class GraphExpandedIndex(SimpleMemoryIndex):
             ):
                 connect(scoped_positions[a], scoped_positions[b])
 
+    def _load_attribute_vectors(self, layout: DatasetLayout) -> None:
+        if not layout.attributes.is_file() or not layout.attribute_vectors.is_file():
+            if self.edge_attributes:
+                raise FileNotFoundError(
+                    "Attribute graph requires attributes.json and vectors/attributes.npy"
+                )
+            return
+        rows = json.loads(layout.attributes.read_text(encoding="utf-8"))
+        vectors = np.load(layout.attribute_vectors, allow_pickle=False)
+        if not isinstance(rows, list) or vectors.ndim != 2 or len(rows) != len(vectors):
+            raise ValueError("Attribute metadata/vector count or shape mismatch")
+        if vectors.shape[1] != self.text_vectors.shape[1]:
+            raise ValueError(
+                f"Attribute vector dim {vectors.shape[1]} != memory dim "
+                f"{self.text_vectors.shape[1]}"
+            )
+        vectors = _normalize_rows(vectors)
+        for row, vector in zip(rows, vectors):
+            if not isinstance(row, dict):
+                continue
+            attribute = normalize_attribute_pair(row.get("attribute"), row.get("value"))
+            if attribute is not None:
+                self.attribute_vectors[attribute] = vector
+
     def search(
         self,
         query_vector: list[float] | np.ndarray,
@@ -301,6 +388,10 @@ class GraphExpandedIndex(SimpleMemoryIndex):
         seed_indices = _rank_indices(scores, self.bank.memories, seed_count)
 
         if self.mode == "append":
+            if self.attribute_graph:
+                return self._search_attribute_append(
+                    query_vector, scores, seed_indices, int(top_k), active_count
+                )
             return self._search_append(scores, seed_indices, int(top_k), active_count)
 
         final: dict[int, float] = {}
@@ -362,6 +453,56 @@ class GraphExpandedIndex(SimpleMemoryIndex):
                 MemoryHit(
                     item=self.bank.memories[index],
                     score=score,
+                    rank=len(kept) + offset,
+                    via="graph",
+                )
+            )
+        return hits
+
+    def _search_attribute_append(
+        self,
+        query_vector,
+        scores,
+        seed_indices,
+        top_k,
+        active_count,
+    ):
+        """Vector top-k plus query-conditioned scoring over aggregated B_j."""
+        kept = seed_indices[: min(top_k, active_count)]
+        kept_set = set(kept)
+        hits = [
+            MemoryHit(item=self.bank.memories[index], score=float(scores[index]), rank=rank)
+            for rank, index in enumerate(kept, start=1)
+        ]
+        candidate_attributes: dict[int, set[tuple[str, str]]] = {}
+        for seed in kept:
+            for neighbour in self.adjacency.get(seed, ()):
+                if neighbour in kept_set or not np.isfinite(scores[neighbour]):
+                    continue
+                pair = (seed, neighbour) if seed < neighbour else (neighbour, seed)
+                candidate_attributes.setdefault(neighbour, set()).update(
+                    self.edge_attributes.get(pair, set())
+                )
+
+        query = np.asarray(query_vector, dtype=np.float32).reshape(-1)
+        query /= np.linalg.norm(query) + 1e-8
+        candidate_scores = {}
+        for neighbour, attributes in candidate_attributes.items():
+            candidate_scores[neighbour] = sum(
+                self.attribute_idf.get(attribute, 0.0)
+                * float(self.attribute_vectors[attribute] @ query)
+                for attribute in attributes
+                if attribute in self.attribute_vectors
+            )
+        extra = sorted(
+            candidate_scores.items(),
+            key=lambda row: (-row[1], str(self.bank.memories[row[0]].id)),
+        )[: self.append_k]
+        for offset, (index, score) in enumerate(extra, start=1):
+            hits.append(
+                MemoryHit(
+                    item=self.bank.memories[index],
+                    score=float(score),
                     rank=len(kept) + offset,
                     via="graph",
                 )

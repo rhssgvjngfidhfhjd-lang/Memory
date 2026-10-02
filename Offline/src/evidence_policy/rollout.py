@@ -13,12 +13,15 @@ from benchmarks.memgallery_harness.runner.metrics import f1_score
 from hive_mem.retriever import MemoryHit
 
 from .evidence import (
+    EVIDENCE_ORDER,
     EvidenceChainBuilder,
     EvidenceStrategy,
+    EvidenceType,
     MAUEvidenceAction,
     PolicyObservation,
     PolicyStep,
     action_signature,
+    add_available_evidence,
     choose_baseline_actions,
     make_policy_observation,
 )
@@ -100,6 +103,8 @@ class EvidenceRollout:
     cost_window_count: int | None = None
     cost_normalizer_active: bool | None = None
     cost_error: str = ""
+    skipped_invalid_response: bool = False
+    skipped_error: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         row: dict[str, Any] = {
@@ -134,6 +139,8 @@ class EvidenceRollout:
             "cost_window_count": self.cost_window_count,
             "cost_normalizer_active": self.cost_normalizer_active,
             "cost_error": self.cost_error,
+            "skipped_invalid_response": self.skipped_invalid_response,
+            "skipped_error": self.skipped_error,
             "evidence_availability_mask": [
                 [bool(value) for value in values]
                 for values in self.observation.evidence_availability_mask.detach()
@@ -199,6 +206,8 @@ class EvidenceSelectionEnv:
         cache: RolloutCache | None = None,
         rng: random.Random | None = None,
         visual_categories: set[str] | frozenset[str] | None = None,
+        ppo_force_visual_evidence: bool = False,
+        disabled_evidence_types: Sequence[EvidenceType | str] = (),
     ):
         self.client = client
         self.chain_builder = chain_builder
@@ -206,6 +215,11 @@ class EvidenceSelectionEnv:
         self.cache = cache
         self.rng = rng or random.Random()
         self.visual_categories = visual_categories
+        self.ppo_force_visual_evidence = bool(ppo_force_visual_evidence)
+        self.disabled_evidence_types = frozenset(
+            value if isinstance(value, EvidenceType) else EvidenceType(value)
+            for value in disabled_evidence_types
+        )
 
     def rollout(
         self,
@@ -218,6 +232,10 @@ class EvidenceSelectionEnv:
         availability = self.chain_builder.availability(
             episode.dataset, episode.category, episode.memory_hits
         )
+        if self.disabled_evidence_types:
+            availability = availability.clone()
+            for kind in self.disabled_evidence_types:
+                availability[:, EVIDENCE_ORDER.index(kind)] = False
         observation = make_policy_observation(
             episode.query_embedding,
             episode.memory_hits,
@@ -237,6 +255,17 @@ class EvidenceSelectionEnv:
                 else policy.sample(observation)
             )
             actions = policy_step.actions
+            if self.ppo_force_visual_evidence:
+                if not deterministic:
+                    raise ValueError(
+                        "PPO visual fallback is an inference-only deterministic option"
+                    )
+                actions = add_available_evidence(
+                    actions,
+                    observation.evidence_availability_mask,
+                    (EvidenceType.IMAGE, EvidenceType.VP),
+                )
+                policy_step = policy.evaluate_actions(observation, actions)
         else:
             actions = choose_baseline_actions(
                 episode.memory_hits,

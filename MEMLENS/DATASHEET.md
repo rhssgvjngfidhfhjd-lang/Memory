@@ -1,6 +1,20 @@
-# Datasheet for MEMLENS
+# Datasheet for MEMLENS (Local Experimental Subset)
 
 This datasheet follows the *Datasheets for Datasets* template by Gebru et al. (2021). It complements the machine-readable Croissant metadata at `metadata/croissant.json` and the human-readable description in the paper.
+
+## Local Experiment Override
+
+This directory is an intentionally pruned experimental derivative, not the complete upstream MEMLENS distribution.
+
+| Split | Setting | Context | Instances | QA | Images |
+|---|---|---:|---:|---:|---:|
+| MEMLENS-32K-Agent | OOD test only | 32K | 173 | 173 | 1,851 |
+
+The experiment begins with the upstream canonical 195-question Agent subset and excludes all 22 `answer_refusal` records. The retained type counts are 61 Information Extraction, 35 Multi-Session Reasoning, 48 Temporal Reasoning, and 29 Knowledge Update questions. All other questions, the 64K/128K/256K versions, alternate Parquet/TSV serializations, and images not referenced by these 173 records were deleted by experiment requirement.
+
+The active local files are `dataset_32k.json`, `agent_subset_173.json`, and the exactly referenced images under `release_images/`. The Croissant file is retained unchanged as provenance for the upstream release and does not describe the local subset cardinality.
+
+The remainder of this document records the motivation, construction, and provenance of the **complete upstream benchmark**. Its 789/195 and multi-context figures must not be used as the local experiment counts.
 
 ---
 

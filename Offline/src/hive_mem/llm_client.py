@@ -37,6 +37,8 @@ class LLMClient(BaseLLMClient):
         max_retries: int = 3,
         retry_sleep: float = 2.0,
         timeout: int = 60,
+        response_format: dict[str, Any] | None = None,
+        reasoning_effort: str = "",
     ):
         keys = _normalize_api_keys(api_key)
         if not keys:
@@ -51,6 +53,8 @@ class LLMClient(BaseLLMClient):
         self.max_retries = max(1, int(max_retries))
         self.retry_sleep = retry_sleep
         self.timeout = timeout
+        self.response_format = response_format
+        self.reasoning_effort = str(reasoning_effort).strip()
         self._client_cache = {}
         self._lock = threading.Lock()
         self._key_index = 0
@@ -78,13 +82,20 @@ class LLMClient(BaseLLMClient):
         for attempt in range(self.max_retries):
             client = self._next_client()
             try:
-                completion = client.chat.completions.create(
+                request = dict(
                     model=self.model,
                     messages=[{"role": "user", "content": user_content}],
                     temperature=self.temperature,
                     top_p=self.top_p,
                     max_tokens=self.max_new_tokens,
                 )
+                if self.response_format is not None:
+                    request["response_format"] = self.response_format
+                if self.reasoning_effort:
+                    request["extra_body"] = {
+                        "reasoning": {"effort": self.reasoning_effort}
+                    }
+                completion = client.chat.completions.create(**request)
                 message = completion.choices[0].message.content
                 usage = _normalize_usage(completion.usage)
                 if usage:

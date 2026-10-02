@@ -1,7 +1,10 @@
 from dataclasses import dataclass
 from datetime import datetime
+import hashlib
+import json
+import re
 from langgraph.graph import END
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 from langchain.tools import tool
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage, ToolMessage, trim_messages
 from langchain_core.messages.utils import count_tokens_approximately
@@ -16,6 +19,7 @@ from ..config import ChatAgentConfig
 from ..utils.message import (
     deduplicate_message_images,
     encode_image_to_base64,
+    is_truncated_completion,
     raise_for_truncated_completion,
 )
 from .tool_call_normalizer import (
@@ -140,6 +144,193 @@ class ChatAgent:
                 for block in content
             )
         return False
+
+    @staticmethod
+    def _response_text(response: AIMessage) -> str:
+        content = response.content
+        if isinstance(content, str):
+            return content
+        if not isinstance(content, list):
+            return str(content or "")
+        parts: list[str] = []
+        for block in content:
+            if isinstance(block, str):
+                parts.append(block)
+            elif isinstance(block, dict):
+                value = block.get("text") or block.get("content")
+                if value:
+                    parts.append(str(value))
+        return "\n".join(parts)
+
+    @staticmethod
+    def _complete_json_objects(text: str) -> list[dict[str, Any]]:
+        decoder = json.JSONDecoder()
+        objects: list[dict[str, Any]] = []
+        cursor = 0
+        while cursor < len(text):
+            start = text.find("{", cursor)
+            if start < 0:
+                break
+            try:
+                value, consumed = decoder.raw_decode(text[start:])
+            except json.JSONDecodeError:
+                cursor = start + 1
+                continue
+            if isinstance(value, dict):
+                objects.append(value)
+            cursor = max(start + consumed, start + 1)
+        return objects
+
+    @staticmethod
+    def _update_args_from_json(payload: dict[str, Any]) -> dict[str, Any] | None:
+        candidate = payload
+        function = payload.get("function")
+        if isinstance(function, dict):
+            candidate = function
+        name = str(candidate.get("name") or "")
+        if name != "update_memory":
+            return None
+        arguments = candidate.get("arguments")
+        if isinstance(arguments, str):
+            try:
+                arguments = json.loads(arguments)
+            except json.JSONDecodeError:
+                return None
+        return arguments if isinstance(arguments, dict) else None
+
+    @staticmethod
+    def _decode_json_string_prefix(value: str) -> str:
+        # Keep this deliberately equivalent to MemoryManager's recovery rule:
+        # decode only the valid prefix and never invent a missing suffix.
+        output: list[str] = []
+        index = 0
+        escapes = {
+            '"': '"', "\\": "\\", "/": "/", "b": "\b", "f": "\f",
+            "n": "\n", "r": "\r", "t": "\t",
+        }
+        while index < len(value):
+            char = value[index]
+            if char != "\\":
+                output.append(char)
+                index += 1
+                continue
+            if index + 1 >= len(value):
+                break
+            escaped = value[index + 1]
+            if escaped == "u" and index + 5 < len(value):
+                codepoint = value[index + 2 : index + 6]
+                if re.fullmatch(r"[0-9a-fA-F]{4}", codepoint):
+                    output.append(chr(int(codepoint, 16)))
+                    index += 6
+                    continue
+            output.append(escapes.get(escaped, escaped))
+            index += 2
+        return "".join(output).strip()
+
+    @classmethod
+    def _unfinished_update_text(cls, text: str) -> str:
+        update_markers = list(
+            re.finditer(r'"name"\s*:\s*"update_memory"', text, re.IGNORECASE)
+        )
+        if not update_markers:
+            update_markers = list(re.finditer(r"update_memory\s*\(", text))
+        if not update_markers:
+            return ""
+        tail = text[update_markers[-1].end() :]
+        text_markers = list(
+            re.finditer(r'(?:"text"|text)\s*[:=]\s*"', tail, re.IGNORECASE)
+        )
+        if not text_markers:
+            return ""
+        raw = tail[text_markers[-1].end() :]
+        escaped = False
+        end = len(raw)
+        for index, char in enumerate(raw):
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                end = index
+                break
+        return cls._decode_json_string_prefix(raw[:end])
+
+    def _salvage_truncated_update_stage(
+        self, response: AIMessage, state: ChatAgentState
+    ) -> str:
+        """Route a truncated ChatAgent update through MemoryManager best-effort."""
+        normalized = response
+        try:
+            normalized = normalize_qwen_tool_calls(response)
+        except ValueError:
+            pass
+
+        candidates: list[dict[str, Any]] = []
+        for tool_call in getattr(normalized, "tool_calls", []) or []:
+            if str(tool_call.get("name") or "") == "update_memory":
+                args = tool_call.get("args")
+                if isinstance(args, dict):
+                    candidates.append(args)
+
+        content = self._response_text(normalized)
+        for payload in self._complete_json_objects(content):
+            args = self._update_args_from_json(payload)
+            if args is not None:
+                candidates.append(args)
+
+        partial_text = self._unfinished_update_text(content)
+        if partial_text:
+            candidates.append({"text": f"{partial_text} [TRUNCATED]"})
+
+        raw_fallback = False
+        if not any(str(item.get("text") or "").strip() for item in candidates):
+            fallback = content.strip()
+            if not fallback:
+                fallback = str(getattr(response, "additional_kwargs", {}) or "").strip()
+            candidates.append(
+                {"text": f"[TRUNCATED CHATAGENT OUTPUT]\n{fallback}".rstrip()}
+            )
+            raw_fallback = True
+
+        context = self.raw_messages[-self.memory_manager.config.context_window:]
+        results: list[str] = []
+        seen: set[str] = set()
+        for candidate in candidates:
+            query_text = str(candidate.get("text") or "").strip()
+            query_image = candidate.get("image")
+            signature = json.dumps(
+                {"text": query_text, "image": query_image},
+                ensure_ascii=False,
+                sort_keys=True,
+            )
+            if not query_text or signature in seen:
+                continue
+            seen.add(signature)
+            try:
+                image_path = self.image_manager.image_token_to_image(query_image)
+            except Exception:
+                image_path = None
+            results.append(
+                self.memory_manager.update(
+                    context=context,
+                    query_text=query_text,
+                    query_image=image_path,
+                )
+            )
+
+        audit = {
+            "op": "salvage_truncated_chat_agent_update",
+            "chat_agent_truncation_salvaged": True,
+            "raw_response_sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(),
+            "update_requests_executed": len(results),
+            "partial_text_forwarded": bool(partial_text),
+            "raw_fallback_forwarded": raw_fallback,
+        }
+        log = getattr(self.memory_manager.semantic_store, "log", None)
+        if isinstance(log, list):
+            log.append(audit)
+        self._tool_budget_events.append(dict(audit))
+        return json.dumps(audit, ensure_ascii=False)
 
     def init_conversation(self, system_prompt: Optional[str] = None):
         """Initialize conversation for evaluation mode"""
@@ -457,6 +648,12 @@ You are an AI assistant with access to long-term memory.
             # Finish with a plain model request and stop the graph immediately;
             # tools are neither advertised nor executable past the hard cap.
             response = llm.invoke(request_messages)
+            if is_truncated_completion(response) and bool(
+                getattr(self.memory_manager.config, "salvage_truncated_updates", False)
+            ):
+                messages.append(response)
+                self._salvage_truncated_update_stage(response, state)
+                return Command(update={"messages": messages}, goto=END)
             raise_for_truncated_completion(response)
             messages.append(response)
             return Command(
@@ -464,6 +661,12 @@ You are an AI assistant with access to long-term memory.
                 goto=END
             )
 
+        if is_truncated_completion(response) and bool(
+            getattr(self.memory_manager.config, "salvage_truncated_updates", False)
+        ):
+            messages.append(response)
+            self._salvage_truncated_update_stage(response, state)
+            return Command(update={"messages": messages}, goto=END)
         raise_for_truncated_completion(response)
         response = normalize_qwen_tool_calls(response)
         response = self._cap_response_tool_calls(
