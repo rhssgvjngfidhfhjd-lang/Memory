@@ -1,0 +1,378 @@
+"""Semantic retrieval and affinity-guided Horizontal Memory Expansion."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+import json
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+
+from .memory import MemoryBank, MemoryEpisode
+from .utils import DatasetLayout
+from .memory import normalize_attribute_pair
+
+
+DEFAULT_HIVEMEM_VECTOR_K = 5
+DEFAULT_HIVEMEM_GRAPH_OPTIONS = {
+    "seed_k": 0,
+    "mode": "append",
+    "append_k": 2,
+    "degree_cap": 4,
+    "attribute_weighting": "idf",
+}
+
+
+@dataclass(frozen=True)
+class MemoryHit:
+    item: MemoryEpisode
+    score: float
+    rank: int
+    # "vector" for direct similarity hits, "graph" for hits pulled in by
+    # graph expansion (HorizontalMemoryExpansionIndex).
+    via: str = "vector"
+
+    def to_context_item(self) -> dict[str, Any]:
+        metadata = self.item.metadata
+        paths = metadata.get("image_paths", [])
+        image_ids = metadata.get("image_ids", [])
+        captions = metadata.get("image_captions", [])
+        image = None
+        if paths:
+            image = {
+                "path": paths[0],
+                "img_id": image_ids[0] if image_ids else "",
+                "caption": captions[0] if captions else "",
+            }
+        return {
+            "text": self.item.evidence_text,
+            "image": image,
+            "chunk_id": self.item.id,
+            "score": self.score,
+            "metadata": metadata,
+        }
+
+
+class SimpleMemoryIndex:
+    def __init__(
+        self,
+        directory: str | Path,
+        *,
+        visual_categories: set[str] | None = None,
+    ):
+        self.directory = Path(directory)
+        self.visual_categories = {
+            str(value).upper() for value in (visual_categories or {"VS", "VR", "TTL"})
+        }
+        layout = DatasetLayout(self.directory)
+        self.bank = MemoryBank.load(self.directory)
+        self.text_vectors = _normalize_rows(
+            np.vstack([item.embedding for item in self.bank.memories])
+            if self.bank.memories
+            else np.zeros((0, 0), dtype=np.float32)
+        )
+        image_vectors_path = layout.existing_vector_path("image.npy", "image_vectors.npy")
+        image_mask_path = layout.existing_vector_path("image_mask.npy", "image_mask.npy")
+        if image_vectors_path.exists() != image_mask_path.exists():
+            raise ValueError(
+                "Image vectors and image mask must either both exist or both be absent: "
+                f"{image_vectors_path}, {image_mask_path}"
+            )
+        self.image_vectors = None
+        self.image_mask = None
+        if image_vectors_path.exists():
+            image_vectors = np.load(image_vectors_path, allow_pickle=False)
+            image_mask = np.load(image_mask_path, allow_pickle=False)
+            if image_vectors.ndim != 2 or image_vectors.shape != self.text_vectors.shape:
+                raise ValueError(
+                    f"Image vectors shape {image_vectors.shape} != text vectors shape "
+                    f"{self.text_vectors.shape}"
+                )
+            if image_mask.ndim != 1 or len(image_mask) != len(self.bank):
+                raise ValueError(
+                    f"Image mask shape {image_mask.shape} does not match {len(self.bank)} memories"
+                )
+            if not np.isfinite(image_vectors).all():
+                raise ValueError(f"Image vectors contain NaN or Inf: {image_vectors_path}")
+            self.image_vectors = _normalize_rows(image_vectors)
+            self.image_mask = image_mask.astype(bool, copy=False)
+
+    def _scores(
+        self,
+        query_vector: list[float] | np.ndarray,
+        category: str = "",
+        allowed_session_ids: set[str] | None = None,
+    ) -> np.ndarray:
+        """Per-memory similarity scores for a query; ARCHIVED rows are -inf."""
+        query = np.array(query_vector, dtype=np.float32, copy=True).reshape(-1)
+        if not np.isfinite(query).all():
+            raise ValueError("Query vector contains NaN or Inf")
+        query_norm = float(np.linalg.norm(query))
+        if query_norm <= 0:
+            raise ValueError("Query vector must have non-zero norm")
+        query /= query_norm
+        if self.text_vectors.shape[1] != query.shape[0]:
+            raise ValueError(f"Query dim {query.shape[0]} != memory dim {self.text_vectors.shape[1]}")
+        scores = self.text_vectors @ query
+        if category.upper() in self.visual_categories and self.image_vectors is not None:
+            image_scores = self.image_vectors @ query
+            scores = np.where(self.image_mask, np.maximum(scores, image_scores), scores)
+        archived = np.asarray(
+            [item.status != "ACTIVE" for item in self.bank.memories], dtype=bool
+        )
+        disallowed = archived
+        if allowed_session_ids is not None:
+            allowed = {str(value) for value in allowed_session_ids}
+            outside_checkpoint = np.asarray(
+                [str(item.metadata.get("session_id", "")) not in allowed for item in self.bank.memories],
+                dtype=bool,
+            )
+            disallowed = disallowed | outside_checkpoint
+        return np.where(disallowed, -np.inf, scores)
+
+    def search(
+        self,
+        query_vector: list[float] | np.ndarray,
+        top_k: int = DEFAULT_HIVEMEM_VECTOR_K,
+        *,
+        category: str = "",
+        allowed_session_ids: set[str] | None = None,
+    ) -> list[MemoryHit]:
+        if int(top_k) < 1:
+            raise ValueError("top_k must be at least 1")
+        if not len(self.bank):
+            return []
+        scores = self._scores(query_vector, category, allowed_session_ids)
+        actual_k = min(int(top_k), int(np.isfinite(scores).sum()))
+        indices = _rank_indices(scores, self.bank.memories, actual_k)
+        return [
+            MemoryHit(item=self.bank.memories[int(index)], score=float(scores[index]), rank=rank)
+            for rank, index in enumerate(indices, start=1)
+        ]
+
+
+def _normalize_rows(matrix: np.ndarray) -> np.ndarray:
+    matrix = np.asarray(matrix, dtype=np.float32)
+    if matrix.ndim != 2:
+        raise ValueError(f"Embedding matrix must be 2-D, got {matrix.shape}")
+    if not np.isfinite(matrix).all():
+        raise ValueError("Embedding matrix contains NaN or Inf")
+    if matrix.size == 0:
+        return matrix
+    return matrix / (np.linalg.norm(matrix, axis=1, keepdims=True) + 1e-8)
+
+
+def _rank_indices(scores: np.ndarray, memories: list[MemoryEpisode], limit: int) -> list[int]:
+    """Rank deterministically, including when separate banks order ties differently."""
+
+    eligible = (int(index) for index in np.flatnonzero(np.isfinite(scores)))
+    return sorted(
+        eligible,
+        key=lambda index: (-float(scores[index]), str(memories[index].id)),
+    )[: int(limit)]
+
+
+class HorizontalMemoryExpansionIndex(SimpleMemoryIndex):
+    """Expand semantically retrieved seeds through the cross-episode affinity graph."""
+
+    def __init__(
+        self,
+        directory: str | Path,
+        *,
+        seed_k: int = 0,
+        mode: str = "append",
+        append_k: int = 2,
+        degree_cap: int = 4,
+        attribute_weighting: str = "idf",
+        visual_categories: set[str] | None = None,
+        allowed_session_ids: set[str] | None = None,
+    ):
+        super().__init__(directory, visual_categories=visual_categories)
+        self.graph_allowed_session_ids = (
+            {str(value) for value in allowed_session_ids}
+            if allowed_session_ids is not None
+            else None
+        )
+        self.seed_k = int(seed_k)
+        if mode != "append":
+            raise ValueError("The Ti/Vi affinity graph supports append mode only")
+        self.mode = mode
+        self.append_k = int(append_k)
+        if self.seed_k < 0 or self.append_k < 0:
+            raise ValueError("seed_k and append_k cannot be negative")
+        if degree_cap < 0:
+            raise ValueError("degree_cap cannot be negative")
+        if attribute_weighting != "idf":
+            raise ValueError("attribute_weighting must be 'idf'")
+        self.adjacency: dict[int, set[int]] = {}
+        self.edge_attributes: dict[tuple[int, int], set[tuple[str, str]]] = {}
+        self.attribute_idf: dict[tuple[str, str], float] = {}
+        self.attribute_vectors: dict[tuple[str, str], np.ndarray] = {}
+        self.affinity_graph = False
+        index_by_id = {item.id: position for position, item in enumerate(self.bank.memories)}
+
+        def eligible(position: int) -> bool:
+            item = self.bank.memories[position]
+            return (
+                item.status == "ACTIVE"
+                and (
+                    self.graph_allowed_session_ids is None
+                    or str(item.metadata.get("session_id", ""))
+                    in self.graph_allowed_session_ids
+                )
+            )
+
+        def connect(a: int | None, b: int | None) -> None:
+            if a is None or b is None or a == b:
+                return
+            if not eligible(a) or not eligible(b):
+                return
+            self.adjacency.setdefault(a, set()).add(b)
+            self.adjacency.setdefault(b, set()).add(a)
+
+        layout = DatasetLayout(self.directory)
+        if not layout.edges_manifest.is_file():
+            raise FileNotFoundError(f"Missing Ti/Vi affinity graph: {layout.edges_manifest}")
+        graph_payload = json.loads(layout.edges_manifest.read_text(encoding="utf-8"))
+        if int(graph_payload.get("schema_version", 0)) != 2:
+            raise ValueError("The memory bank requires a schema version 2 Ti/Vi affinity graph")
+        if graph_payload.get("degree_cap") != degree_cap:
+            raise ValueError(
+                f"Graph degree cap mismatch: index={graph_payload.get('degree_cap')!r}, "
+                f"requested={degree_cap}; rebuild the graph with the requested degree cap"
+            )
+        self.affinity_graph = True
+        stored_weighting = str(graph_payload.get("attribute_weighting") or "idf")
+        if stored_weighting != attribute_weighting:
+            raise ValueError(
+                "Graph attribute weighting mismatch: "
+                f"index={stored_weighting!r}, requested={attribute_weighting!r}"
+            )
+        weight_rows = graph_payload.get("attribute_weights")
+        if weight_rows is None:
+            weight_rows = graph_payload.get("idf") or []
+        for row in weight_rows:
+            if not isinstance(row, dict):
+                continue
+            attribute = normalize_attribute_pair(row.get("attribute"), row.get("value"))
+            if attribute is not None:
+                self.attribute_idf[attribute] = float(
+                    row.get("weight", row.get("idf", 0.0))
+                )
+        for edge in graph_payload.get("edges") or []:
+            if not isinstance(edge, dict):
+                continue
+            left = index_by_id.get(str(edge.get("source") or ""))
+            right = index_by_id.get(str(edge.get("target") or ""))
+            if left is None or right is None or left == right:
+                continue
+            connect(left, right)
+            pair = (left, right) if left < right else (right, left)
+            attributes = set()
+            for field in ("shared_text", "shared_cross"):
+                for value in edge.get(field) or []:
+                    if not isinstance(value, dict):
+                        continue
+                    attribute = normalize_attribute_pair(
+                        value.get("attribute"), value.get("value")
+                    )
+                    if attribute is not None:
+                        attributes.add(attribute)
+            self.edge_attributes[pair] = attributes
+        self._load_attribute_vectors(layout)
+
+    def _load_attribute_vectors(self, layout: DatasetLayout) -> None:
+        if not layout.attributes.is_file() or not layout.attribute_vectors.is_file():
+            if self.edge_attributes:
+                raise FileNotFoundError(
+                    "Affinity graph requires attributes.json and vectors/attributes.npy"
+                )
+            return
+        rows = json.loads(layout.attributes.read_text(encoding="utf-8"))
+        vectors = np.load(layout.attribute_vectors, allow_pickle=False)
+        if not isinstance(rows, list) or vectors.ndim != 2 or len(rows) != len(vectors):
+            raise ValueError("Attribute metadata/vector count or shape mismatch")
+        if vectors.shape[1] != self.text_vectors.shape[1]:
+            raise ValueError(
+                f"Attribute vector dim {vectors.shape[1]} != memory dim "
+                f"{self.text_vectors.shape[1]}"
+            )
+        vectors = _normalize_rows(vectors)
+        for row, vector in zip(rows, vectors):
+            if not isinstance(row, dict):
+                continue
+            attribute = normalize_attribute_pair(row.get("attribute"), row.get("value"))
+            if attribute is not None:
+                self.attribute_vectors[attribute] = vector
+
+    def search(
+        self,
+        query_vector: list[float] | np.ndarray,
+        top_k: int = DEFAULT_HIVEMEM_VECTOR_K,
+        *,
+        category: str = "",
+        allowed_session_ids: set[str] | None = None,
+    ) -> list[MemoryHit]:
+        if int(top_k) < 1:
+            raise ValueError("top_k must be at least 1")
+        if not len(self.bank):
+            return []
+        scores = self._scores(query_vector, category, allowed_session_ids)
+        active_count = int(np.isfinite(scores).sum())
+        seed_count = min(self.seed_k or int(top_k), active_count)
+        seed_indices = _rank_indices(scores, self.bank.memories, seed_count)
+
+        return self.expand_memories(
+            query_vector, scores, seed_indices, int(top_k), active_count
+        )
+
+    def expand_memories(
+        self,
+        query_vector,
+        scores,
+        seed_indices,
+        top_k,
+        active_count,
+    ):
+        """Horizontal Memory Expansion using query-conditioned connecting anchors B_u."""
+        kept = seed_indices[: min(top_k, active_count)]
+        kept_set = set(kept)
+        hits = [
+            MemoryHit(item=self.bank.memories[index], score=float(scores[index]), rank=rank)
+            for rank, index in enumerate(kept, start=1)
+        ]
+        candidate_attributes: dict[int, set[tuple[str, str]]] = {}
+        for seed in kept:
+            for neighbour in self.adjacency.get(seed, ()):
+                if neighbour in kept_set or not np.isfinite(scores[neighbour]):
+                    continue
+                pair = (seed, neighbour) if seed < neighbour else (neighbour, seed)
+                candidate_attributes.setdefault(neighbour, set()).update(
+                    self.edge_attributes.get(pair, set())
+                )
+
+        query = np.array(query_vector, dtype=np.float32, copy=True).reshape(-1)
+        query /= np.linalg.norm(query) + 1e-8
+        candidate_scores = {}
+        for neighbour, attributes in candidate_attributes.items():
+            candidate_scores[neighbour] = sum(
+                self.attribute_idf.get(attribute, 0.0)
+                * float(self.attribute_vectors[attribute] @ query)
+                for attribute in attributes
+                if attribute in self.attribute_vectors
+            )
+        extra = sorted(
+            candidate_scores.items(),
+            key=lambda row: (-row[1], str(self.bank.memories[row[0]].id)),
+        )[: self.append_k]
+        for offset, (index, score) in enumerate(extra, start=1):
+            hits.append(
+                MemoryHit(
+                    item=self.bank.memories[index],
+                    score=float(score),
+                    rank=len(kept) + offset,
+                    via="graph",
+                )
+            )
+        return hits

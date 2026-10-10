@@ -1,0 +1,19 @@
+# Credentials and personal configuration
+.env
+.env.*
+!.env.example
+
+# Generated data and run products
+data/
+outputs/
+logs/
+.cache/
+
+# Python environments and build products
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv*/
+.pytest_cache/
+build/
+dist/

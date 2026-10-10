@@ -1,0 +1,9 @@
+include LICENSE
+include .env.example
+include scripts/run.sh
+recursive-include configs *.json
+include benchmarks/multimodal_split_manifest.json
+include benchmarks/memgallery_harness/profiles.json
+recursive-include gvv_extractor/configs *.json
+recursive-include gvv_extractor/prompts *.json
+global-exclude *.py[cod]

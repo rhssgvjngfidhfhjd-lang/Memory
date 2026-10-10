@@ -1,0 +1,1074 @@
+"""Shared multimodal answer client, evidence formatting, and image transport."""
+from __future__ import annotations
+
+from src.utils import api_key_for
+
+import base64
+from contextvars import ContextVar
+from functools import lru_cache, wraps
+import io
+import json
+import logging
+import mimetypes
+import re
+import time
+from dataclasses import dataclass, field, replace
+from pathlib import Path
+from typing import Any, Mapping
+from urllib.parse import urlparse
+
+import requests
+from PIL import Image, ImageOps
+
+from benchmarks.common.prompts import (
+    ANSWER_BLOCK_REGEX,
+    ANSWER_BLOCK_RETRY_REGEX,
+    AnswerFormatError,
+    parse_answer_block,
+    recover_unique_answer_block,
+)
+
+
+LOGGER = logging.getLogger(__name__)
+MAX_IMAGE_SIDE_FOR_ANSWER = 1344
+ANSWER_IMAGE_JPEG_QUALITY = 90
+CONTEXT_RECOVERY_IMAGE_SIDES = (896, 672, 448)
+IMAGE_ID_PATTERN = re.compile(r"\bD\d+:IMG_\d+\b", re.IGNORECASE)
+MEMORY_IMAGE_CATEGORIES = frozenset({"VS", "VR", "TTL"})
+ANSWER_FORMAT_RETRY_REPETITION_PENALTY = 1.05
+OPENROUTER_HOSTS = frozenset({"openrouter.ai", "www.openrouter.ai"})
+OPENROUTER_ANSWER_SCHEMA = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "benchmark_answer",
+        "strict": True,
+        "schema": {
+            "type": "object",
+            "properties": {
+                "answer": {
+                    "type": "string",
+                    "description": (
+                        "Concise answer text only, without XML tags; use at most "
+                        "100 words."
+                    ),
+                }
+            },
+            "required": ["answer"],
+            "additionalProperties": False,
+        },
+    },
+}
+
+
+@dataclass(frozen=True)
+class AnswerResponse:
+    text: str
+    usage: dict[str, int] | None
+    attempts: int
+    failed_attempts: int
+    image_count: int = 0
+    raw_text: str | None = None
+    total_image_count: int | None = None
+
+
+@dataclass
+class _AnswerRequestAccounting:
+    attempts: int = 0
+    failed_attempts: int = 0
+    total_image_count: int = 0
+    last_request_failed: bool = False
+    usage: dict[str, int] = field(default_factory=lambda: {
+        "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0,
+    })
+    usage_is_exact: bool = True
+
+
+_ANSWER_REQUESTS: ContextVar[_AnswerRequestAccounting | None] = ContextVar("answer_requests", default=None)
+
+
+def _mark_answer_request_failed() -> None:
+    accounting = _ANSWER_REQUESTS.get()
+    if accounting is not None and accounting.attempts and not accounting.last_request_failed:
+        accounting.failed_attempts += 1
+        accounting.last_request_failed = True
+
+
+def _track_answer_requests(method):
+    """Keep transport accounting local to each call, including concurrent calls."""
+    @wraps(method)
+    def tracked(self, *args, **kwargs):
+        accounting = _AnswerRequestAccounting()
+        token = _ANSWER_REQUESTS.set(accounting)
+        try:
+            response = method(self, *args, **kwargs)
+            if not accounting.attempts:
+                return response
+            # A final malformed envelope may have been recovered successfully.
+            if accounting.last_request_failed:
+                accounting.failed_attempts -= 1
+            return replace(response, attempts=accounting.attempts,
+                           failed_attempts=accounting.failed_attempts,
+                           total_image_count=accounting.total_image_count,
+                           usage=accounting.usage if accounting.usage_is_exact else None)
+        except Exception as exc:
+            _mark_answer_request_failed()
+            exc.attempts = accounting.attempts
+            exc.failed_attempts = accounting.failed_attempts
+            exc.total_image_count = accounting.total_image_count
+            try:
+                exc.image_count = self.count_answer_images(
+                    kwargs.get("memory_items", []), query_image=kwargs.get("query_image"),
+                    category=kwargs.get("category", ""),
+                )
+            except Exception:
+                exc.image_count = 0
+            exc.usage = accounting.usage if accounting.usage_is_exact else None
+            raise
+        finally:
+            _ANSWER_REQUESTS.reset(token)
+    return tracked
+
+
+class _AnswerAttemptError(RuntimeError):
+    def __init__(
+        self,
+        message: str,
+        usage: dict[str, int] | None = None,
+        raw_text: str | None = None,
+    ):
+        super().__init__(message)
+        self.usage = usage
+        self.raw_text = raw_text
+
+
+def build_retrieved_memory_context(
+    memory_items: list[dict[str, Any]],
+    category: str = "",
+) -> tuple[str, list[str]]:
+    """Render the exact retrieved-memory text and attached memory images.
+
+    Keeping this formatter outside ``VLMAnswerClient`` lets offline metrics
+    tokenize the same text that the answer model receives.
+    """
+    evidence, image_paths = build_retrieved_memory_evidence(memory_items, category)
+    return "\n\n".join(["The retrieved memory contents are as follows:", *evidence]), image_paths
+
+
+def build_retrieved_memory_evidence(
+    memory_items: list[dict[str, Any]],
+    category: str = "",
+) -> tuple[list[str], list[str]]:
+    """Render one prompt evidence string per retrieval item plus image paths."""
+    evidence: list[str] = []
+    image_paths: list[str] = []
+    seen_image_paths: set[str] = set()
+    image_num = 0
+    include_memory_images = category.upper() in MEMORY_IMAGE_CATEGORIES
+    for idx, item in enumerate(memory_items, start=1):
+        md = item.get("metadata", {}) or {}
+        raw_images = item.get("images")
+        if not isinstance(raw_images, list):
+            legacy = item.get("image")
+            raw_images = [legacy] if isinstance(legacy, dict) else []
+        attached_images: list[dict[str, Any]] = []
+        if include_memory_images:
+            for image in raw_images:
+                if not isinstance(image, dict) or not image.get("path"):
+                    continue
+                image_path = str(image["path"])
+                if image_path in seen_image_paths:
+                    continue
+                seen_image_paths.add(image_path)
+                attached_images.append(image)
+        has_attached_original = any(
+            str(image.get("kind", "image")) == "image" for image in attached_images
+        )
+        header = f"[{idx}] SESSION:{md.get('session_id', '')} ROUND:{md.get('dialogue_id', '')}"
+        # Expose image IDs only when their images are attached to the request.
+        if has_attached_original and md.get("image_id"):
+            header += f" IMG:{md.get('image_id')}"
+        block = [header]
+        memory_text = str(item.get("text", ""))
+        if not has_attached_original:
+            memory_text = IMAGE_ID_PATTERN.sub("[IMAGE_ID_REDACTED]", memory_text)
+        block.append(memory_text)
+        for image in attached_images:
+            image_num += 1
+            raw_kind = str(image.get("kind", "image")).lower()
+            kind = "image" if raw_kind == "image" else raw_kind.upper()
+            block.append(
+                f"Attached memory {kind} {image_num}: {image.get('img_id', '')}"
+            )
+            image_paths.append(str(image["path"]))
+        evidence.append("\n\n".join(block))
+    return evidence, image_paths
+
+
+def query_image_prompt_metadata(
+    query_image: dict[str, Any] | None,
+) -> list[dict[str, str]]:
+    if not query_image or not query_image.get("path"):
+        return []
+    image_id = str(
+        query_image.get("img_id")
+        or query_image.get("id")
+        or Path(str(query_image["path"])).name
+    )
+    row = {"id": image_id}
+    if query_image.get("caption"):
+        row["caption"] = str(query_image["caption"])
+    return [row]
+
+
+def count_answer_images(
+    memory_items: list[dict[str, Any]],
+    query_image: dict[str, Any] | None = None,
+    category: str = "",
+) -> int:
+    """Count images attached to each answer-model attempt."""
+    _, memory_image_paths = build_retrieved_memory_context(memory_items, category)
+    return len(memory_image_paths) + int(
+        bool(query_image and query_image.get("path"))
+    )
+
+
+class VLMAnswerClient:
+    def __init__(
+        self,
+        model: str = "Qwen/Qwen3-VL-4B-Instruct",
+        base_url: str = "",
+        api_key: str = "EMPTY",
+        temperature: float = 0.0,
+        num_predict: int = 512,
+        timeout: int = 180,
+        retries: int = 0,
+        think: bool | None = None,
+        reasoning_effort: str = "",
+        backend: str = "openai",
+    ):
+        self.model = model
+        self.base_url = str(base_url or "").strip().rstrip("/")
+        if not self.base_url:
+            raise ValueError("Answer base URL is required; set HIVE_ANSWER_BASE_URL or pass base_url explicitly")
+        self.api_key = api_key_for("answer", api_key)
+        self.temperature = float(temperature)
+        self.num_predict = num_predict
+        self.timeout = timeout
+        self.retries = max(0, int(retries))
+        self.think = think
+        self.reasoning_effort = str(reasoning_effort).strip()
+        self.backend = backend
+        self._session = requests.Session()
+        if (urlparse(self.base_url).hostname or "").lower() in {
+            "localhost",
+            "127.0.0.1",
+            "::1",
+        }:
+            # Local OpenAI-compatible servers must not inherit an unrelated
+            # system HTTP proxy. This also removes the need for fragile
+            # wildcard NO_PROXY settings.
+            self._session.trust_env = False
+
+    def assert_model_available(self) -> None:
+        if self.backend == "ollama":
+            resp = self._session.get(f"{self.base_url}/api/tags", timeout=10)
+            resp.raise_for_status()
+            models = {m.get("name") for m in resp.json().get("models", [])}
+            models |= {m.split(":", 1)[0] for m in models if isinstance(m, str)}
+        else:
+            resp = self._session.get(
+                f"{self.base_url}/models",
+                headers=self._headers(),
+                timeout=10,
+            )
+            resp.raise_for_status()
+            models = {m.get("id") for m in resp.json().get("data", [])}
+        resp.raise_for_status()
+        if self.model not in models:
+            raise RuntimeError(
+                f"Answer model {self.model!r} is not available at {self.base_url}. "
+                f"Available models: {sorted(models)}"
+            )
+
+    def answer(
+        self,
+        *,
+        system_prompt: str,
+        memory_items: list[dict[str, Any]],
+        question_prompt: str,
+        query_image: dict[str, Any] | None = None,
+        category: str = "",
+        prepend_memory_context: bool = True,
+    ) -> str:
+        return self.answer_with_usage(
+            system_prompt=system_prompt,
+            memory_items=memory_items,
+            question_prompt=question_prompt,
+            query_image=query_image,
+            category=category,
+            prepend_memory_context=prepend_memory_context,
+        ).text
+
+    @_track_answer_requests
+    def answer_with_usage(
+        self,
+        *,
+        system_prompt: str,
+        memory_items: list[dict[str, Any]],
+        question_prompt: str,
+        query_image: dict[str, Any] | None = None,
+        category: str = "",
+        prepend_memory_context: bool = True,
+    ) -> AnswerResponse:
+        last_error: Exception | None = None
+        cumulative_usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+        usage_is_exact = True
+        image_count = self.count_answer_images(
+            memory_items, query_image=query_image, category=category
+        )
+        for attempt in range(self.retries + 1):
+            try:
+                if self.backend == "ollama":
+                    text, usage = self._answer_ollama_native(
+                        system_prompt=system_prompt,
+                        memory_items=memory_items,
+                        question_prompt=question_prompt,
+                        query_image=query_image,
+                        category=category,
+                        prepend_memory_context=prepend_memory_context,
+                    )
+                else:
+                    text, usage = self._answer_openai_compatible(
+                        system_prompt=system_prompt,
+                        memory_items=memory_items,
+                        question_prompt=question_prompt,
+                        query_image=query_image,
+                        category=category,
+                        prepend_memory_context=prepend_memory_context,
+                    )
+                if usage is None:
+                    usage_is_exact = False
+                else:
+                    cumulative_usage = _sum_answer_usage(cumulative_usage, usage)
+                return AnswerResponse(
+                    text=text,
+                    usage=cumulative_usage if usage_is_exact else None,
+                    attempts=attempt + 1,
+                    failed_attempts=attempt,
+                    image_count=image_count,
+                )
+            except Exception as exc:
+                _mark_answer_request_failed()
+                LOGGER.warning(
+                    "Answer attempt %d/%d failed (images=%d): %s: %s",
+                    attempt + 1,
+                    self.retries + 1,
+                    image_count,
+                    type(exc).__name__,
+                    exc,
+                )
+                attempt_usage = (
+                    exc.usage if isinstance(exc, _AnswerAttemptError) else None
+                )
+                if attempt_usage is None:
+                    usage_is_exact = False
+                else:
+                    cumulative_usage = _sum_answer_usage(
+                        cumulative_usage, attempt_usage
+                    )
+                last_error = exc
+                if attempt < self.retries:
+                    time.sleep(1 + attempt)
+        assert last_error is not None
+        raise last_error
+
+    @_track_answer_requests
+    def answer_messages_with_usage(
+        self,
+        *,
+        messages: list[dict[str, str]],
+        memory_items: list[dict[str, Any]],
+        query_image: dict[str, Any] | None = None,
+        category: str = "",
+    ) -> AnswerResponse:
+        """Send prebuilt prompt messages verbatim while attaching actual images."""
+        normalized = _validate_prebuilt_messages(messages)
+        last_error: Exception | None = None
+        cumulative_usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+        usage_is_exact = True
+        image_count = self.count_answer_images(
+            memory_items, query_image=query_image, category=category
+        )
+        for attempt in range(self.retries + 1):
+            try:
+                if self.backend == "ollama":
+                    text, usage = self._answer_prebuilt_ollama_native(
+                        messages=normalized,
+                        memory_items=memory_items,
+                        query_image=query_image,
+                        category=category,
+                    )
+                else:
+                    use_openrouter_json = (
+                        attempt > 0
+                        and (urlparse(self.base_url).hostname or "").lower()
+                        in OPENROUTER_HOSTS
+                    )
+                    text, usage = self._answer_prebuilt_openai_compatible(
+                        messages=normalized,
+                        memory_items=memory_items,
+                        query_image=query_image,
+                        category=category,
+                        structured_regex=(
+                            ANSWER_BLOCK_REGEX
+                            if attempt == 0
+                            else ANSWER_BLOCK_RETRY_REGEX
+                        ),
+                        repetition_penalty=(
+                            None
+                            if attempt == 0
+                            else ANSWER_FORMAT_RETRY_REPETITION_PENALTY
+                        ),
+                        structured_json=use_openrouter_json,
+                    )
+                try:
+                    parse_answer_block(text)
+                except AnswerFormatError as exc:
+                    raise _AnswerAttemptError(str(exc), usage, raw_text=text) from exc
+                if usage is None:
+                    usage_is_exact = False
+                else:
+                    cumulative_usage = _sum_answer_usage(cumulative_usage, usage)
+                return AnswerResponse(
+                    text=text,
+                    usage=cumulative_usage if usage_is_exact else None,
+                    attempts=attempt + 1,
+                    failed_attempts=attempt,
+                    image_count=image_count,
+                )
+            except Exception as exc:
+                _mark_answer_request_failed()
+                LOGGER.warning(
+                    "Answer attempt %d/%d failed (images=%d): %s: %s",
+                    attempt + 1,
+                    self.retries + 1,
+                    image_count,
+                    type(exc).__name__,
+                    exc,
+                )
+                attempt_usage = (
+                    exc.usage if isinstance(exc, _AnswerAttemptError) else None
+                )
+                if attempt_usage is None:
+                    usage_is_exact = False
+                else:
+                    cumulative_usage = _sum_answer_usage(
+                        cumulative_usage, attempt_usage
+                    )
+                last_error = exc
+                if attempt < self.retries:
+                    time.sleep(1 + attempt)
+        if isinstance(last_error, _AnswerAttemptError) and last_error.raw_text:
+            try:
+                recovered = recover_unique_answer_block(last_error.raw_text)
+            except AnswerFormatError as exc:
+                preview = repr(last_error.raw_text[:500])
+                raise _AnswerAttemptError(
+                    f"{last_error}; unrecoverable raw response: {preview}",
+                    cumulative_usage if usage_is_exact else None,
+                    raw_text=last_error.raw_text,
+                ) from exc
+            return AnswerResponse(
+                text=f"<answer>{recovered}</answer>",
+                raw_text=last_error.raw_text,
+                usage=cumulative_usage if usage_is_exact else None,
+                attempts=self.retries + 1,
+                failed_attempts=self.retries,
+                image_count=image_count,
+            )
+        assert last_error is not None
+        raise last_error
+
+    def count_answer_images(
+        self,
+        memory_items: list[dict[str, Any]],
+        *,
+        query_image: dict[str, Any] | None = None,
+        category: str = "",
+    ) -> int:
+        """Count images attached by this client's benchmark-specific renderer."""
+        _, image_paths = self._build_text_and_image_paths(
+            memory_items, "", query_image, category
+        )
+        return len(image_paths)
+
+    def _send_answer_request(self, url: str, payload: dict[str, Any]) -> dict[str, Any]:
+        accounting = _ANSWER_REQUESTS.get()
+        if accounting is not None:
+            accounting.attempts += 1
+            accounting.last_request_failed = False
+            for message in payload.get("messages", []):
+                accounting.total_image_count += len(message.get("images") or [])
+                content = message.get("content")
+                if isinstance(content, list):
+                    accounting.total_image_count += sum(
+                        item.get("type") in {"image_url", "image"}
+                        for item in content if isinstance(item, dict)
+                    )
+        try:
+            data = self._post_json(url, payload)
+        except Exception:
+            _mark_answer_request_failed()
+            if accounting is not None:
+                accounting.usage_is_exact = False
+            raise
+        if accounting is not None:
+            usage = _normalize_answer_usage(data, backend=self.backend)
+            if usage is None:
+                accounting.usage_is_exact = False
+            else:
+                accounting.usage = _sum_answer_usage(accounting.usage, usage)
+        return data
+
+    def _answer_openai_compatible(
+        self,
+        *,
+        system_prompt: str,
+        memory_items: list[dict[str, Any]],
+        question_prompt: str,
+        query_image: dict[str, Any] | None = None,
+        category: str = "",
+        prepend_memory_context: bool = True,
+    ) -> tuple[str, dict[str, int] | None]:
+        data: dict[str, Any] | None = None
+        image_sides = (MAX_IMAGE_SIDE_FOR_ANSWER, *CONTEXT_RECOVERY_IMAGE_SIDES)
+        for index, image_side in enumerate(image_sides):
+            content = self._build_openai_content(
+                memory_items,
+                question_prompt,
+                query_image,
+                category,
+                max_image_side=image_side,
+                prepend_memory_context=prepend_memory_context,
+            )
+            messages: list[dict[str, Any]] = []
+            if system_prompt.strip():
+                messages.append({"role": "system", "content": system_prompt})
+            messages.append({"role": "user", "content": content})
+            payload = {
+                "model": self.model,
+                "temperature": self.temperature,
+                "max_tokens": self.num_predict,
+                "messages": messages,
+            }
+            if self.think is not None:
+                # vLLM applies Qwen's thinking switch while rendering the chat
+                # template. Top-level ``think``/``extra_body`` fields are ignored
+                # by its OpenAI-compatible request schema.
+                payload["chat_template_kwargs"] = {"enable_thinking": self.think}
+            if self.reasoning_effort:
+                payload["reasoning"] = {"effort": self.reasoning_effort}
+            try:
+                data = self._send_answer_request(f"{self.base_url}/chat/completions", payload)
+                break
+            except requests.HTTPError as exc:
+                if index + 1 == len(image_sides) or not _is_context_length_error(exc):
+                    raise
+        assert data is not None
+        usage = _normalize_answer_usage(data, backend="openai")
+        choices = data.get("choices") or []
+        if not choices:
+            raise _AnswerAttemptError("Answer endpoint returned no choices", usage)
+        message = choices[0].get("message") or {}
+        answer = (
+            message.get("content") or message.get("reasoning_content") or ""
+        ).strip()
+        if not answer:
+            raise _AnswerAttemptError("Answer endpoint returned an empty response", usage)
+        return answer, usage
+
+    def _answer_prebuilt_openai_compatible(
+        self,
+        *,
+        messages: list[dict[str, str]],
+        memory_items: list[dict[str, Any]],
+        query_image: dict[str, Any] | None,
+        category: str,
+        structured_regex: str,
+        repetition_penalty: float | None = None,
+        structured_json: bool = False,
+    ) -> tuple[str, dict[str, int] | None]:
+        _, image_paths = self._build_text_and_image_paths(
+            memory_items,
+            "",
+            query_image,
+            category,
+            prepend_memory_context=False,
+        )
+        data: dict[str, Any] | None = None
+        context_retry_usage = {
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+        }
+        context_retry_usage_exact = True
+        image_sides = (MAX_IMAGE_SIDE_FOR_ANSWER, *CONTEXT_RECOVERY_IMAGE_SIDES)
+        for side_index, image_side in enumerate(image_sides):
+            payload_messages: list[dict[str, Any]] = [dict(message) for message in messages]
+            user_index = max(
+                index
+                for index, message in enumerate(payload_messages)
+                if message["role"] == "user"
+            )
+            user_text = str(payload_messages[user_index]["content"])
+            user_content: list[dict[str, Any]] = [{"type": "text", "text": user_text}]
+            for path in image_paths:
+                user_content.append(
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": _encode_image_data_url(path, max_side=image_side)
+                        },
+                    }
+                )
+            payload_messages[user_index]["content"] = user_content
+            payload: dict[str, Any] = {
+                "model": self.model,
+                "temperature": self.temperature,
+                "max_tokens": self.num_predict,
+                "messages": payload_messages,
+                # Constrain only decoding; the harness-authored system/user
+                # message text above remains byte-for-byte unchanged.
+                "structured_outputs": {"regex": structured_regex},
+            }
+            if structured_json:
+                # OpenRouter's documented constrained-output interface is JSON
+                # Schema. Use it only after the unchanged benchmark request has
+                # failed its answer-tag contract, then normalize the transport
+                # envelope back to the contract expected by every harness.
+                payload.pop("structured_outputs", None)
+                payload["response_format"] = OPENROUTER_ANSWER_SCHEMA
+            if repetition_penalty is not None:
+                # Deterministic retries otherwise reproduce the same malformed
+                # repetition until max_tokens. This changes decoding only; the
+                # benchmark-authored prompt remains byte-for-byte identical.
+                payload["repetition_penalty"] = float(repetition_penalty)
+            if self.think is not None:
+                payload["chat_template_kwargs"] = {"enable_thinking": self.think}
+            if self.reasoning_effort:
+                payload["reasoning"] = {"effort": self.reasoning_effort}
+            try:
+                data = self._send_answer_request(f"{self.base_url}/chat/completions", payload)
+                if (
+                    _is_context_capacity_truncation(data, self.num_predict)
+                    and side_index + 1 < len(image_sides)
+                ):
+                    _mark_answer_request_failed()
+                    retry_usage = _normalize_answer_usage(data, backend="openai")
+                    if retry_usage is None:
+                        context_retry_usage_exact = False
+                    else:
+                        context_retry_usage = _sum_answer_usage(
+                            context_retry_usage, retry_usage
+                        )
+                    LOGGER.warning(
+                        "Answer response exhausted context capacity at image side %d; "
+                        "retrying with side %d",
+                        image_side,
+                        image_sides[side_index + 1],
+                    )
+                    continue
+                break
+            except requests.HTTPError as exc:
+                if side_index + 1 == len(image_sides) or not _is_context_length_error(exc):
+                    raise
+        assert data is not None
+        usage = _normalize_answer_usage(data, backend="openai")
+        if usage is None or not context_retry_usage_exact:
+            usage = None
+        else:
+            usage = _sum_answer_usage(context_retry_usage, usage)
+        choices = data.get("choices") or []
+        if not choices:
+            raise _AnswerAttemptError("Answer endpoint returned no choices", usage)
+        message = choices[0].get("message") or {}
+        answer = (message.get("content") or message.get("reasoning_content") or "").strip()
+        if structured_json:
+            try:
+                structured_answer = str(json.loads(answer)["answer"]).strip()
+            except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+                raise _AnswerAttemptError(
+                    "Answer endpoint returned invalid structured JSON",
+                    usage,
+                    raw_text=answer,
+                ) from exc
+            try:
+                structured_answer = parse_answer_block(structured_answer)
+            except AnswerFormatError:
+                pass
+            answer = f"<answer>{structured_answer}</answer>"
+        if not answer:
+            raise _AnswerAttemptError("Answer endpoint returned an empty response", usage)
+        return answer, usage
+
+    def _answer_ollama_native(
+        self,
+        *,
+        system_prompt: str,
+        memory_items: list[dict[str, Any]],
+        question_prompt: str,
+        query_image: dict[str, Any] | None = None,
+        category: str = "",
+        prepend_memory_context: bool = True,
+    ) -> tuple[str, dict[str, int] | None]:
+        content, images = self._build_user_content(
+            memory_items,
+            question_prompt,
+            query_image,
+            category,
+            prepend_memory_context=prepend_memory_context,
+        )
+        messages: list[dict[str, Any]] = []
+        if system_prompt.strip():
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": content, "images": images})
+        payload = {
+            "model": self.model,
+            "stream": False,
+            "options": {"temperature": self.temperature, "num_predict": self.num_predict},
+            "messages": messages,
+        }
+        if self.think is not None:
+            payload["think"] = self.think
+        data = self._send_answer_request(f"{self.base_url}/api/chat", payload)
+        usage = _normalize_answer_usage(data, backend="ollama")
+        message = (data.get("message", {}) or {})
+        content = (message.get("content") or "").strip()
+        if content:
+            return content, usage
+        # Some local Qwen3-VL Ollama builds return only `thinking`.
+        thinking = (message.get("thinking") or "").strip()
+        if not thinking:
+            raise _AnswerAttemptError("Answer endpoint returned an empty response", usage)
+        return thinking, usage
+
+    def _answer_prebuilt_ollama_native(
+        self,
+        *,
+        messages: list[dict[str, str]],
+        memory_items: list[dict[str, Any]],
+        query_image: dict[str, Any] | None,
+        category: str,
+    ) -> tuple[str, dict[str, int] | None]:
+        _, image_paths = self._build_text_and_image_paths(
+            memory_items,
+            "",
+            query_image,
+            category,
+            prepend_memory_context=False,
+        )
+        payload_messages: list[dict[str, Any]] = [dict(message) for message in messages]
+        user_index = max(
+            index for index, message in enumerate(payload_messages) if message["role"] == "user"
+        )
+        payload_messages[user_index]["images"] = [
+            _encode_image(path) for path in image_paths
+        ]
+        payload: dict[str, Any] = {
+            "model": self.model,
+            "stream": False,
+            "options": {"temperature": self.temperature, "num_predict": self.num_predict},
+            "messages": payload_messages,
+        }
+        if self.think is not None:
+            payload["think"] = self.think
+        data = self._send_answer_request(f"{self.base_url}/api/chat", payload)
+        usage = _normalize_answer_usage(data, backend="ollama")
+        message = data.get("message", {}) or {}
+        content = (message.get("content") or "").strip()
+        if content:
+            return content, usage
+        thinking = (message.get("thinking") or "").strip()
+        if not thinking:
+            raise _AnswerAttemptError("Answer endpoint returned an empty response", usage)
+        return thinking, usage
+
+    def _build_openai_content(
+        self,
+        memory_items: list[dict[str, Any]],
+        question_prompt: str,
+        query_image: dict[str, Any] | None,
+        category: str = "",
+        *,
+        max_image_side: int = MAX_IMAGE_SIDE_FOR_ANSWER,
+        prepend_memory_context: bool = True,
+    ) -> list[dict[str, Any]]:
+        text, image_paths = self._build_text_and_image_paths(
+            memory_items,
+            question_prompt,
+            query_image,
+            category,
+            prepend_memory_context=prepend_memory_context,
+        )
+        content: list[dict[str, Any]] = [{"type": "text", "text": text}]
+        for path in image_paths:
+            content.append(
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": _encode_image_data_url(path, max_side=max_image_side)
+                    },
+                }
+            )
+        return content
+
+    def _build_user_content(
+        self,
+        memory_items: list[dict[str, Any]],
+        question_prompt: str,
+        query_image: dict[str, Any] | None,
+        category: str = "",
+        *,
+        prepend_memory_context: bool = True,
+    ) -> tuple[str, list[str]]:
+        text, image_paths = self._build_text_and_image_paths(
+            memory_items,
+            question_prompt,
+            query_image,
+            category,
+            prepend_memory_context=prepend_memory_context,
+        )
+        return text, [_encode_image(path) for path in image_paths]
+
+    def _build_text_and_image_paths(
+        self,
+        memory_items: list[dict[str, Any]],
+        question_prompt: str,
+        query_image: dict[str, Any] | None,
+        category: str = "",
+        *,
+        prepend_memory_context: bool = True,
+    ) -> tuple[str, list[str]]:
+        memory_text, image_paths = build_retrieved_memory_context(memory_items, category)
+        lines = (
+            [memory_text, "", question_prompt]
+            if prepend_memory_context
+            else [question_prompt]
+        )
+        image_num = len(image_paths)
+        if query_image and query_image.get("path"):
+            image_num += 1
+            lines.append(f"Attached question image {image_num}.")
+            image_paths.append(str(query_image["path"]))
+        return "\n\n".join(lines), image_paths
+
+    def _post_json(self, url: str, payload: dict[str, Any]) -> dict[str, Any]:
+        resp = self._session.post(
+            url,
+            json=payload,
+            headers=self._headers(),
+            timeout=self.timeout,
+        )
+        try:
+            resp.raise_for_status()
+        except requests.HTTPError as exc:
+            # OpenAI-compatible servers normally return the actionable cause
+            # (for example context length or image limits) in the response
+            # body. Preserve it so endpoint recovery can distinguish a bad
+            # payload from a transient tunnel failure.
+            body = (resp.text or "").strip()
+            if len(body) > 2000:
+                body = body[:2000] + "..."
+            detail = f"; response body: {body}" if body else ""
+            raise requests.HTTPError(
+                f"{exc}{detail}",
+                response=resp,
+                request=resp.request,
+            ) from exc
+        return resp.json()
+
+    def _headers(self) -> dict[str, str]:
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        return headers
+
+
+def _is_context_length_error(error: Exception) -> bool:
+    message = str(error).lower()
+    return any(marker in message for marker in (
+        "maximum model length", "decoder prompt", "maximum context length",
+        "context length exceeded", "context_length_exceeded",
+    ))
+
+
+def _is_context_capacity_truncation(
+    payload: Mapping[str, Any], requested_completion_tokens: int
+) -> bool:
+    """Detect HTTP-200 responses whose prompt consumed the generation budget."""
+
+    choices = payload.get("choices") or []
+    if not choices or str(choices[0].get("finish_reason") or "") != "length":
+        return False
+    usage = _normalize_answer_usage(payload, backend="openai")
+    if usage is None:
+        return False
+    return int(usage["completion_tokens"]) < int(requested_completion_tokens)
+
+
+def _validate_prebuilt_messages(
+    messages: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    """Enforce a fresh QA-only conversation for final benchmark answering."""
+    if not isinstance(messages, list) or len(messages) != 2:
+        raise ValueError(
+            "Final answer isolation requires exactly one system QA message and "
+            "one user QA message"
+        )
+    normalized: list[dict[str, str]] = []
+    expected_roles = ("system", "user")
+    for index, message in enumerate(messages):
+        if not isinstance(message, dict):
+            raise TypeError("Each prompt message must be a mapping")
+        role = str(message.get("role") or "")
+        content = message.get("content")
+        if role != expected_roles[index]:
+            raise ValueError(
+                "Final answer isolation requires message roles ['system', 'user']; "
+                f"got {role!r} at index {index}"
+            )
+        if not isinstance(content, str) or not content:
+            raise ValueError("Each prompt message must have non-empty string content")
+        normalized.append({"role": role, "content": content})
+    return normalized
+
+
+def _normalize_answer_usage(
+    payload: Mapping[str, Any],
+    *,
+    backend: str,
+) -> dict[str, int] | None:
+    if backend == "ollama":
+        source: Mapping[str, Any] = payload
+        prompt_keys = ("prompt_eval_count",)
+        completion_keys = ("eval_count",)
+        total_keys: tuple[str, ...] = ()
+    else:
+        raw = payload.get("usage")
+        if not isinstance(raw, Mapping):
+            return None
+        source = raw
+        prompt_keys = ("prompt_tokens", "input_tokens")
+        completion_keys = ("completion_tokens", "output_tokens")
+        total_keys = ("total_tokens",)
+    if not any(key in source for key in prompt_keys) or not any(
+        key in source for key in completion_keys
+    ):
+        return None
+    prompt_tokens = _first_nonnegative_int(source, prompt_keys)
+    completion_tokens = _first_nonnegative_int(source, completion_keys)
+    total_tokens = _first_nonnegative_int(source, total_keys)
+    if total_tokens == 0:
+        total_tokens = prompt_tokens + completion_tokens
+    return {
+        "prompt_tokens": prompt_tokens,
+        "completion_tokens": completion_tokens,
+        "total_tokens": total_tokens,
+    }
+
+
+def _first_nonnegative_int(source: Mapping[str, Any], keys: tuple[str, ...]) -> int:
+    for key in keys:
+        if key not in source:
+            continue
+        try:
+            value = int(source.get(key) or 0)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"Invalid answer usage field {key}: {source.get(key)!r}") from exc
+        if value < 0:
+            raise ValueError(f"Invalid answer usage field {key}: {source.get(key)!r}")
+        return value
+    return 0
+
+
+def _sum_answer_usage(
+    left: Mapping[str, int],
+    right: Mapping[str, int],
+) -> dict[str, int]:
+    return {
+        key: int(left.get(key) or 0) + int(right.get(key) or 0)
+        for key in ("prompt_tokens", "completion_tokens", "total_tokens")
+    }
+
+
+def _encode_image(path: str) -> str:
+    p = Path(path)
+    with p.open("rb") as f:
+        return base64.b64encode(f.read()).decode("utf-8")
+
+
+def _encode_image_data_url(
+    path: str, *, max_side: int = MAX_IMAGE_SIDE_FOR_ANSWER
+) -> str:
+    image_bytes, mime = _prepare_image_bytes(path, max_side=max_side)
+    return f"data:{mime};base64,{base64.b64encode(image_bytes).decode('utf-8')}"
+
+
+def _prepare_image_bytes(
+    path: str, *, max_side: int = MAX_IMAGE_SIDE_FOR_ANSWER
+) -> tuple[bytes, str]:
+    """Return a size-controlled copy used only for remote VLM transport.
+
+    The source image is never modified.  Even an image already within the
+    dimension cap can be a very large PNG, so build a JPEG candidate and use
+    it only when it is smaller than the original bytes. The cache is
+    invalidated by file size or mtime.
+    """
+    if max_side <= 0:
+        raise ValueError("max_side must be positive")
+    p = Path(path).resolve()
+    stat = p.stat()
+    original = p.read_bytes()
+    original_mime = mimetypes.guess_type(str(p))[0] or "image/jpeg"
+    compressed = _transport_image_bytes(
+        str(p),
+        stat.st_size,
+        stat.st_mtime_ns,
+        int(max_side),
+        ANSWER_IMAGE_JPEG_QUALITY,
+    )
+    if len(compressed) >= len(original):
+        return original, original_mime
+    return compressed, "image/jpeg"
+
+
+@lru_cache(maxsize=256)
+def _transport_image_bytes(
+    image_path: str,
+    source_size: int,
+    source_mtime_ns: int,
+    max_side: int,
+    quality: int,
+) -> bytes:
+    """Create a cached JPEG transport candidate without touching the source."""
+    del source_size, source_mtime_ns  # Included solely to invalidate the cache.
+    with Image.open(image_path) as source:
+        image = ImageOps.exif_transpose(source)
+        image.thumbnail((max_side, max_side), Image.Resampling.LANCZOS)
+        if image.mode in {"RGBA", "LA"} or (
+            image.mode == "P" and "transparency" in image.info
+        ):
+            rgba = image.convert("RGBA")
+            background = Image.new("RGB", rgba.size, "white")
+            background.paste(rgba, mask=rgba.getchannel("A"))
+            image = background
+        elif image.mode not in {"RGB", "L"}:
+            image = image.convert("RGB")
+        output = io.BytesIO()
+        image.save(
+            output,
+            format="JPEG",
+            quality=quality,
+            optimize=True,
+        )
+        return output.getvalue()

@@ -1,0 +1,1538 @@
+{
+  "schema_version": 1,
+  "split_manifest": "benchmark://multimodal_split_manifest.json",
+  "split_manifest_sha256": "590f187604245a7c2d446786662689afa8cdce855897e463694083fd0abb0d36",
+  "split_unit": "conversation",
+  "selection": "exact frozen conversation and question IDs; no resampling",
+  "source_validation": "passed",
+  "question_counts": {
+    "h2hmem_dyadic/test": 327,
+    "h2hmem_dyadic/train": 966,
+    "h2hmem_dyadic/val": 330,
+    "h2hmem_multiparty/test": 33,
+    "h2hmem_multiparty/train": 97,
+    "h2hmem_multiparty/val": 33,
+    "mem_gallery/test": 275,
+    "mem_gallery/train": 940,
+    "mem_gallery/val": 312,
+    "worldmemarena_lifelong/test": 440,
+    "worldmemarena_lifelong/train": 1265,
+    "worldmemarena_lifelong/val": 385
+  },
+  "conversation_counts": {
+    "h2hmem_dyadic/test": 4,
+    "h2hmem_dyadic/train": 11,
+    "h2hmem_dyadic/val": 4,
+    "h2hmem_multiparty/test": 1,
+    "h2hmem_multiparty/train": 3,
+    "h2hmem_multiparty/val": 1,
+    "mem_gallery/test": 4,
+    "mem_gallery/train": 12,
+    "mem_gallery/val": 4,
+    "worldmemarena_lifelong/test": 8,
+    "worldmemarena_lifelong/train": 23,
+    "worldmemarena_lifelong/val": 7
+  },
+  "source_files": [
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session0/questions.json",
+      "sha256": "7e52bcae6b937fa04e678f7923a469183dbe0e895699517cf80ee22668989494"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session1/questions.json",
+      "sha256": "47f07c5cd12c9893cb14f6389e07a8a0e47ec8f2fea1b985440d1868abdd5b2b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session10/questions.json",
+      "sha256": "a335c5e83f0e68da926a8d32bb82c79d734fcb5d27e3c4f8c3a6f06cdee836c6"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session11/questions.json",
+      "sha256": "e957b54b6d73d4ef7d2a280f2c1a451278e79926ea2a3c360e72276ef2d322f1"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session2/questions.json",
+      "sha256": "97a5b7ee9a1ee32d226bbba30608e3b41fc431c632d3e17b52935605a52fa069"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session3/questions.json",
+      "sha256": "1a41edd5bfde26b8c2bea9294f191ba32aadf443130258efc0fd18c35f9adaa0"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session4/questions.json",
+      "sha256": "c529d2c890d3aeb8f2a951e21e997c5a0d83ba85813f5b337d26d7d26cd20141"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session5/questions.json",
+      "sha256": "79a9f0c7edb3973b1ac30c8392ac381d21d874795db91aabcaa77c7de0ae78db"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session6/questions.json",
+      "sha256": "9be8b70170515ed9973305a3e3bdac18348684b4f3efb7638f7bc383d4ddcde0"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session7/questions.json",
+      "sha256": "9193e3c63b32dd98b8cac5288c63edb0f4d60a56b3e8e765762cb9f8eb7162db"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session8/questions.json",
+      "sha256": "7c54fc57146007cf8f96dd42eb9d89a39b80a324ba8686503f7a732c440b60af"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue1/scenes/session9/questions.json",
+      "sha256": "22fd64e62782b5a221a8f1ea995774c8d0988539ebece485ad473e90b1094c18"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session0/questions.json",
+      "sha256": "4f8bb779cda7d4d29c8d67726b26c221700a093bf938bcfe7e5a9b706dc03d03"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session1/questions.json",
+      "sha256": "4927846a7818aeb35e4bab594bfeb3325fc637d196133e80d023a84374f962c3"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session10/questions.json",
+      "sha256": "caa50e67606522ba94911d432d8f2186ec17085f8d9226586ea74d9eaa43dd59"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session11/questions.json",
+      "sha256": "9ffffbc23a582e304c1ade8d907d1a795eb2f4c9929a39b56ec503074d8b4b31"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session12/questions.json",
+      "sha256": "31e89843566b64fa84ab5a1e13e59061751e243220ebe3c70e19fbe3f9814ac5"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session13/questions.json",
+      "sha256": "96a04803cc237abf62d0fcaeec383d1572d1b15403971d711e62899d3ffa5fc0"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session14/questions.json",
+      "sha256": "12dd7f5655a24317dbae1300f57933e11faeefa47262a46f7eee4f4c2798b0eb"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session15/questions.json",
+      "sha256": "0c19dce816f3b5c46e019369de2e06af6ac13f6fb5082487333cd742f833b27c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session16/questions.json",
+      "sha256": "2580952d72932a33d60da6d2e12d4e9b49047a0d4d46aad629f76c98fa443404"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session2/questions.json",
+      "sha256": "dec5958df69a01d04ff965fa2eda3f6c90e5d2f287883e906e054e0a55462f61"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session3/questions.json",
+      "sha256": "4c5ab25fec985904d726cd6e5e2129a48867640a91e18cc0552bc119e2a1bb7b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session4/questions.json",
+      "sha256": "580efddf2361ead468afb1b63f6c94e49dd268e8263c9c350c62a83399ed7afb"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session5/questions.json",
+      "sha256": "227a83cfbc77488aa33cb6e677b9f2882693f980fb2aed9269da14d2b44f78af"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session6/questions.json",
+      "sha256": "db5bbf24abaa43ac93b35a9f7c3be60a785f16367e15024729fb857538df2a10"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session7/questions.json",
+      "sha256": "99a3dbf500087a6a8f7d2bd3d0b4199e412d762a7c0836e61169597517a6ea0b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session8/questions.json",
+      "sha256": "95aeb33d463b64617d8f5471c606eb7f399e1469be1990b65d5221133f77d424"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue10/scenes/session9/questions.json",
+      "sha256": "e38d8882922f118b93a90a0414243a3920ac4f783769be02993d7aafb644491a"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session0/questions.json",
+      "sha256": "099e458b16e51ec2657b0a47e48e16fa792d7162f119047f533372dfa39c8854"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session1/questions.json",
+      "sha256": "dd046b7c6cd23d964645fd9ded1a57ea2f1b0f3fc2a4edd94d0c2f643cddc548"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session10/questions.json",
+      "sha256": "54f721e68de03ea808530cfd143626a4b78e89d63693e64aa20ab7575351a0b2"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session11/questions.json",
+      "sha256": "b860c7a199057a0ea562c5d3b711e09213923e6ba7cfccca4c6b20d27e128387"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session12/questions.json",
+      "sha256": "12c92432cf47b4caa8a3a0084708c16e3320d05e6c9d4147d5219f993f5e57cc"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session13/questions.json",
+      "sha256": "dea9487a2ef00263feba0dba6f31387531cc14e305cdd5f404e3cd5e589a5c4d"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session2/questions.json",
+      "sha256": "b9f4a7ef55cc0e1a24f443ba71a7b4dd85e2c35c9c57d62bb2d38c6a0765b74a"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session3/questions.json",
+      "sha256": "97c579463743765d11e818a38685736cab6e15899451293c8d1314d53d65fffd"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session4/questions.json",
+      "sha256": "dd29aeedf2511685d31760e05e293fd0d931d1bee3c8a3e11b711b844fadb906"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session5/questions.json",
+      "sha256": "0f2e5cf5b6cf7e77bb722c0d6b9b3a7245bead69cae33410dc860b1363d65f1e"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session6/questions.json",
+      "sha256": "78973b1a88a9be4f73e266d1c39607a60c99597131e851b3e3726bca40455c3f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session7/questions.json",
+      "sha256": "aec8897f9480acc4b79bf3c550893bb7602e7769c59d2775d8219a0fb024b5b2"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session8/questions.json",
+      "sha256": "362b11b9b5b686a9a4133abf64807e527454b64cc1f153e4ffc1ec5990e9e5cd"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue11/scenes/session9/questions.json",
+      "sha256": "33e7080909c56c33459ee34bad1aa7eae0cd4f898ddee081e53e3aae112a4c83"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session0/questions.json",
+      "sha256": "0a9c09c12886e54f409241202f5929ee9f1697e5b5004793f1729641be7967b8"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session1/questions.json",
+      "sha256": "084290fb6776b8cf48117c6496906b3ce6117a3c787a03dcd93432a1e56e2f1d"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session10/questions.json",
+      "sha256": "6336fab68029b4b5f6895265f731ddbf3070fd22abe57d88682a60e0c9474c0f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session11/questions.json",
+      "sha256": "709b8984d804cf35f29a486e8b2dfa56b6d314c0f392d4abc748be840611198d"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session12/questions.json",
+      "sha256": "3fe1db3d7ce9e30fdeae00b5556dbfbc9c122dffc10007da372097f755d01d45"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session13/questions.json",
+      "sha256": "cc3d47b6e7bd004d60f8fa4ba94d96eb14ba7aea8285c23ae127d086576bd99c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session14/questions.json",
+      "sha256": "1845aba51d746e8daa367346128b5d4718f8de62497c12094f984cecdede0076"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session15/questions.json",
+      "sha256": "81bb5ee155c3288893523671b3a1fc04a1652e93bf0873e36661d8fff6b1fb69"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session16/questions.json",
+      "sha256": "8347beb498947f1e3aba946283ee80c06b89832ce98805781da3a07fb64f4fc8"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session2/questions.json",
+      "sha256": "db9a6dabdc7a0fe47964929fe3884aa60e7bb3df5c06d2ceb659315385ee6f63"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session3/questions.json",
+      "sha256": "086744c9b6ac8496fa6a9626a1cac15ebd6bbc2bbf707445e233abca9d422bc0"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session4/questions.json",
+      "sha256": "edb34e544bcb891f820269cf238a4c166b8550e3601840f0b2b97f19e5ebc26e"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session5/questions.json",
+      "sha256": "fce9b0cf9c366a0ad7a8a58da2b1332cae3a019dbb6d9a1ba127738701a095ef"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session6/questions.json",
+      "sha256": "84c79efd3b3109fc22ed63b8548bd3651e95d663084ad34a0dd2810a15e5c0c6"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session7/questions.json",
+      "sha256": "16d613471f3448b9b979c84fbf3900895a253f4be9faac821b40f4f0e2c724e0"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session8/questions.json",
+      "sha256": "fed5e17eb72c366fc5577b5d28723e6f8395be864d04c3a57fa0bc88439a476e"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue12/scenes/session9/questions.json",
+      "sha256": "c4f7b990bb22c163bf1622ddc11f153604c478064eeeb58c852e4d2edb0585e2"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session0/questions.json",
+      "sha256": "bbb3a4dcbe57c3b065f917eeeb1e9f4cfecee56b66e766b0b0cca20d399497da"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session1/questions.json",
+      "sha256": "09859e0f5b4a3b4023745fa9c01b8fab7a0976476756904726ef87111f82ee3c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session10/questions.json",
+      "sha256": "852982f9921b7e73f43450ed0108d42f45859e62b437aae3075d012510815797"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session11/questions.json",
+      "sha256": "e89d721295f4f88cab5f706064ec2cd4104358ddf24d1f03508a51f8de52111f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session12/questions.json",
+      "sha256": "a13d5ebdec378ce177d9c0847e0832e9c5ee33b1f1387b11cc3e1bffa2e6cf90"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session13/questions.json",
+      "sha256": "cde6583bfacee18e951d2a6dea7f52567898b4d4780e604ea2c081ad39716e17"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session14/questions.json",
+      "sha256": "1b7245f92ffd899c2c7e30213b5656087d47384d3fb9fff72db81b0b48169651"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session15/questions.json",
+      "sha256": "1c9f779482bd39135e6b3bc399546268d038cc3b1817aa5491cb8844e58fa603"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session2/questions.json",
+      "sha256": "0e792a6eaf006f0e8b34c7d611fcc5d8622da73999f86f3b9ff497f522c3c4c2"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session3/questions.json",
+      "sha256": "d40ac0a0d6bb5a9e61125c2b98ff288389ae4e620b9607eab744ec92123dd4dd"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session4/questions.json",
+      "sha256": "bf479da927dbf574e88952f6336424e4b67f0dc4217534b3a008a32939a7f2e5"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session5/questions.json",
+      "sha256": "b465aa18c9af7b0cb64459508d3e0ca303ed9b70bc9ac785437d727b41535cb5"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session6/questions.json",
+      "sha256": "b035aa243582cccb523b0f2176e0200e0bcc45907a41117ada128454bc5a3f22"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session7/questions.json",
+      "sha256": "af23742eedb3a25e820cbf833cf1ca6cafd894b500778c60bb395372458ef0c7"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session8/questions.json",
+      "sha256": "91a3aaad059f7110a966f2b85f206aa1f4d5d11a4ea9cd8658d22cc42cf6988b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue13/scenes/session9/questions.json",
+      "sha256": "edea909362b6b3702bb9f3eac254ee7856a5fb1fc7142272a3e6cc674e4cc51b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session0/questions.json",
+      "sha256": "1114b3ac66714a49179676975fbbd2028396c7a979e2023ee7ea39ac1a5b0b6f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session1/questions.json",
+      "sha256": "dbda8133eb2ae6d86c784a687da49f98fd3fb2fb1087c294b717e492fa887f44"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session10/questions.json",
+      "sha256": "1c44108447f725e23a054b5c10b7e73ebb2ca139e58acfa9f6afaa4073e5554a"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session11/questions.json",
+      "sha256": "48f67d14398a46e60bb4942f25cda8d412cd772cfe5c907e563dad87f44007b5"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session12/questions.json",
+      "sha256": "9aec44d92286b3eb2051a0961d83f6302fc71a26a9a3c3c2b1e47d5cc29d7172"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session13/questions.json",
+      "sha256": "11ba72fb1116619c7b3c25e5d853e906610676b033645b45c00f67077c49ebf3"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session14/questions.json",
+      "sha256": "3353f5e7a5bff955d6777629c9809a2d979540b328ddbb58941af6515410b8d9"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session15/questions.json",
+      "sha256": "1713bfbd55d6ad28c843816a17a44e5650ac3671212d604baafb0c470ef74235"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session16/questions.json",
+      "sha256": "0268b25756e2977260268859efc779e9c88ddc6953a7b7063d47330ba10f9d13"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session2/questions.json",
+      "sha256": "beaad27c54475e440dd1f79a7f590006f521358e3763767c7e6f53447f49a335"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session4/questions.json",
+      "sha256": "491a9c1a26c272b1209afe97c143888d778599765e369f9dac401c666ad37fae"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session5/questions.json",
+      "sha256": "a80f0af0a406eb5dcb6a8ede115799b18e665430285ac236c472a4fb757ee569"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session6/questions.json",
+      "sha256": "bbf6de898fdec2022d6c6eacd9a3d7c8ab417ef2229ce5444553613f70d7a473"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session7/questions.json",
+      "sha256": "5fc444e37be30bef30900c4dbc6fb0d12ed9697eea5138ebd71899b631cf0eed"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session8/questions.json",
+      "sha256": "9dc8ffac0010c9474214f2134dca4477729753fcb0c9140237ac24a29c007cad"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue14/scenes/session9/questions.json",
+      "sha256": "76beda1e2878ec8a99697aa72c7d0ef193d46b93522a43768f921c3741ecdc21"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session0/questions.json",
+      "sha256": "99e802591a06b8c0547b36cb4383c29513f2f26e4f17d4c91f8562f54e67aa4a"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session1/questions.json",
+      "sha256": "8c7f3ea06a549807073b0033ff9a753a1ef00c6cc23e191078d07b875b19aba3"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session10/questions.json",
+      "sha256": "36ff71e0b1b5dd9cabdb50a0e15c345305b6f656a626a960d3b76aaba8259f28"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session11/questions.json",
+      "sha256": "cc369aa53e5825617b25733c4a4b5890fed18c9445aca460608e670723924b4c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session12/questions.json",
+      "sha256": "0fa919794b20429408f1f7a3127d089e8dec07cbac7aeadaa1f37d6756914d37"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session13/questions.json",
+      "sha256": "b10be99f86335ac0630540a77ffd7f46cc0991a68db07eb6eda833f06039ab23"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session14/questions.json",
+      "sha256": "a239995fb6a1dbb7ad0fec5972ed748242de9b184462100bb1fffce837053e72"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session15/questions.json",
+      "sha256": "f45ddb5865a52721c7b27172721659d58aa0f9eca99591a66a311a56b15402df"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session2/questions.json",
+      "sha256": "1c04c8e8c2936867b1be890cb33bbae9e5c0a2e9a6fc7ea4d4ccd4ef7489b28b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session3/questions.json",
+      "sha256": "750c35bc73dfd46afbe43bf785de4c30a020c54873062a4b1c9090399278143c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session4/questions.json",
+      "sha256": "d11e29c2744c44b3e02cb703cccca937a1c03feb25bad2436811f8135dd8d155"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session5/questions.json",
+      "sha256": "24188a096ca7a9f578ea1099949c64fce2b3b56f1582bb45007f3c83b6b52765"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session6/questions.json",
+      "sha256": "c9ceb930682ddc4792e3edaf9d4aa46d6ca268cf32724a2b7646236a9297bec6"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session7/questions.json",
+      "sha256": "7f43e7cdbd243772106bd46a176506beacfe0158fec4eabaa76dd5cdd29e1c98"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session8/questions.json",
+      "sha256": "24e4f03ab971f8afa96b8c5337bde85c8cd819ea16cefa13961d2fb80f26ea52"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue15/scenes/session9/questions.json",
+      "sha256": "cd76a4be4c8a331e0b164ee9f5dd549d56b74dc9a7bf357bbd609e0cc2431653"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session0/questions.json",
+      "sha256": "357452d7b3ad64b05b01231825a132564cf02c92b798250ee09ebe412ead2f0d"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session1/questions.json",
+      "sha256": "28dad31db0ef38fbb9b6d49ea3210ed0f1b10a0c8ce6a7e97a9dcd737a354441"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session10/questions.json",
+      "sha256": "9cdc9ca7bcf6ed69fc2c6230874d5cc87abacc551940debdf79488e6e534cc7c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session11/questions.json",
+      "sha256": "349ffb450b3695f77dc4c0f58a284e9336bb05c607b5bec243265aec28bffd7c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session12/questions.json",
+      "sha256": "dc19e53d4904468a5535c379208caf921c2f96af16ed31b0cf6a747590b0ca48"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session13/questions.json",
+      "sha256": "4f2bd4ca1440a14bbc441450b2d5446dd0884df7424c950bfcd28d2f9dd90c37"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session14/questions.json",
+      "sha256": "f692e5c912a2a5c25e9b1203f97cf74c677b252cd70a5796249d649cdff1b601"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session15/questions.json",
+      "sha256": "09830f5bb72bc56fc09ff880a1e521e9f73dbaca3b6489ee2bbe411ef8d1792b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session2/questions.json",
+      "sha256": "3fb52272bbdbac9a58d0722c76be15935b373b4c3ead8a4a9079fae7e3d52718"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session3/questions.json",
+      "sha256": "faf46c24ed29b432b7abf35ac7f9f7ffac6bfe7d4993fe02f76e01da6f67d259"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session4/questions.json",
+      "sha256": "6a1c0f6d6c797cecda472fe248697138e39270febb7a1a755fd73339baae6056"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session5/questions.json",
+      "sha256": "32dc0a599086a57722a5225548e9f21d489753c09190ca13b4156ab2e37b7398"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session6/questions.json",
+      "sha256": "2116dc2f67024ac5c27fca0656433ac83b4787e19245f12b41874cfb16eeeb83"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session7/questions.json",
+      "sha256": "197ef9de5dde3c66700dc5ddd0e5cf3a1224a3ccc141772209db977818594fcc"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session8/questions.json",
+      "sha256": "43b8b981a9e9dc9dd87bd2f47184cb76e9695c6248472456e28b7f0b0451be10"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue16/scenes/session9/questions.json",
+      "sha256": "f34d57634ee64e442ec18bc44b47675e287ad4d3794ca373f85ada267c7c503f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session0/questions.json",
+      "sha256": "51380a9c30bebd0d8e6101e1f0f1cbbce5917e7bd141913b363fb5ba6207202c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session1/questions.json",
+      "sha256": "3fb3db3171779a3d4b0f290be8531ddedcb9004d03d166d0e28ca9cb7668b2e0"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session10/questions.json",
+      "sha256": "dba0cea5ff8f43dbfc457ad2f54c37142c96bac700235329890b88f7a44957b5"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session11/questions.json",
+      "sha256": "6dd2794133663f7f1835a09605663ab296fc44bc07034c3e770e102697f5f97a"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session12/questions.json",
+      "sha256": "eb7794cd141468db17e69d9048d2ea48fb6f7f14e921c4b58e00c693c39a138c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session13/questions.json",
+      "sha256": "33cd76d5ebe7d645f0e9e1b7d944daffb54ec65db4b3f72087e59e4d252edeed"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session14/questions.json",
+      "sha256": "60ee11264a7b94e8bee0fa221e566916e2cb9cad94712d254801c7ae4f2e1bd4"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session15/questions.json",
+      "sha256": "c89db8ec2f16e1f297cebcd670ee056d9d425547e4f655eab0e5e34400d7910e"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session2/questions.json",
+      "sha256": "d15d38d116f0bd62374df7be0f0f700979ca2820509676e97901b3f2cd945616"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session3/questions.json",
+      "sha256": "733c9310ac159b7ab90c26261d7d208313d921a0a9321e7945d7da2f4fb2af63"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session4/questions.json",
+      "sha256": "3fb6f69a92eb1c12355edcb52797ff68ba56a56ef8ee46e7327d238f5045a414"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session5/questions.json",
+      "sha256": "7b44ddf9084d042ef0415857bc8900df83d42bf190824fdf9ed866cd6fa19a6e"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session6/questions.json",
+      "sha256": "222a5bfb85c8210e92c746aff35c7b7d0168436e9d2e8be59551935fd572d0e5"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session7/questions.json",
+      "sha256": "c491111e96fbc84d08b1c69f4823772e1dd29ffa7a6a524308ec82cf109ecbdb"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session8/questions.json",
+      "sha256": "5b61df00c8d69eb24ca75dd5739a0c40caaf13a66d1cc8e652bb3b714305f474"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue17/scenes/session9/questions.json",
+      "sha256": "94061437462af8ba78f7fb77776ed33f3ab0e51e11fefcbe3812f08b995c87ec"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session0/questions.json",
+      "sha256": "611fe27b9a5ef5c907c1d88c02161e9f122090ba90c714386045558f25b31e4b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session1/questions.json",
+      "sha256": "a6ca8f6039d763247725bceea5da47309fc492b6972ab16edb53bbde76ec2417"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session10/questions.json",
+      "sha256": "b42ed8847ff88c8626c894e9a3368515b17aef2b9e0a55bdf3f03a771c5bf67a"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session11/questions.json",
+      "sha256": "314607c6dc7e42eab785871b684c59270a010afba75fde04b0b888f87b9160d4"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session12/questions.json",
+      "sha256": "ca1466f94bb374f740fdca6da665323f8c8de8a11d9a93ff0eceba1bb6eb3264"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session13/questions.json",
+      "sha256": "f12c5075389b15d34935fa92237559a55a341dcfb18ab62853aa45e4ade7dcc6"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session14/questions.json",
+      "sha256": "fdcfab9da7d0ad74602e15a9b38ae7c8ad087af5f0b3931331f4867b652abbf4"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session15/questions.json",
+      "sha256": "f967a76b29e6bb21ed68d0aea4bca04b028c486026adc9f5fa4c43a8a067986c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session16/questions.json",
+      "sha256": "8d471372683aa0c661884efedf73394d8f4e8fc1443ab30b5818db59e47e4406"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session2/questions.json",
+      "sha256": "95712ff71a5d01776bb7e35b42415f562317c4f215c1e5b29aa5f44091d35336"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session3/questions.json",
+      "sha256": "e3df9cc364cd273c71aa3459486d27021813a48d6ddf542c9669d7a31c03f024"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session4/questions.json",
+      "sha256": "79a468ea3a43d1d82dd0152614ec80bf4705a8c9d32675a7a8cf6187d4c4ddc8"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session5/questions.json",
+      "sha256": "454c8edbc5b4a977f25af783ffbabff17ad5afc233fe7b5fc59c012cc6427740"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session6/questions.json",
+      "sha256": "28e9a431acd281a8b2d2211470c37cabf6269e18060ab092af7847eb4e2a3c25"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session7/questions.json",
+      "sha256": "47ed243782d1c5098c75b63c6cebc2d19fec4c5c9f2fb32ae513e59a9fb1235c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session8/questions.json",
+      "sha256": "df0c30d49912e20b4a9e3aed78962b9e93d1fd6c57250cf37b738aa51f2a3295"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue18/scenes/session9/questions.json",
+      "sha256": "1ff4f996e13eeecaa4c8a09464149922d3da0aa1398da1ea3cdb59c0d0544bf9"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session0/questions.json",
+      "sha256": "e92a2f43d0ec97156cbeffd2cdb4fea62e37fa06789af3a6e362485c0127dd8f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session1/questions.json",
+      "sha256": "f29b6ee64926ab276c44418b8793d970bb39a4081002c4ff2d7668ae6e486046"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session10/questions.json",
+      "sha256": "306bad0ea24265e2f58bbe90253485efbedea83c0f37145b7d4177c7553b9af1"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session11/questions.json",
+      "sha256": "180760d3a218381e153c97bff228af1181836ba0620bfc3fb9c18bb3b99b11e3"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session12/questions.json",
+      "sha256": "abb77895628bee70571bbecd4b38705bd1c4e12f124fa5490748956c6857ef3c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session13/questions.json",
+      "sha256": "641b218bc4683468461d37e0670f67a057c62f55895613a92854035eecde4e39"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session14/questions.json",
+      "sha256": "884a92a27f91c6a4c47a6c9b08829150c8f9b2098b393803f9aa232485c90033"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session15/questions.json",
+      "sha256": "a9d4c9545e9fe2ab91a032c5bd0c0f0f4cc12bd7a50b2436c9db311d6b4ca101"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session16/questions.json",
+      "sha256": "a9e3b7289b27afee2b5fb34a3a07d3cf324674bf9ce40d18a824627ddfb5e66d"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session2/questions.json",
+      "sha256": "9f5ab91a4290292ffde2737fb8cf08d245a04c6621b187b6eee50aa034e74ec4"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session3/questions.json",
+      "sha256": "4c414b0b07c14d7917635ad27458fe71c81116a819dbad10d3ab8d585e92a8d3"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session4/questions.json",
+      "sha256": "5488ee5afeacc95a46ffee4c682e53a43298d7fbc7c8d2847f8b985c4a061e20"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session5/questions.json",
+      "sha256": "aaa1c9758c51cbf7e1f1b13fead976cf213a2a20a45dd42645cfe2d8f3c823a2"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session6/questions.json",
+      "sha256": "a6dfe21f6e712346acb059a31599a9ca61e396b7627444a4a7fa1cf86415a50a"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session7/questions.json",
+      "sha256": "75da134937da2a6a1b2980552ed34efd29f03c711761c03228dbe877d6388534"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session8/questions.json",
+      "sha256": "111d5d31531bcaf2553118e8ed850970832eaad30960ea6f4f235a5259e12b20"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue19/scenes/session9/questions.json",
+      "sha256": "816e88547abf8938335090d22156f959208bd55d4e9ab5cd2b404636ccf38ef1"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session0/questions.json",
+      "sha256": "88a8ff656d4535b4d4bd31e10039690468aa683577d4eb8570cca0038743f581"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session1/questions.json",
+      "sha256": "563a31c16ed09ed2c969432081059a98c0a2158ef6144f2e60ece99a0e784072"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session10/questions.json",
+      "sha256": "234f7d08a9f8d723fbb30956e656335f3000c6ac0fb8fc7981b6e54c8f041e6b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session11/questions.json",
+      "sha256": "ed0df9a20c67139a6a0cdd7dc9ddef91ecb046c3b93d513a52f6c52cb36f94ab"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session2/questions.json",
+      "sha256": "09b0077a00502406e86e4c652ddcf1cc0aa7eeaeb8fdf59154dabffb3a8a051b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session3/questions.json",
+      "sha256": "d35359f9e2965874e9c97f30eeb45d82f82281cf78b96c97c673b968bc39f609"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session4/questions.json",
+      "sha256": "6d2ac14fd4ff0e223fe097dc1c596cba73768b2158e1b25a9dc8b650b7f3aac6"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session5/questions.json",
+      "sha256": "4dea4a09a6cb77f1bc46d1a18348bc0f117a5f6f86b90220b0bf8e0beec4a959"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session6/questions.json",
+      "sha256": "25638ae7fef6c802153ecf8dd4501d2948ab1711e5340e5ea1abca70c24130bb"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session7/questions.json",
+      "sha256": "93c4696d953bceb94e8166774a429404b26e5093ccd269a6151a90e0e0e4937d"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session8/questions.json",
+      "sha256": "1b652ea6aad21b437a5a6773b15d3b35a050e8658d7107734edf3a9593453d3d"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue2/scenes/session9/questions.json",
+      "sha256": "ce15a6f3cfcfc279ebd9abfa3fc9011e13fc17352e4721eb9a2bcf57ac431adf"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session0/questions.json",
+      "sha256": "20fc5a47b523a1d8d983fd30ab470e26ef1ccd00ff42f7dda56966f6db255557"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session1/questions.json",
+      "sha256": "fe302c1a6ba96bb39b429f3470cf39a69bda2551bdc9cd62c84a0f5657b08292"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session10/questions.json",
+      "sha256": "9376a8be0f2b4cfaa2dc76cedad2929fa49a8a20f7da936f88508328a267a92f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session11/questions.json",
+      "sha256": "602d526b4b13eddb9d0e1b4cd60791e2c464cd35e7bccee9b0e9d39d2d50464c"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session12/questions.json",
+      "sha256": "4f8029de3d0e388d015b03d075ab85dc8504f01cec55cfb53d0fb6ef687c1f7b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session2/questions.json",
+      "sha256": "39a6a9f595999d20141fc826777679e9a4f2cbc9613eb1c81f327fa61655fdfe"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session3/questions.json",
+      "sha256": "7c8eb144ad07914484afd21484edff43173e223fda40a803df8bbee5f61bdae9"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session4/questions.json",
+      "sha256": "8cf7cd4b660a5e5970a8ae2ba5e938a875c6e68fc76a52f22a2e3c0a1ec0c5c2"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session5/questions.json",
+      "sha256": "cc7b4294ab8799869bbb1bd1efd47aa608c9c86e138e95e2972ef3cc8f3cf47a"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session6/questions.json",
+      "sha256": "ae360feecc3703a60a44c489d355582e2a568632f673bd7faaf8285de348db1a"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session7/questions.json",
+      "sha256": "54d3e50ea565092e8161d31f9a55733033fa7eabc0c12c247d1e9746ccd19c1b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session8/questions.json",
+      "sha256": "6e81dc8ad37023169cde343c7c0bc45a118f66f8119590c487d15e4ba714c092"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue20/scenes/session9/questions.json",
+      "sha256": "0c834e27a45d60332486195e78f66944c229ab65a5246b4a9f3779e530bac94b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session0/questions.json",
+      "sha256": "bd96dcda9b362aa55ae93d38ab91e8e4884ae7ccad8f5e8840d00f2b2cb68f16"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session1/questions.json",
+      "sha256": "3a6b29e726a361868d55ae428a09d8c169aa53b8944823a03567b31d9a5f957f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session10/questions.json",
+      "sha256": "83ad4e834e9f19f03be8107b04559d92c55783b65011fb181f14a465bc7bf3c3"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session11/questions.json",
+      "sha256": "a2fbe3f102bed7fa6de54dad4fd8d38b6f8fdeb7389073413fcbe0f75e4688e1"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session12/questions.json",
+      "sha256": "80448686d25c53464eda5e8892a67c3e902f0cfc4e5a418279390b60c917dc8d"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session13/questions.json",
+      "sha256": "95fcfe66510bd0f11cfac9ddadab73956ccaadc5eafa47459ebd9c341cd21011"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session14/questions.json",
+      "sha256": "9d974a7adeff942af1007c85042a1a8a7dd337cb1eb85f6da5cc12293723ead6"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session15/questions.json",
+      "sha256": "a1f07c3369e2bb6e2a8ab65d0f64574bb7edec4f916852171c75e3aa477792da"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session2/questions.json",
+      "sha256": "41f030996c0924bd80cb640820af1dcd83798cce26c378c7887c477e74a3402e"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session3/questions.json",
+      "sha256": "b7a420ecd03413680dd7262c26557eaf629e758811c092baa0e7424f99157e82"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session4/questions.json",
+      "sha256": "634211f31e0ad8749542a8a832768677fe6f56cdf74b1dc8c007dc31dbd933e8"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session5/questions.json",
+      "sha256": "dea1b3cebcb217611acb82ebbb32adbe9f4c42e5be71aba3e5176d68cd79bcbf"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session6/questions.json",
+      "sha256": "ec4bc4947de096ca6ceb5c4d411890a93aafaf7b32eddf19cd1da010578e83ef"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session7/questions.json",
+      "sha256": "24bef245ad4434389e07844a4c2653bbf20c3edb64e160e8d82838131409d968"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session8/questions.json",
+      "sha256": "15af65e972f4a45bd0c8caddf96f781b5607694cff92d327e660fb193758175f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue4/scenes/session9/questions.json",
+      "sha256": "396c2b05516e1304fdcab66d894e563f47b3cdb27bb0c4b40ae756bbd13c7f42"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session0/questions.json",
+      "sha256": "a738bfb371b22f14fc0a600fce15455fcfe22fde07ce80b3209d20f6b049ecc8"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session1/questions.json",
+      "sha256": "38e7c5b85be8b06df06973584afef6327bbcf1f30d415c4323a34f727232d2bb"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session10/questions.json",
+      "sha256": "77999433b058d50e54bb0116f232c2ce48049a1033c8e2b06c7d5ea118348396"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session11/questions.json",
+      "sha256": "d3f5c2e104b1f307829649d77d656c84538a342de2b508f792b8a94f97aa6702"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session12/questions.json",
+      "sha256": "e5151c0cf4cfb61b2aa602e46b9d881b6d4cf1ba875490e7acb2ceea98ed7396"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session13/questions.json",
+      "sha256": "06682aefe7fd37a7e92e9655e71f4b211185ce179133b3fa371a93ab7be2fe64"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session14/questions.json",
+      "sha256": "edd9624883afd5d4fb6d40e688b46f83c4d7ab0f9735c24f069708a9f7279b03"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session2/questions.json",
+      "sha256": "87f11d7ea04afef8be9fb1be7724b0a9691532f618394e61375b47da9e52d8e1"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session3/questions.json",
+      "sha256": "31becba1523aa7b415acf00651b9293aebd3c1473bdd24aea92c7ad8dc76addc"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session4/questions.json",
+      "sha256": "12d5b5036dec463169577bbd6c231e61f8533ad69061f83e80705feeaf84d8a5"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session5/questions.json",
+      "sha256": "c08f86368aa9f27fbd1bd28c5adab432935037b9a3850017e773ae321003db68"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session6/questions.json",
+      "sha256": "e653d9e720ed7882c2eb6949b47de0f70e3a1af1720dc12d7bff9cb5ac998788"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session7/questions.json",
+      "sha256": "c56f53d7a311fa4a3997a7210b8ad8881bc0d534d37a447125088e4429a49666"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session8/questions.json",
+      "sha256": "a5a9a3ab7347ad5c5d6d3d4728846fcaf12771f10f0c5366d8e5bb1530e7ab5b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue5/scenes/session9/questions.json",
+      "sha256": "91ec0097bb485e3f15b4b088d6f9cc58abc3563e36d27b3b04dd0e73dbc17289"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session0/questions.json",
+      "sha256": "afa325b74581c1ddcd70039dd3aa51436b45834da23f364e26a75a8daf7f59cc"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session1/questions.json",
+      "sha256": "7e9c7d235b15fba9096798d386574d9cac3592e89d2df772927addeb248b6478"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session10/questions.json",
+      "sha256": "7e24cbf2fe3cc07ab5db5826c7ad517359d592e5755202c95128fb979c85dc77"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session11/questions.json",
+      "sha256": "0c08c3b428512e995b427b0e4e36e35b14c6ad2e6a0fa107d561808336b1b112"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session2/questions.json",
+      "sha256": "81cf5bbe24fea425c0918214b0d316cd0c921224a0ef23e1aa95797d701a35ad"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session3/questions.json",
+      "sha256": "583ceb3cc3615bac6466d5a47527573e41afb262997ff0f2d6c95d1fa99ee832"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session4/questions.json",
+      "sha256": "948dd6019c0486b473ab6b195773a37031b141f363503bf58d6a2cf8476d1a90"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session5/questions.json",
+      "sha256": "78b4285dbd90acf6945b022ce951bc60e7e38947ee4f768dd9e387982b35da92"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session6/questions.json",
+      "sha256": "117cb806ba0310d296667adedf79bbca3eb1fb6245a37bc059a043b672db1c20"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session7/questions.json",
+      "sha256": "216e2567f652b13170aed31081c70430da29c20118a4db72f15b2651f27933d7"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session8/questions.json",
+      "sha256": "76212b5f500341a3c9ae613f590898a97f2373a29ae554e427fb25fe8a116330"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue6/scenes/session9/questions.json",
+      "sha256": "4c99b70fa1a1f94804abbcba610b308bca0ae10b380eb67870c32a6e6c4398af"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session0/questions.json",
+      "sha256": "c021ae893c0ff6776cd55eff3a154883c59a5a3dbf4464d14721ee8de530e687"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session1/questions.json",
+      "sha256": "78fc8703fba7789ba54bcdea3dd6e7ea6c259a367f6a5521d066e2fdf848f189"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session10/questions.json",
+      "sha256": "6c5ffd5f1c638ffd1a66c3989441de1c32d69950ce0d961a506c9a6befe88307"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session11/questions.json",
+      "sha256": "4b9791d6c4b70288459ee172d9e54a37c66cecf1571212d636f7ef0e9adeddbe"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session12/questions.json",
+      "sha256": "38cffbde682e8c9dd569c2d952517267a98c030cd86e0adc8d8fcc055e948804"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session2/questions.json",
+      "sha256": "2dc64f617ce3851e2557a56bf75c0460d8e8662d22b47344ab72787df4211fce"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session3/questions.json",
+      "sha256": "9488c928a477f56f3210cf57519ef19c552bb64d1e19aa38a0b49282206d6279"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session4/questions.json",
+      "sha256": "a48f673985800a36194a2463e7d9fdff2c21b9c311d30ea531d31ad5597c65fc"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session5/questions.json",
+      "sha256": "dbe9b47fb0778f1c78ce9e832afe296d525c60b615491006850efc451e5cb6aa"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session6/questions.json",
+      "sha256": "bb194c155abaf45f08243ecf22f7b28c2ce62e25d3425812f7322ed9a00c6897"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session7/questions.json",
+      "sha256": "39df6e76d3044be55461fc0b26afbf6ad6ce7a2fc961a9e0d579732c5072187f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session8/questions.json",
+      "sha256": "8d4d45e9ae726e8f8475ba8a905b92806c3a4150e6d182835093cd381076ef92"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue7/scenes/session9/questions.json",
+      "sha256": "296b60919b90b5e34133ea947db63ed5a00a9ab3faccaef625a722b0f738c73b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session0/questions.json",
+      "sha256": "29885fafde7e1bc5acd1b8b274431f323ddbb3b61028562aba1511d5081c8313"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session1/questions.json",
+      "sha256": "27cedae3c4daf6b36a0c4bcc96585247c449abeb93267f2fb3fd3f570d0b9b90"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session10/questions.json",
+      "sha256": "6a091468257095eed2e89d4fedf2b75e22d1ea81407bfe6e05b0ae70c872d9d2"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session11/questions.json",
+      "sha256": "d2564311dc3a035157e97c183a62954bc875464c45c7ad5b55d62fd9afbeaa0b"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session12/questions.json",
+      "sha256": "9f23caab350ccd69ac77fb8a505fbc26f0ff0936b881a91ce7f249e55ad881c2"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session13/questions.json",
+      "sha256": "f9c7fdd116fdc1468daa9273be792ea55cdfd2091bcce7a13bbe8b1d300ee817"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session14/questions.json",
+      "sha256": "d10022c27c181e2f372aa18ebe15946439a3c30ea945deac458df17c6776fa79"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session2/questions.json",
+      "sha256": "465c0487752fb89a0ebb7f230678daf069e2df83158f89fd28ecb4cadfb64f7f"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session3/questions.json",
+      "sha256": "0843d984e694e966c5b9c3b563263edb08ff7dd5ccffb276efc21493ef3a12b9"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session4/questions.json",
+      "sha256": "65080f1b019dabe8ec81a06d7dda36397dc608590c515bad118cfe250c7d2082"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session5/questions.json",
+      "sha256": "f654f976cea19b63f72643a94e0132a4b736b1cc1c021b512bb9af3b9076b2ee"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session6/questions.json",
+      "sha256": "51ede3089d21feb15affaab00f87b9cb48b492da763c9e1f0ff8c7e1c9424cac"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session7/questions.json",
+      "sha256": "9aa3b7a1e4a0c82ba97ed7b0d67aa19a3d196fa795ee0d3d1be203c9b35d996e"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session8/questions.json",
+      "sha256": "e32eb7ed5f809c12222e61df67571a9a4d7fd82676d2a8269b78d7b1c7762951"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue8/scenes/session9/questions.json",
+      "sha256": "f70cb06862437334e9d971763956afe72825703f7ae48f1d93ee304c4654720e"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session0/questions.json",
+      "sha256": "5728223441cd85826cbf0fd71fd3e32b4eba2377d27bd70404dbe4fd888e7fb2"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session1/questions.json",
+      "sha256": "ad561acffe87f89aaf21340f6c45349aad971e11b81249dd6bc98f0db69daf72"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session10/questions.json",
+      "sha256": "9669296ad1ed17926e8c23711f136c817954673b10f6e327e8464a711500ce00"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session11/questions.json",
+      "sha256": "8578783a81a3faa67d182901f8019e8d125967eec7d36bc4ca34d25482170048"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session12/questions.json",
+      "sha256": "eac38a6c3205cf2c2c6c8321c6ff2220ed206607b17209a98712ee7bb1f883dd"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session13/questions.json",
+      "sha256": "c5789607d2f8e827e472459102b7acd8e1f7fb3d9c446b869786e48a148fbd4a"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session14/questions.json",
+      "sha256": "c57e106125318c0c7314d784827f9b22ff450660f5295d8fe838605edfc25759"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session15/questions.json",
+      "sha256": "1720fde36aaa8b8fc98fcbe273fd2b1ad07b206a37dd90f3d53d8b305211c2c2"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session16/questions.json",
+      "sha256": "0bfe81991fbca0a27fdadbd559bf6eb81c188006cf53ef30559127d3b2dcfab6"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session2/questions.json",
+      "sha256": "3ae55fe4935226ccf1ced73549505f4f152806d6a4c8e1da3c48deb13aefc935"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session3/questions.json",
+      "sha256": "65c669f4a267628fb0ef36eb8e0d8defb19d9b0e0d2d54497685574c39f750b3"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session4/questions.json",
+      "sha256": "3559b210a6137dba702a9e514a307a2eb1bb7a0844a01c92abb056396a081582"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session5/questions.json",
+      "sha256": "066870ee24fb7dfb230eb13ce243fb8bb9b94f6972f6cc30565a390c88417465"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session6/questions.json",
+      "sha256": "b614961a3b7411b41857ad0c9bc600deba7a16cb299c3fb644e23d2c42095ffa"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session7/questions.json",
+      "sha256": "b5de97fe60392449325d5a326e655c8a609874ce748b6c0448dee0e7a0837b91"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session8/questions.json",
+      "sha256": "631eb37e1ae461ca2ddb7cd8ae2185b8d62f178f185bb6f293ec9e230bf3a689"
+    },
+    {
+      "path": "dataset://h2hmem/dyadic/dialogue9/scenes/session9/questions.json",
+      "sha256": "60018295a2fe3a4d74cb285f7c6656bb2fbd72cf0fe7e8a679c01f4e666db80c"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue1/scenes/session0/questions.json",
+      "sha256": "72b1f6573b0d78108fd5ff8bfe3e31592a07bc036659ef57a1eceea8417e1373"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue1/scenes/session1/questions.json",
+      "sha256": "27e5f495f9b5e0c80454f7391a9847b92a318de1e6529b72095853eb05e60851"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue1/scenes/session2/questions.json",
+      "sha256": "e2dcdf9c7886829253797c499314763c93353cda5e6d42d1705a319776c92bc2"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue1/scenes/session3/questions.json",
+      "sha256": "5eda88c0d8d8c186766ee7522bcf28abf363f34aa56a4bb54fb0b42b88756794"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue1/scenes/session4/questions.json",
+      "sha256": "e464b04086a45636c1f079d29b8b3cd258bf598fb5b99f49c7f76b74c7e8edde"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue1/scenes/session5/questions.json",
+      "sha256": "b64054eb4dab5fcfd10d8fbbd6f655882a6f0df3c2e3603e9de377c875e9b020"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue2/scenes/session0/questions.json",
+      "sha256": "c4d82175a03dae5155a551ddc2e2ab6a8bc383f1b33f9011b8f8972bb8039aba"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue2/scenes/session1/questions.json",
+      "sha256": "b6a48bfdecb8c3da07455e75acbdc9dd359ec3158bcade5be59aea1e45f60cd7"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue2/scenes/session2/questions.json",
+      "sha256": "005c2710574444859b9d59082637cc5fd5437dcad1ae7a9fe1fae6aef82bc7a4"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue2/scenes/session3/questions.json",
+      "sha256": "128f9f839f52cc221a1b2b4ea66d4d9c5dd4aca50ae9adf8557754a4488e2f22"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue2/scenes/session4/questions.json",
+      "sha256": "29ca1080a99b7259351ddadf41c92a5ee83d96d33c7d6a3292c248b2d06497f8"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue2/scenes/session5/questions.json",
+      "sha256": "18d88b29a4c88f04037b63e190809dfc2e5acf0711f7c95e945eb37dd60754af"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue3/scenes/session0/questions.json",
+      "sha256": "ccf2d2fb5e3c14eb2617ff3591dd469b0c4a6f043e822a86cc7cfec5ac382e18"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue3/scenes/session1/questions.json",
+      "sha256": "c8afc26627a15a5fa07e50cb717a6fa3364171dca8b34369604063fb26714aa4"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue3/scenes/session2/questions.json",
+      "sha256": "3c2bebc430f9ab6bb5ff86c5571e19c90f3a6b940b1b93a52ea2c2a92ea0bafa"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue3/scenes/session3/questions.json",
+      "sha256": "4ce5f240e10050b933c444815ce9c55c9c8305bc4997f669483504a2b5d9b706"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue3/scenes/session4/questions.json",
+      "sha256": "22e07a86dd3a2793664ca116e7a3efca7e1be2f9059646549c9178db590408f0"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue3/scenes/session5/questions.json",
+      "sha256": "02dc55cecf074ba00e3061ce0fb5629073f056c0bfa6c156025ae08c39496649"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue4/scenes/session0/questions.json",
+      "sha256": "ec76a260c6926d7d0f1b233ada4cef4654b1c020b3862079eaea804a09f8c4e3"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue4/scenes/session1/questions.json",
+      "sha256": "926a40ffaaf414b6a6951d0a82db1ae0c1e4fd8bb12509f37da2152e8eb29721"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue4/scenes/session2/questions.json",
+      "sha256": "59a04e675dff82c2c2e2645b67ebd9459d62d2cc70dc73190449d6ec58cd5ccb"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue4/scenes/session3/questions.json",
+      "sha256": "3a48e18ff72b799b2b66dd0474dddd95f223011ab27f29afaa01c8805c5620f9"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue4/scenes/session4/questions.json",
+      "sha256": "e63cec00263c9faddb7270f8ae6f04f71d57e4869299556dfc6aa08156d1268a"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue4/scenes/session5/questions.json",
+      "sha256": "86c93b941ed34ff8de7f0d7bd16b0b3e13934731f5f63818f36c07dd72cd5ce1"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue5/scenes/session0/questions.json",
+      "sha256": "c40f992697ef3cd603c686b6fd36f47659d06b9a9abce2e9a2f72b12fe417beb"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue5/scenes/session1/questions.json",
+      "sha256": "83773875a4ba88fbb2bc4bd5d7b8aa091086267b8e62742d4d75b6d846354af8"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue5/scenes/session2/questions.json",
+      "sha256": "1574abf37599acee59c923fb40e912c453ef3c7589a23cd501626f2dc84cc132"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue5/scenes/session3/questions.json",
+      "sha256": "e7f089af3f82b36f68bbfd00518ec9852c45be6616bbbc4a55dc13dc310d1225"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue5/scenes/session4/questions.json",
+      "sha256": "0a20b28dda71ca0e5a0c13b6546b7283fd032e3ed179f64c13d64c98fc880249"
+    },
+    {
+      "path": "dataset://h2hmem/multi-party/dialogue5/scenes/session5/questions.json",
+      "sha256": "549431eecd14bb7da0abf3af6c944c98d729b4b6dc83caa57a722bfe4c9b38d3"
+    },
+    {
+      "path": "dataset://memgallery/dialog/AI_Robotics_Automation_Future_Tech.json",
+      "sha256": "fb51fad8a80b3610d90eaced0bf01bb2250a7f486a8dc67e8e9eee88a4e55b8e"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Academic_Animal_Pet_Research_Life.json",
+      "sha256": "9289425b20c81b25a217ad1a76009c88ddf02a784881b719f8b7e5b25911b948"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Architecture_Art_Culture_Exhibition_Technology.json",
+      "sha256": "1d1c336cb1412ef866d3d6b7efddeb5dadc1f6ef1fd2678b79239722ae285bd4"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Astronomy_Physics_Scientific_Experiments_Cosmology.json",
+      "sha256": "38e1820504b88845f001c2820fdb53e0db8d0a4b9dc59083e5e60f376b864b97"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Baking_Dessert_Daily_Life_Skill.json",
+      "sha256": "7b0169375ef20cfa9ddf67433ca78139f82ce30449e7813bb748ea29610ea859"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Dog_Behavior_Research_Academic_Life.json",
+      "sha256": "d825f7e3798514144230bb9edc9c8811604c92f8ad16584ad24d1fc18029898b"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Education_Career_Research_Lifestyle.json",
+      "sha256": "6e8c712397dc41ae0da623250c36250f5b71a85a4f86199159d729337136cc8b"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Entrepreneurship_Blockchain_Economics_Logistics_Nature.json",
+      "sha256": "c869195883d786b12c1ec984ca12a2b061c0aea2b5feb7f1d19cc0070392bf5b"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Fashion_Personal_Care_Lifestyle_Shopping.json",
+      "sha256": "7c4d3a48758429280a9e0b55fce2ae1af1f1d7e05b27800240f15e2a45a2751a"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Global_Travel_Cultural_Sightseeing.json",
+      "sha256": "775871b984df79969ac9e50d0497642d49eaa203ab09937127d6358dc7a17037"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Global_Travel_Sustainable_Fashion_Design.json",
+      "sha256": "e8c5e8c36d559a25172204af98a1a012db580115061f5b1609e9d4b7b850b5d8"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Home_Health_Lifestyle_Product.json",
+      "sha256": "bcc786c056738d5163ad0a132ba67caae2df82303ac7b99065471721484caf1b"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Home_Repair_Maintenance_Cleaning.json",
+      "sha256": "6c10293e51b5a9fa567eb8fd56bd9af52429b19a9aa945abd26f5cea6ed9f91c"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Landscape_Travel_Architecture_Nature.json",
+      "sha256": "883d8fc1ea325fa7abf3bad5213e2f192323c71dc4209b6b24dfd0edcc66615a"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Music_Dance_Theater_Performance_Learning.json",
+      "sha256": "c536c4091c463a7cb0a71db9628f1fbf744389b049b74945b505b6f73f91569f"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Nature_Economics_Programming_Student_Life.json",
+      "sha256": "3978b59ff7beeb1d64c50c8393127b70504130139cd90c198c2bb9e1533dc6b0"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Parenting_Commuting_Hobbies_Travel_Gear.json",
+      "sha256": "88824a01e9a25ef49a7af63436651ec323910a81f3139be3796d398d101a892e"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Python_Botany_AI_Student_Life.json",
+      "sha256": "d5bd84226e1dd48ade2d37683f91ed3a55d7f230d89bb6414ef68782b5103a7b"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Real_Estate_Home_Decor_DIY_Lifestyle.json",
+      "sha256": "ace411b22e74f80f9e25e5bf12279133b9895e2f38c9347581ae45541b740fcd"
+    },
+    {
+      "path": "dataset://memgallery/dialog/Technology_Ethics_Future_Society.json",
+      "sha256": "11d931289ddd6bd9bd59a5564ccf6494d4ef59a10cdc5f320fbcf4a863c27fa2"
+    },
+    {
+      "path": "dataset://wma/personal/personal_01.json",
+      "sha256": "2329f25cd0a3a2d2ff3ea5bbc67ae87e6131e1ece1953708f1ff9aab9fa78fc8"
+    },
+    {
+      "path": "dataset://wma/personal/personal_02.json",
+      "sha256": "8b924d631bd7b8a10884af00d72e665861c94faa8a5c9962262290069284e715"
+    },
+    {
+      "path": "dataset://wma/personal/personal_03.json",
+      "sha256": "b8ab7482c6a7ae050a7ae9e2cad29c355fdb9bb4cec46ad21584da3d0f2eec3b"
+    },
+    {
+      "path": "dataset://wma/personal/personal_04.json",
+      "sha256": "5c77a29696cfa222c27cff4cd6b08275a841b4029ca60caede56be5bfdd10ed5"
+    },
+    {
+      "path": "dataset://wma/personal/personal_05.json",
+      "sha256": "67d011c5c60222fa902ff76eb7375122486f366a5c801586a3ccd916945c002c"
+    },
+    {
+      "path": "dataset://wma/personal/personal_06.json",
+      "sha256": "1a3b772499723e8f3a82941185dae0b35470bd88ca4b2ad2843f9b16fb8a1eae"
+    },
+    {
+      "path": "dataset://wma/personal/personal_07.json",
+      "sha256": "4efb4b570d0422cc5551f19a4b2a9746e0560f78f42d3296f28bb5fe9cbd22b1"
+    },
+    {
+      "path": "dataset://wma/personal/personal_08.json",
+      "sha256": "2cd5bad1c01186e796413355bc21a4f65055196688aa3d0afd57c1322b2cb47b"
+    },
+    {
+      "path": "dataset://wma/personal/personal_09.json",
+      "sha256": "5bd381f27e793185a247faadf8316a517c6a053107744fd731e10c72de84313f"
+    },
+    {
+      "path": "dataset://wma/personal/personal_10.json",
+      "sha256": "912d5d59dafc56506c21c2507ab5e5b7daad3cdc99e5f911693bbe988b3bd14d"
+    },
+    {
+      "path": "dataset://wma/personal/personal_11.json",
+      "sha256": "af20c34e45bac7c52e69da37695eb71780b425bdd719813a5e907b858ef087f6"
+    },
+    {
+      "path": "dataset://wma/personal/personal_12.json",
+      "sha256": "8fd40d712299c1fa5281d1f8a440f3b5c869e889b9edff86fee7301a5439484f"
+    },
+    {
+      "path": "dataset://wma/personal/personal_13.json",
+      "sha256": "9ffad3363ce52f3b90eeed5a581512f746eabc5a4d9f6998aea81120507f8de2"
+    },
+    {
+      "path": "dataset://wma/personal/personal_14.json",
+      "sha256": "ac2b1af0f1866f3ac1dc8f523f25cfa16a94eada2e7153d758ecb7ea5d6bf85b"
+    },
+    {
+      "path": "dataset://wma/personal/personal_15.json",
+      "sha256": "89a581715b6682fa4c7a449b051fa423cccfbedcd2182bb33260320ad7dd8d3f"
+    },
+    {
+      "path": "dataset://wma/personal/personal_16.json",
+      "sha256": "40c5a32a9de3abb14dff5c209c3eca1951a85dc67f1d2b8459f4e7356f5593ed"
+    },
+    {
+      "path": "dataset://wma/personal/personal_17.json",
+      "sha256": "6659ca76e68a845759a2471b6d842d94b7d7e50af61039f513f909cfeb35b3b7"
+    },
+    {
+      "path": "dataset://wma/personal/personal_18.json",
+      "sha256": "d91be0d6c908d62c850cab1a30798196b8b111010a3c5f37e4456c251c9fd51f"
+    },
+    {
+      "path": "dataset://wma/personal/personal_19.json",
+      "sha256": "cecaefe2a49723c439b0bd5d663962c8a14d547004b90be0a2527098ae18939c"
+    },
+    {
+      "path": "dataset://wma/personal/personal_20.json",
+      "sha256": "982d7088fd80311c4537f043ad3213c96c425a19d8a207f2deb649d8057cf1b4"
+    },
+    {
+      "path": "dataset://wma/project/academic/academic_01.json",
+      "sha256": "844b0fca04949603403ba967cb0afcc324db5054e07a3ed6b6faf74db5eb4197"
+    },
+    {
+      "path": "dataset://wma/project/academic/academic_02.json",
+      "sha256": "d21b8742fe06f9abdb34c0e0297888591d1ee0cc326add71ed1689b00d44372e"
+    },
+    {
+      "path": "dataset://wma/project/academic/academic_03.json",
+      "sha256": "8a6e70f5d3c7b5b7756eec30983aae05e1d0f77239deddabb35e5b58ee10dad5"
+    },
+    {
+      "path": "dataset://wma/project/education/education_01.json",
+      "sha256": "72b887b39adebdf148913394a297a0ce2b1ed7190b3038eadd39ac2bb8928ba0"
+    },
+    {
+      "path": "dataset://wma/project/education/education_02.json",
+      "sha256": "c82445e07d457ef053db6cc8c98220382a36bfec54b88b7c2942587590008f1b"
+    },
+    {
+      "path": "dataset://wma/project/education/education_03.json",
+      "sha256": "850f4ad79742654b29fb5b9f6a90007c30293e4eb152ad0592140394bc82a8c5"
+    },
+    {
+      "path": "dataset://wma/project/finance/finance_01.json",
+      "sha256": "ed5d251fceef6e5a00176cc2d03633514f2eaf2639f483cb7bf23e5705f56fee"
+    },
+    {
+      "path": "dataset://wma/project/finance/finance_02.json",
+      "sha256": "b448c9abdaba17ad23a857542d29be67000b07d5f751108547e4c70808ccfff8"
+    },
+    {
+      "path": "dataset://wma/project/finance/finance_03.json",
+      "sha256": "546a3eda6866c5e1b8d404bd53d183e9e0d2e84bfab60a2bfd581ba5807db6fe"
+    },
+    {
+      "path": "dataset://wma/project/health/health_01.json",
+      "sha256": "7c06d45a7844fadbe6cf9008b416d34f36dcc46dd69eb6c089b9e7e47c08d008"
+    },
+    {
+      "path": "dataset://wma/project/health/health_02.json",
+      "sha256": "38c59825e3fa11c22a74086e437644ceafafa1239103048214cbda7c7dc5c0a7"
+    },
+    {
+      "path": "dataset://wma/project/health/health_03.json",
+      "sha256": "a5a962eb47dce145e1039710dd20913cd57ac57cb5302a4481bdec34644ae6fd"
+    },
+    {
+      "path": "dataset://wma/project/software/software_01.json",
+      "sha256": "e239c274d13afbdc57f3ad3eeb20f71e7b996b6a63402752328914a6c2c86536"
+    },
+    {
+      "path": "dataset://wma/project/software/software_02.json",
+      "sha256": "4ab37969af55e2f8db028239f6046f9e295c6e720751a66e6ca672245bb93431"
+    },
+    {
+      "path": "dataset://wma/project/software/software_03.json",
+      "sha256": "86461e5f6c44eb82c90777a5bc047772725744cfd721339e6265a24d12d22f3c"
+    },
+    {
+      "path": "dataset://wma/project/startup/startup_01.json",
+      "sha256": "7d2f000ff07e9eccb981d7dfed4a11d69694b423cd301b30e5c739c270bc3915"
+    },
+    {
+      "path": "dataset://wma/project/startup/startup_02.json",
+      "sha256": "b8cd47bb97a14cf7461fa18b12a5655556cffa83bcc140ed651b2210afa2b9cb"
+    },
+    {
+      "path": "dataset://wma/project/startup/startup_03.json",
+      "sha256": "ce90a2606771607a61d51a6b4f62b17f825624ffc332b9910b3db476fbe788f9"
+    }
+  ]
+}

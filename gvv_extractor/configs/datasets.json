@@ -1,0 +1,15 @@
+{
+  "H2HMEM": {
+    "root": "dataset://h2hmem/",
+    "include": ["**/image/*"]
+  },
+  "Mem-Gallery": {
+    "root": "dataset://memgallery/image",
+    "include": ["**/*"],
+    "caption_root": "dataset://memgallery/dialog"
+  },
+  "WorldMemArena": {
+    "root": "dataset://wma/",
+    "include": ["images/**/*", "**/images/**/*"]
+  }
+}
